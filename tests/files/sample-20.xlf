@@ -1,0 +1,34 @@
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0"
+    version="2.0"
+    srcLang="en"
+    trgLang="fr"
+    >
+    <file id="f1" original="389108a4-rtapi.xml">
+        <notes>
+            <note id="n1">note for file.</note>
+            <note id="n2">note2 for file.</note>
+        </notes>
+        <unit id="u1">
+            <my:elem xmlns:my="myNamespaceURI" id="x1">data</my:elem>
+            <notes>
+                <note id="n1">note for unit</note>
+                <note id="n2">another note for unit.</note>
+                <note id="n3">
+                    {
+                        "key": "value",
+                        "key2": "value2",
+                        "key3": "value3"
+                    }
+                </note>
+            </notes>
+            <segment id="s1">
+                <source>
+                    <pc id="1">Hello <mrk id="m1" type="term">World</mrk>!</pc>
+                </source>
+                <target>
+                    <pc id="1">Bonjour le <mrk id="m1" type="term">Monde</mrk> !</pc>
+                </target>
+            </segment>
+        </unit>
+    </file>
+</xliff>

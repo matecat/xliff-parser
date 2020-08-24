@@ -1,0 +1,35 @@
+{
+  "name": "matecat/xliff-parser",
+  "type": "library",
+  "description": "A Xliff parser written in PHP",
+  "keywords": ["text", "search", "php"],
+  "homepage": "https://github.com/matecat/xliff-parser",
+  "license": "MIT",
+  "support": {
+    "issues": "https://github.com/matecat/xliff-parser/issues"
+  },
+  "authors": [
+    {
+      "name": "Mauro Cassani",
+      "email": "maurocassani1978@gmail.com",
+      "homepage": "https://github.com/mauretto78"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Matecat\\XliffParser\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": { "Matecat\\XliffParser\\Tests\\": "tests/" }
+  },
+  "require": {
+    "php": ">=5.5"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^8.2",
+    "phpstan/phpstan": "^0.11.12",
+    "friendsofphp/php-cs-fixer": "^2.15",
+    "fzaninotto/faker": "^1.8"
+  }
+}
