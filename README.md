@@ -27,7 +27,22 @@ In case of invalid or not supported xliff file an empty array will be returned.
 
 ## Output
 
-Since there are some differences between xliff v1 and v2, the produced output will be slighty different.
+Since there are some differences between xliff v1 and v2, the produced output will be slightly different.
+
+The array skeleton of the output is the following:
+
+* `attr` - an array of metadata containing
+    * `original`
+    * `source-language`
+    * `target-language`
+    * `datatype` [ONLY FOR V1]
+* `trans-units` - the array of trans-units, every unit contains
+    * `attr`
+    * `notes`
+    * `original-data` [ONLY FOR V2]
+    * `source`
+    * `target`
+* `notes` [ONLY FOR V2]
 
 ## Examples
 
@@ -119,10 +134,10 @@ $output = [
             0 => ['raw-content' => 'note for file.', ],
             1 => ['raw-content' => 'note2 for file.',],
             2 => ['json' => '{
-            "key": "value",
-            "key2": "value2",
-            "key3": "value3"
-        }',
+                    "key": "value",
+                    "key2": "value2",
+                    "key3": "value3"
+                }',
             ],
         ],
     'trans-units' =>
@@ -136,10 +151,10 @@ $output = [
                     0 => ['raw-content' => 'note for unit',],
                     1 => ['raw-content' => 'another note for unit.',],
                     2 => ['json' => '{
-                "key": "value",
-                "key2": "value2",
-                "key3": "value3"
-            }',
+                            "key": "value",
+                            "key2": "value2",
+                            "key3": "value3"
+                        }',
                     ],
                 ],
                 'original-data' => [],
@@ -160,10 +175,10 @@ $output = [
                     0 => [ 'raw-content' => 'note for unit2', ],
                     1 => [ 'raw-content' => 'another note for unit2.', ],
                     2 => [ 'json' => '{
-                "key": "value",
-                "key2": "value2",
-                "key3": "value3"
-            }',
+                        "key": "value",
+                        "key2": "value2",
+                        "key3": "value3"
+                    }',
                  ],
             ],
             'original-data' => [],
