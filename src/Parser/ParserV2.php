@@ -34,6 +34,7 @@ class ParserV2 extends AbstractParser
 
                 // notes
                 // merge <notes> with key-note contained in metadata <mda:metaGroup>
+                $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'notes' ] = $this->extractTransUnitNotes($transUnit);
 
                 // original-data (exclusive for V2)
                 // http://docs.oasis-open.org/xliff/xliff-core/v2.0/xliff-core-v2.0.html#originaldata
@@ -240,7 +241,65 @@ class ParserV2 extends AbstractParser
         return $originalData;
     }
 
+    /**
+     * @param \DOMElement $transUnit
+     *
+     * @return array
+     * @throws \Exception
+     */
+    private function extractTransUnitNotes( \DOMElement $transUnit )
+    {
+        $notes = [];
 
+        // loop <notes> to get nested <note> tag
+        foreach ( $transUnit->childNodes as $childNode ) {
+            if ( $childNode->nodeName == 'notes' ) {
+                foreach ( $childNode->childNodes as $note ) {
+                    $noteValue = trim($note->nodeValue);
+                    if('' !== $noteValue){
+                        if ( Strings::isJSON( $noteValue ) ) {
+                            $notes[]['json'] = Strings::cleanCDATA( $noteValue );
+                        } else {
+                            $notes[]['raw-content'] = Strings::fixNonWellFormedXml( $noteValue );
+                        }
+                    }
+                }
+            }
+
+            if ( $childNode->nodeName === 'mda:metadata' ) {
+                foreach ( $childNode->childNodes as $metadata ) {
+                    if ( $metadata->nodeName === 'mda:metaGroup' ) {
+                        foreach ( $metadata->childNodes as $meta ) {
+                            if(null!== $meta->attributes and null !== $meta->attributes->getNamedItem('type')){
+                                $type = $meta->attributes->getNamedItem('type')->nodeValue;
+
+                                $metaValue = trim($meta->nodeValue);
+                                if('' !== $metaValue){
+                                    if ( Strings::isJSON( $metaValue ) ) {
+                                        $notes[] = [
+                                                'json' => Strings::cleanCDATA( $metaValue ),
+                                                'attr' => [
+                                                    'type' => $type
+                                                ]
+                                        ];
+                                    } else {
+                                        $notes[] = [
+                                                'raw-content' => Strings::fixNonWellFormedXml( $metaValue ),
+                                                'attr' => [
+                                                    'type' => $type
+                                                ]
+                                        ];
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return $notes;
+    }
 
 
 
@@ -388,4 +447,6 @@ class ParserV2 extends AbstractParser
 
         return $originalData;
     }
+
+
 }
