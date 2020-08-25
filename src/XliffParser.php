@@ -16,12 +16,12 @@ class XliffParser
     public function toArray($xliffContent)
     {
         try {
-            $dom = XmlParser::parse($xliffContent);
-            $version = VersionDetector::detect($dom);
+            $version = VersionDetector::detect($xliffContent);
             $parserClass = 'Matecat\\XliffParser\\Parser\\ParserV' . $version;
 
             /** @var AbstractParser $parser */
             $parser = new $parserClass();
+            $dom = XmlParser::parse($xliffContent);
 
             return $parser->parse($dom);
         } catch (\Exception $exception){

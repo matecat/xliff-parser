@@ -65,6 +65,3 @@ class StringsTest extends BaseTest
         $this->assertEquals($splitted[2], 'das2</file>');
     }
 }
-
-
-

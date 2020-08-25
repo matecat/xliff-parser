@@ -18,48 +18,36 @@ class VersionDetector
     private static $versions_2 = ['2.0'];
 
     /**
-     * @param \DOMDocument $dom
+     * @param string $xliffContent
      *
      * @return int
+     * @throws NotSupportedVersionException
      * @throws NotValidFileException
      */
-    public static function detect(\DOMDocument $dom)
+    public static function detect($xliffContent)
     {
-        var_dump($dom->getElementsByTagName('xliff')->item(0)->attributes->getNamedItem('version'));
+        preg_match( '|<xliff.*?\sversion\s?=\s?["\'](.*?)["\']|si', substr( $xliffContent, 0, 1000 ), $versionMatches );
+        preg_match( '|<xliff.*?\sxmlns\s?=\s?["\']urn:oasis:names:tc:xliff:document:(.*?)["\']|si', substr( $xliffContent, 0, 1000 ), $xmlnsMatches );
 
-        /** @var \DOMNode $xliff */
-        foreach ($dom->getElementsByTagName('xliff') as $xliff) {
-            $version = $xliff->attributes->getNamedItem('version');
-
-
-
-            if ($version) {
-
-                die();
-                return self::resolveVersion($version->nodeValue);
-            }
-
-            $namespace = $xliff->attributes->getNamedItem('xmlns');
-            if ($namespace) {
-                if (0 !== substr_compare('urn:oasis:names:tc:xliff:document:', $namespace->nodeValue, 0, 34)) {
-                    throw new \InvalidArgumentException(sprintf('Not a valid XLIFF namespace "%s".', $namespace));
-                }
-
-                return self::resolveVersion(substr($namespace, 34));
-            }
+        if(empty($versionMatches) or empty($xmlnsMatches)){
+            throw new NotValidFileException('This is not a valid xliff file');
         }
 
-        // Falls back to v1.2
-        return '1.2';
+        $version = $versionMatches[1];
+        $xmlns = $xmlnsMatches[1];
 
-        // Not a valid XLIFF file, throw an exception
-        throw new NotValidFileException('This is not a valid xliff file');
+        if($version != $xmlns){
+            throw new NotSupportedVersionException('The xmlns and version declaration on root node do not correspond');
+        }
+
+        return self::resolveVersion($version);
     }
 
     /**
      * @param string $version
      *
      * @return int
+     * @throws NotSupportedVersionException
      */
     private static function resolveVersion($version)
     {
@@ -70,5 +58,7 @@ class VersionDetector
         if(in_array($version, self::$versions_2)){
             return 2;
         }
+
+        throw new NotSupportedVersionException('Not supported version');
     }
 }
