@@ -2,8 +2,9 @@
 
 namespace Matecat\XliffParser;
 
-use Matecat\XliffParser\Utils\VersionDetector;
+use Matecat\XliffParser\XliffUtils\VersionDetector;
 use Matecat\XliffParser\Parser\AbstractParser;
+use Matecat\XliffParser\XliffUtils\XmlParser;
 
 class XliffParser
 {
@@ -15,13 +16,14 @@ class XliffParser
     public function toArray($xliffContent)
     {
         try {
-            $version = (new VersionDetector())->detect($xliffContent);
+            $dom = XmlParser::parse($xliffContent);
+            $version = VersionDetector::detect($dom);
             $parserClass = 'Matecat\\XliffParser\\Parser\\ParserV' . $version;
 
             /** @var AbstractParser $parser */
             $parser = new $parserClass();
 
-            return $parser->parse($xliffContent);
+            return $parser->parse($dom);
         } catch (\Exception $exception){
             return [];
         }

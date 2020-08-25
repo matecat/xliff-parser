@@ -5,35 +5,43 @@ namespace Matecat\XliffParser\Parser;
 class ParserV1 extends AbstractParser
 {
     /**
-     * @param string $xliffContent
-     *
-     * @return array
+     * @inheritDoc
      */
-    public function parse( $xliffContent )
+    public function parse( \DOMDocument $dom )
     {
-        $xliff = [];
-        $xliffContent = $this->forceUft8Encoding($xliffContent, $xliff);
-
-        foreach ( $this->getFiles($xliffContent) as $i => $file ) {
-            if($i > 0){
-                $fileAttributes = $this->getFileAttributes($file);
-
-                // metadata
-                $xliff[ 'files' ][ $i ][ 'attr' ] = $this->extractMetadata($fileAttributes);
-
-                // reference
-
-                // trans-unit
-                foreach ( $this->getTransUnits($file) as $j => $transUnit ) {
-                    if($j > 0){
-                        $xliff[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'attr' ] = $this->extractTransUnitMetadata($transUnit);
-                    }
-                }
-            }
-        }
-
-        return $xliff;
+        // TODO: Implement parse() method.
     }
+
+//    /**
+//     * @param string $xliffContent
+//     *
+//     * @return array
+//     */
+//    public function parse( $xliffContent )
+//    {
+//        $xliff = [];
+//        $xliffContent = $this->forceUft8Encoding($xliffContent, $xliff);
+//
+//        foreach ( $this->getFiles($xliffContent) as $i => $file ) {
+//            if($i > 0){
+//                $fileAttributes = $this->getFileAttributes($file);
+//
+//                // metadata
+//                $xliff[ 'files' ][ $i ][ 'attr' ] = $this->extractMetadata($fileAttributes);
+//
+//                // reference
+//
+//                // trans-unit
+//                foreach ( $this->getTransUnits($file) as $j => $transUnit ) {
+//                    if($j > 0){
+//                        $xliff[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'attr' ] = $this->extractTransUnitMetadata($transUnit);
+//                    }
+//                }
+//            }
+//        }
+//
+//        return $xliff;
+//    }
 
     /**
      * @param string $fileAttributes

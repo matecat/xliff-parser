@@ -5,11 +5,11 @@ namespace Matecat\XliffParser\Parser;
 abstract class AbstractParser
 {
     /**
-     * @param string $xliffContent
+     * @param \DOMDocument $dom
      *
      * @return array
      */
-    abstract public function parse($xliffContent);
+    abstract public function parse(\DOMDocument $dom);
 
     /**
      * Pre-Processing.

@@ -9,66 +9,74 @@ use Matecat\XliffParser\Utils\Strings;
 class ParserV2 extends AbstractParser
 {
     /**
-     * @param string $xliffContent
-     *
-     * @return array
+     * @inheritDoc
      */
-    public function parse( $xliffContent )
+    public function parse( \DOMDocument $dom )
     {
-        $xliff = [];
-        $xliffContent = $this->forceUft8Encoding($xliffContent, $xliff);
-        $xliffHeadings = $this->getFiles($xliffContent)[0];
-
-        foreach ( $this->getFiles($xliffContent) as $i => $file ) {
-            if($i > 0){
-                // get <file> attributes
-                $fileAttributes = $this->getFileAttributes($file);
-
-                // metadata
-                $xliff[ 'files' ][ $i ][ 'attr' ] = $this->extractMetadata($xliffHeadings, $fileAttributes);
-
-                // notes
-                foreach ( Strings::extractTag('notes', $file) as $n => $note ) {
-                    if ( $n === 0 ) {
-                        $xliff[ 'files' ][ $i ]['notes'] = $this->extractNote($note);
-                    }
-                }
-
-                // trans-units
-                $transUnitIdArrayForUniquenessCheck = [];
-
-                foreach ( $this->getTransUnits($file) as $j => $transUnit ) {
-                    if($j > 0){
-                        // metadata
-                        $xliff[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'attr' ] = $this->extractTransUnitMetadata($transUnit, $transUnitIdArrayForUniquenessCheck);
-
-                        // notes
-                        // merge <notes> with key-note contained in metadata <mda:metaGroup>
-                        $transUnitNotes = [];
-                        foreach ( $this->getTransUnitNotes($transUnit) as $note ) {
-                            $transUnitNotes = array_merge($transUnitNotes, $this->extractAndAggregateTransUnitNotes($note));
-                        }
-                        $xliff[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'notes' ] = $transUnitNotes;
-
-                        // original-data (exclusive for V2)
-                        // http://docs.oasis-open.org/xliff/xliff-core/v2.0/xliff-core-v2.0.html#originaldata
-                        if($this->extractOriginalData($transUnit)) {
-                            $xliff[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'original-data' ] = $this->extractOriginalData($transUnit);
-                        }
-                    }
-                }
-
-                // trans-unit re-count check
-                $totalTransUnitsId  = count( $transUnitIdArrayForUniquenessCheck );
-                $transUnitsUniqueId = count( array_unique( $transUnitIdArrayForUniquenessCheck ) );
-                if ( $totalTransUnitsId != $transUnitsUniqueId ) {
-                    throw new DuplicateTransUnitIdInXliff( "Invalid trans-unit id, duplicate found.", 400 );
-                }
-            }
-        }
-
-        return $xliff;
+        // TODO: Implement parse() method.
     }
+
+//    /**
+//     * @param string $xliffContent
+//     *
+//     * @return array
+//     */
+//    public function parse( $xliffContent )
+//    {
+//        $xliff = [];
+//        $xliffContent = $this->forceUft8Encoding($xliffContent, $xliff);
+//        $xliffHeadings = $this->getFiles($xliffContent)[0];
+//
+//        foreach ( $this->getFiles($xliffContent) as $i => $file ) {
+//            if($i > 0){
+//                // get <file> attributes
+//                $fileAttributes = $this->getFileAttributes($file);
+//
+//                // metadata
+//                $xliff[ 'files' ][ $i ][ 'attr' ] = $this->extractMetadata($xliffHeadings, $fileAttributes);
+//
+//                // notes
+//                foreach ( Strings::extractTag('notes', $file) as $n => $note ) {
+//                    if ( $n === 0 ) {
+//                        $xliff[ 'files' ][ $i ]['notes'] = $this->extractNote($note);
+//                    }
+//                }
+//
+//                // trans-units
+//                $transUnitIdArrayForUniquenessCheck = [];
+//
+//                foreach ( $this->getTransUnits($file) as $j => $transUnit ) {
+//                    if($j > 0){
+//                        // metadata
+//                        $xliff[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'attr' ] = $this->extractTransUnitMetadata($transUnit, $transUnitIdArrayForUniquenessCheck);
+//
+//                        // notes
+//                        // merge <notes> with key-note contained in metadata <mda:metaGroup>
+//                        $transUnitNotes = [];
+//                        foreach ( $this->getTransUnitNotes($transUnit) as $note ) {
+//                            $transUnitNotes = array_merge($transUnitNotes, $this->extractAndAggregateTransUnitNotes($note));
+//                        }
+//                        $xliff[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'notes' ] = $transUnitNotes;
+//
+//                        // original-data (exclusive for V2)
+//                        // http://docs.oasis-open.org/xliff/xliff-core/v2.0/xliff-core-v2.0.html#originaldata
+//                        if($this->extractOriginalData($transUnit)) {
+//                            $xliff[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'original-data' ] = $this->extractOriginalData($transUnit);
+//                        }
+//                    }
+//                }
+//
+//                // trans-unit re-count check
+//                $totalTransUnitsId  = count( $transUnitIdArrayForUniquenessCheck );
+//                $transUnitsUniqueId = count( array_unique( $transUnitIdArrayForUniquenessCheck ) );
+//                if ( $totalTransUnitsId != $transUnitsUniqueId ) {
+//                    throw new DuplicateTransUnitIdInXliff( "Invalid trans-unit id, duplicate found.", 400 );
+//                }
+//            }
+//        }
+//
+//        return $xliff;
+//    }
 
     /**
      * @param string $xliffHeadings
@@ -289,50 +297,4 @@ class ParserV2 extends AbstractParser
 
         return $originalData;
     }
-
-
-
-
-
-
-
-
-
-
-    /**
-     * @param string $transUnit
-     *
-     * @return array
-     */
-    private function evalNotes($transUnit)
-    {
-        $notes = [];
-        $temp = null;
-
-        preg_match_all( '|<note.*?>(.+?)</note>|si', $transUnit, $temp );
-        $matches = array_values( $temp[ 1 ] );
-        if ( count( $matches ) > 0 ) {
-            foreach ( $matches as $match ) {
-
-                $note = [];
-                if ( $this->isJSON( $match ) ) {
-                    $note[ 'json' ] = $this->cleanCDATA( $match );
-                } else {
-                    $note[ 'raw-content' ] = $this->fix_non_well_formed_xml( $match );
-                }
-
-                $notes[] = $note;
-
-            }
-        }
-
-        unset( $temp );
-
-        return $notes;
-    }
-
-
-
-
-
 }
