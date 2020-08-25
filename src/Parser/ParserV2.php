@@ -10,6 +10,7 @@ class ParserV2 extends AbstractParser
 {
     /**
      * @inheritDoc
+     * @throws \Exception
      */
     public function parse( \DOMDocument $dom, $output = [] )
     {
@@ -33,14 +34,39 @@ class ParserV2 extends AbstractParser
                 $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'attr' ] = $this->extractTransUnitMetadata($transUnit, $transUnitIdArrayForUniquenessCheck);
 
                 // notes
-                // merge <notes> with key-note contained in metadata <mda:metaGroup>
+                // merge <notes> with key and key-note contained in metadata <mda:metaGroup>
                 $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'notes' ] = $this->extractTransUnitNotes($transUnit);
 
                 // original-data (exclusive for V2)
                 // http://docs.oasis-open.org/xliff/xliff-core/v2.0/xliff-core-v2.0.html#originaldata
                 $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'original-data' ] = $this->extractTransUnitOriginalData($transUnit);
 
+                // seg-source
+                $k = 1;
+                /** @var \DOMElement $segment */
+                foreach ($transUnit->getElementsByTagName('segment') as $segment){
+                    // loop <segment> to get nested <source> and <target> tag
+                    foreach ( $segment->childNodes as $childNode ) {
+                        if ( $childNode->nodeName == 'source' ) {
+                            $output[ 'files' ][ $i ][ 'trans-units' ][ $k ][ 'source' ] = $this->extractContent($dom, $childNode);
+                        }
+
+                        if ( $childNode->nodeName == 'target' ) {
+                            $output[ 'files' ][ $i ][ 'trans-units' ][ $k ][ 'target' ] = $this->extractContent($dom, $childNode);
+                        }
+                    }
+
+                    $k++;
+                }
+
                 $j++;
+            }
+
+            // trans-unit re-count check
+            $totalTransUnitsId  = count( $transUnitIdArrayForUniquenessCheck );
+            $transUnitsUniqueId = count( array_unique( $transUnitIdArrayForUniquenessCheck ) );
+            if ( $totalTransUnitsId != $transUnitsUniqueId ) {
+                throw new DuplicateTransUnitIdInXliff( "Invalid trans-unit id, duplicate found.", 400 );
             }
 
             $i++;
@@ -48,68 +74,6 @@ class ParserV2 extends AbstractParser
 
         return $output;
     }
-
-//    /**
-//     * @param string $xliffContent
-//     *
-//     * @return array
-//     */
-//    public function parse( $xliffContent )
-//    {
-//        $xliff = [];
-//        $xliffContent = $this->forceUft8Encoding($xliffContent, $xliff);
-//        $xliffHeadings = $this->getFiles($xliffContent)[0];
-//
-//        foreach ( $this->getFiles($xliffContent) as $i => $file ) {
-//            if($i > 0){
-//                // get <file> attributes
-//                $fileAttributes = $this->getFileAttributes($file);
-//
-//                // metadata
-//                $xliff[ 'files' ][ $i ][ 'attr' ] = $this->extractMetadata($xliffHeadings, $fileAttributes);
-//
-//                // notes
-//                foreach ( Strings::extractTag('notes', $file) as $n => $note ) {
-//                    if ( $n === 0 ) {
-//                        $xliff[ 'files' ][ $i ]['notes'] = $this->extractNote($note);
-//                    }
-//                }
-//
-//                // trans-units
-//                $transUnitIdArrayForUniquenessCheck = [];
-//
-//                foreach ( $this->getTransUnits($file) as $j => $transUnit ) {
-//                    if($j > 0){
-//                        // metadata
-//                        $xliff[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'attr' ] = $this->extractTransUnitMetadata($transUnit, $transUnitIdArrayForUniquenessCheck);
-//
-//                        // notes
-//                        // merge <notes> with key-note contained in metadata <mda:metaGroup>
-//                        $transUnitNotes = [];
-//                        foreach ( $this->getTransUnitNotes($transUnit) as $note ) {
-//                            $transUnitNotes = array_merge($transUnitNotes, $this->extractAndAggregateTransUnitNotes($note));
-//                        }
-//                        $xliff[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'notes' ] = $transUnitNotes;
-//
-//                        // original-data (exclusive for V2)
-//                        // http://docs.oasis-open.org/xliff/xliff-core/v2.0/xliff-core-v2.0.html#originaldata
-//                        if($this->extractOriginalData($transUnit)) {
-//                            $xliff[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'original-data' ] = $this->extractOriginalData($transUnit);
-//                        }
-//                    }
-//                }
-//
-//                // trans-unit re-count check
-//                $totalTransUnitsId  = count( $transUnitIdArrayForUniquenessCheck );
-//                $transUnitsUniqueId = count( array_unique( $transUnitIdArrayForUniquenessCheck ) );
-//                if ( $totalTransUnitsId != $transUnitsUniqueId ) {
-//                    throw new DuplicateTransUnitIdInXliff( "Invalid trans-unit id, duplicate found.", 400 );
-//                }
-//            }
-//        }
-//
-//        return $xliff;
-//    }
 
     /**
      * @param \DOMDocument $dom
@@ -272,8 +236,8 @@ class ParserV2 extends AbstractParser
                         foreach ( $metadata->childNodes as $meta ) {
                             if(null!== $meta->attributes and null !== $meta->attributes->getNamedItem('type')){
                                 $type = $meta->attributes->getNamedItem('type')->nodeValue;
-
                                 $metaValue = trim($meta->nodeValue);
+
                                 if('' !== $metaValue){
                                     if ( Strings::isJSON( $metaValue ) ) {
                                         $notes[] = [
@@ -301,152 +265,17 @@ class ParserV2 extends AbstractParser
         return $notes;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /**
-     * @param $note
-     *
-     * @return array
-     * @throws \Exception
-     */
-    private function extractNote($note)
-    {
-        $notes = [];
-        $matches = Strings::extractTag('note', $note);
-
-        foreach ($matches as $match){
-            if ( Strings::isJSON( $match ) ) {
-                $notes[]['json'] = Strings::cleanCDATA( $match );
-            } else {
-                $notes[]['raw-content'] = Strings::fixNonWellFormedXml( $match );
-            }
-        }
-
-        return $notes;
-    }
-
-    /**
-     * @param string $note
+     * @param \DOMDocument $dom
+     * @param \DOMElement  $node
      *
      * @return array
      */
-    private function extractNoteFromMetaGroup($note)
+    private function extractContent( \DOMDocument $dom, \DOMElement $node )
     {
-        $notes = [];
-
-        preg_match_all( '|<mda:metaGroup.*?>(.+?)</mda:metaGroup>|si', $note, $temp );
-        $matches = array_values( $temp[ 1 ] );
-
-        if ( count( $matches ) === 0 ) {
-            return [];
-        }
-
-        foreach ($matches as $nn => $meta){
-            preg_match_all( '|<mda:meta type="key">(.+?)</mda:meta>|si', $meta, $tmpK );
-            $metaMatchesKey = array_values( $tmpK[ 1 ] );
-
-            if(count($metaMatchesKey) > 0){
-                $notes[$nn]['key'] = $metaMatchesKey[0];
-            }
-
-            unset($tmpK);
-
-            preg_match_all( '|<mda:meta type="key-note">(.+?)</mda:meta>|si', $meta, $tmpK );
-            $metaMatchesKey = array_values( $tmpK[ 1 ] );
-
-            if(count($metaMatchesKey) > 0){
-                $notes[$nn]['key-note'] = trim($metaMatchesKey[0]);
-            }
-
-            unset($tmpK);
-        }
-
-        return $notes;
+        return [
+            'content' => $this->extractTagContent($dom, $node),
+            'attr' => $this->extractTagAttributes($node)
+        ];
     }
-
-
-
-
-
-    /**
-     * @param string $transUnit
-     *
-     * @return array
-     */
-    private function getTransUnitNotes($transUnit)
-    {
-        $temp = null;
-
-        preg_match_all( '|<notes.*?>(.+?)</notes>|si', $transUnit, $temp );
-        $notesMatches = array_values( $temp[ 1 ] );
-
-        unset($temp);
-
-        preg_match_all( '|<mda:metadata.*?>(.+?)</mda:metadata>|si', $transUnit, $temp );
-        $metadataMatches = array_values( $temp[ 1 ] );
-
-        unset($temp);
-
-        return array_merge($notesMatches, $metadataMatches);
-    }
-
-    /**
-     * @param string $note
-     *
-     * @return array
-     */
-    private function extractAndAggregateTransUnitNotes($note)
-    {
-        if (strpos($note, '<note') !== false) {
-            return $this->extractNote($note);
-        }
-
-        if (strpos($note, '<mda:metaGroup') !== false) {
-            return $this->extractNoteFromMetaGroup($note);
-        }
-    }
-
-    /**
-     * @param string $transUnit
-     *
-     * @return array|null
-     */
-    private function extractOriginalData($transUnit)
-    {
-        $originalData = [];
-        $temp = null;
-
-        preg_match_all( '|<originalData.*?>(.+?)</originalData>|si', $transUnit, $temp );
-        $matches = array_values( $temp[ 1 ] );
-
-        if ( count( $matches ) === 0 ) {
-            return null;
-        }
-
-        foreach ( $matches as $match ) {
-            $originalData[] = $match;
-        }
-
-        unset( $temp );
-
-        return $originalData;
-    }
-
-
 }

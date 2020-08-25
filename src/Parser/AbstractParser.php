@@ -2,6 +2,8 @@
 
 namespace Matecat\XliffParser\Parser;
 
+use Matecat\XliffParser\Utils\Strings;
+
 abstract class AbstractParser
 {
     /**
@@ -12,27 +14,66 @@ abstract class AbstractParser
     abstract public function parse(\DOMDocument $dom, $output = []);
 
     /**
-     * Get <file> node(s) content
+     * Extract attributes if they are present
      *
-     * @param string $xliffContent
+     * Ex:
+     * <p align=center style="font-size: 12px;">some text</p>
      *
-     * @return array|false|string[]
+     * $attr->nodeName == 'align' :: $attr->nodeValue == 'center'
+     * $attr->nodeName == 'style' :: $attr->nodeValue == 'font-size: 12px;'
+     *
+     * @param \DOMElement $element
+     *
+     * @return array
      */
-    protected function getFiles( $xliffContent)
+    protected function extractTagAttributes(\DOMElement $element)
     {
-        return preg_split( '|<file[\s>]|si', $xliffContent, -1, PREG_SPLIT_NO_EMPTY );
+        $tagAttributes = [];
+
+        if ( $element->hasAttributes() ) {
+            foreach ( $element->attributes as $attr ) {
+                $tagAttributes[ $attr->nodeName ] = $attr->nodeValue;
+            }
+        }
+
+        return $tagAttributes;
     }
 
     /**
-     * Getting <file> Attributes
-     * Restrict preg action for speed, just for attributes
+     * @param \DOMDocument $dom
+     * @param \DOMElement  $element
      *
-     * @param string $file
-     *
-     * @return false|string
+     * @return string
      */
-    protected function getFileAttributes($file)
+    protected function extractTagContent(\DOMDocument $dom, \DOMElement $element)
     {
-        return substr( $file, 0, strpos( $file, '>' ) + 1 );
+        $childNodes = $element->hasChildNodes();
+        $extractedContent = '';
+
+        if ( !empty( $childNodes ) ) {
+            foreach ( $element->childNodes as $node ) {
+                $extractedContent .= $dom->saveXML( $node );
+            }
+        }
+
+        return $extractedContent;
+    }
+
+    /**
+     * @param $noteValue
+     *
+     * @return array
+     * @throws \Exception
+     */
+    protected function ciao($noteValue)
+    {
+        $noteValue = trim($noteValue);
+        if('' !== $noteValue){
+            if ( Strings::isJSON( $noteValue ) ) {
+                return ['json' => Strings::cleanCDATA( $noteValue )];
+            }
+
+            return ['raw-content' => Strings::fixNonWellFormedXml( $noteValue )];
+        }
     }
 }

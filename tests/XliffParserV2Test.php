@@ -88,4 +88,16 @@ class XliffParserV2Test extends BaseTest
                 ]
         ]);
     }
+
+    /**
+     * @test
+     */
+    public function can_parse_xliff_v2_trans_units_source_and_target()
+    {
+        $parsed = (new XliffParser())->toArray($this->getTestFile('sample-20.xlf'));
+        $units = $parsed['files'][1]['trans-units'];
+
+        $this->assertStringContainsString('<pc id="2">Hello <mrk id="m2" type="term">World2</mrk>!</pc>', $units[1]['source']['content']);
+        $this->assertEquals($units[1]['target']['attr'], []);
+    }
 }
