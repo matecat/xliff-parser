@@ -25,24 +25,25 @@ $parsed = $xliffParser->toArray('your-file.xliff');
 
 In case of invalid or not supported xliff file an empty array will be returned.
 
-## Output
+## Output skeleton
 
-Since there are some differences between xliff v1 and v2, the produced output will be slightly different.
+Since there are some differences between xliff v1 and v2, the output of the array will be slightly different:
 
-The array skeleton of the output is the following:
-
-* `attr` - an array of metadata containing
-    * `original`
-    * `source-language`
-    * `target-language`
-    * `datatype` [ONLY FOR V1]
-* `trans-units` - the array of trans-units, every unit contains
-    * `attr`
-    * `notes`
-    * `original-data` [ONLY FOR V2]
-    * `source`
-    * `target`
-* `notes` [ONLY FOR V2]
+| Parent element | Key             | V1 | V2 |
+|----------------|-----------------|----|----|
+| attr           | datatype        | *  |    |
+| attr           | original        | *  | *  |
+| attr           | source-language | *  | *  |
+| attr           | target-language | *  | *  |
+| notes          |                 |    | *  |
+| trans-units    | alt-trans       | *  |    |
+| trans-units    | attr            | *  | *  |
+| trans-units    | context-group   | *  |    |
+| trans-units    | locked          | *  |    |
+| trans-units    | notes           | *  | *  |
+| trans-units    | original-data   |    | *  |
+| trans-units    | source          | *  | *  |
+| trans-units    | target          | *  | *  |
 
 ## Examples
 
