@@ -4,5 +4,4 @@ namespace Matecat\XliffParser\XliffUtils;
 
 class SchemaValidator
 {
-
 }

@@ -98,13 +98,14 @@ class XmlParser
     {
         $errors = array();
         foreach (libxml_get_errors() as $error) {
-            $errors[] = sprintf('[%s %s] %s (in %s - line %d, column %d)',
-                    LIBXML_ERR_WARNING == $error->level ? 'WARNING' : 'ERROR',
-                    $error->code,
-                    trim($error->message),
-                    $error->file ?: 'n/a',
-                    $error->line,
-                    $error->column
+            $errors[] = sprintf(
+                '[%s %s] %s (in %s - line %d, column %d)',
+                LIBXML_ERR_WARNING == $error->level ? 'WARNING' : 'ERROR',
+                $error->code,
+                trim($error->message),
+                $error->file ?: 'n/a',
+                $error->line,
+                $error->column
             );
         }
 

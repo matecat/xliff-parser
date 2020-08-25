@@ -13,9 +13,9 @@ class Strings
      *
      * @return string
      */
-    public static function cleanCDATA( $testString )
+    public static function cleanCDATA($testString)
     {
-        $cleanXMLContent = new \SimpleXMLElement( '<rootNoteNode>' . $testString . '</rootNoteNode>', LIBXML_NOCDATA );
+        $cleanXMLContent = new \SimpleXMLElement('<rootNoteNode>' . $testString . '</rootNoteNode>', LIBXML_NOCDATA);
 
         return $cleanXMLContent->__toString();
     }
@@ -29,15 +29,15 @@ class Strings
     public static function isJSON($string)
     {
         try {
-            $string = Strings::cleanCDATA( $string );
+            $string = Strings::cleanCDATA($string);
 
-            if ( empty( $string ) ) {
+            if (empty($string)) {
                 throw new \Exception();
             }
 
-            json_decode( $string );
+            json_decode($string);
             self::raiseJsonExceptionError();
-        } catch ( \Exception $exception ) {
+        } catch (\Exception $exception) {
             return false;
         }
 
@@ -50,13 +50,12 @@ class Strings
      * @return string|null
      * @throws NotValidJSONException
      */
-    private static function raiseJsonExceptionError( $raise = true )
+    private static function raiseJsonExceptionError($raise = true)
     {
-        if ( function_exists( "json_last_error" ) ) {
-
+        if (function_exists("json_last_error")) {
             $error = json_last_error();
 
-            switch ( $error ) {
+            switch ($error) {
                 case JSON_ERROR_NONE:
                     $msg = null; # - No errors
                     break;
@@ -80,9 +79,9 @@ class Strings
                     break;
             }
 
-            if ( $raise && $error != JSON_ERROR_NONE ) {
-                throw new NotValidJSONException( $msg, $error );
-            } elseif ( $error != JSON_ERROR_NONE ) {
+            if ($raise && $error != JSON_ERROR_NONE) {
+                throw new NotValidJSONException($msg, $error);
+            } elseif ($error != JSON_ERROR_NONE) {
                 return $msg;
             }
         }
@@ -108,11 +107,11 @@ class Strings
      */
     public static function fixNonWellFormedXml($content)
     {
-        if ( self::$find_xliff_tags_reg === null ) {
+        if (self::$find_xliff_tags_reg === null) {
             // List of the tags that we don't want to escape
             $xliff_tags = [ 'g', 'x', 'bx', 'ex', 'bpt', 'ept', 'ph', 'it', 'mrk' ];
             // Convert the list of tags in a regexp list, for example "g|x|bx|ex"
-            $xliff_tags_reg_list = implode( '|', $xliff_tags );
+            $xliff_tags_reg_list = implode('|', $xliff_tags);
             // Regexp to find all the XLIFF tags:
             //   </?               -> matches the tag start, for both opening and
             //                        closure tags (see the optional slash)
@@ -133,27 +132,27 @@ class Strings
         }
 
         // Find all the XLIFF tags
-        preg_match_all( self::$find_xliff_tags_reg, $content, $matches );
+        preg_match_all(self::$find_xliff_tags_reg, $content, $matches);
         $tags = (array)$matches[ 0 ];
 
         // Prepare placeholders
         $tags_placeholders = [];
-        for ( $i = 0; $i < count( $tags ); $i++ ) {
+        for ($i = 0; $i < count($tags); $i++) {
             $tag                       = $tags[ $i ];
             $tags_placeholders[ $tag ] = "#@!XLIFF-TAG-$i!@#";
         }
 
         // Replace all XLIFF tags with placeholders that will not be escaped
-        foreach ( $tags_placeholders as $tag => $placeholder ) {
-            $content = str_replace( $tag, $placeholder, $content );
+        foreach ($tags_placeholders as $tag => $placeholder) {
+            $content = str_replace($tag, $placeholder, $content);
         }
 
         // Escape the string with the remaining non-XLIFF tags
-        $content = htmlspecialchars( $content, ENT_NOQUOTES, 'UTF-8', false );
+        $content = htmlspecialchars($content, ENT_NOQUOTES, 'UTF-8', false);
 
         // Put again in place the original XLIFF tags replacing placeholders
-        foreach ( $tags_placeholders as $tag => $placeholder ) {
-            $content = str_replace( $placeholder, $tag, $content );
+        foreach ($tags_placeholders as $tag => $placeholder) {
+            $content = str_replace($placeholder, $tag, $content);
         }
 
         return $content;
@@ -167,10 +166,10 @@ class Strings
      */
     public static function extractTag($tag, $string)
     {
-        preg_match_all( '|<'.$tag.'.*?>(.+?)</'.$tag.'>|si', $string, $temp );
-        $matches = array_values( $temp[ 1 ] );
+        preg_match_all('|<'.$tag.'.*?>(.+?)</'.$tag.'>|si', $string, $temp);
+        $matches = array_values($temp[ 1 ]);
 
-        if ( count( $matches ) === 0 ) {
+        if (count($matches) === 0) {
             unset($temp);
 
             return [];
@@ -189,6 +188,6 @@ class Strings
      */
     public static function splitTag($tag, $string)
     {
-        return preg_split( '|<'.$tag.'[\s>]|si', $string, -1, PREG_SPLIT_NO_EMPTY );
+        return preg_split('|<'.$tag.'[\s>]|si', $string, -1, PREG_SPLIT_NO_EMPTY);
     }
 }

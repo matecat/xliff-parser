@@ -16,7 +16,7 @@ class VersionDetectorTest extends BaseTest
     {
         try {
             VersionDetector::detect($this->getTestFile('note.xml'));
-        } catch (NotValidFileException $exception){
+        } catch (NotValidFileException $exception) {
             $this->assertEquals($exception->getMessage(), 'This is not a valid xliff file');
         }
     }

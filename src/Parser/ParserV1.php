@@ -48,39 +48,39 @@ class ParserV1 extends AbstractParser
      *
      * @return array
      */
-    private function extractMetadata( $fileAttributes)
+    private function extractMetadata($fileAttributes)
     {
         $metadata = [];
 
         // original
-        preg_match( '|original\s?=\s?["\'](.*?)["\']|si', $fileAttributes, $temp );
-        $metadata[ 'original' ] = (isset( $temp[ 1 ])) ? $temp[ 1 ] : 'no-name';
+        preg_match('|original\s?=\s?["\'](.*?)["\']|si', $fileAttributes, $temp);
+        $metadata[ 'original' ] = (isset($temp[ 1 ])) ? $temp[ 1 ] : 'no-name';
 
         // source-language
-        unset( $temp );
-        preg_match( '|source-language\s?=\s?["\'](.*?)["\']|si', $fileAttributes, $temp );
-        $metadata[ 'source-language' ] = (isset( $temp[ 1 ])) ? $temp[ 1 ] : 'en-US';
+        unset($temp);
+        preg_match('|source-language\s?=\s?["\'](.*?)["\']|si', $fileAttributes, $temp);
+        $metadata[ 'source-language' ] = (isset($temp[ 1 ])) ? $temp[ 1 ] : 'en-US';
 
         // datatype
-        unset( $temp );
-        preg_match( '|datatype\s?=\s?["\'](.*?)["\']|si', $fileAttributes, $temp );
-        $metadata[ 'datatype' ] = (isset( $temp[ 1 ])) ? $temp[ 1 ] : 'txt';
+        unset($temp);
+        preg_match('|datatype\s?=\s?["\'](.*?)["\']|si', $fileAttributes, $temp);
+        $metadata[ 'datatype' ] = (isset($temp[ 1 ])) ? $temp[ 1 ] : 'txt';
 
         // target-language
-        unset( $temp );
-        preg_match( '|target-language\s?=\s?["\'](.*?)["\']|si', $fileAttributes, $temp );
-        if ( isset( $temp[ 1 ] ) ) {
+        unset($temp);
+        preg_match('|target-language\s?=\s?["\'](.*?)["\']|si', $fileAttributes, $temp);
+        if (isset($temp[ 1 ])) {
             $metadata[ 'target-language' ] = $temp[ 1 ];
         }
 
         // custom MateCat x-attribute
-        unset( $temp );
-        preg_match( '|x-(.*?)=\s?["\'](.*?)["\']|si', $fileAttributes, $temp );
-        if ( isset( $temp[ 1 ] ) ) {
+        unset($temp);
+        preg_match('|x-(.*?)=\s?["\'](.*?)["\']|si', $fileAttributes, $temp);
+        if (isset($temp[ 1 ])) {
             $metadata[ 'custom' ][ $temp[ 1 ] ] = $temp[ 2 ];
         }
 
-        unset( $temp );
+        unset($temp);
 
         return $metadata;
     }
@@ -92,11 +92,10 @@ class ParserV1 extends AbstractParser
      */
     private function getTransUnits($file)
     {
-        return preg_split( '|<trans-unit[\s>]|si', $file, -1, PREG_SPLIT_NO_EMPTY );
+        return preg_split('|<trans-unit[\s>]|si', $file, -1, PREG_SPLIT_NO_EMPTY);
     }
 
     private function extractTransUnitMetadata($transUnit)
     {
-
     }
 }

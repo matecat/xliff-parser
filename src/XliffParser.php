@@ -26,7 +26,7 @@ class XliffParser
             $dom = XmlParser::parse($xliffContent);
 
             return $parser->parse($dom, $xliff);
-        } catch (\Exception $exception){
+        } catch (\Exception $exception) {
             return [];
         }
     }
@@ -42,12 +42,12 @@ class XliffParser
      */
     protected function forceUft8Encoding($xliffContent, &$xliff)
     {
-        $enc = mb_detect_encoding( $xliffContent );
+        $enc = mb_detect_encoding($xliffContent);
 
-        if ( $enc !== 'UTF-8' ) {
+        if ($enc !== 'UTF-8') {
             $xliff[ 'parser-warnings' ][] = "Input identified as $enc ans converted UTF-8. May not be a problem if the content is English only";
 
-            return iconv( $enc, 'UTF-8', $xliffContent );
+            return iconv($enc, 'UTF-8', $xliffContent);
         }
 
         return $xliffContent;

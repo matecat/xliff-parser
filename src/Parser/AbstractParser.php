@@ -30,8 +30,8 @@ abstract class AbstractParser
     {
         $tagAttributes = [];
 
-        if ( $element->hasAttributes() ) {
-            foreach ( $element->attributes as $attr ) {
+        if ($element->hasAttributes()) {
+            foreach ($element->attributes as $attr) {
                 $tagAttributes[ $attr->nodeName ] = $attr->nodeValue;
             }
         }
@@ -50,13 +50,13 @@ abstract class AbstractParser
         $childNodes = $element->hasChildNodes();
         $extractedContent = '';
 
-        if ( !empty( $childNodes ) ) {
-            foreach ( $element->childNodes as $node ) {
-                $extractedContent .= $dom->saveXML( $node );
+        if (!empty($childNodes)) {
+            foreach ($element->childNodes as $node) {
+                $extractedContent .= $dom->saveXML($node);
             }
         }
 
-        return $extractedContent;
+        return trim($extractedContent);
     }
 
     /**
@@ -65,15 +65,12 @@ abstract class AbstractParser
      * @return array
      * @throws \Exception
      */
-    protected function ciao($noteValue)
+    protected function JSONOrRawContentArray($noteValue)
     {
-        $noteValue = trim($noteValue);
-        if('' !== $noteValue){
-            if ( Strings::isJSON( $noteValue ) ) {
-                return ['json' => Strings::cleanCDATA( $noteValue )];
-            }
-
-            return ['raw-content' => Strings::fixNonWellFormedXml( $noteValue )];
+        if (Strings::isJSON($noteValue)) {
+            return ['json' => Strings::cleanCDATA($noteValue)];
         }
+
+        return ['raw-content' => Strings::fixNonWellFormedXml($noteValue)];
     }
 }
