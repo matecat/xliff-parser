@@ -7,8 +7,15 @@
         <notes>
             <note id="n1">note for file.</note>
             <note id="n2">note2 for file.</note>
+            <note id="n3">
+                {
+                    "key": "value",
+                    "key2": "value2",
+                    "key3": "value3"
+                }
+            </note>
         </notes>
-        <unit id="u1">
+        <unit id="u1" translate="test">
             <my:elem xmlns:my="myNamespaceURI" id="x1">data</my:elem>
             <notes>
                 <note id="n1">note for unit</note>
@@ -27,6 +34,28 @@
                 </source>
                 <target>
                     <pc id="1">Bonjour le <mrk id="m1" type="term">Monde</mrk> !</pc>
+                </target>
+            </segment>
+        </unit>
+        <unit id="u2">
+            <my:elem xmlns:my="myNamespaceURI" id="x2">data</my:elem>
+            <notes>
+                <note id="n1">note for unit2</note>
+                <note id="n2">another note for unit2.</note>
+                <note id="n3">
+                    {
+                        "key": "value",
+                        "key2": "value2",
+                        "key3": "value3"
+                    }
+                </note>
+            </notes>
+            <segment id="s2">
+                <source>
+                    <pc id="2">Hello <mrk id="m2" type="term">World2</mrk>!</pc>
+                </source>
+                <target>
+                    <pc id="2">Bonjour le <mrk id="m2" type="term">Monde2</mrk> !</pc>
                 </target>
             </segment>
         </unit>

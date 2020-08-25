@@ -7,7 +7,7 @@ class ParserV1 extends AbstractParser
     /**
      * @inheritDoc
      */
-    public function parse( \DOMDocument $dom )
+    public function parse(\DOMDocument $dom, $output = [])
     {
         // TODO: Implement parse() method.
     }

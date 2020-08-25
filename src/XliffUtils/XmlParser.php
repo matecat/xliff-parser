@@ -35,7 +35,7 @@ class XmlParser
         $disableEntities = libxml_disable_entity_loader(true);
         libxml_clear_errors();
 
-        $dom = new \DOMDocument();
+        $dom = new \DOMDocument('1.0', 'UTF-8');
         $dom->validateOnParse = true;
         if (!$dom->loadXML($content, LIBXML_NONET | (defined('LIBXML_COMPACT') ? LIBXML_COMPACT : 0))) {
             libxml_disable_entity_loader($disableEntities);

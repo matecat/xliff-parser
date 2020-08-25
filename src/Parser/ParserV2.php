@@ -11,9 +11,41 @@ class ParserV2 extends AbstractParser
     /**
      * @inheritDoc
      */
-    public function parse( \DOMDocument $dom )
+    public function parse( \DOMDocument $dom, $output = [] )
     {
-        // TODO: Implement parse() method.
+        $i = 1;
+        /** @var \DOMElement $file */
+        foreach( $dom->getElementsByTagName('file') as $file )
+        {
+            // metadata
+            $output[ 'files' ][ $i ][ 'attr' ] = $this->extractMetadata($dom);
+
+            // notes
+            $output[ 'files' ][ $i ]['notes'] = $this->extractNotes($file);
+
+            // trans-units
+            $transUnitIdArrayForUniquenessCheck = [];
+            $j = 1;
+            /** @var \DOMElement $transUnit */
+            foreach ($dom->getElementsByTagName('unit') as $transUnit){
+
+                // metadata
+                $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'attr' ] = $this->extractTransUnitMetadata($transUnit, $transUnitIdArrayForUniquenessCheck);
+
+                // notes
+                // merge <notes> with key-note contained in metadata <mda:metaGroup>
+
+                // original-data (exclusive for V2)
+                // http://docs.oasis-open.org/xliff/xliff-core/v2.0/xliff-core-v2.0.html#originaldata
+                $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'original-data' ] = $this->extractTransUnitOriginalData($transUnit);
+
+                $j++;
+            }
+
+            $i++;
+        }
+
+        return $output;
     }
 
 //    /**
@@ -79,58 +111,154 @@ class ParserV2 extends AbstractParser
 //    }
 
     /**
-     * @param string $xliffHeadings
-     * @param string $fileAttributes
+     * @param \DOMDocument $dom
      *
      * @return array
      */
-    private function extractMetadata( $xliffHeadings, $fileAttributes)
+    private function extractMetadata(\DOMDocument $dom)
     {
         $metadata = [];
 
+        $xliffNode = $dom->getElementsByTagName('xliff')->item(0);
+        $fileNode = $dom->getElementsByTagName('file')->item(0);
+
         // original
-        preg_match( '|original\s?=\s?["\'](.*?)["\']|si', $fileAttributes, $temp );
-        $metadata[ 'original' ] = (isset( $temp[ 1 ])) ? $temp[ 1 ] : 'no-name';
+        $metadata[ 'original' ] = (null !== $fileNode->attributes->getNamedItem('original')) ? $fileNode->attributes->getNamedItem('original')->nodeValue : 'no-name';
 
         // source-language
-        unset( $temp );
-        preg_match( '|srcLang\s?=\s?["\'](.*?)["\']|si', $xliffHeadings, $temp );
-        $metadata[ 'source-language' ] = (isset( $temp[ 1 ])) ? $temp[ 1 ] : 'en-US';
+        $metadata[ 'source-language' ] = (null !== $xliffNode->attributes->getNamedItem('srcLang')) ? $xliffNode->attributes->getNamedItem('srcLang')->nodeValue : 'en-US';
 
         // datatype
         // @TODO to be implemented
 
         // target-language
-        unset( $temp );
-        preg_match( '|trgLang\s?=\s?["\'](.*?)["\']|si', $xliffHeadings, $temp );
-        if ( isset( $temp[ 1 ] ) ) {
-            $metadata[ 'target-language' ] = $temp[ 1 ];
-        }
+        $metadata[ 'target-language' ] = (null !== $xliffNode->attributes->getNamedItem('trgLang')) ? $xliffNode->attributes->getNamedItem('trgLang')->nodeValue : 'en-US';
 
         // custom MateCat x-attribute
         // @TODO to be implemented
-
-        unset( $temp );
 
         return $metadata;
     }
 
     /**
-     * @param string $file
+     * @param \DOMElement $file
+     *
+     * @return array
+     * @throws \Exception
+     */
+    private function extractNotes( \DOMElement $file )
+    {
+        $notes = [];
+
+        // loop <notes> to get nested <note> tag
+        foreach ( $file->childNodes as $childNode ) {
+            if ( $childNode->nodeName == 'notes' ) {
+                foreach ( $childNode->childNodes as $note ) {
+                    $noteValue = trim($note->nodeValue);
+                    if('' !== $noteValue){
+                        if ( Strings::isJSON( $noteValue ) ) {
+                            $notes[]['json'] = Strings::cleanCDATA( $noteValue );
+                        } else {
+                            $notes[]['raw-content'] = Strings::fixNonWellFormedXml( $noteValue );
+                        }
+                    }
+                }
+            }
+        }
+
+        return $notes;
+    }
+
+    /**
+     * @param \DOMElement $transUnit
+     * @param             $transUnitIdArrayForUniquenessCheck
      *
      * @return array
      */
-    private function getNotes($file)
+    private function extractTransUnitMetadata(\DOMElement $transUnit, &$transUnitIdArrayForUniquenessCheck)
     {
-        preg_match_all( '|<notes.*?>(.+?)</notes>|si', $file, $temp );
-        $matches = array_values( $temp[ 1 ] );
+        $metadata = [];
 
-        if ( count( $matches ) === 0 ) {
-            return [];
+        // id
+        if ( null === $transUnit->attributes->getNamedItem('id') ) {
+            throw new NotFoundIdInTransUnit( 'Invalid trans-unit id found. EMPTY value', 400 );
         }
 
-        return $matches;
+        $id = $transUnit->attributes->getNamedItem('id')->nodeValue;
+        $transUnitIdArrayForUniquenessCheck[] = $id;
+        $metadata[ 'id' ] = $id;
+
+        // translate
+        if ( null !== $transUnit->attributes->getNamedItem('translate') ) {
+            $metadata[ 'translate' ] = $transUnit->attributes->getNamedItem('translate')->nodeValue;
+        }
+
+        return $metadata;
     }
+
+    /**
+     * @param \DOMElement $transUnit
+     *
+     * @return array
+     * @throws \Exception
+     */
+    private function extractTransUnitOriginalData(\DOMElement $transUnit)
+    {
+        $originalData = [];
+
+        // loop <originalData> to get nested content
+        foreach ( $transUnit->childNodes as $childNode ) {
+            if ( $childNode->nodeName == 'originalData' ) {
+                foreach ( $childNode->childNodes as $data ) {
+
+                    if(null!== $data->attributes and null !== $data->attributes->getNamedItem('id')){
+                        $dataId = $data->attributes->getNamedItem('id')->nodeValue;
+                    }
+
+                    $dataValue = trim($data->nodeValue);
+                    if('' !== $dataValue){
+                        if ( Strings::isJSON( $dataValue ) ) {
+                            $originalData[] = [
+                              'json' => Strings::cleanCDATA( $dataValue ),
+                              'attr' => [
+                                  'id' => $dataId
+                              ]
+                            ];
+                        } else {
+                            $originalData[] = [
+                                'raw-content' => Strings::fixNonWellFormedXml( $dataValue ),
+                                'attr' => [
+                                    'id' => $dataId
+                                ]
+                            ];
+                        }
+                    }
+                }
+            }
+        }
+
+        return $originalData;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * @param $note
@@ -193,46 +321,9 @@ class ParserV2 extends AbstractParser
         return $notes;
     }
 
-    /**
-     * @param string $file
-     *
-     * @return array|false|string[]
-     */
-    private function getTransUnits($file)
-    {
-        return preg_split( '|<unit[\s>]|si', $file, -1, PREG_SPLIT_NO_EMPTY );
-    }
 
-    /**
-     * @param string $transUnit
-     * @param array $transUnitIdArrayForUniquenessCheck
-     *
-     * @return array
-     */
-    private function extractTransUnitMetadata($transUnit, &$transUnitIdArrayForUniquenessCheck)
-    {
-        $metadata = [];
 
-        // id
-        preg_match( '|id\s?=\s?(["\'])(.*?)\1|si', $transUnit, $temp );
-        if ( trim( $temp[ 2 ] ) == '' ) {
-            throw new NotFoundIdInTransUnit( 'Invalid trans-unit id found. EMPTY value', 400 );
-        }
 
-        $transUnitIdArrayForUniquenessCheck[] = trim( $temp[ 2 ] );
-        $metadata[ 'id' ] = $temp[ 2 ];
-
-        // translate
-        unset( $temp );
-        preg_match( '|translate\s?=\s?["\'](.*?)["\']|si', $transUnit, $temp );
-        if ( isset( $temp[ 1 ] ) ) {
-            $metadata[ 'translate' ] = $temp[ 1 ];
-        }
-
-        unset( $temp );
-
-        return $metadata;
-    }
 
     /**
      * @param string $transUnit
