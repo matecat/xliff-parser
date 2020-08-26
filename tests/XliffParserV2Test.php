@@ -187,6 +187,6 @@ class XliffParserV2Test extends BaseTest
             ],
         ];
 
-        $this->assertArraySimilar( $parsed[ 'files' ][ 1 ], $exp );
+        $this->assertArraySimilar($parsed[ 'files' ][ 1 ], $exp);
     }
 }

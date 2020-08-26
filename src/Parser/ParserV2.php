@@ -28,7 +28,7 @@ class ParserV2 extends AbstractParser
             $j = 1;
             /** @var \DOMElement $transUnit */
             foreach ($file->childNodes as $transUnit) {
-                if($transUnit->nodeName === 'unit'){
+                if ($transUnit->nodeName === 'unit') {
 
                     // metadata
                     $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'attr' ] = $this->extractTransUnitMetadata($transUnit, $transUnitIdArrayForUniquenessCheck);
@@ -44,7 +44,7 @@ class ParserV2 extends AbstractParser
                     // seg-source
                     /** @var \DOMElement $segment */
                     foreach ($transUnit->childNodes as $segment) {
-                        if($segment->nodeName === 'segment'){
+                        if ($segment->nodeName === 'segment') {
                             // loop <segment> to get nested <source> and <target> tag
                             foreach ($segment->childNodes as $childNode) {
                                 if ($childNode->nodeName === 'source') {

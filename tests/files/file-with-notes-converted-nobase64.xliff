@@ -20,7 +20,7 @@
         </header>
         <body/>
     </file>
-    <file datatype="x-plaintext" original="" source-language="hy-am" target-language="fr-fr">
+    <file x-data="ciao" x-matecat="matecat" datatype="x-plaintext" original="" source-language="hy-am" target-language="fr-fr">
         <body>
             <trans-unit id="251971551065">
                 <source xml:lang="hy-am">An English string</source>

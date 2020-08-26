@@ -9,93 +9,97 @@ class ParserV1 extends AbstractParser
      */
     public function parse(\DOMDocument $dom, $output = [])
     {
-        // TODO: Implement parse() method.
+        $i = 0;
+        /** @var \DOMElement $file */
+        foreach ($dom->getElementsByTagName('file') as $file) {
+
+            // First element in the XLIFF split is the content before <file> (header), skipping
+            if ($i > 0) {
+                // metadata
+                $output[ 'files' ][ $i ][ 'attr' ] = $this->extractMetadata($file);
+
+                // reference
+                if (!empty($this->extractReference($file))) {
+                    $output[ 'files' ][ $i ][ 'reference' ] = $this->extractReference($file);
+                }
+            }
+
+            $i++;
+        }
+
+        return $output;
     }
 
-//    /**
-//     * @param string $xliffContent
-//     *
-//     * @return array
-//     */
-//    public function parse( $xliffContent )
-//    {
-//        $xliff = [];
-//        $xliffContent = $this->forceUft8Encoding($xliffContent, $xliff);
-//
-//        foreach ( $this->getFiles($xliffContent) as $i => $file ) {
-//            if($i > 0){
-//                $fileAttributes = $this->getFileAttributes($file);
-//
-//                // metadata
-//                $xliff[ 'files' ][ $i ][ 'attr' ] = $this->extractMetadata($fileAttributes);
-//
-//                // reference
-//
-//                // trans-unit
-//                foreach ( $this->getTransUnits($file) as $j => $transUnit ) {
-//                    if($j > 0){
-//                        $xliff[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'attr' ] = $this->extractTransUnitMetadata($transUnit);
-//                    }
-//                }
-//            }
-//        }
-//
-//        return $xliff;
-//    }
-
     /**
-     * @param string $fileAttributes
+     * @param \DOMElement $file
      *
      * @return array
      */
-    private function extractMetadata($fileAttributes)
+    private function extractMetadata(\DOMElement $file)
     {
         $metadata = [];
+        $customAttr = [];
 
-        // original
-        preg_match('|original\s?=\s?["\'](.*?)["\']|si', $fileAttributes, $temp);
-        $metadata[ 'original' ] = (isset($temp[ 1 ])) ? $temp[ 1 ] : 'no-name';
+        /** @var \DOMAttr $attribute */
+        foreach ($file->attributes as $attribute) {
+            switch ($attribute->localName) {
+                // original
+                case 'original':
+                    $metadata[ 'original' ] = $attribute->value;
+                    break;
 
-        // source-language
-        unset($temp);
-        preg_match('|source-language\s?=\s?["\'](.*?)["\']|si', $fileAttributes, $temp);
-        $metadata[ 'source-language' ] = (isset($temp[ 1 ])) ? $temp[ 1 ] : 'en-US';
+                // source-language
+                case 'source-language':
+                    $metadata[ 'source-language' ] = $attribute->value;
+                    break;
 
-        // datatype
-        unset($temp);
-        preg_match('|datatype\s?=\s?["\'](.*?)["\']|si', $fileAttributes, $temp);
-        $metadata[ 'datatype' ] = (isset($temp[ 1 ])) ? $temp[ 1 ] : 'txt';
+                // data-type
+                case 'datatype':
+                    $metadata[ 'data-type' ] = $attribute->value;
+                    break;
 
-        // target-language
-        unset($temp);
-        preg_match('|target-language\s?=\s?["\'](.*?)["\']|si', $fileAttributes, $temp);
-        if (isset($temp[ 1 ])) {
-            $metadata[ 'target-language' ] = $temp[ 1 ];
+                // target-language
+                case 'target-language':
+                    $metadata[ 'target-language' ] = $attribute->value;
+                    break;
+            }
+
+            //Custom MateCat x-Attribute
+            preg_match('|x-(.*?)|si', $attribute->localName, $temp);
+            if (isset($temp[ 1 ])) {
+                $customAttr[ $attribute->localName ] = $attribute->value;
+            }
+            unset($temp);
+
+            if (!empty($customAttr)) {
+                $metadata['custom'] = $customAttr;
+            }
         }
-
-        // custom MateCat x-attribute
-        unset($temp);
-        preg_match('|x-(.*?)=\s?["\'](.*?)["\']|si', $fileAttributes, $temp);
-        if (isset($temp[ 1 ])) {
-            $metadata[ 'custom' ][ $temp[ 1 ] ] = $temp[ 2 ];
-        }
-
-        unset($temp);
 
         return $metadata;
     }
 
     /**
-     * @param string $file
+     * @param \DOMElement $file
      *
-     * @return array|false|string[]
+     * @return array
      */
-    private function getTransUnits($file)
+    private function extractReference(\DOMElement $file)
     {
-        return preg_split('|<trans-unit[\s>]|si', $file, -1, PREG_SPLIT_NO_EMPTY);
-    }
+        $reference = [];
 
-    private function extractTransUnitMetadata($transUnit)
-    {
+        $order = 0;
+        foreach ($file->getElementsByTagName('reference') as $ref) {
+            /** @var \DOMNode $childNode */
+            foreach ($ref->childNodes as $childNode) {
+                if ($childNode->nodeName === 'internal-file') {
+                    $reference[ $order ][ 'form-type' ] = $childNode->attributes->getNamedItem('form')->nodeValue;
+                    $reference[ $order ][ 'base64' ]    = trim($childNode->nodeValue);
+                    $order++;
+                }
+            }
+        }
+
+        return $reference;
     }
 }
