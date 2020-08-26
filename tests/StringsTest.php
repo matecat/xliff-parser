@@ -62,7 +62,7 @@ class StringsTest extends BaseTest
 
         foreach ($tests as $in => $expected) {
             $out = Strings::fixNonWellFormedXml($in);
-            $this->assertEquals( $expected, $out );
+            $this->assertEquals($expected, $out);
         }
     }
 

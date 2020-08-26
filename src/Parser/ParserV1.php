@@ -56,7 +56,7 @@ class ParserV1 extends AbstractParser
                         // seg-target
                         $targetRawContent = @$output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'target' ][ 'raw-content' ];
                         $segSource = @$output[ 'files' ][ $i ][ 'trans-units' ][ $j ]['seg-source'];
-                        if ( isset($targetRawContent) and !empty($targetRawContent) and isset($segSource) and count($segSource) > 0 ) {
+                        if (isset($targetRawContent) and !empty($targetRawContent) and isset($segSource) and count($segSource) > 0) {
                             $output[ 'files' ][ $i ][ 'trans-units' ][ $j ]['seg-target'] = $this->extractSegTarget($dom, $childNode);
                         }
                     }
@@ -68,12 +68,12 @@ class ParserV1 extends AbstractParser
                 }
 
                 // context-group
-                foreach ($transUnit->getElementsByTagName('context-group') as $contextGroup){
-                    $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'context-group' ][] = $this->extractTransUnitContextGroup($dom,$contextGroup);
+                foreach ($transUnit->getElementsByTagName('context-group') as $contextGroup) {
+                    $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'context-group' ][] = $this->extractTransUnitContextGroup($dom, $contextGroup);
                 }
 
                 // alt-trans
-                foreach ($transUnit->getElementsByTagName('alt-trans') as $altTrans){
+                foreach ($transUnit->getElementsByTagName('alt-trans') as $altTrans) {
                     $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'alt-trans' ][] = $this->extractTransUnitAltTrans($altTrans);
                 }
 
@@ -172,7 +172,7 @@ class ParserV1 extends AbstractParser
      *
      * @return array
      */
-    private function extractTransUnitMetadata( \DOMElement $transUnit, array $transUnitIdArrayForUniquenessCheck )
+    private function extractTransUnitMetadata(\DOMElement $transUnit, array $transUnitIdArrayForUniquenessCheck)
     {
         $metadata = [];
 
@@ -193,7 +193,7 @@ class ParserV1 extends AbstractParser
         // approved
         // http://docs.oasis-open.org/xliff/v1.2/os/xliff-core.html#approved
         if (null !== $transUnit->attributes->getNamedItem('approved')) {
-            $metadata[ 'approved' ] = filter_var( $transUnit->attributes->getNamedItem('approved')->nodeValue, FILTER_VALIDATE_BOOLEAN );
+            $metadata[ 'approved' ] = filter_var($transUnit->attributes->getNamedItem('approved')->nodeValue, FILTER_VALIDATE_BOOLEAN);
         }
 
         return $metadata;
@@ -205,11 +205,10 @@ class ParserV1 extends AbstractParser
      * @return array
      * @throws \Exception
      */
-    private function extractTransUnitNotes( \DOMDocument $dom, \DOMElement $transUnit )
+    private function extractTransUnitNotes(\DOMDocument $dom, \DOMElement $transUnit)
     {
         $notes = [];
         foreach ($transUnit->getElementsByTagName('note') as $note) {
-
             $noteValue = $this->extractTagContent($dom, $note);
 
             if ('' !== $noteValue) {
@@ -233,7 +232,6 @@ class ParserV1 extends AbstractParser
         /** @var \DOMNode $context */
         foreach ($contextGroup->childNodes as $context) {
             if ($context->nodeName === 'context') {
-
                 $cg['contexts'][] = $this->extractContent($dom, $context);
             }
         }
@@ -246,7 +244,7 @@ class ParserV1 extends AbstractParser
      *
      * @return array
      */
-    private function extractTransUnitAltTrans( \DOMElement $altTrans )
+    private function extractTransUnitAltTrans(\DOMElement $altTrans)
     {
         $at = [];
         $at['attr'] = $this->extractTagAttributes($altTrans);
@@ -267,7 +265,7 @@ class ParserV1 extends AbstractParser
      *
      * @return bool
      */
-    private function extractLocked( \DOMElement $locked )
+    private function extractLocked(\DOMElement $locked)
     {
         return null !== $locked->getAttribute('locked');
     }
@@ -285,7 +283,6 @@ class ParserV1 extends AbstractParser
         // loop markers
         /** @var \DOMElement $marker */
         foreach ($childNode->getElementsByTagName('mrk') as $marker) {
-
             $segSource[] = [
                 'mid' => $marker->getAttribute('mid'),
                 'ext-prec-tags' => '',
@@ -310,7 +307,6 @@ class ParserV1 extends AbstractParser
         // loop markers
         /** @var \DOMElement $marker */
         foreach ($childNode->getElementsByTagName('mrk') as $marker) {
-
             $segTarget[] = [
                     'mid' => $marker->getAttribute('mid'),
                     'ext-prec-tags' => '',

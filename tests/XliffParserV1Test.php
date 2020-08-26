@@ -52,7 +52,7 @@ class XliffParserV1Test extends BaseTest
     /**
      * @test
      */
-    function can_parse_sdlxliff_v1_tu_metadata()
+    public function can_parse_sdlxliff_v1_tu_metadata()
     {
         $parsed = XliffParser::toArray($this->getTestFile('file-with-notes-nobase64.po.sdlxliff'));
 
@@ -63,48 +63,53 @@ class XliffParserV1Test extends BaseTest
     /**
      * @test
      */
-    function can_parse_sdlxliff_v1_tu_notes()
+    public function can_parse_sdlxliff_v1_tu_notes()
     {
         $parsed = XliffParser::toArray($this->getTestFile('file-with-notes-nobase64.po.sdlxliff'));
 
-        $this->assertEquals( 'This is a comment',
-                $parsed['files'][1]['trans-units'][4]['notes'][0]['raw-content']);
+        $this->assertEquals(
+            'This is a comment',
+            $parsed['files'][1]['trans-units'][4]['notes'][0]['raw-content']
+        );
 
-        $this->assertEquals( 'This is another comment',
-                $parsed['files'][1]['trans-units'][6]['notes'][0]['raw-content']);
+        $this->assertEquals(
+            'This is another comment',
+            $parsed['files'][1]['trans-units'][6]['notes'][0]['raw-content']
+        );
     }
 
     /**
      * @test
      */
-    function can_parse_converted_xliff_v1_tu_notes()
+    public function can_parse_converted_xliff_v1_tu_notes()
     {
         $parsed = XliffParser::toArray($this->getTestFile('file-with-notes-converted.xliff'));
 
         $this->assertEquals(
-                "This is a comment\n" .
+            "This is a comment\n" .
                 "---\n" .
                 "This is a comment number two\n" .
                 "---\n" .
                 "This is a comment number three",
-
-                $parsed['files'][3]['trans-units'][1]['notes'][0]['raw-content']
+            $parsed['files'][3]['trans-units'][1]['notes'][0]['raw-content']
         );
 
-        $this->assertEquals( 'This is another comment',
-                $parsed['files'][3]['trans-units'][3]['notes'][0]['raw-content']);
+        $this->assertEquals(
+            'This is another comment',
+            $parsed['files'][3]['trans-units'][3]['notes'][0]['raw-content']
+        );
     }
 
     /**
      * @test
      */
-    function can_parse_file_with_malicious_note()
+    public function can_parse_file_with_malicious_note()
     {
         $parsed = XliffParser::toArray($this->getTestFile('file-with-notes-and-malicious-code.xliff'));
 
         $this->assertEquals(
-                "&lt;script&gt;alert('This is malicious code');&lt;/script&gt;",
-                $parsed['files'][3]['trans-units'][1]['notes'][0]['raw-content']
+            "&lt;script&gt;alert('This is malicious code');&lt;/script&gt;",
+            $parsed['files'][3]['trans-units'][1]['notes'][0]['raw-content']
         );
     }
 
@@ -115,8 +120,8 @@ class XliffParserV1Test extends BaseTest
     {
         $parsed = XliffParser::toArray($this->getTestFile('file-with-self-closed-tag-and-alt-trans.xliff'));
 
-        $this->assertEmpty( $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'attr' ] );
-        $this->assertEmpty( $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ] );
+        $this->assertEmpty($parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'attr' ]);
+        $this->assertEmpty($parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ]);
     }
 
     /**
@@ -148,7 +153,7 @@ class XliffParserV1Test extends BaseTest
                 'origin' => "Sparta CAT"
         ]);
         $this->assertEquals($altTrans['source'], 'We’ve decreased the amount of money from sales immediately available to you each month');
-        $this->assertEquals($altTrans['target'],'Hemos disminuido el importe mensual procedente de las ventas del que puede disponer inmediatamente');
+        $this->assertEquals($altTrans['target'], 'Hemos disminuido el importe mensual procedente de las ventas del que puede disponer inmediatamente');
     }
 
     /**
@@ -173,10 +178,10 @@ class XliffParserV1Test extends BaseTest
     {
         $parsed = XliffParser::toArray($this->getTestFile('file-with-emoji.xliff'));
 
-        $this->assertNotEmpty( $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'source' ][ 'raw-content' ] );
+        $this->assertNotEmpty($parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'source' ][ 'raw-content' ]);
 
         // the emoticons are not displayed in the IDE but they are present
-        $this->assertEquals(  '<g id="1">👌🏻</g>', $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'source' ][ 'raw-content' ] );
+        $this->assertEquals('<g id="1">👌🏻</g>', $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'source' ][ 'raw-content' ]);
     }
 
     /**
@@ -186,7 +191,7 @@ class XliffParserV1Test extends BaseTest
     {
         $parsed = XliffParser::toArray($this->getTestFile('file-with-empty-self-closed-target-tag-with-alt-trans.xliff'));
 
-        $this->assertEmpty( $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ] );
+        $this->assertEmpty($parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ]);
     }
 
     /**
@@ -196,8 +201,8 @@ class XliffParserV1Test extends BaseTest
     {
         $parsed = XliffParser::toArray($this->getTestFile('file-with-empty-target-tag-withnot-ordered-alt-trans.xliff'));
 
-        $this->assertNotEmpty( $parsed );
-        $this->assertEquals( "PPC000460", $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ] );
+        $this->assertNotEmpty($parsed);
+        $this->assertEquals("PPC000460", $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ]);
     }
 
     /**
@@ -207,8 +212,8 @@ class XliffParserV1Test extends BaseTest
     {
         $parsed = XliffParser::toArray($this->getTestFile('file-with-not-empty-target-tag-without-alt-trans.xliff'));
 
-        $this->assertNotEmpty( $parsed );
-        $this->assertEquals( "PPC000460", $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ] );
+        $this->assertNotEmpty($parsed);
+        $this->assertEquals("PPC000460", $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ]);
     }
 
     /**
@@ -218,8 +223,8 @@ class XliffParserV1Test extends BaseTest
     {
         $parsed = XliffParser::toArray($this->getTestFile('file-with-not-empty-target-tag-with-mrk-with-alt-trans.xliff'));
 
-        $this->assertNotEmpty( $parsed );
-        $this->assertEquals( "<mrk id=\"1\">PPC000460</mrk>", $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ] );
+        $this->assertNotEmpty($parsed);
+        $this->assertEquals("<mrk id=\"1\">PPC000460</mrk>", $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ]);
     }
 
     /**
@@ -229,8 +234,8 @@ class XliffParserV1Test extends BaseTest
     {
         $parsed = XliffParser::toArray($this->getTestFile('file-with-not-empty-target-tag-with-some-mrk-with-alt-trans.xliff'));
 
-        $this->assertNotEmpty( $parsed );
-        $this->assertEquals( "<mrk id=\"1\">Test1</mrk><mrk id=\"2\">Test2</mrk><mrk id=\"3\">Test3</mrk>", $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ] );
+        $this->assertNotEmpty($parsed);
+        $this->assertEquals("<mrk id=\"1\">Test1</mrk><mrk id=\"2\">Test2</mrk><mrk id=\"3\">Test3</mrk>", $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ]);
     }
 
     /**
@@ -240,10 +245,10 @@ class XliffParserV1Test extends BaseTest
     {
         $parsed = XliffParser::toArray($this->getTestFile('file-with-not-empty-target-tag-with-some-mrk-and-html-with-alt-trans.xliff'));
 
-        $this->assertNotEmpty( $parsed );
+        $this->assertNotEmpty($parsed);
         $this->assertEquals(
-                "<mrk id=\"1\">Test1</mrk><mrk id=\"2\">Test2<ex id=\"1\">Another Test Inside</ex></mrk><mrk id=\"3\">Test3&lt;a href=\"https://example.org\"&gt;ClickMe!&lt;/a&gt;</mrk>",
-                $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ]
+            "<mrk id=\"1\">Test1</mrk><mrk id=\"2\">Test2<ex id=\"1\">Another Test Inside</ex></mrk><mrk id=\"3\">Test3&lt;a href=\"https://example.org\"&gt;ClickMe!&lt;/a&gt;</mrk>",
+            $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ]
         );
     }
 
@@ -255,9 +260,9 @@ class XliffParserV1Test extends BaseTest
         //
         $parsed = XliffParser::toArray($this->getTestFile('file-with-complex-structure.xliff'));
 
-        $this->assertNotEmpty( $parsed );
+        $this->assertNotEmpty($parsed);
         $this->assertEquals(
-                '
+            '
         <ph id="59" x="&lt;endcmp/&gt;">{59}</ph>
         <ph id="60" x="&lt;/span&gt;">{60}</ph>
         <ph id="61" x="&lt;startcmp/&gt;">{61}</ph>
@@ -279,7 +284,7 @@ class XliffParserV1Test extends BaseTest
         <ph id="73" x="&lt;/span&gt;">{73}</ph>
         <ph id="74" x="&lt;startcmp/&gt;">{74}</ph>
     ',
-                $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ]
+            $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ]
         );
 
         //
@@ -380,8 +385,8 @@ class XliffParserV1Test extends BaseTest
     </alt-trans>
     </trans-unit>";
 
-        preg_match( '|<target>(.*?)</target>|siu' , $x , $tmp );
+        preg_match('|<target>(.*?)</target>|siu', $x, $tmp);
         //xml validation from DomDocument replaces 'x="&lt;endcmp/>"' with 'x="&lt;endcmp/&gt;"'
-        $this->assertNotEquals( $tmp[ 1 ], $parsed[ 'files' ][ 0 ][ 'trans-units' ][ 0 ][ 'target' ][ 'raw-content' ] );
+        $this->assertNotEquals($tmp[ 1 ], $parsed[ 'files' ][ 0 ][ 'trans-units' ][ 0 ][ 'target' ][ 'raw-content' ]);
     }
 }
