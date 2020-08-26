@@ -14,6 +14,20 @@ abstract class AbstractParser
     abstract public function parse(\DOMDocument $dom, $output = []);
 
     /**
+     * @param \DOMDocument $dom
+     * @param \DOMElement  $node
+     *
+     * @return array
+     */
+    protected function extractContent(\DOMDocument $dom, \DOMElement $node)
+    {
+        return [
+                'raw-content' => $this->extractTagContent($dom, $node),
+                'attr' => $this->extractTagAttributes($node)
+        ];
+    }
+
+    /**
      * Extract attributes if they are present
      *
      * Ex:

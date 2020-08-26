@@ -241,18 +241,4 @@ class ParserV2 extends AbstractParser
 
         return $notes;
     }
-
-    /**
-     * @param \DOMDocument $dom
-     * @param \DOMElement  $node
-     *
-     * @return array
-     */
-    private function extractContent(\DOMDocument $dom, \DOMElement $node)
-    {
-        return [
-            'content' => $this->extractTagContent($dom, $node),
-            'attr' => $this->extractTagAttributes($node)
-        ];
-    }
 }

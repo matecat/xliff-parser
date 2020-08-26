@@ -37,6 +37,30 @@ class ParserV1 extends AbstractParser
                 $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'notes' ] = $this->extractTransUnitNotes($transUnit);
 
                 // content
+                /** @var \DOMElement $childNode */
+                foreach ($transUnit->childNodes as $childNode) {
+                    if ($childNode->nodeName === 'source') {
+                        $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'source' ] = $this->extractContent($dom, $childNode);
+                    }
+
+                    if ($childNode->nodeName === 'target') {
+                        $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'target' ] = $this->extractContent($dom, $childNode);
+                    }
+
+                    if ($childNode->nodeName === 'sdl:seg') {
+                        $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'locked' ] = $this->extractLocked($childNode);
+                    }
+                }
+
+                // context-group
+                foreach ($transUnit->getElementsByTagName('context-group') as $contextGroup){
+                    $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'context-group' ][] = $this->extractTransUnitContextGroup($dom,$contextGroup);
+                }
+
+                // alt-trans
+                foreach ($transUnit->getElementsByTagName('alt-trans') as $altTrans){
+                    $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'alt-trans' ][] = $this->extractTransUnitAltTrans($altTrans);
+                }
 
                 $j++;
             }
@@ -179,5 +203,57 @@ class ParserV1 extends AbstractParser
         }
 
         return $notes;
+    }
+
+    /**
+     * @param \DOMElement $contextGroup
+     *
+     * @return array
+     */
+    private function extractTransUnitContextGroup(\DOMDocument $dom, \DOMElement $contextGroup)
+    {
+        $cg = [];
+        $cg['attr'] = $this->extractTagAttributes($contextGroup);
+
+        /** @var \DOMNode $context */
+        foreach ($contextGroup->childNodes as $context) {
+            if ($context->nodeName === 'context') {
+
+                $cg['contexts'][] = $this->extractContent($dom, $context);
+            }
+        }
+
+        return $cg;
+    }
+
+    /**
+     * @param \DOMElement $altTrans
+     *
+     * @return array
+     */
+    private function extractTransUnitAltTrans( \DOMElement $altTrans )
+    {
+        $at = [];
+        $at['attr'] = $this->extractTagAttributes($altTrans);
+
+        if ($altTrans->getElementsByTagName('source')) {
+            $at['source'] = $altTrans->getElementsByTagName('source')->item(0)->nodeValue;
+        }
+
+        if ($altTrans->getElementsByTagName('target')) {
+            $at['target'] = $altTrans->getElementsByTagName('target')->item(0)->nodeValue;
+        }
+
+        return $at;
+    }
+
+    /**
+     * @param \DOMElement $locked
+     *
+     * @return bool
+     */
+    private function extractLocked( \DOMElement $locked )
+    {
+        return null !== $locked->getAttribute('locked');
     }
 }

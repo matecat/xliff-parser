@@ -110,26 +110,48 @@ class XliffParserV1Test extends BaseTest
 //        );
 //    }
 
+    /**
+     * @test
+     */
+    public function can_parse_empty_self_closed_target_tag_with_alt_trans()
+    {
+        $parsed = XliffParser::toArray($this->getTestFile('file-with-self-closed-tag-and-alt-trans.xliff'));
 
-//    public function testEmptySelfClosedTargetTagWithAltTrans(){
-//
-//        $x = "<trans-unit id=\"0000000121\" datatype=\"x-text/x-4cb\" restype=\"string\">
-//    <source>We’ve decreased the amount of money from sales immediately available to you each month</source>
-//    <target/>
-//    <alt-trans match-quality=\"100.00\" origin=\"Sparta CAT\">
-//        <source>We’ve decreased the amount of money from sales immediately available to you each month</source>
-//        <target>Hemos disminuido el importe mensual procedente de las ventas del que puede disponer inmediatamente</target>
-//    </alt-trans>
-//</trans-unit>
-//";
-//
-//        $refMethod = new ReflectionMethod( 'Xliff_Parser', 'getTarget' );
-//        $refMethod->setAccessible(true);
-//
-//        $xliff = [];
-//        $refMethod->invokeArgs( new Xliff_Parser(), [ &$xliff, 0, 0, $x ] );
-//        $this->assertEmpty( $xliff[ 'files' ][ 0 ][ 'trans-units' ][ 0 ][ 'target' ][ 'raw-content' ] );
-//    }
+        $this->assertEmpty( $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'attr' ] );
+        $this->assertEmpty( $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ] );
+    }
+
+    /**
+     * @test
+     */
+    public function can_parse_context_group()
+    {
+        $parsed = XliffParser::toArray($this->getTestFile('file-with-self-closed-tag-and-alt-trans.xliff'));
+
+        $contextGroup = $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ]['context-group'][0];
+
+        $this->assertEquals($contextGroup['attr'], [
+                'purpose' => "location"
+        ]);
+        $this->assertCount(2, $contextGroup['contexts']);
+    }
+
+    /**
+     * @test
+     */
+    public function can_parse_alt_trans()
+    {
+        $parsed = XliffParser::toArray($this->getTestFile('file-with-self-closed-tag-and-alt-trans.xliff'));
+
+        $altTrans = $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ]['alt-trans'][0];
+
+        $this->assertEquals($altTrans['attr'], [
+                'match-quality' => "100.00",
+                'origin' => "Sparta CAT"
+        ]);
+        $this->assertEquals($altTrans['source'], 'We’ve decreased the amount of money from sales immediately available to you each month');
+        $this->assertEquals($altTrans['target'],'Hemos disminuido el importe mensual procedente de las ventas del que puede disponer inmediatamente');
+    }
 //
 //    public function testEmojiInSource(){
 //
