@@ -95,20 +95,18 @@ class XliffParserV1Test extends BaseTest
                 $parsed['files'][3]['trans-units'][3]['notes'][0]['raw-content']);
     }
 
+    /**
+     * @test
+     */
+    function can_parse_file_with_malicious_note()
+    {
+        $parsed = XliffParser::toArray($this->getTestFile('file-with-notes-and-malicious-code.xliff'));
 
-
-//    /**
-//     * @test
-//     */
-//    function can_parse_file_with_malicious_note()
-//    {
-//        $parsed = XliffParser::toArray($this->getTestFile('file-with-notes-and-malicious-code.xliff'));
-//
-//        $this->assertEquals(
-//                "&lt;script&gt;alert('This is malicious code');&lt;/script&gt;",
-//                $parsed['files'][3]['trans-units'][1]['notes'][0]['raw-content']
-//        );
-//    }
+        $this->assertEquals(
+                "&lt;script&gt;alert('This is malicious code');&lt;/script&gt;",
+                $parsed['files'][3]['trans-units'][1]['notes'][0]['raw-content']
+        );
+    }
 
     /**
      * @test
@@ -124,7 +122,7 @@ class XliffParserV1Test extends BaseTest
     /**
      * @test
      */
-    public function can_parse_context_group()
+    public function can_parse_xliff_v1_tu_context_group()
     {
         $parsed = XliffParser::toArray($this->getTestFile('file-with-self-closed-tag-and-alt-trans.xliff'));
 
@@ -139,7 +137,7 @@ class XliffParserV1Test extends BaseTest
     /**
      * @test
      */
-    public function can_parse_alt_trans()
+    public function can_parse_xliff_v1_tu_alt_trans()
     {
         $parsed = XliffParser::toArray($this->getTestFile('file-with-self-closed-tag-and-alt-trans.xliff'));
 
@@ -152,6 +150,23 @@ class XliffParserV1Test extends BaseTest
         $this->assertEquals($altTrans['source'], 'We’ve decreased the amount of money from sales immediately available to you each month');
         $this->assertEquals($altTrans['target'],'Hemos disminuido el importe mensual procedente de las ventas del que puede disponer inmediatamente');
     }
+
+    /**
+     * @test
+     */
+    public function can_parse_xliff_v1_tu_seg_source_and_seg_target()
+    {
+        $parsed = XliffParser::toArray($this->getTestFile('file-with-notes-converted-nobase64.xliff'));
+
+        $segSource = $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ]['seg-source'];
+        $segTarget = $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ]['seg-target'];
+
+        $this->assertEquals($segSource, $segTarget);
+        $this->assertEquals(0, $segTarget[0]['mid']);
+        $this->assertEquals('An English string', $segTarget[0]['raw-content']);
+    }
+
+
 //
 //    public function testEmojiInSource(){
 //

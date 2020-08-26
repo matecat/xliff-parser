@@ -34,19 +34,34 @@ class ParserV1 extends AbstractParser
                 $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'attr' ] = $this->extractTransUnitMetadata($transUnit, $transUnitIdArrayForUniquenessCheck);
 
                 // notes
-                $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'notes' ] = $this->extractTransUnitNotes($transUnit);
+                $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'notes' ] = $this->extractTransUnitNotes($dom, $transUnit);
 
                 // content
                 /** @var \DOMElement $childNode */
                 foreach ($transUnit->childNodes as $childNode) {
+                    // source
                     if ($childNode->nodeName === 'source') {
                         $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'source' ] = $this->extractContent($dom, $childNode);
                     }
 
-                    if ($childNode->nodeName === 'target') {
-                        $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'target' ] = $this->extractContent($dom, $childNode);
+                    // seg-source
+                    if ($childNode->nodeName === 'seg-source') {
+                        $output[ 'files' ][ $i ][ 'trans-units' ][ $j ]['seg-source'] = $this->extractSegSource($dom, $childNode);
                     }
 
+                    // target
+                    if ($childNode->nodeName === 'target') {
+                        $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'target' ] = $this->extractContent($dom, $childNode);
+
+                        // seg-target
+                        $targetRawContent = @$output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'target' ][ 'raw-content' ];
+                        $segSource = @$output[ 'files' ][ $i ][ 'trans-units' ][ $j ]['seg-source'];
+                        if ( isset($targetRawContent) and !empty($targetRawContent) and isset($segSource) and count($segSource) > 0 ) {
+                            $output[ 'files' ][ $i ][ 'trans-units' ][ $j ]['seg-target'] = $this->extractSegTarget($dom, $childNode);
+                        }
+                    }
+
+                    // locked
                     if ($childNode->nodeName === 'sdl:seg') {
                         $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'locked' ] = $this->extractLocked($childNode);
                     }
@@ -175,7 +190,7 @@ class ParserV1 extends AbstractParser
             $metadata[ 'translate' ] = $transUnit->attributes->getNamedItem('translate')->nodeValue;
         }
 
-        // Approved
+        // approved
         // http://docs.oasis-open.org/xliff/v1.2/os/xliff-core.html#approved
         if (null !== $transUnit->attributes->getNamedItem('approved')) {
             $metadata[ 'approved' ] = filter_var( $transUnit->attributes->getNamedItem('approved')->nodeValue, FILTER_VALIDATE_BOOLEAN );
@@ -190,12 +205,12 @@ class ParserV1 extends AbstractParser
      * @return array
      * @throws \Exception
      */
-    private function extractTransUnitNotes( \DOMElement $transUnit )
+    private function extractTransUnitNotes( \DOMDocument $dom, \DOMElement $transUnit )
     {
         $notes = [];
         foreach ($transUnit->getElementsByTagName('note') as $note) {
 
-            $noteValue = trim($note->nodeValue);
+            $noteValue = $this->extractTagContent($dom, $note);
 
             if ('' !== $noteValue) {
                 $notes[] = $this->JSONOrRawContentArray($noteValue);
@@ -255,5 +270,55 @@ class ParserV1 extends AbstractParser
     private function extractLocked( \DOMElement $locked )
     {
         return null !== $locked->getAttribute('locked');
+    }
+
+    /**
+     * @param \DOMDocument $dom
+     * @param \DOMElement  $childNode
+     *
+     * @return array
+     */
+    private function extractSegSource(\DOMDocument $dom, \DOMElement $childNode)
+    {
+        $segSource = [];
+
+        // loop markers
+        /** @var \DOMElement $marker */
+        foreach ($childNode->getElementsByTagName('mrk') as $marker) {
+
+            $segSource[] = [
+                'mid' => $marker->getAttribute('mid'),
+                'ext-prec-tags' => '',
+                'raw-content' => $this->extractTagContent($dom, $marker),
+                'ext-succ-tags' => '',
+            ];
+        }
+
+        return $segSource;
+    }
+
+    /**
+     * @param \DOMDocument $dom
+     * @param \DOMElement  $childNode
+     *
+     * @return array
+     */
+    private function extractSegTarget(\DOMDocument $dom, \DOMElement $childNode)
+    {
+        $segTarget = [];
+
+        // loop markers
+        /** @var \DOMElement $marker */
+        foreach ($childNode->getElementsByTagName('mrk') as $marker) {
+
+            $segTarget[] = [
+                    'mid' => $marker->getAttribute('mid'),
+                    'ext-prec-tags' => '',
+                    'raw-content' => $this->extractTagContent($dom, $marker),
+                    'ext-succ-tags' => '',
+            ];
+        }
+
+        return $segTarget;
     }
 }
