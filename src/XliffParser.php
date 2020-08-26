@@ -13,11 +13,11 @@ class XliffParser
      *
      * @return array
      */
-    public function toArray($xliffContent)
+    public static function toArray($xliffContent)
     {
         try {
             $xliff = [];
-            $xliffContent = $this->forceUft8Encoding($xliffContent, $xliff);
+            $xliffContent = self::forceUft8Encoding($xliffContent, $xliff);
             $version = VersionDetector::detect($xliffContent);
             $parserClass = 'Matecat\\XliffParser\\Parser\\ParserV' . $version;
 
@@ -40,7 +40,7 @@ class XliffParser
      *
      * @return false|string
      */
-    protected function forceUft8Encoding($xliffContent, &$xliff)
+    protected static function forceUft8Encoding($xliffContent, &$xliff)
     {
         $enc = mb_detect_encoding($xliffContent);
 
