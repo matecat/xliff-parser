@@ -34,6 +34,11 @@ class StringsTest extends BaseTest
 
         $this->assertEquals($expected, Strings::fixNonWellFormedXml($original));
 
+        $original = '<mrk id="1">Test1</mrk><mrk id="2">Test2<ex id="1">Another Test Inside</ex></mrk><mrk id="3">Test3<a href="https://example.org">ClickMe!</a></mrk>';
+        $expected = '<mrk id="1">Test1</mrk><mrk id="2">Test2<ex id="1">Another Test Inside</ex></mrk><mrk id="3">Test3&lt;a href="https://example.org"&gt;ClickMe!&lt;/a&gt;</mrk>';
+
+        $this->assertEquals($expected, Strings::fixNonWellFormedXml($original));
+
         $tests = array(
                 '' => '',
                 'just text' => 'just text',

@@ -98,10 +98,10 @@ class XliffParserV2Test extends BaseTest
         $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
         $this->assertCount(2, $units);
 
-        $this->assertStringContainsString('<pc id="1">Hello <mrk id="m1" type="term">World</mrk>!</pc>', $units[ 1 ][ 'source' ][ 'raw-content' ]);
-        $this->assertStringContainsString('<pc id="2">Hello <mrk id="m2" type="term">World2</mrk>!</pc>', $units[ 2 ][ 'source' ][ 'raw-content' ]);
-        $this->assertStringContainsString('<pc id="1">Bonjour le <mrk id="m1" type="term">Monde</mrk> !</pc>', $units[ 1 ][ 'target' ][ 'raw-content' ]);
-        $this->assertStringContainsString('<pc id="2">Bonjour le <mrk id="m2" type="term">Monde2</mrk> !</pc>', $units[ 2 ][ 'target' ][ 'raw-content' ]);
+        $this->assertStringContainsString('&lt;pc id="1"&gt;Hello <mrk id="m1" type="term">World</mrk>!&lt;/pc&gt;', $units[ 1 ][ 'source' ][ 'raw-content' ]);
+        $this->assertStringContainsString('&lt;pc id="2"&gt;Hello <mrk id="m2" type="term">World2</mrk>!&lt;/pc&gt;', $units[ 2 ][ 'source' ][ 'raw-content' ]);
+        $this->assertStringContainsString('&lt;pc id="1"&gt;Bonjour le <mrk id="m1" type="term">Monde</mrk> !&lt;/pc&gt;', $units[ 1 ][ 'target' ][ 'raw-content' ]);
+        $this->assertStringContainsString('&lt;pc id="2"&gt;Bonjour le <mrk id="m2" type="term">Monde2</mrk> !&lt;/pc&gt;', $units[ 2 ][ 'target' ][ 'raw-content' ]);
         $this->assertEquals($units[ 1 ][ 'source' ][ 'attr' ], []);
         $this->assertEquals($units[ 2 ][ 'source' ][ 'attr' ], []);
         $this->assertEquals($units[ 1 ][ 'target' ][ 'attr' ], []);
@@ -152,11 +152,11 @@ class XliffParserV2Test extends BaseTest
                         ],
                         'original-data' => [],
                          'source' => [
-                             'raw-content' => '<pc id="1">Hello <mrk id="m1" type="term">World</mrk>!</pc>',
+                             'raw-content' => '&lt;pc id="1"&gt;Hello <mrk id="m1" type="term">World</mrk>!&lt;/pc&gt;',
                              'attr'    => [],
                          ],
                          'target' => [
-                            'raw-content' => '<pc id="1">Bonjour le <mrk id="m1" type="term">Monde</mrk> !</pc>',
+                            'raw-content' => '&lt;pc id="1"&gt;Bonjour le <mrk id="m1" type="term">Monde</mrk> !&lt;/pc&gt;',
                              'attr'    => [],
                          ],
                     ],
@@ -176,11 +176,11 @@ class XliffParserV2Test extends BaseTest
                     ],
                     'original-data' => [],
                     'source' => [
-                            'raw-content' => '<pc id="2">Hello <mrk id="m2" type="term">World2</mrk>!</pc>',
+                            'raw-content' => '&lt;pc id="2"&gt;Hello <mrk id="m2" type="term">World2</mrk>!&lt;/pc&gt;',
                             'attr'    => [],
                     ],
                     'target' => [
-                            'raw-content' => '<pc id="2">Bonjour le <mrk id="m2" type="term">Monde2</mrk> !</pc>',
+                            'raw-content' => '&lt;pc id="2"&gt;Bonjour le <mrk id="m2" type="term">Monde2</mrk> !&lt;/pc&gt;',
                             'attr'    => [],
                     ],
                 ],

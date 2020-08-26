@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:its="http://www.w3.org/2005/11/its" xmlns:itsxlf="http://www.w3.org/ns/its-xliff/" xmlns:okp="okapi-framework:xliff-extensions" its:version="2.0" version="1.2"><file datatype="x-xlf" original="Ebay-like-small-file-edited.xlf" source-language="hy-am" target-language="fr-fr" tool-id="matecat-converter"><header><reference>
+        <internal-file form="base64">PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHhsaWZmIHhtbG5zPSJ1cm46b2FzaXM6bmFtZXM6dGM6eGxpZmY6ZG9jdW1lbnQ6MS4yIiB2ZXJzaW9uPSIxLjIiPgo8ZmlsZSBvcmlnaW5hbD0iIiBzb3VyY2UtbGFuZ3VhZ2U9ImVuLVVTIiB0YXJnZXQtbGFuZ3VhZ2U9InB0LUJSIiBkYXRhdHlwZT0icGxhaW50ZXh0IiBtdD0iZU1UIj4KPGhlYWRlcj48L2hlYWRlcj4KPGJvZHk+Cgk8dHJhbnMtdW5pdCBjYXQxPSJBbnRpcXVlcyIgY2F0Mj0iQW50aXF1aXRpZXMiIGlkPSIyNTE5NzE1NTEwNjUiPgoJCTxzb3VyY2UgeG1sOmxhbmc9ImVuLVVTIj5BbiBFbmdsaXNoIHN0cmluZzwvc291cmNlPgoJCTx0YXJnZXQgeG1sOmxhbmc9InB0LUJSIj5UaGlzIGlzIEJyYXppbGlhbiB0ZXh0IDE8L3RhcmdldD4KCQk8bm90ZT5UaGlzIGlzIGEgY29tbWVudDwvbm90ZT4KCQk8bm90ZT5UaGlzIGlzIGEgY29tbWVudCBudW1iZXIgdHdvPC9ub3RlPgoJCTxub3RlPlRoaXMgaXMgYSBjb21tZW50IG51bWJlciB0aHJlZTwvbm90ZT4KCTwvdHJhbnMtdW5pdD4KICA8dHJhbnMtdW5pdCBjYXQxPSJBbnRpcXVlcyIgY2F0Mj0iQW50aXF1aXRpZXMiIGlkPSIyNTE5NzE1NTEwNjYiPgoJCTxzb3VyY2UgeG1sOmxhbmc9ImVuLVVTIj5UaGlzIHVuaXQgaGFzIGEgY29tbWVudCB0b288L3NvdXJjZT4KCQk8dGFyZ2V0IHhtbDpsYW5nPSJwdC1CUiI+QW5vdGhlciB0cmFuc2xhdGVkIHRleHQ8L3RhcmdldD4KCTwvdHJhbnMtdW5pdD4KICA8dHJhbnMtdW5pdCBjYXQxPSJBbnRpcXVlcyIgY2F0Mj0iQW50aXF1aXRpZXMiIGlkPSIyNTE5NzE1NTEwNjciPgoJCTxzb3VyY2UgeG1sOmxhbmc9ImVuLVVTIj5BbiBFbmdsaXNoIHN0cmluZzwvc291cmNlPgoJCTx0YXJnZXQgeG1sOmxhbmc9InB0LUJSIj5UaGlzIGlzIEJyYXppbGlhbiB0ZXh0IDE8L3RhcmdldD4KCQk8bm90ZT5UaGlzIGlzIGFub3RoZXIgY29tbWVudDwvbm90ZT4KCTwvdHJhbnMtdW5pdD4KPC9ib2R5Pgo8L2ZpbGU+CjwveGxpZmY+Cg==</internal-file>
+      </reference></header><body/></file>
+      <file datatype="x-rkm" original="manifest.rkm" source-language="hy-am" target-language="fr-fr" tool-id="matecat-converter"><header><reference><internal-file form="base64">PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjwhLS09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PS0tPg0KPCEtLVBMRUFTRSwgRE8gTk9UIFJFTkFNRSwgTU9WRSwgTU9ESUZZIE9SIEFMVEVSIElOIEFOWSBXQVkgVEhJUyBGSUxFLS0+DQo8IS0tPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0tLT4NCjxtYW5pZmVzdCB2ZXJzaW9uPSIyIiBsaWJWZXJzaW9uPSIiIHByb2plY3RJZD0iTkM1QzkzQURFIiBwYWNrYWdlSWQ9IjY4ODc2NjIyLTQzZWItNDdiYy1hY2VmLWFmNjNlNWQwOTE5OSIgc291cmNlPSJoeS1hbSIgdGFyZ2V0PSJmci1mciIgb3JpZ2luYWxTdWJEaXI9Im9yaWdpbmFsIiBza2VsZXRvblN1YkRpcj0ic2tlbGV0b24iIHNvdXJjZVN1YkRpcj0id29yayIgdGFyZ2V0U3ViRGlyPSJ3b3JrIiBtZXJnZVN1YkRpcj0iZG9uZSIgdG1TdWJEaXI9IiIgZGF0ZT0iMjAxNS0xMC0wNiAxNjo1ODowMCswMDAwIiB1c2VBcHByb3ZlZE9ubHk9IjAiIHVwZGF0ZUFwcHJvdmVkRmxhZz0iMCI+DQo8Y3JlYXRvclBhcmFtZXRlcnM+PC9jcmVhdG9yUGFyYW1ldGVycz4NCjxkb2MgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgZG9jSWQ9IjEiIGV4dHJhY3Rpb25UeXBlPSJ4bGlmZiIgcmVsYXRpdmVJbnB1dFBhdGg9IkViYXktbGlrZS1zbWFsbC1maWxlLWVkaXRlZC54bGYiIGZpbHRlcklkPSJva2ZfeGxpZmYiIGlucHV0RW5jb2Rpbmc9InV0Zi04IiByZWxhdGl2ZVRhcmdldFBhdGg9IkViYXktbGlrZS1zbWFsbC1maWxlLWVkaXRlZC5vdXQueGxmIiB0YXJnZXRFbmNvZGluZz0iVVRGLTgiIHNlbGVjdGVkPSIxIj5JM1l4Q25WelpVTjFjM1J2YlZCaGNuTmxjaTVpUFhSeWRXVUtabUZqZEc5eWVVTnNZWE56UFdOdmJTNWpkR011ZDNOMGVDNXpkR0Y0TGxkemRIaEpibkIxZEVaaFkzUnZjbmtLWm1Gc2JHSmhZMnRVYjBsRUxtSTlabUZzYzJVS1pYTmpZWEJsUjFRdVlqMW1ZV3h6WlFwaFpHUlVZWEpuWlhSTVlXNW5kV0ZuWlM1aVBYUnlkV1VLYjNabGNuSnBaR1ZVWVhKblpYUk1ZVzVuZFdGblpTNWlQV1poYkhObENtOTFkSEIxZEZObFoyMWxiblJoZEdsdmJsUjVjR1V1YVQwekNtbG5ibTl5WlVsdWNIVjBVMlZuYldWdWRHRjBhVzl1TG1JOVptRnNjMlVLWVdSa1FXeDBWSEpoYm5NdVlqMW1ZV3h6WlFwaFpHUkJiSFJVY21GdWMwZE5iMlJsTG1JOWRISjFaUXBsWkdsMFFXeDBWSEpoYm5NdVlqMW1ZV3h6WlFwcGJtTnNkV1JsUlhoMFpXNXphVzl1Y3k1aVBYUnlkV1VLYVc1amJIVmtaVWwwY3k1aVBYUnlkV1VLWW1Gc1lXNWpaVU52WkdWekxtSTlkSEoxWlFwaGJHeHZkMFZ0Y0hSNVZHRnlaMlYwY3k1aVBXWmhiSE5sQ25SaGNtZGxkRk4wWVhSbFRXOWtaUzVwUFRBS2RHRnlaMlYwVTNSaGRHVldZV3gxWlQxdVpXVmtjeTEwY21GdWMyeGhkR2x2YmdwaGJIZGhlWE5WYzJWVFpXZFRiM1Z5WTJVdVlqMW1ZV3h6WlFweGRXOTBaVTF2WkdWRVpXWnBibVZrTG1JOWRISjFaUXB4ZFc5MFpVMXZaR1V1YVQwd0NuVnpaVk5rYkZoc2FXWm1WM0pwZEdWeUxtSTlabUZzYzJVPTwvZG9jPg0KPC9tYW5pZmVzdD4=</internal-file></reference></header><body/>
+          </file>
+          <file datatype="x-plaintext" original="" source-language="en-us" target-language="es-es">
+          <body>
+              <trans-unit id="0000000035" datatype="x-text/x-4cb" restype="string">
+                  <source>
+                      <ph id="59" x="&lt;endcmp/>">{59}</ph>
+                      <ph id="60" x="&lt;/span>">{60}</ph>
+                      <ph id="61" x="&lt;startcmp/>">{61}</ph>
+                      <ph id="62" x="&lt;endcmp/>">{62}</ph>
+                      <ph id="63" x="&lt;startcmp/>">{63}</ph>
+                      <ph id="64" x="&lt;endcmp/>">{64}</ph>
+                      <ph id="65" x="&lt;startcmp/>">{65}</ph>
+                      <ph id="66" x="&lt;endcmp/>">{66}</ph>
+                      <ph id="67" x="&lt;span class=&quot;listContentDPHContentBlockSpecificValue ecat-block aloha-block aloha-block-ListContentDPHContentBlockSpecificValue&quot; contenteditable=&quot;false&quot; data-aloha-block-type=&quot;ListContentDPHContentBlockSpecificValue&quot; data-listcontentdphfield=&quot;test.DecreaseReleaseAmount&quot; data-listcontentdphspecificvalue=&quot;default&quot; id=&quot;9705d4c0-824b-0c49-e631-91c34666bc9f&quot; style=&quot;display:block;border: 1px #90f dashed;&quot;>">
+                          {67}
+                      </ph>
+                      <ph id="68" x="&lt;span class=&quot;specificContentDiv handleContainer&quot; style=&quot;word-break:break-all;display:block; background-color:rgb(265, 275, 166);&quot;>">{68}</ph>
+                      <ph id="69" x="&lt;span class=&quot;specificContentDiv editHandle&quot; contenteditable=&quot;false&quot; style=&quot;word-break:break-all;display:block;background-color:rgb(265, 275, 166);&quot;>">
+                          {69}
+                      </ph>
+                      <ph id="70" x="&lt;strong>">{70}</ph>Choice Content - default
+                      <ph id="71" x="&lt;/strong>">{71}</ph>
+                      <ph id="72" x="&lt;/span>">{72}</ph>
+                      <ph id="73" x="&lt;/span>">{73}</ph>
+                      <ph id="74" x="&lt;startcmp/>">{74}</ph>
+                  </source>
+                  <target>
+                      <ph id="59" x="&lt;endcmp/>">{59}</ph>
+                      <ph id="60" x="&lt;/span>">{60}</ph>
+                      <ph id="61" x="&lt;startcmp/>">{61}</ph>
+                      <ph id="62" x="&lt;endcmp/>">{62}</ph>
+                      <ph id="63" x="&lt;startcmp/>">{63}</ph>
+                      <ph id="64" x="&lt;endcmp/>">{64}</ph>
+                      <ph id="65" x="&lt;startcmp/>">{65}</ph>
+                      <ph id="66" x="&lt;endcmp/>">{66}</ph>
+                      <ph id="67" x="&lt;span class=&quot;listContentDPHContentBlockSpecificValue ecat-block aloha-block aloha-block-ListContentDPHContentBlockSpecificValue&quot; contenteditable=&quot;false&quot; data-aloha-block-type=&quot;ListContentDPHContentBlockSpecificValue&quot; data-listcontentdphfield=&quot;test.DecreaseReleaseAmount&quot; data-listcontentdphspecificvalue=&quot;default&quot; id=&quot;9705d4c0-824b-0c49-e631-91c34666bc9f&quot; style=&quot;display:block;border: 1px #90f dashed;&quot;>">
+                          {67}
+                      </ph>
+                      <ph id="68" x="&lt;span class=&quot;specificContentDiv handleContainer&quot; style=&quot;word-break:break-all;display:block; background-color:rgb(265, 275, 166);&quot;>">{68}</ph>
+                      <ph id="69" x="&lt;span class=&quot;specificContentDiv editHandle&quot; contenteditable=&quot;false&quot; style=&quot;word-break:break-all;display:block;background-color:rgb(265, 275, 166);&quot;>">
+                          {69}
+                      </ph>
+                      <ph id="70" x="&lt;strong>">{70}</ph>
+                      <ph id="71" x="&lt;/strong>">{71}</ph>
+                      <ph id="72" x="&lt;/span>">{72}</ph>
+                      <ph id="73" x="&lt;/span>">{73}</ph>
+                      <ph id="74" x="&lt;startcmp/>">{74}</ph>
+                  </target>
+                  <alt-trans match-quality="100.00" origin="Sparta CAT">
+                      <source>
+                          <ph id="1">{1}</ph>
+                          <ph id="2">{2}</ph>
+                          <ph id="3">{3}</ph>
+                          <ph id="4">{4}</ph>
+                          <ph id="5">{5}</ph>
+                          <ph id="6">{6}</ph>
+                          <ph id="7">{7}</ph>
+                          <ph id="8">{8}</ph>
+                          <ph id="9">{9}</ph>
+                          <ph id="10">{10}</ph>
+                          <ph id="11">{11}</ph>
+                          <ph id="12">{12}</ph>Choice Content - default
+                          <ph id="13">{13}</ph>
+                          <ph id="14">{14}</ph>
+                          <ph id="15">{15}</ph>
+                          <ph id="16">{16}</ph>
+                      </source>
+                      <target>
+                          <ph id="1">{1}</ph>
+                          <ph id="2">{2}</ph>
+                          <ph id="3">{3}</ph>
+                          <ph id="4">{4}</ph>
+                          <ph id="5">{5}</ph>
+                          <ph id="6">{6}</ph>
+                          <ph id="7">{7}</ph>
+                          <ph id="8">{8}</ph>
+                          <ph id="9">{9}</ph>
+                          <ph id="10">{10}</ph>
+                          <ph id="11">{11}</ph>
+                          <ph id="12">{12}</ph>Choice Content - default
+                          <ph id="13">{13}</ph>
+                          <ph id="14">{14}</ph>
+                          <ph id="15">{15}</ph>
+                          <ph id="16">{16}</ph>
+                      </target>
+                      <iws:tm_entry_id tm_entry_id_value="21401420"/>
+                      <iws:is-reverse-leveraged reverse="false"/>
+                      <iws:is-repaired-match repaired="false"/>
+                      <iws:status translation_status="finished"/>
+                      <iws:asset-origin origin="/source/en_ES/content/msgrenderingapp/1.0.0/PPC000460/perm13.4cb"/>
+                      <iws:attribute name="_tm_created_by">Marta Chico</iws:attribute>
+                      <iws:attribute name="_tm_created_date">1503056686433</iws:attribute>
+                      <iws:attribute name="_tm_modified_by">Marta Chico</iws:attribute>
+                      <iws:attribute name="_tm_modified_date">1503056686433</iws:attribute>
+                      <iws:attribute name="_tm_sid">msgrenderingapp/Transactions/Holds/PPC000460/perm13/en_AD/messageSubject/d41d8cd98f00b204e9800998ecf8427e</iws:attribute>
+                  </alt-trans>
+                  </trans-unit>
+            </body>
+          </file>
+        </xliff>

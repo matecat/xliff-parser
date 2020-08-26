@@ -66,7 +66,7 @@ abstract class AbstractParser
 
         if (!empty($childNodes)) {
             foreach ($element->childNodes as $node) {
-                $extractedContent .= $dom->saveXML($node);
+                $extractedContent .= Strings::fixNonWellFormedXml($dom->saveXML($node));
             }
         }
 
