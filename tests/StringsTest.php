@@ -33,7 +33,35 @@ class StringsTest extends BaseTest
         $expected = '<g id="1">Hello</g>, 4 &gt; 3 -&gt; <g id="1">Hello</g>, 4 &gt; 3';
 
         $this->assertEquals($expected, Strings::fixNonWellFormedXml($original));
+
+        $tests = array(
+                '' => '',
+                'just text' => 'just text',
+                '<gap>Hey</gap>' => '&lt;gap&gt;Hey&lt;/gap&gt;',
+                '<mrk>Hey</mrk>' => '<mrk>Hey</mrk>',
+                '<g >Hey</g >' => '<g >Hey</g >',
+                '<g    >Hey</g   >' => '<g    >Hey</g   >',
+                '<g id="99">Hey</g>' => '<g id="99">Hey</g>',
+                'Hey<x/>' => 'Hey<x/>',
+                'Hey<x />' => 'Hey<x />',
+                'Hey<x   />' => 'Hey<x   />',
+                'Hey<x id="15"/>' => 'Hey<x id="15"/>',
+                'Hey<bx id="1"/>' => 'Hey<bx id="1"/>',
+                'Hey<ex id="1"/>' => 'Hey<ex id="1"/>',
+                '<bpt id="1">Hey</bpt>' => '<bpt id="1">Hey</bpt>',
+                '<ept id="1">Hey</ept>' => '<ept id="1">Hey</ept>',
+                '<ph id="1">Hey</ph>' => '<ph id="1">Hey</ph>',
+                '<it id="1">Hey</it>' => '<it id="1">Hey</it>',
+                '<mrk mid="3" mtype="seg"><g id="2">Hey man! <x id="1"/><b id="dunno">Hey man & hey girl!</b></mrk>' => '<mrk mid="3" mtype="seg"><g id="2">Hey man! <x id="1"/>&lt;b id="dunno"&gt;Hey man &amp; hey girl!&lt;/b&gt;</mrk>',
+        );
+
+        foreach ($tests as $in => $expected) {
+            $out = Strings::fixNonWellFormedXml($in);
+            $this->assertEquals( $expected, $out );
+        }
     }
+
+
 
     /**
      * @test

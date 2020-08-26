@@ -41,7 +41,7 @@ class ParserV2 extends AbstractParser
                     // http://docs.oasis-open.org/xliff/xliff-core/v2.0/xliff-core-v2.0.html#originaldata
                     $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'original-data' ] = $this->extractTransUnitOriginalData($transUnit);
 
-                    // seg-source
+                    // content
                     /** @var \DOMElement $segment */
                     foreach ($transUnit->childNodes as $segment) {
                         if ($segment->nodeName === 'segment') {

@@ -2,6 +2,9 @@
 
 namespace Matecat\XliffParser\Parser;
 
+use Matecat\XliffParser\Exception\DuplicateTransUnitIdInXliff;
+use Matecat\XliffParser\Exception\NotFoundIdInTransUnit;
+
 class ParserV1 extends AbstractParser
 {
     /**
@@ -9,19 +12,40 @@ class ParserV1 extends AbstractParser
      */
     public function parse(\DOMDocument $dom, $output = [])
     {
-        $i = 0;
+        $i = 1;
         /** @var \DOMElement $file */
         foreach ($dom->getElementsByTagName('file') as $file) {
 
-            // First element in the XLIFF split is the content before <file> (header), skipping
-            if ($i > 0) {
-                // metadata
-                $output[ 'files' ][ $i ][ 'attr' ] = $this->extractMetadata($file);
+            // metadata
+            $output[ 'files' ][ $i ][ 'attr' ] = $this->extractMetadata($file);
 
-                // reference
-                if (!empty($this->extractReference($file))) {
-                    $output[ 'files' ][ $i ][ 'reference' ] = $this->extractReference($file);
-                }
+            // reference
+            if (!empty($this->extractReference($file))) {
+                $output[ 'files' ][ $i ][ 'reference' ] = $this->extractReference($file);
+            }
+
+            // trans-units
+            $transUnitIdArrayForUniquenessCheck = [];
+            $j = 1;
+            /** @var \DOMElement $transUnit */
+            foreach ($file->getElementsByTagName('trans-unit') as $transUnit) {
+
+                // metadata
+                $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'attr' ] = $this->extractTransUnitMetadata($transUnit, $transUnitIdArrayForUniquenessCheck);
+
+                // notes
+                $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'notes' ] = $this->extractTransUnitNotes($transUnit);
+
+                // content
+
+                $j++;
+            }
+
+            // trans-unit re-count check
+            $totalTransUnitsId  = count($transUnitIdArrayForUniquenessCheck);
+            $transUnitsUniqueId = count(array_unique($transUnitIdArrayForUniquenessCheck));
+            if ($totalTransUnitsId != $transUnitsUniqueId) {
+                throw new DuplicateTransUnitIdInXliff("Invalid trans-unit id, duplicate found.", 400);
             }
 
             $i++;
@@ -101,5 +125,59 @@ class ParserV1 extends AbstractParser
         }
 
         return $reference;
+    }
+
+    /**
+     * @param \DOMElement $transUnit
+     * @param array       $transUnitIdArrayForUniquenessCheck
+     *
+     * @return array
+     */
+    private function extractTransUnitMetadata( \DOMElement $transUnit, array $transUnitIdArrayForUniquenessCheck )
+    {
+        $metadata = [];
+
+        // id
+        if (null === $transUnit->attributes->getNamedItem('id')) {
+            throw new NotFoundIdInTransUnit('Invalid trans-unit id found. EMPTY value', 400);
+        }
+
+        $id = $transUnit->attributes->getNamedItem('id')->nodeValue;
+        $transUnitIdArrayForUniquenessCheck[] = $id;
+        $metadata[ 'id' ] = $id;
+
+        // translate
+        if (null !== $transUnit->attributes->getNamedItem('translate')) {
+            $metadata[ 'translate' ] = $transUnit->attributes->getNamedItem('translate')->nodeValue;
+        }
+
+        // Approved
+        // http://docs.oasis-open.org/xliff/v1.2/os/xliff-core.html#approved
+        if (null !== $transUnit->attributes->getNamedItem('approved')) {
+            $metadata[ 'approved' ] = filter_var( $transUnit->attributes->getNamedItem('approved')->nodeValue, FILTER_VALIDATE_BOOLEAN );
+        }
+
+        return $metadata;
+    }
+
+    /**
+     * @param \DOMElement $transUnit
+     *
+     * @return array
+     * @throws \Exception
+     */
+    private function extractTransUnitNotes( \DOMElement $transUnit )
+    {
+        $notes = [];
+        foreach ($transUnit->getElementsByTagName('note') as $note) {
+
+            $noteValue = trim($note->nodeValue);
+
+            if ('' !== $noteValue) {
+                $notes[] = $this->JSONOrRawContentArray($noteValue);
+            }
+        }
+
+        return $notes;
     }
 }

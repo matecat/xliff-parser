@@ -16,7 +16,7 @@ class XliffParserV1Test extends BaseTest
 
         $this->assertEquals('Input identified as ASCII ans converted UTF-8. May not be a problem if the content is English only', $parsed['parser-warnings'][0]);
         $this->assertNotEmpty($parsed['files']);
-        $this->assertCount(2, $parsed['files']);
+        $this->assertCount(3, $parsed['files']);
     }
 
     /**
@@ -25,7 +25,7 @@ class XliffParserV1Test extends BaseTest
     public function can_parse_xliff_v1_metadata()
     {
         $parsed = XliffParser::toArray($this->getTestFile('file-with-notes-converted-nobase64.xliff'));
-        $attr   = $parsed[ 'files' ][ 2 ][ 'attr' ];
+        $attr   = $parsed[ 'files' ][ 3 ][ 'attr' ];
 
         $this->assertCount(5, $attr);
         $this->assertEquals($attr[ 'source-language' ], 'hy-am');
@@ -42,93 +42,75 @@ class XliffParserV1Test extends BaseTest
     public function can_parse_xliff_v1_reference()
     {
         $parsed = XliffParser::toArray($this->getTestFile('file-with-notes-converted-nobase64.xliff'));
-        $reference   = $parsed[ 'files' ][ 1 ][ 'reference' ];
+        $reference   = $parsed[ 'files' ][ 2 ][ 'reference' ];
 
         $this->assertCount(2, $reference[0]);
         $this->assertEquals($reference[0][ 'form-type' ], 'base64');
         $this->assertEquals($reference[0][ 'base64' ], 'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjwhLS09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PS0tPg0KPCEtLVBMRUFTRSwgRE8gTk9UIFJFTkFNRSwgTU9WRSwgTU9ESUZZIE9SIEFMVEVSIElOIEFOWSBXQVkgVEhJUyBGSUxFLS0+DQo8IS0tPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0tLT4NCjxtYW5pZmVzdCB2ZXJzaW9uPSIyIiBsaWJWZXJzaW9uPSIiIHByb2plY3RJZD0iTkM1QzkzQURFIiBwYWNrYWdlSWQ9IjY4ODc2NjIyLTQzZWItNDdiYy1hY2VmLWFmNjNlNWQwOTE5OSIgc291cmNlPSJoeS1hbSIgdGFyZ2V0PSJmci1mciIgb3JpZ2luYWxTdWJEaXI9Im9yaWdpbmFsIiBza2VsZXRvblN1YkRpcj0ic2tlbGV0b24iIHNvdXJjZVN1YkRpcj0id29yayIgdGFyZ2V0U3ViRGlyPSJ3b3JrIiBtZXJnZVN1YkRpcj0iZG9uZSIgdG1TdWJEaXI9IiIgZGF0ZT0iMjAxNS0xMC0wNiAxNjo1ODowMCswMDAwIiB1c2VBcHByb3ZlZE9ubHk9IjAiIHVwZGF0ZUFwcHJvdmVkRmxhZz0iMCI+DQo8Y3JlYXRvclBhcmFtZXRlcnM+PC9jcmVhdG9yUGFyYW1ldGVycz4NCjxkb2MgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgZG9jSWQ9IjEiIGV4dHJhY3Rpb25UeXBlPSJ4bGlmZiIgcmVsYXRpdmVJbnB1dFBhdGg9IkViYXktbGlrZS1zbWFsbC1maWxlLWVkaXRlZC54bGYiIGZpbHRlcklkPSJva2ZfeGxpZmYiIGlucHV0RW5jb2Rpbmc9InV0Zi04IiByZWxhdGl2ZVRhcmdldFBhdGg9IkViYXktbGlrZS1zbWFsbC1maWxlLWVkaXRlZC5vdXQueGxmIiB0YXJnZXRFbmNvZGluZz0iVVRGLTgiIHNlbGVjdGVkPSIxIj5JM1l4Q25WelpVTjFjM1J2YlZCaGNuTmxjaTVpUFhSeWRXVUtabUZqZEc5eWVVTnNZWE56UFdOdmJTNWpkR011ZDNOMGVDNXpkR0Y0TGxkemRIaEpibkIxZEVaaFkzUnZjbmtLWm1Gc2JHSmhZMnRVYjBsRUxtSTlabUZzYzJVS1pYTmpZWEJsUjFRdVlqMW1ZV3h6WlFwaFpHUlVZWEpuWlhSTVlXNW5kV0ZuWlM1aVBYUnlkV1VLYjNabGNuSnBaR1ZVWVhKblpYUk1ZVzVuZFdGblpTNWlQV1poYkhObENtOTFkSEIxZEZObFoyMWxiblJoZEdsdmJsUjVjR1V1YVQwekNtbG5ibTl5WlVsdWNIVjBVMlZuYldWdWRHRjBhVzl1TG1JOVptRnNjMlVLWVdSa1FXeDBWSEpoYm5NdVlqMW1ZV3h6WlFwaFpHUkJiSFJVY21GdWMwZE5iMlJsTG1JOWRISjFaUXBsWkdsMFFXeDBWSEpoYm5NdVlqMW1ZV3h6WlFwcGJtTnNkV1JsUlhoMFpXNXphVzl1Y3k1aVBYUnlkV1VLYVc1amJIVmtaVWwwY3k1aVBYUnlkV1VLWW1Gc1lXNWpaVU52WkdWekxtSTlkSEoxWlFwaGJHeHZkMFZ0Y0hSNVZHRnlaMlYwY3k1aVBXWmhiSE5sQ25SaGNtZGxkRk4wWVhSbFRXOWtaUzVwUFRBS2RHRnlaMlYwVTNSaGRHVldZV3gxWlQxdVpXVmtjeTEwY21GdWMyeGhkR2x2YmdwaGJIZGhlWE5WYzJWVFpXZFRiM1Z5WTJVdVlqMW1ZV3h6WlFweGRXOTBaVTF2WkdWRVpXWnBibVZrTG1JOWRISjFaUXB4ZFc5MFpVMXZaR1V1YVQwd0NuVnpaVk5rYkZoc2FXWm1WM0pwZEdWeUxtSTlabUZzYzJVPTwvZG9jPg0KPC9tYW5pZmVzdD4=');
     }
 
+    /**
+     * @test
+     */
+    function can_parse_sdlxliff_v1_tu_metadata()
+    {
+        $parsed = XliffParser::toArray($this->getTestFile('file-with-notes-nobase64.po.sdlxliff'));
+
+        $this->assertEquals($parsed['files'][1]['trans-units'][4]['attr']['id'], 5);
+        $this->assertTrue($parsed['files'][1]['trans-units'][4]['attr']['approved']);
+    }
+
+    /**
+     * @test
+     */
+    function can_parse_sdlxliff_v1_tu_notes()
+    {
+        $parsed = XliffParser::toArray($this->getTestFile('file-with-notes-nobase64.po.sdlxliff'));
+
+        $this->assertEquals( 'This is a comment',
+                $parsed['files'][1]['trans-units'][4]['notes'][0]['raw-content']);
+
+        $this->assertEquals( 'This is another comment',
+                $parsed['files'][1]['trans-units'][6]['notes'][0]['raw-content']);
+    }
+
+    /**
+     * @test
+     */
+    function can_parse_converted_xliff_v1_tu_notes()
+    {
+        $parsed = XliffParser::toArray($this->getTestFile('file-with-notes-converted.xliff'));
+
+        $this->assertEquals(
+                "This is a comment\n" .
+                "---\n" .
+                "This is a comment number two\n" .
+                "---\n" .
+                "This is a comment number three",
+
+                $parsed['files'][3]['trans-units'][1]['notes'][0]['raw-content']
+        );
+
+        $this->assertEquals( 'This is another comment',
+                $parsed['files'][3]['trans-units'][3]['notes'][0]['raw-content']);
+    }
+
+
+
 //    /**
 //     * @test
 //     */
-//    function testParsesNoteElements() {
-//        // read a file with notes inside
-//        $parsed = XliffParser::toArray($this->getTestFile('file-with-notes-nobase64.po.sdlxliff'));
-//
-//        $this->assertEquals( 'This is a comment',
-//                $parsed['files'][1]['trans-units'][4]['notes'][0]['raw-content']);
-//
-//        $this->assertEquals( 'This is another comment',
-//                $parsed['files'][1]['trans-units'][6]['notes'][0]['raw-content']);
-//    }
-
-//    function testConvertedFile() {
-//        $file = test_file_path('xliff/file-with-notes-converted.xliff');
-//        $content = file_get_contents( $file );
-//
-//        $xliff_obj = new Xliff_Parser();
-//        $xliff     = $xliff_obj->Xliff2Array( $content );
-//
-//        $this->assertEquals(
-//                "This is a comment\n" .
-//                "---\n" .
-//                "This is a comment number two\n" .
-//                "---\n" .
-//                "This is a comment number three",
-//
-//                $xliff['files'][3]['trans-units'][1]['notes'][0]['raw-content']
-//        );
-//
-//        $this->assertEquals( 'This is another comment',
-//                $xliff['files'][3]['trans-units'][3]['notes'][0]['raw-content']);
-//
-//    }
-//
-//    function testFileWithMaliciousNote() {
-//        $file = test_file_path('xliff/file-with-notes-and-malicious-code.xliff');
-//        $content = file_get_contents( $file );
-//
-//        $xliff_obj = new Xliff_Parser();
-//        $xliff     = $xliff_obj->Xliff2Array( $content );
+//    function can_parse_file_with_malicious_note()
+//    {
+//        $parsed = XliffParser::toArray($this->getTestFile('file-with-notes-and-malicious-code.xliff'));
 //
 //        $this->assertEquals(
 //                "&lt;script&gt;alert('This is malicious code');&lt;/script&gt;",
-//                $xliff['files'][3]['trans-units'][1]['notes'][0]['raw-content']
+//                $parsed['files'][3]['trans-units'][1]['notes'][0]['raw-content']
 //        );
-//
 //    }
-//
-//    public function testFixNotWellFormedXML(){
-//
-//        $tests = array(
-//                '' => '',
-//                'just text' => 'just text',
-//                '<gap>Hey</gap>' => '&lt;gap&gt;Hey&lt;/gap&gt;',
-//                '<mrk>Hey</mrk>' => '<mrk>Hey</mrk>',
-//                '<g >Hey</g >' => '<g >Hey</g >',
-//                '<g    >Hey</g   >' => '<g    >Hey</g   >',
-//                '<g id="99">Hey</g>' => '<g id="99">Hey</g>',
-//                'Hey<x/>' => 'Hey<x/>',
-//                'Hey<x />' => 'Hey<x />',
-//                'Hey<x   />' => 'Hey<x   />',
-//                'Hey<x id="15"/>' => 'Hey<x id="15"/>',
-//                'Hey<bx id="1"/>' => 'Hey<bx id="1"/>',
-//                'Hey<ex id="1"/>' => 'Hey<ex id="1"/>',
-//                '<bpt id="1">Hey</bpt>' => '<bpt id="1">Hey</bpt>',
-//                '<ept id="1">Hey</ept>' => '<ept id="1">Hey</ept>',
-//                '<ph id="1">Hey</ph>' => '<ph id="1">Hey</ph>',
-//                '<it id="1">Hey</it>' => '<it id="1">Hey</it>',
-//                '<mrk mid="3" mtype="seg"><g id="2">Hey man! <x id="1"/><b id="dunno">Hey man & hey girl!</b></mrk>' => '<mrk mid="3" mtype="seg"><g id="2">Hey man! <x id="1"/>&lt;b id="dunno"&gt;Hey man &amp; hey girl!&lt;/b&gt;</mrk>',
-//        );
-//
-//        foreach ($tests as $in => $expected) {
-//            $out = Xliff_Parser::fix_non_well_formed_xml($in);
-//            $this->assertEquals( $expected, $out );
-//        }
-//
-//    }
-//
+
+
 //    public function testEmptySelfClosedTargetTagWithAltTrans(){
 //
 //        $x = "<trans-unit id=\"0000000121\" datatype=\"x-text/x-4cb\" restype=\"string\">
