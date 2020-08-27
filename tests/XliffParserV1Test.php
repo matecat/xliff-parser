@@ -186,7 +186,8 @@ class XliffParserV1Test extends BaseTest
         $segSource = $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ]['seg-source'];
         $segTarget = $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ]['seg-target'];
 
-        $this->assertEquals($segSource, $segTarget);
+        $this->assertEquals(0, $segSource[0]['mid']);
+        $this->assertEquals('An English string', $segSource[0]['raw-content']);
         $this->assertEquals(0, $segTarget[0]['mid']);
         $this->assertEquals('An English string', $segTarget[0]['raw-content']);
     }

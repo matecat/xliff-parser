@@ -22,8 +22,8 @@ abstract class AbstractParser
     protected function extractContent(\DOMDocument $dom, \DOMElement $node)
     {
         return [
-                'raw-content' => $this->extractTagContent($dom, $node),
-                'attr' => $this->extractTagAttributes($node)
+            'raw-content' => $this->extractTagContent($dom, $node),
+            'attr' => $this->extractTagAttributes($node)
         ];
     }
 
@@ -70,7 +70,7 @@ abstract class AbstractParser
             }
         }
 
-        return trim($extractedContent);
+        return $extractedContent;
     }
 
     /**

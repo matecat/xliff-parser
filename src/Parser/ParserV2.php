@@ -42,21 +42,50 @@ class ParserV2 extends AbstractParser
                     $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'original-data' ] = $this->extractTransUnitOriginalData($transUnit);
 
                     // content
+                    // in xliff v2 there is not <seg-source> tag, so we need to concatenate all segment <source> and <target>
+                    // to build the full strings
+
+                    $source = [
+                        'attr' => [],
+                        'raw-content' => '',
+                    ];
+
+                    $target = [
+                            'attr' => [],
+                            'raw-content' => '',
+                    ];
+
                     /** @var \DOMElement $segment */
+                    $c = 0;
                     foreach ($transUnit->childNodes as $segment) {
                         if ($segment->nodeName === 'segment') {
                             // loop <segment> to get nested <source> and <target> tag
                             foreach ($segment->childNodes as $childNode) {
                                 if ($childNode->nodeName === 'source') {
-                                    $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'source' ] = $this->extractContent($dom, $childNode);
+                                    $extractedSource = $this->extractContent($dom, $childNode);
+                                    $source['raw-content'] .= $extractedSource['raw-content'];
+
+                                    if(!empty($extractedSource['attr'])){
+                                        $source['attr'][$c] = $extractedSource['attr'];
+                                    }
                                 }
 
                                 if ($childNode->nodeName === 'target') {
-                                    $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'target' ] = $this->extractContent($dom, $childNode);
+                                    $extractedTarget = $this->extractContent($dom, $childNode);
+                                    $target['raw-content'] .= $extractedTarget['raw-content'];
+
+                                    if(!empty($extractedTarget['attr'])){
+                                        $source['attr'][$c] = $extractedTarget['attr'];
+                                    }
                                 }
                             }
+
+                            $c++;
                         }
                     }
+
+                    $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'source' ] = $source;
+                    $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'target' ] = $target;
 
                     $j++;
                 }
