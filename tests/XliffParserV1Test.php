@@ -116,6 +116,26 @@ class XliffParserV1Test extends BaseTest
     /**
      * @test
      */
+    public function can_parse_xliff_v1_tu_with_extenal_tags_in_seg_source_and_target()
+    {
+        $parsed = XliffParser::toArray($this->getTestFile('file-with-notes-converted-and-seg-source-with-ex-tags.xliff'));
+
+        $segSource = $parsed[ 'files' ][ 3 ]['trans-units'][ 1 ][ 'seg-source' ][ 0 ];
+        $segTarget = $parsed[ 'files' ][ 3 ]['trans-units'][ 1 ][ 'seg-target' ][ 0 ];
+        $expected = [
+                'mid' => 0,
+                'ext-prec-tags' => '<g id="1">',
+                'raw-content' => 'An English string with g tags',
+                'ext-succ-tags' => '</g>',
+        ];
+
+        $this->assertEquals($expected, $segSource);
+        $this->assertEquals($expected, $segTarget);
+    }
+
+    /**
+     * @test
+     */
     public function can_parse_empty_self_closed_target_tag_with_alt_trans()
     {
         $parsed = XliffParser::toArray($this->getTestFile('file-with-self-closed-tag-and-alt-trans.xliff'));

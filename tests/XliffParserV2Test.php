@@ -18,6 +18,7 @@ class XliffParserV2Test extends BaseTest
         $this->assertEquals($attr[ 'source-language' ], 'en-us');
         $this->assertEquals($attr[ 'target-language' ], 'el-gr');
         $this->assertEquals($attr[ 'original' ], '389108a4-rtapi.xml');
+        $this->assertEmpty($parsed[ 'files' ][ 1 ][ 'notes' ]);
     }
 
     /**
