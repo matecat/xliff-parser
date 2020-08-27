@@ -441,14 +441,14 @@ $output = [
                             ],
                         ],
                         'original-data' => [],
-                         'source' => [
-                             'content' => '&lt;pc id="1"&gt;Hello <mrk id="m1" type="term">World</mrk>!&lt;/pc&gt;',
-                             'attr'    => [],
-                         ],
-                         'target' => [
+                        'source' => [
+                            'content' => '&lt;pc id="1"&gt;Hello <mrk id="m1" type="term">World</mrk>!&lt;/pc&gt;',
+                            'attr'    => [],
+                        ],
+                        'target' => [
                             'content' => '&lt;pc id="1"&gt;Bonjour le <mrk id="m1" type="term">Monde</mrk> !&lt;/pc&gt;',
-                             'attr'    => [],
-                         ],
+                            'attr'    => [],
+                        ],
                     ],
                     2 => [
                         'attr' => [
@@ -466,12 +466,12 @@ $output = [
                     ],
                     'original-data' => [],
                     'source' => [
-                            'content' => '&lt;pc id="2"&gt;Hello <mrk id="m2" type="term">World2</mrk>!&lt;/pc&gt;',
-                            'attr'    => [],
+                        'content' => '&lt;pc id="2"&gt;Hello <mrk id="m2" type="term">World2</mrk>!&lt;/pc&gt;',
+                        'attr'    => [],
                     ],
                     'target' => [
-                            'content' => '&lt;pc id="2"&gt;Bonjour le <mrk id="m2" type="term">Monde2</mrk> !&lt;/pc&gt;',
-                            'attr'    => [],
+                        'content' => '&lt;pc id="2"&gt;Bonjour le <mrk id="m2" type="term">Monde2</mrk> !&lt;/pc&gt;',
+                        'attr'    => [],
                     ],
                 ],
             ],
