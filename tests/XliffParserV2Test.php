@@ -96,6 +96,7 @@ class XliffParserV2Test extends BaseTest
     public function can_parse_xliff_v2_trans_units_source_and_target()
     {
         $parsed = XliffParser::toArray($this->getTestFile('sample-20.xlf'));
+
         $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
         $this->assertCount(2, $units);
 
