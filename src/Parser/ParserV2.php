@@ -27,67 +27,15 @@ class ParserV2 extends AbstractParser
             $transUnitIdArrayForUniquenessCheck = [];
             $j = 1;
             /** @var \DOMElement $transUnit */
-            foreach ($file->childNodes as $transUnit) {
-                if ($transUnit->nodeName === 'unit') {
-
-                    // metadata
-                    $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'attr' ] = $this->extractTransUnitMetadata($transUnit, $transUnitIdArrayForUniquenessCheck);
-
-                    // notes
-                    // merge <notes> with key and key-note contained in metadata <mda:metaGroup>
-                    $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'notes' ] = $this->extractTransUnitNotes($transUnit);
-
-                    // original-data (exclusive for V2)
-                    // http://docs.oasis-open.org/xliff/xliff-core/v2.0/xliff-core-v2.0.html#originaldata
-                    $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'original-data' ] = $this->extractTransUnitOriginalData($transUnit);
-
-                    // content
-                    // in xliff v2 there is not <seg-source> tag, so we need to concatenate all segment <source> and <target>
-                    // to build the full strings
-
-                    $source = [
-                        'attr' => [],
-                        'raw-content' => '',
-                    ];
-
-                    $target = [
-                            'attr' => [],
-                            'raw-content' => '',
-                    ];
-
-                    /** @var \DOMElement $segment */
-                    $c = 0;
-                    foreach ($transUnit->childNodes as $segment) {
-                        if ($segment->nodeName === 'segment') {
-                            // loop <segment> to get nested <source> and <target> tag
-                            foreach ($segment->childNodes as $childNode) {
-                                if ($childNode->nodeName === 'source') {
-                                    $extractedSource = $this->extractContent($dom, $childNode);
-                                    $source['raw-content'] .= $extractedSource['raw-content'];
-
-                                    if(!empty($extractedSource['attr'])){
-                                        $source['attr'][$c] = $extractedSource['attr'];
-                                    }
-                                }
-
-                                if ($childNode->nodeName === 'target') {
-                                    $extractedTarget = $this->extractContent($dom, $childNode);
-                                    $target['raw-content'] .= $extractedTarget['raw-content'];
-
-                                    if(!empty($extractedTarget['attr'])){
-                                        $source['attr'][$c] = $extractedTarget['attr'];
-                                    }
-                                }
-                            }
-
-                            $c++;
+            foreach ($file->childNodes as $childNode) {
+                if ($childNode->nodeName === 'group') {
+                    foreach ($childNode->childNodes as $nestedChildNode) {
+                        if ($nestedChildNode->nodeName === 'unit') {
+                            $this->extractTransUnit($nestedChildNode, $transUnitIdArrayForUniquenessCheck, $dom, $output,$i, $j);
                         }
                     }
-
-                    $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'source' ] = $source;
-                    $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'target' ] = $target;
-
-                    $j++;
+                } elseif ($childNode->nodeName === 'unit') {
+                    $this->extractTransUnit($childNode, $transUnitIdArrayForUniquenessCheck, $dom, $output,$i, $j);
                 }
             }
 
@@ -157,6 +105,80 @@ class ParserV2 extends AbstractParser
         }
 
         return $notes;
+    }
+
+    /**
+     * Extract and populate 'trans-units' array
+     *
+     * @param $transUnit
+     * @param $transUnitIdArrayForUniquenessCheck
+     * @param $dom
+     * @param $output
+     * @param $i
+     * @param $j
+     *
+     * @throws \Exception
+     */
+    private function extractTransUnit($transUnit, &$transUnitIdArrayForUniquenessCheck, $dom, &$output, &$i, &$j)
+    {
+        // metadata
+        $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'attr' ] = $this->extractTransUnitMetadata($transUnit, $transUnitIdArrayForUniquenessCheck);
+
+        // notes
+        // merge <notes> with key and key-note contained in metadata <mda:metaGroup>
+        $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'notes' ] = $this->extractTransUnitNotes($transUnit);
+
+        // original-data (exclusive for V2)
+        // http://docs.oasis-open.org/xliff/xliff-core/v2.0/xliff-core-v2.0.html#originaldata
+        $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'original-data' ] = $this->extractTransUnitOriginalData($transUnit);
+
+        // content
+        // in xliff v2 there is not <seg-source> tag, so we need to concatenate all segment <source> and <target>
+        // to build the full strings
+
+        $source = [
+                'attr' => [],
+                'raw-content' => '',
+        ];
+
+        $target = [
+                'attr' => [],
+                'raw-content' => '',
+        ];
+
+        /** @var \DOMElement $segment */
+        $c = 0;
+        foreach ($transUnit->childNodes as $segment) {
+            if ($segment->nodeName === 'segment') {
+                // loop <segment> to get nested <source> and <target> tag
+                foreach ($segment->childNodes as $childNode) {
+                    if ($childNode->nodeName === 'source') {
+                        $extractedSource = $this->extractContent($dom, $childNode);
+                        $source['raw-content'] .= $extractedSource['raw-content'];
+
+                        if(!empty($extractedSource['attr'])){
+                            $source['attr'][$c] = $extractedSource['attr'];
+                        }
+                    }
+
+                    if ($childNode->nodeName === 'target') {
+                        $extractedTarget = $this->extractContent($dom, $childNode);
+                        $target['raw-content'] .= $extractedTarget['raw-content'];
+
+                        if(!empty($extractedTarget['attr'])){
+                            $source['attr'][$c] = $extractedTarget['attr'];
+                        }
+                    }
+                }
+
+                $c++;
+            }
+        }
+
+        $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'source' ] = $source;
+        $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'target' ] = $target;
+
+        $j++;
     }
 
     /**

@@ -131,7 +131,7 @@ class ParserV1 extends AbstractParser
     }
 
     /**
-     * Extract and popolate 'trans-units' array
+     * Extract and populate 'trans-units' array
      *
      * @param $transUnit
      * @param $transUnitIdArrayForUniquenessCheck

@@ -113,6 +113,19 @@ class XliffParserV2Test extends BaseTest
     /**
      * @test
      */
+    public function can_parse_xliff_v2_trans_units_nested_in_groups()
+    {
+        $parsed = XliffParser::toArray($this->getTestFile('sample-20-with-group.xlf'));
+
+        $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
+        $this->assertCount(3, $units);
+        $this->assertStringContainsString('Sentence from a group', $units[ 1 ][ 'source' ][ 'raw-content' ]);
+        $this->assertStringContainsString('Phrase from a group', $units[ 1 ][ 'target' ][ 'raw-content' ]);
+    }
+
+    /**
+     * @test
+     */
     public function can_parse_xliff_v2_trans_units_segmented_source_and_target()
     {
         $parsed = XliffParser::toArray($this->getTestFile('sample-20-segmented.xlf'));

@@ -11,8 +11,6 @@ class XliffParserPerformanceTest extends BaseTest
      */
     public function can_parse_a_very_large_file()
     {
-
-
         // read a file with notes inside
         $parsed = XliffParser::toArray($this->getTestFile('55K_segments_english.sdlxliff'));
 
