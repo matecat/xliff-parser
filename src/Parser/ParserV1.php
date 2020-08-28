@@ -9,6 +9,7 @@ class ParserV1 extends AbstractParser
 {
     /**
      * @inheritDoc
+     * @throws \Exception
      */
     public function parse(\DOMDocument $dom, $output = [])
     {
@@ -27,67 +28,30 @@ class ParserV1 extends AbstractParser
             // trans-units
             $transUnitIdArrayForUniquenessCheck = [];
             $j = 1;
-            /** @var \DOMElement $transUnit */
-            foreach ($file->getElementsByTagName('trans-unit') as $transUnit) {
-
-                // metadata
-                $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'attr' ] = $this->extractTransUnitMetadata($transUnit, $transUnitIdArrayForUniquenessCheck);
-
-                // notes
-                $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'notes' ] = $this->extractTransUnitNotes($dom, $transUnit);
-
-                // content
-                /** @var \DOMElement $childNode */
-                foreach ($transUnit->childNodes as $childNode) {
-                    // source
-                    if ($childNode->nodeName === 'source') {
-                        $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'source' ] = $this->extractContent($dom, $childNode);
-                    }
-
-                    // seg-source
-                    if ($childNode->nodeName === 'seg-source') {
-                        $output[ 'files' ][ $i ][ 'trans-units' ][ $j ]['seg-source'] = $this->extractSource($dom, $childNode);
-                    }
-
-                    // target
-                    if ($childNode->nodeName === 'target') {
-                        $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'target' ] = $this->extractContent($dom, $childNode);
-
-                        // seg-target
-                        $targetRawContent = @$output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'target' ][ 'raw-content' ];
-                        $segSource = @$output[ 'files' ][ $i ][ 'trans-units' ][ $j ]['seg-source'];
-                        if (isset($targetRawContent) and !empty($targetRawContent) and isset($segSource) and count($segSource) > 0) {
-                            $output[ 'files' ][ $i ][ 'trans-units' ][ $j ]['seg-target'] = $this->extractSource($dom, $childNode);
+            foreach ($file->childNodes as $body) {
+                if ($body->nodeName === 'body') {
+                    foreach ($body->childNodes as $childNode) {
+                        if ($childNode->nodeName === 'group') {
+                            foreach ($childNode->childNodes as $nestedChildNode) {
+                                if ($nestedChildNode->nodeName === 'trans-unit') {
+                                    $this->extractTransUnit($nestedChildNode, $transUnitIdArrayForUniquenessCheck, $dom, $output,$i, $j);
+                                }
+                            }
+                        } elseif ($childNode->nodeName === 'trans-unit') {
+                            $this->extractTransUnit($childNode, $transUnitIdArrayForUniquenessCheck, $dom, $output,$i, $j);
                         }
                     }
 
-                    // locked
-                    if ($childNode->nodeName === 'sdl:seg') {
-                        $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'locked' ] = $this->extractLocked($childNode);
+                    // trans-unit re-count check
+                    $totalTransUnitsId  = count($transUnitIdArrayForUniquenessCheck);
+                    $transUnitsUniqueId = count(array_unique($transUnitIdArrayForUniquenessCheck));
+                    if ($totalTransUnitsId != $transUnitsUniqueId) {
+                        throw new DuplicateTransUnitIdInXliff("Invalid trans-unit id, duplicate found.", 400);
                     }
-                }
 
-                // context-group
-                foreach ($transUnit->getElementsByTagName('context-group') as $contextGroup) {
-                    $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'context-group' ][] = $this->extractTransUnitContextGroup($dom, $contextGroup);
+                    $i++;
                 }
-
-                // alt-trans
-                foreach ($transUnit->getElementsByTagName('alt-trans') as $altTrans) {
-                    $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'alt-trans' ][] = $this->extractTransUnitAltTrans($altTrans);
-                }
-
-                $j++;
             }
-
-            // trans-unit re-count check
-            $totalTransUnitsId  = count($transUnitIdArrayForUniquenessCheck);
-            $transUnitsUniqueId = count(array_unique($transUnitIdArrayForUniquenessCheck));
-            if ($totalTransUnitsId != $transUnitsUniqueId) {
-                throw new DuplicateTransUnitIdInXliff("Invalid trans-unit id, duplicate found.", 400);
-            }
-
-            $i++;
         }
 
         return $output;
@@ -164,6 +128,70 @@ class ParserV1 extends AbstractParser
         }
 
         return $reference;
+    }
+
+    /**
+     * Extract and popolate 'trans-units' array
+     *
+     * @param $transUnit
+     * @param $transUnitIdArrayForUniquenessCheck
+     * @param $dom
+     * @param $output
+     * @param $i
+     * @param $j
+     *
+     * @throws \Exception
+     */
+    private function extractTransUnit( $transUnit, &$transUnitIdArrayForUniquenessCheck, $dom, &$output, &$i, &$j)
+    {
+        // metadata
+        $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'attr' ] = $this->extractTransUnitMetadata($transUnit, $transUnitIdArrayForUniquenessCheck);
+
+        // notes
+        $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'notes' ] = $this->extractTransUnitNotes($dom, $transUnit);
+
+        // content
+        /** @var \DOMElement $childNode */
+        foreach ($transUnit->childNodes as $childNode) {
+            // source
+            if ($childNode->nodeName === 'source') {
+                $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'source' ] = $this->extractContent($dom, $childNode);
+            }
+
+            // seg-source
+            if ($childNode->nodeName === 'seg-source') {
+                $output[ 'files' ][ $i ][ 'trans-units' ][ $j ]['seg-source'] = $this->extractSource($dom, $childNode);
+            }
+
+            // target
+            if ($childNode->nodeName === 'target') {
+                $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'target' ] = $this->extractContent($dom, $childNode);
+
+                // seg-target
+                $targetRawContent = @$output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'target' ][ 'raw-content' ];
+                $segSource = @$output[ 'files' ][ $i ][ 'trans-units' ][ $j ]['seg-source'];
+                if (isset($targetRawContent) and !empty($targetRawContent) and isset($segSource) and count($segSource) > 0) {
+                    $output[ 'files' ][ $i ][ 'trans-units' ][ $j ]['seg-target'] = $this->extractSource($dom, $childNode);
+                }
+            }
+
+            // locked
+            if ($childNode->nodeName === 'sdl:seg') {
+                $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'locked' ] = $this->extractLocked($childNode);
+            }
+        }
+
+        // context-group
+        foreach ($transUnit->getElementsByTagName('context-group') as $contextGroup) {
+            $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'context-group' ][] = $this->extractTransUnitContextGroup($dom, $contextGroup);
+        }
+
+        // alt-trans
+        foreach ($transUnit->getElementsByTagName('alt-trans') as $altTrans) {
+            $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'alt-trans' ][] = $this->extractTransUnitAltTrans($altTrans);
+        }
+
+        $j++;
     }
 
     /**
