@@ -19,7 +19,7 @@ Use `XliffParser` to convert a xliff file into an array as shown below:
 //
 use Matecat\XliffParser\XliffParser;
 
-$parsed = XliffParser::toArray('path/to/your/file.xliff');
+$parsed = XliffParser::xliffToArray('path/to/your/file.xliff');
 ```
 
 In case of invalid or not supported xliff file an empty array will be returned.

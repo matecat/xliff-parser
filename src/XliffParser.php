@@ -2,23 +2,29 @@
 
 namespace Matecat\XliffParser;
 
-use Matecat\XliffParser\XliffUtils\VersionDetector;
+use Matecat\XliffParser\XliffUtils\XliffVersionDetector;
 use Matecat\XliffParser\Parser\AbstractParser;
 use Matecat\XliffParser\XliffUtils\XmlParser;
 
 class XliffParser
 {
+    public static function arrayToXliff(array $array = [])
+    {
+
+
+    }
+
     /**
      * @param string $xliffContent
      *
      * @return array
      */
-    public static function toArray($xliffContent)
+    public static function xliffToArray( $xliffContent)
     {
         try {
             $xliff = [];
             $xliffContent = self::forceUft8Encoding($xliffContent, $xliff);
-            $version = VersionDetector::detect($xliffContent);
+            $version = XliffVersionDetector::detect($xliffContent);
             $parserClass = 'Matecat\\XliffParser\\Parser\\ParserV' . $version;
 
             /** @var AbstractParser $parser */

@@ -5,7 +5,7 @@ namespace Matecat\XliffParser\XliffUtils;
 use Matecat\XliffParser\Exception\NotSupportedVersionException;
 use Matecat\XliffParser\Exception\NotValidFileException;
 
-class VersionDetector
+class XliffVersionDetector
 {
     /**
      * @var array

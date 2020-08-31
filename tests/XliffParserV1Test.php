@@ -12,7 +12,7 @@ class XliffParserV1Test extends BaseTest
     public function parses_with_no_errors()
     {
         // read a file with notes inside
-        $parsed = XliffParser::toArray($this->getTestFile('file-with-notes-converted-nobase64.xliff'));
+        $parsed = XliffParser::xliffToArray($this->getTestFile('file-with-notes-converted-nobase64.xliff'));
 
         $this->assertEquals('Input identified as ASCII ans converted UTF-8. May not be a problem if the content is English only', $parsed['parser-warnings'][0]);
         $this->assertNotEmpty($parsed['files']);
@@ -24,7 +24,7 @@ class XliffParserV1Test extends BaseTest
      */
     public function can_parse_xliff_v1_metadata()
     {
-        $parsed = XliffParser::toArray($this->getTestFile('file-with-notes-converted-nobase64.xliff'));
+        $parsed = XliffParser::xliffToArray($this->getTestFile('file-with-notes-converted-nobase64.xliff'));
         $attr   = $parsed[ 'files' ][ 3 ][ 'attr' ];
 
         $this->assertCount(5, $attr);
@@ -41,7 +41,7 @@ class XliffParserV1Test extends BaseTest
      */
     public function can_parse_xliff_v1_reference()
     {
-        $parsed = XliffParser::toArray($this->getTestFile('file-with-notes-converted-nobase64.xliff'));
+        $parsed = XliffParser::xliffToArray($this->getTestFile('file-with-notes-converted-nobase64.xliff'));
         $reference   = $parsed[ 'files' ][ 2 ][ 'reference' ];
 
         $this->assertCount(2, $reference[0]);
@@ -54,7 +54,7 @@ class XliffParserV1Test extends BaseTest
      */
     public function can_parse_sdlxliff_v1_tu_metadata()
     {
-        $parsed = XliffParser::toArray($this->getTestFile('file-with-notes-nobase64.po.sdlxliff'));
+        $parsed = XliffParser::xliffToArray($this->getTestFile('file-with-notes-nobase64.po.sdlxliff'));
 
         $this->assertEquals($parsed['files'][1]['trans-units'][4]['attr']['id'], 5);
         $this->assertTrue($parsed['files'][1]['trans-units'][4]['attr']['approved']);
@@ -65,7 +65,7 @@ class XliffParserV1Test extends BaseTest
      */
     public function can_parse_sdlxliff_v1_tu_notes()
     {
-        $parsed = XliffParser::toArray($this->getTestFile('file-with-notes-nobase64.po.sdlxliff'));
+        $parsed = XliffParser::xliffToArray($this->getTestFile('file-with-notes-nobase64.po.sdlxliff'));
 
         $this->assertEquals(
             'This is a comment',
@@ -83,7 +83,7 @@ class XliffParserV1Test extends BaseTest
      */
     public function can_parse_converted_xliff_v1_tu_notes()
     {
-        $parsed = XliffParser::toArray($this->getTestFile('file-with-notes-converted.xliff'));
+        $parsed = XliffParser::xliffToArray($this->getTestFile('file-with-notes-converted.xliff'));
 
         $this->assertEquals(
             "This is a comment\n" .
@@ -105,7 +105,7 @@ class XliffParserV1Test extends BaseTest
      */
     public function can_parse_file_with_malicious_note()
     {
-        $parsed = XliffParser::toArray($this->getTestFile('file-with-notes-and-malicious-code.xliff'));
+        $parsed = XliffParser::xliffToArray($this->getTestFile('file-with-notes-and-malicious-code.xliff'));
 
         $this->assertEquals(
             "&lt;script&gt;alert('This is malicious code');&lt;/script&gt;",
@@ -118,7 +118,7 @@ class XliffParserV1Test extends BaseTest
      */
     public function can_parse_xliff_v1_tu_with_extenal_tags_in_seg_source_and_target()
     {
-        $parsed = XliffParser::toArray($this->getTestFile('file-with-notes-converted-and-seg-source-with-ex-tags.xliff'));
+        $parsed = XliffParser::xliffToArray($this->getTestFile('file-with-notes-converted-and-seg-source-with-ex-tags.xliff'));
 
         $segSource = $parsed[ 'files' ][ 3 ]['trans-units'][ 1 ][ 'seg-source' ][ 0 ];
         $segTarget = $parsed[ 'files' ][ 3 ]['trans-units'][ 1 ][ 'seg-target' ][ 0 ];
@@ -138,7 +138,7 @@ class XliffParserV1Test extends BaseTest
      */
     public function can_parse_empty_self_closed_target_tag_with_alt_trans()
     {
-        $parsed = XliffParser::toArray($this->getTestFile('file-with-self-closed-tag-and-alt-trans.xliff'));
+        $parsed = XliffParser::xliffToArray($this->getTestFile('file-with-self-closed-tag-and-alt-trans.xliff'));
 
         $this->assertEmpty($parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'attr' ]);
         $this->assertEmpty($parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ]);
@@ -149,7 +149,7 @@ class XliffParserV1Test extends BaseTest
      */
     public function can_parse_xliff_v1_tu_context_group()
     {
-        $parsed = XliffParser::toArray($this->getTestFile('file-with-self-closed-tag-and-alt-trans.xliff'));
+        $parsed = XliffParser::xliffToArray($this->getTestFile('file-with-self-closed-tag-and-alt-trans.xliff'));
 
         $contextGroup = $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ]['context-group'][0];
 
@@ -164,7 +164,7 @@ class XliffParserV1Test extends BaseTest
      */
     public function can_parse_xliff_v1_tu_alt_trans()
     {
-        $parsed = XliffParser::toArray($this->getTestFile('file-with-self-closed-tag-and-alt-trans.xliff'));
+        $parsed = XliffParser::xliffToArray($this->getTestFile('file-with-self-closed-tag-and-alt-trans.xliff'));
 
         $altTrans = $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ]['alt-trans'][0];
 
@@ -181,7 +181,7 @@ class XliffParserV1Test extends BaseTest
      */
     public function can_parse_xliff_v1_tu_seg_source_and_seg_target()
     {
-        $parsed = XliffParser::toArray($this->getTestFile('file-with-notes-converted-nobase64.xliff'));
+        $parsed = XliffParser::xliffToArray($this->getTestFile('file-with-notes-converted-nobase64.xliff'));
 
         $segSource = $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ]['seg-source'];
         $segTarget = $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ]['seg-target'];
@@ -197,7 +197,7 @@ class XliffParserV1Test extends BaseTest
      */
     public function can_parse_xliff_v1_tu_with_emoji_in_source()
     {
-        $parsed = XliffParser::toArray($this->getTestFile('file-with-emoji.xliff'));
+        $parsed = XliffParser::xliffToArray($this->getTestFile('file-with-emoji.xliff'));
 
         $this->assertNotEmpty($parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'source' ][ 'raw-content' ]);
 
@@ -210,7 +210,7 @@ class XliffParserV1Test extends BaseTest
      */
     public function can_parse_xliff_v1_tu_with_empty_not_self_closed_target_tag_with_alt_trans()
     {
-        $parsed = XliffParser::toArray($this->getTestFile('file-with-empty-self-closed-target-tag-with-alt-trans.xliff'));
+        $parsed = XliffParser::xliffToArray($this->getTestFile('file-with-empty-self-closed-target-tag-with-alt-trans.xliff'));
 
         $this->assertEmpty($parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ]);
     }
@@ -220,7 +220,7 @@ class XliffParserV1Test extends BaseTest
      */
     public function can_parse_xliff_v1_tu_with_not_empty_target_tag_with_not_ordered_alt_trans()
     {
-        $parsed = XliffParser::toArray($this->getTestFile('file-with-empty-target-tag-withnot-ordered-alt-trans.xliff'));
+        $parsed = XliffParser::xliffToArray($this->getTestFile('file-with-empty-target-tag-withnot-ordered-alt-trans.xliff'));
 
         $this->assertNotEmpty($parsed);
         $this->assertEquals("PPC000460", $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ]);
@@ -231,7 +231,7 @@ class XliffParserV1Test extends BaseTest
      */
     public function can_parse_xliff_v1_tu_with_not_empty_target_tag_without_alt_trans()
     {
-        $parsed = XliffParser::toArray($this->getTestFile('file-with-not-empty-target-tag-without-alt-trans.xliff'));
+        $parsed = XliffParser::xliffToArray($this->getTestFile('file-with-not-empty-target-tag-without-alt-trans.xliff'));
 
         $this->assertNotEmpty($parsed);
         $this->assertEquals("PPC000460", $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ]);
@@ -242,7 +242,7 @@ class XliffParserV1Test extends BaseTest
      */
     public function can_parse_xliff_v1_tu_with_not_empty_target_tag_with_mrk_with_alt_trans()
     {
-        $parsed = XliffParser::toArray($this->getTestFile('file-with-not-empty-target-tag-with-mrk-with-alt-trans.xliff'));
+        $parsed = XliffParser::xliffToArray($this->getTestFile('file-with-not-empty-target-tag-with-mrk-with-alt-trans.xliff'));
 
         $this->assertNotEmpty($parsed);
         $this->assertEquals("<mrk id=\"1\">PPC000460</mrk>", $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ]);
@@ -253,7 +253,7 @@ class XliffParserV1Test extends BaseTest
      */
     public function can_parse_xliff_v1_tu_with_not_empty_target_tag_with_some_mrk_with_alt_trans()
     {
-        $parsed = XliffParser::toArray($this->getTestFile('file-with-not-empty-target-tag-with-some-mrk-with-alt-trans.xliff'));
+        $parsed = XliffParser::xliffToArray($this->getTestFile('file-with-not-empty-target-tag-with-some-mrk-with-alt-trans.xliff'));
 
         $this->assertNotEmpty($parsed);
         $this->assertEquals("<mrk id=\"1\">Test1</mrk><mrk id=\"2\">Test2</mrk><mrk id=\"3\">Test3</mrk>", $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ]);
@@ -264,7 +264,7 @@ class XliffParserV1Test extends BaseTest
      */
     public function can_parse_xliff_v1_tu_with_not_empty_target_tag_with_some_mrk_and_html_with_alt_trans()
     {
-        $parsed = XliffParser::toArray($this->getTestFile('file-with-not-empty-target-tag-with-some-mrk-and-html-with-alt-trans.xliff'));
+        $parsed = XliffParser::xliffToArray($this->getTestFile('file-with-not-empty-target-tag-with-some-mrk-and-html-with-alt-trans.xliff'));
 
         $this->assertNotEmpty($parsed);
         $this->assertEquals(
@@ -279,7 +279,7 @@ class XliffParserV1Test extends BaseTest
         //
         // FIRST PART OF TEST
         //
-        $parsed = XliffParser::toArray($this->getTestFile('file-with-complex-structure.xliff'));
+        $parsed = XliffParser::xliffToArray($this->getTestFile('file-with-complex-structure.xliff'));
 
         $this->assertNotEmpty($parsed);
         $this->assertEquals(

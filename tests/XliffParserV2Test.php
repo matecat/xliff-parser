@@ -11,7 +11,7 @@ class XliffParserV2Test extends BaseTest
      */
     public function can_parse_xliff_v2_metadata()
     {
-        $parsed = XliffParser::toArray($this->getTestFile('uber-v2.xliff'));
+        $parsed = XliffParser::xliffToArray($this->getTestFile('uber-v2.xliff'));
         $attr   = $parsed[ 'files' ][ 1 ][ 'attr' ];
 
         $this->assertCount(3, $attr);
@@ -26,7 +26,7 @@ class XliffParserV2Test extends BaseTest
      */
     public function can_parse_xliff_v2_notes()
     {
-        $parsed = XliffParser::toArray($this->getTestFile('sample-20.xlf'));
+        $parsed = XliffParser::xliffToArray($this->getTestFile('sample-20.xlf'));
         $notes  = $parsed[ 'files' ][ 1 ][ 'notes' ];
 
         $this->assertCount(3, $notes);
@@ -44,7 +44,7 @@ class XliffParserV2Test extends BaseTest
      */
     public function can_parse_xliff_v2_trans_units_metadata()
     {
-        $parsed = XliffParser::toArray($this->getTestFile('sample-20.xlf'));
+        $parsed = XliffParser::xliffToArray($this->getTestFile('sample-20.xlf'));
         $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
 
         $this->assertCount(2, $units);
@@ -58,7 +58,7 @@ class XliffParserV2Test extends BaseTest
      */
     public function can_parse_xliff_v2_trans_units_originalData()
     {
-        $parsed = XliffParser::toArray($this->getTestFile('uber-v2.xliff'));
+        $parsed = XliffParser::xliffToArray($this->getTestFile('uber-v2.xliff'));
         $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
 
         $this->assertEquals($units[ 5 ][ 'original-data' ][ 0 ][ 'raw-content' ], '${redemptionLimit}');
@@ -70,7 +70,7 @@ class XliffParserV2Test extends BaseTest
      */
     public function can_parse_xliff_v2_trans_units_notes()
     {
-        $parsed = XliffParser::toArray($this->getTestFile('uber-v2.xliff'));
+        $parsed = XliffParser::xliffToArray($this->getTestFile('uber-v2.xliff'));
         $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
         $note   = $units[ 1 ][ 'notes' ];
 
@@ -95,7 +95,7 @@ class XliffParserV2Test extends BaseTest
      */
     public function can_parse_xliff_v2_trans_units_source_and_target()
     {
-        $parsed = XliffParser::toArray($this->getTestFile('sample-20.xlf'));
+        $parsed = XliffParser::xliffToArray($this->getTestFile('sample-20.xlf'));
 
         $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
         $this->assertCount(2, $units);
@@ -115,7 +115,7 @@ class XliffParserV2Test extends BaseTest
      */
     public function can_parse_xliff_v2_trans_units_nested_in_groups()
     {
-        $parsed = XliffParser::toArray($this->getTestFile('sample-20-with-group.xlf'));
+        $parsed = XliffParser::xliffToArray($this->getTestFile('sample-20-with-group.xlf'));
 
         $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
         $this->assertCount(3, $units);
@@ -128,7 +128,7 @@ class XliffParserV2Test extends BaseTest
      */
     public function can_parse_xliff_v2_trans_units_segmented_source_and_target()
     {
-        $parsed = XliffParser::toArray($this->getTestFile('sample-20-segmented.xlf'));
+        $parsed = XliffParser::xliffToArray($this->getTestFile('sample-20-segmented.xlf'));
 
         $source  = $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ]['source'];
         $target  = $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ]['target'];
@@ -146,7 +146,7 @@ class XliffParserV2Test extends BaseTest
      */
     public function can_parse_xliff_v2()
     {
-        $parsed = XliffParser::toArray($this->getTestFile('sample-20.xlf'));
+        $parsed = XliffParser::xliffToArray($this->getTestFile('sample-20.xlf'));
 
         $exp = [
             'attr' =>

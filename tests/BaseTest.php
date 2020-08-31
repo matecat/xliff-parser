@@ -38,7 +38,7 @@ abstract class BaseTest extends TestCase
     {
         $parser = new XliffParser();
 
-        $this->assertEquals($expected, $parser->toArray($this->getTestFile($file)));
+        $this->assertEquals($expected, $parser->xliffToArray($this->getTestFile($file)));
     }
 
     /**
