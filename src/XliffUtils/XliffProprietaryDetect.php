@@ -6,6 +6,9 @@ use Matecat\XliffParser\Utils\Files;
 
 class XliffProprietaryDetect
 {
+    /**
+     * @var array
+     */
     protected static $fileType = [];
 
     /**
@@ -16,14 +19,6 @@ class XliffProprietaryDetect
     public static function getInfo( $fullPathToFile )
     {
         self::reset();
-
-        /**
-         * Conversion Enforce
-         *
-         * Check extensions no more sufficient, we want check content
-         * if this is a proprietary file
-         *
-         */
         $tmp = self::getFirst1024CharsFromXliff( null, $fullPathToFile );
         self::$fileType['info'] = Files::pathInfo( $fullPathToFile );
         self::checkSDL( $tmp );
