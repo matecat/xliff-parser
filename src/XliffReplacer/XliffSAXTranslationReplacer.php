@@ -4,7 +4,6 @@ namespace Matecat\XliffParser\XliffReplacer;
 
 use Matecat\XliffParser\Utils\Constants\TranslationStatus;
 use Matecat\XliffParser\Utils\Strings;
-use SebastianBergmann\CodeCoverage\Report\PHP;
 
 class XliffSAXTranslationReplacer extends AbstractXliffReplacer
 {
@@ -376,15 +375,11 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
         if (is_null($seg [ 'translation' ]) || $seg [ 'translation' ] == '') {
             $translation = $segment;
         } else {
-            //consistency check
-//            $check = new QA ( $this->filter->fromLayer0ToLayer1( $segment ), $this->filter->fromLayer0ToLayer1( $translation ) );
-//            $check->setFeatureSet( $this->featureSet );
-//            $check->setTargetSegLang( $this->targetLang );
-//            $check->performTagCheckOnly();
-//            if ( $check->thereAreErrors() ) {
-//                $translation = '|||UNTRANSLATED_CONTENT_START|||' . $segment . '|||UNTRANSLATED_CONTENT_END|||';
-//               // Log::doJsonLog( "tag mismatch on\n" . print_r( $seg, true ) . "\n(because of: " . print_r( $check->getErrors(), true ) . ")" );
-//            }
+            if($this->callback){
+                if ( $this->callback->thereAreErrors($segment, $translation) ) {
+                    $translation = '|||UNTRANSLATED_CONTENT_START|||' . $segment . '|||UNTRANSLATED_CONTENT_END|||';
+                }
+            }
         }
 
         if ($seg[ 'mrk_id' ] !== null and $seg[ 'mrk_id' ] != '') {

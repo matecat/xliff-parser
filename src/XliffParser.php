@@ -3,6 +3,7 @@
 namespace Matecat\XliffParser;
 
 use Matecat\XliffParser\XliffParser\XliffParserFactory;
+use Matecat\XliffParser\XliffReplacer\XliffReplacerCallbackInterface;
 use Matecat\XliffParser\XliffReplacer\XliffReplacerFactory;
 use Matecat\XliffParser\XliffUtils\XmlParser;
 
@@ -11,16 +12,17 @@ class XliffParser
     /**
      * Replace the translation in a xliff file
      *
-     * @param $originalXliffPath
-     * @param $data
-     * @param $transUnits
-     * @param $targetLang
-     * @param $outputFile
+     * @param string $originalXliffPath
+     * @param array $data
+     * @param array $transUnits
+     * @param string $targetLang
+     * @param string $outputFile
+     * @param XliffReplacerCallbackInterface|null $callback
      */
-    public static function replaceTranslation($originalXliffPath, &$data, &$transUnits, $targetLang, $outputFile)
+    public static function replaceTranslation($originalXliffPath, &$data, &$transUnits, $targetLang, $outputFile, XliffReplacerCallbackInterface $callback = null)
     {
         try {
-            $parser = XliffReplacerFactory::getInstance($originalXliffPath, $data, $transUnits, $targetLang, $outputFile);
+            $parser = XliffReplacerFactory::getInstance($originalXliffPath, $data, $transUnits, $targetLang, $outputFile, $callback);
             $parser->replaceTranslation();
         } catch (\Exception $exception) {
         }
