@@ -11,7 +11,7 @@ class FilesTest extends BaseTest
      */
     public function can_detect_pathInfo()
     {
-        $pathInfo = Files::pathInfo(  __DIR__ .'/files/file-with-notes-converted-nobase64.xliff' );
+        $pathInfo = Files::pathInfo(__DIR__ .'/files/file-with-notes-converted-nobase64.xliff');
 
         $this->assertEquals('file-with-notes-converted-nobase64.xliff', $pathInfo['basename']);
         $this->assertEquals('xliff', $pathInfo['extension']);

@@ -34,11 +34,11 @@ class XliffParserV1 extends AbstractXliffParser
                         if ($childNode->nodeName === 'group') {
                             foreach ($childNode->childNodes as $nestedChildNode) {
                                 if ($nestedChildNode->nodeName === 'trans-unit') {
-                                    $this->extractTransUnit($nestedChildNode, $transUnitIdArrayForUniquenessCheck, $dom, $output,$i, $j);
+                                    $this->extractTransUnit($nestedChildNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j);
                                 }
                             }
                         } elseif ($childNode->nodeName === 'trans-unit') {
-                            $this->extractTransUnit($childNode, $transUnitIdArrayForUniquenessCheck, $dom, $output,$i, $j);
+                            $this->extractTransUnit($childNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j);
                         }
                     }
 
@@ -142,7 +142,7 @@ class XliffParserV1 extends AbstractXliffParser
      *
      * @throws \Exception
      */
-    private function extractTransUnit( $transUnit, &$transUnitIdArrayForUniquenessCheck, $dom, &$output, &$i, &$j)
+    private function extractTransUnit($transUnit, &$transUnitIdArrayForUniquenessCheck, $dom, &$output, &$i, &$j)
     {
         // metadata
         $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'attr' ] = $this->extractTransUnitMetadata($transUnit, $transUnitIdArrayForUniquenessCheck);

@@ -16,7 +16,7 @@ class XliffReplacerTest extends BaseTest
         $inputFile = __DIR__.'/../tests/files/sample-20.xlf';
         $outputFile = __DIR__.'/../tests/files/output/sample-20.xlf';
 
-        XliffParser::replaceTranslation( $inputFile, $data['data'], $data['transUnits'], 'fr-fr', $outputFile);
+        XliffParser::replaceTranslation($inputFile, $data['data'], $data['transUnits'], 'fr-fr', $outputFile);
         $output = XliffParser::xliffToArray(file_get_contents($outputFile));
         $expected = '&lt;pc id="1"&gt;Buongiorno al <mrk id="m2" type="term">Mondo</mrk> !&lt;/pc&gt;';
 
@@ -61,7 +61,7 @@ class XliffReplacerTest extends BaseTest
 
         $transUnits = [];
 
-        foreach ( $data as $i => $k ) {
+        foreach ($data as $i => $k) {
             //create a secondary indexing mechanism on segments' array; this will be useful
             //prepend a string so non-trans unit id ( ex: numerical ) are not overwritten
             $internalId = $k[ 'internal_id' ];

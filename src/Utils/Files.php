@@ -19,16 +19,16 @@ class Files
      *
      * @return array|mixed
      */
-    public static function pathInfo( $path, $options = 15 )
+    public static function pathInfo($path, $options = 15)
     {
-        $rawPath = explode( DIRECTORY_SEPARATOR, $path );
+        $rawPath = explode(DIRECTORY_SEPARATOR, $path);
 
-        $basename = array_pop( $rawPath );
-        $dirname  = implode( DIRECTORY_SEPARATOR, $rawPath );
+        $basename = array_pop($rawPath);
+        $dirname  = implode(DIRECTORY_SEPARATOR, $rawPath);
 
-        $explodedFileName = explode( ".", $basename );
-        $extension        = strtolower( array_pop( $explodedFileName ) );
-        $filename         = implode( ".", $explodedFileName );
+        $explodedFileName = explode(".", $basename);
+        $extension        = strtolower(array_pop($explodedFileName));
+        $filename         = implode(".", $explodedFileName);
 
         $returnArray = [];
 
@@ -41,17 +41,17 @@ class Files
 
         // foreach flag, add in $return_array the corresponding field,
         // obtained by variable name correspondence
-        foreach ( $flagMap as $field => $i ) {
+        foreach ($flagMap as $field => $i) {
             //binary AND
-            if ( ( $options & $i ) > 0 ) {
+            if (($options & $i) > 0) {
                 //variable substitution: $field can be one between 'dirname', 'basename', 'extension', 'filename'
                 // $$field gets the value of the variable named $field
                 $returnArray[ $field ] = $$field;
             }
         }
 
-        if ( count( $returnArray ) == 1 ) {
-            $returnArray = array_pop( $returnArray );
+        if (count($returnArray) == 1) {
+            $returnArray = array_pop($returnArray);
         }
 
         return $returnArray;
@@ -66,11 +66,11 @@ class Files
     {
         $pathInfo = self::pathInfo($path);
 
-        if ( empty( $pathInfo ) ) {
+        if (empty($pathInfo)) {
             return false;
         }
 
-        return strtolower( $pathInfo[ 'extension' ] );
+        return strtolower($pathInfo[ 'extension' ]);
     }
 
     /**
@@ -82,11 +82,11 @@ class Files
     {
         $extension = self::getExtension($path);
 
-        if ( !$extension ) {
+        if (!$extension) {
             return false;
         }
 
-        switch ( $extension ) {
+        switch ($extension) {
             case 'xliff':
             case 'sdlxliff':
             case 'tmx':
@@ -108,11 +108,11 @@ class Files
     {
         $pathInfo = self::pathInfo($path);
 
-        if ( empty( $pathInfo ) ) {
+        if (empty($pathInfo)) {
             return false;
         }
 
-        switch ( strtolower( $pathInfo[ 'info' ][ 'extension' ] ) ) {
+        switch (strtolower($pathInfo[ 'info' ][ 'extension' ])) {
             case 'tmx':
                 return 'tmx';
                 break;
@@ -130,9 +130,9 @@ class Files
      *
      * @return bool
      */
-    public static function isTMXFile( $path )
+    public static function isTMXFile($path)
     {
-        return self::getMemoryFileType( $path ) === 'tmx';
+        return self::getMemoryFileType($path) === 'tmx';
     }
 
     /**
@@ -140,8 +140,8 @@ class Files
      *
      * @return bool
      */
-    public static function isGlossaryFile( $path )
+    public static function isGlossaryFile($path)
     {
-        return self::getMemoryFileType( $path ) === 'glossary';
+        return self::getMemoryFileType($path) === 'glossary';
     }
 }

@@ -6,8 +6,8 @@ namespace Matecat\XliffParser\Utils\Constants;
  * This is a copy of
  * https://github.com/matecat/MateCat/blob/develop/lib/Utils/Constants/TranslationStatus.php
  */
-class TranslationStatus {
-
+class TranslationStatus
+{
     const STATUS_NEW        = 'NEW';
     const STATUS_DRAFT      = 'DRAFT';
     const STATUS_TRANSLATED = 'TRANSLATED';
@@ -54,7 +54,8 @@ class TranslationStatus {
             self::STATUS_REBUTTED
     );
 
-    public static function isReviewedStatus( $status ) {
-        return in_array( $status, Constants_TranslationStatus::$REVISION_STATUSES );
+    public static function isReviewedStatus($status)
+    {
+        return in_array($status, Constants_TranslationStatus::$REVISION_STATUSES);
     }
 }

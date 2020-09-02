@@ -31,11 +31,11 @@ class XliffParserV2 extends AbstractXliffParser
                 if ($childNode->nodeName === 'group') {
                     foreach ($childNode->childNodes as $nestedChildNode) {
                         if ($nestedChildNode->nodeName === 'unit') {
-                            $this->extractTransUnit($nestedChildNode, $transUnitIdArrayForUniquenessCheck, $dom, $output,$i, $j);
+                            $this->extractTransUnit($nestedChildNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j);
                         }
                     }
                 } elseif ($childNode->nodeName === 'unit') {
-                    $this->extractTransUnit($childNode, $transUnitIdArrayForUniquenessCheck, $dom, $output,$i, $j);
+                    $this->extractTransUnit($childNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j);
                 }
             }
 
@@ -156,7 +156,7 @@ class XliffParserV2 extends AbstractXliffParser
                         $extractedSource = $this->extractContent($dom, $childNode);
                         $source['raw-content'] .= $extractedSource['raw-content'];
 
-                        if(!empty($extractedSource['attr'])){
+                        if (!empty($extractedSource['attr'])) {
                             $source['attr'][$c] = $extractedSource['attr'];
                         }
                     }
@@ -165,7 +165,7 @@ class XliffParserV2 extends AbstractXliffParser
                         $extractedTarget = $this->extractContent($dom, $childNode);
                         $target['raw-content'] .= $extractedTarget['raw-content'];
 
-                        if(!empty($extractedTarget['attr'])){
+                        if (!empty($extractedTarget['attr'])) {
                             $source['attr'][$c] = $extractedTarget['attr'];
                         }
                     }

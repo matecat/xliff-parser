@@ -33,7 +33,7 @@ class XliffParser
      *
      * @return array
      */
-    public static function xliffToArray( $xliffContent)
+    public static function xliffToArray($xliffContent)
     {
         try {
             $xliff = [];
