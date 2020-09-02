@@ -17,7 +17,7 @@ class XliffReplacerTest extends BaseTest
         $inputFile = __DIR__.'/../tests/files/sample-20.xlf';
         $outputFile = __DIR__.'/../tests/files/output/sample-20.xlf';
 
-        XliffParser::replaceTranslation( $inputFile, $data['data'], $data['transUnits'], 'fr-fr', $outputFile, new DummyXliffReplacerCallback() );
+        XliffParser::replaceTranslation($inputFile, $data['data'], $data['transUnits'], 'fr-fr', $outputFile, new DummyXliffReplacerCallback());
         $output = XliffParser::xliffToArray(file_get_contents($outputFile));
         $expected = '&lt;pc id="1"&gt;Buongiorno al <mrk id="m2" type="term">Mondo</mrk> !&lt;/pc&gt;';
 
@@ -33,7 +33,7 @@ class XliffReplacerTest extends BaseTest
         $inputFile = __DIR__.'/../tests/files/sample-20.xlf';
         $outputFile = __DIR__.'/../tests/files/output/sample-20.xlf';
 
-        XliffParser::replaceTranslation( $inputFile, $data['data'], $data['transUnits'], 'fr-fr', $outputFile, new DummyXliffReplacerCallbackWhichReturnTrue() );
+        XliffParser::replaceTranslation($inputFile, $data['data'], $data['transUnits'], 'fr-fr', $outputFile, new DummyXliffReplacerCallbackWhichReturnTrue());
         $output = XliffParser::xliffToArray(file_get_contents($outputFile));
         $expected = '|||UNTRANSLATED_CONTENT_START|||&lt;pc id="1"&gt;Hello <mrk id="m2" type="term">World</mrk> !&lt;/pc&gt;|||UNTRANSLATED_CONTENT_END|||';
 
@@ -78,7 +78,7 @@ class XliffReplacerTest extends BaseTest
 
         $transUnits = [];
 
-        foreach ( $data as $i => $k ) {
+        foreach ($data as $i => $k) {
             //create a secondary indexing mechanism on segments' array; this will be useful
             //prepend a string so non-trans unit id ( ex: numerical ) are not overwritten
             $internalId = $k[ 'internal_id' ];
@@ -100,7 +100,7 @@ class DummyXliffReplacerCallback implements XliffReplacerCallbackInterface
     /**
      * @inheritDoc
      */
-    public function thereAreErrors( $segment, $translation )
+    public function thereAreErrors($segment, $translation)
     {
         return false;
     }
@@ -111,7 +111,7 @@ class DummyXliffReplacerCallbackWhichReturnTrue implements XliffReplacerCallback
     /**
      * @inheritDoc
      */
-    public function thereAreErrors( $segment, $translation )
+    public function thereAreErrors($segment, $translation)
     {
         return true;
     }

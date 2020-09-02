@@ -22,10 +22,10 @@ class XliffReplacerFactory
     {
         $info = XliffProprietaryDetect::getInfo($originalXliffPath);
 
-        if( $info[ 'proprietary_short_name' ] !== 'trados' ){
-            return new XliffSAXTranslationReplacer( $originalXliffPath, $info['version'], $data, $transUnits, $targetLang, $outputFilePath, $callback );
+        if ($info[ 'proprietary_short_name' ] !== 'trados') {
+            return new XliffSAXTranslationReplacer($originalXliffPath, $info['version'], $data, $transUnits, $targetLang, $outputFilePath, $callback);
         }
 
-        return new SdlXliffSAXTranslationReplacer( $originalXliffPath, $info['version'],$data, $transUnits, $targetLang, $outputFilePath, $callback );
+        return new SdlXliffSAXTranslationReplacer($originalXliffPath, $info['version'], $data, $transUnits, $targetLang, $outputFilePath, $callback);
     }
 }
