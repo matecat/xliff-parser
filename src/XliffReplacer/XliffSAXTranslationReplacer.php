@@ -238,7 +238,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
                     }
 
                     if ( $warning ) {
-                        $old_fname     = Log::$fileName;
+//                        $old_fname     = Log::$fileName;
 //                        Log::$fileName = "XliffSax_Polling.log";
 //                        Log::doJsonLog( "WARNING: PHP Notice polling. CurrentId: '" . $this->currentId . "' - Filename: '" . $this->segments[ 0 ][ 'filename' ] . "' - First Segment: '" . $this->segments[ 0 ][ 'sid' ] . "'" );
 //                        Log::$fileName = $old_fname;
@@ -267,7 +267,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
                          * pre-assign zero to the new mrk if this is the first one ( in this segment )
                          * If it is null leave it NULL
                          */
-                        if ( (int)$this->segments[ $id ][ "mrk_id" ] < 0 && $this->segments[ $id ][ "mrk_id" ] !== null ) {
+                        if ( (int)$this->segments[ $id ][ "mrk_id" ] < 0 and $this->segments[ $id ][ "mrk_id" ] !== null ) {
                             $this->segments[ $id ][ "mrk_id" ] = 0;
                         }
 
