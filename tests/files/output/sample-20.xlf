@@ -28,7 +28,7 @@
                 <source>
                     <pc id="1">Hello <mrk id="m1" type="term">World</mrk>!</pc>
                 </source>
-                <target state="translated"><pc id="1">Buongiorno al <mrk id="m2" type="term">Mondo</mrk> !</pc></target>
+                <target state="translated">|||UNTRANSLATED_CONTENT_START|||<pc id="1">Hello <mrk id="m2" type="term">World</mrk> !</pc>|||UNTRANSLATED_CONTENT_END|||</target>
 <count-group name="u1"><count count-type="x-matecat-raw">456</count><count count-type="x-matecat-weighted">123</count></count-group>
             </segment>
         </unit>
@@ -49,7 +49,7 @@
                 <source>
                     <pc id="2">Hello <mrk id="m2" type="term">World2</mrk>!</pc>
                 </source>
-                <target state="translated"><pc id="2">Buongiorno al <mrk id="m2" type="term">Mondo2</mrk> !</pc></target>
+                <target state="translated">|||UNTRANSLATED_CONTENT_START|||<pc id="1">Hello <mrk id="m2" type="term">World2</mrk> !</pc>|||UNTRANSLATED_CONTENT_END|||</target>
 <count-group name="u2"><count count-type="x-matecat-raw">54354</count><count count-type="x-matecat-weighted">54353</count></count-group>
             </segment>
         </unit>

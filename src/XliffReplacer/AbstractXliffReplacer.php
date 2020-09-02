@@ -30,33 +30,25 @@ abstract class AbstractXliffReplacer
 
     protected $xliffVersion;
 
+    protected $callback;
+
     protected static $INTERNAL_TAG_PLACEHOLDER;
 
     /**
      * AbstractXliffReplacer constructor.
      *
-     * @param $originalXliffPath
-     * @param $segments
-     * @param $transUnits
-     * @param $trgLang
-     * @param $outputFilePath
+     * @param               $originalXliffPath
+     * @param               $xliffVersion
+     * @param               $segments
+     * @param               $transUnits
+     * @param               $trgLang
+     * @param               $outputFilePath
+     * @param XliffReplacerCallbackInterface|null $callback
      */
-    public function __construct( $originalXliffPath, $xliffVersion, &$segments, &$transUnits, $trgLang, $outputFilePath )
+    public function __construct( $originalXliffPath, $xliffVersion, &$segments, &$transUnits, $trgLang, $outputFilePath, XliffReplacerCallbackInterface $callback = null )
     {
-        self::$INTERNAL_TAG_PLACEHOLDER = "§" .
-                substr(
-                        str_replace(
-                                [ '+', '/' ],
-                                '',
-                                base64_encode( openssl_random_pseudo_bytes( 10, $_crypto_strong ) )
-                        ), 0, 4
-                );
-
-        // create output file
-        if (!file_exists($outputFilePath)) {
-            touch($outputFilePath);
-        }
-
+        self::$INTERNAL_TAG_PLACEHOLDER = $this->getInternalTagPlaceholder();
+        $this->createOutputFileIfDoesNotExist($outputFilePath);
         $this->setFileDescriptors($originalXliffPath, $outputFilePath);
         $this->xliffVersion   = $xliffVersion;
         $this->setTuTagName();
@@ -64,6 +56,30 @@ abstract class AbstractXliffReplacer
         $this->targetLang     = $trgLang;
         $this->sourceInTarget = false;
         $this->transUnits     = $transUnits;
+        $this->callback       = $callback;
+    }
+
+    /**
+     * @return string
+     */
+    private function getInternalTagPlaceholder()
+    {
+        return "§" .
+                substr(
+                        str_replace(
+                                [ '+', '/' ],
+                                '',
+                                base64_encode( openssl_random_pseudo_bytes( 10, $_crypto_strong ) )
+                        ), 0, 4
+                );
+    }
+
+    private function createOutputFileIfDoesNotExist($outputFilePath)
+    {
+        // create output file
+        if (!file_exists($outputFilePath)) {
+            touch($outputFilePath);
+        }
     }
 
     /**
