@@ -1,10 +1,10 @@
 <?php
 
-namespace Matecat\XliffParser\Parser;
+namespace Matecat\XliffParser\XliffParser;
 
 use Matecat\XliffParser\Utils\Strings;
 
-abstract class AbstractParser
+abstract class AbstractXliffParser
 {
     /**
      * @param \DOMDocument $dom

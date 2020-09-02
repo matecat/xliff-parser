@@ -10,12 +10,12 @@ class XliffVersionDetector
     /**
      * @var array
      */
-    private static $versions_1 = ['1.0', '1.1','1.2'];
+    private static $versions_1 = ['1.0', '1.1', '1.2'];
 
     /**
      * @var array
      */
-    private static $versions_2 = ['2.0'];
+    private static $versions_2 = ['2.0', '2.1'];
 
     /**
      * @param string $xliffContent

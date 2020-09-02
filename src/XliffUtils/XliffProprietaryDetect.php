@@ -15,12 +15,15 @@ class XliffProprietaryDetect
      * @param $fullPathToFile
      *
      * @return array
+     * @throws \Matecat\XliffParser\Exception\NotSupportedVersionException
+     * @throws \Matecat\XliffParser\Exception\NotValidFileException
      */
     public static function getInfo( $fullPathToFile )
     {
         self::reset();
         $tmp = self::getFirst1024CharsFromXliff( null, $fullPathToFile );
         self::$fileType['info'] = Files::pathInfo( $fullPathToFile );
+        self::checkVersion( $tmp );
         self::checkSDL( $tmp );
         self::checkGlobalSight( $tmp );
         self::checkMateCATConverter( $tmp );
@@ -77,6 +80,19 @@ class XliffProprietaryDetect
 
     /**
      * @param $tmp
+     *
+     * @throws \Matecat\XliffParser\Exception\NotSupportedVersionException
+     * @throws \Matecat\XliffParser\Exception\NotValidFileException
+     */
+    protected static function checkVersion( $tmp )
+    {
+        if ( isset( $tmp[ 0 ] ) ) {
+            self::$fileType[ 'version' ] = XliffVersionDetector::detect($tmp[ 0 ]);
+        }
+    }
+
+    /**
+     * @param $tmp
      */
     private static function checkSDL( $tmp )
     {
@@ -129,9 +145,11 @@ class XliffProprietaryDetect
     }
 
     /**
-     * @param $stringData
+     * @param string $stringData
      *
      * @return array
+     * @throws \Matecat\XliffParser\Exception\NotSupportedVersionException
+     * @throws \Matecat\XliffParser\Exception\NotValidFileException
      */
     public static function getInfoByStringData( $stringData )
     {
@@ -139,6 +157,7 @@ class XliffProprietaryDetect
 
         $tmp = self::getFirst1024CharsFromXliff( $stringData );
         self::$fileType['info'] = [];
+        self::checkVersion( $tmp );
         self::checkSDL( $tmp );
         self::checkGlobalSight( $tmp );
         self::checkMateCATConverter( $tmp );

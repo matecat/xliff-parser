@@ -2,18 +2,33 @@
 
 namespace Matecat\XliffParser;
 
-use Matecat\XliffParser\Parser\ParserFactory;
-use Matecat\XliffParser\XliffUtils\XliffVersionDetector;
-use Matecat\XliffParser\Parser\AbstractParser;
+use Matecat\XliffParser\XliffParser\XliffParserFactory;
+use Matecat\XliffParser\XliffReplacer\XliffReplacerFactory;
 use Matecat\XliffParser\XliffUtils\XmlParser;
 
 class XliffParser
 {
-    public static function arrayToXliff(array $array = [])
+    /**
+     * Replace the translation in a xliff file
+     *
+     * @param $originalXliffPath
+     * @param $data
+     * @param $transUnits
+     * @param $targetLang
+     * @param $outputFile
+     */
+    public static function replaceTranslation($originalXliffPath, &$data, &$transUnits, $targetLang, $outputFile)
     {
+        try {
+            $parser = XliffReplacerFactory::getInstance($originalXliffPath, $data, $transUnits, $targetLang, $outputFile);
+            $parser->replaceTranslation();
+        } catch (\Exception $exception) {
+        }
     }
 
     /**
+     * Parse a xliff file to array
+     *
      * @param string $xliffContent
      *
      * @return array
@@ -23,7 +38,7 @@ class XliffParser
         try {
             $xliff = [];
             $xliffContent = self::forceUft8Encoding($xliffContent, $xliff);
-            $parser = ParserFactory::getInstance($xliffContent);
+            $parser = XliffParserFactory::getInstance($xliffContent);
             $dom = XmlParser::parse($xliffContent);
 
             return $parser->parse($dom, $xliff);

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en" trgLang="fr" xmlns:mtc="https://www.matecat.com">
+    <file id="f1" original="389108a4-rtapi.xml">
+        <notes>
+            <note id="n1">note for file.</note>
+            <note id="n2">note2 for file.</note>
+            <note id="n3">
+                {
+                    "key": "value",
+                    "key2": "value2",
+                    "key3": "value3"
+                }
+            </note>
+        </notes>
+        <unit help-id="1" id="u1" translate="test">
+            <my:elem xmlns:my="myNamespaceURI" id="x1">data</my:elem>
+            <notes>
+                <note id="n1">note for unit</note>
+                <note id="n2">another note for unit.</note>
+                <note id="n3">
+                    {
+                        "key": "value",
+                        "key2": "value2",
+                        "key3": "value3"
+                    }
+                </note>
+            </notes>
+            <segment id="s1">
+                <source>
+                    <pc id="1">Hello <mrk id="m1" type="term">World</mrk>!</pc>
+                </source>
+                <target state="translated"><mrk mid="3232" mtype="seg">Mondo</mrk></target>
+<count-group name="u1"><count count-type="x-matecat-raw">456</count><count count-type="x-matecat-weighted">123</count></count-group>
+            </segment>
+        </unit>
+        <unit help-id="2" id="u2">
+            <my:elem xmlns:my="myNamespaceURI" id="x2">data</my:elem>
+            <notes>
+                <note id="n1">note for unit2</note>
+                <note id="n2">another note for unit2.</note>
+                <note id="n3">
+                    {
+                        "key": "value",
+                        "key2": "value2",
+                        "key3": "value3"
+                    }
+                </note>
+            </notes>
+            <segment id="s2">
+                <source>
+                    <pc id="2">Hello <mrk id="m2" type="term">World2</mrk>!</pc>
+                </source>
+                <target state="translated"><mrk mid="3232" mtype="seg">Mondo2</mrk></target>
+<count-group name="u2"><count count-type="x-matecat-raw">54354</count><count count-type="x-matecat-weighted">54353</count></count-group>
+            </segment>
+        </unit>
+    </file>
+</xliff>

@@ -65,36 +65,4 @@ class StringsTest extends BaseTest
             $this->assertEquals($expected, $out);
         }
     }
-
-
-
-    /**
-     * @test
-     */
-    public function can_extract_tags()
-    {
-        $xliff = '<notes>
-                    <note id="n1">note for file.</note>
-                </notes>';
-
-        $this->assertCount(1, Strings::extractTag('notes', $xliff));
-
-        $xliff = '<note id="n1">note for file.</note><note id="n2">note2 for file.</note><note id="n3">note2 for file.</note>';
-
-        $this->assertCount(3, Strings::extractTag('note', $xliff));
-    }
-
-    /**
-     * @test
-     */
-    public function can_split_tags()
-    {
-        $xliff = '<xliff><file>das</file><file>das2</file><file>das3</file></xliff>';
-
-        $splitted = Strings::splitTag('file', $xliff);
-
-        $this->assertEquals($splitted[0], '<xliff>');
-        $this->assertEquals($splitted[1], 'das</file>');
-        $this->assertEquals($splitted[2], 'das2</file>');
-    }
 }

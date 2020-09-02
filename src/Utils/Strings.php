@@ -159,35 +159,21 @@ class Strings
     }
 
     /**
-     * @param $tag
      * @param $string
      *
-     * @return array
+     * @return string|string[]|null
      */
-    public static function extractTag($tag, $string)
+    public static function removeDangerousChars( $string )
     {
-        preg_match_all('|<'.$tag.'.*?>(.+?)</'.$tag.'>|si', $string, $temp);
-        $matches = array_values($temp[ 1 ]);
+        // clean invalid xml entities ( characters with ascii < 32 and different from 0A, 0D and 09
+        $regexpEntity = '/&#x(0[0-8BCEF]|1[0-9A-F]|7F);/u';
 
-        if (count($matches) === 0) {
-            unset($temp);
+        // remove binary chars in some xliff files
+        $regexpAscii  = '/[\x{00}-\x{08}\x{0B}\x{0C}\x{0E}-\x{1F}\x{7F}]/u';
 
-            return [];
-        }
+        $string = preg_replace( $regexpAscii, '', $string );
+        $string = preg_replace( $regexpEntity, '', $string );
 
-        unset($temp);
-
-        return $matches;
-    }
-
-    /**
-     * @param $tag
-     * @param $string
-     *
-     * @return array|false|string[]
-     */
-    public static function splitTag($tag, $string)
-    {
-        return preg_split('|<'.$tag.'[\s>]|si', $string, -1, PREG_SPLIT_NO_EMPTY);
+        return $string;
     }
 }

@@ -1,11 +1,11 @@
 <?php
 
-namespace Matecat\XliffParser\Parser;
+namespace Matecat\XliffParser\XliffParser;
 
 use Matecat\XliffParser\Exception\DuplicateTransUnitIdInXliff;
 use Matecat\XliffParser\Exception\NotFoundIdInTransUnit;
 
-class ParserV2 extends AbstractParser
+class XliffParserV2 extends AbstractXliffParser
 {
     /**
      * @inheritDoc

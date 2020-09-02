@@ -1,24 +1,24 @@
 <?php
 
-namespace Matecat\XliffParser\Parser;
+namespace Matecat\XliffParser\XliffParser;
 
 use Matecat\XliffParser\XliffUtils\XliffVersionDetector;
 
-class ParserFactory
+class XliffParserFactory
 {
     /**
      * @param $xliffContent
      *
-     * @return AbstractParser
+     * @return AbstractXliffParser
      * @throws \Matecat\XliffParser\Exception\NotSupportedVersionException
      * @throws \Matecat\XliffParser\Exception\NotValidFileException
      */
     public static function getInstance($xliffContent)
     {
         $version = XliffVersionDetector::detect($xliffContent);
-        $parserClass = 'Matecat\\XliffParser\\Parser\\ParserV' . $version;
+        $parserClass = 'Matecat\\XliffParser\\XliffParser\\XliffParserV' . $version;
 
-        /** @var AbstractParser $parser */
+        /** @var AbstractXliffParser $parser */
         return new $parserClass();
     }
 }
