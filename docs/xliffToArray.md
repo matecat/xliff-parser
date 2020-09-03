@@ -1,4 +1,4 @@
-## 1. xliffToArray
+## xliffToArray
 
 ### Usage
 
