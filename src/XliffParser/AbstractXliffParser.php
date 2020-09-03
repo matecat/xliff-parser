@@ -3,9 +3,25 @@
 namespace Matecat\XliffParser\XliffParser;
 
 use Matecat\XliffParser\Utils\Strings;
+use Psr\Log\LoggerInterface;
 
 abstract class AbstractXliffParser
 {
+    /**
+     * @var LoggerInterface
+     */
+    protected $logger;
+
+    /**
+     * XliffParser constructor.
+     *
+     * @param LoggerInterface $logger
+     */
+    public function __construct(LoggerInterface $logger = null)
+    {
+        $this->logger = $logger;
+    }
+
     /**
      * @param \DOMDocument $dom
      *

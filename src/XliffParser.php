@@ -6,9 +6,25 @@ use Matecat\XliffParser\XliffParser\XliffParserFactory;
 use Matecat\XliffParser\XliffReplacer\XliffReplacerCallbackInterface;
 use Matecat\XliffParser\XliffReplacer\XliffReplacerFactory;
 use Matecat\XliffParser\XliffUtils\XmlParser;
+use Psr\Log\LoggerInterface;
 
 class XliffParser
 {
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
+     * XliffParser constructor.
+     *
+     * @param LoggerInterface $logger
+     */
+    public function __construct(LoggerInterface $logger = null)
+    {
+        $this->logger = $logger;
+    }
+
     /**
      * Replace the translation in a xliff file
      *
@@ -19,12 +35,13 @@ class XliffParser
      * @param string $outputFile
      * @param XliffReplacerCallbackInterface|null $callback
      */
-    public static function replaceTranslation($originalXliffPath, &$data, &$transUnits, $targetLang, $outputFile, XliffReplacerCallbackInterface $callback = null)
+    public function replaceTranslation($originalXliffPath, &$data, &$transUnits, $targetLang, $outputFile, XliffReplacerCallbackInterface $callback = null)
     {
         try {
-            $parser = XliffReplacerFactory::getInstance($originalXliffPath, $data, $transUnits, $targetLang, $outputFile, $callback);
+            $parser = XliffReplacerFactory::getInstance($originalXliffPath, $data, $transUnits, $targetLang, $outputFile, $this->logger, $callback);
             $parser->replaceTranslation();
         } catch (\Exception $exception) {
+            // do nothing
         }
     }
 
@@ -35,12 +52,12 @@ class XliffParser
      *
      * @return array
      */
-    public static function xliffToArray($xliffContent)
+    public function xliffToArray($xliffContent)
     {
         try {
             $xliff = [];
             $xliffContent = self::forceUft8Encoding($xliffContent, $xliff);
-            $parser = XliffParserFactory::getInstance($xliffContent);
+            $parser = XliffParserFactory::getInstance($xliffContent, $this->logger);
             $dom = XmlParser::parse($xliffContent);
 
             return $parser->parse($dom, $xliff);

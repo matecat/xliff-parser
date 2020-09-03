@@ -2,6 +2,8 @@
 
 namespace Matecat\XliffParser\XliffReplacer;
 
+use Psr\Log\LoggerInterface;
+
 abstract class AbstractXliffReplacer
 {
     protected $originalFP;
@@ -32,20 +34,23 @@ abstract class AbstractXliffReplacer
 
     protected $callback;
 
+    protected $logger;
+
     protected static $INTERNAL_TAG_PLACEHOLDER;
 
     /**
      * AbstractXliffReplacer constructor.
      *
-     * @param               $originalXliffPath
-     * @param               $xliffVersion
-     * @param               $segments
-     * @param               $transUnits
-     * @param               $trgLang
-     * @param               $outputFilePath
+     * @param                                     $originalXliffPath
+     * @param                                     $xliffVersion
+     * @param                                     $segments
+     * @param                                     $transUnits
+     * @param                                     $trgLang
+     * @param                                     $outputFilePath
+     * @param LoggerInterface|null                $logger
      * @param XliffReplacerCallbackInterface|null $callback
      */
-    public function __construct($originalXliffPath, $xliffVersion, &$segments, &$transUnits, $trgLang, $outputFilePath, XliffReplacerCallbackInterface $callback = null)
+    public function __construct($originalXliffPath, $xliffVersion, &$segments, &$transUnits, $trgLang, $outputFilePath, LoggerInterface $logger = null, XliffReplacerCallbackInterface $callback = null)
     {
         self::$INTERNAL_TAG_PLACEHOLDER = $this->getInternalTagPlaceholder();
         $this->createOutputFileIfDoesNotExist($outputFilePath);
@@ -56,6 +61,7 @@ abstract class AbstractXliffReplacer
         $this->targetLang     = $trgLang;
         $this->sourceInTarget = false;
         $this->transUnits     = $transUnits;
+        $this->logger         = $logger;
         $this->callback       = $callback;
     }
 
