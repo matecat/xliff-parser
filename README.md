@@ -26,7 +26,8 @@ To convert a xliff file into an array:
 // ...
 use Matecat\XliffParser\XliffParser;
 
-$parsed = XliffParser::xliffToArray('path/to/your/file.xliff');
+$parser = new XliffParser();
+$parsed = $parser->xliffToArray('path/to/your/file.xliff');
 ```
 
 In case of invalid or not supported xliff file an empty array will be returned.
@@ -500,7 +501,8 @@ To replace a translation into a xliff file:
 //
 use Matecat\XliffParser\XliffParser;
 
-XliffParser::replaceTranslation($inputFile, $data, $transUnits, $targetLang, $outputFile, $callback);
+$parser = new XliffParser();
+$parser->replaceTranslation($inputFile, $data, $transUnits, $targetLang, $outputFile, $callback);
 ```
 
 Where:
@@ -576,7 +578,20 @@ foreach ( $data as $i => $k ) {
 $inputFile = __DIR__.'/../tests/files/sample-20.xlf';
 $outputFile = __DIR__.'/../tests/files/output/sample-20.xlf';
 
-XliffParser::replaceTranslation( $inputFile, $data, $transUnits, 'fr-fr', $outputFile, new DummyXliffReplacerCallback() );
+$parser = new XliffParser();
+$parser->replaceTranslation( $inputFile, $data, $transUnits, 'fr-fr', $outputFile, new DummyXliffReplacerCallback() );
+```
+
+## Logging
+
+You can inject your own logger (must be a `LoggerInterface` implementation):
+
+```php
+// ...
+
+// $logger must be implement PS3 LoggerInterface
+$parser = new XliffParser($logger);
+
 ```
 
 ## Support

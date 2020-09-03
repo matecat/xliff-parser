@@ -236,10 +236,10 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
                     }
 
                     if ($warning) {
-//                        $old_fname     = Log::$fileName;
-//                        Log::$fileName = "XliffSax_Polling.log";
-//                        Log::doJsonLog( "WARNING: PHP Notice polling. CurrentId: '" . $this->currentId . "' - Filename: '" . $this->segments[ 0 ][ 'filename' ] . "' - First Segment: '" . $this->segments[ 0 ][ 'sid' ] . "'" );
-//                        Log::$fileName = $old_fname;
+                        if(null !== $this->logger){
+                            $this->logger->warning("WARNING: PHP Notice polling. CurrentId: '" . $this->currentId . "' - Filename: '" . $this->segments[ 0 ][ 'filename' ] . "' - First Segment: '" . $this->segments[
+                                    0 ][ 'sid' ] . "'");
+                        }
                     }
 
                     // init translation and state
