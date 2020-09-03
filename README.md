@@ -13,8 +13,8 @@ Xliff supported versions:
 
 ## Methods
 
-* [xliffToArray]() - converts a xliff file into an array
-* [replaceTranslation]() - replace a translation in a xliff file 
+* [xliffToArray](https://github.com/matecat/xliff-parser/blob/master/docs/xliffToArray.md) - converts a xliff file into an array
+* [replaceTranslation](https://github.com/matecat/xliff-parser/blob/master/docs/replaceTranslation.md) - replace a translation in a xliff file 
 
 ## Logging
 
