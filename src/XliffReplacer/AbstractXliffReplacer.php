@@ -38,6 +38,11 @@ abstract class AbstractXliffReplacer
 
     protected static $INTERNAL_TAG_PLACEHOLDER;
 
+    protected $counts = [
+            'raw_word_count' => 0,
+            'eq_word_count' => 0,
+    ];
+
     /**
      * AbstractXliffReplacer constructor.
      *

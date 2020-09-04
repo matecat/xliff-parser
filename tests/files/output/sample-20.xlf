@@ -24,13 +24,18 @@
                     }
                 </note>
             </notes>
-            <segment id="s1">
+            <segment state="translated" id="s1">
                 <source>
                     <pc id="1">Hello <mrk id="m1" type="term">World</mrk>!</pc>
                 </source>
-                <target state="translated">|||UNTRANSLATED_CONTENT_START|||<pc id="1">Hello <mrk id="m2" type="term">World</mrk> !</pc>|||UNTRANSLATED_CONTENT_END|||</target>
-<count-group name="u1"><count count-type="x-matecat-raw">456</count><count count-type="x-matecat-weighted">123</count></count-group>
+                <target>|||UNTRANSLATED_CONTENT_START|||<pc id="1">Hello <mrk id="m2" type="term">World</mrk> !</pc>|||UNTRANSLATED_CONTENT_END|||</target>
             </segment>
+            <mda:metadata>
+                <mda:metagroup category="row_xml_attribute">
+                    <mda:meta type="x-matecat-raw">200</mda:meta>
+                    <mda:meta type="x-matecat-weighted">100</mda:meta>
+                </mda:metagroup>
+            </mda:metadata>
         </unit>
         <unit help-id="2" id="u2">
             <my:elem xmlns:my="myNamespaceURI" id="x2">data</my:elem>
@@ -45,13 +50,18 @@
                     }
                 </note>
             </notes>
-            <segment id="s2">
+            <segment state="translated" id="s2">
                 <source>
                     <pc id="2">Hello <mrk id="m2" type="term">World2</mrk>!</pc>
                 </source>
-                <target state="translated">|||UNTRANSLATED_CONTENT_START|||<pc id="1">Hello <mrk id="m2" type="term">World2</mrk> !</pc>|||UNTRANSLATED_CONTENT_END|||</target>
-<count-group name="u2"><count count-type="x-matecat-raw">54354</count><count count-type="x-matecat-weighted">54353</count></count-group>
+                <target>|||UNTRANSLATED_CONTENT_START|||<pc id="1">Hello <mrk id="m2" type="term">World2</mrk> !</pc>|||UNTRANSLATED_CONTENT_END|||</target>
             </segment>
+            <mda:metadata>
+                <mda:metagroup category="row_xml_attribute">
+                    <mda:meta type="x-matecat-raw">500</mda:meta>
+                    <mda:meta type="x-matecat-weighted">300</mda:meta>
+                </mda:metagroup>
+            </mda:metadata>
         </unit>
     </file>
 </xliff>

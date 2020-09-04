@@ -57,8 +57,8 @@ class XliffReplacerTest extends BaseTest
                 'mrk_succ_tags' => '',
                 'translation' => '<pc id="1">Buongiorno al <mrk id="m2" type="term">Mondo</mrk> !</pc>',
                 'status' => TranslationStatus::STATUS_TRANSLATED,
-                'eq_word_count' => 123,
-                'raw_word_count' => 456,
+                'eq_word_count' => 100,
+                'raw_word_count' => 200,
             ],
             [
                 'sid' => 2,
@@ -71,8 +71,8 @@ class XliffReplacerTest extends BaseTest
                 'mrk_succ_tags' => '',
                 'translation' => '<pc id="2">Buongiorno al <mrk id="m2" type="term">Mondo2</mrk> !</pc>',
                 'status' => TranslationStatus::STATUS_TRANSLATED,
-                'eq_word_count' => 54353,
-                'raw_word_count' => 54354,
+                'eq_word_count' => 200,
+                'raw_word_count' => 300,
             ],
         ];
 
