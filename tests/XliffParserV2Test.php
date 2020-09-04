@@ -183,7 +183,6 @@ class XliffParserV2Test extends BaseTest
                     }',
                             ],
                         ],
-                        'original-data' => [],
                          'source' => [
                              'raw-content' => '&lt;pc id="1"&gt;Hello <mrk id="m1" type="term">World</mrk>!&lt;/pc&gt;',
                              'attr'    => [],
@@ -207,7 +206,6 @@ class XliffParserV2Test extends BaseTest
                     }',
                          ],
                     ],
-                    'original-data' => [],
                     'source' => [
                             'raw-content' => '&lt;pc id="2"&gt;Hello <mrk id="m2" type="term">World2</mrk>!&lt;/pc&gt;',
                             'attr'    => [],

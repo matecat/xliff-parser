@@ -1,0 +1,165 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0" xmlns:slr="urn:oasis:names:tc:xliff:sizerestriction:2.0" xmlns:memsource="http://www.memsource.com/xliff2.0/1.0" version="2.0" memsource:wfLevel="3" srcLang="en-us" trgLang="el-gr">
+    <file id="dMAegkRCnyDu77Pn_dc5:0-9" memsource:taskId="dMAegkRCnyDu77Pn_dc5" canResegment="no" original="389108a4-rtapi.xml">
+        <slr:profiles generalProfile="xliff:codepoints" />
+        <unit id="0" memsource:tGroupBegin="0" memsource:tGroupEnd="0">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key">01d35857-b9bd-4835-8db1-40febcdcc8e9</mda:meta>
+                    <mda:meta type="key-note">
+                        Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/rtapi/keys" target="_blank"&gt;rtapi&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/rtapi/key/driver_tasks.delivery_reminders.order.wda.title/overview" target="_blank"&gt;driver_tasks.delivery_reminders.order.wda.title&lt;/a&gt; Description: &lt;font color="blue"&gt;Title for delivery reminders when an eater has changed the dropoff location for an order&lt;/font&gt;
+
+                    </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <memsource:additionalTagData>
+                <memsource:tag id="source1">
+                    <memsource:tagId>1</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+            </memsource:additionalTagData>
+            <originalData>
+                <data id="source1">${recipientName}</data>
+            </originalData>
+            <segment id="0" state="final">
+                <source>
+                    <ph id="source1" dataRef="source1" /> changed the address</source>
+                <target></target>
+            </segment>
+        </unit>
+        <unit id="1" memsource:tGroupBegin="1" memsource:tGroupEnd="1">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key">2133b273-dd50-47bb-b629-302409d23c40</mda:meta>
+                    <mda:meta type="key-note">
+                        Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/rtapi/keys" target="_blank"&gt;rtapi&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/rtapi/key/driver_tasks.delivery_reminders.order.high_risk.description/overview" target="_blank"&gt;driver_tasks.delivery_reminders.order.high_risk.description&lt;/a&gt; Description: &lt;font color="blue"&gt;Description of the alert that reminds couriers that the pickup is at risk of missing items&lt;/font&gt;
+
+                    </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <segment id="1" state="final">
+                <source>Customers have reported missing items from here before.</source>
+                <target></target>
+            </segment>
+        </unit>
+        <unit id="2" memsource:tGroupBegin="2" memsource:tGroupEnd="3">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key">40466f66-19d0-40c2-a9de-8573c31833f3</mda:meta>
+                    <mda:meta type="key-note">
+                        Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/rtapi/keys" target="_blank"&gt;rtapi&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/rtapi/key/driver_tasks.delivery_reminders.order.wda.description/overview" target="_blank"&gt;driver_tasks.delivery_reminders.order.wda.description&lt;/a&gt; Description: &lt;font color="blue"&gt;Description for delivery reminders when an eater has changed the dropoff location for an order&lt;/font&gt;
+
+                    </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <segment id="2" state="final">
+                <source>Your earnings will reflect the new address.</source>
+                <target></target>
+            </segment>
+            <segment id="3" state="final">
+                <source>Thanks for helping the customer.</source>
+                <target></target>
+            </segment>
+        </unit>
+        <unit id="3" memsource:tGroupBegin="4" memsource:tGroupEnd="4">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key">53b2b402-5cbd-4ae9-af77-f0a753c23aa1</mda:meta>
+                    <mda:meta type="key-note">
+                        Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/rtapi/keys" target="_blank"&gt;rtapi&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/rtapi/key/driver_tasks.delivery_reminders.order.generic.callout/overview" target="_blank"&gt;driver_tasks.delivery_reminders.order.generic.callout&lt;/a&gt; Description: &lt;font color="blue"&gt;Generic alert text that reminds couriers of possible missing items on pickup&lt;/font&gt;
+
+                    </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <segment id="4" state="final">
+                <source>Customers have reported wrong or missing items from here before</source>
+                <target></target>
+            </segment>
+        </unit>
+        <unit id="4" memsource:tGroupBegin="5" memsource:tGroupEnd="5">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key">82875bf5-2d97-4f93-9d27-472ba18d0c6e</mda:meta>
+                    <mda:meta type="key-note">
+                        Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/rtapi/keys" target="_blank"&gt;rtapi&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/rtapi/key/bus.trial_promo_pass.card.title/overview" target="_blank"&gt;bus.trial_promo_pass.card.title&lt;/a&gt; Description: &lt;font color="blue"&gt;This text will be the title for a card showing users a promotional offer. The title is supposed to let users understand how many trips the offer is applicable for e.g. "30-trip trial package"&lt;/font&gt;
+
+                    </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <memsource:additionalTagData>
+                <memsource:tag id="source1">
+                    <memsource:tagId>1</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+            </memsource:additionalTagData>
+            <originalData>
+                <data id="source1">${redemptionLimit}</data>
+            </originalData>
+            <segment id="5" state="final">
+                <source>
+                    <ph id="source1" dataRef="source1" />-trip trial package</source>
+                <target></target>
+            </segment>
+        </unit>
+        <unit id="5" memsource:tGroupBegin="6" memsource:tGroupEnd="6">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key">854a8e5f-06ea-49e1-a0ca-df488e4c0d2a</mda:meta>
+                    <mda:meta type="key-note">
+                        Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/rtapi/keys" target="_blank"&gt;rtapi&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/rtapi/key/lite_testing_nil/overview" target="_blank"&gt;lite_testing_nil&lt;/a&gt; Description: &lt;font color="blue"&gt;lite_testing_nil&lt;/font&gt;
+
+                    </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <segment id="6" state="final">
+                <source>lite_testing_nil</source>
+                <target></target>
+            </segment>
+        </unit>
+        <unit id="6" memsource:tGroupBegin="7" memsource:tGroupEnd="7">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key">9c13d511-6995-463b-8965-f7cecd02a99f</mda:meta>
+                    <mda:meta type="key-note">
+                        Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/rtapi/keys" target="_blank"&gt;rtapi&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/rtapi/key/driver_tasks.delivery_reminders.order.multiple_items.description/overview" target="_blank"&gt;driver_tasks.delivery_reminders.order.multiple_items.description&lt;/a&gt; Description: &lt;font color="blue"&gt;Description of the alert that reminds couriers that the pickup has more items than usual&lt;/font&gt;
+
+                    </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <segment id="7" state="final">
+                <source>The restaurant should verify if any items are missing.</source>
+                <target></target>
+            </segment>
+        </unit>
+        <unit id="7" memsource:tGroupBegin="8" memsource:tGroupEnd="8">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key">9c81d1c7-8aa9-49bd-97a9-cfc42b6df3d8</mda:meta>
+                    <mda:meta type="key-note">
+                        Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/rtapi/keys" target="_blank"&gt;rtapi&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/rtapi/key/driver_tasks.delivery_reminders.order.customizations.description/overview" target="_blank"&gt;driver_tasks.delivery_reminders.order.customizations.description&lt;/a&gt; Description: &lt;font color="blue"&gt;The description of the alert that reminds couriers that the pickup has customizations&lt;/font&gt;
+
+                    </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <segment id="8" state="final">
+                <source>The restaurant should verify if the customer’s instructions were followed.</source>
+                <target></target>
+            </segment>
+        </unit>
+        <unit id="8" memsource:tGroupBegin="9" memsource:tGroupEnd="9">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key">e24a5ac4-16e2-484c-8f68-26a370fea0c4</mda:meta>
+                    <mda:meta type="key-note">
+                        Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/rtapi/keys" target="_blank"&gt;rtapi&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/rtapi/key/driver_tasks.delivery_reminders.order.generic.title/overview" target="_blank"&gt;driver_tasks.delivery_reminders.order.generic.title&lt;/a&gt; Description: &lt;font color="blue"&gt;Generic title of alert that reminds couriers that pickup is at risk of missing items&lt;/font&gt;
+
+                    </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <segment id="9" state="final">
+                <source>The restaurant should verify this order</source>
+                <target></target>
+            </segment>
+        </unit>
+    </file>
+</xliff>

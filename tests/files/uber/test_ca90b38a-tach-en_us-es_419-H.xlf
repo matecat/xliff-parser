@@ -1,0 +1,236 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0" xmlns:slr="urn:oasis:names:tc:xliff:sizerestriction:2.0" xmlns:memsource="http://www.memsource.com/xliff2.0/1.0" version="2.0" memsource:wfLevel="1" srcLang="en-us" trgLang="es-419">
+    <file id="KI063R3my91kc1A05_dc6:0-29" memsource:taskId="KI063R3my91kc1A05_dc6" canResegment="no" original="test_ca90b38a-tach.xml">
+        <slr:profiles generalProfile="xliff:codepoints" />
+        <unit id="0" memsource:tGroupBegin="0" memsource:tGroupEnd="0">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key">0a5c6c0c-d3eb-4cdd-bdaa-04a5f2e38279</mda:meta>
+                    <mda:meta type="key-note">
+      Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/tach/keys" target="_blank"&gt;tach&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/tach/key/carbon.rides.feedback.issues.sharp.turns.title/overview" target="_blank"&gt;carbon.rides.feedback.issues.sharp.turns.title&lt;/a&gt; Description: &lt;font color="blue"&gt;Rider selected "Swerves and sharp turns" as a reason for giving the driver less than 5-stars. We want to explain the driver our community guidelines&lt;/font&gt;
+
+    </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <segment id="0" state="initial">
+                <source>Swerves and sharp turns</source>
+                <target></target>
+            </segment>
+        </unit>
+        <unit id="1" memsource:tGroupBegin="1" memsource:tGroupEnd="5">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key">1e24b822-475a-418b-920b-c96f90241667</mda:meta>
+                    <mda:meta type="key-note">
+      Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/tach/keys" target="_blank"&gt;tach&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/tach/key/carbon.rides.feedback.issues.distracted.phone.body/overview" target="_blank"&gt;carbon.rides.feedback.issues.distracted.phone.body&lt;/a&gt; Description: &lt;font color="blue"&gt;When a rider selects "Distracted by phone" as a reason for not giving 5-stars, we want to tell the driver what our Community Guidelines are&lt;/font&gt;
+
+    </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <segment id="1" state="initial">
+                <source>A rider reported that you looked distracted by your phone.</source>
+                <target></target>
+            </segment>
+            <segment id="2" state="initial">
+                <source>Uber's Community Guidelines</source>
+                <target></target>
+            </segment>
+            <segment id="3" state="initial">
+                <source>Uber reviews all safety reports that violate our guidelines of keeping one another safe.</source>
+                <target></target>
+            </segment>
+            <segment id="4" state="initial">
+                <source>In serious cases, your account may be put on hold until our review is complete.</source>
+                <target></target>
+            </segment>
+            <segment id="5" state="initial">
+                <source>Link: https://www.uber.com/safety/uber-community-guidelines/</source>
+                <target></target>
+            </segment>
+        </unit>
+        <unit id="2" memsource:tGroupBegin="6" memsource:tGroupEnd="10">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key">3a98b66e-caaa-4cb3-8555-2b9fe6fe155a</mda:meta>
+                    <mda:meta type="key-note">
+      Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/tach/keys" target="_blank"&gt;tach&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/tach/key/carbon.rides.feedback.issues.drowsy.driving.body/overview" target="_blank"&gt;carbon.rides.feedback.issues.drowsy.driving.body&lt;/a&gt; Description: &lt;font color="blue"&gt;When a rider selects "Drowsy driving" as a reason for not giving 5-stars, we want to tell the driver what our community guidelines are&lt;/font&gt;
+
+    </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <segment id="6" state="initial">
+                <source>A rider reported that you looked drowsy while driving.</source>
+                <target></target>
+            </segment>
+            <segment id="7" state="initial">
+                <source>Uber's Community Guidelines</source>
+                <target></target>
+            </segment>
+            <segment id="8" state="initial">
+                <source>Uber reviews all safety reports that violate our guidelines of keeping one another safe.</source>
+                <target></target>
+            </segment>
+            <segment id="9" state="initial">
+                <source>In serious cases, your account may be put on hold until our review is complete.</source>
+                <target></target>
+            </segment>
+            <segment id="10" state="initial">
+                <source>Link: https://www.uber.com/safety/uber-community-guidelines/</source>
+                <target></target>
+            </segment>
+        </unit>
+        <unit id="3" memsource:tGroupBegin="11" memsource:tGroupEnd="15">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key">4f6f5e0a-689a-4209-a1d3-1469e4bf8efa</mda:meta>
+                    <mda:meta type="key-note">
+      Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/tach/keys" target="_blank"&gt;tach&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/tach/key/carbon.rides.feedback.issues.harsh.stop.body/overview" target="_blank"&gt;carbon.rides.feedback.issues.harsh.stop.body&lt;/a&gt; Description: &lt;font color="blue"&gt;When a rider selects "Harsh stop and go" as a reason for not giving 5-stars, we want to tell the driver what our community guidelines are&lt;/font&gt;
+
+    </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <segment id="11" state="initial">
+                <source>A rider reported they experienced sudden stops and acceleration on their trip.</source>
+                <target></target>
+            </segment>
+            <segment id="12" state="initial">
+                <source>Uber's Community Guidelines</source>
+                <target></target>
+            </segment>
+            <segment id="13" state="initial">
+                <source>Uber reviews all safety reports that violate our guidelines of keeping one another safe.</source>
+                <target></target>
+            </segment>
+            <segment id="14" state="initial">
+                <source>In serious cases, your account may be put on hold until our review is complete.</source>
+                <target></target>
+            </segment>
+            <segment id="15" state="initial">
+                <source>Link: https://www.uber.com/safety/uber-community-guidelines/</source>
+                <target></target>
+            </segment>
+        </unit>
+        <unit id="4" memsource:tGroupBegin="16" memsource:tGroupEnd="16">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key">6f299d12-5b22-4aa7-9190-9fbe43444826</mda:meta>
+                    <mda:meta type="key-note">
+      Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/tach/keys" target="_blank"&gt;tach&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/tach/key/carbon.rides.feedback.issues.illegal.driving.title/overview" target="_blank"&gt;carbon.rides.feedback.issues.illegal.driving.title&lt;/a&gt; Description: &lt;font color="blue"&gt;Rider selected "Illegal driving" as a reason for giving the driver less than 5-stars. We want to explain the driver our community guidelines&lt;/font&gt;
+
+    </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <segment id="16" state="initial">
+                <source>Illegal driving</source>
+                <target></target>
+            </segment>
+        </unit>
+        <unit id="5" memsource:tGroupBegin="17" memsource:tGroupEnd="17">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key">832435e4-8984-4fe7-8d90-1486a3d2556c</mda:meta>
+                    <mda:meta type="key-note">
+      Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/tach/keys" target="_blank"&gt;tach&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/tach/key/carbon.rides.feedback.issues.distracted.phone.title/overview" target="_blank"&gt;carbon.rides.feedback.issues.distracted.phone.title&lt;/a&gt; Description: &lt;font color="blue"&gt;Rider selected "Distracted by phone" as a reason for giving the driver less than 5-stars. We want to explain the driver our community guidelines&lt;/font&gt;
+
+    </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <segment id="17" state="initial">
+                <source>Distracted by phone</source>
+                <target></target>
+            </segment>
+        </unit>
+        <unit id="6" memsource:tGroupBegin="18" memsource:tGroupEnd="22">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key">8bdcd26c-d7e1-4d15-b87c-b0d060be9dbd</mda:meta>
+                    <mda:meta type="key-note">
+      Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/tach/keys" target="_blank"&gt;tach&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/tach/key/carbon.rides.feedback.issues.illegal.driving.body/overview" target="_blank"&gt;carbon.rides.feedback.issues.illegal.driving.body&lt;/a&gt; Description: &lt;font color="blue"&gt;When a rider selects "Illegal driving" as a reason for not giving 5-stars, we want to tell the driver what our community guidelines are&lt;/font&gt;
+
+    </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <segment id="18" state="initial">
+                <source>A rider reported that you didn't follow a traffic law.</source>
+                <target></target>
+            </segment>
+            <segment id="19" state="initial">
+                <source>Uber's Community Guidelines</source>
+                <target></target>
+            </segment>
+            <segment id="20" state="initial">
+                <source>Uber reviews all safety reports that violate our guidelines.</source>
+                <target></target>
+            </segment>
+            <segment id="21" state="initial">
+                <source>In serious cases, your account may be put on hold until our review is complete.</source>
+                <target></target>
+            </segment>
+            <segment id="22" state="initial">
+                <source>Link: https://www.uber.com/safety/uber-community-guidelines/</source>
+                <target></target>
+            </segment>
+        </unit>
+        <unit id="7" memsource:tGroupBegin="23" memsource:tGroupEnd="27">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key">b973bc89-4cc2-44b4-9f0d-707b467f7bc2</mda:meta>
+                    <mda:meta type="key-note">
+      Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/tach/keys" target="_blank"&gt;tach&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/tach/key/carbon.rides.feedback.issues.sharp.turns.body/overview" target="_blank"&gt;carbon.rides.feedback.issues.sharp.turns.body&lt;/a&gt; Description: &lt;font color="blue"&gt;When a rider selects "Swerves and sharp turns" as a reason for not giving 5-stars, we want to tell the driver what our community guidelines are&lt;/font&gt;
+
+    </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <segment id="23" state="initial">
+                <source>A rider reported that you were swerving or making sharp turns.</source>
+                <target></target>
+            </segment>
+            <segment id="24" state="initial">
+                <source>Uber's Community Guidelines</source>
+                <target></target>
+            </segment>
+            <segment id="25" state="initial">
+                <source>Uber reviews all safety reports that violate our guidelines of keeping one another safe.</source>
+                <target></target>
+            </segment>
+            <segment id="26" state="initial">
+                <source>In serious cases, your account may be put on hold until our review is complete.</source>
+                <target></target>
+            </segment>
+            <segment id="27" state="initial">
+                <source>Link: https://www.uber.com/safety/uber-community-guidelines/</source>
+                <target></target>
+            </segment>
+        </unit>
+        <unit id="8" memsource:tGroupBegin="28" memsource:tGroupEnd="28">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key">ecf90dfa-0898-4d41-bcd0-08613d95c727</mda:meta>
+                    <mda:meta type="key-note">
+      Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/tach/keys" target="_blank"&gt;tach&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/tach/key/carbon.rides.feedback.issues.drowsy.driving.title/overview" target="_blank"&gt;carbon.rides.feedback.issues.drowsy.driving.title&lt;/a&gt; Description: &lt;font color="blue"&gt;Rider selected "Drowsy driving" as a reason for giving the driver less than 5-stars. We want to explain the driver our community guidelines&lt;/font&gt;
+
+    </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <segment id="28" state="initial">
+                <source>Drowsy driving</source>
+                <target></target>
+            </segment>
+        </unit>
+        <unit id="9" memsource:tGroupBegin="29" memsource:tGroupEnd="29">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key">f7dc0c0c-c2c3-4c9d-8146-97bf43db76e5</mda:meta>
+                    <mda:meta type="key-note">
+      Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/tach/keys" target="_blank"&gt;tach&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/tach/key/carbon.rides.feedback.issues.harsh.stop.title/overview" target="_blank"&gt;carbon.rides.feedback.issues.harsh.stop.title&lt;/a&gt; Description: &lt;font color="blue"&gt;Rider selected "Harsh stop and go" as a reason for giving the driver less than 5-stars. We want to explain the driver our community guidelines&lt;/font&gt;
+
+    </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <segment id="29" state="initial">
+                <source>Harsh stop and go</source>
+                <target></target>
+            </segment>
+        </unit>
+    </file>
+</xliff>

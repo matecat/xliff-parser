@@ -119,12 +119,16 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
                         }
                     } elseif ('segment' === $name and $this->xliffVersion === 2) { // add state to segment in Xliff v2
                         list($stateProp, $lastMrkState) = $this->setTransUnitState($this->segments[ $pos ], $stateProp, $lastMrkState);
-
-                        $tag .= $stateProp . " ";
                     }
 
                     //normal tag flux, put attributes in it
                     $tag .= "$k=\"$v\" ";
+
+                    // replace state for xliff v2
+                    if($stateProp){
+                        $pattern = '/state=\"(.*)\"/i';
+                        $tag = preg_replace($pattern, $stateProp, $tag);
+                    }
                 }
             }
 
@@ -478,7 +482,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
             case TranslationStatus::STATUS_FIXED:
             case TranslationStatus::STATUS_APPROVED:
                 if ($lastMrkState == null or $lastMrkState == TranslationStatus::STATUS_APPROVED) {
-                    $state_prop   = "state=\"signed-off\"";
+                    $state_prop   = ($this->xliffVersion === 2) ? "state=\"reviewed\"": "state=\"signed-off\"";
                     $lastMrkState = TranslationStatus::STATUS_APPROVED;
                 }
                 break;
@@ -490,17 +494,17 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
                 }
                 break;
 
-            case TranslationStatus::STATUS_REJECTED:  // if there is a mark REJECTED and there is not a DRAFT, all the trans-unit is REJECTED
+            case TranslationStatus::STATUS_REJECTED:  // if there is a mark REJECTED and there is not a DRAFT, all the trans-unit is REJECTED. In V2 there is no way to mark
             case TranslationStatus::STATUS_REBUTTED:
                 if (($lastMrkState == null) or ($lastMrkState != TranslationStatus::STATUS_NEW or $lastMrkState != TranslationStatus::STATUS_DRAFT)) {
-                    $state_prop   = "state=\"needs-review-translation\"";
+                    $state_prop   = ($this->xliffVersion === 2) ? "state=\"initial\"" : "state=\"needs-review-translation\"";
                     $lastMrkState = TranslationStatus::STATUS_REJECTED;
                 }
                 break;
 
             case TranslationStatus::STATUS_NEW:
                 if (($lastMrkState == null) or $lastMrkState != TranslationStatus::STATUS_DRAFT) {
-                    $state_prop   = "state=\"new\"";
+                    $state_prop   = ($this->xliffVersion === 2) ? "state=\"initial\"" : "state=\"new\"";
                     $lastMrkState = TranslationStatus::STATUS_NEW;
                 }
                 break;

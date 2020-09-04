@@ -1,0 +1,179 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0" xmlns:slr="urn:oasis:names:tc:xliff:sizerestriction:2.0" xmlns:memsource="http://www.memsource.com/xliff2.0/1.0" version="2.0" memsource:wfLevel="1" srcLang="en-us" trgLang="mr-in">
+    <file id="Ulx06325z5BLr0iv1_dc5:0-24" memsource:taskId="Ulx06325z5BLr0iv1_dc5" canResegment="no" original="test_[Localization] Manual Template for Global - Wrong courier process.xlsx">
+        <slr:profiles generalProfile="xliff:codepoints" />
+        <unit id="0" memsource:tGroupBegin="0" memsource:tGroupEnd="0" slr:sizeRestriction="Character Limits">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key">no </mda:meta>
+                    <mda:meta type="key-note"></mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <segment id="0" state="initial">
+                <source>English</source>
+                <target></target>
+            </segment>
+        </unit>
+        <unit id="1" memsource:tGroupBegin="1" memsource:tGroupEnd="1" slr:sizeRestriction="Please note limits for Ring Messages, SMS, Push Notifications">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key">Context Key (if necessary)</mda:meta>
+                    <mda:meta type="key-note">English Context
+(Example: DRIVER EMAIL 1)</mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <segment id="1" state="initial">
+                <source>English (Baseline Version)</source>
+                <target></target>
+            </segment>
+        </unit>
+        <unit id="2" memsource:tGroupBegin="2" memsource:tGroupEnd="5" slr:sizeRestriction="500">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key"></mda:meta>
+                    <mda:meta type="key-note">Body </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <segment id="2" state="initial">
+                <source>Uber Eats - We have been informed that someone else has used your account.</source>
+                <target></target>
+            </segment>
+            <segment id="3" state="initial">
+                <source>This violates the terms of your Services Agreement with Uber.</source>
+                <target></target>
+            </segment>
+            <segment id="4" state="initial">
+                <source>If we receive multiple reports of this nature, your account will be suspended.</source>
+                <target></target>
+            </segment>
+            <segment id="5" state="initial">
+                <source>Thank you for taking this notification into account in your next deliveries.</source>
+                <target></target>
+            </segment>
+        </unit>
+        <unit id="3" memsource:tGroupBegin="6" memsource:tGroupEnd="9" slr:sizeRestriction="500">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key"></mda:meta>
+                    <mda:meta type="key-note">Body </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <segment id="6" state="initial">
+                <source>Uber Eats - We have been informed several times that someone else has used your account.</source>
+                <target></target>
+            </segment>
+            <segment id="7" state="initial">
+                <source>This violates the terms of your Services Agreement.</source>
+                <target></target>
+            </segment>
+            <segment id="8" state="initial">
+                <source>Preventively, your account has been temporarily suspended.</source>
+                <target></target>
+            </segment>
+            <segment id="9" state="initial">
+                <source>We are reviewing this information and we will contact you within 48 hours to inform you of the result of this verification.</source>
+                <target></target>
+            </segment>
+        </unit>
+        <unit id="4" memsource:tGroupBegin="10" memsource:tGroupEnd="12" slr:sizeRestriction="500">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key"></mda:meta>
+                    <mda:meta type="key-note">Body </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <segment id="10" state="initial">
+                <source>Uber Eats - Analysis of your account has led to verification of reports that someone else has used your account.</source>
+                <target></target>
+            </segment>
+            <segment id="11" state="initial">
+                <source>However, as it was a first strike, your account has been reactivated.</source>
+                <target></target>
+            </segment>
+            <segment id="12" state="initial">
+                <source>If we are informed of a similar situation again, your account will be permanently disabled.</source>
+                <target></target>
+            </segment>
+        </unit>
+        <unit id="5" memsource:tGroupBegin="13" memsource:tGroupEnd="14" slr:sizeRestriction="500">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key"></mda:meta>
+                    <mda:meta type="key-note">Body </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <segment id="13" state="initial">
+                <source>Uber Eats - We have been informed multiple times that someone else has used your account.</source>
+                <target></target>
+            </segment>
+            <segment id="14" state="initial">
+                <source>After an in-depth analysis of this information, this information has been confirmed and your account has been disabled for continuing to violate the terms of the Services Agreement, despite having received a warning.</source>
+                <target></target>
+            </segment>
+        </unit>
+        <unit id="6" memsource:tGroupBegin="15" memsource:tGroupEnd="17" slr:sizeRestriction="500">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key"></mda:meta>
+                    <mda:meta type="key-note">Body </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <segment id="15" state="initial">
+                <source>Uber Eats - We have been informed multiple times that someone else has used your account, despite the fact that you have already received a warning.</source>
+                <target></target>
+            </segment>
+            <segment id="16" state="initial">
+                <source>After an in-depth analysis, these reports have been confirmed and your account has been disabled for continuing to violate the terms of the Services Agreement.</source>
+                <target></target>
+            </segment>
+            <segment id="17" state="initial">
+                <source>If you believe that these reports are incorrect, please contact our partner support through the Help section in your Uber Eats app.</source>
+                <target></target>
+            </segment>
+        </unit>
+        <unit id="7" memsource:tGroupBegin="18" memsource:tGroupEnd="21" slr:sizeRestriction="500">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key"></mda:meta>
+                    <mda:meta type="key-note">Body </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <segment id="18" state="initial">
+                <source>Uber Eats - We have been informed several times that someone else has used your account.</source>
+                <target></target>
+            </segment>
+            <segment id="19" state="initial">
+                <source>This violates the terms of your Services Agreement.</source>
+                <target></target>
+            </segment>
+            <segment id="20" state="initial">
+                <source>Preventively, your account has been temporarily suspended.</source>
+                <target></target>
+            </segment>
+            <segment id="21" state="initial">
+                <source>We are reviewing this information and we will contact you within 48 hours to inform you of the result of this verification.</source>
+                <target></target>
+            </segment>
+        </unit>
+        <unit id="8" memsource:tGroupBegin="22" memsource:tGroupEnd="24" slr:sizeRestriction="500">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key"></mda:meta>
+                    <mda:meta type="key-note">Body </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <segment id="22" state="initial">
+                <source>Uber Eats - Analysis of your account has led to verification of reports that someone else has used your account.</source>
+                <target></target>
+            </segment>
+            <segment id="23" state="initial">
+                <source>However, as it was a first strike, your account has been reactivated.</source>
+                <target></target>
+            </segment>
+            <segment id="24" state="initial">
+                <source>If we are informed of a similar situation again, your account will be permanently disabled.</source>
+                <target></target>
+            </segment>
+        </unit>
+    </file>
+</xliff>

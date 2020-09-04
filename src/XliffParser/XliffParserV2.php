@@ -130,7 +130,17 @@ class XliffParserV2 extends AbstractXliffParser
 
         // original-data (exclusive for V2)
         // http://docs.oasis-open.org/xliff/xliff-core/v2.0/xliff-core-v2.0.html#originaldata
-        $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'original-data' ] = $this->extractTransUnitOriginalData($transUnit);
+        $originalData = $this->extractTransUnitOriginalData($transUnit);
+        if(!empty($originalData)){
+            $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'original-data' ] = $originalData;
+        }
+
+        // additionalTagData (exclusive for V2)
+        $additionalTagData = $this->extractTransUnitAdditionalTagData($transUnit);
+        if(!empty($additionalTagData)){
+            $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'additional-tag-data' ] = $additionalTagData;
+        }
+
 
         // content
         // in xliff v2 there is not <seg-source> tag, so we need to concatenate all segment <source> and <target>
@@ -150,6 +160,11 @@ class XliffParserV2 extends AbstractXliffParser
         $c = 0;
         foreach ($transUnit->childNodes as $segment) {
             if ($segment->nodeName === 'segment') {
+
+                // check segment id consistency
+                $attr = $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'attr' ];
+                $this->checkSegmentIdConsistency($segment, $attr);
+
                 // loop <segment> to get nested <source> and <target> tag
                 foreach ($segment->childNodes as $childNode) {
                     if ($childNode->nodeName === 'source') {
@@ -205,6 +220,16 @@ class XliffParserV2 extends AbstractXliffParser
             $metadata[ 'translate' ] = $transUnit->attributes->getNamedItem('translate')->nodeValue;
         }
 
+        // tGroupBegin
+        if (null !== $transUnit->attributes->getNamedItem('tGroupBegin')) {
+            $metadata[ 'tGroupBegin' ] = $transUnit->attributes->getNamedItem('tGroupBegin')->nodeValue;
+        }
+
+        // tGroupEnd
+        if (null !== $transUnit->attributes->getNamedItem('tGroupEnd')) {
+            $metadata[ 'tGroupEnd' ] = $transUnit->attributes->getNamedItem('tGroupEnd')->nodeValue;
+        }
+
         return $metadata;
     }
 
@@ -242,6 +267,72 @@ class XliffParserV2 extends AbstractXliffParser
         }
 
         return $originalData;
+    }
+
+    /**
+     * @param \DOMElement $transUnit
+     *
+     * @return array
+     */
+    private function extractTransUnitAdditionalTagData(\DOMElement $transUnit)
+    {
+        $additionalTagData = [];
+
+        // loop <originalData> to get nested content
+        foreach ($transUnit->childNodes as $childNode) {
+            if ( $childNode->nodeName === 'memsource:additionalTagData' ) {
+                foreach ($childNode->childNodes as $data) {
+
+                    $dataArray = [];
+
+                    // id
+                    if ( $data->nodeName === 'memsource:tag' ) {
+                        if (null!== $data->attributes and null !== $data->attributes->getNamedItem('id')) {
+                            $dataId = $data->attributes->getNamedItem('id')->nodeValue;
+                            $dataArray['attr']['id'] = $dataId;
+                        }
+                    }
+
+                    // content
+                    foreach ($data->childNodes as $datum) {
+                        if ( $datum->nodeName === 'memsource:tagId' ) {
+                            $dataArray['raw-content']['tagId'] = $datum->nodeValue;
+                        }
+
+                        if ( $datum->nodeName === 'memsource:type' ) {
+                            $dataArray['raw-content']['type'] = $datum->nodeValue;
+                        }
+                    }
+
+                    if(!empty($dataArray)){
+                        $additionalTagData[] = $dataArray;
+                    }
+                }
+            }
+        }
+
+        return $additionalTagData;
+    }
+
+    /**
+     * Check if segment id is present within tGroupBegin and tGroupEnd attributes
+     *
+     * @param \DOMElement $segment
+     * @param array $attr
+     */
+    private function checkSegmentIdConsistency( \DOMElement $segment, array $attr)
+    {
+        if(isset($attr[ 'tGroupBegin' ]) and isset($attr[ 'tGroupEnd' ]) and $segment->attributes->getNamedItem('id')){
+            $id = $segment->attributes->getNamedItem('id')->nodeValue;
+            $min = (int)$attr[ 'tGroupBegin' ];
+            $max = (int)$attr[ 'tGroupEnd' ];
+
+            if( false === ( ($min <= $id) and ($id <= $max) ) ){
+                if($this->logger){
+                    $this->logger->warning('Segment #' . $id . ' is not included within tGroupBegin and tGroupEnd');
+                }
+            }
+        }
     }
 
     /**
