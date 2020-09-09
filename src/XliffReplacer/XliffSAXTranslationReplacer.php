@@ -7,6 +7,8 @@ use Matecat\XliffParser\Utils\Strings;
 
 class XliffSAXTranslationReplacer extends AbstractXliffReplacer
 {
+    private $currentData;
+
     public function replaceTranslation()
     {
         fwrite($this->outputFP, '<?xml version="1.0" encoding="UTF-8"?>');
@@ -108,6 +110,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
                     //replace Target language with job language provided from constructor
                     $tag .= "$k=\"$this->target_lang\" ";
                 } else {
+                    $pos = 0;
                     if($this->currentId){
                         $pos = current($this->transUnits[ $this->currentId ]);
                     }
@@ -533,11 +536,19 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
      */
     protected function characterData($parser, $data)
     {
-        //don't write <target> data
+        // don't write <target> data
         if (!$this->inTarget and !$this->bufferIsActive) {
 
-            //flush to pointer
-            $this->postProcAndFlush($this->outputFP, $data);
+            $this->currentData = $this->currentData . $data;
+
+            $trimmedData = trim($data);
+
+            if($trimmedData === ''){
+                // flush $this->currentData
+                $this->postProcAndFlush($this->outputFP, $this->currentData);
+                $this->currentData = null;
+            }
+
         } elseif ($this->bufferIsActive) {
             $this->CDATABuffer .= $data;
         }

@@ -12,7 +12,7 @@
             </note>
         </notes>
         <unit help-id="1" id="u1" translate="test">
-            <my:elem xmlns:my="myNamespaceURI" id="x1">data</my:elem>
+            <my:elem xmlns:my="myNamespaceURI" id="x1"></my:elem>data
             <notes>
                 <note id="n1">note for unit</note>
                 <note id="n2">another note for unit.</note>
@@ -24,7 +24,7 @@
                     }
                 </note>
             </notes>
-            <segment state="translated" id="s1">
+            <segment id="s1">
                 <source>
                     <pc id="1">Hello <mrk id="m1" type="term">World</mrk>!</pc>
                 </source>
@@ -38,7 +38,7 @@
             </mda:metadata>
         </unit>
         <unit help-id="2" id="u2">
-            <my:elem xmlns:my="myNamespaceURI" id="x2">data</my:elem>
+            <my:elem xmlns:my="myNamespaceURI" id="x2"></my:elem>data
             <notes>
                 <note id="n1">note for unit2</note>
                 <note id="n2">another note for unit2.</note>
@@ -50,7 +50,7 @@
                     }
                 </note>
             </notes>
-            <segment state="translated" id="s2">
+            <segment id="s2">
                 <source>
                     <pc id="2">Hello <mrk id="m2" type="term">World2</mrk>!</pc>
                 </source>

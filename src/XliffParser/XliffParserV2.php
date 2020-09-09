@@ -141,7 +141,6 @@ class XliffParserV2 extends AbstractXliffParser
             $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'additional-tag-data' ] = $additionalTagData;
         }
 
-
         // content
         // in xliff v2 there is not <seg-source> tag, so we need to concatenate all segment <source> and <target>
         // to build the full strings

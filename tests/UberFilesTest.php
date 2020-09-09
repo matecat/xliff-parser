@@ -48,91 +48,143 @@ class UberFilesTest extends BaseTest
     /**
      * @test
      */
-    public function parses_and_set_the_correct_segment_state()
+    public function parses_and_set_the_translations()
     {
-        $data = $this->getData();
+        $data = [
+                [
+                        'sid' => 1,
+                        'segment' => 'Uber Eats Online Ordering Sales Channel Addendum Data Processing Agreement',
+                        'internal_id' => 'tu-1',
+                        'mrk_id' => '',
+                        'prev_tags' => '',
+                        'succ_tags' => '',
+                        'mrk_prev_tags' => '',
+                        'mrk_succ_tags' => '',
+                        'translation' => 'Ciao',
+                        'status' => TranslationStatus::STATUS_NEW,
+                        'eq_word_count' => 100,
+                        'raw_word_count' => 200,
+                ],
+                [
+                        'sid' => 2,
+                        'segment' => 'Got it',
+                        'internal_id' => 'tu-2',
+                        'mrk_id' => '',
+                        'prev_tags' => '',
+                        'succ_tags' => '',
+                        'mrk_prev_tags' => '',
+                        'mrk_succ_tags' => '',
+                        'translation' => 'Ricevuto!',
+                        'status' => TranslationStatus::STATUS_TRANSLATED,
+                        'eq_word_count' => 200,
+                        'raw_word_count' => 300,
+                ],
+                [
+                        'sid' => 3,
+                        'segment' => 'Play video',
+                        'internal_id' => 'tu-3',
+                        'mrk_id' => '',
+                        'prev_tags' => '',
+                        'succ_tags' => '',
+                        'mrk_prev_tags' => '',
+                        'mrk_succ_tags' => '',
+                        'translation' => 'Riprodurre video',
+                        'status' => TranslationStatus::STATUS_TRANSLATED,
+                        'eq_word_count' => 200,
+                        'raw_word_count' => 300,
+                ],
+        ];
+
+        $transUnits = $this->getTransUnitsForReplacementTest($data);
         $inputFile = __DIR__.'/../tests/files/uber/55384cd-uber-sites-en_us-ar-H_STRIPPED.xlf';
         $outputFile = __DIR__.'/../tests/files/uber/output/55384cd-uber-sites-en_us-ar-H_STRIPPED.xlf';
         $targetLang = 'it-it';
 
-        //(new XliffParser())->replaceTranslation($inputFile, $data['data'], $data['transUnits'], $targetLang, $outputFile);
+        (new XliffParser())->replaceTranslation($inputFile, $data, $transUnits, $targetLang, $outputFile);
         $output = (new XliffParser())->xliffToArray(file_get_contents($outputFile));
 
-        var_dump(
-                $output
-        );
-
-
-        //$expected = '|||UNTRANSLATED_CONTENT_START|||&lt;pc id="1"&gt;Hello <mrk id="m2" type="term">World</mrk> !&lt;/pc&gt;|||UNTRANSLATED_CONTENT_END|||';
-
-        //$this->assertEquals($expected, $output['files'][1]['trans-units'][1]['target']['raw-content']);
+        $this->assertEquals('Ciao', $output['files'][1]['trans-units'][1]['target']['raw-content']);
+        $this->assertEquals('Ricevuto!', $output['files'][1]['trans-units'][2]['target']['raw-content']);
+        $this->assertEquals('Riprodurre video', $output['files'][1]['trans-units'][3]['target']['raw-content']);
     }
 
     /**
-     * @return array
+     * @test
      */
-    private function getData()
+    public function parses_and_set_the_translations_with_tu_id_0()
     {
         $data = [
-            [
-                'sid' => 1,
-                'segment' => 'Uber Eats Online Ordering Sales Channel Addendum Data Processing Agreement',
-                'internal_id' => 'tu-1',
-                'mrk_id' => '',
-                'prev_tags' => '',
-                'succ_tags' => '',
-                'mrk_prev_tags' => '',
-                'mrk_succ_tags' => '',
-                'translation' => 'Uber Eats Online Ordering Sales Channel Addendum Data Processing Agreement',
-                'status' => TranslationStatus::STATUS_NEW,
-                'eq_word_count' => 100,
-                'raw_word_count' => 200,
-            ],
-            [
-                'sid' => 2,
-                'segment' => 'Got it',
-                'internal_id' => 'tu-2',
-                'mrk_id' => '',
-                'prev_tags' => '',
-                'succ_tags' => '',
-                'mrk_prev_tags' => '',
-                'mrk_succ_tags' => '',
-                'translation' => 'Ricevuto!',
-                'status' => TranslationStatus::STATUS_TRANSLATED,
-                'eq_word_count' => 200,
-                'raw_word_count' => 300,
-            ],
-            [
-                'sid' => 3,
-                'segment' => 'Play video',
-                'internal_id' => 'tu-3',
-                'mrk_id' => '',
-                'prev_tags' => '',
-                'succ_tags' => '',
-                'mrk_prev_tags' => '',
-                'mrk_succ_tags' => '',
-                'translation' => 'Riprodurre video',
-                'status' => TranslationStatus::STATUS_TRANSLATED,
-                'eq_word_count' => 200,
-                'raw_word_count' => 300,
-            ],
+                [
+                        'sid' => 0,
+                        'segment' => 'English',
+                        'internal_id' => 0,
+                        'mrk_id' => '',
+                        'prev_tags' => '',
+                        'succ_tags' => '',
+                        'mrk_prev_tags' => '',
+                        'mrk_succ_tags' => '',
+                        'translation' => 'Italiano',
+                        'status' => TranslationStatus::STATUS_NEW,
+                        'eq_word_count' => 100,
+                        'raw_word_count' => 200,
+                ],
         ];
 
-        $transUnits = [];
+        $transUnits = $this->getTransUnitsForReplacementTest($data);
+        $inputFile = __DIR__.'/../tests/files/uber/test_Localization_Manual Template for Global - Wrong courier process-en_us-mr_in-H_STRIPPED.xlf';
+        $outputFile = __DIR__.'/../tests/files/uber/output/test_Localization_Manual Template for Global - Wrong courier process-en_us-mr_in-H_STRIPPED.xlf';
+        $targetLang = 'it-it';
 
-        foreach ($data as $i => $k) {
-            //create a secondary indexing mechanism on segments' array; this will be useful
-            //prepend a string so non-trans unit id ( ex: numerical ) are not overwritten
-            $internalId = $k[ 'internal_id' ];
+        (new XliffParser())->replaceTranslation($inputFile, $data, $transUnits, $targetLang, $outputFile);
+        $output = (new XliffParser())->xliffToArray(file_get_contents($outputFile));
 
-            $transUnits[ $internalId ] [] = $i;
+        $this->assertEquals('Italiano', $output['files'][1]['trans-units'][1]['target']['raw-content']);
+    }
 
-            $data[ 'matecat|' . $internalId ] [] = $i;
-        }
-
-        return [
-                'data' => $data,
-                'transUnits' => $transUnits,
+    /**
+     * @test
+     */
+    public function parses_and_set_the_translations_with_tu_with_bunch_of_segments()
+    {
+        $data = [
+                [
+                        'sid' => 2,
+                        'segment' => 'English',
+                        'internal_id' => 2,
+                        'mrk_id' => '',
+                        'prev_tags' => '',
+                        'succ_tags' => '',
+                        'mrk_prev_tags' => '',
+                        'mrk_succ_tags' => '',
+                        'translation' => 'Italiano',
+                        'status' => TranslationStatus::STATUS_TRANSLATED,
+                        'eq_word_count' => 100,
+                        'raw_word_count' => 200,
+                ],
+                [
+                        'sid' => 2,
+                        'segment' => 'English',
+                        'internal_id' => 2,
+                        'mrk_id' => '',
+                        'prev_tags' => '',
+                        'succ_tags' => '',
+                        'mrk_prev_tags' => '',
+                        'mrk_succ_tags' => '',
+                        'translation' => 'Italiano2222',
+                        'status' => TranslationStatus::STATUS_TRANSLATED,
+                        'eq_word_count' => 100,
+                        'raw_word_count' => 200,
+                ],
         ];
+
+        $transUnits = $this->getTransUnitsForReplacementTest($data);
+        $inputFile = __DIR__.'/../tests/files/uber/test_Localization_Manual Template for Global - Wrong courier process-en_us-mr_in-H_STRIPPED_MULTI.xlf';
+        $outputFile = __DIR__.'/../tests/files/uber/output/test_Localization_Manual Template for Global - Wrong courier process-en_us-mr_in-H_STRIPPED_MULTI.xlf';
+        $targetLang = 'it-it';
+
+        (new XliffParser())->replaceTranslation($inputFile, $data, $transUnits, $targetLang, $outputFile);
+        $output = (new XliffParser())->xliffToArray(file_get_contents($outputFile));
+
+        //$this->assertEquals('Italiano', $output['files'][1]['trans-units'][1]['target']['raw-content']);
     }
 }
