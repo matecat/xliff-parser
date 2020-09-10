@@ -223,6 +223,8 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
                     // actually there may be more that one segment to that ID if there are two mrk of the same source segment
                     $list_of_ids = $this->transUnits[ $this->currentId ];
 
+
+
                     /*
                      * At the end of every cycle the segment grouping information is lost: unset( 'matecat|' . $this->currentId )
                      *
@@ -264,6 +266,11 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
 
                     // we must reset the lastMrkId found because this is a new segment.
                     $lastMrkId      = -1;
+
+                    // V2
+
+
+
 
                     foreach ($list_of_ids as $pos => $id) {
 
@@ -329,7 +336,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
                     $tag = $this->buildTranslateTag($targetLang, $stateProp, $translation, $this->counts[ 'raw_word_count' ], $this->counts[ 'eq_word_count' ]);
                 }
 
-                //signal we are leaving a target
+                // signal we are leaving a target
                 $this->inTarget = false;
                 $this->postProcAndFlush($this->outputFP, $tag, $treatAsCDATA = true);
             } elseif ('source' === $name
@@ -539,8 +546,8 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
         // don't write <target> data
         if (!$this->inTarget and !$this->bufferIsActive) {
 
+            // to avoid broken tag
             $this->currentData = $this->currentData . $data;
-
             $trimmedData = trim($data);
 
             if($trimmedData === ''){

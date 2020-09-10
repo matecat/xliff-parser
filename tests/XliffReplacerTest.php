@@ -21,7 +21,7 @@ class XliffReplacerTest extends BaseTest
         $output = (new XliffParser())->xliffToArray(file_get_contents($outputFile));
         $expected = '&lt;pc id="1"&gt;Buongiorno al <mrk id="m2" type="term">Mondo</mrk> !&lt;/pc&gt;';
 
-        $this->assertEquals($expected, $output['files'][1]['trans-units'][1]['target']['raw-content']);
+        $this->assertEquals($expected, $output['files'][1]['trans-units'][1]['target']['raw-content'][0]);
     }
 
     /**
@@ -37,7 +37,7 @@ class XliffReplacerTest extends BaseTest
         $output = (new XliffParser())->xliffToArray(file_get_contents($outputFile));
         $expected = '|||UNTRANSLATED_CONTENT_START|||&lt;pc id="1"&gt;Hello <mrk id="m2" type="term">World</mrk> !&lt;/pc&gt;|||UNTRANSLATED_CONTENT_END|||';
 
-        $this->assertEquals($expected, $output['files'][1]['trans-units'][1]['target']['raw-content']);
+        $this->assertEquals($expected, $output['files'][1]['trans-units'][1]['target']['raw-content'][0]);
     }
 
     /**

@@ -146,13 +146,13 @@ class XliffParserV2 extends AbstractXliffParser
         // to build the full strings
 
         $source = [
-                'attr' => [],
-                'raw-content' => '',
+            'attr' => [],
+            'raw-content' => [],
         ];
 
         $target = [
-                'attr' => [],
-                'raw-content' => '',
+            'attr' => [],
+            'raw-content' => [],
         ];
 
         /** @var \DOMElement $segment */
@@ -168,7 +168,7 @@ class XliffParserV2 extends AbstractXliffParser
                 foreach ($segment->childNodes as $childNode) {
                     if ($childNode->nodeName === 'source') {
                         $extractedSource = $this->extractContent($dom, $childNode);
-                        $source['raw-content'] .= $extractedSource['raw-content'];
+                        $source['raw-content'][$c] = $extractedSource['raw-content'];
 
                         if (!empty($extractedSource['attr'])) {
                             $source['attr'][$c] = $extractedSource['attr'];
@@ -177,10 +177,10 @@ class XliffParserV2 extends AbstractXliffParser
 
                     if ($childNode->nodeName === 'target') {
                         $extractedTarget = $this->extractContent($dom, $childNode);
-                        $target['raw-content'] .= $extractedTarget['raw-content'];
+                        $target['raw-content'][$c] = $extractedTarget['raw-content'];
 
                         if (!empty($extractedTarget['attr'])) {
-                            $source['attr'][$c] = $extractedTarget['attr'];
+                            $target['attr'][$c] = $extractedTarget['attr'];
                         }
                     }
                 }

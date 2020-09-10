@@ -100,10 +100,10 @@ class XliffParserV2Test extends BaseTest
         $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
         $this->assertCount(2, $units);
 
-        $this->assertStringContainsString('&lt;pc id="1"&gt;Hello <mrk id="m1" type="term">World</mrk>!&lt;/pc&gt;', $units[ 1 ][ 'source' ][ 'raw-content' ]);
-        $this->assertStringContainsString('&lt;pc id="2"&gt;Hello <mrk id="m2" type="term">World2</mrk>!&lt;/pc&gt;', $units[ 2 ][ 'source' ][ 'raw-content' ]);
-        $this->assertStringContainsString('&lt;pc id="1"&gt;Bonjour le <mrk id="m1" type="term">Monde</mrk> !&lt;/pc&gt;', $units[ 1 ][ 'target' ][ 'raw-content' ]);
-        $this->assertStringContainsString('&lt;pc id="2"&gt;Bonjour le <mrk id="m2" type="term">Monde2</mrk> !&lt;/pc&gt;', $units[ 2 ][ 'target' ][ 'raw-content' ]);
+        $this->assertStringContainsString('&lt;pc id="1"&gt;Hello <mrk id="m1" type="term">World</mrk>!&lt;/pc&gt;', $units[ 1 ][ 'source' ][ 'raw-content' ][0]);
+        $this->assertStringContainsString('&lt;pc id="2"&gt;Hello <mrk id="m2" type="term">World2</mrk>!&lt;/pc&gt;', $units[ 2 ][ 'source' ][ 'raw-content' ][0]);
+        $this->assertStringContainsString('&lt;pc id="1"&gt;Bonjour le <mrk id="m1" type="term">Monde</mrk> !&lt;/pc&gt;', $units[ 1 ][ 'target' ][ 'raw-content' ][0]);
+        $this->assertStringContainsString('&lt;pc id="2"&gt;Bonjour le <mrk id="m2" type="term">Monde2</mrk> !&lt;/pc&gt;', $units[ 2 ][ 'target' ][ 'raw-content' ][0]);
         $this->assertEquals($units[ 1 ][ 'source' ][ 'attr' ], []);
         $this->assertEquals($units[ 2 ][ 'source' ][ 'attr' ], []);
         $this->assertEquals($units[ 1 ][ 'target' ][ 'attr' ], []);
@@ -119,8 +119,8 @@ class XliffParserV2Test extends BaseTest
 
         $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
         $this->assertCount(3, $units);
-        $this->assertStringContainsString('Sentence from a group', $units[ 1 ][ 'source' ][ 'raw-content' ]);
-        $this->assertStringContainsString('Phrase from a group', $units[ 1 ][ 'target' ][ 'raw-content' ]);
+        $this->assertStringContainsString('Sentence from a group', $units[ 1 ][ 'source' ][ 'raw-content' ][0]);
+        $this->assertStringContainsString('Phrase from a group', $units[ 1 ][ 'target' ][ 'raw-content' ][0]);
     }
 
     /**
@@ -133,8 +133,15 @@ class XliffParserV2Test extends BaseTest
         $source  = $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ]['source'];
         $target  = $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ]['target'];
 
-        $this->assertEquals($source['raw-content'], 'Sentence 1. Sentence 2. Sentence 3. &lt;pc id="1"&gt;pc&lt;/pc&gt; Sentence 4.');
-        $this->assertEquals($target['raw-content'], 'Phrase 1. Phrase 2. Phrase 3. Phrase 4.');
+        $this->assertEquals($source['raw-content'][0], 'Sentence 1. ');
+        $this->assertEquals($target['raw-content'][0], 'Phrase 1. ');
+        $this->assertEquals($source['raw-content'][1], 'Sentence 2. ');
+        $this->assertEquals($target['raw-content'][1], 'Phrase 2. ');
+        $this->assertEquals($source['raw-content'][2], 'Sentence 3. ');
+        $this->assertEquals($target['raw-content'][2], 'Phrase 3. ');
+        $this->assertEquals($source['raw-content'][3], '&lt;pc id="1"&gt;pc&lt;/pc&gt; Sentence 4.');
+        $this->assertEquals($target['raw-content'][3], 'Phrase 4.');
+
         $this->assertEquals($source['attr'][ 3 ], [
             'xml:space' => 'space',
             'xml:lang' => 'fr',
@@ -184,11 +191,15 @@ class XliffParserV2Test extends BaseTest
                             ],
                         ],
                          'source' => [
-                             'raw-content' => '&lt;pc id="1"&gt;Hello <mrk id="m1" type="term">World</mrk>!&lt;/pc&gt;',
+                             'raw-content' => [
+                                 0 => '&lt;pc id="1"&gt;Hello <mrk id="m1" type="term">World</mrk>!&lt;/pc&gt;'
+                             ],
                              'attr'    => [],
                          ],
                          'target' => [
-                            'raw-content' => '&lt;pc id="1"&gt;Bonjour le <mrk id="m1" type="term">Monde</mrk> !&lt;/pc&gt;',
+                            'raw-content' => [
+                                0 => '&lt;pc id="1"&gt;Bonjour le <mrk id="m1" type="term">Monde</mrk> !&lt;/pc&gt;',
+                            ],
                              'attr'    => [],
                          ],
                     ],
@@ -207,11 +218,15 @@ class XliffParserV2Test extends BaseTest
                          ],
                     ],
                     'source' => [
-                            'raw-content' => '&lt;pc id="2"&gt;Hello <mrk id="m2" type="term">World2</mrk>!&lt;/pc&gt;',
+                            'raw-content' => [
+                                0 => '&lt;pc id="2"&gt;Hello <mrk id="m2" type="term">World2</mrk>!&lt;/pc&gt;',
+                            ],
                             'attr'    => [],
                     ],
                     'target' => [
-                            'raw-content' => '&lt;pc id="2"&gt;Bonjour le <mrk id="m2" type="term">Monde2</mrk> !&lt;/pc&gt;',
+                            'raw-content' => [
+                                0 => '&lt;pc id="2"&gt;Bonjour le <mrk id="m2" type="term">Monde2</mrk> !&lt;/pc&gt;',
+                            ],
                             'attr'    => [],
                     ],
                 ],
