@@ -12,4 +12,54 @@
             </mda:metadata>
             <segment id="0" state="initial">
                 <source>Uber Eats Online Ordering Sales Channel Addendum Data Processing Agreement</source>
-                
+                <target>Ciao</target>
+            </segment>
+            <mda:metadata>
+                <mda:metagroup category="row_xml_attribute">
+                    <mda:meta type="x-matecat-raw">200</mda:meta>
+                    <mda:meta type="x-matecat-weighted">100</mda:meta>
+                </mda:metagroup>
+            </mda:metadata>
+        </unit>
+        <unit help-id="2" id="tu-2" memsource:tGroupBegin="1" memsource:tGroupEnd="1">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key"></mda:meta>a349d3d9-e255-4ace-8c99-f1065854f806
+                    <mda:meta type="key-note"></mda:meta>
+                        Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/uber-sites/keys" target="_blank"&gt;uber-sites&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/uber-sites/key/cookie.banner.optin.text/overview" target="_blank"&gt;cookie.banner.optin.text&lt;/a&gt; Description: &lt;font color="blue"&gt;Opt in button text for cookie banner&lt;/font&gt;
+                    
+                </mda:metaGroup>
+            </mda:metadata>
+            <segment id="1" state="translated">
+                <source>Got it</source>
+                <target>Ricevuto!</target>
+            </segment>
+            <mda:metadata>
+                <mda:metagroup category="row_xml_attribute">
+                    <mda:meta type="x-matecat-raw">500</mda:meta>
+                    <mda:meta type="x-matecat-weighted">300</mda:meta>
+                </mda:metagroup>
+            </mda:metadata>
+        </unit>
+        <unit help-id="3" id="tu-3" memsource:tGroupBegin="2" memsource:tGroupEnd="2">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key"></mda:meta>a40265ea-c911-463a-bd22-2b2f20e54f27
+                    <mda:meta type="key-note"></mda:meta>
+                        Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/uber-sites/keys" target="_blank"&gt;uber-sites&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/uber-sites/key/common.media.button.play/overview" target="_blank"&gt;common.media.button.play&lt;/a&gt; Description: &lt;font color="blue"&gt;Default text for media/video play buttons&lt;/font&gt;
+                    
+                </mda:metaGroup>
+            </mda:metadata>
+            <segment id="2" state="translated">
+                <source>Play video</source>
+                <target>Riprodurre video</target>
+            </segment>
+            <mda:metadata>
+                <mda:metagroup category="row_xml_attribute">
+                    <mda:meta type="x-matecat-raw">800</mda:meta>
+                    <mda:meta type="x-matecat-weighted">500</mda:meta>
+                </mda:metagroup>
+            </mda:metadata>
+        </unit>
+    </file>
+</xliff>

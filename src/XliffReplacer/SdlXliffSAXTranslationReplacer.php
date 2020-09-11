@@ -15,7 +15,7 @@ class SdlXliffSAXTranslationReplacer extends XliffSAXTranslationReplacer
         if ($this->tuTagName === $name) {
             $this->inTU = true;
             //get id
-            $this->currentId = $attr[ 'id' ];
+            $this->currentTransUnitId = $attr[ 'id' ];
         }
 
         // check if we are entering into a <target>
@@ -54,7 +54,7 @@ class SdlXliffSAXTranslationReplacer extends XliffSAXTranslationReplacer
                 } elseif ('sdl:seg' == $name) {
 
                     // write the confidence level for this segment ( Translated, Draft, etc. )
-                    if (isset($this->segments[ 'matecat|' . $this->currentId ]) and $_sdlStatus_confWritten == false) {
+                    if (isset($this->segments[ 'matecat|' . $this->currentTransUnitId ]) and $_sdlStatus_confWritten == false) {
 
                         // append definition attribute
                         $tag .= $this->prepareTargetStatuses($this->lastTransUnit[ $this->markerPos ]);

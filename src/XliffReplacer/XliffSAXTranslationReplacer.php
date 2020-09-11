@@ -86,7 +86,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
         if ($this->tuTagName === $name) {
             $this->inTU = true;
             //get id
-            $this->currentId = $attr[ 'id' ];
+            $this->currentTransUnitId = $attr[ 'id' ];
         }
 
         //check if we are entering into a <target>
@@ -111,8 +111,8 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
                     $tag .= "$k=\"$this->target_lang\" ";
                 } else {
                     $pos = 0;
-                    if($this->currentId){
-                        $pos = current($this->transUnits[ $this->currentId ]);
+                    if($this->currentTransUnitId){
+                        $pos = current($this->transUnits[ $this->currentTransUnitId ]);
                     }
 
                     if ($name === $this->tuTagName and strpos($tag, 'help-id') === false) {
@@ -218,11 +218,15 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
             }
 
             if ('target' == $name) {
-                if (isset($this->transUnits[ $this->currentId ])) {
+                if (isset($this->transUnits[ $this->currentTransUnitId ])) {
+
                     // get translation of current segment, by indirect indexing: id -> positional index -> segment
                     // actually there may be more that one segment to that ID if there are two mrk of the same source segment
-                    $list_of_ids = $this->transUnits[ $this->currentId ];
 
+                    $listOfSegmentsIds = $this->transUnits[ $this->currentTransUnitId ];
+
+                    // $currentSegmentId
+                    $this->setCurrentSegmentArray($listOfSegmentsIds);
 
 
                     /*
@@ -240,11 +244,11 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
 
                     $warning    = false;
                     $last_value = null;
-                    for ($i = 0; $i < count($list_of_ids); $i++) {
-                        if (isset($list_of_ids[ $i ])) {
-                            $id = $list_of_ids[ $i ];
-                            if (isset($this->segments[ $id ]) and ($i == 0 or $last_value + 1 == $list_of_ids[ $i ])) {
-                                $last_value            = $list_of_ids[ $i ];
+                    for ($i = 0; $i < count($listOfSegmentsIds); $i++) {
+                        if (isset($listOfSegmentsIds[ $i ])) {
+                            $id = $listOfSegmentsIds[ $i ];
+                            if (isset($this->segments[ $id ]) and ($i == 0 or $last_value + 1 == $listOfSegmentsIds[ $i ])) {
+                                $last_value            = $listOfSegmentsIds[ $i ];
                                 $this->lastTransUnit[] = $this->segments[ $id ];
                             }
                         } else {
@@ -254,7 +258,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
 
                     if ($warning) {
                         if(null !== $this->logger){
-                            $this->logger->warning("WARNING: PHP Notice polling. CurrentId: '" . $this->currentId . "' - Filename: '" . $this->segments[ 0 ][ 'filename' ] . "' - First Segment: '" . $this->segments[
+                            $this->logger->warning("WARNING: PHP Notice polling. CurrentId: '" . $this->currentTransUnitId . "' - Filename: '" . $this->segments[ 0 ][ 'filename' ] . "' - First Segment: '" . $this->segments[
                                     0 ][ 'sid' ] . "'");
                         }
                     }
@@ -267,64 +271,76 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
                     // we must reset the lastMrkId found because this is a new segment.
                     $lastMrkId      = -1;
 
-                    // V2
+                    if($this->xliffVersion === 2){
+                        $seg = $this->segments[ $this->currentSegmentArray['sid'] ];
 
-
-
-
-                    foreach ($list_of_ids as $pos => $id) {
-
-                        /*
-                         * This routine works to respect the positional orders of markers.
-                         * In every cycle we check if the mrk of the segment is below or equal the last one.
-                         * When this is true, means that the mrk id belongs to the next segment with the same internal_id
-                         * so we MUST stop to apply markers and translations
-                         * and stop to add eq_word_count
-                         *
-                         * Begin:
-                         * pre-assign zero to the new mrk if this is the first one ( in this segment )
-                         * If it is null leave it NULL
-                         */
-                        if ((int)$this->segments[ $id ][ "mrk_id" ] < 0 and $this->segments[ $id ][ "mrk_id" ] !== null) {
-                            $this->segments[ $id ][ "mrk_id" ] = 0;
-                        }
-
-                        /*
-                         * WARNING:
-                         * For those seg-source that does'nt have a mrk ( having a mrk id === null )
-                         * ( null <= -1 ) === true
-                         * so, cast to int
-                         */
-                        if ((int)$this->segments[ $id ][ "mrk_id" ] <= $lastMrkId) {
-                            break;
-                        }
-
-                        $seg = $this->segments[ $id ];
-
-                        // counts update only for xliff v1
-                        if($this->xliffVersion === 1){
-                            $this->counts[ 'raw_word_count' ] += $seg['raw_word_count'];
-                            $this->counts[ 'eq_word_count' ] += (floor($seg[ 'eq_word_count' ] * 100) / 100);
-                        }
+                        // update counts
+                        $this->updateCounts($seg);
 
                         // delete translations so the prepareSegment
                         // will put source content in target tag
                         if ($this->sourceInTarget) {
                             $seg[ 'translation' ] = '';
-                            $this->counts[ 'raw_word_count' ] = 0;
-                            $this->counts[ 'eq_word_count' ] = 0;
+                            $this->resetCounts();
                         }
 
+                        // append $translation
                         $translation = $this->prepareTranslation($seg, $translation);
 
-                        // for xliff 2 we need $this->transUnits[ $this->currentId ] [ $pos ] for populating metadata
-                        if($this->xliffVersion === 1){
-                            unset($this->transUnits[ $this->currentId ] [ $pos ]);
-                        }
-
-                        $lastMrkId = $this->segments[ $id ][ "mrk_id" ];
-
                         list($stateProp, $lastMrkState) = $this->setTransUnitState($seg, $stateProp, $lastMrkState);
+
+                    } else {
+                        foreach ($listOfSegmentsIds as $pos => $id) {
+
+                            /*
+                             * This routine works to respect the positional orders of markers.
+                             * In every cycle we check if the mrk of the segment is below or equal the last one.
+                             * When this is true, means that the mrk id belongs to the next segment with the same internal_id
+                             * so we MUST stop to apply markers and translations
+                             * and stop to add eq_word_count
+                             *
+                             * Begin:
+                             * pre-assign zero to the new mrk if this is the first one ( in this segment )
+                             * If it is null leave it NULL
+                             */
+                            if ((int)$this->segments[ $id ][ "mrk_id" ] < 0 and $this->segments[ $id ][ "mrk_id" ] !== null) {
+                                $this->segments[ $id ][ "mrk_id" ] = 0;
+                            }
+
+                            /*
+                             * WARNING:
+                             * For those seg-source that does'nt have a mrk ( having a mrk id === null )
+                             * ( null <= -1 ) === true
+                             * so, cast to int
+                             */
+                            if ((int)$this->segments[ $id ][ "mrk_id" ] <= $lastMrkId) {
+                                break;
+                            }
+
+                            // set $this->currentSegment
+                            $seg = $this->segments[ $id ];
+
+
+                            // update counts
+                            $this->updateCounts($seg);
+
+                            // delete translations so the prepareSegment
+                            // will put source content in target tag
+                            if ($this->sourceInTarget) {
+                                $seg[ 'translation' ] = '';
+                                $this->resetCounts();
+                            }
+
+                            // append $translation
+                            $translation = $this->prepareTranslation($seg, $translation);
+
+                            // for xliff 2 we need $this->transUnits[ $this->currentId ] [ $pos ] for populating metadata
+                            unset($this->transUnits[ $this->currentTransUnitId ] [ $pos ]);
+
+                            $lastMrkId = $this->segments[ $id ][ "mrk_id" ];
+
+                            list($stateProp, $lastMrkState) = $this->setTransUnitState($seg, $stateProp, $lastMrkState);
+                        }
                     }
 
                     //append translation
@@ -354,10 +370,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
                 //flush to pointer
                 $this->postProcAndFlush($this->outputFP, $tag);
             } elseif ('segment' === $name and $this->xliffVersion === 2) { // in xliff v2 we add metadata after closing a <section>
-                if(isset($this->transUnits[ $this->currentId ]) and !empty($this->transUnits[ $this->currentId ])){
-                    $pos = $this->transUnits[ $this->currentId ][0];
-                    $this->counts[ 'raw_word_count' ] += $this->segments[$pos]['raw_word_count'];
-                    $this->counts[ 'eq_word_count' ] += (floor($this->segments[$pos][ 'eq_word_count' ] * 100) / 100);
+                if(isset($this->transUnits[ $this->currentTransUnitId ]) and !empty($this->transUnits[ $this->currentTransUnitId ])){
                     $tag .= $this->getWordCountGroupForXliffV2($this->counts[ 'raw_word_count' ], $this->counts[ 'eq_word_count' ]);
                 }
 
@@ -384,6 +397,48 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
         if ($this->tuTagName === $name) {
             $this->inTU = false;
         }
+    }
+
+    /**
+     * Set the current segment array (with segment id and trans-unit id)
+     *
+     * @param array $listOfSegmentsIds
+     */
+    private function setCurrentSegmentArray(array $listOfSegmentsIds)
+    {
+        // $currentSegmentId
+        if(empty($this->currentSegmentArray)){
+            $this->currentSegmentArray = [
+                'sid' => $listOfSegmentsIds[0],
+                'tid' => $this->currentTransUnitId,
+            ];
+        } else {
+            if($this->currentSegmentArray['tid'] === $this->currentTransUnitId){
+                $key = array_search($this->currentSegmentArray['sid'], $listOfSegmentsIds);
+                $this->currentSegmentArray['sid'] = $listOfSegmentsIds[$key+1];
+                $this->currentSegmentArray['tid'] = $this->currentTransUnitId;
+            } else {
+                $this->currentSegmentArray = [
+                    'sid' => $listOfSegmentsIds[0],
+                    'tid' => $this->currentTransUnitId,
+                ];
+            }
+        }
+    }
+
+    /**
+     * @param array $seg
+     */
+    private function updateCounts(array $seg)
+    {
+        $this->counts[ 'raw_word_count' ] += $seg['raw_word_count'];
+        $this->counts[ 'eq_word_count' ] += (floor($seg[ 'eq_word_count' ] * 100) / 100);
+    }
+
+    private function resetCounts()
+    {
+        $this->counts[ 'raw_word_count' ] = 0;
+        $this->counts[ 'eq_word_count' ] = 0;
     }
 
     /**
@@ -458,7 +513,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
      */
     private function getWordCountGroup($raw_word_count, $eq_word_count)
     {
-        return "\n<count-group name=\"$this->currentId\"><count count-type=\"x-matecat-raw\">$raw_word_count</count><count count-type=\"x-matecat-weighted\">$eq_word_count</count></count-group>";
+        return "\n<count-group name=\"$this->currentTransUnitId\"><count count-type=\"x-matecat-raw\">$raw_word_count</count><count count-type=\"x-matecat-weighted\">$eq_word_count</count></count-group>";
     }
 
     /**
