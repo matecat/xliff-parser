@@ -19,31 +19,45 @@ class XliffProprietaryDetect
      * @param $fullPathToFile
      *
      * @return array
-     * @throws \Matecat\XliffParser\Exception\NotSupportedVersionException
-     * @throws \Matecat\XliffParser\Exception\NotValidFileException
      */
     public static function getInfo($fullPathToFile)
     {
         self::reset();
         $tmp = self::getFirst1024CharsFromXliff(null, $fullPathToFile);
         self::$fileType['info'] = Files::pathInfo($fullPathToFile);
-        self::checkVersion($tmp);
+
+        try {
+            self::checkVersion($tmp);
+        } catch (\Exception $e){
+            // do nothing
+            // self::$fileType[ 'version' ] is left empty
+        }
 
         // run CheckXliffProprietaryPipeline
+        $pipeline = self::runPipeline($tmp);
+
+        self::$fileType['proprietary' ] = $pipeline['proprietary' ];
+        self::$fileType[ 'proprietary_name' ] = $pipeline['proprietary_name' ];
+        self::$fileType[ 'proprietary_short_name' ] = $pipeline['proprietary_short_name' ];
+        self::$fileType[ 'converter_version' ] = $pipeline['converter_version' ];
+
+        return self::$fileType;
+    }
+
+    /**
+     * @param $tmp
+     *
+     * @return array
+     */
+    private static function runPipeline($tmp)
+    {
         $pipeline = new CheckXliffProprietaryPipeline($tmp);
         $pipeline->addCheck(new CheckSDL());
         $pipeline->addCheck(new CheckGlobalSight());
         $pipeline->addCheck(new CheckMateCATConverter());
         $pipeline->addCheck(new CheckXliffVersion2());
 
-        $p = $pipeline->run();
-
-        self::$fileType['proprietary' ] = $p['proprietary' ];
-        self::$fileType[ 'proprietary_name' ] = $p['proprietary_name' ];
-        self::$fileType[ 'proprietary_short_name' ] = $p['proprietary_short_name' ];
-        self::$fileType[ 'converter_version' ] = $p['converter_version' ];
-
-        return self::$fileType;
+        return $pipeline->run();
     }
 
     /**
@@ -123,18 +137,12 @@ class XliffProprietaryDetect
         self::checkVersion($tmp);
 
         // run CheckXliffProprietaryPipeline
-        $pipeline = new CheckXliffProprietaryPipeline($tmp);
-        $pipeline->addCheck(new CheckSDL());
-        $pipeline->addCheck(new CheckGlobalSight());
-        $pipeline->addCheck(new CheckMateCATConverter());
-        $pipeline->addCheck(new CheckXliffVersion2());
+        $pipeline = self::runPipeline($tmp);
 
-        $p = $pipeline->run();
-
-        self::$fileType['proprietary' ] = $p['proprietary' ];
-        self::$fileType[ 'proprietary_name' ] = $p['proprietary_name' ];
-        self::$fileType[ 'proprietary_short_name' ] = $p['proprietary_short_name' ];
-        self::$fileType[ 'converter_version' ] = $p['converter_version' ];
+        self::$fileType['proprietary' ] = $pipeline['proprietary' ];
+        self::$fileType[ 'proprietary_name' ] = $pipeline['proprietary_name' ];
+        self::$fileType[ 'proprietary_short_name' ] = $pipeline['proprietary_short_name' ];
+        self::$fileType[ 'converter_version' ] = $pipeline['converter_version' ];
 
         return self::$fileType;
     }
