@@ -164,4 +164,63 @@ class XliffProprietaryDetect
 
         return self::$fileType;
     }
+
+    /**
+     * @param string $fullPath
+     * @param null $enforceOnXliff
+     * @param null $filterAddress
+     *
+     * @return bool|int
+     * @throws \Matecat\XliffParser\Exception\NotSupportedVersionException
+     * @throws \Matecat\XliffParser\Exception\NotValidFileException
+     */
+    public static function fileMustBeConverted($fullPath, $enforceOnXliff = null, $filterAddress = null)
+    {
+        $convert = true;
+
+        $fileType = self::getInfo( $fullPath );
+
+        if ( Files::isXliff($fullPath) or Files::getMemoryFileType($fullPath) ) {
+
+            if ( !empty( $filterAddress ) ) {
+
+                //conversion enforce
+                if ( !$enforceOnXliff ) {
+
+                    //if file is not proprietary AND Enforce is disabled
+                    //we take it as is
+                    if ( !$fileType[ 'proprietary' ] or Files::getMemoryFileType($fullPath) ) {
+                        $convert = false;
+                        //ok don't convert a standard sdlxliff
+                    }
+                } else {
+                    //if conversion enforce is active
+                    //we force all xliff files but not files produced by SDL Studio because we can handle them
+                    if (
+                            $fileType[ 'proprietary_short_name' ] == 'matecat_converter'
+                            or $fileType[ 'proprietary_short_name' ] == 'trados'
+                            or Files::getMemoryFileType($fullPath)
+                    ) {
+                        $convert = false;
+                        //ok don't convert a standard sdlxliff
+                    }
+                }
+            } elseif ( $fileType[ 'proprietary' ] ) {
+
+                /**
+                 * Application misconfiguration.
+                 * upload should not be happened, but if we are here, raise an error.
+                 * @see upload.class.php
+                 * */
+
+                $convert = -1;
+                //stop execution
+            } elseif ( !$fileType[ 'proprietary' ] ) {
+                $convert = false;
+                //ok don't convert a standard sdlxliff
+            }
+        }
+
+        return $convert;
+    }
 }

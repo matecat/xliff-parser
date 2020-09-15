@@ -47,4 +47,13 @@ class XliffProprietaryDetectTest extends BaseTest
         $this->assertNull($info['proprietary_name']);
         $this->assertNull($info['proprietary_short_name']);
     }
+
+    /**
+     * @test
+     */
+    public function file_must_be_converted()
+    {
+        $this->assertFalse(XliffProprietaryDetect::fileMustBeConverted(__DIR__ .'/files/file-with-notes-converted-nobase64.xliff'));
+        $this->assertFalse(XliffProprietaryDetect::fileMustBeConverted(__DIR__ .'/files/sample-20.xlf'));
+    }
 }
