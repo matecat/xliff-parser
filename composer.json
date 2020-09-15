@@ -2,7 +2,7 @@
   "name": "matecat/xliff-parser",
   "type": "library",
   "description": "A Xliff parser written in PHP",
-  "keywords": ["text", "search", "php"],
+  "keywords": ["xliff", "parsing", "php"],
   "homepage": "https://github.com/matecat/xliff-parser",
   "license": "MIT",
   "support": {
