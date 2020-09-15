@@ -53,7 +53,8 @@ class XliffProprietaryDetectTest extends BaseTest
      */
     public function file_must_be_converted()
     {
-        $this->assertFalse(XliffProprietaryDetect::fileMustBeConverted(__DIR__ .'/files/file-with-notes-converted-nobase64.xliff'));
-        $this->assertFalse(XliffProprietaryDetect::fileMustBeConverted(__DIR__ .'/files/sample-20.xlf'));
+        $this->assertFalse(XliffProprietaryDetect::fileMustBeConverted(__DIR__ .'/files/sample-20.xlf', true, '0.0.0.0'));
+        $this->assertFalse(XliffProprietaryDetect::fileMustBeConverted(__DIR__ .'/files/file-with-notes-converted-nobase64.xliff', true, '0.0.0.0'));
+        $this->assertFalse(XliffProprietaryDetect::fileMustBeConverted(__DIR__ .'/files/uber/56d591a5-louvre-v2-en_us-fr_fr-PM.xlf', true, '0.0.0.0'));
     }
 }

@@ -112,7 +112,7 @@ class Files
             return false;
         }
 
-        switch (strtolower($pathInfo[ 'info' ][ 'extension' ])) {
+        switch (strtolower($pathInfo[ 'extension' ])) {
             case 'tmx':
                 return 'tmx';
                 break;

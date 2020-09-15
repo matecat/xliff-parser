@@ -3,6 +3,10 @@
 namespace Matecat\XliffParser\XliffUtils;
 
 use Matecat\XliffParser\Utils\Files;
+use Matecat\XliffParser\XliffUtils\Pipeline\CheckGlobalSight;
+use Matecat\XliffParser\XliffUtils\Pipeline\CheckMateCATConverter;
+use Matecat\XliffParser\XliffUtils\Pipeline\CheckSDL;
+use Matecat\XliffParser\XliffUtils\Pipeline\CheckXliffVersion2;
 
 class XliffProprietaryDetect
 {
@@ -24,9 +28,15 @@ class XliffProprietaryDetect
         $tmp = self::getFirst1024CharsFromXliff(null, $fullPathToFile);
         self::$fileType['info'] = Files::pathInfo($fullPathToFile);
         self::checkVersion($tmp);
-        self::checkSDL($tmp);
-        self::checkGlobalSight($tmp);
-        self::checkMateCATConverter($tmp);
+
+        // run CheckXliffProprietaryPipeline
+        $pipeline = new CheckXliffProprietaryPipeline($tmp);
+        $pipeline->addCheck(new CheckSDL());
+        $pipeline->addCheck(new CheckGlobalSight());
+        $pipeline->addCheck(new CheckMateCATConverter());
+        $pipeline->addCheck(new CheckXliffVersion2());
+
+        self::$fileType = $pipeline->run();
 
         return self::$fileType;
     }
@@ -92,57 +102,65 @@ class XliffProprietaryDetect
         }
     }
 
-    /**
-     * @param $tmp
-     */
-    private static function checkSDL($tmp)
-    {
-        if (isset($tmp[ 0 ])) {
-            if (stripos($tmp[ 0 ], 'sdl:version') !== false) {
-                //little trick, we consider not proprietary Sdlxliff files because we can handle them
-                self::$fileType[ 'proprietary' ]            = false;
-                self::$fileType[ 'proprietary_name' ]       = 'SDL Studio ';
-                self::$fileType[ 'proprietary_short_name' ] = 'trados';
-                self::$fileType[ 'converter_version' ]      = 'legacy';
-            }
-        }
-    }
-
-    /**
-     * @param $tmp
-     */
-    private static function checkGlobalSight($tmp)
-    {
-        if (isset($tmp[ 0 ])) {
-            if (stripos($tmp[ 0 ], 'globalsight') !== false) {
-                self::$fileType[ 'proprietary' ]            = true;
-                self::$fileType[ 'proprietary_name' ]       = 'GlobalSight Download File';
-                self::$fileType[ 'proprietary_short_name' ] = 'globalsight';
-                self::$fileType[ 'converter_version' ]      = 'legacy';
-            }
-        }
-    }
-
-    /**
-     * @param $tmp
-     */
-    private static function checkMateCATConverter($tmp)
-    {
-        if (isset($tmp[ 0 ])) {
-            preg_match('#tool-id\s*=\s*"matecat-converter(\s+([^"]+))?"#i', $tmp[ 0 ], $matches);
-            if (!empty($matches)) {
-                self::$fileType[ 'proprietary' ]            = false;
-                self::$fileType[ 'proprietary_name' ]       = 'MateCAT Converter';
-                self::$fileType[ 'proprietary_short_name' ] = 'matecat_converter';
-                if (isset($matches[ 2 ])) {
-                    self::$fileType[ 'converter_version' ] = $matches[ 2 ];
-                } else {
-                    // First converter release didn't specify version
-                    self::$fileType[ 'converter_version' ] = '1.0';
-                }
-            }
-        }
-    }
+//    /**
+//     * @param $tmp
+//     */
+//    private static function checkSDL($tmp)
+//    {
+//        if (isset($tmp[ 0 ])) {
+//            if (stripos($tmp[ 0 ], 'sdl:version') !== false) {
+//                //little trick, we consider not proprietary Sdlxliff files because we can handle them
+//                self::$fileType[ 'proprietary' ]            = false;
+//                self::$fileType[ 'proprietary_name' ]       = 'SDL Studio ';
+//                self::$fileType[ 'proprietary_short_name' ] = 'trados';
+//                self::$fileType[ 'converter_version' ]      = 'legacy';
+//            }
+//        }
+//    }
+//
+//    /**
+//     * @param $tmp
+//     */
+//    private static function checkGlobalSight($tmp)
+//    {
+//        if (isset($tmp[ 0 ])) {
+//            if (stripos($tmp[ 0 ], 'globalsight') !== false) {
+//                self::$fileType[ 'proprietary' ]            = true;
+//                self::$fileType[ 'proprietary_name' ]       = 'GlobalSight Download File';
+//                self::$fileType[ 'proprietary_short_name' ] = 'globalsight';
+//                self::$fileType[ 'converter_version' ]      = 'legacy';
+//            }
+//        }
+//    }
+//
+//    /**
+//     * @param $tmp
+//     */
+//    private static function checkMateCATConverter($tmp)
+//    {
+//        if (isset($tmp[ 0 ])) {
+//            preg_match('#tool-id\s*=\s*"matecat-converter(\s+([^"]+))?"#i', $tmp[ 0 ], $matches);
+//            if (!empty($matches)) {
+//                self::$fileType[ 'proprietary' ]            = false;
+//                self::$fileType[ 'proprietary_name' ]       = 'MateCAT Converter';
+//                self::$fileType[ 'proprietary_short_name' ] = 'matecat_converter';
+//                if (isset($matches[ 2 ])) {
+//                    self::$fileType[ 'converter_version' ] = $matches[ 2 ];
+//                } else {
+//                    // First converter release didn't specify version
+//                    self::$fileType[ 'converter_version' ] = '1.0';
+//                }
+//            }
+//        }
+//    }
+//
+//    /**
+//     * @param $tmp
+//     */
+//    private static function checkMateCATConverter($tmp)
+//    {
+//
+//    }
 
     /**
      * @param string $stringData
@@ -179,8 +197,9 @@ class XliffProprietaryDetect
         $convert = true;
 
         $fileType = self::getInfo( $fullPath );
+        $memoryFileType = Files::getMemoryFileType($fullPath);
 
-        if ( Files::isXliff($fullPath) or Files::getMemoryFileType($fullPath) ) {
+        if ( Files::isXliff($fullPath) or $memoryFileType ) {
 
             if ( !empty( $filterAddress ) ) {
 
@@ -189,7 +208,7 @@ class XliffProprietaryDetect
 
                     //if file is not proprietary AND Enforce is disabled
                     //we take it as is
-                    if ( !$fileType[ 'proprietary' ] or Files::getMemoryFileType($fullPath) ) {
+                    if ( !$fileType[ 'proprietary' ] or $memoryFileType ) {
                         $convert = false;
                         //ok don't convert a standard sdlxliff
                     }
@@ -199,7 +218,8 @@ class XliffProprietaryDetect
                     if (
                             $fileType[ 'proprietary_short_name' ] == 'matecat_converter'
                             or $fileType[ 'proprietary_short_name' ] == 'trados'
-                            or Files::getMemoryFileType($fullPath)
+                            or $fileType[ 'proprietary_short_name' ] == 'xliff_v2'
+                            or $memoryFileType
                     ) {
                         $convert = false;
                         //ok don't convert a standard sdlxliff

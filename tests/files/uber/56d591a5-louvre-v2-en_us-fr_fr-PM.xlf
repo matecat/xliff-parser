@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0" xmlns:slr="urn:oasis:names:tc:xliff:sizerestriction:2.0" xmlns:memsource="http://www.memsource.com/xliff2.0/1.0" version="2.0" memsource:wfLevel="1" srcLang="en-us" trgLang="fr-fr">
+<file id="JjDI7HCyNyOqbwRn_dc5:0-1" memsource:taskId="JjDI7HCyNyOqbwRn_dc5" canResegment="no" original="56d591a5-louvre-v2.xml">
+<slr:profiles generalProfile="xliff:codepoints"/>
+<unit id="0" memsource:tGroupBegin="0" memsource:tGroupEnd="1">
+<mda:metadata><mda:metaGroup><mda:meta type="key">6813ef3a-1975-4b2c-8698-c96e31fef627</mda:meta>
+<mda:meta type="key-note">
+      Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/louvre-v2/keys" target="_blank"&gt;louvre-v2&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/louvre-v2/key/v1-38ffd597acf5f4b019e226b4afb23fea/overview" target="_blank"&gt;v1-38ffd597acf5f4b019e226b4afb23fea&lt;/a&gt; Description: &lt;font color="blue"&gt;Content Type: Marketing, Preview Link: https://chameleon-preview.uberinternal.com/preview-v2/page/456f46a5-71d2-4158-823d-81dd7d52f92e, &lt;/font&gt;
+
+    </mda:meta>
+</mda:metaGroup></mda:metadata>
+<memsource:additionalTagData>
+<memsource:tag id="source3"><memsource:tagId>3</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+<memsource:tag id="source1"><memsource:tagId>1</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+<memsource:tag id="source2"><memsource:tagId>2</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+</memsource:additionalTagData>
+<originalData>
+<data id="source3">&amp;lt;/p&amp;gt;</data>
+<data id="source1">&amp;lt;p class=&amp;quot;cmln__paragraph&amp;quot;&amp;gt;</data>
+<data id="source2">&amp;amp;#39;</data>
+</originalData>
+<segment id="0" state="initial">
+<source><ph id="source1" dataRef="source1"/>The safety and well-being of everyone who uses Uber is at the heart of what we do.</source>
+<target></target>
+</segment>
+<segment id="1" state="initial">
+<source>We<ph id="source2" dataRef="source2"/>re continuing to expand our response to COVID-19 with new features for our users, support for those who earn on our platform, and partnerships and initiatives that serve our cities. <ph id="source3" dataRef="source3"/></source>
+<target></target>
+</segment>
+</unit>
+</file>
+</xliff>
