@@ -42,14 +42,14 @@ class CheckXliffProprietaryPipeline
     {
         $fileType = [];
 
-        $mandatoryKeys = ['proprietary', 'proprietary_name' , 'proprietary_short_name' , 'converter_version', ];
-
         /** @var CheckInterface $step */
         foreach ($this->steps as $step){
-            $fileType = $step->check($this->tmp);
+            if(null !== $step->check($this->tmp)){
+                $fileType = $step->check($this->tmp);
+            }
         }
 
-        if(!empty($fileType) and array_keys($fileType) === $mandatoryKeys ){
+        if(!empty($fileType) and $this->isValid($fileType) ){
             return $fileType;
         }
 
@@ -59,5 +59,22 @@ class CheckXliffProprietaryPipeline
             'proprietary_short_name' => null,
             'converter_version' => null,
         ];
+    }
+
+    /**
+     * @param $fileType
+     *
+     * @return bool
+     */
+    private function isValid( $fileType)
+    {
+        $mandatoryKeys = [
+            'proprietary',
+            'proprietary_name',
+            'proprietary_short_name',
+            'converter_version',
+        ];
+
+        return array_keys($fileType) === $mandatoryKeys;
     }
 }

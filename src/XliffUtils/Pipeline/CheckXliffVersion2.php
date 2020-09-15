@@ -25,7 +25,7 @@ class CheckXliffVersion2 implements CheckInterface
                 $version = $versionMatches[1];
                 $xmlns = $xmlnsMatches[1];
 
-                if ($version === $xmlns) {
+                if ($version === $xmlns and $version >= 2) {
                     $fileType[ 'proprietary' ]            = true;
                     $fileType[ 'proprietary_name' ]       = 'Xliff v'.$version.' File';
                     $fileType[ 'proprietary_short_name' ] = 'xliff_v2';

@@ -9,6 +9,19 @@ class XliffProprietaryDetectTest extends BaseTest
     /**
      * @test
      */
+    public function return_empty_info_array_from_not_xliff_file()
+    {
+        $info = XliffProprietaryDetect::getInfo(__DIR__ .'/files/sample.txt');
+
+        $this->assertFalse($info['proprietary']);
+        $this->assertNull($info['proprietary_name']);
+        $this->assertNull($info['proprietary_short_name']);
+        $this->assertNull($info['converter_version']);
+    }
+
+    /**
+     * @test
+     */
     public function can_get_info_from_content()
     {
         $info = XliffProprietaryDetect::getInfoByStringData(file_get_contents(__DIR__ .'/files/file-with-notes-converted-nobase64.xliff'));
@@ -44,8 +57,9 @@ class XliffProprietaryDetectTest extends BaseTest
         $info = XliffProprietaryDetect::getInfo(__DIR__ .'/files/sample-20.xlf');
 
         $this->assertEquals($info['version'], 2);
-        $this->assertNull($info['proprietary_name']);
-        $this->assertNull($info['proprietary_short_name']);
+        $this->assertEquals($info['proprietary_name'], 'Xliff v2.0 File');
+        $this->assertEquals($info['proprietary_short_name'], 'xliff_v2');
+        $this->assertEquals($info['converter_version'], '2.0');
     }
 
     /**
