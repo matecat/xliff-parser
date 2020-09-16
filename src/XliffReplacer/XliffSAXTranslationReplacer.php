@@ -111,7 +111,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
                     $tag .= "$k=\"$this->target_lang\" ";
                 } else {
                     $pos = 0;
-                    if($this->currentTransUnitId){
+                    if ($this->currentTransUnitId) {
                         $pos = current($this->transUnits[ $this->currentTransUnitId ]);
                     }
 
@@ -128,7 +128,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
                     $tag .= "$k=\"$v\" ";
 
                     // replace state for xliff v2
-                    if($stateProp){
+                    if ($stateProp) {
                         $pattern = '/state=\"(.*)\"/i';
                         $tag = preg_replace($pattern, $stateProp, $tag);
                     }
@@ -257,7 +257,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
                     }
 
                     if ($warning) {
-                        if(null !== $this->logger){
+                        if (null !== $this->logger) {
                             $this->logger->warning("WARNING: PHP Notice polling. CurrentId: '" . $this->currentTransUnitId . "' - Filename: '" . $this->segments[ 0 ][ 'filename' ] . "' - First Segment: '" . $this->segments[
                                     0 ][ 'sid' ] . "'");
                         }
@@ -271,7 +271,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
                     // we must reset the lastMrkId found because this is a new segment.
                     $lastMrkId      = -1;
 
-                    if($this->xliffVersion === 2){
+                    if ($this->xliffVersion === 2) {
                         $seg = $this->segments[ $this->currentSegmentArray['sid'] ];
 
                         // update counts
@@ -288,7 +288,6 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
                         $translation = $this->prepareTranslation($seg, $translation);
 
                         list($stateProp, $lastMrkState) = $this->setTransUnitState($seg, $stateProp, $lastMrkState);
-
                     } else {
                         foreach ($listOfSegmentsIds as $pos => $id) {
 
@@ -370,15 +369,14 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
                 //flush to pointer
                 $this->postProcAndFlush($this->outputFP, $tag);
             } elseif ('segment' === $name and $this->xliffVersion === 2) { // in xliff v2 we add metadata after closing a <section>
-                if(isset($this->transUnits[ $this->currentTransUnitId ]) and !empty($this->transUnits[ $this->currentTransUnitId ])){
+                if (isset($this->transUnits[ $this->currentTransUnitId ]) and !empty($this->transUnits[ $this->currentTransUnitId ])) {
                     $tag .= $this->getWordCountGroupForXliffV2($this->counts[ 'raw_word_count' ], $this->counts[ 'eq_word_count' ]);
                 }
 
                 $this->postProcAndFlush($this->outputFP, $tag);
-
             } elseif ($this->bufferIsActive) { // this is a tag ( <g | <mrk ) inside a seg or seg-source tag
                 $this->CDATABuffer .= "</$name>";
-                // Do NOT Flush
+            // Do NOT Flush
             } else { //generic tag closure do Nothing
                 // flush to pointer
                 $this->postProcAndFlush($this->outputFP, $tag);
@@ -407,13 +405,13 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
     private function setCurrentSegmentArray(array $listOfSegmentsIds)
     {
         // $currentSegmentId
-        if(empty($this->currentSegmentArray)){
+        if (empty($this->currentSegmentArray)) {
             $this->currentSegmentArray = [
                 'sid' => $listOfSegmentsIds[0],
                 'tid' => $this->currentTransUnitId,
             ];
         } else {
-            if($this->currentSegmentArray['tid'] === $this->currentTransUnitId){
+            if ($this->currentSegmentArray['tid'] === $this->currentTransUnitId) {
                 $key = array_search($this->currentSegmentArray['sid'], $listOfSegmentsIds);
                 $this->currentSegmentArray['sid'] = $listOfSegmentsIds[$key+1];
                 $this->currentSegmentArray['tid'] = $this->currentTransUnitId;
@@ -490,9 +488,9 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
      *
      * @return string
      */
-    private function buildTranslateTag( $targetLang, $stateProp, $translation, $rawWordCount, $eqWordCount)
+    private function buildTranslateTag($targetLang, $stateProp, $translation, $rawWordCount, $eqWordCount)
     {
-        switch ($this->xliffVersion){
+        switch ($this->xliffVersion) {
             case 1:
             default:
                 $tag = "<target $targetLang $stateProp>$translation</target>";
@@ -605,12 +603,11 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
             $this->currentData = $this->currentData . $data;
             $trimmedData = trim($data);
 
-            if($trimmedData === ''){
+            if ($trimmedData === '') {
                 // flush $this->currentData
                 $this->postProcAndFlush($this->outputFP, $this->currentData);
                 $this->currentData = null;
             }
-
         } elseif ($this->bufferIsActive) {
             $this->CDATABuffer .= $data;
         }

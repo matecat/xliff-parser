@@ -28,7 +28,7 @@ class XliffProprietaryDetect
 
         try {
             self::checkVersion($tmp);
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             // do nothing
             // self::$fileType[ 'version' ] is left empty
         }
@@ -160,19 +160,18 @@ class XliffProprietaryDetect
     {
         $convert = true;
 
-        $fileType = self::getInfo( $fullPath );
+        $fileType = self::getInfo($fullPath);
         $memoryFileType = Files::getMemoryFileType($fullPath);
 
-        if ( Files::isXliff($fullPath) or $memoryFileType ) {
-
-            if ( !empty( $filterAddress ) ) {
+        if (Files::isXliff($fullPath) or $memoryFileType) {
+            if (!empty($filterAddress)) {
 
                 //conversion enforce
-                if ( !$enforceOnXliff ) {
+                if (!$enforceOnXliff) {
 
                     //if file is not proprietary AND Enforce is disabled
                     //we take it as is
-                    if ( !$fileType[ 'proprietary' ] or $memoryFileType ) {
+                    if (!$fileType[ 'proprietary' ] or $memoryFileType) {
                         $convert = false;
                         //ok don't convert a standard sdlxliff
                     }
@@ -189,7 +188,7 @@ class XliffProprietaryDetect
                         //ok don't convert a standard sdlxliff
                     }
                 }
-            } elseif ( $fileType[ 'proprietary' ] ) {
+            } elseif ($fileType[ 'proprietary' ]) {
 
                 /**
                  * Application misconfiguration.
@@ -198,8 +197,8 @@ class XliffProprietaryDetect
                  * */
 
                 $convert = -1;
-                //stop execution
-            } elseif ( !$fileType[ 'proprietary' ] ) {
+            //stop execution
+            } elseif (!$fileType[ 'proprietary' ]) {
                 $convert = false;
                 //ok don't convert a standard sdlxliff
             }

@@ -131,13 +131,13 @@ class XliffParserV2 extends AbstractXliffParser
         // original-data (exclusive for V2)
         // http://docs.oasis-open.org/xliff/xliff-core/v2.0/xliff-core-v2.0.html#originaldata
         $originalData = $this->extractTransUnitOriginalData($transUnit);
-        if(!empty($originalData)){
+        if (!empty($originalData)) {
             $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'original-data' ] = $originalData;
         }
 
         // additionalTagData (exclusive for V2)
         $additionalTagData = $this->extractTransUnitAdditionalTagData($transUnit);
-        if(!empty($additionalTagData)){
+        if (!empty($additionalTagData)) {
             $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'additional-tag-data' ] = $additionalTagData;
         }
 
@@ -176,12 +176,16 @@ class XliffParserV2 extends AbstractXliffParser
                         }
 
                         // append value to 'seg-source'
-                        $segSource[] = [
-                            'mid'           => count($segSource) > 0 ? count($segSource) : 0,
-                            'ext-prec-tags' => '',
-                            'raw-content'   => $extractedSource['raw-content'],
-                            'ext-succ-tags' => '',
-                        ];
+                        if ($this->stringContainsMarks($extractedSource['raw-content'])) {
+                            $segSource = $this->extractContentWithMarksAndExtTags($dom, $childNode);
+                        } else {
+                            $segSource[] = [
+                                'mid'           => count($segSource) > 0 ? count($segSource) : 0,
+                                'ext-prec-tags' => '',
+                                'raw-content'   => $extractedSource['raw-content'],
+                                'ext-succ-tags' => '',
+                            ];
+                        }
                     }
 
                     if ($childNode->nodeName === 'target') {
@@ -193,12 +197,16 @@ class XliffParserV2 extends AbstractXliffParser
                         }
 
                         // append value to 'seg-target'
-                        $segTarget[] = [
-                            'mid'           => count($segTarget) > 0 ? count($segTarget) : 0,
-                            'ext-prec-tags' => '',
-                            'raw-content'   => $extractedTarget['raw-content'],
-                            'ext-succ-tags' => '',
-                        ];
+                        if ($this->stringContainsMarks($extractedTarget['raw-content'])) {
+                            $segTarget = $this->extractContentWithMarksAndExtTags($dom, $childNode);
+                        } else {
+                            $segTarget[] = [
+                                'mid'           => count($segTarget) > 0 ? count($segTarget) : 0,
+                                'ext-prec-tags' => '',
+                                'raw-content'   => $extractedTarget['raw-content'],
+                                'ext-succ-tags' => '',
+                            ];
+                        }
                     }
                 }
 
@@ -298,13 +306,12 @@ class XliffParserV2 extends AbstractXliffParser
 
         // loop <originalData> to get nested content
         foreach ($transUnit->childNodes as $childNode) {
-            if ( $childNode->nodeName === 'memsource:additionalTagData' ) {
+            if ($childNode->nodeName === 'memsource:additionalTagData') {
                 foreach ($childNode->childNodes as $data) {
-
                     $dataArray = [];
 
                     // id
-                    if ( $data->nodeName === 'memsource:tag' ) {
+                    if ($data->nodeName === 'memsource:tag') {
                         if (null!== $data->attributes and null !== $data->attributes->getNamedItem('id')) {
                             $dataId = $data->attributes->getNamedItem('id')->nodeValue;
                             $dataArray['attr']['id'] = $dataId;
@@ -313,16 +320,16 @@ class XliffParserV2 extends AbstractXliffParser
 
                     // content
                     foreach ($data->childNodes as $datum) {
-                        if ( $datum->nodeName === 'memsource:tagId' ) {
+                        if ($datum->nodeName === 'memsource:tagId') {
                             $dataArray['raw-content']['tagId'] = $datum->nodeValue;
                         }
 
-                        if ( $datum->nodeName === 'memsource:type' ) {
+                        if ($datum->nodeName === 'memsource:type') {
                             $dataArray['raw-content']['type'] = $datum->nodeValue;
                         }
                     }
 
-                    if(!empty($dataArray)){
+                    if (!empty($dataArray)) {
                         $additionalTagData[] = $dataArray;
                     }
                 }
@@ -338,15 +345,15 @@ class XliffParserV2 extends AbstractXliffParser
      * @param \DOMElement $segment
      * @param array $attr
      */
-    private function checkSegmentIdConsistency( \DOMElement $segment, array $attr)
+    private function checkSegmentIdConsistency(\DOMElement $segment, array $attr)
     {
-        if(isset($attr[ 'tGroupBegin' ]) and isset($attr[ 'tGroupEnd' ]) and $segment->attributes->getNamedItem('id')){
+        if (isset($attr[ 'tGroupBegin' ]) and isset($attr[ 'tGroupEnd' ]) and $segment->attributes->getNamedItem('id')) {
             $id = $segment->attributes->getNamedItem('id')->nodeValue;
             $min = (int)$attr[ 'tGroupBegin' ];
             $max = (int)$attr[ 'tGroupEnd' ];
 
-            if( false === ( ($min <= $id) and ($id <= $max) ) ){
-                if($this->logger){
+            if (false === (($min <= $id) and ($id <= $max))) {
+                if ($this->logger) {
                     $this->logger->warning('Segment #' . $id . ' is not included within tGroupBegin and tGroupEnd');
                 }
             }

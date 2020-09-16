@@ -79,10 +79,10 @@ abstract class AbstractXliffReplacer
         return "§" .
                 substr(
                     str_replace(
-                            [ '+', '/' ],
-                            '',
-                            base64_encode(openssl_random_pseudo_bytes(10, $_crypto_strong))
-                        ),
+                        [ '+', '/' ],
+                        '',
+                        base64_encode(openssl_random_pseudo_bytes(10, $_crypto_strong))
+                    ),
                     0,
                     4
                 );

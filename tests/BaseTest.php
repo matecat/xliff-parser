@@ -68,7 +68,7 @@ abstract class BaseTest extends TestCase
      *
      * @return array
      */
-    protected function getTransUnitsForReplacementTest( $data)
+    protected function getTransUnitsForReplacementTest($data)
     {
         $transUnits = [];
 

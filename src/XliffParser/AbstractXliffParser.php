@@ -118,7 +118,7 @@ abstract class AbstractXliffParser
             $mark_content = preg_split('#</mrk>#si', $mark_string);
 
             $source[] = [
-                    'mid' => $mid[ 1 ],
+                    'mid' => (isset($mid[ 1 ])) ? $mid[ 1 ] : $mi,
                     'ext-prec-tags' => ($mi == 0 ? $markers[ 0 ] : ""),
                     'raw-content' => $mark_content[ 0 ],
                     'ext-succ-tags' => $mark_content[ 1 ],
@@ -128,6 +128,18 @@ abstract class AbstractXliffParser
         }
 
         return $source;
+    }
+
+    /**
+     * @param $raw
+     *
+     * @return bool
+     */
+    protected function stringContainsMarks($raw)
+    {
+        $markers = preg_split('#<mrk\s#si', $raw, -1);
+
+        return isset($markers[1]);
     }
 
     /**

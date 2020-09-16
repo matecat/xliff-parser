@@ -9,7 +9,7 @@ class CheckGlobalSight implements CheckInterface
      *
      * @return array|null
      */
-    public function check( $tmp )
+    public function check($tmp)
     {
         $fileType = [];
 

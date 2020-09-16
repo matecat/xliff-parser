@@ -30,7 +30,7 @@ class CheckXliffProprietaryPipeline
     /**
      * @param CheckInterface $step
      */
-    public function addCheck( CheckInterface $step)
+    public function addCheck(CheckInterface $step)
     {
         $this->steps[] = $step;
     }
@@ -43,13 +43,13 @@ class CheckXliffProprietaryPipeline
         $fileType = [];
 
         /** @var CheckInterface $step */
-        foreach ($this->steps as $step){
-            if(null !== $step->check($this->tmp)){
+        foreach ($this->steps as $step) {
+            if (null !== $step->check($this->tmp)) {
                 $fileType = $step->check($this->tmp);
             }
         }
 
-        if(!empty($fileType) and $this->isValid($fileType) ){
+        if (!empty($fileType) and $this->isValid($fileType)) {
             return $fileType;
         }
 
@@ -66,7 +66,7 @@ class CheckXliffProprietaryPipeline
      *
      * @return bool
      */
-    private function isValid( $fileType)
+    private function isValid($fileType)
     {
         $mandatoryKeys = [
             'proprietary',

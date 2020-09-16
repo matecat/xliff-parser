@@ -12,7 +12,7 @@ class CheckXliffVersion2 implements CheckInterface
      *
      * @return array|void|null
      */
-    public function check( $tmp )
+    public function check($tmp)
     {
         $fileType = [];
 
@@ -21,7 +21,6 @@ class CheckXliffVersion2 implements CheckInterface
             preg_match('|<xliff.*?\sxmlns\s?=\s?["\']urn:oasis:names:tc:xliff:document:(.*?)["\']|si', substr($tmp[0], 0, 1000), $xmlnsMatches);
 
             if (!empty($versionMatches) and !empty($xmlnsMatches)) {
-
                 $version = $versionMatches[1];
                 $xmlns = $xmlnsMatches[1];
 

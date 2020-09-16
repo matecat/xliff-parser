@@ -4,7 +4,7 @@ namespace Matecat\XliffParser\XliffUtils\Pipeline;
 
 class CheckSDL implements CheckInterface
 {
-    public function check( $tmp )
+    public function check($tmp)
     {
         $fileType = [];
 

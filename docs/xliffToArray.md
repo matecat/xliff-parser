@@ -73,8 +73,8 @@ As above mentioned, since there are some differences between xliff v1 and v2, th
 | trans-units    | original-data   |    | *  |
 | trans-units    | source          | *  | *  |
 | trans-units    | target          | *  | *  |
-| trans-units    | seg-source      | *  |    |
-| trans-units    | seg-target      | *  |    |
+| trans-units    | seg-source      | *  | *  |
+| trans-units    | seg-target      | *  | *  |
 
 For more info please referer to this [document](https://www.localizationworld.com/lwdub2014/feisgiltt/slides/Yves_Differences.pdf).
 

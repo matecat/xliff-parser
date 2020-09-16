@@ -47,10 +47,9 @@ class SdlXliffSAXTranslationReplacer extends XliffSAXTranslationReplacer
                     //replace Target language with job language provided from constructor
                     $tag .= "$k=\"$this->target_lang\" ";
 
-                    if(null !== $this->logger){
+                    if (null !== $this->logger) {
                         $this->logger->debug($k . " => " . $this->target_lang);
                     }
-
                 } elseif ('sdl:seg' == $name) {
 
                     // write the confidence level for this segment ( Translated, Draft, etc. )
