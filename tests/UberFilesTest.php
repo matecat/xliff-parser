@@ -16,6 +16,18 @@ class UberFilesTest extends BaseTest
     /**
      * @test
      */
+    public function can_read_files_with_empty_target()
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('uber/56d591a5-louvre-v2-en_us-fr_fr-PM.xlf'));
+        $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
+
+        $this->assertEmpty($units[1]['target']['raw-content'][0]);
+        $this->assertEmpty($units[1]['target']['raw-content'][1]);
+    }
+
+    /**
+     * @test
+     */
     public function can_extract_tGroupBegin_and_tGroupEnd()
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('uber/SpotCheck-en_us-es_419-H.xlf'));
