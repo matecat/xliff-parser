@@ -90,6 +90,47 @@ abstract class AbstractXliffParser
     }
 
     /**
+     * @param \DOMDocument $dom
+     * @param \DOMElement  $childNode
+     *
+     * @return array
+     */
+    protected function extractContentWithMarksAndExtTags(\DOMDocument $dom, \DOMElement $childNode)
+    {
+        $source = [];
+
+        // example:
+        // <g id="1"><mrk mid="0" mtype="seg">An English string with g tags</mrk></g>
+        $raw = $this->extractTagContent($dom, $childNode);
+
+        $markers = preg_split('#<mrk\s#si', $raw, -1);
+
+        $mi = 0;
+        while (isset($markers[ $mi + 1 ])) {
+            unset($mid);
+
+            preg_match('|mid\s?=\s?["\'](.*?)["\']|si', $markers[ $mi + 1 ], $mid);
+
+            //re-build the mrk tag after the split
+            $originalMark = trim('<mrk ' . $markers[ $mi + 1 ]);
+
+            $mark_string  = preg_replace('#^<mrk\s[^>]+>(.*)#', '$1', $originalMark); // at this point we have: ---> 'Test </mrk> </g>>'
+            $mark_content = preg_split('#</mrk>#si', $mark_string);
+
+            $source[] = [
+                    'mid' => $mid[ 1 ],
+                    'ext-prec-tags' => ($mi == 0 ? $markers[ 0 ] : ""),
+                    'raw-content' => $mark_content[ 0 ],
+                    'ext-succ-tags' => $mark_content[ 1 ],
+            ];
+
+            $mi++;
+        }
+
+        return $source;
+    }
+
+    /**
      * @param $noteValue
      *
      * @return array

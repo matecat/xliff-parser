@@ -142,8 +142,6 @@ class XliffParserV2 extends AbstractXliffParser
         }
 
         // content
-        // in xliff v2 there is not <seg-source> tag, so we need to concatenate all segment <source> and <target>
-        // to build the full strings
 
         $source = [
             'attr' => [],
@@ -154,6 +152,9 @@ class XliffParserV2 extends AbstractXliffParser
             'attr' => [],
             'raw-content' => [],
         ];
+
+        $segSource = [];
+        $segTarget = [];
 
         /** @var \DOMElement $segment */
         $c = 0;
@@ -173,6 +174,14 @@ class XliffParserV2 extends AbstractXliffParser
                         if (!empty($extractedSource['attr'])) {
                             $source['attr'][$c] = $extractedSource['attr'];
                         }
+
+                        // append value to 'seg-source'
+                        $segSource[] = [
+                            'mid'           => count($segSource) > 0 ? count($segSource) : 0,
+                            'ext-prec-tags' => '',
+                            'raw-content'   => $extractedSource['raw-content'],
+                            'ext-succ-tags' => '',
+                        ];
                     }
 
                     if ($childNode->nodeName === 'target') {
@@ -182,6 +191,14 @@ class XliffParserV2 extends AbstractXliffParser
                         if (!empty($extractedTarget['attr'])) {
                             $target['attr'][$c] = $extractedTarget['attr'];
                         }
+
+                        // append value to 'seg-target'
+                        $segTarget[] = [
+                            'mid'           => count($segTarget) > 0 ? count($segTarget) : 0,
+                            'ext-prec-tags' => '',
+                            'raw-content'   => $extractedTarget['raw-content'],
+                            'ext-succ-tags' => '',
+                        ];
                     }
                 }
 
@@ -191,6 +208,8 @@ class XliffParserV2 extends AbstractXliffParser
 
         $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'source' ] = $source;
         $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'target' ] = $target;
+        $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'seg-source' ] = $segSource;
+        $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'seg-target' ] = $segTarget;
 
         $j++;
     }

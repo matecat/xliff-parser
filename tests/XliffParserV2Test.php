@@ -151,6 +151,26 @@ class XliffParserV2Test extends BaseTest
     /**
      * @test
      */
+    public function can_parse_xliff_v2_trans_units_segmented_seg_source_and_seg_target()
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('sample-20-segmented.xlf'));
+
+        $segSource  = $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ]['seg-source'];
+        $segTarget  = $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ]['seg-target'];
+
+        $this->assertEquals($segSource[0]['raw-content'], 'Sentence 1. ');
+        $this->assertEquals($segTarget[0]['raw-content'], 'Phrase 1. ');
+        $this->assertEquals($segSource[1]['raw-content'], 'Sentence 2. ');
+        $this->assertEquals($segTarget[1]['raw-content'], 'Phrase 2. ');
+        $this->assertEquals($segSource[2]['raw-content'], 'Sentence 3. ');
+        $this->assertEquals($segTarget[2]['raw-content'], 'Phrase 3. ');
+        $this->assertEquals($segSource[3]['raw-content'], '&lt;pc id="1"&gt;pc&lt;/pc&gt; Sentence 4.');
+        $this->assertEquals($segTarget[3]['raw-content'], 'Phrase 4.');
+    }
+
+    /**
+     * @test
+     */
     public function can_parse_xliff_v2()
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('sample-20.xlf'));

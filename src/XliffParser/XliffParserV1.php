@@ -160,7 +160,7 @@ class XliffParserV1 extends AbstractXliffParser
 
             // seg-source
             if ($childNode->nodeName === 'seg-source') {
-                $output[ 'files' ][ $i ][ 'trans-units' ][ $j ]['seg-source'] = $this->extractSource($dom, $childNode);
+                $output[ 'files' ][ $i ][ 'trans-units' ][ $j ]['seg-source'] = $this->extractContentWithMarksAndExtTags($dom, $childNode);
             }
 
             // target
@@ -171,7 +171,7 @@ class XliffParserV1 extends AbstractXliffParser
                 $targetRawContent = @$output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'target' ][ 'raw-content' ];
                 $segSource = @$output[ 'files' ][ $i ][ 'trans-units' ][ $j ]['seg-source'];
                 if (isset($targetRawContent) and !empty($targetRawContent) and isset($segSource) and count($segSource) > 0) {
-                    $output[ 'files' ][ $i ][ 'trans-units' ][ $j ]['seg-target'] = $this->extractSource($dom, $childNode);
+                    $output[ 'files' ][ $i ][ 'trans-units' ][ $j ]['seg-target'] = $this->extractContentWithMarksAndExtTags($dom, $childNode);
                 }
             }
 
@@ -296,46 +296,5 @@ class XliffParserV1 extends AbstractXliffParser
     private function extractLocked(\DOMElement $locked)
     {
         return null !== $locked->getAttribute('locked');
-    }
-
-    /**
-     * @param \DOMDocument $dom
-     * @param \DOMElement  $childNode
-     *
-     * @return array
-     */
-    private function extractSource(\DOMDocument $dom, \DOMElement $childNode)
-    {
-        $source = [];
-
-        // example:
-        // <g id="1"><mrk mid="0" mtype="seg">An English string with g tags</mrk></g>
-        $raw = $this->extractTagContent($dom, $childNode);
-
-        $markers = preg_split('#<mrk\s#si', $raw, -1);
-
-        $mi = 0;
-        while (isset($markers[ $mi + 1 ])) {
-            unset($mid);
-
-            preg_match('|mid\s?=\s?["\'](.*?)["\']|si', $markers[ $mi + 1 ], $mid);
-
-            //re-build the mrk tag after the split
-            $originalMark = trim('<mrk ' . $markers[ $mi + 1 ]);
-
-            $mark_string  = preg_replace('#^<mrk\s[^>]+>(.*)#', '$1', $originalMark); // at this point we have: ---> 'Test </mrk> </g>>'
-            $mark_content = preg_split('#</mrk>#si', $mark_string);
-
-            $source[] = [
-                'mid' => $mid[ 1 ],
-                'ext-prec-tags' => ($mi == 0 ? $markers[ 0 ] : ""),
-                'raw-content' => $mark_content[ 0 ],
-                'ext-succ-tags' => $mark_content[ 1 ],
-            ];
-
-            $mi++;
-        }
-
-        return $source;
     }
 }
