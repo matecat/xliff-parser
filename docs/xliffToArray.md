@@ -447,6 +447,22 @@ $output = [
                             ],
                             'attr'    => [],
                         ],
+                        'seg-source' => [
+                            0 => [
+                                'mid' => 0,
+                                'ext-prec-tags' => '&lt;pc id="1"&gt;Hello ',
+                                'raw-content' => 'World',
+                                'ext-succ-tags' => '!&lt;/pc&gt;',
+                            ]
+                        ],
+                        'seg-target' => [
+                            0 => [
+                                'mid' => 0,
+                                'ext-prec-tags' => '&lt;pc id="1"&gt;Bonjour le ',
+                                'raw-content' => 'Monde',
+                                'ext-succ-tags' => ' !&lt;/pc&gt;',
+                            ]
+                        ]
                     ],
                     2 => [
                         'attr' => [
@@ -475,6 +491,22 @@ $output = [
                         ],
                         'attr'    => [],
                     ],
+                    'seg-source' => [
+                        0 => [
+                            'mid' => 0,
+                            'ext-prec-tags' => '&lt;pc id="2"&gt;Hello ',
+                            'raw-content' => 'World2',
+                            'ext-succ-tags' => '!&lt;/pc&gt;',
+                        ]
+                    ],
+                    'seg-target' => [
+                        0 => [
+                            'mid' => 0,
+                            'ext-prec-tags' => '&lt;pc id="2"&gt;Bonjour le ',
+                            'raw-content' => 'Monde2',
+                            'ext-succ-tags' => ' !&lt;/pc&gt;',
+                        ]
+                    ]
                 ],
             ],
         ]

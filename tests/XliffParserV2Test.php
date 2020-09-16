@@ -222,6 +222,22 @@ class XliffParserV2Test extends BaseTest
                             ],
                              'attr'    => [],
                          ],
+                        'seg-source' => [
+                            0 => [
+                                'mid' => 0,
+                                'ext-prec-tags' => '&lt;pc id="1"&gt;Hello ',
+                                'raw-content' => 'World',
+                                'ext-succ-tags' => '!&lt;/pc&gt;',
+                            ]
+                        ],
+                        'seg-target' => [
+                            0 => [
+                                'mid' => 0,
+                                'ext-prec-tags' => '&lt;pc id="1"&gt;Bonjour le ',
+                                'raw-content' => 'Monde',
+                                'ext-succ-tags' => ' !&lt;/pc&gt;',
+                            ]
+                        ]
                     ],
                     2 => [
                         'attr' => [
@@ -238,17 +254,33 @@ class XliffParserV2Test extends BaseTest
                          ],
                     ],
                     'source' => [
-                            'raw-content' => [
-                                0 => '&lt;pc id="2"&gt;Hello <mrk id="m2" type="term">World2</mrk>!&lt;/pc&gt;',
-                            ],
-                            'attr'    => [],
+                        'raw-content' => [
+                            0 => '&lt;pc id="2"&gt;Hello <mrk id="m2" type="term">World2</mrk>!&lt;/pc&gt;',
+                        ],
+                        'attr'    => [],
                     ],
                     'target' => [
-                            'raw-content' => [
-                                0 => '&lt;pc id="2"&gt;Bonjour le <mrk id="m2" type="term">Monde2</mrk> !&lt;/pc&gt;',
-                            ],
-                            'attr'    => [],
+                        'raw-content' => [
+                            0 => '&lt;pc id="2"&gt;Bonjour le <mrk id="m2" type="term">Monde2</mrk> !&lt;/pc&gt;',
+                        ],
+                        'attr'    => [],
                     ],
+                    'seg-source' => [
+                        0 => [
+                            'mid' => 0,
+                            'ext-prec-tags' => '&lt;pc id="2"&gt;Hello ',
+                            'raw-content' => 'World2',
+                            'ext-succ-tags' => '!&lt;/pc&gt;',
+                        ]
+                    ],
+                    'seg-target' => [
+                        0 => [
+                            'mid' => 0,
+                            'ext-prec-tags' => '&lt;pc id="2"&gt;Bonjour le ',
+                            'raw-content' => 'Monde2',
+                            'ext-succ-tags' => ' !&lt;/pc&gt;',
+                        ]
+                    ]
                 ],
             ],
         ];
