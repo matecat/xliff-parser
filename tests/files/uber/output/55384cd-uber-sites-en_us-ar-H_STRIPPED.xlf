@@ -1,13 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?><xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0" xmlns:slr="urn:oasis:names:tc:xliff:sizerestriction:2.0" xmlns:memsource="http://www.memsource.com/xliff2.0/1.0" version="2.0" memsource:wfLevel="1" srcLang="en-us" trgLang="ar" xmlns:mtc="https://www.matecat.com">
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0" xmlns:slr="urn:oasis:names:tc:xliff:sizerestriction:2.0"
+       xmlns:memsource="http://www.memsource.com/xliff2.0/1.0" version="2.0" memsource:wfLevel="1" srcLang="en-us" trgLang="ar">
     <file id="QEx16325z55c11A05_dc6:0-6" memsource:taskId="QEx16325z55c11A05_dc6" canResegment="no" original="255384cd-uber-sites.xml">
         <slr:profiles generalProfile="xliff:codepoints"/>
         <unit help-id="1" id="tu-1" memsource:tGroupBegin="0" memsource:tGroupEnd="0">
             <mda:metadata>
                 <mda:metaGroup>
-                    <mda:meta type="key"></mda:meta>83cddb71-92ff-4868-baf0-780f58d76838
-                    <mda:meta type="key-note"></mda:meta>
+                    <mda:meta type="key">83cddb71-92ff-4868-baf0-780f58d76838</mda:meta>
+                    <mda:meta type="key-note">
                         Repo: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/uber-sites/keys/" target="_blank"&gt;uber-sites&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/uber-sites/key/legal.hub.terms.uber-eats-online-ordering-sales-channel-addendum-data-processing-agreement/overview" target="_blank"&gt;legal.hub.terms.uber-eats-online-ordering-sales-channel-addendum-data-processing-agreement&lt;/a&gt; Description: &lt;font color="blue"&gt;Hyperlink to document on uber.com/legal&lt;/font&gt;
-                    
+                    </mda:meta>
                 </mda:metaGroup>
             </mda:metadata>
             <segment id="0" state="initial">
@@ -24,10 +26,10 @@
         <unit help-id="2" id="tu-2" memsource:tGroupBegin="1" memsource:tGroupEnd="1">
             <mda:metadata>
                 <mda:metaGroup>
-                    <mda:meta type="key"></mda:meta>a349d3d9-e255-4ace-8c99-f1065854f806
-                    <mda:meta type="key-note"></mda:meta>
+                    <mda:meta type="key">a349d3d9-e255-4ace-8c99-f1065854f806</mda:meta>
+                    <mda:meta type="key-note">
                         Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/uber-sites/keys" target="_blank"&gt;uber-sites&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/uber-sites/key/cookie.banner.optin.text/overview" target="_blank"&gt;cookie.banner.optin.text&lt;/a&gt; Description: &lt;font color="blue"&gt;Opt in button text for cookie banner&lt;/font&gt;
-                    
+                    </mda:meta>
                 </mda:metaGroup>
             </mda:metadata>
             <segment id="1" state="translated">
@@ -44,10 +46,10 @@
         <unit help-id="3" id="tu-3" memsource:tGroupBegin="2" memsource:tGroupEnd="2">
             <mda:metadata>
                 <mda:metaGroup>
-                    <mda:meta type="key"></mda:meta>a40265ea-c911-463a-bd22-2b2f20e54f27
-                    <mda:meta type="key-note"></mda:meta>
+                    <mda:meta type="key">a40265ea-c911-463a-bd22-2b2f20e54f27</mda:meta>
+                    <mda:meta type="key-note">
                         Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/uber-sites/keys" target="_blank"&gt;uber-sites&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/uber-sites/key/common.media.button.play/overview" target="_blank"&gt;common.media.button.play&lt;/a&gt; Description: &lt;font color="blue"&gt;Default text for media/video play buttons&lt;/font&gt;
-                    
+                    </mda:meta>
                 </mda:metaGroup>
             </mda:metadata>
             <segment id="2" state="translated">

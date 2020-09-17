@@ -2,9 +2,6 @@
 
 namespace Matecat\XliffParser\XliffUtils\Pipeline;
 
-use Matecat\XliffParser\Exception\NotSupportedVersionException;
-use Matecat\XliffParser\Exception\NotValidFileException;
-
 class CheckXliffVersion2 implements CheckInterface
 {
     /**

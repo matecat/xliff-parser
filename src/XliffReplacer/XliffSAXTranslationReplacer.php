@@ -7,7 +7,23 @@ use Matecat\XliffParser\Utils\Strings;
 
 class XliffSAXTranslationReplacer extends AbstractXliffReplacer
 {
-    private $currentData;
+    /**
+     * @var array
+     */
+    private $nodesToCopy = [
+        'source',
+        'mda:metadata' ,
+        'memsource:additionalTagData' ,
+        'originalData' ,
+        'seg-source' ,
+        'value' ,
+        'bpt' ,
+        'ept' ,
+        'ph' ,
+        'st' ,
+        'note' ,
+        'context',
+    ];
 
     public function replaceTranslation()
     {
@@ -173,16 +189,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
             $tag .= ">";
             
             //set a a Buffer for the segSource Source tag
-            if ('source' === $name
-                    or 'seg-source' === $name
-                    or $this->bufferIsActive
-                    or 'value' === $name
-                    or 'bpt' === $name
-                    or 'ept' === $name
-                    or 'ph' === $name
-                    or 'st' === $name
-                    or 'note' === $name
-                    or 'context' === $name) { // we are opening a critical CDATA section
+            if ($this->bufferIsActive or in_array($name, $this->nodesToCopy)) { // we are opening a critical CDATA section
 
                 //WARNING BECAUSE SOURCE AND SEG-SOURCE TAGS CAN BE EMPTY IN SOME CASES!!!!!
                 //so check for isEmpty also in conjunction with name
@@ -354,14 +361,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
                 // signal we are leaving a target
                 $this->inTarget = false;
                 $this->postProcAndFlush($this->outputFP, $tag, $treatAsCDATA = true);
-            } elseif ('source' === $name
-                    or 'seg-source' === $name
-                    or 'value' === $name
-                    or 'bpt' === $name
-                    or 'ept' === $name
-                    or 'st' === $name
-                    or 'note' === $name
-                    or 'context' === $name) { // we are closing a critical CDATA section
+            } elseif (in_array($name, $this->nodesToCopy)) { // we are closing a critical CDATA section
 
                 $this->bufferIsActive = false;
                 $tag                  = $this->CDATABuffer . "</$name>";
@@ -598,16 +598,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
     {
         // don't write <target> data
         if (!$this->inTarget and !$this->bufferIsActive) {
-
-            // to avoid broken tag
-            $this->currentData = $this->currentData . $data;
-            $trimmedData = trim($data);
-
-            if ($trimmedData === '') {
-                // flush $this->currentData
-                $this->postProcAndFlush($this->outputFP, $this->currentData);
-                $this->currentData = null;
-            }
+            $this->postProcAndFlush($this->outputFP, $data);
         } elseif ($this->bufferIsActive) {
             $this->CDATABuffer .= $data;
         }

@@ -16,6 +16,222 @@ class UberFilesTest extends BaseTest
     /**
      * @test
      */
+    public function can_replace_translation_with_ph()
+    {
+        $data = [
+            [
+                'sid' => 1,
+                'segment' => 'Did you collect <ph id="source1" dataRef="source1"/> from <ph id="source2" dataRef="source2"/>?',
+                'internal_id' => '0',
+                'mrk_id' => '',
+                'prev_tags' => '',
+                'succ_tags' => '',
+                'mrk_prev_tags' => '',
+                'mrk_succ_tags' => '',
+                'translation' => 'Hai raccolto <ph id="source1" dataRef="source1"/> da <ph id="source2" dataRef="source2"/>?',
+                'status' => TranslationStatus::STATUS_TRANSLATED,
+                'eq_word_count' => 100,
+                'raw_word_count' => 200,
+            ],
+        ];
+
+        $transUnits = $this->getTransUnitsForReplacementTest($data);
+        $inputFile = __DIR__.'/../tests/files/uber/7cf155ce-rtapi-en_us-bn_bd-H.xlf';
+        $outputFile = __DIR__.'/../tests/files/uber/output/7cf155ce-rtapi-en_us-bn_bd-H.xlf';
+        $targetLang = 'it-it';
+
+        (new XliffParser())->replaceTranslation($inputFile, $data, $transUnits, $targetLang, $outputFile);
+        $output = (new XliffParser())->xliffToArray(file_get_contents($outputFile));
+
+        $this->assertEquals('Hai raccolto <ph id="source1" dataRef="source1"/> da <ph id="source2" dataRef="source2"/>?', $output['files'][1]['trans-units'][1]['target']['raw-content'][0]);
+    }
+
+    /**
+     * @test
+     */
+    public function can_replace_translation_in_a_large_file_with_ph()
+    {
+        $data = [
+            [
+                'sid' => 0,
+                'segment' => 'Hi <ph id="source1" dataRef="source1" />,<ph id="source2" dataRef="source2" /><ph id="source3" dataRef="source3" /><ph id="source4" dataRef="source4" /><ph id="source5" dataRef="source5" />Thanks for reaching out.<ph id="source6" dataRef="source6" /><ph id="source7" dataRef="source7" /><ph id="source8" dataRef="source8" /><ph id="source9" dataRef="source9" /><ph id="source10" dataRef="source10" />Vouchers can be used to treat customers or employees by covering the cost of rides and meals.<ph id="source11" dataRef="source11" /><ph id="source12" dataRef="source12" /><ph id="source13" dataRef="source13" /><ph id="source14" dataRef="source14" /><ph id="source15" dataRef="source15" />To start creating vouchers:<ph id="source16" dataRef="source16" /><ph id="source17" dataRef="source17" /><ph id="source18" dataRef="source18" /><ph id="source19" dataRef="source19" /><ph id="source20" dataRef="source20" />1.',
+                'internal_id' => '0',
+                'mrk_id' => '',
+                'prev_tags' => '',
+                'succ_tags' => '',
+                'mrk_prev_tags' => '',
+                'mrk_succ_tags' => '',
+                'translation' => 'ciao',
+                'status' => TranslationStatus::STATUS_TRANSLATED,
+                'eq_word_count' => 1,
+                'raw_word_count' => 1,
+            ],
+            [
+                'sid' => 1,
+                'segment' => 'Hi <ph id="source1" dataRef="source1" />,<ph id="source2" dataRef="source2" /><ph id="source3" dataRef="source3" /><ph id="source4" dataRef="source4" /><ph id="source5" dataRef="source5" />Thanks for reaching out.<ph id="source6" dataRef="source6" /><ph id="source7" dataRef="source7" /><ph id="source8" dataRef="source8" /><ph id="source9" dataRef="source9" /><ph id="source10" dataRef="source10" />Vouchers can be used to treat customers or employees by covering the cost of rides and meals.<ph id="source11" dataRef="source11" /><ph id="source12" dataRef="source12" /><ph id="source13" dataRef="source13" /><ph id="source14" dataRef="source14" /><ph id="source15" dataRef="source15" />To start creating vouchers:<ph id="source16" dataRef="source16" /><ph id="source17" dataRef="source17" /><ph id="source18" dataRef="source18" /><ph id="source19" dataRef="source19" /><ph id="source20" dataRef="source20" />1.',
+                'internal_id' => '0',
+                'mrk_id' => '',
+                'prev_tags' => '',
+                'succ_tags' => '',
+                'mrk_prev_tags' => '',
+                'mrk_succ_tags' => '',
+                'translation' => 'ciao 1',
+                'status' => TranslationStatus::STATUS_TRANSLATED,
+                'eq_word_count' => 1,
+                'raw_word_count' => 1,
+            ],
+            [
+                'sid' => 2,
+                'segment' => 'Hi <ph id="source1" dataRef="source1" />,<ph id="source2" dataRef="source2" /><ph id="source3" dataRef="source3" /><ph id="source4" dataRef="source4" /><ph id="source5" dataRef="source5" />Thanks for reaching out.<ph id="source6" dataRef="source6" /><ph id="source7" dataRef="source7" /><ph id="source8" dataRef="source8" /><ph id="source9" dataRef="source9" /><ph id="source10" dataRef="source10" />Vouchers can be used to treat customers or employees by covering the cost of rides and meals.<ph id="source11" dataRef="source11" /><ph id="source12" dataRef="source12" /><ph id="source13" dataRef="source13" /><ph id="source14" dataRef="source14" /><ph id="source15" dataRef="source15" />To start creating vouchers:<ph id="source16" dataRef="source16" /><ph id="source17" dataRef="source17" /><ph id="source18" dataRef="source18" /><ph id="source19" dataRef="source19" /><ph id="source20" dataRef="source20" />1.',
+                'internal_id' => '0',
+                'mrk_id' => '',
+                'prev_tags' => '',
+                'succ_tags' => '',
+                'mrk_prev_tags' => '',
+                'mrk_succ_tags' => '',
+                'translation' => 'ciao 2',
+                'status' => TranslationStatus::STATUS_TRANSLATED,
+                'eq_word_count' => 1,
+                'raw_word_count' => 1,
+            ],
+            [
+                    'sid' => 3,
+                    'segment' => 'Hi <ph id="source1" dataRef="source1" />,<ph id="source2" dataRef="source2" /><ph id="source3" dataRef="source3" /><ph id="source4" dataRef="source4" /><ph id="source5" dataRef="source5" />Thanks for reaching out.<ph id="source6" dataRef="source6" /><ph id="source7" dataRef="source7" /><ph id="source8" dataRef="source8" /><ph id="source9" dataRef="source9" /><ph id="source10" dataRef="source10" />Vouchers can be used to treat customers or employees by covering the cost of rides and meals.<ph id="source11" dataRef="source11" /><ph id="source12" dataRef="source12" /><ph id="source13" dataRef="source13" /><ph id="source14" dataRef="source14" /><ph id="source15" dataRef="source15" />To start creating vouchers:<ph id="source16" dataRef="source16" /><ph id="source17" dataRef="source17" /><ph id="source18" dataRef="source18" /><ph id="source19" dataRef="source19" /><ph id="source20" dataRef="source20" />1.',
+                    'internal_id' => '0',
+                    'mrk_id' => '',
+                    'prev_tags' => '',
+                    'succ_tags' => '',
+                    'mrk_prev_tags' => '',
+                    'mrk_succ_tags' => '',
+                    'translation' => 'ciao 3',
+                    'status' => TranslationStatus::STATUS_TRANSLATED,
+                    'eq_word_count' => 1,
+                    'raw_word_count' => 1,
+            ],
+            [
+                    'sid' => 4,
+                    'segment' => 'Hi <ph id="source1" dataRef="source1" />,<ph id="source2" dataRef="source2" /><ph id="source3" dataRef="source3" /><ph id="source4" dataRef="source4" /><ph id="source5" dataRef="source5" />Thanks for reaching out.<ph id="source6" dataRef="source6" /><ph id="source7" dataRef="source7" /><ph id="source8" dataRef="source8" /><ph id="source9" dataRef="source9" /><ph id="source10" dataRef="source10" />Vouchers can be used to treat customers or employees by covering the cost of rides and meals.<ph id="source11" dataRef="source11" /><ph id="source12" dataRef="source12" /><ph id="source13" dataRef="source13" /><ph id="source14" dataRef="source14" /><ph id="source15" dataRef="source15" />To start creating vouchers:<ph id="source16" dataRef="source16" /><ph id="source17" dataRef="source17" /><ph id="source18" dataRef="source18" /><ph id="source19" dataRef="source19" /><ph id="source20" dataRef="source20" />1.',
+                    'internal_id' => '0',
+                    'mrk_id' => '',
+                    'prev_tags' => '',
+                    'succ_tags' => '',
+                    'mrk_prev_tags' => '',
+                    'mrk_succ_tags' => '',
+                    'translation' => 'ciao 4',
+                    'status' => TranslationStatus::STATUS_TRANSLATED,
+                    'eq_word_count' => 1,
+                    'raw_word_count' => 1,
+            ],
+            [
+                    'sid' => 5,
+                    'segment' => 'Hi <ph id="source1" dataRef="source1" />,<ph id="source2" dataRef="source2" /><ph id="source3" dataRef="source3" /><ph id="source4" dataRef="source4" /><ph id="source5" dataRef="source5" />Thanks for reaching out.<ph id="source6" dataRef="source6" /><ph id="source7" dataRef="source7" /><ph id="source8" dataRef="source8" /><ph id="source9" dataRef="source9" /><ph id="source10" dataRef="source10" />Vouchers can be used to treat customers or employees by covering the cost of rides and meals.<ph id="source11" dataRef="source11" /><ph id="source12" dataRef="source12" /><ph id="source13" dataRef="source13" /><ph id="source14" dataRef="source14" /><ph id="source15" dataRef="source15" />To start creating vouchers:<ph id="source16" dataRef="source16" /><ph id="source17" dataRef="source17" /><ph id="source18" dataRef="source18" /><ph id="source19" dataRef="source19" /><ph id="source20" dataRef="source20" />1.',
+                    'internal_id' => '0',
+                    'mrk_id' => '',
+                    'prev_tags' => '',
+                    'succ_tags' => '',
+                    'mrk_prev_tags' => '',
+                    'mrk_succ_tags' => '',
+                    'translation' => 'ciao 5',
+                    'status' => TranslationStatus::STATUS_TRANSLATED,
+                    'eq_word_count' => 1,
+                    'raw_word_count' => 1,
+            ],
+            [
+                    'sid' => 6,
+                    'segment' => 'Hi <ph id="source1" dataRef="source1" />,<ph id="source2" dataRef="source2" /><ph id="source3" dataRef="source3" /><ph id="source4" dataRef="source4" /><ph id="source5" dataRef="source5" />Thanks for reaching out.<ph id="source6" dataRef="source6" /><ph id="source7" dataRef="source7" /><ph id="source8" dataRef="source8" /><ph id="source9" dataRef="source9" /><ph id="source10" dataRef="source10" />Vouchers can be used to treat customers or employees by covering the cost of rides and meals.<ph id="source11" dataRef="source11" /><ph id="source12" dataRef="source12" /><ph id="source13" dataRef="source13" /><ph id="source14" dataRef="source14" /><ph id="source15" dataRef="source15" />To start creating vouchers:<ph id="source16" dataRef="source16" /><ph id="source17" dataRef="source17" /><ph id="source18" dataRef="source18" /><ph id="source19" dataRef="source19" /><ph id="source20" dataRef="source20" />1.',
+                    'internal_id' => '0',
+                    'mrk_id' => '',
+                    'prev_tags' => '',
+                    'succ_tags' => '',
+                    'mrk_prev_tags' => '',
+                    'mrk_succ_tags' => '',
+                    'translation' => 'ciao 6',
+                    'status' => TranslationStatus::STATUS_TRANSLATED,
+                    'eq_word_count' => 1,
+                    'raw_word_count' => 1,
+            ],
+            [
+                    'sid' => 7,
+                    'segment' => 'Hi <ph id="source1" dataRef="source1" />,<ph id="source2" dataRef="source2" /><ph id="source3" dataRef="source3" /><ph id="source4" dataRef="source4" /><ph id="source5" dataRef="source5" />Thanks for reaching out.<ph id="source6" dataRef="source6" /><ph id="source7" dataRef="source7" /><ph id="source8" dataRef="source8" /><ph id="source9" dataRef="source9" /><ph id="source10" dataRef="source10" />Vouchers can be used to treat customers or employees by covering the cost of rides and meals.<ph id="source11" dataRef="source11" /><ph id="source12" dataRef="source12" /><ph id="source13" dataRef="source13" /><ph id="source14" dataRef="source14" /><ph id="source15" dataRef="source15" />To start creating vouchers:<ph id="source16" dataRef="source16" /><ph id="source17" dataRef="source17" /><ph id="source18" dataRef="source18" /><ph id="source19" dataRef="source19" /><ph id="source20" dataRef="source20" />1.',
+                    'internal_id' => '0',
+                    'mrk_id' => '',
+                    'prev_tags' => '',
+                    'succ_tags' => '',
+                    'mrk_prev_tags' => '',
+                    'mrk_succ_tags' => '',
+                    'translation' => 'ciao 7',
+                    'status' => TranslationStatus::STATUS_TRANSLATED,
+                    'eq_word_count' => 1,
+                    'raw_word_count' => 1,
+            ],
+            [
+                    'sid' => 8,
+                    'segment' => 'Hi <ph id="source1" dataRef="source1" />,<ph id="source2" dataRef="source2" /><ph id="source3" dataRef="source3" /><ph id="source4" dataRef="source4" /><ph id="source5" dataRef="source5" />Thanks for reaching out.<ph id="source6" dataRef="source6" /><ph id="source7" dataRef="source7" /><ph id="source8" dataRef="source8" /><ph id="source9" dataRef="source9" /><ph id="source10" dataRef="source10" />Vouchers can be used to treat customers or employees by covering the cost of rides and meals.<ph id="source11" dataRef="source11" /><ph id="source12" dataRef="source12" /><ph id="source13" dataRef="source13" /><ph id="source14" dataRef="source14" /><ph id="source15" dataRef="source15" />To start creating vouchers:<ph id="source16" dataRef="source16" /><ph id="source17" dataRef="source17" /><ph id="source18" dataRef="source18" /><ph id="source19" dataRef="source19" /><ph id="source20" dataRef="source20" />1.',
+                    'internal_id' => '0',
+                    'mrk_id' => '',
+                    'prev_tags' => '',
+                    'succ_tags' => '',
+                    'mrk_prev_tags' => '',
+                    'mrk_succ_tags' => '',
+                    'translation' => 'ciao 8',
+                    'status' => TranslationStatus::STATUS_TRANSLATED,
+                    'eq_word_count' => 1,
+                    'raw_word_count' => 1,
+            ],
+            [
+                    'sid' => 9,
+                    'segment' => 'Hi <ph id="source1" dataRef="source1" />,<ph id="source2" dataRef="source2" /><ph id="source3" dataRef="source3" /><ph id="source4" dataRef="source4" /><ph id="source5" dataRef="source5" />Thanks for reaching out.<ph id="source6" dataRef="source6" /><ph id="source7" dataRef="source7" /><ph id="source8" dataRef="source8" /><ph id="source9" dataRef="source9" /><ph id="source10" dataRef="source10" />Vouchers can be used to treat customers or employees by covering the cost of rides and meals.<ph id="source11" dataRef="source11" /><ph id="source12" dataRef="source12" /><ph id="source13" dataRef="source13" /><ph id="source14" dataRef="source14" /><ph id="source15" dataRef="source15" />To start creating vouchers:<ph id="source16" dataRef="source16" /><ph id="source17" dataRef="source17" /><ph id="source18" dataRef="source18" /><ph id="source19" dataRef="source19" /><ph id="source20" dataRef="source20" />1.',
+                    'internal_id' => '0',
+                    'mrk_id' => '',
+                    'prev_tags' => '',
+                    'succ_tags' => '',
+                    'mrk_prev_tags' => '',
+                    'mrk_succ_tags' => '',
+                    'translation' => 'ciao 9',
+                    'status' => TranslationStatus::STATUS_TRANSLATED,
+                    'eq_word_count' => 1,
+                    'raw_word_count' => 1,
+            ],
+            [
+                    'sid' => 10,
+                    'segment' => 'Hi <ph id="source1" dataRef="source1" />,<ph id="source2" dataRef="source2" /><ph id="source3" dataRef="source3" /><ph id="source4" dataRef="source4" /><ph id="source5" dataRef="source5" />Thanks for reaching out.<ph id="source6" dataRef="source6" /><ph id="source7" dataRef="source7" /><ph id="source8" dataRef="source8" /><ph id="source9" dataRef="source9" /><ph id="source10" dataRef="source10" />Vouchers can be used to treat customers or employees by covering the cost of rides and meals.<ph id="source11" dataRef="source11" /><ph id="source12" dataRef="source12" /><ph id="source13" dataRef="source13" /><ph id="source14" dataRef="source14" /><ph id="source15" dataRef="source15" />To start creating vouchers:<ph id="source16" dataRef="source16" /><ph id="source17" dataRef="source17" /><ph id="source18" dataRef="source18" /><ph id="source19" dataRef="source19" /><ph id="source20" dataRef="source20" />1.',
+                    'internal_id' => '0',
+                    'mrk_id' => '',
+                    'prev_tags' => '',
+                    'succ_tags' => '',
+                    'mrk_prev_tags' => '',
+                    'mrk_succ_tags' => '',
+                    'translation' => 'ciao 10',
+                    'status' => TranslationStatus::STATUS_TRANSLATED,
+                    'eq_word_count' => 1,
+                    'raw_word_count' => 1,
+            ],
+        ];
+
+        $transUnits = $this->getTransUnitsForReplacementTest($data);
+        $inputFile = __DIR__.'/../tests/files/uber/39f87a30-bliss_saved_reply_content-en_us-ar-PM.xlf';
+        $outputFile = __DIR__.'/../tests/files/uber/output/39f87a30-bliss_saved_reply_content-en_us-ar-PM.xlf';
+        $targetLang = 'it-it';
+
+        (new XliffParser())->replaceTranslation($inputFile, $data, $transUnits, $targetLang, $outputFile);
+        $output = (new XliffParser())->xliffToArray(file_get_contents($outputFile));
+
+        $this->assertEquals('ciao', $output['files'][1]['trans-units'][1]['target']['raw-content'][0]);
+        $this->assertEquals('ciao 1', $output['files'][1]['trans-units'][1]['target']['raw-content'][1]);
+        $this->assertEquals('ciao 2', $output['files'][1]['trans-units'][1]['target']['raw-content'][2]);
+        $this->assertEquals('ciao 3', $output['files'][1]['trans-units'][1]['target']['raw-content'][3]);
+        $this->assertEquals('ciao 4', $output['files'][1]['trans-units'][1]['target']['raw-content'][4]);
+        $this->assertEquals('ciao 5', $output['files'][1]['trans-units'][1]['target']['raw-content'][5]);
+        $this->assertEquals('ciao 6', $output['files'][1]['trans-units'][1]['target']['raw-content'][6]);
+        $this->assertEquals('ciao 7', $output['files'][1]['trans-units'][1]['target']['raw-content'][7]);
+        $this->assertEquals('ciao 8', $output['files'][1]['trans-units'][1]['target']['raw-content'][8]);
+        $this->assertEquals('ciao 9', $output['files'][1]['trans-units'][1]['target']['raw-content'][9]);
+        $this->assertEquals('ciao 10', $output['files'][1]['trans-units'][1]['target']['raw-content'][10]);
+    }
+
+    /**
+     * @test
+     */
     public function can_read_files_with_empty_target()
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('uber/56d591a5-louvre-v2-en_us-fr_fr-PM.xlf'));

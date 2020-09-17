@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0" xmlns:slr="urn:oasis:names:tc:xliff:sizerestriction:2.0"
+       xmlns:memsource="http://www.memsource.com/xliff2.0/1.0" version="2.0" memsource:wfLevel="1" srcLang="en-us" trgLang="ar">
+    <file id="lz4IqI5bNAMW4wRn_dc5:0-33" memsource:taskId="lz4IqI5bNAMW4wRn_dc5" canResegment="no" original="39f87a30-bliss_saved_reply_content.xml">
+        <slr:profiles generalProfile="xliff:codepoints"/>
+        <unit id="0" memsource:tGroupBegin="0" memsource:tGroupEnd="10">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key">79d2551e-637a-4117-bc81-2ccaa87bddea</mda:meta>
+                    <mda:meta type="key-note">
+                        Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/bliss_saved_reply_content/keys" target="_blank"&gt;bliss_saved_reply_content&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/bliss_saved_reply_content/key/bliss_saved_reply_content-7b3206fe-b0a8-4936-a3a3-ede7de9992d0/overview" target="_blank"&gt;bliss_saved_reply_content-7b3206fe-b0a8-4936-a3a3-ede7de9992d0&lt;/a&gt; Description: &lt;font color="blue"&gt;This is a body for a saved reply in Bliss. It is used to respond to issues an Uber user might have with their experience. (variant id: f1b6c649-4307-4948-98ce-8af25f9f3b47)&lt;/font&gt;
+
+                    </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <memsource:additionalTagData>
+                <memsource:tag id="source3">
+                    <memsource:tagId>3</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source34">
+                    <memsource:tagId>34</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source45">
+                    <memsource:tagId>45</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source30">
+                    <memsource:tagId>30</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source41">
+                    <memsource:tagId>41</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source52">
+                    <memsource:tagId>52</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source17">
+                    <memsource:tagId>17</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source28">
+                    <memsource:tagId>28</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source8">
+                    <memsource:tagId>8</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source39">
+                    <memsource:tagId>39</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source13">
+                    <memsource:tagId>13</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source24">
+                    <memsource:tagId>24</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source4">
+                    <memsource:tagId>4</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source35">
+                    <memsource:tagId>35</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source46">
+                    <memsource:tagId>46</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source20">
+                    <memsource:tagId>20</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source31">
+                    <memsource:tagId>31</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source42">
+                    <memsource:tagId>42</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source53">
+                    <memsource:tagId>53</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source18">
+                    <memsource:tagId>18</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source29">
+                    <memsource:tagId>29</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source9">
+                    <memsource:tagId>9</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source14">
+                    <memsource:tagId>14</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source25">
+                    <memsource:tagId>25</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source5">
+                    <memsource:tagId>5</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source36">
+                    <memsource:tagId>36</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source47">
+                    <memsource:tagId>47</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source10">
+                    <memsource:tagId>10</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source21">
+                    <memsource:tagId>21</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source1">
+                    <memsource:tagId>1</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source32">
+                    <memsource:tagId>32</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source43">
+                    <memsource:tagId>43</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source54">
+                    <memsource:tagId>54</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source50">
+                    <memsource:tagId>50</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source19">
+                    <memsource:tagId>19</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source15">
+                    <memsource:tagId>15</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source26">
+                    <memsource:tagId>26</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source6">
+                    <memsource:tagId>6</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source37">
+                    <memsource:tagId>37</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source48">
+                    <memsource:tagId>48</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source11">
+                    <memsource:tagId>11</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source22">
+                    <memsource:tagId>22</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source2">
+                    <memsource:tagId>2</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source33">
+                    <memsource:tagId>33</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source44">
+                    <memsource:tagId>44</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source40">
+                    <memsource:tagId>40</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source51">
+                    <memsource:tagId>51</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source16">
+                    <memsource:tagId>16</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source27">
+                    <memsource:tagId>27</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source7">
+                    <memsource:tagId>7</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source38">
+                    <memsource:tagId>38</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source49">
+                    <memsource:tagId>49</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source12">
+                    <memsource:tagId>12</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source23">
+                    <memsource:tagId>23</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+            </memsource:additionalTagData>
+            <originalData>
+                <data id="source3">&amp;lt;br&amp;gt;</data>
+                <data id="source34">&amp;lt;div&amp;gt;</data>
+                <data id="source45">&amp;lt;a href=&amp;quot;http://business.uber.com/&amp;quot;&amp;gt;</data>
+                <data id="source30">&amp;lt;div&amp;gt;</data>
+                <data id="source41">&amp;lt;div&amp;gt;</data>
+                <data id="source52">&amp;lt;/div&amp;gt;</data>
+                <data id="source17">&amp;lt;div&amp;gt;</data>
+                <data id="source28">&amp;lt;div&amp;gt;</data>
+                <data id="source8">&amp;lt;br&amp;gt;</data>
+                <data id="source39">&amp;lt;/b&amp;gt;</data>
+                <data id="source13">&amp;lt;br&amp;gt;</data>
+                <data id="source24">&amp;lt;div&amp;gt;</data>
+                <data id="source4">&amp;lt;/div&amp;gt;</data>
+                <data id="source35">&amp;lt;br&amp;gt;</data>
+                <data id="source46">&amp;lt;/a&amp;gt;</data>
+                <data id="source20">&amp;lt;div&amp;gt;</data>
+                <data id="source31">&amp;lt;a href=&amp;quot;http://vouchers.uber.com/&amp;quot;&amp;gt;</data>
+                <data id="source42">&amp;lt;br&amp;gt;</data>
+                <data id="source53">&amp;lt;div&amp;gt;</data>
+                <data id="source18">&amp;lt;br&amp;gt;</data>
+                <data id="source29">&amp;lt;/div&amp;gt;</data>
+                <data id="source9">&amp;lt;/div&amp;gt;</data>
+                <data id="source14">&amp;lt;/div&amp;gt;</data>
+                <data id="source25">&amp;lt;b&amp;gt;</data>
+                <data id="source5">&amp;lt;div&amp;gt;</data>
+                <data id="source36">&amp;lt;/div&amp;gt;</data>
+                <data id="source47">&amp;lt;b&amp;gt;</data>
+                <data id="source10">&amp;lt;div&amp;gt;</data>
+                <data id="source21">&amp;lt;a href=&amp;quot;https://www.uber.com/us/en/business/vouchers/&amp;quot;&amp;gt;</data>
+                <data id="source1">{Rider First Name}</data>
+                <data id="source32">&amp;lt;/a&amp;gt;</data>
+                <data id="source43">&amp;lt;/div&amp;gt;</data>
+                <data id="source54">&amp;lt;/div&amp;gt;</data>
+                <data id="source50">&amp;lt;div&amp;gt;</data>
+                <data id="source19">&amp;lt;/div&amp;gt;</data>
+                <data id="source15">&amp;lt;div&amp;gt;</data>
+                <data id="source26">&amp;lt;/b&amp;gt;</data>
+                <data id="source6">&amp;lt;/div&amp;gt;</data>
+                <data id="source37">&amp;lt;div&amp;gt;</data>
+                <data id="source48">&amp;lt;/b&amp;gt;</data>
+                <data id="source11">&amp;lt;/div&amp;gt;</data>
+                <data id="source22">&amp;lt;/a&amp;gt;</data>
+                <data id="source2">&amp;lt;div&amp;gt;</data>
+                <data id="source33">&amp;lt;/div&amp;gt;</data>
+                <data id="source44">&amp;lt;div&amp;gt;</data>
+                <data id="source40">&amp;lt;/div&amp;gt;</data>
+                <data id="source51">&amp;lt;br&amp;gt;</data>
+                <data id="source16">&amp;lt;/div&amp;gt;</data>
+                <data id="source27">&amp;lt;/div&amp;gt;</data>
+                <data id="source7">&amp;lt;div&amp;gt;</data>
+                <data id="source38">&amp;lt;b&amp;gt;</data>
+                <data id="source49">&amp;lt;/div&amp;gt;</data>
+                <data id="source12">&amp;lt;div&amp;gt;</data>
+                <data id="source23">&amp;lt;/div&amp;gt;</data>
+            </originalData>
+            <segment id="0" state="translated">
+                <source>Hi <ph id="source1" dataRef="source1"/>,<ph id="source2" dataRef="source2"/><ph id="source3" dataRef="source3"/><ph id="source4" dataRef="source4"/><ph id="source5" dataRef="source5"/>Thanks for reaching out.<ph id="source6" dataRef="source6"/><ph id="source7" dataRef="source7"/><ph id="source8" dataRef="source8"/><ph id="source9" dataRef="source9"/><ph id="source10" dataRef="source10"/>Vouchers can be used to treat customers or employees by covering the cost of rides and meals.<ph id="source11" dataRef="source11"/><ph id="source12" dataRef="source12"/><ph id="source13" dataRef="source13"/><ph id="source14" dataRef="source14"/><ph id="source15" dataRef="source15"/>To start creating vouchers:<ph id="source16" dataRef="source16"/><ph id="source17" dataRef="source17"/><ph id="source18" dataRef="source18"/><ph id="source19" dataRef="source19"/><ph id="source20" dataRef="source20"/>1.</source>
+                <target>ciao</target>
+            </segment>
+            <mda:metadata>
+                <mda:metagroup category="row_xml_attribute">
+                    <mda:meta type="x-matecat-raw">1</mda:meta>
+                    <mda:meta type="x-matecat-weighted">1</mda:meta>
+                </mda:metagroup>
+            </mda:metadata>
+            <segment id="1" state="translated">
+                <source>Visit <ph id="source21" dataRef="source21"/>Uber's website<ph id="source22" dataRef="source22"/>.<ph id="source23" dataRef="source23"/><ph id="source24" dataRef="source24"/>2.</source>
+                <target>ciao 1</target>
+            </segment>
+            <mda:metadata>
+                <mda:metagroup category="row_xml_attribute">
+                    <mda:meta type="x-matecat-raw">2</mda:meta>
+                    <mda:meta type="x-matecat-weighted">2</mda:meta>
+                </mda:metagroup>
+            </mda:metadata>
+            <segment id="2" state="translated">
+                <source>Click <ph id="source25" dataRef="source25"/>Get Started<ph id="source26" dataRef="source26"/> and fill out your personal information.</source>
+                <target>ciao 2</target>
+            </segment>
+            <mda:metadata>
+                <mda:metagroup category="row_xml_attribute">
+                    <mda:meta type="x-matecat-raw">3</mda:meta>
+                    <mda:meta type="x-matecat-weighted">3</mda:meta>
+                </mda:metagroup>
+            </mda:metadata>
+            <segment id="3" state="translated">
+                <source>Please note, you must use a corporate email address when signing up.<ph id="source27" dataRef="source27"/><ph id="source28" dataRef="source28"/>3.</source>
+                <target>ciao 3</target>
+            </segment>
+            <mda:metadata>
+                <mda:metagroup category="row_xml_attribute">
+                    <mda:meta type="x-matecat-raw">4</mda:meta>
+                    <mda:meta type="x-matecat-weighted">4</mda:meta>
+                </mda:metagroup>
+            </mda:metadata>
+            <segment id="4" state="translated">
+                <source>Verify your email address.</source>
+                <target>ciao 4</target>
+            </segment>
+            <mda:metadata>
+                <mda:metagroup category="row_xml_attribute">
+                    <mda:meta type="x-matecat-raw">5</mda:meta>
+                    <mda:meta type="x-matecat-weighted">5</mda:meta>
+                </mda:metagroup>
+            </mda:metadata>
+            <segment id="5" state="translated">
+                <source>After that, you’ll be able to visit the Uber Vouchers website.<ph id="source29" dataRef="source29"/><ph id="source30" dataRef="source30"/>4.</source>
+                <target>ciao 5</target>
+            </segment>
+            <mda:metadata>
+                <mda:metagroup category="row_xml_attribute">
+                    <mda:meta type="x-matecat-raw">6</mda:meta>
+                    <mda:meta type="x-matecat-weighted">6</mda:meta>
+                </mda:metagroup>
+            </mda:metadata>
+            <segment id="6" state="translated">
+                <source>From the <ph id="source31" dataRef="source31"/>Uber Vouchers website<ph id="source32" dataRef="source32"/>, you can create ride or meal voucher campaigns.</source>
+                <target>ciao 6</target>
+            </segment>
+            <mda:metadata>
+                <mda:metagroup category="row_xml_attribute">
+                    <mda:meta type="x-matecat-raw">7</mda:meta>
+                    <mda:meta type="x-matecat-weighted">7</mda:meta>
+                </mda:metagroup>
+            </mda:metadata>
+            <segment id="7" state="translated">
+                <source>Vouchers cannot exceed $200 per ride or meal, and the total voucher campaign cannot exceed $2,000 ($2,500 in Canada).<ph id="source33" dataRef="source33"/><ph id="source34" dataRef="source34"/><ph id="source35" dataRef="source35"/><ph id="source36" dataRef="source36"/><ph id="source37" dataRef="source37"/>When you reach the <ph id="source38" dataRef="source38"/>Checkout<ph id="source39" dataRef="source39"/> section, you’ll be asked to enter a credit card.</source>
+                <target>ciao 7</target>
+            </segment>
+            <mda:metadata>
+                <mda:metagroup category="row_xml_attribute">
+                    <mda:meta type="x-matecat-raw">8</mda:meta>
+                    <mda:meta type="x-matecat-weighted">8</mda:meta>
+                </mda:metagroup>
+            </mda:metadata>
+            <segment id="8" state="translated">
+                <source>You’ll be charged the full amount of the voucher campaign.</source>
+                <target>ciao 8</target>
+            </segment>
+            <mda:metadata>
+                <mda:metagroup category="row_xml_attribute">
+                    <mda:meta type="x-matecat-raw">9</mda:meta>
+                    <mda:meta type="x-matecat-weighted">9</mda:meta>
+                </mda:metagroup>
+            </mda:metadata>
+            <segment id="9" state="translated">
+                <source>You’ll be refunded the unused amount within 10 days of your last active campaign ending.<ph id="source40" dataRef="source40"/><ph id="source41" dataRef="source41"/><ph id="source42" dataRef="source42"/><ph id="source43" dataRef="source43"/><ph id="source44" dataRef="source44"/>To track voucher usage during the campaign, you can visit the <ph id="source45" dataRef="source45"/>Uber for Business website<ph id="source46" dataRef="source46"/>.</source>
+                <target>ciao 9</target>
+            </segment>
+            <mda:metadata>
+                <mda:metagroup category="row_xml_attribute">
+                    <mda:meta type="x-matecat-raw">10</mda:meta>
+                    <mda:meta type="x-matecat-weighted">10</mda:meta>
+                </mda:metagroup>
+            </mda:metadata>
+            <segment id="10" state="translated">
+                <source>The remaining voucher balance will be listed in the Billing section under <ph id="source47" dataRef="source47"/>Wallet<ph id="source48" dataRef="source48"/>.<ph id="source49" dataRef="source49"/><ph id="source50" dataRef="source50"/><ph id="source51" dataRef="source51"/><ph id="source52" dataRef="source52"/><ph id="source53" dataRef="source53"/>Please let us know if you have any questions.<ph id="source54" dataRef="source54"/></source>
+                <target>ciao 10</target>
+            </segment>
+            <mda:metadata>
+                <mda:metagroup category="row_xml_attribute">
+                    <mda:meta type="x-matecat-raw">11</mda:meta>
+                    <mda:meta type="x-matecat-weighted">11</mda:meta>
+                </mda:metagroup>
+            </mda:metadata>
+        </unit>
+    </file>
+</xliff>
