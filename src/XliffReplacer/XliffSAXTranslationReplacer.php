@@ -2,7 +2,7 @@
 
 namespace Matecat\XliffParser\XliffReplacer;
 
-use Matecat\XliffParser\Utils\Constants\TranslationStatus;
+use Matecat\XliffParser\Constants\TranslationStatus;
 use Matecat\XliffParser\Utils\Strings;
 
 class XliffSAXTranslationReplacer extends AbstractXliffReplacer

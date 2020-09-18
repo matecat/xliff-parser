@@ -3,10 +3,10 @@
 namespace Matecat\XliffParser\XliffUtils;
 
 use Matecat\XliffParser\Utils\Files;
-use Matecat\XliffParser\XliffUtils\Pipeline\CheckGlobalSight;
-use Matecat\XliffParser\XliffUtils\Pipeline\CheckMateCATConverter;
-use Matecat\XliffParser\XliffUtils\Pipeline\CheckSDL;
-use Matecat\XliffParser\XliffUtils\Pipeline\CheckXliffVersion2;
+use Matecat\XliffParser\XliffUtils\CheckPipeline\CheckGlobalSight;
+use Matecat\XliffParser\XliffUtils\CheckPipeline\CheckMateCATConverter;
+use Matecat\XliffParser\XliffUtils\CheckPipeline\CheckSDL;
+use Matecat\XliffParser\XliffUtils\CheckPipeline\CheckXliffVersion2;
 
 class XliffProprietaryDetect
 {

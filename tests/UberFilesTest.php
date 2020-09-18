@@ -2,7 +2,7 @@
 
 namespace Matecat\XliffParser\Tests;
 
-use Matecat\XliffParser\Utils\Constants\TranslationStatus;
+use Matecat\XliffParser\Constants\TranslationStatus;
 use Matecat\XliffParser\XliffParser;
 
 /**

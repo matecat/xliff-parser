@@ -1,6 +1,6 @@
 <?php
 
-namespace Matecat\XliffParser\Utils\Constants;
+namespace Matecat\XliffParser\Constants;
 
 /**
  * This is a copy of

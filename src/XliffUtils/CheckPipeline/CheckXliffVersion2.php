@@ -1,6 +1,6 @@
 <?php
 
-namespace Matecat\XliffParser\XliffUtils\Pipeline;
+namespace Matecat\XliffParser\XliffUtils\CheckPipeline;
 
 class CheckXliffVersion2 implements CheckInterface
 {

@@ -2,7 +2,7 @@
 
 namespace Matecat\XliffParser\XliffUtils;
 
-use Matecat\XliffParser\XliffUtils\Pipeline\CheckInterface;
+use Matecat\XliffParser\XliffUtils\CheckPipeline\CheckInterface;
 
 class CheckXliffProprietaryPipeline
 {
