@@ -189,6 +189,39 @@ class UberFilesTest extends BaseTest
         $this->assertEquals('Uber Eats Online Ordering Sales Channel Addendum Accordo sul trattamento dei dati', $output['files'][1]['trans-units'][1]['target']['raw-content'][0]);
     }
 
+    /**
+     * @test
+     */
+    public function can_replace_target_with_source()
+    {
+        $data = [
+            [
+                'sid' => 1,
+                'segment' => 'Did you collect <ph id="source1" dataRef="source1"/> from <ph id="source2" dataRef="source2"/>?',
+                'internal_id' => '0',
+                'mrk_id' => '',
+                'prev_tags' => '',
+                'succ_tags' => '',
+                'mrk_prev_tags' => '',
+                'mrk_succ_tags' => '',
+                'translation' => 'Hai raccolto <ph id="source1" dataRef="source1"/> da <ph id="source2" dataRef="source2"/>?',
+                'status' => TranslationStatus::STATUS_TRANSLATED,
+                'eq_word_count' => 100,
+                'raw_word_count' => 200,
+            ],
+        ];
+
+        $transUnits = $this->getTransUnitsForReplacementTest($data);
+        $inputFile = __DIR__.'/../tests/files/uber/7cf155ce-rtapi-en_us-bn_bd-H.xlf';
+        $outputFile = __DIR__.'/../tests/files/uber/output/7cf155ce-rtapi-en_us-bn_bd-H.xlf';
+        $targetLang = 'it-it';
+
+        // set $setSourceInTarget to true
+        (new XliffParser())->replaceTranslation($inputFile, $data, $transUnits, $targetLang, $outputFile, true);
+        $output = (new XliffParser())->xliffToArray(file_get_contents($outputFile));
+
+        $this->assertEquals('Did you collect <ph id="source1" dataRef="source1"/> from <ph id="source2" dataRef="source2"/>?', $output['files'][1]['trans-units'][1]['target']['raw-content'][0]);
+    }
 
     /**
      * @test

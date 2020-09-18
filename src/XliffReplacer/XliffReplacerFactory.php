@@ -8,11 +8,12 @@ use Psr\Log\LoggerInterface;
 class XliffReplacerFactory
 {
     /**
-     * @param                                     $originalXliffPath
-     * @param                                     $data
-     * @param                                     $transUnits
-     * @param                                     $targetLang
-     * @param                                     $outputFilePath
+     * @param string                              $originalXliffPath
+     * @param array                               $data
+     * @param array                               $transUnits
+     * @param string                              $targetLang
+     * @param string                              $outputFilePath
+     * @param bool                                $setSourceInTarget
      * @param LoggerInterface                     $logger
      * @param XliffReplacerCallbackInterface|null $callback
      *
@@ -20,14 +21,15 @@ class XliffReplacerFactory
      * @throws \Matecat\XliffParser\Exception\NotSupportedVersionException
      * @throws \Matecat\XliffParser\Exception\NotValidFileException
      */
-    public static function getInstance($originalXliffPath, &$data, &$transUnits, $targetLang, $outputFilePath, LoggerInterface $logger = null, XliffReplacerCallbackInterface $callback = null)
+    public static function getInstance($originalXliffPath, &$data, &$transUnits, $targetLang, $outputFilePath, $setSourceInTarget, LoggerInterface $logger = null, XliffReplacerCallbackInterface
+    $callback = null)
     {
         $info = XliffProprietaryDetect::getInfo($originalXliffPath);
 
         if ($info[ 'proprietary_short_name' ] !== 'trados') {
-            return new XliffSAXTranslationReplacer($originalXliffPath, $info['version'], $data, $transUnits, $targetLang, $outputFilePath, $logger, $callback);
+            return new XliffSAXTranslationReplacer($originalXliffPath, $info['version'], $data, $transUnits, $targetLang, $outputFilePath, $setSourceInTarget, $logger, $callback);
         }
 
-        return new SdlXliffSAXTranslationReplacer($originalXliffPath, $info['version'], $data, $transUnits, $targetLang, $outputFilePath, $logger, $callback);
+        return new SdlXliffSAXTranslationReplacer($originalXliffPath, $info['version'], $data, $transUnits, $targetLang, $outputFilePath, $setSourceInTarget, $logger, $callback);
     }
 }

@@ -33,12 +33,13 @@ class XliffParser
      * @param array $transUnits
      * @param string $targetLang
      * @param string $outputFile
+     * @param bool $setSourceInTarget
      * @param XliffReplacerCallbackInterface|null $callback
      */
-    public function replaceTranslation($originalXliffPath, &$data, &$transUnits, $targetLang, $outputFile, XliffReplacerCallbackInterface $callback = null)
+    public function replaceTranslation($originalXliffPath, &$data, &$transUnits, $targetLang, $outputFile, $setSourceInTarget = false, XliffReplacerCallbackInterface $callback = null)
     {
         try {
-            $parser = XliffReplacerFactory::getInstance($originalXliffPath, $data, $transUnits, $targetLang, $outputFile, $this->logger, $callback);
+            $parser = XliffReplacerFactory::getInstance($originalXliffPath, $data, $transUnits, $targetLang, $outputFile, $setSourceInTarget,  $this->logger, $callback);
             $parser->replaceTranslation();
         } catch (\Exception $exception) {
             // do nothing

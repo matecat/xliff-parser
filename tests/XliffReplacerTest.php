@@ -17,7 +17,7 @@ class XliffReplacerTest extends BaseTest
         $inputFile = __DIR__.'/../tests/files/sample-20.xlf';
         $outputFile = __DIR__.'/../tests/files/output/sample-20.xlf';
 
-        (new XliffParser())->replaceTranslation($inputFile, $data['data'], $data['transUnits'], 'fr-fr', $outputFile, new DummyXliffReplacerCallback());
+        (new XliffParser())->replaceTranslation($inputFile, $data['data'], $data['transUnits'], 'fr-fr', $outputFile, false, new DummyXliffReplacerCallback());
         $output = (new XliffParser())->xliffToArray(file_get_contents($outputFile));
         $expected = '&lt;pc id="1"&gt;Buongiorno al <mrk id="m2" type="term">Mondo</mrk> !&lt;/pc&gt;';
 
@@ -33,7 +33,7 @@ class XliffReplacerTest extends BaseTest
         $inputFile = __DIR__.'/../tests/files/sample-20.xlf';
         $outputFile = __DIR__.'/../tests/files/output/sample-20.xlf';
 
-        (new XliffParser())->replaceTranslation($inputFile, $data['data'], $data['transUnits'], 'fr-fr', $outputFile, new DummyXliffReplacerCallbackWhichReturnTrue());
+        (new XliffParser())->replaceTranslation($inputFile, $data['data'], $data['transUnits'], 'fr-fr', $outputFile, false, new DummyXliffReplacerCallbackWhichReturnTrue());
         $output = (new XliffParser())->xliffToArray(file_get_contents($outputFile));
         $expected = '|||UNTRANSLATED_CONTENT_START|||&lt;pc id="1"&gt;Hello <mrk id="m2" type="term">World</mrk> !&lt;/pc&gt;|||UNTRANSLATED_CONTENT_END|||';
 

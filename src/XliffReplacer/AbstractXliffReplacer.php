@@ -47,16 +47,27 @@ abstract class AbstractXliffReplacer
     /**
      * AbstractXliffReplacer constructor.
      *
-     * @param                                     $originalXliffPath
-     * @param                                     $xliffVersion
-     * @param                                     $segments
-     * @param                                     $transUnits
-     * @param                                     $trgLang
-     * @param                                     $outputFilePath
+     * @param string                              $originalXliffPath
+     * @param string                              $xliffVersion
+     * @param array                               $segments
+     * @param array                               $transUnits
+     * @param string                              $trgLang
+     * @param string                              $outputFilePath
+     * @param bool                                $setSourceInTarget
      * @param LoggerInterface|null                $logger
      * @param XliffReplacerCallbackInterface|null $callback
      */
-    public function __construct($originalXliffPath, $xliffVersion, &$segments, &$transUnits, $trgLang, $outputFilePath, LoggerInterface $logger = null, XliffReplacerCallbackInterface $callback = null)
+    public function __construct(
+            $originalXliffPath,
+            $xliffVersion,
+            &$segments,
+            &$transUnits,
+            $trgLang,
+            $outputFilePath,
+            $setSourceInTarget,
+            LoggerInterface $logger = null,
+            XliffReplacerCallbackInterface $callback = null
+    )
     {
         self::$INTERNAL_TAG_PLACEHOLDER = $this->getInternalTagPlaceholder();
         $this->createOutputFileIfDoesNotExist($outputFilePath);
@@ -65,7 +76,7 @@ abstract class AbstractXliffReplacer
         $this->setTuTagName();
         $this->segments       = $segments;
         $this->targetLang     = $trgLang;
-        $this->sourceInTarget = false;
+        $this->sourceInTarget = $setSourceInTarget;
         $this->transUnits     = $transUnits;
         $this->logger         = $logger;
         $this->callback       = $callback;
@@ -130,14 +141,6 @@ abstract class AbstractXliffReplacer
         //to permit multiple concurrent downloads, so suppress warnings
         @fclose($this->originalFP);
         fclose($this->outputFP);
-    }
-
-    /**
-     * @param boolean $emptyTarget
-     */
-    public function setSourceInTarget($emptyTarget)
-    {
-        $this->sourceInTarget = $emptyTarget;
     }
 
     abstract public function replaceTranslation();
