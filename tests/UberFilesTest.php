@@ -16,6 +16,183 @@ class UberFilesTest extends BaseTest
     /**
      * @test
      */
+    public function can_replace_translation_with_a_real_matecat_example()
+    {
+        $transUnits = [
+                0 =>
+                        [
+                                0 => 0,
+                        ],
+                1 =>
+                        [
+                                0 => 1,
+                        ],
+                2 =>
+                        [
+                                0 => 2,
+                        ],
+                3 =>
+                        [
+                                0 => 3,
+                        ],
+                4 =>
+                        [
+                                0 => 4,
+                                1 => 5,
+                        ],
+                5 =>
+                        [
+                                0 => 6,
+                        ],
+        ];
+
+        $data = [
+                0           =>
+                        [
+                                'sid'            => '13570',
+                                'segment'        => 'Uber Eats Online Ordering Sales Channel Addendum Data Processing Agreement',
+                                'internal_id'    => '0',
+                                'mrk_id'         => '0',
+                                'prev_tags'      => '',
+                                'succ_tags'      => '',
+                                'mrk_prev_tags'  => '',
+                                'mrk_succ_tags'  => '',
+                                'translation'    => 'Uber Eats Online Ordering Sales Channel Addendum Accordo sul trattamento dei dati',
+                                'status'         => 'TRANSLATED',
+                                'eq_word_count'  => '8.00',
+                                'raw_word_count' => '10.00',
+                        ],
+                1           =>
+                        [
+                                'sid'            => '13571',
+                                'segment'        => 'Got it',
+                                'internal_id'    => '1',
+                                'mrk_id'         => '0',
+                                'prev_tags'      => '',
+                                'succ_tags'      => '',
+                                'mrk_prev_tags'  => '',
+                                'mrk_succ_tags'  => '',
+                                'translation'    => 'Ho capito',
+                                'status'         => 'TRANSLATED',
+                                'eq_word_count'  => '0.60',
+                                'raw_word_count' => '2.00',
+                        ],
+                2           =>
+                        [
+                                'sid'            => '13572',
+                                'segment'        => 'Play video',
+                                'internal_id'    => '2',
+                                'mrk_id'         => '0',
+                                'prev_tags'      => '',
+                                'succ_tags'      => '',
+                                'mrk_prev_tags'  => '',
+                                'mrk_succ_tags'  => '',
+                                'translation'    => 'Riproduci video',
+                                'status'         => 'TRANSLATED',
+                                'eq_word_count'  => '0.60',
+                                'raw_word_count' => '2.00',
+                        ],
+                3           =>
+                        [
+                                'sid'            => '13573',
+                                'segment'        => 'Opt-Out',
+                                'internal_id'    => '3',
+                                'mrk_id'         => '0',
+                                'prev_tags'      => '',
+                                'succ_tags'      => '',
+                                'mrk_prev_tags'  => '',
+                                'mrk_succ_tags'  => '',
+                                'translation'    => 'Opzione di revoca',
+                                'status'         => 'TRANSLATED',
+                                'eq_word_count'  => '0.60',
+                                'raw_word_count' => '1.00',
+                        ],
+                4           =>
+                        [
+                                'sid'            => '13574',
+                                'segment'        => 'This website uses third party cookies in order to serve you relevant ads on other websites.',
+                                'internal_id'    => '4',
+                                'mrk_id'         => '0',
+                                'prev_tags'      => '',
+                                'succ_tags'      => '',
+                                'mrk_prev_tags'  => '',
+                                'mrk_succ_tags'  => '',
+                                'translation'    => 'Questo sito Web utilizza cookie di terze parti per offrirti annunci pertinenti su altri siti Web.',
+                                'status'         => 'TRANSLATED',
+                                'eq_word_count'  => '12.80',
+                                'raw_word_count' => '16.00',
+                        ],
+                5           =>
+                        [
+                                'sid'            => '13575',
+                                'segment'        => 'Learn more by visiting our <ph id="source1" dataRef="source1"/>Cookie Statement<ph id="source2" dataRef="source2"/>, or opt out of third party ad cookies using the button below.',
+                                'internal_id'    => '4',
+                                'mrk_id'         => '1',
+                                'prev_tags'      => '',
+                                'succ_tags'      => '',
+                                'mrk_prev_tags'  => '',
+                                'mrk_succ_tags'  => '',
+                                'translation'    => 'Per saperne di più, visita la nostra Dichiarazione sui cookieo disattiva i cookie pubblicitari di terze parti utilizzando il pulsante sottostante.<ph id="source1" dataRef="source1"/> <ph id="source2" dataRef="source2"/> ',
+                                'status'         => 'TRANSLATED',
+                                'eq_word_count'  => '15.20',
+                                'raw_word_count' => '19.00',
+                        ],
+                6           =>
+                        [
+                                'sid'            => '13576',
+                                'segment'        => 'Winners Get Dinners Promotion',
+                                'internal_id'    => '5',
+                                'mrk_id'         => '0',
+                                'prev_tags'      => '',
+                                'succ_tags'      => '',
+                                'mrk_prev_tags'  => '',
+                                'mrk_succ_tags'  => '',
+                                'translation'    => 'I vincitori ottengono la promozione delle cene',
+                                'status'         => 'TRANSLATED',
+                                'eq_word_count'  => '3.20',
+                                'raw_word_count' => '4.00',
+                        ],
+                'matecat|0' =>
+                        [
+                                0 => 0,
+                        ],
+                'matecat|1' =>
+                        [
+                                0 => 1,
+                        ],
+                'matecat|2' =>
+                        [
+                                0 => 2,
+                        ],
+                'matecat|3' =>
+                        [
+                                0 => 3,
+                        ],
+                'matecat|4' =>
+                        [
+                                0 => 4,
+                                1 => 5,
+                        ],
+                'matecat|5' =>
+                        [
+                                0 => 6,
+                        ],
+        ];
+
+        $inputFile = __DIR__.'/../tests/files/uber/55384cd-uber-sites-en_us-ar-H.xlf';
+        $outputFile = __DIR__.'/../tests/files/uber/output/55384cd-uber-sites-en_us-ar-H.xlf';
+        $targetLang = 'it-it';
+
+        (new XliffParser())->replaceTranslation($inputFile, $data, $transUnits, $targetLang, $outputFile);
+        $output = (new XliffParser())->xliffToArray(file_get_contents($outputFile));
+
+        $this->assertEquals('Uber Eats Online Ordering Sales Channel Addendum Accordo sul trattamento dei dati', $output['files'][1]['trans-units'][1]['target']['raw-content'][0]);
+    }
+
+
+    /**
+     * @test
+     */
     public function can_replace_translation_with_ph()
     {
         $data = [

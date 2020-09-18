@@ -442,14 +442,14 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
     /**
      * prepare segment tagging for xliff insertion
      *
-     * @param array $seg
-     * @param string $trans_unit_translation
+     * @param array  $seg
+     * @param string $transUnitTranslation
      *
      * @return string
      */
-    private function prepareTranslation($seg, $trans_unit_translation = "")
+    private function prepareTranslation( $seg, $transUnitTranslation = "")
     {
-        $end_tags = "";
+        $endTags = "";
 
         $segment     = Strings::removeDangerousChars($seg [ 'segment' ]);
         $translation = Strings::removeDangerousChars($seg [ 'translation' ]);
@@ -466,6 +466,11 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
             }
         }
 
+        // for xliff v2 we ignore the marks on purpose
+        if($this->xliffVersion === 2){
+            return $translation;
+        }
+
         if ($seg[ 'mrk_id' ] !== null and $seg[ 'mrk_id' ] != '') {
             if ($this->targetLang === 'ja-JP') {
                 $seg[ 'mrk_succ_tags' ] = ltrim($seg[ 'mrk_succ_tags' ]);
@@ -474,9 +479,9 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
             $translation = "<mrk mid=\"" . $seg[ 'mrk_id' ] . "\" mtype=\"seg\">" . $seg[ 'mrk_prev_tags' ] . $translation . $seg[ 'mrk_succ_tags' ] . "</mrk>";
         }
 
-        $trans_unit_translation .= $seg[ 'prev_tags' ] . $translation . $end_tags . $seg[ 'succ_tags' ];
+        $transUnitTranslation .= $seg[ 'prev_tags' ] . $translation . $endTags . $seg[ 'succ_tags' ];
 
-        return $trans_unit_translation;
+        return $transUnitTranslation;
     }
 
     /**
