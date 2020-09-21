@@ -80,7 +80,7 @@ For more info please referer to this [document](https://www.localizationworld.co
 
 ### DateRef replacement
 
-If it's present an `originalData` map, a corresponding `replaced-content` will be generated for every `raw-content`.
+If it's present an `originalData` map for a particular segment, a corresponding `replaced-content` will be generated for every `raw-content`.
 
 Quick example:
 
@@ -91,6 +91,8 @@ Quick example:
 ="source3" equiv-text="Doe John"/> changed'
     ] 
 ```
+
+Please note that the replacement takes place only for `<ph>`, `<sc>`, `<ec>` tags.
 
 ### Examples
 
