@@ -3,6 +3,7 @@
 namespace Matecat\XliffParser\XliffParser;
 
 use Matecat\XliffParser\Utils\Strings;
+use Matecat\XliffParser\XliffUtils\DataRefReplacer;
 use Psr\Log\LoggerInterface;
 
 abstract class AbstractXliffParser
@@ -92,10 +93,11 @@ abstract class AbstractXliffParser
     /**
      * @param \DOMDocument $dom
      * @param \DOMElement  $childNode
+     * @param array $originalData
      *
      * @return array
      */
-    protected function extractContentWithMarksAndExtTags(\DOMDocument $dom, \DOMElement $childNode)
+    protected function extractContentWithMarksAndExtTags(\DOMDocument $dom, \DOMElement $childNode, array $originalData = [])
     {
         $source = [];
 
@@ -117,17 +119,42 @@ abstract class AbstractXliffParser
             $mark_string  = preg_replace('#^<mrk\s[^>]+>(.*)#', '$1', $originalMark); // at this point we have: ---> 'Test </mrk> </g>>'
             $mark_content = preg_split('#</mrk>#si', $mark_string);
 
-            $source[] = [
+            $sourceArray = [
                     'mid' => (isset($mid[ 1 ])) ? $mid[ 1 ] : $mi,
                     'ext-prec-tags' => ($mi == 0 ? $markers[ 0 ] : ""),
                     'raw-content' => $mark_content[ 0 ],
                     'ext-succ-tags' => $mark_content[ 1 ],
             ];
 
+            if(!empty($originalData)) {
+                $dataRefMap = $this->getDataRefMap($originalData);
+                $sourceArray['replaced-content'] = (new DataRefReplacer($dataRefMap))->replace($mark_content[ 0 ]);
+            }
+
+            $source[] = $sourceArray;
+
             $mi++;
         }
 
         return $source;
+    }
+
+    /**
+     * @param array $originalData
+     *
+     * @return array
+     */
+    protected function getDataRefMap($originalData)
+    {
+        // dataRef map
+        $dataRefMap = [];
+        foreach ($originalData as $datum){
+            if(isset($datum['attr']['id'])){
+                $dataRefMap[$datum['attr']['id']] = $datum['raw-content'];
+            }
+        }
+
+        return $dataRefMap;
     }
 
     /**

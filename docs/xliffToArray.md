@@ -78,6 +78,20 @@ As above mentioned, since there are some differences between xliff v1 and v2, th
 
 For more info please referer to this [document](https://www.localizationworld.com/lwdub2014/feisgiltt/slides/Yves_Differences.pdf).
 
+### DateRef replacement
+
+If it's present an `originalData` map, a corresponding `replaced-content` will be generated for every `raw-content`.
+
+Quick example:
+
+```php
+    ... => [
+        'raw-content' => '<ph id="source1" dataRef="source1"/> lorem <ec id="source2" dataRef="source2"/> ipsum <sc id="source3" dataRef="source3"/> changed'
+        'replaced-content' => '<ph id="source1" dataRef="source1" equiv-text="${recipientName}"/> lorem <ec id="source2" dataRef="source2" equiv-text="John Doe"/> ipsum <sc id="source3" dataRef
+="source3" equiv-text="Doe John"/> changed'
+    ] 
+```
+
 ### Examples
 
 In this section you can find two full examples of parsed xliff document.
