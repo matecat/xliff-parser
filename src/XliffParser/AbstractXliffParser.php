@@ -126,7 +126,7 @@ abstract class AbstractXliffParser
                     'ext-succ-tags' => $mark_content[ 1 ],
             ];
 
-            if(!empty($originalData)) {
+            if (!empty($originalData)) {
                 $dataRefMap = $this->getDataRefMap($originalData);
                 $sourceArray['replaced-content'] = (new DataRefReplacer($dataRefMap))->replace($mark_content[ 0 ]);
             }
@@ -148,8 +148,8 @@ abstract class AbstractXliffParser
     {
         // dataRef map
         $dataRefMap = [];
-        foreach ($originalData as $datum){
-            if(isset($datum['attr']['id'])){
+        foreach ($originalData as $datum) {
+            if (isset($datum['attr']['id'])) {
                 $dataRefMap[$datum['attr']['id']] = $datum['raw-content'];
             }
         }

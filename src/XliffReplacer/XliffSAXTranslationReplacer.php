@@ -447,7 +447,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
      *
      * @return string
      */
-    private function prepareTranslation( $seg, $transUnitTranslation = "")
+    private function prepareTranslation($seg, $transUnitTranslation = "")
     {
         $endTags = "";
 
@@ -467,7 +467,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
         }
 
         // for xliff v2 we ignore the marks on purpose
-        if($this->xliffVersion === 2){
+        if ($this->xliffVersion === 2) {
             return $translation;
         }
 

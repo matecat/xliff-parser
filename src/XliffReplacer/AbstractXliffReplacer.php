@@ -58,17 +58,16 @@ abstract class AbstractXliffReplacer
      * @param XliffReplacerCallbackInterface|null $callback
      */
     public function __construct(
-            $originalXliffPath,
-            $xliffVersion,
-            &$segments,
-            &$transUnits,
-            $trgLang,
-            $outputFilePath,
-            $setSourceInTarget,
-            LoggerInterface $logger = null,
-            XliffReplacerCallbackInterface $callback = null
-    )
-    {
+        $originalXliffPath,
+        $xliffVersion,
+        &$segments,
+        &$transUnits,
+        $trgLang,
+        $outputFilePath,
+        $setSourceInTarget,
+        LoggerInterface $logger = null,
+        XliffReplacerCallbackInterface $callback = null
+    ) {
         self::$INTERNAL_TAG_PLACEHOLDER = $this->getInternalTagPlaceholder();
         $this->createOutputFileIfDoesNotExist($outputFilePath);
         $this->setFileDescriptors($originalXliffPath, $outputFilePath);

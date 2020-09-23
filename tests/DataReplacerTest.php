@@ -101,6 +101,19 @@ class DataReplacerTest extends BaseTest
 
         $this->assertEquals($expected, $dataReplacer->replace($string));
         $this->assertEquals($string, $dataReplacer->restore($expected));
+
+        $map = [
+                'source1' => '${Rider First Name}',
+                'source2' => '&amp;lt;div&amp;',
+        ];
+
+        $string = 'Did you collect &lt;ph id="source1" dataRef="source1"/&gt; from &lt;ph id="source2" dataRef="source2"/&gt;?';
+        $expected = 'Did you collect &lt;ph id="source1" dataRef="source1" equiv-text="${Rider First Name}"/&gt; from &lt;ph id="source2" dataRef="source2" equiv-text="&amp;lt;div&amp;"/&gt;?';
+
+        $dataReplacer = new DataRefReplacer($map);
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($string, $dataReplacer->restore($expected));
     }
 
     /**

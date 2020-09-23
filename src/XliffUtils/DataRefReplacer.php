@@ -14,7 +14,7 @@ class DataRefReplacer
      *
      * @param array $map
      */
-    public function __construct( array $map )
+    public function __construct(array $map)
     {
         $this->map = $map;
     }
@@ -32,15 +32,21 @@ class DataRefReplacer
      */
     public function replace($string)
     {
-        $regex = "/<(ph|sc|ec)\s?(.*?)\s?dataRef=\"(.*?)\"(.*?)\/>/si";
+        $regex = '/(&lt;|<)(ph|sc|ec)\s?(.*?)\s?dataRef="(.*?)"(.*?)\/(&gt;|>)/si';
 
-        return  preg_replace_callback($regex, function($match) use ($string) {
-            if(empty($match)){
-                return $string;
+        preg_match_all($regex, $string, $matches);
+
+        if (!empty($matches[0])) {
+            foreach ($matches[0] as $index => $match) {
+                $a = $match;              // complete match. Eg:  <ph id="source1" dataRef="source1"/>
+                $b = $matches[4][$index]; // id. Eg: source1
+                $c = $matches[6][$index]; // terminator: Eg: >
+                $d = str_replace('/'.$c, ' equiv-text="'.$this->map[$b].'"/'.$c, $a);
+                $string = str_replace($a, $d, $string);
             }
+        }
 
-            return str_replace('/>', ' equiv-text="'.$this->map[$match[3]].'"/>', $match[0]);
-        }, $string);
+        return $string;
     }
 
     /**
@@ -48,16 +54,22 @@ class DataRefReplacer
      *
      * @return string
      */
-    public function restore( $string )
+    public function restore($string)
     {
-        $regex = "/<(ph|sc|ec)\s?(.*?)\s?equiv-text=\"(.*?)\"(.*?)\/>/si";
+        $regex = '/(&lt;|<)(ph|sc|ec)\s?(.*?)\s?dataRef="(.*?)"(.*?)\/(&gt;|>)/si';
 
-        return  preg_replace_callback($regex, function($match) use ($string) {
-            if(empty($match)){
-                return $string;
+        preg_match_all($regex, $string, $matches);
+
+        if (!empty($matches[0])) {
+            foreach ($matches[0] as $index => $match) {
+                $a = $match;              // complete match. Eg:  <ph id="source1" dataRef="source1"/>
+                $b = $matches[4][$index]; // id. Eg: source1
+                $c = $matches[6][$index]; // terminator: Eg: >
+                $d = str_replace(' equiv-text="'.$this->map[$b].'"/'.$c, '/'.$c, $a);
+                $string = str_replace($a, $d, $string);
             }
+        }
 
-            return str_replace(' equiv-text="'.$match[3].'"/>', '/>', $match[0]);
-        }, $string);
+        return $string;
     }
 }
