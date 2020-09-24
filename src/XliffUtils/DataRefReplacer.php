@@ -70,6 +70,10 @@ class DataRefReplacer
      */
     public function restore($string)
     {
+        // replace eventual empty equiv-text=""
+        $string = str_replace(' equiv-text=""', '', $string);
+
+        // regex
         $regex = '/(&lt;|<)(ph|sc|ec)\s?(.*?)\s?dataRef="(.*?)"(.*?)\/(&gt;|>)/si';
 
         preg_match_all($regex, $string, $matches);

@@ -158,8 +158,8 @@ class DataReplacerTest extends BaseTest
     {
         // sample test
         $map = [
-                "source2" => '${RIDER}',
-                "source3" => '&amp;lt;br&amp;gt;',
+            "source2" => '${RIDER}',
+            "source3" => '&amp;lt;br&amp;gt;',
         ];
 
         $string = 'Hola <ph id="source1" dataRef="source1"/>';
@@ -168,6 +168,24 @@ class DataReplacerTest extends BaseTest
 
         $this->assertEquals($expected, $dataReplacer->replace($string));
         $this->assertEquals($string, $dataReplacer->restore($expected));
+    }
+
+    /**
+     * @test
+     */
+    public function fdssfdfsd()
+    {
+        // sample test
+        $map = [
+                "source2" => '${RIDER}',
+                "source3" => '&amp;lt;br&amp;gt;',
+        ];
+
+        $string = 'Hola <ph id="source1" dataRef="source1" equiv-text=""/>';
+        $expected = 'Hola <ph id="source1" dataRef="source1"/>';
+        $dataReplacer = new DataRefReplacer($map);
+
+        $this->assertEquals($expected, $dataReplacer->restore($string));
     }
 
     /**
