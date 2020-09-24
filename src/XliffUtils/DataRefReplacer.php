@@ -44,7 +44,7 @@ class DataRefReplacer
 
                 // if isset a value in the map calculate base64 encoded value
                 // otherwise skip
-                if(!isset($this->map[$b])){
+                if (!isset($this->map[$b])) {
                     return $string;
                 }
 
@@ -82,7 +82,7 @@ class DataRefReplacer
 
                 // if isset a value in the map calculate base64 encoded value
                 // otherwise skip
-                if(!isset($this->map[$b])){
+                if (!isset($this->map[$b])) {
                     return $string;
                 }
 
