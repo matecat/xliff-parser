@@ -10,7 +10,7 @@ class DataReplacerTest extends BaseTest
     /**
      * @test
      */
-    public function can_replace_and_restore_data()
+    public function can_replace_data()
     {
         $map = [
             'source1' => '${AMOUNT}',
@@ -22,6 +22,24 @@ class DataReplacerTest extends BaseTest
         $dataReplacer = new DataRefReplacer($map);
 
         $this->assertEquals($expected, $dataReplacer->replace($string));
+    }
+
+    /**
+     * @test
+     */
+    public function can_replace_and_restore_data()
+    {
+        $map = [
+                'source1' => '${AMOUNT}',
+                'source2' => '${RIDER}',
+        ];
+
+        $string = 'Hai raccolto <ph id="source1" dataRef="source1"/>  da <ph id="source2" dataRef="source2"/>?';
+        $expected = 'Hai raccolto <ph id="source1" dataRef="source1" equiv-text="base64:JHtBTU9VTlR9"/>  da <ph id="source2" dataRef="source2" equiv-text="base64:JHtSSURFUn0="/>?';
+        $dataReplacer = new DataRefReplacer($map);
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($string, $dataReplacer->restore($expected));
     }
 
     /**
@@ -137,6 +155,25 @@ class DataReplacerTest extends BaseTest
      * @test
      */
     public function can_replace_and_restore_data_test_5()
+    {
+        // sample test
+        $map = [
+                "source2" => '${RIDER}',
+                "source3" => '&amp;lt;br&amp;gt;',
+        ];
+
+        $string = 'Hola <ph id="source1" dataRef="source1"/>';
+        $expected = 'Hola <ph id="source1" dataRef="source1"/>';
+        $dataReplacer = new DataRefReplacer($map);
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($string, $dataReplacer->restore($expected));
+    }
+
+    /**
+     * @test
+     */
+    public function can_replace_and_restore_data_test_6()
     {
         $map = [
                 'source1' => '${Rider First Name}',

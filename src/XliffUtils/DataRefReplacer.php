@@ -39,10 +39,15 @@ class DataRefReplacer
         if (!empty($matches[0])) {
             foreach ($matches[0] as $index => $match) {
                 $a = $match;              // complete match. Eg:  <ph id="source1" dataRef="source1"/>
-                $b = $matches[4][$index]; // id. Eg: source1
+                $b = $matches[4][$index]; // map identifier. Eg: source1
                 $c = $matches[6][$index]; // terminator: Eg: >
 
-                // calculate base64 encoded value
+                // if isset a value in the map calculate base64 encoded value
+                // otherwise skip
+                if(!isset($this->map[$b])){
+                    return $string;
+                }
+
                 $value = $this->map[$b];
                 $base64EncodedValue = base64_encode($value);
 
@@ -72,8 +77,15 @@ class DataRefReplacer
         if (!empty($matches[0])) {
             foreach ($matches[0] as $index => $match) {
                 $a = $match;              // complete match. Eg:  <ph id="source1" dataRef="source1"/>
-                $b = $matches[4][$index]; // id. Eg: source1
+                $b = $matches[4][$index]; // map identifier. Eg: source1
                 $c = $matches[6][$index]; // terminator: Eg: >
+
+                // if isset a value in the map calculate base64 encoded value
+                // otherwise skip
+                if(!isset($this->map[$b])){
+                    return $string;
+                }
+
                 $d = str_replace(' equiv-text="base64:'.base64_encode($this->map[$b]).'"/'.$c, '/'.$c, $a);
                 $string = str_replace($a, $d, $string);
             }
