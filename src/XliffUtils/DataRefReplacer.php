@@ -41,7 +41,16 @@ class DataRefReplacer
                 $a = $match;              // complete match. Eg:  <ph id="source1" dataRef="source1"/>
                 $b = $matches[4][$index]; // id. Eg: source1
                 $c = $matches[6][$index]; // terminator: Eg: >
-                $d = str_replace('/'.$c, ' equiv-text="'.$this->map[$b].'"/'.$c, $a);
+
+                // calculate base64 encoded value
+                $value = $this->map[$b];
+                $base64EncodedValue = base64_encode($value);
+
+                // remove eventual equiv-text already present
+                $e = str_replace(' equiv-text="base64:'.$base64EncodedValue.'"', '', $a);
+
+                // replacement
+                $d = str_replace('/'.$c, ' equiv-text="base64:'.$base64EncodedValue.'"/'.$c, $e);
                 $string = str_replace($a, $d, $string);
             }
         }
@@ -65,7 +74,7 @@ class DataRefReplacer
                 $a = $match;              // complete match. Eg:  <ph id="source1" dataRef="source1"/>
                 $b = $matches[4][$index]; // id. Eg: source1
                 $c = $matches[6][$index]; // terminator: Eg: >
-                $d = str_replace(' equiv-text="'.$this->map[$b].'"/'.$c, '/'.$c, $a);
+                $d = str_replace(' equiv-text="base64:'.base64_encode($this->map[$b]).'"/'.$c, '/'.$c, $a);
                 $string = str_replace($a, $d, $string);
             }
         }
