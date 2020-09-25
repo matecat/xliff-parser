@@ -658,4 +658,83 @@ class UberFilesTest extends BaseTest
         $this->assertEquals('Italiano 4', $output['files'][1]['trans-units'][1]['target']['raw-content'][2]);
         $this->assertEquals('Italiano 5', $output['files'][1]['trans-units'][1]['target']['raw-content'][3]);
     }
+
+    /**
+     * @test
+     */
+    public function parses_and_set_the_translations_with_tu_with_bunch_of_segments_2()
+    {
+        $data = [
+            [
+                'sid' => 0,
+                'segment' => 'Enter <ph id="source1" dataRef="source1" />\'s PIN',
+                'internal_id' => 0,
+                'mrk_id' => 0,
+                'prev_tags' => '',
+                'succ_tags' => '',
+                'mrk_prev_tags' => '',
+                'mrk_succ_tags' => '',
+                'translation' => 'Digita il PIN di <ph id="source1" dataRef="source1" />',
+                'status' => TranslationStatus::STATUS_TRANSLATED,
+                'eq_word_count' => 1,
+                'raw_word_count' => 1,
+            ],
+            [
+                'sid' => 1,
+                'segment' => 'Are you sure you want to sign out?',
+                'internal_id' => 1,
+                'mrk_id' => 0,
+                'prev_tags' => '',
+                'succ_tags' => '',
+                'mrk_prev_tags' => '',
+                'mrk_succ_tags' => '',
+                'translation' => 'Sei sicuro di voler fare logout?',
+                'status' => TranslationStatus::STATUS_TRANSLATED,
+                'eq_word_count' => 1,
+                'raw_word_count' => 1,
+            ],
+            [
+                'sid' => 2,
+                'segment' => 'Changing this hoping it will dirty the rest',
+                'internal_id' => 1,
+                'mrk_id' => 0,
+                'prev_tags' => '',
+                'succ_tags' => '',
+                'mrk_prev_tags' => '',
+                'mrk_succ_tags' => '',
+                'translation' => 'Cambiare questo sperando che sporchi il resto',
+                'status' => TranslationStatus::STATUS_TRANSLATED,
+                'eq_word_count' => 1,
+                'raw_word_count' => 1,
+            ],
+            [
+                'sid' => 3,
+                'segment' => 'this group of language will automatically complete the review steps',
+                'internal_id' => 2,
+                'mrk_id' => 0,
+                'prev_tags' => '',
+                'succ_tags' => '',
+                'mrk_prev_tags' => '',
+                'mrk_succ_tags' => '',
+                'translation' => 'questo gruppo linguistico completerà automaticamente tutti i passaggi della review',
+                'status' => TranslationStatus::STATUS_TRANSLATED,
+                'eq_word_count' => 1,
+                'raw_word_count' => 1,
+            ],
+        ];
+
+        $transUnits = $this->getTransUnitsForReplacementTest($data);
+
+        $inputFile = __DIR__.'/../tests/files/uber/2020-09-25T07_54_17.292_8bdea7c8-fef3-11ea-83a6-e9686d2c65d2.xliff (3).xliff';
+        $outputFile = __DIR__.'/../tests/files/uber/output/2020-09-25T07_54_17.292_8bdea7c8-fef3-11ea-83a6-e9686d2c65d2.xliff (3).xliff';
+        $targetLang = 'it-it';
+
+        (new XliffParser())->replaceTranslation($inputFile, $data, $transUnits, $targetLang, $outputFile);
+        $output = (new XliffParser())->xliffToArray(file_get_contents($outputFile));
+
+        $this->assertEquals('Digita il PIN di <ph id="source1" dataRef="source1"/>', $output['files'][1]['trans-units'][1]['target']['raw-content'][0]);
+        $this->assertEquals('Sei sicuro di voler fare logout?', $output['files'][1]['trans-units'][2]['target']['raw-content'][0]);
+        $this->assertEquals('Cambiare questo sperando che sporchi il resto', $output['files'][1]['trans-units'][2]['target']['raw-content'][1]);
+        $this->assertEquals('questo gruppo linguistico completerà automaticamente tutti i passaggi della review', $output['files'][1]['trans-units'][3]['target']['raw-content'][0]);
+    }
 }

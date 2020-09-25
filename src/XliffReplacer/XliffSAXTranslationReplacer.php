@@ -214,12 +214,13 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
         $tag = '';
 
         /**
+         * if is a tag within <target> or
          * if it is an empty tag, do not add closing tag because we have already closed it in
          *
          * self::tagOpen method
          *
          */
-        if (!$this->isEmpty) {
+        if (!$this->isEmpty and !($this->inTarget and $name !== 'target')) {
             if (!$this->inTarget) {
                 $tag = "</$name>";
             }
