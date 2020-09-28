@@ -51,6 +51,10 @@ class DataRefReplacer
                 $value = $this->map[$b];
                 $base64EncodedValue = base64_encode($value);
 
+                if(empty($base64EncodedValue) or $base64EncodedValue === ''){
+                    return $string;
+                }
+
                 // remove eventual equiv-text already present
                 $e = str_replace(' equiv-text="base64:'.$base64EncodedValue.'"', '', $a);
 
@@ -85,8 +89,9 @@ class DataRefReplacer
                 $c = $matches[6][$index]; // terminator: Eg: >
 
                 // if isset a value in the map calculate base64 encoded value
+                // or it is an empty string
                 // otherwise skip
-                if (!isset($this->map[$b])) {
+                if (!isset($this->map[$b]) or empty($this->map[$b]) or $this->map[$b] === '') {
                     return $string;
                 }
 
