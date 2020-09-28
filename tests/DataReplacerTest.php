@@ -210,6 +210,25 @@ class DataReplacerTest extends BaseTest
     /**
      * @test
      */
+    public function can_replace_and_restore_data_test_7()
+    {
+        $map = [
+            'source1' => '${Rider First Name}',
+            'source2' => '&amp;lt;div&amp;',
+        ];
+
+        $string = 'Did you collect &lt;ph id="source1" dataRef="source1" equiv-text="base64:"/&gt; from &lt;ph id="source2" dataRef="source2" equiv-text="base64:"/&gt;?';
+        $expected = 'Did you collect &lt;ph id="source1" dataRef="source1" equiv-text="base64:JHtSaWRlciBGaXJzdCBOYW1lfQ=="/&gt; from &lt;ph id="source2" dataRef="source2" equiv-text="base64:JmFtcDtsdDtkaXYmYW1wOw=="/&gt;?';
+
+        $dataReplacer = new DataRefReplacer($map);
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals('Did you collect &lt;ph id="source1" dataRef="source1"/&gt; from &lt;ph id="source2" dataRef="source2"/&gt;?', $dataReplacer->restore($expected));
+    }
+
+    /**
+     * @test
+     */
     public function add_replaced_content_to_parsed_xliff_array()
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('uber/56d591a5-louvre-v2-en_us-fr_fr-PM.xlf'));

@@ -38,9 +38,12 @@ class DataRefReplacer
 
         if (!empty($matches[0])) {
             foreach ($matches[0] as $index => $match) {
-                $a = $match;              // complete match. Eg:  <ph id="source1" dataRef="source1"/>
-                $b = $matches[4][$index]; // map identifier. Eg: source1
-                $c = $matches[6][$index]; // terminator: Eg: >
+                $a = str_replace( ' equiv-text="base64:"', '', $match); // complete match. Eg:  <ph id="source1" dataRef="source1"/>, remove every eventual equiv-text="base64:"
+                $b = $matches[4][$index];                                            // map identifier. Eg: source1
+                $c = $matches[6][$index];                                            // terminator: Eg: >
+
+                // remove every eventual equiv-text="base64:"
+                $string = str_replace( ' equiv-text="base64:"', '', $string);
 
                 // if isset a value in the map calculate base64 encoded value
                 // otherwise skip
@@ -56,7 +59,7 @@ class DataRefReplacer
                 }
 
                 // remove eventual equiv-text already present
-                $e = str_replace(' equiv-text="base64:'.$base64EncodedValue.'"', '', $a);
+                $e = str_replace( ' equiv-text="base64:'.$base64EncodedValue.'"', '', $a);
 
                 // replacement
                 $d = str_replace('/'.$c, ' equiv-text="base64:'.$base64EncodedValue.'"/'.$c, $e);
