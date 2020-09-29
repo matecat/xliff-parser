@@ -34,16 +34,16 @@ class DataRefReplacer
     {
         $regex = '/(&lt;|<)(ph|sc|ec)\s?(.*?)\s?dataRef="(.*?)"(.*?)\/(&gt;|>)/si';
 
+        // clean string from equiv-text eventually present
+        $string = $this->cleanFromEquivText($string);
+
         preg_match_all($regex, $string, $matches);
 
         if (!empty($matches[0])) {
             foreach ($matches[0] as $index => $match) {
-                $a = str_replace( ' equiv-text="base64:"', '', $match); // complete match. Eg:  <ph id="source1" dataRef="source1"/>, remove every eventual equiv-text="base64:"
-                $b = $matches[4][$index];                                            // map identifier. Eg: source1
-                $c = $matches[6][$index];                                            // terminator: Eg: >
-
-                // remove every eventual equiv-text="base64:"
-                $string = str_replace( ' equiv-text="base64:"', '', $string);
+                $a = $match;                // complete match. Eg:  <ph id="source1" dataRef="source1"/>
+                $b = $matches[4][$index];   // map identifier. Eg: source1
+                $c = $matches[6][$index];   // terminator: Eg: >
 
                 // if isset a value in the map calculate base64 encoded value
                 // otherwise skip
@@ -58,16 +58,23 @@ class DataRefReplacer
                     return $string;
                 }
 
-                // remove eventual equiv-text already present
-                $e = str_replace( ' equiv-text="base64:'.$base64EncodedValue.'"', '', $a);
-
                 // replacement
-                $d = str_replace('/'.$c, ' equiv-text="base64:'.$base64EncodedValue.'"/'.$c, $e);
+                $d = str_replace('/'.$c, ' equiv-text="base64:'.$base64EncodedValue.'"/'.$c, $a);
                 $string = str_replace($a, $d, $string);
             }
         }
 
         return $string;
+    }
+
+    /**
+     * @param string $string
+     *
+     * @return string
+     */
+    private function cleanFromEquivText($string)
+    {
+        return preg_replace('/ equiv-text="(.*?)"/', '', $string);
     }
 
     /**

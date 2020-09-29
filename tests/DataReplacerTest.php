@@ -229,6 +229,27 @@ class DataReplacerTest extends BaseTest
     /**
      * @test
      */
+    public function can_replace_and_restore_data_test_8()
+    {
+        $map = [
+                'source1' => '&lt;p class=&quot;cmln__paragraph&quot;&gt;',
+                'source2' => '&amp;#39;',
+                'source3' => '&lt;/p&gt;',
+        ];
+
+        // in this case string input has some wrong equiv-text
+        $string = 'Hai <ph id="source1" dataRef="source1" equiv-text="base64:JHtBTU9VTlR9"/>,<ph id="source2" dataRef="source2" equiv-text="base64:JHtSSURFUn0="/><ph id="source3" dataRef="source3"/>';
+        $expected = 'Hai <ph id="source1" dataRef="source1" equiv-text="base64:Jmx0O3AgY2xhc3M9JnF1b3Q7Y21sbl9fcGFyYWdyYXBoJnF1b3Q7Jmd0Ow=="/>,<ph id="source2" dataRef="source2" equiv-text="base64:JmFtcDsjMzk7"/><ph id="source3" dataRef="source3" equiv-text="base64:Jmx0Oy9wJmd0Ow=="/>';
+
+        $dataReplacer = new DataRefReplacer($map);
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals('Hai <ph id="source1" dataRef="source1"/>,<ph id="source2" dataRef="source2"/><ph id="source3" dataRef="source3"/>', $dataReplacer->restore($expected));
+    }
+
+    /**
+     * @test
+     */
     public function add_replaced_content_to_parsed_xliff_array()
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('uber/56d591a5-louvre-v2-en_us-fr_fr-PM.xlf'));
@@ -240,3 +261,7 @@ class DataReplacerTest extends BaseTest
         $this->assertEquals($expected, trim($units[1]['seg-source'][0]['replaced-content']));
     }
 }
+
+
+
+
