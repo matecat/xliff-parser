@@ -78,19 +78,21 @@ As above mentioned, since there are some differences between xliff v1 and v2, th
 
 For more info please referer to this [document](https://www.localizationworld.com/lwdub2014/feisgiltt/slides/Yves_Differences.pdf).
 
-### DateRef replacement
+### dataRef replacement
 
-If it's present an `originalData` map for a particular segment, a corresponding `replaced-content` will be generated for every `raw-content`.
+If it's present an `originalData` map for a particular segment, a corresponding `replaced-content` will be generated for every `raw-content` (in `segment`, `seg-source`, `target` and `seg-target`).
 
 Quick example:
 
 ```php
     ... => [
         'raw-content' => '<ph id="source1" dataRef="source1"/> lorem <ec id="source2" dataRef="source2"/> ipsum <sc id="source3" dataRef="source3"/> changed'
-        'replaced-content' => '<ph id="source1" dataRef="source1" equiv-text="${recipientName}"/> lorem <ec id="source2" dataRef="source2" equiv-text="John Doe"/> ipsum <sc id="source3" dataRef
+        'replaced-content' => '<ph id="source1" dataRef="source1" equiv-text="base64:JHtyZWNpcGllbnROYW1lfQ=="/> lorem <ec id="source2" dataRef="source2" equiv-text="base64:QmFiYm8gTmF0YWxl"/> ipsum <sc id="source3" dataRef
 ="source3" equiv-text="Doe John"/> changed'
     ] 
 ```
+
+An `equiv-text` attribute will be added to the corresponding tag (content will be encoded in base64).
 
 Please note that the replacement takes place only for `<ph>`, `<sc>`, `<ec>` tags.
 
