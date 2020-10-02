@@ -10,6 +10,21 @@ class DataReplacerTest extends BaseTest
     /**
      * @test
      */
+    public function do_nothing_with_empty_map()
+    {
+        $map = [];
+
+        $string = 'Hai raccolto &lt;ph id="source1" dataRef="source1" equiv-text="base64:JHtBTU9VTlR9"/&gt;&nbsp; da &lt;ph id="source2" dataRef="source2" equiv-text="base64:JHtSSURFUn0="/&gt;?';
+        $expected = 'Hai raccolto &lt;ph id="source1" dataRef="source1" equiv-text="base64:JHtBTU9VTlR9"/&gt;&nbsp; da &lt;ph id="source2" dataRef="source2" equiv-text="base64:JHtSSURFUn0="/&gt;?';
+
+        $dataReplacer = new DataRefReplacer($map);
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+    }
+
+    /**
+     * @test
+     */
     public function can_replace_data()
     {
         $map = [

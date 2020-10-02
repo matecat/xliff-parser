@@ -32,6 +32,11 @@ class DataRefReplacer
      */
     public function replace($string)
     {
+        // if map is empty return string as is
+        if(empty($this->map)){
+            return  $string;
+        }
+
         $regex = '/(&lt;|<)(ph|sc|ec)\s?(.*?)\s?dataRef="(.*?)"(.*?)\/(&gt;|>)/si';
 
         // clean string from equiv-text eventually present
@@ -84,6 +89,11 @@ class DataRefReplacer
      */
     public function restore($string)
     {
+        // if map is empty return string as is
+        if(empty($this->map)){
+            return  $string;
+        }
+
         // replace eventual empty equiv-text=""
         $string = str_replace(' equiv-text=""', '', $string);
 
