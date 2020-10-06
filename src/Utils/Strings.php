@@ -176,4 +176,15 @@ class Strings
 
         return $string;
     }
+
+    /**
+     * @param $needle
+     * @param $haystack
+     *
+     * @return bool
+     */
+    public static function contains($needle, $haystack)
+    {
+        return strpos($haystack, $needle) !== false;
+    }
 }

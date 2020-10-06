@@ -2,6 +2,8 @@
 
 namespace Matecat\XliffParser\XliffUtils;
 
+use Matecat\XliffParser\Utils\Strings;
+
 class DataRefReplacer
 {
     /**
@@ -93,9 +95,16 @@ class DataRefReplacer
                     $endValue = $this->map[$dataRefEndMatches[1]];
                     $base64EncodedEndValue = base64_encode($endValue);
 
-                    $d  = '<ph '. ((isset($idMatches[1])) ? 'id="'.$idMatches[1].'_1"' : '') .' dataRef="'.$dataRefStartMatches[1].'" equiv-text="base64:'.$base64EncodedStartValue.'">';
+                    $startOriginalData = '<pc '.$b.'>';
+                    $endOriginalData = '</pc>';
+                    $base64StartOriginalData = base64_encode($startOriginalData);
+                    $base64EndOriginalData = base64_encode($endOriginalData);
+
+
+                    $d  = '<ph '. ((isset($idMatches[1])) ? 'id="'.$idMatches[1].'_1"' : '') .' dataType="pcStart" originalData="'.$base64StartOriginalData.'" dataRef="'.$dataRefStartMatches[1].'" equiv-text="base64:'
+                            .$base64EncodedStartValue.'"/>';
                     $d .= $c;
-                    $d .= '<ph '. ((isset($idMatches[1])) ? 'id="'.$idMatches[1].'_2"': '') .' dataRef="'.$dataRefEndMatches[1].'" equiv-text="base64:' .$base64EncodedEndValue.'">';
+                    $d .= '<ph '. ((isset($idMatches[1])) ? 'id="'.$idMatches[1].'_2"': '') .' dataType="pcEnd" originalData="'.$base64EndOriginalData.'" dataRef="'.$dataRefEndMatches[1].'" equiv-text="base64:' .$base64EncodedEndValue.'"/>';
                     $string = str_replace($a, $d, $string);
                 }
             }
@@ -149,6 +158,16 @@ class DataRefReplacer
 
                 $d = str_replace(' equiv-text="base64:'.base64_encode($this->map[$b]).'"/'.$c, '/'.$c, $a);
                 $string = str_replace($a, $d, $string);
+
+                // if <ph> tag has originalData and originalType is pcStart or pcEnd, replace with original data
+                if(Strings::contains('dataType="pcStart"', $d) or Strings::contains('dataType="pcEnd"', $d)){
+                    preg_match('/\s?originalData="(.*?)"\s?/', $d, $originalDataMatches);
+
+                    if(isset($originalDataMatches[1])){
+                        $originalData = base64_decode($originalDataMatches[1]);
+                        $string = str_replace($d, $originalData, $string);
+                    }
+                }
             }
         }
 

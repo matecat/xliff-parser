@@ -287,12 +287,56 @@ class DataReplacerTest extends BaseTest
         ];
 
         $string = 'Link semplice: <pc id="1" canCopy="no" canDelete="no" dataRefEnd="d2" dataRefStart="d1">La Repubblica</pc>.';
-        $expected = 'Link semplice: <ph id="1_1" dataRef="d1" equiv-text="base64:Ww==">La Repubblica<ph id="1_2" dataRef="d2" equiv-text="base64:XShodHRwOi8vcmVwdWJibGljYS5pdCk=">.';
+        $expected = 'Link semplice: <ph id="1_1" dataType="pcStart" originalData="PHBjIGlkPSIxIiBjYW5Db3B5PSJubyIgY2FuRGVsZXRlPSJubyIgZGF0YVJlZkVuZD0iZDIiIGRhdGFSZWZTdGFydD0iZDEiPg==" dataRef="d1" equiv-text="base64:Ww=="/>La Repubblica<ph id="1_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="d2" equiv-text="base64:XShodHRwOi8vcmVwdWJibGljYS5pdCk="/>.';
 
         $dataReplacer = new DataRefReplacer($map);
 
         $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($string, $dataReplacer->restore($expected));
+    }
 
+    /**
+     * @test
+     */
+    public function can_replace_and_restore_data_with_pc_test_2()
+    {
+        $map = [
+            'd1' => '[',
+            'd2' => '](http://repubblica.it)',
+            'd3' => '[',
+            'd4' => '](http://google.it)',
+        ];
+
+        $string = 'Link semplici: <pc id="1" dataRefEnd="d2" dataRefStart="d1">La Repubblica</pc> <pc id="2" dataRefEnd="d3" dataRefStart="d4">Google</pc>.';
+        $expected = 'Link semplici: <ph id="1_1" dataType="pcStart" originalData="PHBjIGlkPSIxIiBkYXRhUmVmRW5kPSJkMiIgZGF0YVJlZlN0YXJ0PSJkMSI+" dataRef="d1" equiv-text="base64:Ww=="/>La Repubblica<ph id="1_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="d2" equiv-text="base64:XShodHRwOi8vcmVwdWJibGljYS5pdCk="/> <ph id="2_1" dataType="pcStart" originalData="PHBjIGlkPSIyIiBkYXRhUmVmRW5kPSJkMyIgZGF0YVJlZlN0YXJ0PSJkNCI+" dataRef="d4" equiv-text="base64:XShodHRwOi8vZ29vZ2xlLml0KQ=="/>Google<ph id="2_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="d3" equiv-text="base64:Ww=="/>.';
+
+        $dataReplacer = new DataRefReplacer($map);
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($string, $dataReplacer->restore($expected));
+    }
+
+    /**
+     * @test
+     */
+    public function can_replace_and_restore_data_with_pc_test_3()
+    {
+        $map = [
+            'd1' => '[',
+            'd2' => '](http://repubblica.it)',
+            'd3' => '[',
+            'd4' => '](http://google.it)',
+            'source1' => '${Rider First Name}',
+            'source2' => '&amp;lt;div&amp;',
+        ];
+
+        $string = 'Did you collect &lt;ph id="source1" dataRef="source1"/&gt; from &lt;ph id="source2" dataRef="source2"/&gt;? Link semplici: <pc id="1" dataRefEnd="d2" dataRefStart="d1">La Repubblica</pc> <pc id="2" dataRefEnd="d3" dataRefStart="d4">Google</pc>.';
+        $expected = 'Did you collect &lt;ph id="source1" dataRef="source1" equiv-text="base64:JHtSaWRlciBGaXJzdCBOYW1lfQ=="/&gt; from &lt;ph id="source2" dataRef="source2" equiv-text="base64:JmFtcDtsdDtkaXYmYW1wOw=="/&gt;? Link semplici: <ph id="1_1" dataType="pcStart" originalData="PHBjIGlkPSIxIiBkYXRhUmVmRW5kPSJkMiIgZGF0YVJlZlN0YXJ0PSJkMSI+" dataRef="d1" equiv-text="base64:Ww=="/>La Repubblica<ph id="1_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="d2" equiv-text="base64:XShodHRwOi8vcmVwdWJibGljYS5pdCk="/> <ph id="2_1" dataType="pcStart" originalData="PHBjIGlkPSIyIiBkYXRhUmVmRW5kPSJkMyIgZGF0YVJlZlN0YXJ0PSJkNCI+" dataRef="d4" equiv-text="base64:XShodHRwOi8vZ29vZ2xlLml0KQ=="/>Google<ph id="2_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="d3" equiv-text="base64:Ww=="/>.';
+
+        $dataReplacer = new DataRefReplacer($map);
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($string, $dataReplacer->restore($expected));
     }
 }
 
