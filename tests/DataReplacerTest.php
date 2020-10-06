@@ -338,7 +338,27 @@ class DataReplacerTest extends BaseTest
         $this->assertEquals($expected, $dataReplacer->replace($string));
         $this->assertEquals($string, $dataReplacer->restore($expected));
     }
+
+    /**
+     * @test
+     */
+    public function can_replace_and_restore_data_with_pc_test_4()
+    {
+        $map = [
+                'd1' => '_',
+                'd2' => '**',
+                'd3' => '`',
+        ];
+
+        $string = 'Testo libero contenente <pc id="1" canCopy="no" canDelete="no" dataRefEnd="d1" dataRefStart="d1">corsivo</pc>, <pc id="2" canCopy="no" canDelete="no" dataRefEnd="d2" dataRefStart="d2">grassetto</pc>, <pc id="3" canCopy="no" canDelete="no" dataRefEnd="d1" dataRefStart="d1"><pc id="4" canCopy="no" canDelete="no" dataRefEnd="d2" dataRefStart="d2">grassetto + corsivo</pc></pc> e <pc id="5" canCopy="no" canDelete="no" dataRefEnd="d3" dataRefStart="d3">larghezza fissa</pc>.';
+        $expected = '';
+
+        $dataReplacer = new DataRefReplacer($map);
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+    }
 }
+
 
 
 

@@ -2,7 +2,10 @@
 
 namespace Matecat\XliffParser\XliffUtils;
 
+use Matecat\XliffParser\Utils\HtmlParser;
 use Matecat\XliffParser\Utils\Strings;
+use simplehtmldom\HtmlDocument;
+use simplehtmldom\HtmlNode;
 
 class DataRefReplacer
 {
@@ -12,13 +15,20 @@ class DataRefReplacer
     private $map;
 
     /**
+     * @var bool
+     */
+    private $escapeHtml;
+
+    /**
      * DataRefReplacer constructor.
      *
      * @param array $map
+     * @param bool  $escapeHtml
      */
-    public function __construct(array $map)
+    public function __construct(array $map, $escapeHtml = false)
     {
         $this->map = $map;
+        $this->escapeHtml = $escapeHtml;
     }
 
     /**
@@ -38,6 +48,28 @@ class DataRefReplacer
         if(empty($this->map)){
             return  $string;
         }
+
+        $html = HtmlParser::parse($string, $this->escapeHtml);
+
+        foreach ($html as $node){
+
+            // 1. Replace for ph|sc|ec tag
+            if($node->tagname === 'ph' or $node->tagname === 'sc' or $node->tagname === 'ec'){
+
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
 
         // 1. Replace for ph|sc|ec tag
         $regex = '/(&lt;|<)(ph|sc|ec)\s?(.*?)\s?dataRef="(.*?)"(.*?)\/(&gt;|>)/si';
@@ -72,7 +104,7 @@ class DataRefReplacer
             }
         }
 
-        // 2. Replace for tag
+        // 2. Replace tag <pc>
         $regex = '/(&lt;|<)pc\s?(.*?)(&gt;|>)(.*?)(&lt;|<)\/pc(&gt;|>)/';
 
         preg_match_all($regex, $string, $matches);
@@ -112,6 +144,8 @@ class DataRefReplacer
 
         return $string;
     }
+
+
 
     /**
      * @param string $string
@@ -172,5 +206,15 @@ class DataRefReplacer
         }
 
         return $string;
+    }
+
+    public static function fsfd($string)
+    {
+        $table = get_html_translation_table(HTML_ENTITIES, ENT_COMPAT, 'UTF-8');
+        $chars = implode('', array_keys($table));
+
+        if (preg_match("/[{$chars}]+/", $string) === 1) {
+            // special chars in string
+        }
     }
 }
