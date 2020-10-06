@@ -275,6 +275,25 @@ class DataReplacerTest extends BaseTest
         $this->assertEquals($expected, trim($units[1]['source']['replaced-content'][0]));
         $this->assertEquals($expected, trim($units[1]['seg-source'][0]['replaced-content']));
     }
+
+    /**
+     * @test
+     */
+    public function can_replace_and_restore_data_with_pc_test_1()
+    {
+        $map = [
+            'd1' => '[',
+            'd2' => '](http://repubblica.it)',
+        ];
+
+        $string = 'Link semplice: <pc id="1" canCopy="no" canDelete="no" dataRefEnd="d2" dataRefStart="d1">La Repubblica</pc>.';
+        $expected = 'Link semplice: <ph id="1_1" dataRef="d1" equiv-text="base64:Ww==">La Repubblica<ph id="1_2" dataRef="d2" equiv-text="base64:XShodHRwOi8vcmVwdWJibGljYS5pdCk=">.';
+
+        $dataReplacer = new DataRefReplacer($map);
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+
+    }
 }
 
 

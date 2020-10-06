@@ -37,6 +37,7 @@ class DataRefReplacer
             return  $string;
         }
 
+        // 1. Replace for ph|sc|ec tag
         $regex = '/(&lt;|<)(ph|sc|ec)\s?(.*?)\s?dataRef="(.*?)"(.*?)\/(&gt;|>)/si';
 
         // clean string from equiv-text eventually present
@@ -66,6 +67,37 @@ class DataRefReplacer
                 // replacement
                 $d = str_replace('/'.$c, ' equiv-text="base64:'.$base64EncodedValue.'"/'.$c, $a);
                 $string = str_replace($a, $d, $string);
+            }
+        }
+
+        // 2. Replace for tag
+        $regex = '/(&lt;|<)pc\s?(.*?)(&gt;|>)(.*?)(&lt;|<)\/pc(&gt;|>)/';
+
+        preg_match_all($regex, $string, $matches);
+
+        if (!empty($matches[0])) {
+            foreach ($matches[0] as $index => $match) {
+                $a = $match;               // <pc id="1" canCopy="no" canDelete="no" dataRefEnd="d2" dataRefStart="d1">La Repubblica</pc>
+                $b = $matches[2][$index];  // id="1" canCopy="no" canDelete="no" dataRefEnd="d2" dataRefStart="d1"
+                $c = $matches[4][$index];  // La Repubblica
+
+                preg_match('/\s?dataRefEnd="(.*?)"\s?/', $b, $dataRefEndMatches);
+                preg_match('/\s?dataRefStart="(.*?)"\s?/', $b, $dataRefStartMatches);
+                preg_match('/\s?id="(.*?)"\s?/', $b, $idMatches);
+
+                if(!empty($dataRefEndMatches[1]) and !empty($dataRefStartMatches[1])){
+
+                    $startValue = $this->map[$dataRefStartMatches[1]];
+                    $base64EncodedStartValue = base64_encode($startValue);
+
+                    $endValue = $this->map[$dataRefEndMatches[1]];
+                    $base64EncodedEndValue = base64_encode($endValue);
+
+                    $d  = '<ph '. ((isset($idMatches[1])) ? 'id="'.$idMatches[1].'_1"' : '') .' dataRef="'.$dataRefStartMatches[1].'" equiv-text="base64:'.$base64EncodedStartValue.'">';
+                    $d .= $c;
+                    $d .= '<ph '. ((isset($idMatches[1])) ? 'id="'.$idMatches[1].'_2"': '') .' dataRef="'.$dataRefEndMatches[1].'" equiv-text="base64:' .$base64EncodedEndValue.'">';
+                    $string = str_replace($a, $d, $string);
+                }
             }
         }
 
