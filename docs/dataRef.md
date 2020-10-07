@@ -42,7 +42,7 @@ $dataReplacer = new DataRefReplacer($map);
 
 $string = 'Did you collect <ph id="source1" dataRef="source1"/> from <ph id="source2" dataRef="source2"/>?';
 
-$replaced =$dataReplacer->replace($string);
+$replaced = $dataReplacer->replace($string);
 
 // $replaced is:
 // Did you collect <ph id="source1" dataRef="source1" equiv-text="base64:JHtBTU9VTlR9"/> from <ph id="source2" dataRef="source2" equiv-text="base64:JHtSSURFUn0="/>?
@@ -94,7 +94,7 @@ $dataReplacer = new DataRefReplacer($map);
 
 $string = 'Testo libero contenente <pc id="3" dataRefEnd="d1" dataRefStart="d1"><pc id="4" dataRefEnd="d2" dataRefStart="d2">grassetto + corsivo</pc></pc>';
 
-$replaced =$dataReplacer->replace($string);
+$replaced = $dataReplacer->replace($string);
 
 // $replaced is:
 // Testo libero contenente <ph id="3_1" dataType="pcStart" originalData="PHBjIGlkPSIzIiBkYXRhUmVmRW5kPSJkMSIgZGF0YVJlZlN0YXJ0PSJkMSI+" dataRef="d1" equiv-text="base64:Xw=="/><ph id="4_1" dataType="pcStart" originalData="PHBjIGlkPSI0IiBkYXRhUmVmRW5kPSJkMiIgZGF0YVJlZlN0YXJ0PSJkMiI+" dataRef="d2" equiv-text="base64:Kio="/>grassetto + corsivo<ph id="4_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="d2" equiv-text="base64:Kio="/><ph id="3_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="d1" equiv-text="base64:Xw=="/>
@@ -105,7 +105,7 @@ In this case a special `originalData` attribute is appended to each `<ph>` gener
 
 ## Restoring original content
 
-`DataRefReplacer` is capable also to restore original content:
+`DataRefReplacer` is also capable to restore original content:
 
 ```php
 
