@@ -17,7 +17,7 @@ class HtmlParser
      */
     public static function parse($html, $escapeHtml = false)
     {
-        if($escapeHtml){
+        if ($escapeHtml) {
             $html = htmlspecialchars_decode($html, ENT_NOQUOTES);
         }
 
@@ -56,8 +56,8 @@ class HtmlParser
 
         $attributes = [];
 
-        if(isset($matches[1]) and count($matches[1]) > 0 ) {
-            foreach ($matches[1] as $key => $match){
+        if (isset($matches[1]) and count($matches[1]) > 0) {
+            foreach ($matches[1] as $key => $match) {
                 $attributes[trim($match[0])] = $matches[3][$key][0];
             }
         }
@@ -73,8 +73,8 @@ class HtmlParser
      */
     private static function getInnerHtml($matches, $key)
     {
-        if(isset($matches[6][$key][0])){
-            if( !empty(self::parse($matches[6][$key][0]))  ){
+        if (isset($matches[6][$key][0])) {
+            if (!empty(self::parse($matches[6][$key][0]))) {
                 return self::parse($matches[6][$key][0]);
             }
 

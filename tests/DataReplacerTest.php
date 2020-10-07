@@ -350,16 +350,33 @@ class DataReplacerTest extends BaseTest
                 'd3' => '`',
         ];
 
-        $string = 'Testo libero contenente <pc id="1" canCopy="no" canDelete="no" dataRefEnd="d1" dataRefStart="d1">corsivo</pc>, <pc id="2" canCopy="no" canDelete="no" dataRefEnd="d2" dataRefStart="d2">grassetto</pc>, <pc id="3" canCopy="no" canDelete="no" dataRefEnd="d1" dataRefStart="d1"><pc id="4" canCopy="no" canDelete="no" dataRefEnd="d2" dataRefStart="d2">grassetto + corsivo</pc></pc> e <pc id="5" canCopy="no" canDelete="no" dataRefEnd="d3" dataRefStart="d3">larghezza fissa</pc>.';
-        $expected = '';
+        $string = 'Testo libero contenente <pc id="3" dataRefEnd="d1" dataRefStart="d1"><pc id="4" dataRefEnd="d2" dataRefStart="d2">grassetto + corsivo</pc></pc>';
+        $expected = 'Testo libero contenente <ph id="3_1" dataType="pcStart" originalData="PHBjIGlkPSIzIiBkYXRhUmVmRW5kPSJkMSIgZGF0YVJlZlN0YXJ0PSJkMSI+" dataRef="d1" equiv-text="base64:Xw=="/><ph id="4_1" dataType="pcStart" originalData="PHBjIGlkPSI0IiBkYXRhUmVmRW5kPSJkMiIgZGF0YVJlZlN0YXJ0PSJkMiI+" dataRef="d2" equiv-text="base64:Kio="/>grassetto + corsivo<ph id="4_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="d2" equiv-text="base64:Kio="/><ph id="3_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="d1" equiv-text="base64:Xw=="/>';
 
         $dataReplacer = new DataRefReplacer($map);
 
         $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($string, $dataReplacer->restore($expected));
+    }
+
+    /**
+     * @test
+     */
+    public function can_replace_and_restore_data_with_pc_test_5()
+    {
+        $map = [
+                'd1' => '[',
+                'd2' => '](http://repubblica.it)',
+                'd3' => '[',
+                'd4' => '](http://google.it)',
+        ];
+
+        $string = 'Link semplici: &lt;pc id="1" dataRefEnd="d2" dataRefStart="d1"&gt;La Repubblica&lt;/pc&gt;';
+        $expected = 'Link semplici: &lt;ph id="1_1" dataType="pcStart" originalData="Jmx0O3BjIGlkPSIxIiBkYXRhUmVmRW5kPSJkMiIgZGF0YVJlZlN0YXJ0PSJkMSImZ3Q7" dataRef="d1" equiv-text="base64:Ww=="/&gt;La Repubblica&lt;ph id="1_2" dataType="pcEnd" originalData="Jmx0Oy9wYyZndDs=" dataRef="d2" equiv-text="base64:XShodHRwOi8vcmVwdWJibGljYS5pdCk="/&gt;';
+
+        $dataReplacer = new DataRefReplacer($map, true);
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($string, $dataReplacer->restore($expected));
     }
 }
-
-
-
-
-
