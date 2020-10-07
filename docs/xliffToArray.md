@@ -94,7 +94,7 @@ Quick example:
 
 An `equiv-text` attribute will be added to the corresponding tag (content will be encoded in base64).
 
-A full documentation for dataRef replacement is avaliable [here](https://github.com/matecat/xliff-parser/blob/master/docs/dataRef.md)
+A full documentation for dataRef replacement is available [here](https://github.com/matecat/xliff-parser/blob/master/docs/dataRef.md).
 
 ### Examples
 

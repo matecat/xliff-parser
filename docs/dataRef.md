@@ -103,7 +103,7 @@ $replaced =$dataReplacer->replace($string);
 
 In this case a special `originalData` attribute is appended to each `<ph>` generated tag to restore original `<pc>` tag (see below).
 
-## restoring original content
+## Restoring original content
 
 `DataRefReplacer` is capable also to restore original content:
 
