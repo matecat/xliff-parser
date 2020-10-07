@@ -2,6 +2,7 @@
 
 namespace Matecat\XliffParser\XliffUtils;
 
+use Matecat\XliffParser\Utils\FlatData;
 use Matecat\XliffParser\Utils\HtmlParser;
 use Matecat\XliffParser\Utils\Strings;
 use simplehtmldom\HtmlDocument;
@@ -49,6 +50,9 @@ class DataRefReplacer
             return  $string;
         }
 
+        // clean string from equiv-text eventually present
+        $string = $this->cleanFromEquivText($string);
+
         $html = HtmlParser::parse($string, $this->escapeHtml);
 
         foreach ($html as $node){
@@ -56,34 +60,12 @@ class DataRefReplacer
             // 1. Replace for ph|sc|ec tag
             if($node->tagname === 'ph' or $node->tagname === 'sc' or $node->tagname === 'ec'){
 
-            }
-        }
+                if (!isset($node->attributes['dataRef'])) {
+                    return $string;
+                }
 
-
-
-
-
-
-
-
-
-
-
-
-
-        // 1. Replace for ph|sc|ec tag
-        $regex = '/(&lt;|<)(ph|sc|ec)\s?(.*?)\s?dataRef="(.*?)"(.*?)\/(&gt;|>)/si';
-
-        // clean string from equiv-text eventually present
-        $string = $this->cleanFromEquivText($string);
-
-        preg_match_all($regex, $string, $matches);
-
-        if (!empty($matches[0])) {
-            foreach ($matches[0] as $index => $match) {
-                $a = $match;                // complete match. Eg:  <ph id="source1" dataRef="source1"/>
-                $b = $matches[4][$index];   // map identifier. Eg: source1
-                $c = $matches[6][$index];   // terminator: Eg: >
+                $a = $node->node;  // complete match. Eg:  <ph id="source1" dataRef="source1"/>
+                $b = $node->attributes['dataRef'];   // map identifier. Eg: source1
 
                 // if isset a value in the map calculate base64 encoded value
                 // otherwise skip
@@ -99,44 +81,32 @@ class DataRefReplacer
                 }
 
                 // replacement
-                $d = str_replace('/'.$c, ' equiv-text="base64:'.$base64EncodedValue.'"/'.$c, $a);
+                $d = str_replace('/', ' equiv-text="base64:'.$base64EncodedValue.'"/', $a);
                 $string = str_replace($a, $d, $string);
             }
-        }
 
-        // 2. Replace tag <pc>
-        $regex = '/(&lt;|<)pc\s?(.*?)(&gt;|>)(.*?)(&lt;|<)\/pc(&gt;|>)/';
+            // 2. Replace tag <pc>
+            if($node->tagname === 'pc') {
+                $a = $node->node; // <pc id="1" canCopy="no" canDelete="no" dataRefEnd="d2" dataRefStart="d1">La Repubblica</pc>
 
-        preg_match_all($regex, $string, $matches);
+                if( isset($node->attributes['dataRefEnd']) and isset($node->attributes['dataRefStart']) ){
 
-        if (!empty($matches[0])) {
-            foreach ($matches[0] as $index => $match) {
-                $a = $match;               // <pc id="1" canCopy="no" canDelete="no" dataRefEnd="d2" dataRefStart="d1">La Repubblica</pc>
-                $b = $matches[2][$index];  // id="1" canCopy="no" canDelete="no" dataRefEnd="d2" dataRefStart="d1"
-                $c = $matches[4][$index];  // La Repubblica
-
-                preg_match('/\s?dataRefEnd="(.*?)"\s?/', $b, $dataRefEndMatches);
-                preg_match('/\s?dataRefStart="(.*?)"\s?/', $b, $dataRefStartMatches);
-                preg_match('/\s?id="(.*?)"\s?/', $b, $idMatches);
-
-                if(!empty($dataRefEndMatches[1]) and !empty($dataRefStartMatches[1])){
-
-                    $startValue = $this->map[$dataRefStartMatches[1]];
+                    $startValue = $this->map[$node->attributes['dataRefStart']];
                     $base64EncodedStartValue = base64_encode($startValue);
 
-                    $endValue = $this->map[$dataRefEndMatches[1]];
+                    $endValue = $this->map[$node->attributes['dataRefEnd']];
                     $base64EncodedEndValue = base64_encode($endValue);
 
-                    $startOriginalData = '<pc '.$b.'>';
+                    $startOriginalData = '<pc '. FlatData::flatArray($node->attributes, ' ','=')  .'>';
                     $endOriginalData = '</pc>';
                     $base64StartOriginalData = base64_encode($startOriginalData);
                     $base64EndOriginalData = base64_encode($endOriginalData);
 
-
-                    $d  = '<ph '. ((isset($idMatches[1])) ? 'id="'.$idMatches[1].'_1"' : '') .' dataType="pcStart" originalData="'.$base64StartOriginalData.'" dataRef="'.$dataRefStartMatches[1].'" equiv-text="base64:'
+                    $d  = '<ph '. ((isset($node->attributes['id'])) ? 'id="'.$node->attributes['id'].'_1"' : '') .' dataType="pcStart" originalData="'.$base64StartOriginalData.'" dataRef="'
+                            .$node->attributes['dataRefStart'].'" equiv-text="base64:'
                             .$base64EncodedStartValue.'"/>';
-                    $d .= $c;
-                    $d .= '<ph '. ((isset($idMatches[1])) ? 'id="'.$idMatches[1].'_2"': '') .' dataType="pcEnd" originalData="'.$base64EndOriginalData.'" dataRef="'.$dataRefEndMatches[1].'" equiv-text="base64:' .$base64EncodedEndValue.'"/>';
+                    $d .= $node->inner_html;
+                    $d .= '<ph '. ((isset($node->attributes['id'])) ? 'id="'.$node->attributes['id'].'_2"': '') .' dataType="pcEnd" originalData="'.$base64EndOriginalData.'" dataRef="'.$node->attributes['dataRefEnd'].'" equiv-text="base64:' .$base64EncodedEndValue.'"/>';
                     $string = str_replace($a, $d, $string);
                 }
             }
@@ -144,8 +114,6 @@ class DataRefReplacer
 
         return $string;
     }
-
-
 
     /**
      * @param string $string

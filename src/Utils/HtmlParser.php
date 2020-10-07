@@ -18,7 +18,7 @@ class HtmlParser
     public static function parse($html, $escapeHtml = false)
     {
         if($escapeHtml){
-            $html = htmlspecialchars_decode($html);
+            $html = htmlspecialchars_decode($html, ENT_NOQUOTES);
         }
 
         // I have split the pattern in two lines not to have long lines alerts by the PHP.net form:
@@ -30,7 +30,7 @@ class HtmlParser
 
         foreach ($matches[0] as $key => $match) {
             $elements[] = (object)[
-                'node' => ($escapeHtml) ? htmlentities($match[0]) : $match[0],
+                'node' => ($escapeHtml) ? htmlentities($match[0], ENT_NOQUOTES) : $match[0],
                 'offset' => $match[1],
                 'tagname' => $matches[1][$key][0],
                 'attributes' => isset($matches[2][$key][0]) ? self::getAttributes($matches[2][$key][0]) : [],
@@ -58,7 +58,7 @@ class HtmlParser
 
         if(isset($matches[1]) and count($matches[1]) > 0 ) {
             foreach ($matches[1] as $key => $match){
-                $attributes[$match[0]] = $matches[3][$key][0];
+                $attributes[trim($match[0])] = $matches[3][$key][0];
             }
         }
 
