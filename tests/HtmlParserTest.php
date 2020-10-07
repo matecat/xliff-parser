@@ -28,7 +28,7 @@ class HtmlParserTest extends BaseTest
     /**
      * @test
      */
-    public function can_parse_html_with_escape_html()
+    public function can_parse_html_with_escaped_html()
     {
         $html = '&lt;div&gt;Ciao&lt;div&gt;Ciao&lt;/div&gt;&lt;/div&gt;';
 

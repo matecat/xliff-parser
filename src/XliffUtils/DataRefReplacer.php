@@ -5,8 +5,6 @@ namespace Matecat\XliffParser\XliffUtils;
 use Matecat\XliffParser\Utils\FlatData;
 use Matecat\XliffParser\Utils\HtmlParser;
 use Matecat\XliffParser\Utils\Strings;
-use simplehtmldom\HtmlDocument;
-use simplehtmldom\HtmlNode;
 
 class DataRefReplacer
 {
@@ -18,18 +16,18 @@ class DataRefReplacer
     /**
      * @var bool
      */
-    private $escapeHtml;
+    private $escapedHtml;
 
     /**
      * DataRefReplacer constructor.
      *
      * @param array $map
-     * @param bool  $escapeHtml
+     * @param bool  $escapedHtml
      */
-    public function __construct(array $map, $escapeHtml = false)
+    public function __construct( array $map, $escapedHtml = false)
     {
-        $this->map = $map;
-        $this->escapeHtml = $escapeHtml;
+        $this->map         = $map;
+        $this->escapedHtml = $escapedHtml;
     }
 
     /**
@@ -53,7 +51,7 @@ class DataRefReplacer
         // clean string from equiv-text eventually present
         $string = $this->cleanFromEquivText($string);
 
-        $html = HtmlParser::parse($string, $this->escapeHtml);
+        $html = HtmlParser::parse($string, $this->escapedHtml);
 
         foreach ($html as $node) {
             // 1. Replace for ph|sc|ec tag
@@ -134,9 +132,9 @@ class DataRefReplacer
             $startOriginalData = '<pc '. FlatData::flatArray($node->attributes, ' ', '=')  .'>';
             $endOriginalData = '</pc>';
 
-            if ($this->escapeHtml) {
-                $startOriginalData = htmlentities($startOriginalData, ENT_NOQUOTES);
-                $endOriginalData = htmlentities($endOriginalData, ENT_NOQUOTES);
+            if ($this->escapedHtml) {
+                $startOriginalData = Strings::htmlentities($startOriginalData);
+                $endOriginalData = Strings::htmlentities($endOriginalData);
             }
 
             $base64StartOriginalData = base64_encode($startOriginalData);
@@ -159,8 +157,8 @@ class DataRefReplacer
             $string = str_replace($a, $d, $string);
         }
 
-        if ($this->escapeHtml) {
-            $string = htmlentities($string, ENT_NOQUOTES);
+        if ($this->escapedHtml) {
+            $string = Strings::htmlentities($string);
         }
 
         return $string;

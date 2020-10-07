@@ -2,8 +2,6 @@
 
 namespace Matecat\XliffParser\Utils;
 
-use Matecat\XliffParser\Exception\NotValidJSONException;
-
 class HtmlParser
 {
     /**
@@ -11,14 +9,14 @@ class HtmlParser
      * https://www.php.net/manual/fr/regexp.reference.recursive.php#95568
      *
      * @param string $html
-     * @param bool   $escapeHtml
+     * @param bool   $escapedHtml
      *
      * @return array
      */
-    public static function parse($html, $escapeHtml = false)
+    public static function parse( $html, $escapedHtml = false)
     {
-        if ($escapeHtml) {
-            $html = htmlspecialchars_decode($html, ENT_NOQUOTES);
+        if ($escapedHtml) {
+            $html = Strings::htmlspecialchars_decode($html);
         }
 
         // I have split the pattern in two lines not to have long lines alerts by the PHP.net form:
@@ -30,7 +28,7 @@ class HtmlParser
 
         foreach ($matches[0] as $key => $match) {
             $elements[] = (object)[
-                'node' => ($escapeHtml) ? htmlentities($match[0], ENT_NOQUOTES) : $match[0],
+                'node' => ($escapedHtml) ? Strings::htmlentities($match[0]) : $match[0],
                 'offset' => $match[1],
                 'tagname' => $matches[1][$key][0],
                 'attributes' => isset($matches[2][$key][0]) ? self::getAttributes($matches[2][$key][0]) : [],

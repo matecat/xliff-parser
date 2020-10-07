@@ -73,6 +73,13 @@ class DataReplacerTest extends BaseTest
 
         $this->assertEquals($expected, $dataReplacer->replace($string));
         $this->assertEquals($string, $dataReplacer->restore($expected));
+
+        $string = '<ec id="source1" dataRef="source1"/> changed the address';
+        $expected = '<ec id="source1" dataRef="source1" equiv-text="base64:JHtyZWNpcGllbnROYW1lfQ=="/> changed the address';
+        $dataReplacer = new DataRefReplacer($map);
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($string, $dataReplacer->restore($expected));
     }
 
     /**

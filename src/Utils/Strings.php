@@ -187,4 +187,24 @@ class Strings
     {
         return strpos($haystack, $needle) !== false;
     }
+
+    /**
+     * @param string $string
+     *
+     * @return string
+     */
+    public static function htmlentities($string)
+    {
+        return htmlentities($string, ENT_NOQUOTES);
+    }
+
+    /**
+     * @param string $string
+     *
+     * @return string
+     */
+    public static function htmlspecialchars_decode($string)
+    {
+        return htmlspecialchars_decode($string, ENT_NOQUOTES);
+    }
 }
