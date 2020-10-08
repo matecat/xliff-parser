@@ -91,6 +91,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
 
         // close Sax parser
         $this->closeSaxParser($xmlParser);
+
     }
 
     /**
@@ -101,7 +102,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
         //check if we are entering into a <trans-unit> (xliff v1.*) or <unit> (xliff v2.*)
         if ($this->tuTagName === $name) {
             $this->inTU = true;
-            //get id
+            // get id
             $this->currentTransUnitId = $attr[ 'id' ];
         }
 
@@ -187,7 +188,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
 
             //add tag ending
             $tag .= ">";
-            
+
             //set a a Buffer for the segSource Source tag
             if ($this->bufferIsActive or in_array($name, $this->nodesToCopy)) { // we are opening a critical CDATA section
 
@@ -342,6 +343,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
                             $translation = $this->prepareTranslation($seg, $translation);
 
                             // for xliff 2 we need $this->transUnits[ $this->currentId ] [ $pos ] for populating metadata
+
                             unset($this->transUnits[ $this->currentTransUnitId ] [ $pos ]);
 
                             $lastMrkId = $this->segments[ $id ][ "mrk_id" ];
@@ -500,7 +502,11 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
             case 1:
             default:
                 $tag = "<target $targetLang $stateProp>$translation</target>";
-                $tag .= $this->getWordCountGroup($rawWordCount, $eqWordCount);
+
+                // if it's a Trados file don't append count group
+                if(get_class($this) !== SdlXliffSAXTranslationReplacer::class){
+                    $tag .= $this->getWordCountGroup($rawWordCount, $eqWordCount);
+                }
 
                 return $tag;
 

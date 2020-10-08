@@ -1,0 +1,293 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns:sdl="http://sdl.com/FileTypes/SdlXliff/1.0" xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2" sdl:version="1.0">
+    <file original="\\10.3.14.41\translated\projects\2020\2020-10-05-CC20152299-TheBigword-32667884\100_original_from_customer\S9_Backlight.xls.ttx" datatype="x-sdlfilterframework2" source-language="en-US" target-language="nl-NL">
+        <header>
+            <reference>
+                <internal-file form="base64">UEsDBBQAAAAIAMRdRVEsFGfS/QQAAGwjAAAQAAAAam4zMTNsMjUudmdyLnR0eO1abU/jRhCez5X6
+                    H6x84L4UTLj2WlSOEyRAqbhySuhVOiFVJi+XiLxQ2ymlP77tM8+uE8feJE5Cjy9WFLLemX3mZWd2
+                    xzf37z9H8k7+kqEMxJM/pSOhRNKXsYzkrbySquzJPn7fybF8LV/JkdxIQ06kLtfSlFgC+Yx1HzPr
+                    KnLAdRWsOpJz0HQ+lvfgj/FR7mNijfEZAKnD+T64PgPHkxo4OuQ2mHWOOxZ7n999OZTX+HsDLQ/w
+                    rXLuEzjy6xNJur4JtCvwpC3RJ7XlTNpYEYM3XIqTt/gHWPyaVu9h/Abjivi08lfwKXfeSmNVANQn
+                    ebDWfQD6BPRLcNWIbnZFrW9Tp2vZhZ4jaYHatmi68pHjNmYfgb5Lr3yHr67Jyv4FUodWoov+gZr1
+                    UvQxtAohswPfBeSa0GMG4wyIu7C0SW71ZUha7OTO8tTxt4vnCWyPES8mWlyy6xi38KS6K09az1t8
+                    HvDUgiZqRxe/Y8xE2JMqaNf0cZjazQizP2N0x1GT3wk+I0bALXx3IN8z1r7Ffh5iRvNhXqNbG99D
+                    +uCCGIfyu5xCTkvuYVEfVvaAuIc8G0CSy98NPA+sZrrfWf+no+KSto1J26HHfnTSd/CsNBdPlnYB
+                    Sh+xk8zP58YZNG9RQw/W9rlGPenZPE++CZqfw5tRlmnRhJRgiQX+So4asCPu3tBq2nHwauw/YJRI
+                    7YFL9yMi72/M/ntEheb6PXwQwhK1d7bSIJ0iby+Zcx14KIvrb4GcxarR+xo9J5SnyAHjOQLKDDma
+                    SlyMfcOsuGLOxbBhzEhUjzWmsaqWNXiS5K16Tl1ce5FgXfLc7/PcCMm3GEcpqrvmUwAs915sgrxK
+                    wwtm/wQz/5/HN5G5Su8an/VeaX6BmNlO+nq2GMpL2bJKej6zVfLsPgt5wyl2ZG+HfKx38XHl5bpI
+                    WYyfeGa3iVCzt/D2em2HmtdR6zHj23Oeo+YuKqbhyKnf5ohZtPlTZXOd1sfJx5WJSq1C4qltIXiC
+                    VOWxuYbPh+/yYYRnrYeenKjFfbgejis3B7bWO0GEBKwvZ/Vjdn2dHrlndGu1fjU9T9JI0YLcXUdS
+                    FiGpmYusbXA3+vI3fvUs/Eg/9VGVaLWU120d7Ozq9/R0gtC0UrOrqqwds3KLrc2ua9DzE0Zl8s4W
+                    0uIefdzOIRw4pa+Ps1qTc5stY8e9UC2oxTKM/D1p4lz3dT3fF1m5k4reIlV3Eql9izr/BlRW52V1
+                    XlbnZXVeVudldV5W52V1XlbnZXVeVufPUZ2vrrhd/zafrd+Tbpa/pJ93yo7UE8cN0B45moDDm+tx
+                    RYxSvZNNLyQGbWBpWqsbRFMrKsfs5tf+XNJFCqY+qLCXlj5PbiyO6YtlK17tSyZW56mJxWqr6p50
+                    Pl/ajpHt2aW1T+bcOs+qt+pCGzp8Syimf1KVPZf2/gr9X97nLfs2ldY6mVukcxs+8ua6mDVqo2e4
+                    vgcZvU3WKlU715VCmbKtLd2MHapnd6rnjvwBDcb2bk1rnKZ409tpfoVakX7Oe+eS8mLGpIe8C9ir
+                    7WF8xygdYaS16ID0LvPSkzc4AT120FvUtM3OuaEN+duRb1K4d7m+q2d7hh7XD+AVI9GzZ7V2XAPb
+                    X1fKEyk6mth3D137YO+XSPZok+7y8YqM2iZfsrvlc6Z4nnypvHZliL8yR15O3+W3gV/oPjji3Z/c
+                    b/7cvec7/oeMsfo/UEsBAjMAFAAAAAgAxF1FUSwUZ9L9BAAAbCMAABAAAAAAAAAAAAAAAAAAAAAA
+                    AGpuMzEzbDI1LnZnci50dHhQSwUGAAAAAAEAAQA+AAAAKwUAAAAA
+                </internal-file>
+            </reference>
+            <reference>
+                <internal-file form="base64">UEsDBBQAAAAIAMRdRVEsFGfS/QQAAGwjAAAQAAAAa2h1ZDFiczEubmJsLnR0eO1abU/jRhCez5X6
+                    H6x84L4UTLj2WlSOEyRAqbhySuhVOiFVJi+XiLxQ2ymlP77tM8+uE8feJE5Cjy9WFLLemX3mZWd2
+                    xzf37z9H8k7+kqEMxJM/pSOhRNKXsYzkrbySquzJPn7fybF8LV/JkdxIQ06kLtfSlFgC+Yx1HzPr
+                    KnLAdRWsOpJz0HQ+lvfgj/FR7mNijfEZAKnD+T64PgPHkxo4OuQ2mHWOOxZ7n999OZTX+HsDLQ/w
+                    rXLuEzjy6xNJur4JtCvwpC3RJ7XlTNpYEYM3XIqTt/gHWPyaVu9h/Abjivi08lfwKXfeSmNVANQn
+                    ebDWfQD6BPRLcNWIbnZFrW9Tp2vZhZ4jaYHatmi68pHjNmYfgb5Lr3yHr67Jyv4FUodWoov+gZr1
+                    UvQxtAohswPfBeSa0GMG4wyIu7C0SW71ZUha7OTO8tTxt4vnCWyPES8mWlyy6xi38KS6K09az1t8
+                    HvDUgiZqRxe/Y8xE2JMqaNf0cZjazQizP2N0x1GT3wk+I0bALXx3IN8z1r7Ffh5iRvNhXqNbG99D
+                    +uCCGIfyu5xCTkvuYVEfVvaAuIc8G0CSy98NPA+sZrrfWf+no+KSto1J26HHfnTSd/CsNBdPlnYB
+                    Sh+xk8zP58YZNG9RQw/W9rlGPenZPE++CZqfw5tRlmnRhJRgiQX+So4asCPu3tBq2nHwauw/YJRI
+                    7YFL9yMi72/M/ntEheb6PXwQwhK1d7bSIJ0iby+Zcx14KIvrb4GcxarR+xo9J5SnyAHjOQLKDDma
+                    SlyMfcOsuGLOxbBhzEhUjzWmsaqWNXiS5K16Tl1ce5FgXfLc7/PcCMm3GEcpqrvmUwAs915sgrxK
+                    wwtm/wQz/5/HN5G5Su8an/VeaX6BmNlO+nq2GMpL2bJKej6zVfLsPgt5wyl2ZG+HfKx38XHl5bpI
+                    WYyfeGa3iVCzt/D2em2HmtdR6zHj23Oeo+YuKqbhyKnf5ohZtPlTZXOd1sfJx5WJSq1C4qltIXiC
+                    VOWxuYbPh+/yYYRnrYeenKjFfbgejis3B7bWO0GEBKwvZ/Vjdn2dHrlndGu1fjU9T9JI0YLcXUdS
+                    FiGpmYusbXA3+vI3fvUs/Eg/9VGVaLWU120d7Ozq9/R0gtC0UrOrqqwds3KLrc2ua9DzE0Zl8s4W
+                    0uIefdzOIRw4pa+Ps1qTc5stY8e9UC2oxTKM/D1p4lz3dT3fF1m5k4reIlV3Eql9izr/BlRW52V1
+                    XlbnZXVeVudldV5W52V1XlbnZXVeVufPUZ2vrrhd/zafrd+Tbpa/pJ93yo7UE8cN0B45moDDm+tx
+                    RYxSvZNNLyQGbWBpWqsbRFMrKsfs5tf+XNJFCqY+qLCXlj5PbiyO6YtlK17tSyZW56mJxWqr6p50
+                    Pl/ajpHt2aW1T+bcOs+qt+pCGzp8Syimf1KVPZf2/gr9X97nLfs2ldY6mVukcxs+8ua6mDVqo2e4
+                    vgcZvU3WKlU715VCmbKtLd2MHapnd6rnjvwBDcb2bk1rnKZ409tpfoVakX7Oe+eS8mLGpIe8C9ir
+                    7WF8xygdYaS16ID0LvPSkzc4AT120FvUtM3OuaEN+duRb1K4d7m+q2d7hh7XD+AVI9GzZ7V2XAPb
+                    X1fKEyk6mth3D137YO+XSPZok+7y8YqM2iZfsrvlc6Z4nnypvHZliL8yR15O3+W3gV/oPjji3Z/c
+                    b/7cvec7/oeMsfo/UEsBAjMAFAAAAAgAxF1FUSwUZ9L9BAAAbCMAABAAAAAAAAAAAAAAAAAAAAAA
+                    AGtodWQxYnMxLm5ibC50dHhQSwUGAAAAAAEAAQA+AAAAKwUAAAAA
+                </internal-file>
+            </reference>
+            <sdl:ref-files>
+                <sdl:ref-file uid="0" id="bf62d21d-c06d-413f-9313-e75ab18d55fa" name="okphzoqw.ttx" />
+                <sdl:ref-file uid="1" id="http://www.sdl.com/Sdl.FileTypeSupport.Bilingual.Ttx/OriginalTtxFile" name="okphzoqw.ttx" o-path="C:\Users\translated\AppData\Local\Temp\okphzoqw.ttx" date="01/01/0001 00:00:00" expected-use="Generation" pref-reftype="Embed" />
+            </sdl:ref-files>
+            <file-info xmlns="http://sdl.com/FileTypes/SdlXliff/1.0">
+                <value key="SDL:FileId">08b88693-3056-4d41-a70b-08caeec68482</value>
+                <value key="SDL:CreationDate">10/05/2020 13:46:08</value>
+                <value key="SDL:OriginalFilePath">\\10.3.14.41\translated\projects\2020\2020-10-05-CC20152299-TheBigword-32667884\100_original_from_customer\S9_Backlight.xls.ttx</value>
+                <value key="SDL:InputFilePath">C:\Users\translated\AppData\Local\Temp\okphzoqw.ttx</value>
+                <value key="FrontMatter">&lt;FrontMatter&gt;&lt;ToolSettings CreationDate="20200930T121100Z" CreationTool="SDL TRADOS TagEditor" CreationToolVersion="8.3.0.863" /&gt;&lt;UserSettings DataType="PlugInConverted" O-Encoding="windows-1252" SettingsName="" SettingsPath="" SourceLanguage="EN-US" TargetLanguage="" TargetDefaultFont="" SourceDocumentPath="\\ptc-inf-ops01\Operations\Jobs\S\Suunto\22720439\1. Source\FromENG\S9_Backlight.xls" SettingsRelativePath="" PlugInInfo="&amp;lt;PlugInInfo&amp;gt;&amp;lt;PlugIn&amp;gt;&amp;lt;Guid&amp;gt;TRADOS Excel Filter 2.0.0.0&amp;lt;/Guid&amp;gt;&amp;lt;/PlugIn&amp;gt;&amp;lt;ScanInfo&amp;gt;&amp;lt;/ScanInfo&amp;gt;&amp;lt;CustomFileInfo&amp;gt;&amp;amp;lt;SheetsInWorkbookOrder&amp;amp;gt;ByIndex&amp;amp;lt;/SheetsInWorkbookOrder&amp;amp;gt;&amp;amp;lt;CellsAndShapesOnWorksheetOrder&amp;amp;gt;TopLeftBottomRightByRow&amp;amp;lt;/CellsAndShapesOnWorksheetOrder&amp;amp;gt;&amp;amp;lt;ShapesInDiagramOrder&amp;amp;gt;Original&amp;amp;lt;/ShapesInDiagramOrder&amp;amp;gt;&amp;amp;lt;ShapesInGroupOrder&amp;amp;gt;TopLeftBottomRightByRow&amp;amp;lt;/ShapesInGroupOrder&amp;amp;gt;&amp;amp;lt;ShapesInChartSheetOrder&amp;amp;gt;TopLeftBottomRightByRow&amp;amp;lt;/ShapesInChartSheetOrder&amp;amp;gt;&amp;amp;lt;ShapesInChartShapeOrder&amp;amp;gt;TopLeftBottomRightByRow&amp;amp;lt;/ShapesInChartShapeOrder&amp;amp;gt;&amp;amp;lt;CommentProcessing&amp;amp;gt;Off&amp;amp;lt;/CommentProcessing&amp;amp;gt;&amp;amp;lt;HiddenContentProcessing&amp;amp;gt;Off&amp;amp;lt;/HiddenContentProcessing&amp;amp;gt;&amp;amp;lt;HeaderFooterProcessing&amp;amp;gt;On&amp;amp;lt;/HeaderFooterProcessing&amp;amp;gt;&amp;amp;lt;DiagramProcessing&amp;amp;gt;On&amp;amp;lt;/DiagramProcessing&amp;amp;gt;&amp;amp;lt;CharacterFormattingProcessing&amp;amp;gt;On&amp;amp;lt;/CharacterFormattingProcessing&amp;amp;gt;&amp;amp;lt;DisplayFormatting&amp;amp;gt;On&amp;amp;lt;/DisplayFormatting&amp;amp;gt;&amp;amp;lt;ColourAdaptation&amp;amp;gt;DarkenedLightColours&amp;amp;lt;/ColourAdaptation&amp;amp;gt;&amp;amp;lt;FontAdaptation&amp;amp;gt;ResizeToVisible&amp;amp;lt;/FontAdaptation&amp;amp;gt;&amp;amp;lt;MinFontSize&amp;amp;gt;10&amp;amp;lt;/MinFontSize&amp;amp;gt;&amp;amp;lt;ReductionTreshold&amp;amp;gt;20&amp;amp;lt;/ReductionTreshold&amp;amp;gt;&amp;amp;lt;ReductionFactor&amp;amp;gt;10&amp;amp;lt;/ReductionFactor&amp;amp;gt;&amp;amp;lt;SingleSize&amp;amp;gt;10&amp;amp;lt;/SingleSize&amp;amp;gt;&amp;lt;/CustomFileInfo&amp;gt;&amp;lt;FileSettings&amp;gt;&amp;amp;lt;SheetsInWorkbookOrder&amp;amp;gt;ByIndex&amp;amp;lt;/SheetsInWorkbookOrder&amp;amp;gt;&amp;amp;lt;CellsAndShapesOnWorksheetOrder&amp;amp;gt;TopLeftBottomRightByRow&amp;amp;lt;/CellsAndShapesOnWorksheetOrder&amp;amp;gt;&amp;amp;lt;ShapesInDiagramOrder&amp;amp;gt;Original&amp;amp;lt;/ShapesInDiagramOrder&amp;amp;gt;&amp;amp;lt;ShapesInGroupOrder&amp;amp;gt;TopLeftBottomRightByRow&amp;amp;lt;/ShapesInGroupOrder&amp;amp;gt;&amp;amp;lt;ShapesInChartSheetOrder&amp;amp;gt;TopLeftBottomRightByRow&amp;amp;lt;/ShapesInChartSheetOrder&amp;amp;gt;&amp;amp;lt;ShapesInChartShapeOrder&amp;amp;gt;TopLeftBottomRightByRow&amp;amp;lt;/ShapesInChartShapeOrder&amp;amp;gt;&amp;amp;lt;CommentProcessing&amp;amp;gt;Off&amp;amp;lt;/CommentProcessing&amp;amp;gt;&amp;amp;lt;HiddenContentProcessing&amp;amp;gt;Off&amp;amp;lt;/HiddenContentProcessing&amp;amp;gt;&amp;amp;lt;HeaderFooterProcessing&amp;amp;gt;On&amp;amp;lt;/HeaderFooterProcessing&amp;amp;gt;&amp;amp;lt;DiagramProcessing&amp;amp;gt;On&amp;amp;lt;/DiagramProcessing&amp;amp;gt;&amp;amp;lt;CharacterFormattingProcessing&amp;amp;gt;On&amp;amp;lt;/CharacterFormattingProcessing&amp;amp;gt;&amp;amp;lt;DisplayFormatting&amp;amp;gt;On&amp;amp;lt;/DisplayFormatting&amp;amp;gt;&amp;amp;lt;ColourAdaptation&amp;amp;gt;DarkenedLightColours&amp;amp;lt;/ColourAdaptation&amp;amp;gt;&amp;amp;lt;FontAdaptation&amp;amp;gt;ResizeToVisible&amp;amp;lt;/FontAdaptation&amp;amp;gt;&amp;amp;lt;MinFontSize&amp;amp;gt;10&amp;amp;lt;/MinFontSize&amp;amp;gt;&amp;amp;lt;ReductionTreshold&amp;amp;gt;20&amp;amp;lt;/ReductionTreshold&amp;amp;gt;&amp;amp;lt;ReductionFactor&amp;amp;gt;10&amp;amp;lt;/ReductionFactor&amp;amp;gt;&amp;amp;lt;SingleSize&amp;amp;gt;10&amp;amp;lt;/SingleSize&amp;amp;gt;&amp;lt;/FileSettings&amp;gt;&amp;lt;/PlugInInfo&amp;gt;" /&gt;&lt;/FrontMatter&gt;</value>
+                <value key="FileFooter">&lt;/TRADOStag&gt;
+                </value>
+                <value key="TTX:OriginalFileType">PlugInConverted</value>
+                <value key="SDL:WrappedOriginalEncoding">windows-1252</value>
+                <value key="PluginFileDefinitionGuid">TRADOS Excel Filter 2.0.0.0</value>
+                <value key="ParagraphTextDirections"></value>
+                <sniff-info>
+                    <detected-encoding detection-level="Certain" encoding="" />
+                    <detected-source-lang detection-level="Certain" lang="en-US" />
+                    <suggested-target-encoding category="NotApplicable" />
+                    <props>
+                        <value key="PluginFileDefinitionGuid">TRADOS Excel Filter 2.0.0.0</value>
+                    </props>
+                </sniff-info>
+            </file-info>
+            <sdl:filetype-info>
+                <sdl:filetype-id>TTX 2.0 v 2.0.0.0</sdl:filetype-id>
+            </sdl:filetype-info>
+            <cxt-defs xmlns="http://sdl.com/FileTypes/SdlXliff/1.0">
+                <cxt-def id="1" type="wo" code="wo" name="worksheet" descr="&amp;lt;worksheet&amp;gt;" />
+                <cxt-def id="2" type="na" code="na" name="name" descr="&amp;lt;name&amp;gt;" />
+                <cxt-def id="3" type="ce" code="ce" name="cell" descr="&amp;lt;cell&amp;gt;" />
+            </cxt-defs>
+            <node-defs xmlns="http://sdl.com/FileTypes/SdlXliff/1.0">
+                <node-def id="1" force-name="false">
+                    <cxt id="1" />
+                </node-def>
+                <node-def id="2" force-name="false" parent="1">
+                    <cxt id="2" />
+                </node-def>
+                <node-def id="3" force-name="false" parent="1">
+                    <cxt id="3" />
+                </node-def>
+            </node-defs>
+            <tag-defs xmlns="http://sdl.com/FileTypes/SdlXliff/1.0">
+                <tag id="6">
+                    <ph name="cf" word-end="false">&lt;cf font="Calibri" size="11"&gt;</ph>
+                    <props>
+                        <value key="MetaUtText">&lt;ut Type="start" RightEdge="angle" DisplayText="cf"&gt;&amp;lt;cf font=&amp;quot;Calibri&amp;quot; size=&amp;quot;11&amp;quot;&amp;gt;&lt;/ut&gt;</value>
+                        <value key="ttTagType">Start</value>
+                        <value key="Formatting">&lt;df Font="Calibri" Size="11"&gt;</value>
+                    </props>
+                </tag>
+                <tag id="7">
+                    <ph name="cf" word-end="false">&lt;/cf&gt;</ph>
+                    <props>
+                        <value key="MetaUtText">&lt;ut Type="end" LeftEdge="angle" DisplayText="cf"&gt;&amp;lt;/cf&amp;gt;&lt;/ut&gt;</value>
+                        <value key="ttTagType">End</value>
+                        <value key="Formatting">&lt;/df&gt;</value>
+                    </props>
+                </tag>
+                <tag id="0">
+                    <st>&lt;Body&gt;</st>
+                </tag>
+                <tag id="1">
+                    <st>&lt;Raw&gt;</st>
+                </tag>
+                <tag id="2">
+                    <st>&lt;ut Type="start" Style="external" RightEdge="angle" DisplayText="worksheet"&gt;&amp;lt;worksheet&amp;gt;&lt;/ut&gt;</st>
+                </tag>
+                <tag id="3">
+                    <st>&lt;ut Type="start" Style="external" RightEdge="angle" DisplayText="name"&gt;&amp;lt;name&amp;gt;&lt;/ut&gt;</st>
+                </tag>
+                <tag id="4">
+                    <st>&lt;ut Type="end" Style="external" LeftEdge="angle" DisplayText="name"&gt;&amp;lt;/name&amp;gt;&lt;/ut&gt;</st>
+                </tag>
+                <tag id="5">
+                    <st>&lt;ut Type="start" Style="external" RightEdge="angle" DisplayText="cell"&gt;&amp;lt;cell&amp;gt;&lt;/ut&gt;</st>
+                </tag>
+                <tag id="8">
+                    <st>&lt;ut Type="end" Style="external" LeftEdge="angle" DisplayText="cell"&gt;&amp;lt;/cell&amp;gt;&lt;/ut&gt;</st>
+                </tag>
+                <tag id="9">
+                    <st>&lt;ut Type="end" Style="external" LeftEdge="angle" DisplayText="worksheet"&gt;&amp;lt;/worksheet&amp;gt;&lt;/ut&gt;</st>
+                </tag>
+                <tag id="10">
+                    <st>&lt;/Raw&gt;</st>
+                </tag>
+                <tag id="11">
+                    <st>&lt;/Body&gt;</st>
+                </tag>
+            </tag-defs>
+        </header>
+        <body>
+            <trans-unit translate="no" id="0d876d9f-1f08-4069-bf9f-b4b2714a8ece">
+                <source>
+                    <x id="0" />
+                </source>
+            </trans-unit>
+            <trans-unit translate="no" id="244df05e-67e3-4b08-874c-a718f6690c0e">
+                <source>
+                    <x id="1" />
+                </source>
+            </trans-unit>
+            <group>
+                <sdl:cxts>
+                    <sdl:cxt id="1" />
+                    <sdl:node id="1" />
+                </sdl:cxts>
+                <trans-unit translate="no" id="8ec900dc-2c79-4790-9c31-231442f36c6d">
+                    <source>
+                        <x id="2" />
+                    </source>
+                </trans-unit>
+                <trans-unit id="dcd9e7f6-abcc-4639-8ead-044f80db8f34">
+                    <source></source>
+                    <seg-source></seg-source>
+                    <target></target>
+                </trans-unit>
+            </group>
+            <group>
+                <sdl:cxts>
+                    <sdl:cxt id="2" />
+                    <sdl:cxt id="1" />
+                    <sdl:node id="2" />
+                </sdl:cxts>
+                <trans-unit translate="no" id="5376268d-eced-4b35-80bc-e832b14f1b1e">
+                    <source>
+                        <x id="3" />
+                    </source>
+                </trans-unit>
+                <trans-unit id="5b6b0db3-2e2a-4684-a573-718e04f282fb">
+                    <source>
+                        Sheet1
+                    </source>
+                    <seg-source>
+                        <mrk mtype="seg" mid="1">Sheet1</mrk>
+                    </seg-source>
+                    <target>
+                        <mrk mtype="seg" mid="1" />
+                    </target>
+                    <sdl:seg-defs>
+                        <sdl:seg id="1">
+                            <sdl:value key="SegmentIdentityHash">uBS2TZQ/5NhiYsMTN7LOlA3z1ic=</sdl:value>
+                        </sdl:seg>
+                    </sdl:seg-defs>
+                </trans-unit>
+            </group>
+            <group>
+                <sdl:cxts>
+                    <sdl:cxt id="1" />
+                    <sdl:node id="1" />
+                </sdl:cxts>
+                <trans-unit translate="no" id="4d7365ea-d84a-474f-987d-1021ee80c126">
+                    <source>
+                        <x id="4" />
+                    </source>
+                </trans-unit>
+                <trans-unit id="e7ca2569-e7df-43ce-9747-5fe7db09f4ab">
+                    <source></source>
+                    <seg-source></seg-source>
+                    <target></target>
+                </trans-unit>
+            </group>
+            <group>
+                <sdl:cxts>
+                    <sdl:cxt id="3" />
+                    <sdl:cxt id="1" />
+                    <sdl:node id="3" />
+                </sdl:cxts>
+                <trans-unit translate="no" id="8ec94276-7d8b-448a-9a93-2333425ef1e6">
+                    <source>
+                        <x id="5" />
+                    </source>
+                </trans-unit>
+                <trans-unit id="5a5c6ae0-b256-4929-a7ae-4d826323bc40">
+                    <source>
+                        <x id="6" />If the watch been idle for 60 seconds or more, the backlight can only be activated by a button press.<x id="7" />
+                    </source>
+                    <seg-source>
+                        <x id="6" />
+                            <mrk mtype="seg" mid="2">If the watch been idle for 60 seconds or more, the backlight can only be activated by a button press.</mrk>
+                        <x id="7" />
+                    </seg-source>
+                    <target>
+                        <x id="6" />
+                            <mrk mtype="seg" mid="2" />
+                        <x id="7" />
+                    </target>
+                    <sdl:seg-defs>
+                        <sdl:seg id="2">
+                            <sdl:value key="SegmentIdentityHash">QTgKwX2qI83npo5nN24tkY6oFZQ=</sdl:value>
+                        </sdl:seg>
+                    </sdl:seg-defs>
+                </trans-unit>
+            </group>
+            <group>
+                <sdl:cxts>
+                    <sdl:cxt id="1" />
+                    <sdl:node id="1" />
+                </sdl:cxts>
+                <trans-unit translate="no" id="167af643-f06f-4bca-931e-bec0acadbb2e">
+                    <source>
+                        <x id="8" />
+                    </source>
+                </trans-unit>
+                <trans-unit id="9cfb8ac2-5638-4811-9170-28adc1e75db5">
+                    <source></source>
+                    <seg-source></seg-source>
+                    <target></target>
+                </trans-unit>
+            </group>
+            <group>
+                <sdl:cxts />
+                <trans-unit translate="no" id="9e1c6cd0-8be0-4b5c-bb25-06e2154bd76c">
+                    <source>
+                        <x id="9" />
+                    </source>
+                </trans-unit>
+            </group>
+            <trans-unit translate="no" id="5f5d7402-6dfe-4edc-bcf2-f9b265aa3f25">
+                <source>
+                    <x id="10" />
+                </source>
+            </trans-unit>
+            <trans-unit translate="no" id="c9504518-5464-4bd3-b600-4c22b2639a45">
+                <source>
+                    <x id="11" />
+                </source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

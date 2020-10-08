@@ -11,7 +11,51 @@ class XliffReplacerTest extends BaseTest
     /**
      * @test
      */
-    public function parses_with_no_errors()
+    public function can_replace_a_xliff_10()
+    {
+        $data = [
+            [
+                'sid' => 1,
+                'segment' => '<g id="1">&#128076;&#127995;</g>',
+                'internal_id' => 'NFDBB2FA9-tu519',
+                'mrk_id' => '',
+                'prev_tags' => '',
+                'succ_tags' => '',
+                'mrk_prev_tags' => '',
+                'mrk_succ_tags' => '',
+                'translation' => '<g id="1">&#128076;&#127995;</g>',
+                'status' => TranslationStatus::STATUS_TRANSLATED,
+                'eq_word_count' => 1,
+                'raw_word_count' => 1,
+            ]
+        ];
+
+        $transUnits = [];
+
+        foreach ($data as $i => $k) {
+            //create a secondary indexing mechanism on segments' array; this will be useful
+            //prepend a string so non-trans unit id ( ex: numerical ) are not overwritten
+            $internalId = $k[ 'internal_id' ];
+
+            $transUnits[ $internalId ] [] = $i;
+
+            $data[ 'matecat|' . $internalId ] [] = $i;
+        }
+
+        $inputFile = __DIR__.'/../tests/files/file-with-emoji.xliff';
+        $outputFile = __DIR__.'/../tests/files/output/file-with-emoji.xliff';
+
+        (new XliffParser())->replaceTranslation($inputFile, $data, $transUnits, 'fr-fr', $outputFile);
+        $output = (new XliffParser())->xliffToArray(file_get_contents($outputFile));
+        $expected = '<g id="1">👌🏻</g>';
+
+        $this->assertEquals($expected, $output['files'][3]['trans-units'][1]['target']['raw-content']);
+    }
+
+    /**
+     * @test
+     */
+    public function can_replace_a_xliff_20_with_no_errors()
     {
         $data = $this->getData();
         $inputFile = __DIR__.'/../tests/files/sample-20.xlf';
@@ -27,7 +71,7 @@ class XliffReplacerTest extends BaseTest
     /**
      * @test
      */
-    public function parses_with_consistency_errors()
+    public function can_replace_a_xliff_20_with_consistency_errors()
     {
         $data = $this->getData();
         $inputFile = __DIR__.'/../tests/files/sample-20.xlf';
