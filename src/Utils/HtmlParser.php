@@ -52,7 +52,7 @@ class HtmlParser
      */
     private static function getAttributes($content)
     {
-        $pattern = '/(.*?)=("|\')(.*?)("|\')/';
+        $pattern = '/(.*?)=("|\'|\\\")(.*?)("|\'|\\\")/';
 
         preg_match_all($pattern, $content, $matches, PREG_OFFSET_CAPTURE);
 

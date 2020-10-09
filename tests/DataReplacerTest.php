@@ -32,9 +32,15 @@ class DataReplacerTest extends BaseTest
             'source2' => '${RIDER}',
         ];
 
+        $dataReplacer = new DataRefReplacer($map);
+
         $string = 'Hai raccolto &lt;ph id="source1" dataRef="source1" equiv-text="base64:JHtBTU9VTlR9"/&gt;&nbsp; da &lt;ph id="source2" dataRef="source2" equiv-text="base64:JHtSSURFUn0="/&gt;?';
         $expected = 'Hai raccolto &lt;ph id="source1" dataRef="source1" equiv-text="base64:JHtBTU9VTlR9"/&gt;&nbsp; da &lt;ph id="source2" dataRef="source2" equiv-text="base64:JHtSSURFUn0="/&gt;?';
-        $dataReplacer = new DataRefReplacer($map);
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+
+        $string = 'Ai colectat &lt;ph id=\"source1\" dataRef=\"source1\"/&gt; din &lt;ph id=\"source2\" dataRef=\"source2\"/&gt;?';
+        $expected = 'Ai colectat &lt;ph id=\"source1\" dataRef=\"source1\" equiv-text="base64:JHtBTU9VTlR9"/&gt; din &lt;ph id=\"source2\" dataRef=\"source2\" equiv-text="base64:JHtSSURFUn0="/&gt;?';
 
         $this->assertEquals($expected, $dataReplacer->replace($string));
     }
