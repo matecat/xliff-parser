@@ -10,6 +10,31 @@ class StringsTest extends BaseTest
      * @test
      * @throws \Exception
      */
+    public function can_detect_escaped_html()
+    {
+        $strings = [
+            '&lt;ph id="1" /&gt;',
+            '&lt;div class="test"&gt;This is an html string &lt; /div&gt;',
+        ];
+
+        foreach ($strings as $string){
+            $this->assertTrue(Strings::isAnEscapedHTML($string));
+        }
+
+        $strings = [
+                '<ph id="1" />',
+                '<div class="test">This is an html string < /div>',
+        ];
+
+        foreach ($strings as $string){
+            $this->assertFalse(Strings::isAnEscapedHTML($string));
+        }
+    }
+
+    /**
+     * @test
+     * @throws \Exception
+     */
     public function can_detect_JSON()
     {
         $json = '{

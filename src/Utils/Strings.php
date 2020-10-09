@@ -207,4 +207,14 @@ class Strings
     {
         return htmlspecialchars_decode($string, ENT_NOQUOTES);
     }
+
+    /**
+     * @param string $str
+     *
+     * @return bool
+     */
+    public static function isAnEscapedHTML( $str )
+    {
+        return preg_match( "/\/[a-z]*&gt;/i", $str ) != 0;
+    }
 }

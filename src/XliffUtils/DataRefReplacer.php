@@ -14,20 +14,13 @@ class DataRefReplacer
     private $map;
 
     /**
-     * @var bool
-     */
-    private $escapedHtml;
-
-    /**
      * DataRefReplacer constructor.
      *
      * @param array $map
-     * @param bool  $escapedHtml
      */
-    public function __construct( array $map, $escapedHtml = false)
+    public function __construct( array $map)
     {
-        $this->map         = $map;
-        $this->escapedHtml = $escapedHtml;
+        $this->map = $map;
     }
 
     /**
@@ -51,7 +44,7 @@ class DataRefReplacer
         // clean string from equiv-text eventually present
         $string = $this->cleanFromEquivText($string);
 
-        $html = HtmlParser::parse($string, $this->escapedHtml);
+        $html = HtmlParser::parse($string);
 
         foreach ($html as $node) {
             // 1. Replace for ph|sc|ec tag
@@ -121,6 +114,7 @@ class DataRefReplacer
     private function convertPcToPhAndAddEquivText($node, $string)
     {
         $a = $node->node; // <pc id="1" canCopy="no" canDelete="no" dataRefEnd="d2" dataRefStart="d1">La Repubblica</pc>
+        $toBeEscaped = Strings::isAnEscapedHTML($a);
 
         if (isset($node->attributes['dataRefEnd']) and isset($node->attributes['dataRefStart'])) {
             $startValue = $this->map[$node->attributes['dataRefStart']];
@@ -132,7 +126,7 @@ class DataRefReplacer
             $startOriginalData = '<pc '. FlatData::flatArray($node->attributes, ' ', '=')  .'>';
             $endOriginalData = '</pc>';
 
-            if ($this->escapedHtml) {
+            if ($toBeEscaped) {
                 $startOriginalData = Strings::htmlentities($startOriginalData);
                 $endOriginalData = Strings::htmlentities($endOriginalData);
             }
@@ -157,7 +151,7 @@ class DataRefReplacer
             $string = str_replace($a, $d, $string);
         }
 
-        if ($this->escapedHtml) {
+        if ($toBeEscaped) {
             $string = Strings::htmlentities($string);
         }
 

@@ -13,9 +13,11 @@ class HtmlParser
      *
      * @return array
      */
-    public static function parse( $html, $escapedHtml = false)
+    public static function parse($html)
     {
-        if ($escapedHtml) {
+        $toBeEscaped = Strings::isAnEscapedHTML($html);
+
+        if ($toBeEscaped) {
             $html = Strings::htmlspecialchars_decode($html);
         }
 
@@ -28,7 +30,7 @@ class HtmlParser
 
         foreach ($matches[0] as $key => $match) {
             $elements[] = (object)[
-                'node' => ($escapedHtml) ? Strings::htmlentities($match[0]) : $match[0],
+                'node' => ($toBeEscaped) ? Strings::htmlentities($match[0]) : $match[0],
                 'offset' => $match[1],
                 'tagname' => $matches[1][$key][0],
                 'attributes' => isset($matches[2][$key][0]) ? self::getAttributes($matches[2][$key][0]) : [],
@@ -40,6 +42,8 @@ class HtmlParser
 
         return $elements;
     }
+
+
 
     /**
      * @param $content

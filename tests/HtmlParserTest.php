@@ -32,7 +32,7 @@ class HtmlParserTest extends BaseTest
     {
         $html = '&lt;div&gt;Ciao&lt;div&gt;Ciao&lt;/div&gt;&lt;/div&gt;';
 
-        $parsed = HtmlParser::parse($html, true);
+        $parsed = HtmlParser::parse($html);
         $this->assertCount(1, $parsed);
         $this->assertCount(1, $parsed[0]->inner_html);
     }

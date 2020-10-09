@@ -34,7 +34,7 @@ class DataReplacerTest extends BaseTest
 
         $string = 'Hai raccolto &lt;ph id="source1" dataRef="source1" equiv-text="base64:JHtBTU9VTlR9"/&gt;&nbsp; da &lt;ph id="source2" dataRef="source2" equiv-text="base64:JHtSSURFUn0="/&gt;?';
         $expected = 'Hai raccolto &lt;ph id="source1" dataRef="source1" equiv-text="base64:JHtBTU9VTlR9"/&gt;&nbsp; da &lt;ph id="source2" dataRef="source2" equiv-text="base64:JHtSSURFUn0="/&gt;?';
-        $dataReplacer = new DataRefReplacer($map, true);
+        $dataReplacer = new DataRefReplacer($map);
 
         $this->assertEquals($expected, $dataReplacer->replace($string));
     }
@@ -223,7 +223,7 @@ class DataReplacerTest extends BaseTest
         $string = 'Did you collect &lt;ph id="source1" dataRef="source1"/&gt; from &lt;ph id="source2" dataRef="source2"/&gt;?';
         $expected = 'Did you collect &lt;ph id="source1" dataRef="source1" equiv-text="base64:JHtSaWRlciBGaXJzdCBOYW1lfQ=="/&gt; from &lt;ph id="source2" dataRef="source2" equiv-text="base64:JmFtcDtsdDtkaXYmYW1wOw=="/&gt;?';
 
-        $dataReplacer = new DataRefReplacer($map, true);
+        $dataReplacer = new DataRefReplacer($map);
 
         $this->assertEquals($expected, $dataReplacer->replace($string));
         $this->assertEquals($string, $dataReplacer->restore($expected));
@@ -242,7 +242,7 @@ class DataReplacerTest extends BaseTest
         $string = 'Did you collect &lt;ph id="source1" dataRef="source1" equiv-text="base64:"/&gt; from &lt;ph id="source2" dataRef="source2" equiv-text="base64:"/&gt;?';
         $expected = 'Did you collect &lt;ph id="source1" dataRef="source1" equiv-text="base64:JHtSaWRlciBGaXJzdCBOYW1lfQ=="/&gt; from &lt;ph id="source2" dataRef="source2" equiv-text="base64:JmFtcDtsdDtkaXYmYW1wOw=="/&gt;?';
 
-        $dataReplacer = new DataRefReplacer($map, true);
+        $dataReplacer = new DataRefReplacer($map);
 
         $this->assertEquals($expected, $dataReplacer->replace($string));
         $this->assertEquals('Did you collect &lt;ph id="source1" dataRef="source1"/&gt; from &lt;ph id="source2" dataRef="source2"/&gt;?', $dataReplacer->restore($expected));
@@ -381,7 +381,7 @@ class DataReplacerTest extends BaseTest
         $string = 'Link semplici: &lt;pc id="1" dataRefEnd="d2" dataRefStart="d1"&gt;La Repubblica&lt;/pc&gt;';
         $expected = 'Link semplici: &lt;ph id="1_1" dataType="pcStart" originalData="Jmx0O3BjIGlkPSIxIiBkYXRhUmVmRW5kPSJkMiIgZGF0YVJlZlN0YXJ0PSJkMSImZ3Q7" dataRef="d1" equiv-text="base64:Ww=="/&gt;La Repubblica&lt;ph id="1_2" dataType="pcEnd" originalData="Jmx0Oy9wYyZndDs=" dataRef="d2" equiv-text="base64:XShodHRwOi8vcmVwdWJibGljYS5pdCk="/&gt;';
 
-        $dataReplacer = new DataRefReplacer($map, true);
+        $dataReplacer = new DataRefReplacer($map);
 
         $this->assertEquals($expected, $dataReplacer->replace($string));
         $this->assertEquals($string, $dataReplacer->restore($expected));
