@@ -30,7 +30,6 @@ class XliffParserV2 extends AbstractXliffParser
             /** @var \DOMElement $transUnit */
             foreach ($file->childNodes as $childNode) {
                 $this->extractTuFromNode($childNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j);
-
             }
 
             // trans-unit re-count check
