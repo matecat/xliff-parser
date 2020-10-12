@@ -14,13 +14,31 @@ abstract class AbstractXliffParser
     protected $logger;
 
     /**
+     * @var int
+     */
+    protected $version;
+
+    /**
      * XliffParser constructor.
      *
      * @param LoggerInterface $logger
      */
-    public function __construct(LoggerInterface $logger = null)
+    public function __construct($version, LoggerInterface $logger = null)
     {
+        $this->version = $version;
         $this->logger = $logger;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getTuTagName()
+    {
+        if($this->version === 1) {
+            return 'trans-unit';
+        }
+
+        return 'unit';
     }
 
     /**
@@ -29,6 +47,43 @@ abstract class AbstractXliffParser
      * @return array
      */
     abstract public function parse(\DOMDocument $dom, $output = []);
+
+    /**
+     * Extract and populate 'trans-units' array
+     *
+     * @param $transUnit
+     * @param $transUnitIdArrayForUniquenessCheck
+     * @param $dom
+     * @param $output
+     * @param $i
+     * @param $j
+     *
+     * @return mixed
+     */
+    abstract protected function extractTransUnit($transUnit, &$transUnitIdArrayForUniquenessCheck, $dom, &$output, &$i, &$j);
+
+    /**
+     * @param              $childNode
+     * @param              $transUnitIdArrayForUniquenessCheck
+     * @param \DOMDocument $dom
+     * @param              $output
+     * @param              $i
+     * @param              $j
+     */
+    protected function extractTuFromNode($childNode, &$transUnitIdArrayForUniquenessCheck, \DOMDocument $dom, &$output, &$i, &$j)
+    {
+        if ($childNode->nodeName === 'group') {
+            foreach ($childNode->childNodes as $nestedChildNode) {
+                if ($nestedChildNode->nodeName === 'group') {
+                    $this->extractTuFromNode($nestedChildNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j);
+                } elseif ($nestedChildNode->nodeName === $this->getTuTagName()) {
+                    static::extractTransUnit($nestedChildNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j);
+                }
+            }
+        } elseif ($childNode->nodeName === $this->getTuTagName()) {
+            static::extractTransUnit($childNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j);
+        }
+    }
 
     /**
      * @param \DOMDocument $dom

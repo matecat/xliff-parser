@@ -20,6 +20,6 @@ class XliffParserFactory
         $parserClass = 'Matecat\\XliffParser\\XliffParser\\XliffParserV' . $version;
 
         /** @var AbstractXliffParser $parser */
-        return new $parserClass($logger);
+        return new $parserClass($version, $logger);
     }
 }

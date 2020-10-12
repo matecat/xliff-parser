@@ -123,31 +123,6 @@ class XliffParserV1 extends AbstractXliffParser
     }
 
     /**
-     * @param $childNode
-     * @param $transUnitIdArrayForUniquenessCheck
-     * @param $dom
-     * @param $output
-     * @param $i
-     * @param $j
-     *
-     * @throws \Exception
-     */
-    private function extractTuFromNode($childNode, &$transUnitIdArrayForUniquenessCheck, $dom, &$output, &$i, &$j)
-    {
-        if ($childNode->nodeName === 'group') {
-            foreach ($childNode->childNodes as $nestedChildNode) {
-                if ($nestedChildNode->nodeName === 'group') {
-                    $this->extractTuFromNode($nestedChildNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j);
-                } elseif ($nestedChildNode->nodeName === 'trans-unit') {
-                    $this->extractTransUnit($nestedChildNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j);
-                }
-            }
-        } elseif ($childNode->nodeName === 'trans-unit') {
-            $this->extractTransUnit($childNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j);
-        }
-    }
-
-    /**
      * Extract and populate 'trans-units' array
      *
      * @param $transUnit
@@ -159,7 +134,7 @@ class XliffParserV1 extends AbstractXliffParser
      *
      * @throws \Exception
      */
-    private function extractTransUnit($transUnit, &$transUnitIdArrayForUniquenessCheck, $dom, &$output, &$i, &$j)
+    protected function extractTransUnit($transUnit, &$transUnitIdArrayForUniquenessCheck, $dom, &$output, &$i, &$j)
     {
         // metadata
         $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'attr' ] = $this->extractTransUnitMetadata($transUnit, $transUnitIdArrayForUniquenessCheck);
