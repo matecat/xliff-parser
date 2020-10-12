@@ -273,6 +273,16 @@ class XliffParserV1Test extends BaseTest
         );
     }
 
+    /**
+     * @test
+     */
+    public function can_parse_xliff_v1_with_nested_group_tags()
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('file-with-nested-group.xliff'));
+
+        $this->assertCount(5, $parsed[ 'files' ][ 3 ][ 'trans-units' ]);
+        $this->assertEquals('Bla Bla', $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'source' ][ 'raw-content' ]);
+    }
 
     public function can_parse_xliff_v1_tu_with_complex_structure()
     {

@@ -31,15 +31,7 @@ class XliffParserV1 extends AbstractXliffParser
             foreach ($file->childNodes as $body) {
                 if ($body->nodeName === 'body') {
                     foreach ($body->childNodes as $childNode) {
-                        if ($childNode->nodeName === 'group') {
-                            foreach ($childNode->childNodes as $nestedChildNode) {
-                                if ($nestedChildNode->nodeName === 'trans-unit') {
-                                    $this->extractTransUnit($nestedChildNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j);
-                                }
-                            }
-                        } elseif ($childNode->nodeName === 'trans-unit') {
-                            $this->extractTransUnit($childNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j);
-                        }
+                        $this->extractTuFromNode($childNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j);
                     }
 
                     // trans-unit re-count check
@@ -128,6 +120,31 @@ class XliffParserV1 extends AbstractXliffParser
         }
 
         return $reference;
+    }
+
+    /**
+     * @param $childNode
+     * @param $transUnitIdArrayForUniquenessCheck
+     * @param $dom
+     * @param $output
+     * @param $i
+     * @param $j
+     *
+     * @throws \Exception
+     */
+    private function extractTuFromNode($childNode, &$transUnitIdArrayForUniquenessCheck, $dom, &$output, &$i, &$j)
+    {
+        if ($childNode->nodeName === 'group') {
+            foreach ($childNode->childNodes as $nestedChildNode) {
+                if ($nestedChildNode->nodeName === 'group') {
+                    $this->extractTuFromNode($nestedChildNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j);
+                } elseif ($nestedChildNode->nodeName === 'trans-unit') {
+                    $this->extractTransUnit($nestedChildNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j);
+                }
+            }
+        } elseif ($childNode->nodeName === 'trans-unit') {
+            $this->extractTransUnit($childNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j);
+        }
     }
 
     /**

@@ -29,15 +29,8 @@ class XliffParserV2 extends AbstractXliffParser
             $j = 1;
             /** @var \DOMElement $transUnit */
             foreach ($file->childNodes as $childNode) {
-                if ($childNode->nodeName === 'group') {
-                    foreach ($childNode->childNodes as $nestedChildNode) {
-                        if ($nestedChildNode->nodeName === 'unit') {
-                            $this->extractTransUnit($nestedChildNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j);
-                        }
-                    }
-                } elseif ($childNode->nodeName === 'unit') {
-                    $this->extractTransUnit($childNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j);
-                }
+                $this->extractTuFromNode($childNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j);
+
             }
 
             // trans-unit re-count check
@@ -106,6 +99,31 @@ class XliffParserV2 extends AbstractXliffParser
         }
 
         return $notes;
+    }
+
+    /**
+     * @param $childNode
+     * @param $transUnitIdArrayForUniquenessCheck
+     * @param $dom
+     * @param $output
+     * @param $i
+     * @param $j
+     *
+     * @throws \Exception
+     */
+    private function extractTuFromNode($childNode, &$transUnitIdArrayForUniquenessCheck, $dom, &$output, &$i, &$j)
+    {
+        if ($childNode->nodeName === 'group') {
+            foreach ($childNode->childNodes as $nestedChildNode) {
+                if ($nestedChildNode->nodeName === 'group') {
+                    $this->extractTuFromNode($nestedChildNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j);
+                } elseif ($nestedChildNode->nodeName === 'unit') {
+                    $this->extractTransUnit($nestedChildNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j);
+                }
+            }
+        } elseif ($childNode->nodeName === 'unit') {
+            $this->extractTransUnit($childNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j);
+        }
     }
 
     /**
