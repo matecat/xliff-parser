@@ -21,6 +21,7 @@ abstract class AbstractXliffParser
     /**
      * XliffParser constructor.
      *
+     * @param int             $version
      * @param LoggerInterface $logger
      */
     public function __construct($version, LoggerInterface $logger = null)
@@ -34,11 +35,7 @@ abstract class AbstractXliffParser
      */
     protected function getTuTagName()
     {
-        if($this->version === 1) {
-            return 'trans-unit';
-        }
-
-        return 'unit';
+        return ($this->version === 1) ? 'trans-unit' : 'unit';
     }
 
     /**
@@ -49,20 +46,8 @@ abstract class AbstractXliffParser
     abstract public function parse(\DOMDocument $dom, $output = []);
 
     /**
-     * Extract and populate 'trans-units' array
+     * Extract trans-unit content from the current node
      *
-     * @param $transUnit
-     * @param $transUnitIdArrayForUniquenessCheck
-     * @param $dom
-     * @param $output
-     * @param $i
-     * @param $j
-     *
-     * @return mixed
-     */
-    abstract protected function extractTransUnit($transUnit, &$transUnitIdArrayForUniquenessCheck, $dom, &$output, &$i, &$j);
-
-    /**
      * @param              $childNode
      * @param              $transUnitIdArrayForUniquenessCheck
      * @param \DOMDocument $dom
@@ -84,6 +69,20 @@ abstract class AbstractXliffParser
             static::extractTransUnit($childNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j);
         }
     }
+
+    /**
+     * Extract and populate 'trans-units' array
+     *
+     * @param $transUnit
+     * @param $transUnitIdArrayForUniquenessCheck
+     * @param $dom
+     * @param $output
+     * @param $i
+     * @param $j
+     *
+     * @return mixed
+     */
+    abstract protected function extractTransUnit($transUnit, &$transUnitIdArrayForUniquenessCheck, $dom, &$output, &$i, &$j);
 
     /**
      * @param \DOMDocument $dom
