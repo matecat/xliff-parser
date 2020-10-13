@@ -151,8 +151,8 @@ class DataRefReplacer
             $string = str_replace($a, $d, $string);
         }
 
-        if ($toBeEscaped) {
-            $string = Strings::htmlentities($string);
+        if($toBeEscaped){
+            $string = str_replace(['<', '>'], ['&lt;', '&gt;'], $string);
         }
 
         return $string;

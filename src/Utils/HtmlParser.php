@@ -9,7 +9,6 @@ class HtmlParser
      * https://www.php.net/manual/fr/regexp.reference.recursive.php#95568
      *
      * @param string $html
-     * @param bool   $escapedHtml
      *
      * @return array
      */
@@ -21,7 +20,17 @@ class HtmlParser
             $html = Strings::htmlspecialchars_decode($html);
         }
 
-        // I have split the pattern in two lines not to have long lines alerts by the PHP.net form:
+        return self::extractHtmlNode($html, $toBeEscaped);
+    }
+
+    /**
+     * @param string $html
+     * @param bool $toBeEscaped
+     *
+     * @return array
+     */
+    private static function extractHtmlNode( $html, $toBeEscaped = false)
+    {
         $pattern = "/<([\w]+)([^>]*?)(([\s]*\/>)|".
                 "(>((([^<]*?|<\!\-\-.*?\-\->)|(?R))*)<\/\\1[\s]*>))/sm";
         preg_match_all($pattern, $html, $matches, PREG_OFFSET_CAPTURE);
@@ -35,15 +44,13 @@ class HtmlParser
                 'tagname' => $matches[1][$key][0],
                 'attributes' => isset($matches[2][$key][0]) ? self::getAttributes($matches[2][$key][0]) : [],
                 'omittag' => ($matches[4][$key][1] > -1), // boolean
-                'inner_html' => $inner_html = self::getInnerHtml($matches, $key),
+                'inner_html' => $inner_html = self::getInnerHtml($matches, $key, $toBeEscaped),
                 'has_children' => is_array($inner_html),
             ];
         }
 
         return $elements;
     }
-
-
 
     /**
      * @param $content
@@ -68,19 +75,19 @@ class HtmlParser
     }
 
     /**
-     * @param array $matches
+     * @param array  $matches
      * @param string $key
+     *
+     * @param bool   $toBeEscaped
      *
      * @return array|mixed|string
      */
-    private static function getInnerHtml($matches, $key)
+    private static function getInnerHtml($matches, $key, $toBeEscaped = false)
     {
         if (isset($matches[6][$key][0])) {
-            if (!empty(self::parse($matches[6][$key][0]))) {
-                return self::parse($matches[6][$key][0]);
-            }
+            $node = self::extractHtmlNode($matches[6][$key][0], $toBeEscaped);
 
-            return $matches[6][$key][0];
+            return (!empty($node)) ? $node: $matches[6][$key][0];
         }
 
         return '';
