@@ -33,6 +33,20 @@ class StringsTest extends BaseTest
 
     /**
      * @test
+     */
+    public function can_detect_escaped_html_additional_test()
+    {
+        $string = '<5 &lt;pc id="1"/&gt;';
+
+        $this->assertTrue(Strings::isAnEscapedHTML($string));
+
+        $string = '&lt;5 <pc id="1"/>';
+
+        $this->assertFalse(Strings::isAnEscapedHTML($string));
+    }
+
+    /**
+     * @test
      * @throws \Exception
      */
     public function can_detect_JSON()

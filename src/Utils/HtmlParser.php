@@ -31,7 +31,7 @@ class HtmlParser
      */
     private static function extractHtmlNode( $html, $toBeEscaped = false)
     {
-        $pattern = "/<([\w]+)([^>]*?)(([\s]*\/>)|".
+        $pattern = "/<([\w]+)([^>]|[^<]*?)(([\s]*\/>)|".
                 "(>((([^<]*?|<\!\-\-.*?\-\->)|(?R))*)<\/\\1[\s]*>))/sm";
         preg_match_all($pattern, $html, $matches, PREG_OFFSET_CAPTURE);
 

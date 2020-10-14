@@ -1,0 +1,384 @@
+<?xml version="1.0"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en-US" trgLang="it-IT" xmlns:its="http://www.w3.org/2005/11/its" xmlns:itsxlf="http://www.w3.org/ns/its-xliff/" its:version="2.0">
+    <file id="f1" original="/home/afalappa/Documenti/filters-sample-docs/markdown/prova.md">
+        <unit id="tu1">
+            <segment>
+                <source xml:space="preserve">Titolo del documento</source>
+            </segment>
+        </unit>
+        <unit id="tu2">
+            <originalData>
+                <data id="d1">_</data>
+                <data id="d2">**</data>
+                <data id="d3">`</data>
+            </originalData>
+            <segment>
+                <source xml:space="preserve">Testo libero contenente <pc id="1" canCopy="no" canDelete="no" dataRefEnd="d1" dataRefStart="d1">corsivo</pc>, <pc id="2" canCopy="no" canDelete="no" dataRefEnd="d2" dataRefStart="d2">grassetto</pc>, <pc id="3" canCopy="no" canDelete="no" dataRefEnd="d1" dataRefStart="d1"><pc id="4" canCopy="no" canDelete="no" dataRefEnd="d2" dataRefStart="d2">grassetto + corsivo</pc></pc> e <pc id="5" canCopy="no" canDelete="no" dataRefEnd="d3" dataRefStart="d3">larghezza fissa</pc>.</source>
+            </segment>
+        </unit>
+        <unit id="tu3">
+            <segment>
+                <source xml:space="preserve">Questo è un paragrafo contenente due frasi. La seconda frase è di seguito alla prima.</source>
+            </segment>
+        </unit>
+        <unit id="tu4">
+            <originalData>
+                <data id="d1">  </data>
+            </originalData>
+            <segment>
+                <source xml:space="preserve">Anche quest'altro paragrafo contiene due frasi.<ph id="1" canCopy="no" canDelete="no" dataRef="d1"/>
+                    La seconda frase va sulla riga successiva.</source>
+            </segment>
+        </unit>
+        <unit id="tu5">
+            <segment>
+                <source xml:space="preserve">Questo paragrafo contiene caratteri 'escaped' come ad esempio: \{, \}, \[, \] e \#.</source>
+            </segment>
+        </unit>
+        <unit id="tu6">
+            <originalData>
+                <data id="d1">[</data>
+                <data id="d2">]</data>
+            </originalData>
+            <segment>
+                <source xml:space="preserve">In questa frase ci sono caratteri 'non escaped'! Per vedere come si comporta { + o - } il filtro Markdown in presenza di #. Anche se non è_detto_che 2 * 2 &lt; 5 con <ph id="1" canCopy="no" canDelete="no" dataRef="d1"/><ph id="2" canCopy="no" canDelete="no" dataRef="d2"/>.</source>
+            </segment>
+        </unit>
+        <unit id="tu7">
+            <segment>
+                <source xml:space="preserve">Liste</source>
+            </segment>
+        </unit>
+        <unit id="tu8">
+            <segment>
+                <source xml:space="preserve">Una lista puntata:</source>
+            </segment>
+        </unit>
+        <unit id="tu9">
+            <segment>
+                <source xml:space="preserve">Uno</source>
+            </segment>
+        </unit>
+        <unit id="tu10">
+            <segment>
+                <source xml:space="preserve">Due</source>
+            </segment>
+        </unit>
+        <unit id="tu11">
+            <segment>
+                <source xml:space="preserve">Tre</source>
+            </segment>
+        </unit>
+        <unit id="tu12">
+            <segment>
+                <source xml:space="preserve">Tre indentato</source>
+            </segment>
+        </unit>
+        <unit id="tu13">
+            <segment>
+                <source xml:space="preserve">Altro tre indentato</source>
+            </segment>
+        </unit>
+        <unit id="tu14">
+            <segment>
+                <source xml:space="preserve">Una lista numerata:</source>
+            </segment>
+        </unit>
+        <unit id="tu15">
+            <segment>
+                <source xml:space="preserve">Uno</source>
+            </segment>
+        </unit>
+        <unit id="tu16">
+            <segment>
+                <source xml:space="preserve">Due</source>
+            </segment>
+        </unit>
+        <unit id="tu17">
+            <segment>
+                <source xml:space="preserve">Tre</source>
+            </segment>
+        </unit>
+        <unit id="tu18">
+            <segment>
+                <source xml:space="preserve">Quattro</source>
+            </segment>
+        </unit>
+        <unit id="tu19">
+            <segment>
+                <source xml:space="preserve">Quattro punto uno</source>
+            </segment>
+        </unit>
+        <unit id="tu20">
+            <segment>
+                <source xml:space="preserve">Quattro punto due</source>
+            </segment>
+        </unit>
+        <unit id="tu21">
+            <segment>
+                <source xml:space="preserve">Citazioni</source>
+            </segment>
+        </unit>
+        <unit id="tu22">
+            <segment>
+                <source xml:space="preserve">Aforisma di Oscar Wilde:</source>
+            </segment>
+        </unit>
+        <unit id="tu23">
+            <segment>
+                <source xml:space="preserve">Posso resistere a tutto, tranne che alle tentazioni</source>
+            </segment>
+        </unit>
+        <unit id="tu24">
+            <segment>
+                <source xml:space="preserve">Blocchi preformattati</source>
+            </segment>
+        </unit>
+        <unit id="tu25">
+            <segment>
+                <source xml:space="preserve">Blocco di testo preformattato:</source>
+            </segment>
+        </unit>
+        <unit id="tu26">
+            <segment>
+                <source xml:space="preserve">Ciao!
+Testo
+  da
+    mantenere
+      allineato
+        a scaletta.
+          Contiene
+            due
+              frasi.
+</source>
+            </segment>
+        </unit>
+        <unit id="tu27">
+            <segment>
+                <source xml:space="preserve">Links</source>
+            </segment>
+        </unit>
+        <unit id="tu28">
+            <originalData>
+                <data id="d1">[</data>
+                <data id="d2">](http://repubblica.it)</data>
+            </originalData>
+            <segment>
+                <source xml:space="preserve">Link semplice: <pc id="1" canCopy="no" canDelete="no" dataRefEnd="d2" dataRefStart="d1">La Repubblica</pc>.</source>
+            </segment>
+        </unit>
+        <unit id="tu29">
+            <originalData>
+                <data id="d1">[</data>
+                <data id="d2">](http://google.it "</data>
+                <data id="d3">")</data>
+            </originalData>
+            <segment>
+                <source xml:space="preserve">Link con testo alternativo: <pc id="1" canCopy="no" canDelete="no" dataRefEnd="d2" dataRefStart="d1">Google</pc>La pagina di Google<ec id="2" isolated="yes" canOverlap="no" canCopy="no" canDelete="no" dataRef="d3"/>.</source>
+            </segment>
+        </unit>
+        <unit id="tu30">
+            <originalData>
+                <data id="d1">[</data>
+                <data id="d2">]</data>
+                <data id="d3">1</data>
+            </originalData>
+            <segment>
+                <source xml:space="preserve">Link in forma di riferimento: <ph id="1" canCopy="no" canDelete="no" dataRef="d1"/>Twitter<ph id="2" canCopy="no" canDelete="no" dataRef="d2"/><ph id="3" canCopy="no" canDelete="no" dataRef="d1"/><ph id="4" canCopy="no" canDelete="no" dataRef="d3"/><ph id="5" canCopy="no" canDelete="no" dataRef="d2"/>.</source>
+            </segment>
+        </unit>
+        <unit id="tu31">
+            <originalData>
+                <data id="d1">&lt;pierino@viavai.it></data>
+            </originalData>
+            <segment>
+                <source xml:space="preserve">Un indirizzo di posta: <ph id="1" canCopy="no" canDelete="no" dataRef="d1"/>.</source>
+            </segment>
+        </unit>
+        <unit id="tu32">
+            <originalData>
+                <data id="d1">&lt;http://ilmessaggero.it></data>
+            </originalData>
+            <segment>
+                <source xml:space="preserve">Un link autorilevato: <ph id="1" canCopy="no" canDelete="no" dataRef="d1"/>.</source>
+            </segment>
+        </unit>
+        <unit id="tu33">
+            <segment>
+                <source xml:space="preserve">La pagina di Twitter</source>
+            </segment>
+        </unit>
+        <unit id="tu34">
+            <segment>
+                <source xml:space="preserve">Immagini</source>
+            </segment>
+        </unit>
+        <unit id="tu35">
+            <segment>
+                <source xml:space="preserve">Immagine normale:</source>
+            </segment>
+        </unit>
+        <unit id="tu36">
+            <originalData>
+                <data id="d1">![</data>
+                <data id="d2">](https://www.adnkronos.com/rf/image_size_400x300/Pub/AdnKronos/Assets/Immagini/gattino.png)</data>
+            </originalData>
+            <segment>
+                <source xml:space="preserve"><ph id="1" canCopy="no" canDelete="no" dataRef="d1"/><ph id="2" canCopy="no" canDelete="no" dataRef="d2"/></source>
+            </segment>
+        </unit>
+        <unit id="tu37">
+            <segment>
+                <source xml:space="preserve">Immagine con testo alternativo:</source>
+            </segment>
+        </unit>
+        <unit id="tu38">
+            <originalData>
+                <data id="d1">![</data>
+                <data id="d2">](https://www.pu24.it/wp/wp-content/uploads/2019/03/Gattini-foto-tratta-dal-web.jpeg)</data>
+            </originalData>
+            <segment>
+                <source xml:space="preserve"><ph id="1" canCopy="no" canDelete="no" dataRef="d1"/>Cuccioli di gatto<ph id="2" canCopy="no" canDelete="no" dataRef="d2"/></source>
+            </segment>
+        </unit>
+        <unit id="tu39">
+            <segment>
+                <source xml:space="preserve">Separatori</source>
+            </segment>
+        </unit>
+        <unit id="tu40">
+            <segment>
+                <source xml:space="preserve">Di seguito una linea separatrice.</source>
+            </segment>
+        </unit>
+        <unit id="tu41">
+            <segment>
+                <source xml:space="preserve">Testo dopo la linea.</source>
+            </segment>
+        </unit>
+        <unit id="tu42">
+            <segment>
+                <source xml:space="preserve">HTML incluso</source>
+            </segment>
+        </unit>
+        <unit id="tu43">
+            <originalData>
+                <data id="d1">&lt;i></data>
+                <data id="d2">&lt;/i></data>
+            </originalData>
+            <segment>
+                <source xml:space="preserve">Questo paragrafo <ph id="1" canCopy="no" canDelete="no" dataRef="d1"/>contiene<ph id="2" canCopy="no" canDelete="no" dataRef="d2"/></source>
+            </segment>
+        </unit>
+        <unit id="tu44">
+            <originalData>
+                <data id="d1">&lt;b></data>
+                <data id="d2">&lt;/b></data>
+            </originalData>
+            <segment>
+                <source xml:space="preserve"><ph id="1" canCopy="no" canDelete="no" dataRef="d1"/>stili<ph id="2" canCopy="no" canDelete="no" dataRef="d2"/></source>
+            </segment>
+        </unit>
+        <unit id="tu45">
+            <originalData>
+                <data id="d1">&lt;code></data>
+                <data id="d2">&lt;/code></data>
+                <data id="d3">&lt;b></data>
+                <data id="d4">&lt;i></data>
+                <data id="d5">&lt;/i></data>
+                <data id="d6">&lt;/b></data>
+            </originalData>
+            <segment>
+                <source xml:space="preserve"><ph id="1" canCopy="no" canDelete="no" dataRef="d1"/>formattati<ph id="2" canCopy="no" canDelete="no" dataRef="d2"/> in <ph id="3" canCopy="no" canDelete="no" dataRef="d3"/><ph id="4" canCopy="no" canDelete="no" dataRef="d4"/>HTML<ph id="5" canCopy="no" canDelete="no" dataRef="d5"/><ph id="6" canCopy="no" canDelete="no" dataRef="d6"/>.</source>
+            </segment>
+        </unit>
+        <unit id="tu46">
+            <originalData>
+                <data id="d1">&lt;input type="Submit"/></data>
+            </originalData>
+            <segment>
+                <source xml:space="preserve">Widget: <ph id="1" canCopy="no" canDelete="no" dataRef="d1"/></source>
+            </segment>
+        </unit>
+        <unit id="tu47">
+            <originalData>
+                <data id="d1">&lt;button></data>
+                <data id="d2">&lt;/button></data>
+            </originalData>
+            <segment>
+                <source xml:space="preserve"><ph id="1" canCopy="no" canDelete="no" dataRef="d1"/>Annulla<ph id="2" canCopy="no" canDelete="no" dataRef="d2"/></source>
+            </segment>
+        </unit>
+        <unit id="tu48">
+            <segment>
+                <source xml:space="preserve">Tabelle (GitHub Flavored Markdown)</source>
+            </segment>
+        </unit>
+        <unit id="tu49">
+            <segment>
+                <source xml:space="preserve">Di sequito una semplice tabella:</source>
+            </segment>
+        </unit>
+        <unit id="tu50">
+            <segment>
+                <source xml:space="preserve">Descrizione</source>
+            </segment>
+        </unit>
+        <unit id="tu51">
+            <segment>
+                <source xml:space="preserve">Quantità</source>
+            </segment>
+        </unit>
+        <unit id="tu52">
+            <segment>
+                <source xml:space="preserve">Mele</source>
+            </segment>
+        </unit>
+        <unit id="tu53">
+            <segment>
+                <source xml:space="preserve">23</source>
+            </segment>
+        </unit>
+        <unit id="tu54">
+            <segment>
+                <source xml:space="preserve">Pere</source>
+            </segment>
+        </unit>
+        <unit id="tu55">
+            <segment>
+                <source xml:space="preserve">12</source>
+            </segment>
+        </unit>
+        <unit id="tu56">
+            <segment>
+                <source xml:space="preserve">Banane</source>
+            </segment>
+        </unit>
+        <unit id="tu57">
+            <segment>
+                <source xml:space="preserve">26</source>
+            </segment>
+        </unit>
+        <unit id="tu58">
+            <segment>
+                <source xml:space="preserve">Blocchi di codice (GitHub Flavored Markdown)</source>
+            </segment>
+        </unit>
+        <unit id="tu59">
+            <originalData>
+                <data id="d1">**</data>
+            </originalData>
+            <segment>
+                <source xml:space="preserve">Di seguito un blocco di codice C con <pc id="1" canCopy="no" canDelete="no" dataRefEnd="d1" dataRefStart="d1">tripli apici inversi</pc>:</source>
+            </segment>
+        </unit>
+        <unit id="tu60">
+            <segment>
+                <source xml:space="preserve">int main(char* argv){
+    printf("Hello world!\n");
+}
+</source>
+            </segment>
+        </unit>
+    </file>
+</xliff>
