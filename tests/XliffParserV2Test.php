@@ -187,18 +187,6 @@ class XliffParserV2Test extends BaseTest
     /**
      * @test
      */
-    public function can_parse_xliff_v2_with_square_brakets_in_dataRef()
-    {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('prova.md.xlf'));
-
-        var_export(
-                $parsed
-        );
-    }
-
-    /**
-     * @test
-     */
     public function can_parse_xliff_v2()
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('sample-20.xlf'));
