@@ -11,6 +11,46 @@ class XliffReplacerTest extends BaseTest
     /**
      * @test
      */
+    public function can_replace_a_xliff_10_without_target_lang()
+    {
+        $data = [
+                [
+                        'sid' => 1,
+                        'segment' => 'Image showing Italian Patreon creators',
+                        'internal_id' => 'pendo-image-e3aaf7b7|alt',
+                        'mrk_id' => '',
+                        'prev_tags' => '',
+                        'succ_tags' => '',
+                        'mrk_prev_tags' => '',
+                        'mrk_succ_tags' => '',
+                        'translation' => 'Bla bla bla',
+                        'status' => TranslationStatus::STATUS_TRANSLATED,
+                        'eq_word_count' => 1,
+                        'raw_word_count' => 1,
+                ]
+        ];
+
+        $transUnits = [];
+
+        foreach ($data as $i => $k) {
+            //create a secondary indexing mechanism on segments' array; this will be useful
+            //prepend a string so non-trans unit id ( ex: numerical ) are not overwritten
+            $internalId = $k[ 'internal_id' ];
+
+            $transUnits[ $internalId ] [] = $i;
+
+            $data[ 'matecat|' . $internalId ] [] = $i;
+        }
+
+        $inputFile = __DIR__.'/../tests/files/no-target.xliff';
+        $outputFile = __DIR__.'/../tests/files/output/no-target.xliff';
+
+        (new XliffParser())->replaceTranslation($inputFile, $data, $transUnits, 'it-it', $outputFile);
+    }
+
+    /**
+     * @test
+     */
     public function can_replace_a_xliff_10()
     {
         $data = [
