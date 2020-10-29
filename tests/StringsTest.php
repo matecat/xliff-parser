@@ -104,4 +104,16 @@ class StringsTest extends BaseTest
             $this->assertEquals($expected, $out);
         }
     }
+
+    /**
+     * @test
+     */
+    public function can_validate_an_uuid()
+    {
+        $not_valid_uuid = 'xxx';
+        $uuid = '4213862b-596b-4b03-b175-baf4a0ed6fd8';
+
+        $this->assertFalse(Strings::isAValidUuid($not_valid_uuid));
+        $this->assertTrue(Strings::isAValidUuid($uuid));
+    }
 }

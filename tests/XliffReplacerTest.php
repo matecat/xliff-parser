@@ -45,7 +45,11 @@ class XliffReplacerTest extends BaseTest
         $inputFile = __DIR__.'/../tests/files/no-target.xliff';
         $outputFile = __DIR__.'/../tests/files/output/no-target.xliff';
 
-        (new XliffParser())->replaceTranslation($inputFile, $data, $transUnits, 'it-it', $outputFile);
+        $xliffParser = new XliffParser();
+        $xliffParser->replaceTranslation($inputFile, $data, $transUnits, 'it-it', $outputFile);
+        $output = $xliffParser->xliffToArray(file_get_contents($outputFile));
+
+        $this->assertEquals($output['files'][1]['attr']['target-language'], 'it-it');
     }
 
     /**
@@ -85,8 +89,9 @@ class XliffReplacerTest extends BaseTest
         $inputFile = __DIR__.'/../tests/files/file-with-emoji.xliff';
         $outputFile = __DIR__.'/../tests/files/output/file-with-emoji.xliff';
 
-        (new XliffParser())->replaceTranslation($inputFile, $data, $transUnits, 'fr-fr', $outputFile);
-        $output = (new XliffParser())->xliffToArray(file_get_contents($outputFile));
+        $xliffParser = new XliffParser();
+        $xliffParser->replaceTranslation($inputFile, $data, $transUnits, 'fr-fr', $outputFile);
+        $output = $xliffParser->xliffToArray(file_get_contents($outputFile));
         $expected = '<g id="1">👌🏻</g>';
 
         $this->assertEquals($expected, $output['files'][3]['trans-units'][1]['target']['raw-content']);

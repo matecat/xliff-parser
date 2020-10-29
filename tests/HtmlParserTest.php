@@ -91,10 +91,50 @@ class HtmlParserTest extends BaseTest
     public function can_parse_html_with_nested_escaped_html()
     {
         $html = 'Testo libero contenente &lt;pc id="1" canCopy="no" canDelete="no" dataRefEnd="d1" dataRefStart="d1"&gt;corsivo&lt;/pc&gt;, &lt;pc id="2" canCopy="no" canDelete="no" dataRefEnd="d2" dataRefStart="d2"&gt;grassetto&lt;/pc&gt;, &lt;pc id="3" canCopy="no" canDelete="no" dataRefEnd="d1" dataRefStart="d1"&gt;&lt;pc id="4" canCopy="no" canDelete="no" dataRefEnd="d2" dataRefStart="d2"&gt;grassetto + corsivo&lt;/pc&gt;&lt;/pc&gt; e &lt;pc id="5" canCopy="no" canDelete="no" dataRefEnd="d3" dataRefStart="d3"&gt;larghezza fissa&lt;/pc&gt;.';
-
         $parsed = HtmlParser::parse($html);
 
         $this->assertEquals($parsed[2]->inner_html[0]->node, '&lt;pc id="4" canCopy="no" canDelete="no" dataRefEnd="d2" dataRefStart="d2"&gt;grassetto + corsivo&lt;/pc&gt;');
+    }
+
+//    /**
+//     * @test
+//     */
+//    public function can_parse_a_google_page_html()
+//    {
+//        $html = file_get_contents(__DIR__.'/files/google.html');
+//        $parsed = HtmlParser::parse($html);
+//    }
+
+    /**
+     * @test
+     */
+    public function can_parse_a_xml()
+    {
+        $xml = file_get_contents(__DIR__.'/files/note.xml');
+        $parsed = HtmlParser::parse($xml);
+
+        $this->assertCount(4, $parsed[0]->inner_html);
+        $this->assertEquals('Tove', $parsed[0]->inner_html[0]->inner_html);
+        $this->assertEquals('Jani', $parsed[0]->inner_html[1]->inner_html);
+        $this->assertEquals('Reminder', $parsed[0]->inner_html[2]->inner_html);
+        $this->assertEquals('Don\'t forget me this weekend!', $parsed[0]->inner_html[3]->inner_html);
+    }
+
+    /**
+     * @test
+     */
+    public function can_parse_a_xliff()
+    {
+        $xliff = file_get_contents(__DIR__.'/files/no-target.xliff');
+        $parsed = HtmlParser::parse($xliff);
+
+        $note = $parsed[0]->inner_html[0]->inner_html[0]->inner_html[0]->inner_html[0];
+        $tu = $parsed[0]->inner_html[0]->inner_html[0]->inner_html[0]->inner_html[1];
+
+        $this->assertEquals($note->tagname, 'note');
+        $this->assertEquals($note->inner_html, '');
+        $this->assertEquals($tu->tagname, 'trans-unit');
+        $this->assertEquals($tu->attributes['id'], 'pendo-image-e3aaf7b7|alt');
     }
 }
 

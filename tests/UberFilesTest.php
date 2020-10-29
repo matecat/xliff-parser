@@ -737,4 +737,15 @@ class UberFilesTest extends BaseTest
         $this->assertEquals('Cambiare questo sperando che sporchi il resto', $output['files'][1]['trans-units'][2]['target']['raw-content'][1]);
         $this->assertEquals('questo gruppo linguistico completerà automaticamente tutti i passaggi della review', $output['files'][1]['trans-units'][3]['target']['raw-content'][0]);
     }
+
+    /**
+     * @test
+     */
+    public function can_extract_trans_unit_uuid()
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('uber/2020-10-13T21:16:55.732_a81546b0-0d88-11eb-83e4-a433ca39afdb.xliff.xliff'));
+        $unit = $parsed['files'][1]['trans-units'][1];
+
+        $this->assertEquals('4213862b-596b-4b03-b175-baf4a0ed6fd8', $unit['attr']['uuid']);
+    }
 }

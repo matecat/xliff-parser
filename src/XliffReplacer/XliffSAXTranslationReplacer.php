@@ -123,7 +123,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
             foreach ($attr as $k => $v) {
 
                 //if tag name is file, we must replace the target-language attribute
-                if ($name == 'file' and $k == 'target-language' and !empty($this->targetLang)) {
+                if ($name === 'file' and $k === 'target-language' and !empty($this->targetLang)) {
                     //replace Target language with job language provided from constructor
                     $tag .= "$k=\"$this->targetLang\" ";
                 } else {

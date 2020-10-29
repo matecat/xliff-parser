@@ -27,18 +27,12 @@ class XliffVersionDetector
     public static function detect($xliffContent)
     {
         preg_match('|<xliff.*?\sversion\s?=\s?["\'](.*?)["\']|si', substr($xliffContent, 0, 1000), $versionMatches);
-        preg_match('|<xliff.*?\sxmlns\s?=\s?["\']urn:oasis:names:tc:xliff:document:(.*?)["\']|si', substr($xliffContent, 0, 1000), $xmlnsMatches);
 
-        if (empty($versionMatches) or empty($xmlnsMatches)) {
+        if (empty($versionMatches) ) {
             throw new NotValidFileException('This is not a valid xliff file');
         }
 
         $version = $versionMatches[1];
-        $xmlns = $xmlnsMatches[1];
-
-        if ($version != $xmlns) {
-            throw new NotSupportedVersionException('The xmlns and version declaration on root node do not correspond');
-        }
 
         return self::resolveVersion($version);
     }

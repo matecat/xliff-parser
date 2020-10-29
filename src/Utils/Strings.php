@@ -217,4 +217,14 @@ class Strings
     {
         return preg_match( "/\/[a-z]*&gt;/i", $str ) != 0;
     }
+
+    /**
+     * @param string $str
+     *
+     * @return bool
+     */
+    public static function isAValidUuid( $uuid )
+    {
+        return preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/', $uuid) === 1;
+    }
 }

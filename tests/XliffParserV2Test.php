@@ -184,6 +184,7 @@ class XliffParserV2Test extends BaseTest
         $this->assertEquals($segTarget[3]['raw-content'], 'Phrase 4.');
     }
 
+
     /**
      * @test
      */

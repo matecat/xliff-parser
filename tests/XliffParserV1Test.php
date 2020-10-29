@@ -420,4 +420,15 @@ class XliffParserV1Test extends BaseTest
         //xml validation from DomDocument replaces 'x="&lt;endcmp/>"' with 'x="&lt;endcmp/&gt;"'
         $this->assertNotEquals($tmp[ 1 ], $parsed[ 'files' ][ 0 ][ 'trans-units' ][ 0 ][ 'target' ][ 'raw-content' ]);
     }
+
+    /**
+     * @test
+     */
+    public function can_parse_xliff_v12_with_emoji()
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('xliff12-with-emoji.xliff'));
+
+        $this->assertEquals('🤙 Join this (video)call at: {{joinUrl}}', $parsed['files'][1]['trans-units'][1]['source']['raw-content']); // there is an emoji here
+        $this->assertEquals('', $parsed['files'][1]['trans-units'][1]['target']['raw-content']);
+    }
 }

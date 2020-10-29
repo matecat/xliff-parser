@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0" xmlns:slr="urn:oasis:names:tc:xliff:sizerestriction:2.0" xmlns:memsource="http://www.memsource.com/xliff2.0/1.0" version="2.0" memsource:wfLevel="4" srcLang="en-us" trgLang="pt-br">
+    <file id="1eEZ9D0qa5Zeodxv1_dc6:0-4" memsource:taskId="1eEZ9D0qa5Zeodxv1_dc6" canResegment="no" original="a1036dec-buffet.xml">
+        <slr:profiles generalProfile="xliff:codepoints" />
+        <unit id="0" memsource:tGroupBegin="0" memsource:tGroupEnd="1">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key">4213862b-596b-4b03-b175-baf4a0ed6fd8</mda:meta>
+                    <mda:meta type="key-note">
+                        Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/buffet/keys" target="_blank"&gt;buffet&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/buffet/key/personal_transport_feedback.tip_intro_overlay_header_for_near_end_rating_xp_no_name/overview" target="_blank"&gt;personal_transport_feedback.tip_intro_overlay_header_for_near_end_rating_xp_no_name&lt;/a&gt; Description: &lt;font color="blue"&gt;Less aggressive rating card tip text for when we can't show the driver's name&lt;/font&gt;
+
+                    </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <segment id="0" state="translated">
+                <source>Add a tip.</source>
+                <target>Dê um valor extra.</target>
+            </segment>
+            <segment id="1" state="translated">
+                <source>Your driver won’t see the amount until your trip is over.</source>
+                <target>Seu motorista só verá a quantia quando a viagem terminar.</target>
+            </segment>
+        </unit>
+        <unit id="1" memsource:tGroupBegin="2" memsource:tGroupEnd="3">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key">6b1740d4-074b-4b71-a50e-5bb645ff00d9</mda:meta>
+                    <mda:meta type="key-note">
+                        Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/buffet/keys" target="_blank"&gt;buffet&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/buffet/key/personal_transport_feedback.tip_intro_overlay_header_for_near_end_rating_xp_no_name_alt/overview" target="_blank"&gt;personal_transport_feedback.tip_intro_overlay_header_for_near_end_rating_xp_no_name_alt&lt;/a&gt; Description: &lt;font color="blue"&gt;Less Aggressive rating card tip text for countries with no tipping and when we don't have the driver's name&lt;/font&gt;
+
+                    </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <segment id="2" state="translated">
+                <source>Add an extra.</source>
+                <target>Adicione um valor extra.</target>
+            </segment>
+            <segment id="3" state="translated">
+                <source>Your driver won’t see the amount until your trip is over.</source>
+                <target>Seu motorista só verá a quantia quando a viagem terminar.</target>
+            </segment>
+        </unit>
+        <unit id="2" memsource:tGroupBegin="4" memsource:tGroupEnd="4">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key">71291079-f217-4221-a9df-67cf75b0b74d</mda:meta>
+                    <mda:meta type="key-note">
+                        Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/buffet/keys" target="_blank"&gt;buffet&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/buffet/key/personal_transport_feedback.tip_intro_overlay_header_for_near_end_rating_xp_alt/overview" target="_blank"&gt;personal_transport_feedback.tip_intro_overlay_header_for_near_end_rating_xp_alt&lt;/a&gt; Description: &lt;font color="blue"&gt;Less aggressive rating card tip text for countries without tipping&lt;/font&gt;
+
+                    </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <memsource:additionalTagData>
+                <memsource:tag id="source1">
+                    <memsource:tagId>1</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+            </memsource:additionalTagData>
+            <originalData>
+                <data id="source1">${driver_name}</data>
+            </originalData>
+            <segment id="4" state="translated">
+                <source>Add an extra. <ph id="source1" dataRef="source1" /> won’t see the amount until your trip is over.</source>
+                <target>Dê um valor extra. <ph id="source1" dataRef="source1" /> só verá a quantia quando a viagem terminar.</target>
+            </segment>
+        </unit>
+    </file>
+</xliff>

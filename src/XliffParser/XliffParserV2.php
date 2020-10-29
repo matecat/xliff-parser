@@ -4,6 +4,7 @@ namespace Matecat\XliffParser\XliffParser;
 
 use Matecat\XliffParser\Exception\DuplicateTransUnitIdInXliff;
 use Matecat\XliffParser\Exception\NotFoundIdInTransUnit;
+use Matecat\XliffParser\Utils\Strings;
 use Matecat\XliffParser\XliffUtils\DataRefReplacer;
 
 class XliffParserV2 extends AbstractXliffParser
@@ -120,6 +121,13 @@ class XliffParserV2 extends AbstractXliffParser
         // notes
         // merge <notes> with key and key-note contained in metadata <mda:metaGroup>
         $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'notes' ] = $this->extractTransUnitNotes($transUnit);
+
+        // uuid
+        foreach ($output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'notes' ] as $note){
+            if(isset($note['raw-content']) and Strings::isAValidUuid($note['raw-content'])){
+                $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'attr' ]['uuid'] = $note['raw-content'];
+            }
+        }
 
         // original-data (exclusive for V2)
         // http://docs.oasis-open.org/xliff/xliff-core/v2.0/xliff-core-v2.0.html#originaldata
