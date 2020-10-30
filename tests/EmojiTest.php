@@ -2,6 +2,7 @@
 
 namespace Matecat\XliffParser\Tests;
 
+use Faker\Factory;
 use Matecat\XliffParser\Utils\Emoji;
 
 class EmojiTest extends BaseTest
@@ -23,6 +24,18 @@ class EmojiTest extends BaseTest
 
         foreach ($dataset as $emoji => $entity) {
             $this->assertEquals($entity, Emoji::toEntity($emoji));
+        }
+    }
+
+    /**
+     * @test
+     */
+    public function performance()
+    {
+        $faker = Factory::create();
+
+        for ($i=0;$i<100000;$i++){
+            $this->assertNotEquals('', Emoji::toEntity($faker->emoji));
         }
     }
 }
