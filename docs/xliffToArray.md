@@ -96,6 +96,25 @@ An `equiv-text` attribute will be added to the corresponding tag (content will b
 
 A full documentation for dataRef replacement is available [here](https://github.com/matecat/xliff-parser/blob/master/docs/dataRef.md).
 
+### Emojis 🌻
+
+All emojis contained in the original xliff are converted to their corresponding decimal entities. Example:
+
+```xml
+<trans-unit id="328_0" resname="2_F339">
+    <source>🤙 Join this (video)call at: {{joinUrl}}</source>
+    <target />
+</trans-unit>
+```
+
+Is extracted as:
+
+```php
+    ... => [
+        'raw-content' => '&#129305; Join this (video)call at: {{joinUrl}}'
+    ]
+```
+
 ### Examples
 
 In this section you can find two full examples of parsed xliff document.

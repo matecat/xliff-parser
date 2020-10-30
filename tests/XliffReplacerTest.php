@@ -92,7 +92,7 @@ class XliffReplacerTest extends BaseTest
         $xliffParser = new XliffParser();
         $xliffParser->replaceTranslation($inputFile, $data, $transUnits, 'fr-fr', $outputFile);
         $output = $xliffParser->xliffToArray(file_get_contents($outputFile));
-        $expected = '<g id="1">👌🏻</g>';
+        $expected = '<g id="1">&#128076;&#127995;</g>';
 
         $this->assertEquals($expected, $output['files'][3]['trans-units'][1]['target']['raw-content']);
     }

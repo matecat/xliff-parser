@@ -2,6 +2,7 @@
 
 namespace Matecat\XliffParser\XliffParser;
 
+use Matecat\XliffParser\Utils\Emoji;
 use Matecat\XliffParser\Utils\Strings;
 use Matecat\XliffParser\XliffUtils\DataRefReplacer;
 use Psr\Log\LoggerInterface;
@@ -137,7 +138,7 @@ abstract class AbstractXliffParser
 
         if (!empty($childNodes)) {
             foreach ($element->childNodes as $node) {
-                $extractedContent .= Strings::fixNonWellFormedXml($dom->saveXML($node));
+                $extractedContent .= Emoji::toEntity(Strings::fixNonWellFormedXml($dom->saveXML($node)));
             }
         }
 

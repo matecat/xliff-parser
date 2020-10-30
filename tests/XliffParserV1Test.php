@@ -201,9 +201,7 @@ class XliffParserV1Test extends BaseTest
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('file-with-emoji.xliff'));
 
         $this->assertNotEmpty($parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'source' ][ 'raw-content' ]);
-
-        // the emoticons are not displayed in the IDE but they are present
-        $this->assertEquals('<g id="1">👌🏻</g>', $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'source' ][ 'raw-content' ]);
+        $this->assertEquals('<g id="1">&#128076;&#127995;</g>', $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'source' ][ 'raw-content' ]);
     }
 
     /**
@@ -418,7 +416,7 @@ class XliffParserV1Test extends BaseTest
     </trans-unit>";
 
         preg_match('|<target>(.*?)</target>|siu', $x, $tmp);
-        //xml validation from DomDocument replaces 'x="&lt;endcmp/>"' with 'x="&lt;endcmp/&gt;"'
+
         $this->assertNotEquals($tmp[ 1 ], $parsed[ 'files' ][ 0 ][ 'trans-units' ][ 0 ][ 'target' ][ 'raw-content' ]);
     }
 
@@ -429,11 +427,7 @@ class XliffParserV1Test extends BaseTest
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('xliff12-with-emoji.xliff'));
 
-        var_dump(
-                XliffProprietaryDetect::fileMustBeConverted($this->getTestFile('xliff12-with-emoji.xliff'))
-        );
-
-        $this->assertEquals('🤙 Join this (video)call at: {{joinUrl}}', $parsed['files'][1]['trans-units'][1]['source']['raw-content']); // there is an emoji here
+        $this->assertEquals('&#129305; Join this (video)call at: {{joinUrl}}', $parsed['files'][1]['trans-units'][1]['source']['raw-content']); // there is an emoji here
         $this->assertEquals('', $parsed['files'][1]['trans-units'][1]['target']['raw-content']);
     }
 
@@ -444,7 +438,7 @@ class XliffParserV1Test extends BaseTest
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('xliff12-with-emoji-encoded.xliff'));
 
-        $this->assertEquals('🤙 Join this (video)call at: {{joinUrl}}', $parsed['files'][1]['trans-units'][1]['source']['raw-content']); // there is an emoji here
+        $this->assertEquals('&#129305; Join this (video)call at: {{joinUrl}}', $parsed['files'][1]['trans-units'][1]['source']['raw-content']); // there is an emoji here
         $this->assertEquals('', $parsed['files'][1]['trans-units'][1]['target']['raw-content']);
     }
 }

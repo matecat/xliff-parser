@@ -3,9 +3,6 @@
 namespace Matecat\XliffParser\Utils;
 
 /**
- * Class Emoji
- * @package Matecat\XliffParser\Utils
- *
  * This class was copied from:
  * https://gist.github.com/BarryMode/432a7a1f9621e824c8a3a23084a50f60#file-htmlemoji-php
  *
@@ -14,6 +11,9 @@ namespace Matecat\XliffParser\Utils;
  *
  * Full emoji list here:
  * https://unicode.org/emoji/charts/full-emoji-list.html
+ *
+ * Unicode code converter:
+ * https://r12a.github.io/app-conversion/
  */
 class Emoji
 {
@@ -44,10 +44,6 @@ class Emoji
 
         $hexadecimalValue = bin2hex(mb_convert_encoding("$matches[0]", 'UTF-32', 'UTF-8'));
         $chunks = str_split($hexadecimalValue, 8);
-
-        if(empty($chunks)){
-            return $entity;
-        }
 
         foreach ($chunks as $chunk){
             $entity .= '&#'.hexdec($chunk).';';
