@@ -3,6 +3,7 @@
 namespace Matecat\XliffParser\Tests;
 
 use Matecat\XliffParser\XliffParser;
+use Matecat\XliffParser\XliffUtils\XliffProprietaryDetect;
 
 class XliffParserV1Test extends BaseTest
 {
@@ -427,6 +428,21 @@ class XliffParserV1Test extends BaseTest
     public function can_parse_xliff_v12_with_emoji()
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('xliff12-with-emoji.xliff'));
+
+        var_dump(
+                XliffProprietaryDetect::fileMustBeConverted($this->getTestFile('xliff12-with-emoji.xliff'))
+        );
+
+        $this->assertEquals('🤙 Join this (video)call at: {{joinUrl}}', $parsed['files'][1]['trans-units'][1]['source']['raw-content']); // there is an emoji here
+        $this->assertEquals('', $parsed['files'][1]['trans-units'][1]['target']['raw-content']);
+    }
+
+    /**
+     * @test
+     */
+    public function can_parse_xliff_v12_with_emoji_encoded()
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('xliff12-with-emoji-encoded.xliff'));
 
         $this->assertEquals('🤙 Join this (video)call at: {{joinUrl}}', $parsed['files'][1]['trans-units'][1]['source']['raw-content']); // there is an emoji here
         $this->assertEquals('', $parsed['files'][1]['trans-units'][1]['target']['raw-content']);
