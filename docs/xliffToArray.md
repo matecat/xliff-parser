@@ -115,6 +115,10 @@ Is extracted as:
     ]
 ```
 
+The complete list of supported emojis can be found here:
+
+[https://www.compart.com/en/unicode/category/So](https://www.compart.com/en/unicode/category/So)
+
 ### Examples
 
 In this section you can find two full examples of parsed xliff document.

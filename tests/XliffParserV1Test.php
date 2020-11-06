@@ -3,7 +3,6 @@
 namespace Matecat\XliffParser\Tests;
 
 use Matecat\XliffParser\XliffParser;
-use Matecat\XliffParser\XliffUtils\XliffProprietaryDetect;
 
 class XliffParserV1Test extends BaseTest
 {

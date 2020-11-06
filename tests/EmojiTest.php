@@ -20,6 +20,11 @@ class EmojiTest extends BaseTest
             '🇺🇸' => '&#127482;&#127480;',
             '9️⃣' => '&#57;&#65039;&#8419;',
             '👋🏻' => '&#128075;&#127995;',
+            '🡪' => '&#129130;',
+            '࿕' => '&#4053;',
+            '⾮' => '&#12206;',
+            '⌛'  => '&#8987;',
+            '⏯'   => '&#9199;',
         ];
 
         foreach ($dataset as $emoji => $entity) {
@@ -28,9 +33,11 @@ class EmojiTest extends BaseTest
     }
 
     /**
+     * Perform 100000 iterations to test script performance
+     *
      * @test
      */
-    public function performance()
+    public function performanceTest()
     {
         $faker = Factory::create();
 
