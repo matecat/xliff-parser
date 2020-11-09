@@ -80,6 +80,7 @@ class StringsTest extends BaseTest
 
         $tests = array(
                 '' => '',
+                '&#129305; Join this (video)call at: {{joinUrl}}' => '&#129305; Join this (video)call at: {{joinUrl}}',
                 'just text' => 'just text',
                 '<gap>Hey</gap>' => '&lt;gap&gt;Hey&lt;/gap&gt;',
                 '<mrk>Hey</mrk>' => '<mrk>Hey</mrk>',
