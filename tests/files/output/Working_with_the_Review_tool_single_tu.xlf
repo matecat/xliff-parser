@@ -14,7 +14,6 @@
       </count-group>
         <tool tool-id="MadCap Lingo 11 r2" tool-name="Lingo" tool-version="11.1.7517.27792" tool-company="MadCap Software"/>
     </header>
-        <body><trans-unit help-id="1" id="1" restype="x-xhtml-madcap:keyword-term" phase-name="pretrans" translate="no"><source>Tools:Review</source><seg-source><mrk mtype="seg" mid="1">Tools:Review</mrk></seg-source><target  xml:lang="it-it" state="translated">Tools:Recensione</target>
-<count-group name="1"><count count-type="x-matecat-raw">1</count><count count-type="x-matecat-weighted">1</count></count-group></trans-unit></body>
+        <body><trans-unit help-id="1" id="1" restype="x-xhtml-madcap:keyword-term" phase-name="pretrans" translate="no"><source>Tools:Review</source><seg-source><mrk mtype="seg" mid="1">Tools:Review</mrk></seg-source><target state="needs-translation"><mrk mtype="seg" mid="1" MadCap:segmentStatus="Untranslated" MadCap:matchPercent="0"/></target></trans-unit></body>
   </file>
 </xliff>

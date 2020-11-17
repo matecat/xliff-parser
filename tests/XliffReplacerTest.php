@@ -130,6 +130,8 @@ class XliffReplacerTest extends BaseTest
     }
 
     /**
+     * In this case the replacer must do not replace original target
+     *
      * @test
      */
     public function can_replace_a_xliff_12_with__translate_no()
@@ -168,7 +170,7 @@ class XliffReplacerTest extends BaseTest
 
         (new XliffParser())->replaceTranslation($inputFile, $data, $transUnits, 'it-it', $outputFile, false);
         $output = (new XliffParser())->xliffToArray(file_get_contents($outputFile));
-        $expected = 'Tools:Recensione';
+        $expected = '<mrk mtype="seg" mid="1" MadCap:segmentStatus="Untranslated" MadCap:matchPercent="0"/>';
 
         $this->assertEquals($expected, $output['files'][1]['trans-units'][1]['target']['raw-content']);
     }

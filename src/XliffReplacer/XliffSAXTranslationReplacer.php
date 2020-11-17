@@ -99,22 +99,30 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
      */
     protected function tagOpen($parser, $name, $attr)
     {
-        //check if we are entering into a <trans-unit> (xliff v1.*) or <unit> (xliff v2.*)
+        // check if we are entering into a <trans-unit> (xliff v1.*) or <unit> (xliff v2.*)
         if ($this->tuTagName === $name) {
             $this->inTU = true;
+
             // get id
             $this->currentTransUnitId = $attr[ 'id' ];
+
+            // current 'translate' attribute of the current trans-unit
+            $this->currentTransUnitTranslate = isset($attr[ 'translate' ]) ? $attr[ 'translate' ] : 'yes';
         }
 
-        //check if we are entering into a <target>
+        // check if we are entering into a <target>
         if ('target' === $name) {
-            $this->inTarget = true;
+            if($this->currentTransUnitTranslate === 'no'){
+                $this->inTarget = false;
+            } else {
+                $this->inTarget = true;
+            }
         }
 
-        //check if we are inside a <target>, obviously this happen only if there are targets inside the trans-unit
-        //<target> must be stripped to be replaced, so this check avoids <target> reconstruction
+        // check if we are inside a <target>, obviously this happen only if there are targets inside the trans-unit
+        // <target> must be stripped to be replaced, so this check avoids <target> reconstruction
         if (!$this->inTarget) {
-            //costruct tag
+            // construct tag
             $tag = "<$name ";
 
             $lastMrkState = null;
@@ -219,7 +227,6 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
          * if it is an empty tag, do not add closing tag because we have already closed it in
          *
          * self::tagOpen method
-         *
          */
         if (!$this->isEmpty and !($this->inTarget and $name !== 'target')) {
             if (!$this->inTarget) {
@@ -227,7 +234,9 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
             }
 
             if ('target' == $name) {
-                if (isset($this->transUnits[ $this->currentTransUnitId ])) {
+                if($this->currentTransUnitTranslate === 'no') {
+                    // do nothing
+                } elseif (isset($this->transUnits[ $this->currentTransUnitId ])) {
 
                     // get translation of current segment, by indirect indexing: id -> positional index -> segment
                     // actually there may be more that one segment to that ID if there are two mrk of the same source segment
@@ -394,8 +403,9 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
             $this->isEmpty = false;
         }
 
-        //check if we are leaving a <trans-unit> (xliff v1.*) or <unit> (xliff v2.*)
+        // check if we are leaving a <trans-unit> (xliff v1.*) or <unit> (xliff v2.*)
         if ($this->tuTagName === $name) {
+            $this->currentTransUnitTranslate = null;
             $this->inTU = false;
         }
     }
