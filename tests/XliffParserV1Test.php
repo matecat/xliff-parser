@@ -422,6 +422,16 @@ class XliffParserV1Test extends BaseTest
     /**
      * @test
      */
+    public function can_parse_xliff_v1_with_translate_no()
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('Working_with_the_Review_tool.xlf'));
+
+        $this->assertCount(56, $parsed['files'][1]['trans-units']);
+    }
+
+    /**
+     * @test
+     */
     public function can_parse_xliff_v12_with_emoji()
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('xliff12-with-emoji.xliff'));

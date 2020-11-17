@@ -177,8 +177,8 @@ abstract class AbstractXliffParser
             $sourceArray = [
                     'mid' => (isset($mid[ 1 ])) ? $mid[ 1 ] : $mi,
                     'ext-prec-tags' => ($mi == 0 ? $markers[ 0 ] : ""),
-                    'raw-content' => $mark_content[ 0 ],
-                    'ext-succ-tags' => $mark_content[ 1 ],
+                    'raw-content' => (isset($mark_content[ 0 ])) ? $mark_content[ 0 ] : '',
+                    'ext-succ-tags' => (isset($mark_content[ 1 ])) ? $mark_content[ 1 ] : '',
             ];
 
             if (!empty($originalData)) {

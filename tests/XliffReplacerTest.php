@@ -130,6 +130,50 @@ class XliffReplacerTest extends BaseTest
     }
 
     /**
+     * @test
+     */
+    public function can_replace_a_xliff_12_with__translate_no()
+    {
+        $data = [
+                [
+                    'sid' => 1,
+                    'segment' => 'Tools:Review',
+                    'internal_id' => '1',
+                    'mrk_id' => '',
+                    'prev_tags' => '',
+                    'succ_tags' => '',
+                    'mrk_prev_tags' => '',
+                    'mrk_succ_tags' => '',
+                    'translation' => 'Tools:Recensione',
+                    'status' => TranslationStatus::STATUS_TRANSLATED,
+                    'eq_word_count' => 1,
+                    'raw_word_count' => 1,
+                ]
+        ];
+
+        $transUnits = [];
+
+        foreach ($data as $i => $k) {
+            //create a secondary indexing mechanism on segments' array; this will be useful
+            //prepend a string so non-trans unit id ( ex: numerical ) are not overwritten
+            $internalId = $k[ 'internal_id' ];
+
+            $transUnits[ $internalId ] [] = $i;
+
+            $data[ 'matecat|' . $internalId ] [] = $i;
+        }
+
+        $inputFile = __DIR__.'/../tests/files/Working_with_the_Review_tool_single_tu.xlf';
+        $outputFile = __DIR__.'/../tests/files/output/Working_with_the_Review_tool_single_tu.xlf';
+
+        (new XliffParser())->replaceTranslation($inputFile, $data, $transUnits, 'it-it', $outputFile, false);
+        $output = (new XliffParser())->xliffToArray(file_get_contents($outputFile));
+        $expected = 'Tools:Recensione';
+
+        $this->assertEquals($expected, $output['files'][1]['trans-units'][1]['target']['raw-content']);
+    }
+
+    /**
      * @return array
      */
     private function getData()
