@@ -88,3 +88,23 @@ $outputFile = __DIR__.'/../tests/files/output/sample-20.xlf';
 $parser = new XliffParser();
 $parser->replaceTranslation( $inputFile, $data, $transUnits, 'fr-fr', $outputFile, new DummyXliffReplacerCallback() );
 ```
+
+### `translate` attribute
+
+Translations will be not replaced in trans-units when `translate` attribute set to `no`.
+
+Consider this `trans-unit` taken from a classic xliff v1.2 file:
+
+```xml
+<trans-unit help-id="1" id="1" restype="x-xhtml-madcap:keyword-term" phase-name="pretrans" translate="no">
+	<source>Tools:Review</source>
+	<seg-source>
+		<mrk mtype="seg" mid="1">Tools:Review</mrk>
+	</seg-source>
+	<target state="needs-translation">
+		<mrk mtype="seg" mid="1" MadCap:segmentStatus="Untranslated" MadCap:matchPercent="0"/>
+	</target>
+</trans-unit>
+```
+
+In this case the replacer will do not touch `target` and it is simply left as is.
