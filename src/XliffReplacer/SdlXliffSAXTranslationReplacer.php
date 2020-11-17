@@ -14,13 +14,21 @@ class SdlXliffSAXTranslationReplacer extends XliffSAXTranslationReplacer
         // check if we are entering into a <trans-unit> (xliff v1.*) or <unit> (xliff v2.*)
         if ($this->tuTagName === $name) {
             $this->inTU = true;
+
             //get id
             $this->currentTransUnitId = $attr[ 'id' ];
+
+            // current 'translate' attribute of the current trans-unit
+            $this->currentTransUnitTranslate = isset($attr[ 'translate' ]) ? $attr[ 'translate' ] : 'yes';
         }
 
         // check if we are entering into a <target>
         if ('target' == $name) {
-            $this->inTarget = true;
+            if($this->currentTransUnitTranslate === 'no'){
+                $this->inTarget = false;
+            } else {
+                $this->inTarget = true;
+            }
         }
 
         // reset Marker positions
