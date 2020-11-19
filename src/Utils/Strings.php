@@ -227,4 +227,15 @@ class Strings
     {
         return preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/', $uuid) === 1;
     }
+
+    /**
+     * @param $pattern
+     * @param $subject
+     *
+     * @return array|false|string[]
+     */
+    public static function preg_split($pattern, $subject)
+    {
+        return preg_split( $pattern, $subject, -1, PREG_SPLIT_NO_EMPTY );
+    }
 }

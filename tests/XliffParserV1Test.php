@@ -450,4 +450,15 @@ class XliffParserV1Test extends BaseTest
         $this->assertEquals('&#129305; Join this (video)call at: {{joinUrl}}', $parsed['files'][1]['trans-units'][1]['source']['raw-content']); // there is an emoji here
         $this->assertEquals('', $parsed['files'][1]['trans-units'][1]['target']['raw-content']);
     }
+
+    /**
+     * @test
+     */
+    public function can_parse_a_very_large_xliff_v12()
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('ENIMAC_XT CARTESIAN 3_REV.1.0_ITA.docx (7).sdlxliff'));
+
+        $this->assertNotNull($parsed['files'][1]['reference'][0]['base64']);
+        $this->assertCount(1503, $parsed['files'][1]['trans-units']);
+    }
 }
