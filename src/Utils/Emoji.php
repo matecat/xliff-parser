@@ -7399,9 +7399,6 @@ class Emoji
      */
     public static function toEntity($str)
     {
-        $a = array_unique(self::$chmap);
-
-
         $letters = preg_split( '//u', $str, null, PREG_SPLIT_NO_EMPTY );
         foreach( $letters as $letter ){
             if(@self::$chmap[ $letter ]){
