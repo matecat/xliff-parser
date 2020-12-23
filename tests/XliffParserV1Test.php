@@ -461,4 +461,15 @@ class XliffParserV1Test extends BaseTest
         $this->assertNotNull($parsed['files'][1]['reference'][0]['base64']);
         $this->assertCount(1503, $parsed['files'][1]['trans-units']);
     }
+
+    /**
+     * @test
+     */
+    public function can_parse_a_po_converted_in_sdlxliff()
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('inglese-con-newlines-e-doctype.po.sdlxliff'));
+        $transUnits = $parsed[ 'files' ][ 3 ][ 'trans-units' ];
+
+        $this->assertCount(3, $transUnits);
+    }
 }
