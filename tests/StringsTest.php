@@ -10,6 +10,29 @@ class StringsTest extends BaseTest
      * @test
      * @throws \Exception
      */
+    public function can_detected_escaped_html_entities()
+    {
+        $this->assertFalse(Strings::isAnEscapedEntity("&lt;p class=&quot;cmln__paragraph&quot;&gt;"));
+        $this->assertFalse(Strings::isAnEscapedEntity("&lt;/p&gt;"));
+        $this->assertTrue(Strings::isAnEscapedEntity("&amp;#39;"));
+    }
+
+    /**
+     * @test
+     * @throws \Exception
+     */
+    public function can_decode_only_escaped_entities()
+    {
+        $string = "&lt;/p&gt; &amp;#39; &apos;";
+        $expected = "&lt;/p&gt; &#39; &apos;";
+
+        $this->assertEquals(Strings::htmlspecialchars_decode($string, true), $expected);
+    }
+
+    /**
+     * @test
+     * @throws \Exception
+     */
     public function can_detect_escaped_html()
     {
         $strings = [

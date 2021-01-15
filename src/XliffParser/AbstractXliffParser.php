@@ -232,6 +232,16 @@ abstract class AbstractXliffParser
      */
     protected function JSONOrRawContentArray($noteValue)
     {
+        // convert escaped entites
+        //
+        // Example:
+        //
+        // &amp;#39; ---> &#39;
+        //
+        if (Strings::isAnEscapedEntity($noteValue)) {
+            $noteValue = Strings::htmlspecialchars_decode($noteValue, true);
+        }
+
         if (Strings::isJSON($noteValue)) {
             return ['json' => Strings::cleanCDATA($noteValue)];
         }

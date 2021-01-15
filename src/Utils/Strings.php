@@ -200,12 +200,30 @@ class Strings
 
     /**
      * @param string $string
+     * @param bool   $onlyEscapedEntities
      *
      * @return string
      */
-    public static function htmlspecialchars_decode($string)
+    public static function htmlspecialchars_decode($string, $onlyEscapedEntities = false)
     {
-        return htmlspecialchars_decode($string, ENT_NOQUOTES);
+        if(false === $onlyEscapedEntities){
+            return htmlspecialchars_decode($string, ENT_NOQUOTES);
+        }
+
+        return preg_replace_callback('/&amp;#[a-zA-Z0-9]{1,6};/u',
+            function ($match){
+                return self::htmlspecialchars_decode($match[0]);
+        }, $string);
+    }
+
+    /**
+     * @param string $str
+     *
+     * @return bool
+     */
+    public static function isAnEscapedEntity( $str )
+    {
+        return preg_match( "/&amp;#[a-zA-Z0-9]{1,6};/i", $str ) != 0;
     }
 
     /**
