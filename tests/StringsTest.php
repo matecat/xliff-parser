@@ -12,9 +12,11 @@ class StringsTest extends BaseTest
      */
     public function can_detected_escaped_html_entities()
     {
-        $this->assertFalse(Strings::isAnEscapedEntity("&lt;p class=&quot;cmln__paragraph&quot;&gt;"));
-        $this->assertFalse(Strings::isAnEscapedEntity("&lt;/p&gt;"));
-        $this->assertTrue(Strings::isAnEscapedEntity("&amp;#39;"));
+        $this->assertFalse(Strings::isADoubleEscapedEntity("&lt;p class=&quot;cmln__paragraph&quot;&gt;"));
+        $this->assertFalse(Strings::isADoubleEscapedEntity("&lt;/p&gt;"));
+        $this->assertTrue(Strings::isADoubleEscapedEntity("&amp;#39;"));
+        $this->assertTrue(Strings::isADoubleEscapedEntity("&amp;amp;"));
+        $this->assertTrue(Strings::isADoubleEscapedEntity("&amp;apos;"));
     }
 
     /**
@@ -25,6 +27,11 @@ class StringsTest extends BaseTest
     {
         $string = "&lt;/p&gt; &amp;#39; &apos;";
         $expected = "&lt;/p&gt; &#39; &apos;";
+
+        $this->assertEquals(Strings::htmlspecialchars_decode($string, true), $expected);
+
+        $string = "&amp;amp; &amp;apos;";
+        $expected = "&amp; &apos;";
 
         $this->assertEquals(Strings::htmlspecialchars_decode($string, true), $expected);
     }

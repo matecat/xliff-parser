@@ -226,26 +226,33 @@ abstract class AbstractXliffParser
 
     /**
      * @param $noteValue
+     * @param bool $escapeStrings
      *
      * @return array
      * @throws \Exception
      */
-    protected function JSONOrRawContentArray($noteValue)
+    protected function JSONOrRawContentArray($noteValue, $escapeStrings = true)
     {
-        // convert escaped entites
+        //
+        // convert double escaped entites
         //
         // Example:
         //
         // &amp;#39; ---> &#39;
+        // &amp;amp; ---> &amp;
+        // &amp;apos ---> &apos;
         //
-        if (Strings::isAnEscapedEntity($noteValue)) {
+        if (Strings::isADoubleEscapedEntity($noteValue)) {
             $noteValue = Strings::htmlspecialchars_decode($noteValue, true);
+        } else {
+            // for non escaped entities $escapeStrings is always true for security reasons
+            $escapeStrings = true;
         }
 
         if (Strings::isJSON($noteValue)) {
             return ['json' => Strings::cleanCDATA($noteValue)];
         }
 
-        return ['raw-content' => Strings::fixNonWellFormedXml($noteValue)];
+        return ['raw-content' => Strings::fixNonWellFormedXml($noteValue, $escapeStrings)];
     }
 }

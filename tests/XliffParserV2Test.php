@@ -11,12 +11,25 @@ class XliffParserV2Test extends BaseTest
      */
     public function can_parse_xliff_v2_with_double_encoded_map()
     {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('uber/&amp;.xlf'));
+        // &amp;#39;
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('uber/39.xliff.xliff'));
         $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
 
-        $this->assertEquals("&lt;p class=&quot;cmln__paragraph&quot;&gt;", $units[1][ 'original-data' ][1]['raw-content']);
-        $this->assertEquals("&#39;", $units[1][ 'original-data' ][2]['raw-content']);
-        $this->assertEquals("&lt;/p&gt;", $units[1][ 'original-data' ][0]['raw-content']);
+        $this->assertEquals("&lt;p class=&quot;cmln__paragraph&quot;&gt;", $units[4][ 'original-data' ][1]['raw-content']);
+        $this->assertEquals("&#39;", $units[4][ 'original-data' ][2]['raw-content']);
+        $this->assertEquals("&lt;/p&gt;", $units[4][ 'original-data' ][0]['raw-content']);
+
+        // &amp;amp;
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('uber/&.xliff.xliff'));
+        $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
+
+        $this->assertEquals("&amp;", $units[2][ 'original-data' ][7]['raw-content']);
+
+        // &amp;apos;
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('uber/apos.xliff.xliff'));
+        $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
+
+        $this->assertEquals("&apos;", $units[5][ 'original-data' ][0]['raw-content']);
     }
 
     /**

@@ -7,6 +7,7 @@ use Matecat\XliffParser\Exception\NotValidJSONException;
 class Strings
 {
     private static $find_xliff_tags_reg = null;
+    private static $htmlEntityRegex = '/&amp;[#a-zA-Z0-9]{1,20};/u';
 
     /**
      * @param string $testString
@@ -102,10 +103,11 @@ class Strings
      * <g id="1">Hello</g>, 4 > 3 &gt; -> <g id="1">Hello</g>, 4 &gt; 3 &gt; 2
      *
      * @param string $content
+     * @param bool $escapeStrings
      *
      * @return mixed|string
      */
-    public static function fixNonWellFormedXml($content)
+    public static function fixNonWellFormedXml($content, $escapeStrings = true)
     {
         if (self::$find_xliff_tags_reg === null) {
             // List of the tags that we don't want to escape
@@ -148,7 +150,9 @@ class Strings
         }
 
         // Escape the string with the remaining non-XLIFF tags
-        $content = htmlspecialchars($content, ENT_NOQUOTES, 'UTF-8', false);
+        if($escapeStrings){
+            $content = htmlspecialchars($content, ENT_NOQUOTES, 'UTF-8', false);
+        }
 
         // Put again in place the original XLIFF tags replacing placeholders
         foreach ($tags_placeholders as $tag => $placeholder) {
@@ -210,20 +214,27 @@ class Strings
             return htmlspecialchars_decode($string, ENT_NOQUOTES);
         }
 
-        return preg_replace_callback('/&amp;#[a-zA-Z0-9]{1,6};/u',
+        return preg_replace_callback(self::$htmlEntityRegex,
             function ($match){
                 return self::htmlspecialchars_decode($match[0]);
         }, $string);
     }
 
     /**
+     * Checks if a string is a double encoded entity.
+     *
+     * Example:
+     *
+     * &amp;#39; ---> true
+     * &#39;     ---> false
+     *
      * @param string $str
      *
      * @return bool
      */
-    public static function isAnEscapedEntity( $str )
+    public static function isADoubleEscapedEntity( $str )
     {
-        return preg_match( "/&amp;#[a-zA-Z0-9]{1,6};/i", $str ) != 0;
+        return preg_match( self::$htmlEntityRegex, $str ) != 0;
     }
 
     /**

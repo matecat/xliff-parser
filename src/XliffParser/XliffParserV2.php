@@ -292,7 +292,7 @@ class XliffParserV2 extends AbstractXliffParser
                     $dataValue = trim($data->nodeValue);
                     if ('' !== $dataValue) {
                         $originalData[] = array_merge(
-                            $this->JSONOrRawContentArray($dataValue),
+                            $this->JSONOrRawContentArray($dataValue, false),
                             [
                                 'attr' => [
                                 'id' => $dataId
