@@ -36,8 +36,11 @@ class DataRefReplacer
      */
     public function replace($string)
     {
-        // if map is empty return string as is
-        if (empty($this->map)) {
+        // if map is empty
+        // or the string has not a dataRef attribute
+        // or the string ha not a dataRefStart/dataRefEnd
+        // return string as is
+        if (empty($this->map) or !$this->hasAnyDataRefAttribute($string)) {
             return  $string;
         }
 
@@ -59,6 +62,28 @@ class DataRefReplacer
         }
 
         return $string;
+    }
+
+    /**
+     * @param string $string
+     *
+     * @return bool
+     */
+    private function hasAnyDataRefAttribute($string)
+    {
+        $dataRefTags = [
+                'dataRef',
+                'dataRefStart',
+                'dataRefEnd',
+        ];
+
+        foreach ($dataRefTags as $tag){
+            preg_match('/ '.$tag.'=[\\\\"](.*?)[\\\\"]/', $string, $matches);
+
+            if(count($matches) > 0){
+                return true;
+            }
+        }
     }
 
     /**

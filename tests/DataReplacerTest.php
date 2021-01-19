@@ -10,6 +10,27 @@ class DataReplacerTest extends BaseTest
     /**
      * @test
      */
+    public function do_nothing_with_ph_tags_without_dataref()
+    {
+        $map = [
+                'source3' => '&lt;/a&gt;',
+                'source4' => '&lt;br&gt;',
+                'source5' => '&lt;br&gt;',
+                'source1' => '&lt;br&gt;',
+                'source2' => '&lt;a href=%s&gt;',
+        ];
+
+        $string = 'Hi <ph id="mtc_1" equiv-text="base64:JXM="/> .';
+        $expected = 'Hi <ph id="mtc_1" equiv-text="base64:JXM="/> .';
+
+        $dataReplacer = new DataRefReplacer($map);
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+    }
+
+    /**
+     * @test
+     */
     public function do_nothing_with_empty_map()
     {
         $map = [];
