@@ -38,10 +38,9 @@ class DataRefReplacer
     {
         // if map is empty
         // or the string has not a dataRef attribute
-        // or the string ha not a dataRefStart/dataRefEnd
         // return string as is
         if (empty($this->map) or !$this->hasAnyDataRefAttribute($string)) {
-            return  $string;
+            return $string;
         }
 
         // clean string from equiv-text eventually present
