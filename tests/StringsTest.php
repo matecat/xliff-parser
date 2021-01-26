@@ -95,6 +95,19 @@ class StringsTest extends BaseTest
 
     /**
      * @test
+     * @throws \Exception
+     */
+    public function can_encode_json()
+    {
+        $json = '{"source3":"&#39;","source4":"&lt;a class=&quot;cmln__link&quot; href=&quot;https:\\/\\/restaurant-dashboard.uber.com\\/&quot; target=&quot;_blank&quot;&gt;","source5":"&lt;\\/a&gt;","source1":"&lt;p class=&quot;cmln__paragraph&quot;&gt;","source6":"&lt;\\/p&gt;","source2":"&#39;"}';
+        $noJson = "csacsacsa";
+
+        $this->assertCount(6, Strings::jsonToArray($json));
+        $this->assertEmpty(Strings::jsonToArray($noJson));
+    }
+
+    /**
+     * @test
      */
     public function can_fix_not_well_formed_xml()
     {

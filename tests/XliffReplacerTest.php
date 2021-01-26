@@ -230,12 +230,23 @@ class XliffReplacerTest extends BaseTest
     }
 }
 
+class RealXliffReplacerCallback implements XliffReplacerCallbackInterface
+{
+    /**
+     * @inheritDoc
+     */
+    public function thereAreErrors($segment, $translation, array $dataRefMap = [])
+    {
+        return false;
+    }
+}
+
 class DummyXliffReplacerCallback implements XliffReplacerCallbackInterface
 {
     /**
      * @inheritDoc
      */
-    public function thereAreErrors($segment, $translation)
+    public function thereAreErrors($segment, $translation, array $dataRefMap = [])
     {
         return false;
     }
@@ -246,7 +257,7 @@ class DummyXliffReplacerCallbackWhichReturnTrue implements XliffReplacerCallback
     /**
      * @inheritDoc
      */
-    public function thereAreErrors($segment, $translation)
+    public function thereAreErrors($segment, $translation, array $dataRefMap = [])
     {
         return true;
     }

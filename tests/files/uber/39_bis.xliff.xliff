@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0" xmlns:slr="urn:oasis:names:tc:xliff:sizerestriction:2.0" xmlns:memsource="http://www.memsource.com/xliff2.0/1.0" version="2.0" memsource:wfLevel="4" srcLang="en-us" trgLang="es-419">
+    <file id="fotsSuCCihL6hOVn_dc6:0-3" memsource:taskId="fotsSuCCihL6hOVn_dc6" canResegment="no" original="437bfd3d-eats-restaurant-website.xml">
+        <slr:profiles generalProfile="xliff:codepoints"/>
+        <unit id="0" memsource:tGroupBegin="0" memsource:tGroupEnd="0">
+            <mda:metadata><mda:metaGroup><mda:meta type="key">225648eb-b613-473d-b969-a472b16528be</mda:meta>
+                <mda:meta type="key-note">
+                    Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/eats-restaurant-website/keys" target="_blank"&gt;eats-restaurant-website&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/eats-restaurant-website/key/v1-eats-restaurants-09db24bd4c1edf000c4577d5e4decad2/overview" target="_blank"&gt;v1-eats-restaurants-09db24bd4c1edf000c4577d5e4decad2&lt;/a&gt; Description: &lt;font color="blue"&gt;Content Type: Website
+                    Preview Link: https://chameleon-preview.uberinternal.com/preview-v2/page/7ed21d20-979d-4cf5-812e-0ef97b877d17?country=BR
+                    Additional Info:
+                    TEXT_LINE&lt;/font&gt;
+
+                </mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="0" state="initial">
+                <source>Compatible with tablets and smartphones</source>
+                <target></target>
+            </segment>
+        </unit>
+        <unit id="1" memsource:tGroupBegin="1" memsource:tGroupEnd="3">
+            <mda:metadata><mda:metaGroup><mda:meta type="key">294646f5-e30e-46ba-8059-7d25abe00337</mda:meta>
+                <mda:meta type="key-note">
+                    Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/eats-restaurant-website/keys" target="_blank"&gt;eats-restaurant-website&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/eats-restaurant-website/key/v1-eats-restaurants-f81cf27e6a61f484dc295648a0644a97/overview" target="_blank"&gt;v1-eats-restaurants-f81cf27e6a61f484dc295648a0644a97&lt;/a&gt; Description: &lt;font color="blue"&gt;Content Type: Website
+                    Preview Link: https://chameleon-preview.uberinternal.com/preview-v2/page/7ed21d20-979d-4cf5-812e-0ef97b877d17?country=BR
+                    Additional Info:
+                    MARKDOWN&lt;/font&gt;
+
+                </mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <memsource:additionalTagData>
+                <memsource:tag id="source3"><memsource:tagId>3</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+                <memsource:tag id="source4"><memsource:tagId>4</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+                <memsource:tag id="source5"><memsource:tagId>5</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+                <memsource:tag id="source1"><memsource:tagId>1</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+                <memsource:tag id="source6"><memsource:tagId>6</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+                <memsource:tag id="source2"><memsource:tagId>2</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+            </memsource:additionalTagData>
+            <originalData>
+                <data id="source3">&amp;amp;#39;</data>
+                <data id="source4">&amp;lt;a class=&amp;quot;cmln__link&amp;quot; href=&amp;quot;https://restaurant-dashboard.uber.com/&amp;quot; target=&amp;quot;_blank&amp;quot;&amp;gt;</data>
+                <data id="source5">&amp;lt;/a&amp;gt;</data>
+                <data id="source1">&amp;lt;p class=&amp;quot;cmln__paragraph&amp;quot;&amp;gt;</data>
+                <data id="source6">&amp;lt;/p&amp;gt;</data>
+                <data id="source2">&amp;amp;#39;</data>
+            </originalData>
+            <segment id="1" state="initial">
+                <source><ph id="source1" dataRef="source1"/>When you partner with Uber Eats, you have access to the Restaurant Dashboard to manage your establishment<ph id="source2" dataRef="source2"/>s orders.</source>
+                <target></target>
+            </segment>
+            <segment id="2" state="initial">
+                <source>Go to your device<ph id="source3" dataRef="source3"/>s app store and download it now to start accepting orders.</source>
+                <target></target>
+            </segment>
+            <segment id="3" state="initial">
+                <source>You can also access it through your computer via <ph id="source4" dataRef="source4"/>Restaurant Dashboard.<ph id="source5" dataRef="source5"/><ph id="source6" dataRef="source6"/></source>
+                <target></target>
+            </segment>
+        </unit>
+    </file>
+</xliff>

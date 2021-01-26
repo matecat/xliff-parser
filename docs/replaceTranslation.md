@@ -33,7 +33,7 @@ class DummyXliffReplacerCallback implements XliffReplacerCallbackInterface
     /**
      * @inheritDoc
      */
-    public function thereAreErrors( $segment, $translation )
+    public function thereAreErrors( $segment, $translation, array $dataRefMap = [] )
     {
         return false;
     }

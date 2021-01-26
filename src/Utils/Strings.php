@@ -46,6 +46,16 @@ class Strings
     }
 
     /**
+     * @param string $string
+     *
+     * @return array
+     */
+    public static function jsonToArray($string)
+    {
+        return (is_array(json_decode($string, true))) ? json_decode($string, true) : [];
+    }
+
+    /**
      * @param bool $raise
      *
      * @return string|null
