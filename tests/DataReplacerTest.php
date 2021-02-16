@@ -433,4 +433,26 @@ class DataReplacerTest extends BaseTest
         $this->assertEquals($expected, $dataReplacer->replace($string));
         $this->assertEquals($string, $dataReplacer->restore($expected));
     }
+
+    /**
+     * @test
+     */
+    public function can_restore_data_with_consecutive_tags()
+    {
+        $map = [
+                'source3' => '&#39;',
+                'source4' => '&lt;a class=&quot;cmln__link&quot; href=&quot;https://restaurant-dashboard.uber.com/&quot; target=&quot;_blank&quot;&gt;',
+                'source5' => '&lt;/a&gt;',
+                'source1' => '&lt;p class=&quot;cmln__paragraph&quot;&gt;',
+                'source6' => '&lt;/p&gt;',
+                'source2' => '&#39;',
+        ];
+
+        $string = 'Ao fazer parceria com o Uber Eats, você tem acesso ao Painel do Restaurante para gerenciar os pedidos dos seus estabelecimentos. <ph id="source1" dataRef="source1"/> ';
+        $expected = 'Ao fazer parceria com o Uber Eats, você tem acesso ao Painel do Restaurante para gerenciar os pedidos dos seus estabelecimentos';
+
+        $dataReplacer = new DataRefReplacer($map);
+
+        $this->assertEquals($expected, $dataReplacer->restore($string));
+    }
 }
