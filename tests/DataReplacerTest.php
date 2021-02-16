@@ -437,22 +437,28 @@ class DataReplacerTest extends BaseTest
     /**
      * @test
      */
-    public function can_restore_data_with_consecutive_tags()
+    public function do_not_affect_not_matecat_ph_tags_with_equiv_text()
     {
-        $map = [
-                'source3' => '&#39;',
-                'source4' => '&lt;a class=&quot;cmln__link&quot; href=&quot;https://restaurant-dashboard.uber.com/&quot; target=&quot;_blank&quot;&gt;',
-                'source5' => '&lt;/a&gt;',
-                'source1' => '&lt;p class=&quot;cmln__paragraph&quot;&gt;',
-                'source6' => '&lt;/p&gt;',
-                'source2' => '&#39;',
-        ];
+        $dataReplacer = new DataRefReplacer([
+            'source1' => '&lt;br&gt;',
+        ]);
 
-        $string = 'Ao fazer parceria com o Uber Eats, você tem acesso ao Painel do Restaurante para gerenciar os pedidos dos seus estabelecimentos. <ph id="source1" dataRef="source1"/> ';
-        $expected = 'Ao fazer parceria com o Uber Eats, você tem acesso ao Painel do Restaurante para gerenciar os pedidos dos seus estabelecimentos';
+        $string = 'Hi <ph id="mtc_1" equiv-text="JXM="/>, <ph id="source1" dataRef="source1"/>You mentioned that you have a dashcam video footage to help us to better understand your recent incident.';
+        $expected = 'Hi <ph id="mtc_1" equiv-text="JXM="/>, <ph id="source1" dataRef="source1" equiv-text="base64:Jmx0O2JyJmd0Ow=="/>You mentioned that you have a dashcam video footage to help us to better understand your recent incident.';
 
-        $dataReplacer = new DataRefReplacer($map);
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($string, $dataReplacer->restore($expected));
 
-        $this->assertEquals($expected, $dataReplacer->restore($string));
+        $string = 'Hi &lt;ph id="mtc_1" equiv-text="JXM="/&gt;, <ph id="source1" dataRef="source1"/>You mentioned that you have a dashcam video footage to help us to better understand your recent incident.';
+        $expected = 'Hi &lt;ph id="mtc_1" equiv-text="JXM="/&gt;, <ph id="source1" dataRef="source1" equiv-text="base64:Jmx0O2JyJmd0Ow=="/>You mentioned that you have a dashcam video footage to help us to better understand your recent incident.';
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($string, $dataReplacer->restore($expected));
+
+        $string = 'Hi &lt;ph id="mtc_1" equiv-text="JXM="/&gt;, &lt;ph id="source1" dataRef="source1"/&gt;You mentioned that you have a dashcam video footage to help us to better understand your recent incident.';
+        $expected = 'Hi &lt;ph id="mtc_1" equiv-text="JXM="/&gt;, &lt;ph id="source1" dataRef="source1" equiv-text="base64:Jmx0O2JyJmd0Ow=="/&gt;You mentioned that you have a dashcam video footage to help us to better understand your recent incident.';
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($string, $dataReplacer->restore($expected));
     }
 }

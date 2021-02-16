@@ -92,7 +92,16 @@ class DataRefReplacer
      */
     private function cleanFromEquivText($string)
     {
-        return preg_replace('/ equiv-text="(.*?)"/', '', $string);
+        $html = HtmlParser::parse($string);
+
+        foreach ($html as $node){
+            if(isset($node->attributes['id']) and array_key_exists($node->attributes['id'], $this->map)){
+                $cleaned = preg_replace('/ equiv-text="(.*?)"/', '', $node->node);
+                $string = str_replace($node->node, $cleaned, $string);
+            }
+        }
+
+        return $string;
     }
 
     /**
@@ -125,6 +134,9 @@ class DataRefReplacer
 
         // replacement
         $d = str_replace('/', ' equiv-text="base64:'.$base64EncodedValue.'"/', $a);
+
+        $a = str_replace(['<','>','&gt;', '&lt;'], '', $a);
+        $d = str_replace(['<','>','&gt;', '&lt;'], '', $d);
 
         return str_replace($a, $d, $string);
     }
