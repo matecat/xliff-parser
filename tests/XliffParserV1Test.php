@@ -9,6 +9,17 @@ class XliffParserV1Test extends BaseTest
     /**
      * @test
      */
+    public function parses_xliff_with_multiple_files()
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('calibre.docx.xliff'));
+
+        $this->assertNotEmpty($parsed['files']);
+        $this->assertCount(5, $parsed['files']);
+    }
+
+    /**
+     * @test
+     */
     public function parses_with_no_errors()
     {
         // read a file with notes inside
