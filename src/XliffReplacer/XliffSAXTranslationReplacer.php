@@ -466,7 +466,6 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
 
         $segment     = Strings::removeDangerousChars($seg [ 'segment' ]);
         $translation = Strings::removeDangerousChars($seg [ 'translation' ]);
-        $dataRefMap  = (isset($seg['data_ref_map']) and $seg['data_ref_map'] !== null) ? Strings::jsonToArray($seg['data_ref_map']) : [];
 
         // We don't need transform/sanitize from view to xliff because the values comes from Database
         // QA non sense for source/source check, until source can be changed. For now SKIP
@@ -474,7 +473,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
             $translation = $segment;
         } else {
             if ($this->callback) {
-                if ($this->callback->thereAreErrors($segment, $translation, $dataRefMap)) {
+                if ($this->callback->thereAreErrors($segment, $translation)) {
                     $translation = '|||UNTRANSLATED_CONTENT_START|||' . $segment . '|||UNTRANSLATED_CONTENT_END|||';
                 }
             }

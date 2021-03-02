@@ -7,9 +7,8 @@ interface XliffReplacerCallbackInterface
     /**
      * @param string $segment
      * @param string $translation
-     * @param array  $dataRefMap
      *
      * @return bool
      */
-    public function thereAreErrors($segment, $translation, array $dataRefMap = []);
+    public function thereAreErrors($segment, $translation);
 }
