@@ -273,7 +273,7 @@ class XliffParserV1 extends AbstractXliffParser
             $at['source'] = $altTrans->getElementsByTagName('source')->item(0)->nodeValue;
         }
 
-        if ($altTrans->getElementsByTagName('target')->length > 0) {
+        if ($altTrans->getElementsByTagName('target')) {
             $at['target'] = $altTrans->getElementsByTagName('target')->item(0)->nodeValue;
         }
 
