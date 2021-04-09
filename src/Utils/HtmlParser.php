@@ -38,11 +38,17 @@ class HtmlParser
         $elements = [];
 
         foreach ($matches[0] as $key => $match) {
+
+            $attributes = isset($matches[2][$key][0]) ? self::getAttributes($matches[2][$key][0]) : [];
+            $base64Decoded = (isset($attributes['equiv-text'])) ? base64_decode(str_replace("base64:", "", $attributes['equiv-text'])): null;
+
             $elements[] = (object)[
                 'node' => ($toBeEscaped) ? Strings::htmlentities($match[0]) : $match[0],
+                'terminator' => ($toBeEscaped) ? '&gt;' : '>',
                 'offset' => $match[1],
                 'tagname' => $matches[1][$key][0],
-                'attributes' => isset($matches[2][$key][0]) ? self::getAttributes($matches[2][$key][0]) : [],
+                'attributes' => $attributes,
+                'base64_decoded' => $base64Decoded,
                 'omittag' => ($matches[4][$key][1] > -1), // boolean
                 'inner_html' => $inner_html = self::getInnerHtml($matches, $key, $toBeEscaped),
                 'has_children' => is_array($inner_html),
