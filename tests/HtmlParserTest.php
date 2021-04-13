@@ -9,6 +9,33 @@ class HtmlParserTest extends BaseTest
     /**
      * @test
      */
+    public function can_extract_inner_text()
+    {
+        $string = '<div class=\'text\'>questo è un testo</div>';
+        $parsed = HtmlParser::parse($string);
+
+        $this->assertCount(1, $parsed);
+        $this->assertEquals('text', $parsed[0]->attributes['class']);
+        $this->assertEquals('questo è un testo', $parsed[0]->original_text);
+    }
+
+    /**
+     * @test
+     */
+    public function can_extract_inner_text_with_nested_html_content()
+    {
+        $string = '<div class=\'text\'><div>ciao questo è un testo</div> con del contenuto html.</div>';
+        $parsed = HtmlParser::parse($string);
+
+        $this->assertCount(1, $parsed);
+        $this->assertEquals('text', $parsed[0]->attributes['class']);
+        $this->assertEquals('<div>ciao questo è un testo</div> con del contenuto html.', $parsed[0]->original_text);
+        $this->assertEquals('ciao questo è un testo con del contenuto html.', $parsed[0]->stripped_text);
+    }
+
+    /**
+     * @test
+     */
     public function can_parse_a_string_with_escaped_single_quotes()
     {
         $string = '<div class=\'text\'></div>';
@@ -16,6 +43,7 @@ class HtmlParserTest extends BaseTest
 
         $this->assertCount(1, $parsed);
         $this->assertEquals('text', $parsed[0]->attributes['class']);
+        $this->assertNull($parsed[0]->original_text);
     }
 
     /**
@@ -83,6 +111,8 @@ class HtmlParserTest extends BaseTest
 
         $this->assertCount(1, $parsed);
         $this->assertCount(1, $parsed[0]->inner_html);
+        $this->assertEquals('Ciao&lt;div&gt;Ciao&lt;/div&gt;', $parsed[0]->original_text);
+        $this->assertEquals('CiaoCiao', $parsed[0]->stripped_text);
     }
 
     /**

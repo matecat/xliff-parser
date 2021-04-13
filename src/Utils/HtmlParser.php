@@ -41,17 +41,22 @@ class HtmlParser
 
             $attributes = isset($matches[2][$key][0]) ? self::getAttributes($matches[2][$key][0]) : [];
             $base64Decoded = (isset($attributes['equiv-text'])) ? base64_decode(str_replace("base64:", "", $attributes['equiv-text'])): null;
+            $node = ($toBeEscaped) ? Strings::htmlentities($match[0]) : $match[0];
+            $tagName = $matches[1][$key][0];
+            $text = (isset($matches[6][$key][0]) and '' !== $matches[6][$key][0]) ? $matches[6][$key][0] : null;
 
             $elements[] = (object)[
-                'node' => ($toBeEscaped) ? Strings::htmlentities($match[0]) : $match[0],
-                'terminator' => ($toBeEscaped) ? '&gt;' : '>',
-                'offset' => $match[1],
-                'tagname' => $matches[1][$key][0],
-                'attributes' => $attributes,
-                'base64_decoded' => $base64Decoded,
-                'omittag' => ($matches[4][$key][1] > -1), // boolean
-                'inner_html' => $inner_html = self::getInnerHtml($matches, $key, $toBeEscaped),
-                'has_children' => is_array($inner_html),
+                    'node' => $node,
+                    'terminator' => ($toBeEscaped) ? '&gt;' : '>',
+                    'offset' => $match[1],
+                    'tagname' => $tagName,
+                    'attributes' => $attributes,
+                    'base64_decoded' => $base64Decoded,
+                    'omittag' => ($matches[4][$key][1] > -1), // boolean
+                    'inner_html' => $inner_html = self::getInnerHtml($matches, $key, $toBeEscaped),
+                    'has_children' => is_array($inner_html),
+                    'original_text' => ($toBeEscaped) ? Strings::htmlentities($text) : $text,
+                    'stripped_text' => ($toBeEscaped) ? strip_tags(Strings::htmlspecialchars_decode($text)) : strip_tags($text),
             ];
         }
 
@@ -93,9 +98,9 @@ class HtmlParser
         if (isset($matches[6][$key][0])) {
             $node = self::extractHtmlNode($matches[6][$key][0], $toBeEscaped);
 
-            return (!empty($node)) ? $node: $matches[6][$key][0];
+            return (!empty($node)) ? $node : $matches[6][$key][0];
         }
 
-        return '';
+        return null;
     }
 }

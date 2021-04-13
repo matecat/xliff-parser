@@ -43,16 +43,15 @@ class DataRefReplacer
             return $string;
         }
 
-        // clean string from equiv-text eventually present
-        // DON'T TOUCH MATECAT PH TAGS
+        // (recursively) clean string from equiv-text eventually present
         $string = $this->cleanFromEquivText($string);
 
         $html = HtmlParser::parse($string);
 
-        foreach ($html as $node) {
+        foreach ($html as $node){
             // 1. Replace for ph|sc|ec tag
             if ($node->tagname === 'ph' or $node->tagname === 'sc' or $node->tagname === 'ec') {
-                $string = $this->recursiveAddEquivText($node, $string);
+                $string = $this->addEquivText($node, $string);
             }
 
             // 2. Replace tag <pc>
@@ -130,43 +129,35 @@ class DataRefReplacer
      *
      * @return string
      */
-    private function recursiveAddEquivText($node, $string)
+    private function addEquivText( $node, $string)
     {
-        if($node->has_children){
-            foreach ($node->inner_html as $childNode){
-                $string = $this->recursiveAddEquivText($childNode, $string);
-            }
-        } else {
-            if (!isset($node->attributes['dataRef'])) {
-                return $string;
-            }
-
-            $a = $node->node;  // complete match. Eg:  <ph id="source1" dataRef="source1"/>
-            $b = $node->attributes['dataRef'];   // map identifier. Eg: source1
-
-            // if isset a value in the map calculate base64 encoded value
-            // otherwise skip
-            if (!isset($this->map[$b])) {
-                return $string;
-            }
-
-            $value = $this->map[$b];
-            $base64EncodedValue = base64_encode($value);
-
-            if (empty($base64EncodedValue) or $base64EncodedValue === '') {
-                return $string;
-            }
-
-            // replacement
-            $d = str_replace('/', ' equiv-text="base64:'.$base64EncodedValue.'"/', $a);
-
-            $a = str_replace(['<','>','&gt;', '&lt;'], '', $a);
-            $d = str_replace(['<','>','&gt;', '&lt;'], '', $d);
-
-            $string = str_replace($a, $d, $string);
+        if (!isset($node->attributes['dataRef'])) {
+            return $string;
         }
 
-        return $string;
+        $a = $node->node;  // complete match. Eg:  <ph id="source1" dataRef="source1"/>
+        $b = $node->attributes['dataRef'];   // map identifier. Eg: source1
+
+        // if isset a value in the map calculate base64 encoded value
+        // otherwise skip
+        if (!isset($this->map[$b])) {
+            return $string;
+        }
+
+        $value = $this->map[$b];
+        $base64EncodedValue = base64_encode($value);
+
+        if (empty($base64EncodedValue) or $base64EncodedValue === '') {
+            return $string;
+        }
+
+        // replacement
+        $d = str_replace('/', ' equiv-text="base64:'.$base64EncodedValue.'"/', $a);
+
+        $a = str_replace(['<','>','&gt;', '&lt;'], '', $a);
+        $d = str_replace(['<','>','&gt;', '&lt;'], '', $d);
+
+        return str_replace($a, $d, $string);
     }
 
     /**
@@ -198,18 +189,21 @@ class DataRefReplacer
             $base64StartOriginalData = base64_encode($startOriginalData);
             $base64EndOriginalData = base64_encode($endOriginalData);
 
+            // this is the conversion for opening <pc> tag
             $d  = '<ph '. ((isset($node->attributes['id'])) ? 'id="'.$node->attributes['id'].'_1"' : '') .' dataType="pcStart" originalData="'.$base64StartOriginalData.'" dataRef="'
                     .$node->attributes['dataRefStart'].'" equiv-text="base64:'
                     .$base64EncodedStartValue.'"/>';
 
-            if (!$node->has_children) {
-                $d .= $node->inner_html;
-            } else {
+            // check if there are some <pc> nested tags inside
+            if(self::nodeContainsNestedPcTags($node)){
                 foreach ($node->inner_html as $nestedNode) {
                     $d .= $this->convertPcToPhAndAddEquivText($nestedNode, $nestedNode->node);
                 }
+            } else {
+                $d .= $node->original_text;
             }
 
+            // this is the conversion for closing <pc> tag
             $d .= '<ph '. ((isset($node->attributes['id'])) ? 'id="'.$node->attributes['id'].'_2"': '') .' dataType="pcEnd" originalData="'.$base64EndOriginalData.'" dataRef="'.$node->attributes['dataRefEnd'].'" equiv-text="base64:' .$base64EncodedEndValue.'"/>';
 
             $string = str_replace($a, $d, $string);
@@ -220,6 +214,26 @@ class DataRefReplacer
         }
 
         return $string;
+    }
+
+    /**
+     * @param $node
+     *
+     * @return bool
+     */
+    private static function nodeContainsNestedPcTags($node)
+    {
+        if(!$node->has_children){
+            return false;
+        }
+
+        foreach ($node->inner_html as $nestedNode) {
+            if($nestedNode->tagname === 'pc' and isset($node->attributes['dataRefEnd']) and isset($node->attributes['dataRefStart'])){
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -236,9 +250,9 @@ class DataRefReplacer
 
         // replace eventual empty equiv-text=""
         $string = str_replace(' equiv-text=""', '', $string);
-        $parsed = HtmlParser::parse($string);
+        $html = HtmlParser::parse($string);
 
-        foreach ($parsed as $node){
+        foreach ($html as $node){
             $string = $this->recursiveRemoveOriginalData($node, $string);
         }
 
