@@ -292,8 +292,9 @@ class DataRefReplacer
 
             // replace only content tag, no matter if the string is encoded or not
             // in this way we can handle string with mixed tags (encoded and not-encoded)
-            $a = str_replace(['<', '>', '&lt;', '&gt;'], '', $a);
-            $d = str_replace(['<', '>', '&lt;', '&gt;'], '', $d);
+            // in the same string
+            $a = self::purgeTags($a);
+            $d = self::purgeTags($d);
 
             $string = str_replace($a, $d, $string);
 
@@ -303,11 +304,22 @@ class DataRefReplacer
 
                 if (isset($originalDataMatches[1])) {
                     $originalData = base64_decode($originalDataMatches[1]);
+                    $originalData = self::purgeTags($originalData);
                     $string = str_replace($d, $originalData, $string);
                 }
             }
         }
 
-        return str_replace(['<<', '>>', '&lt;&lt;', '&gt;&gt;'], ['<', '>', '&lt;', '&gt;'], $string);
+        return $string;
+    }
+
+    /**
+     * @param string $string
+     *
+     * @return string
+     */
+    private static function purgeTags($string)
+    {
+        return str_replace(['<', '>', '&lt;', '&gt;'], '', $string);
     }
 }

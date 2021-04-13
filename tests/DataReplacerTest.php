@@ -512,4 +512,23 @@ class DataReplacerTest extends BaseTest
         $this->assertEquals($expected, $dataReplacer->replace($string));
         $this->assertEquals($string, $dataReplacer->restore($expected));
     }
+
+    /**
+     * @test
+     */
+    public function can_restore_data_with_pc_from_matecat_real_case()
+    {
+        $map = [
+                'd1' => '_',
+                'd2' => '**',
+                'd3' => '`',
+        ];
+
+        $string = 'Testo libero contenente <ph id="1_1" dataType="pcStart" originalData="Jmx0O3BjIGlkPSIxIiBjYW5Db3B5PSJubyIgY2FuRGVsZXRlPSJubyIgZGF0YVJlZkVuZD0iZDEiIGRhdGFSZWZTdGFydD0iZDEiJmd0Ow==" dataRef="d1" equiv-text="base64:Xw=="/>';
+        $expected = 'Testo libero contenente <pc id="1" canCopy="no" canDelete="no" dataRefEnd="d1" dataRefStart="d1">';
+
+        $dataRefReplacer = new DataRefReplacer($map);
+
+        $this->assertEquals($expected, $dataRefReplacer->restore($string));
+    }
 }
