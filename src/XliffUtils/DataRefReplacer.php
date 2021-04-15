@@ -171,15 +171,26 @@ class DataRefReplacer
         $a = $node->node; // <pc id="1" canCopy="no" canDelete="no" dataRefEnd="d2" dataRefStart="d1">La Repubblica</pc>
         $toBeEscaped = Strings::isAnEscapedHTML($a);
 
+        // Original data
+        $startOriginalData = '<pc '. FlatData::flatArray($node->attributes, ' ', '=')  .'>';
+        $endOriginalData = '</pc>';
+
+        // CASE 1 - Missing `dataRefStart`
+        if( isset($node->attributes['dataRefEnd']) and !isset($node->attributes['dataRefStart'])  ){
+            $node->attributes['dataRefStart'] = $node->attributes['dataRefEnd'];
+        }
+
+        // CASE 2 - Missing `dataRefEnd`
+        if( isset($node->attributes['dataRefStart']) and !isset($node->attributes['dataRefEnd'])  ){
+            $node->attributes['dataRefEnd'] = $node->attributes['dataRefStart'];
+        }
+
         if (isset($node->attributes['dataRefEnd']) and isset($node->attributes['dataRefStart'])) {
             $startValue = $this->map[$node->attributes['dataRefStart']];
             $base64EncodedStartValue = base64_encode($startValue);
 
             $endValue = $this->map[$node->attributes['dataRefEnd']];
             $base64EncodedEndValue = base64_encode($endValue);
-
-            $startOriginalData = '<pc '. FlatData::flatArray($node->attributes, ' ', '=')  .'>';
-            $endOriginalData = '</pc>';
 
             if ($toBeEscaped) {
                 $startOriginalData = Strings::htmlentities($startOriginalData);

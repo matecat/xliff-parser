@@ -531,4 +531,38 @@ class DataReplacerTest extends BaseTest
 
         $this->assertEquals($expected, $dataRefReplacer->restore($string));
     }
+
+    /**
+     * @test
+     */
+    public function can_replace_and_restore_data_with_pc_with_missing_dataRefStart()
+    {
+        $map = [
+                'd1' => '&lt;br\/&gt;',
+        ];
+
+        $string = 'Text <pc id="d1" dataRefStart="d1">Uber Community Guidelines</pc>.';
+        $expected = 'Text <ph id="d1_1" dataType="pcStart" originalData="PHBjIGlkPSJkMSIgZGF0YVJlZlN0YXJ0PSJkMSI+" dataRef="d1" equiv-text="base64:Jmx0O2JyXC8mZ3Q7"/>Uber Community Guidelines<ph id="d1_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="d1" equiv-text="base64:Jmx0O2JyXC8mZ3Q7"/>.';
+
+        $dataReplacer = new DataRefReplacer($map);
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($string, $dataReplacer->restore($expected));
+    }
+
+    /**
+     * @test
+     */
+    public function can_replace_and_restore_data_with_pc_with_missing_dataRefEnd()
+    {
+        $map = [
+                'd1' => '&lt;br\/&gt;',
+        ];
+
+        $string = 'Text <pc id="d1" dataRefEnd="d1">Uber Community Guidelines</pc>.';
+        $expected = 'Text <ph id="d1_1" dataType="pcStart" originalData="PHBjIGlkPSJkMSIgZGF0YVJlZkVuZD0iZDEiPg==" dataRef="d1" equiv-text="base64:Jmx0O2JyXC8mZ3Q7"/>Uber Community Guidelines<ph id="d1_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="d1" equiv-text="base64:Jmx0O2JyXC8mZ3Q7"/>.';
+
+        $dataReplacer = new DataRefReplacer($map);
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($string, $dataReplacer->restore($expected));
+    }
 }
