@@ -9,6 +9,18 @@ class XliffParserV2Test extends BaseTest
     /**
      * @test
      */
+    public function can_parse_xliff_v2_with_pc_tags()
+    {
+        // <pc> tags do not be escaped here
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('1111_prova.md.xlf'));
+        $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
+
+        $this->assertEquals('Testo libero contenente <pc id="1" canCopy="no" canDelete="no" dataRefEnd="d1" dataRefStart="d1">corsivo</pc>.', $units[2][ 'source' ]['raw-content'][0]);
+    }
+
+    /**
+     * @test
+     */
     public function can_parse_xliff_v2_with_double_encoded_map()
     {
         // &amp;#39;

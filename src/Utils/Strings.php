@@ -121,7 +121,7 @@ class Strings
     {
         if (self::$find_xliff_tags_reg === null) {
             // List of the tags that we don't want to escape
-            $xliff_tags = [ 'g', 'x', 'bx', 'ex', 'bpt', 'ept', 'ph', 'it', 'mrk' ];
+            $xliff_tags = [ 'g', 'x', 'bx', 'ex', 'bpt', 'ept', 'ph', 'pc', 'it', 'mrk' ];
             // Convert the list of tags in a regexp list, for example "g|x|bx|ex"
             $xliff_tags_reg_list = implode('|', $xliff_tags);
             // Regexp to find all the XLIFF tags:
