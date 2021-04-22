@@ -47,6 +47,7 @@ class HtmlParser
             $originalText = ($toBeEscaped) ? Strings::htmlentities($text) : $text;
             $strippedText = ($toBeEscaped) ? strip_tags(Strings::htmlspecialchars_decode($text)) : strip_tags($text);
 
+            // get start and end
             $explosionPlaceholder = '___####::::####____';
             $explodedNode = explode($explosionPlaceholder, str_replace($originalText, $explosionPlaceholder, $node));
 
