@@ -6,7 +6,7 @@ class Placeholder
 {
     /**
      * Placeholder map to preserve white spaces
-     * contained in <original-data> map
+     * contained in <originalData> map
      * (only for Xliff 2.0)
      */
     const WHITE_SPACE_PLACEHOLDER = '###___WHITE_SPACE_PLACEHOLDER___###';
