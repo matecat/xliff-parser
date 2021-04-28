@@ -2,6 +2,7 @@
 
 namespace Matecat\XliffParser;
 
+use Matecat\XliffParser\Constants\Placeholder;
 use Matecat\XliffParser\Utils\Strings;
 use Matecat\XliffParser\XliffParser\XliffParserFactory;
 use Matecat\XliffParser\XliffReplacer\XliffReplacerCallbackInterface;
@@ -67,6 +68,10 @@ class XliffParser
                 $xliffContent = self::removeInternalFileTagFromContent($xliffContent, $xliff);
             }
 
+            if($version === 2){
+                $xliffContent = self::replaceSpacesInOriginalMapData($xliffContent);
+            }
+
             $parser = XliffParserFactory::getInstance($version, $this->logger);
             $dom = XmlParser::parse($xliffContent);
 
@@ -101,6 +106,7 @@ class XliffParser
     /**
      * Remove <internal-file> heading tag from xliff content
      * This allows to parse xliff files with a very large <internal-file>
+     * (only for Xliff 1.0)
      *
      * @param $xliffContent
      * @param $xliff
@@ -142,5 +148,34 @@ class XliffParser
             'form-type' => 'base64',
             'base64' => trim(str_replace('form="base64">', '', $base64)),
         ];
+    }
+
+    /**
+     * Replace spaces (like white space, tab space etc..) with placeholders in the original data map to preserve them
+     * (only for Xliff 2.0)
+     *
+     * @param $xliffContent
+     *
+     * @return string
+     */
+    private static function replaceSpacesInOriginalMapData($xliffContent)
+    {
+        return preg_replace_callback('/<data(.*?)>(.*?)<\/data>/iU', [XliffParser::class, 'replaceSpace' ], $xliffContent);
+    }
+
+    /**
+     * Replace <data> value
+     *
+     * @param array $matches
+     *
+     * @return string
+     */
+    private static function replaceSpace($matches)
+    {
+        $content = str_replace(' ', Placeholder::WHITE_SPACE_PLACEHOLDER, $matches[2]);
+        $content = str_replace('\n', Placeholder::NEW_LINE_PLACEHOLDER, $content);
+        $content = str_replace('\t', Placeholder::TAB_PLACEHOLDER, $content);
+
+        return '<data'.$matches[1].'>'.$content.'</data>';
     }
 }
