@@ -138,10 +138,10 @@ class XliffParserV2Test extends BaseTest
         $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
         $this->assertCount(2, $units);
 
-        $this->assertStringContainsString('&lt;pc id="1"&gt;Hello <mrk id="m1" type="term">World</mrk>!&lt;/pc&gt;', $units[ 1 ][ 'source' ][ 'raw-content' ][0]);
-        $this->assertStringContainsString('&lt;pc id="2"&gt;Hello <mrk id="m2" type="term">World2</mrk>!&lt;/pc&gt;', $units[ 2 ][ 'source' ][ 'raw-content' ][0]);
-        $this->assertStringContainsString('&lt;pc id="1"&gt;Bonjour le <mrk id="m1" type="term">Monde</mrk> !&lt;/pc&gt;', $units[ 1 ][ 'target' ][ 'raw-content' ][0]);
-        $this->assertStringContainsString('&lt;pc id="2"&gt;Bonjour le <mrk id="m2" type="term">Monde2</mrk> !&lt;/pc&gt;', $units[ 2 ][ 'target' ][ 'raw-content' ][0]);
+        $this->assertStringContainsString('<pc id="1">Hello <mrk id="m1" type="term">World</mrk>!</pc>', $units[ 1 ][ 'source' ][ 'raw-content' ][0]);
+        $this->assertStringContainsString('<pc id="2">Hello <mrk id="m2" type="term">World2</mrk>!</pc>', $units[ 2 ][ 'source' ][ 'raw-content' ][0]);
+        $this->assertStringContainsString('<pc id="1">Bonjour le <mrk id="m1" type="term">Monde</mrk> !</pc>', $units[ 1 ][ 'target' ][ 'raw-content' ][0]);
+        $this->assertStringContainsString('<pc id="2">Bonjour le <mrk id="m2" type="term">Monde2</mrk> !</pc>', $units[ 2 ][ 'target' ][ 'raw-content' ][0]);
         $this->assertEquals($units[ 1 ][ 'source' ][ 'attr' ], []);
         $this->assertEquals($units[ 2 ][ 'source' ][ 'attr' ], []);
         $this->assertEquals($units[ 1 ][ 'target' ][ 'attr' ], []);
@@ -193,7 +193,7 @@ class XliffParserV2Test extends BaseTest
         $this->assertEquals($target['raw-content'][1], 'Phrase 2. ');
         $this->assertEquals($source['raw-content'][2], 'Sentence 3. ');
         $this->assertEquals($target['raw-content'][2], 'Phrase 3. ');
-        $this->assertEquals($source['raw-content'][3], '&lt;pc id="1"&gt;pc&lt;/pc&gt; Sentence 4.');
+        $this->assertEquals($source['raw-content'][3], '<pc id="1">pc</pc> Sentence 4.');
         $this->assertEquals($target['raw-content'][3], 'Phrase 4.');
 
         $this->assertEquals($source['attr'][ 3 ], [
@@ -218,7 +218,7 @@ class XliffParserV2Test extends BaseTest
         $this->assertEquals($segTarget[1]['raw-content'], 'Phrase 2. ');
         $this->assertEquals($segSource[2]['raw-content'], 'Sentence 3. ');
         $this->assertEquals($segTarget[2]['raw-content'], 'Phrase 3. ');
-        $this->assertEquals($segSource[3]['raw-content'], '&lt;pc id="1"&gt;pc&lt;/pc&gt; Sentence 4.');
+        $this->assertEquals($segSource[3]['raw-content'], '<pc id="1">pc</pc> Sentence 4.');
         $this->assertEquals($segTarget[3]['raw-content'], 'Phrase 4.');
     }
 
@@ -267,30 +267,30 @@ class XliffParserV2Test extends BaseTest
                         ],
                          'source' => [
                              'raw-content' => [
-                                 0 => '&lt;pc id="1"&gt;Hello <mrk id="m1" type="term">World</mrk>!&lt;/pc&gt;'
+                                 0 => '<pc id="1">Hello <mrk id="m1" type="term">World</mrk>!</pc>'
                              ],
                              'attr'    => [],
                          ],
                          'target' => [
                             'raw-content' => [
-                                0 => '&lt;pc id="1"&gt;Bonjour le <mrk id="m1" type="term">Monde</mrk> !&lt;/pc&gt;',
+                                0 => '<pc id="1">Bonjour le <mrk id="m1" type="term">Monde</mrk> !</pc>',
                             ],
                              'attr'    => [],
                          ],
                         'seg-source' => [
                             0 => [
                                 'mid' => 0,
-                                'ext-prec-tags' => '&lt;pc id="1"&gt;Hello ',
+                                'ext-prec-tags' => '<pc id="1">Hello ',
                                 'raw-content' => 'World',
-                                'ext-succ-tags' => '!&lt;/pc&gt;',
+                                'ext-succ-tags' => '!</pc>;',
                             ]
                         ],
                         'seg-target' => [
                             0 => [
                                 'mid' => 0,
-                                'ext-prec-tags' => '&lt;pc id="1"&gt;Bonjour le ',
+                                'ext-prec-tags' => '<pc id="1">Bonjour le ',
                                 'raw-content' => 'Monde',
-                                'ext-succ-tags' => ' !&lt;/pc&gt;',
+                                'ext-succ-tags' => ' !</pc>',
                             ]
                         ]
                     ],
@@ -310,30 +310,30 @@ class XliffParserV2Test extends BaseTest
                     ],
                     'source' => [
                         'raw-content' => [
-                            0 => '&lt;pc id="2"&gt;Hello <mrk id="m2" type="term">World2</mrk>!&lt;/pc&gt;',
+                            0 => '<pc id="2">Hello <mrk id="m2" type="term">World2</mrk>!</pc>',
                         ],
                         'attr'    => [],
                     ],
                     'target' => [
                         'raw-content' => [
-                            0 => '&lt;pc id="2"&gt;Bonjour le <mrk id="m2" type="term">Monde2</mrk> !&lt;/pc&gt;',
+                            0 => '<pc id="2">Bonjour le <mrk id="m2" type="term">Monde2</mrk> !</pc>',
                         ],
                         'attr'    => [],
                     ],
                     'seg-source' => [
                         0 => [
                             'mid' => 0,
-                            'ext-prec-tags' => '&lt;pc id="2"&gt;Hello ',
+                            'ext-prec-tags' => '<pc id="2">Hello ',
                             'raw-content' => 'World2',
-                            'ext-succ-tags' => '!&lt;/pc&gt;',
+                            'ext-succ-tags' => '!</pc>',
                         ]
                     ],
                     'seg-target' => [
                         0 => [
                             'mid' => 0,
-                            'ext-prec-tags' => '&lt;pc id="2"&gt;Bonjour le ',
+                            'ext-prec-tags' => '<pc id="2">Bonjour le ',
                             'raw-content' => 'Monde2',
-                            'ext-succ-tags' => ' !&lt;/pc&gt;',
+                            'ext-succ-tags' => ' !</pc>',
                         ]
                     ]
                 ],

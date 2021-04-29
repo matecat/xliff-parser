@@ -17,6 +17,8 @@ class HtmlParserTest extends BaseTest
         $this->assertCount(1, $parsed);
         $this->assertEquals('text', $parsed[0]->attributes['class']);
         $this->assertEquals('questo è un testo', $parsed[0]->original_text);
+        $this->assertEquals('<div class=\'text\'>', $parsed[0]->start);
+        $this->assertEquals('</div>', $parsed[0]->end);
     }
 
     /**

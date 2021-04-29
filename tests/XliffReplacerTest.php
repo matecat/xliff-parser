@@ -108,7 +108,7 @@ class XliffReplacerTest extends BaseTest
 
         (new XliffParser())->replaceTranslation($inputFile, $data['data'], $data['transUnits'], 'fr-fr', $outputFile, false, new DummyXliffReplacerCallback());
         $output = (new XliffParser())->xliffToArray(file_get_contents($outputFile));
-        $expected = '&lt;pc id="1"&gt;Buongiorno al <mrk id="m2" type="term">Mondo</mrk> !&lt;/pc&gt;';
+        $expected = '<pc id="1">Buongiorno al <mrk id="m2" type="term">Mondo</mrk> !</pc>';
 
         $this->assertEquals($expected, $output['files'][1]['trans-units'][1]['target']['raw-content'][0]);
     }
@@ -124,7 +124,7 @@ class XliffReplacerTest extends BaseTest
 
         (new XliffParser())->replaceTranslation($inputFile, $data['data'], $data['transUnits'], 'fr-fr', $outputFile, false, new DummyXliffReplacerCallbackWhichReturnTrue());
         $output = (new XliffParser())->xliffToArray(file_get_contents($outputFile));
-        $expected = '|||UNTRANSLATED_CONTENT_START|||&lt;pc id="1"&gt;Hello <mrk id="m2" type="term">World</mrk> !&lt;/pc&gt;|||UNTRANSLATED_CONTENT_END|||';
+        $expected = '|||UNTRANSLATED_CONTENT_START|||<pc id="1">Hello <mrk id="m2" type="term">World</mrk> !</pc>|||UNTRANSLATED_CONTENT_END|||';
 
         $this->assertEquals($expected, $output['files'][1]['trans-units'][1]['target']['raw-content'][0]);
     }

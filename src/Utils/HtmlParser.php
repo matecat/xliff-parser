@@ -44,19 +44,27 @@ class HtmlParser
             $node = ($toBeEscaped) ? Strings::htmlentities($match[0]) : $match[0];
             $tagName = $matches[1][$key][0];
             $text = (isset($matches[6][$key][0]) and '' !== $matches[6][$key][0]) ? $matches[6][$key][0] : null;
+            $originalText = ($toBeEscaped) ? Strings::htmlentities($text) : $text;
+            $strippedText = ($toBeEscaped) ? strip_tags(Strings::htmlspecialchars_decode($text)) : strip_tags($text);
+
+            // get start and end
+            $explosionPlaceholder = '___####::::####____';
+            $explodedNode = explode($explosionPlaceholder, str_replace($originalText, $explosionPlaceholder, $node));
 
             $elements[] = (object)[
-                    'node' => $node,
-                    'terminator' => ($toBeEscaped) ? '&gt;' : '>',
-                    'offset' => $match[1],
-                    'tagname' => $tagName,
-                    'attributes' => $attributes,
-                    'base64_decoded' => $base64Decoded,
-                    'omittag' => ($matches[4][$key][1] > -1), // boolean
-                    'inner_html' => $inner_html = self::getInnerHtml($matches, $key, $toBeEscaped),
-                    'has_children' => is_array($inner_html),
-                    'original_text' => ($toBeEscaped) ? Strings::htmlentities($text) : $text,
-                    'stripped_text' => ($toBeEscaped) ? strip_tags(Strings::htmlspecialchars_decode($text)) : strip_tags($text),
+                'node' => $node,
+                'start' => (isset($explodedNode[0])) ? $explodedNode[0] : null,
+                'end' => (isset($explodedNode[1])) ? $explodedNode[1] : null,
+                'terminator' => ($toBeEscaped) ? '&gt;' : '>',
+                'offset' => $match[1],
+                'tagname' => $tagName,
+                'attributes' => $attributes,
+                'base64_decoded' => $base64Decoded,
+                'omittag' => ($matches[4][$key][1] > -1), // boolean
+                'inner_html' => $inner_html = self::getInnerHtml($matches, $key, $toBeEscaped),
+                'has_children' => is_array($inner_html),
+                'original_text' => $originalText,
+                'stripped_text' => $strippedText,
             ];
         }
 
