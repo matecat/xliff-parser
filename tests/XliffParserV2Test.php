@@ -9,6 +9,19 @@ class XliffParserV2Test extends BaseTest
     /**
      * @test
      */
+    public function can_parse_xliff_v2_with_new_line_values_in_originalData()
+    {
+        // <pc> tags do not be escaped here
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('blank-dataRef.xliff'));
+        $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
+
+        $this->assertArrayHasKey('original-data', $units[4]);
+        $this->assertEquals($units[4]['original-data'][0]['raw-content'], '  ');
+    }
+
+    /**
+     * @test
+     */
     public function can_parse_xliff_v2_with_pc_tags()
     {
         // <pc> tags do not be escaped here

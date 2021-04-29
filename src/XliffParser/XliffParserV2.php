@@ -2,6 +2,7 @@
 
 namespace Matecat\XliffParser\XliffParser;
 
+use Matecat\XliffParser\Constants\Placeholder;
 use Matecat\XliffParser\Exception\DuplicateTransUnitIdInXliff;
 use Matecat\XliffParser\Exception\NotFoundIdInTransUnit;
 use Matecat\XliffParser\Utils\Strings;
@@ -287,18 +288,21 @@ class XliffParserV2 extends AbstractXliffParser
                 foreach ($childNode->childNodes as $data) {
                     if (null!== $data->attributes and null !== $data->attributes->getNamedItem('id')) {
                         $dataId = $data->attributes->getNamedItem('id')->nodeValue;
-                    }
 
-                    $dataValue = trim($data->nodeValue);
-                    if ('' !== $dataValue) {
-                        $originalData[] = array_merge(
-                            $this->JSONOrRawContentArray($dataValue, false),
-                            [
-                                'attr' => [
-                                'id' => $dataId
-                            ]
-                        ]
-                        );
+                        $dataValue = str_replace(Placeholder::WHITE_SPACE_PLACEHOLDER, ' ', $data->nodeValue);
+                        $dataValue = str_replace(Placeholder::NEW_LINE_PLACEHOLDER,'\n', $dataValue);
+                        $dataValue = str_replace(Placeholder::TAB_PLACEHOLDER, '\t', $dataValue);
+
+                        if ('' !== $dataValue) {
+                            $originalData[] = array_merge(
+                                    $this->JSONOrRawContentArray($dataValue, false),
+                                    [
+                                            'attr' => [
+                                                    'id' => $dataId
+                                            ]
+                                    ]
+                            );
+                        }
                     }
                 }
             }
