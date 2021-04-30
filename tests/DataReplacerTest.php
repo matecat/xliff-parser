@@ -565,4 +565,28 @@ class DataReplacerTest extends BaseTest
         $this->assertEquals($expected, $dataReplacer->replace($string));
         $this->assertEquals($string, $dataReplacer->restore($expected));
     }
+
+    /**
+     * @test
+     */
+    public function can_replace_and_restore_data_with_pc_with_non_standard_characters()
+    {
+        $map = [
+                "source3" => "<g id=\"jcP-TFFSO2CSsuLt\" ctype=\"x-html-strong\" \/>",
+                "source4" => "<g id=\"5StCYYRvqMc0UAz4\" ctype=\"x-html-ul\" \/>",
+                "source5" => "<g id=\"99phhJcEQDLHBjeU\" ctype=\"x-html-li\" \/>",
+                "source1" => "<g id=\"lpuxniQlIW3KrUyw\" ctype=\"x-html-p\" \/>",
+                "source6" => "<g id=\"0HZug1d3LkXJU04E\" ctype=\"x-html-li\" \/>",
+                "source2" => "<g id=\"d3TlPtomlUt0Ej1k\" ctype=\"x-html-p\" \/>",
+                "source7" => "<g id=\"oZ3oW_0KaicFXFDS\" ctype=\"x-html-li\" \/>"
+        ];
+
+        // this string contains ’
+        $string = '&lt;pc id="source4" dataRefStart="source4"&gt;The rider can’t tell if the driver matched the profile picture.&lt;/pc&gt;';
+        $expected = '&lt;ph id="source4_1" dataType="pcStart" originalData="Jmx0O3BjIGlkPSJzb3VyY2U0IiBkYXRhUmVmU3RhcnQ9InNvdXJjZTQiJmd0Ow==" dataRef="source4" equiv-text="base64:PGcgaWQ9IjVTdENZWVJ2cU1jMFVBejQiIGN0eXBlPSJ4LWh0bWwtdWwiIFwvPg=="/&gt;The rider can’t tell if the driver matched the profile picture.&lt;ph id="source4_2" dataType="pcEnd" originalData="Jmx0Oy9wYyZndDs=" dataRef="source4" equiv-text="base64:PGcgaWQ9IjVTdENZWVJ2cU1jMFVBejQiIGN0eXBlPSJ4LWh0bWwtdWwiIFwvPg=="/&gt;';
+
+        $dataReplacer = new DataRefReplacer($map);
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($string, $dataReplacer->restore($expected));
+    }
 }

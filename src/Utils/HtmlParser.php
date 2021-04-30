@@ -41,27 +41,36 @@ class HtmlParser
 
             $attributes = isset($matches[2][$key][0]) ? self::getAttributes($matches[2][$key][0]) : [];
             $base64Decoded = (isset($attributes['equiv-text'])) ? base64_decode(str_replace("base64:", "", $attributes['equiv-text'])): null;
-            $node = ($toBeEscaped) ? Strings::htmlentities($match[0]) : $match[0];
             $tagName = $matches[1][$key][0];
             $text = (isset($matches[6][$key][0]) and '' !== $matches[6][$key][0]) ? $matches[6][$key][0] : null;
-            $originalText = ($toBeEscaped) ? Strings::htmlentities($text) : $text;
-            $strippedText = ($toBeEscaped) ? strip_tags(Strings::htmlspecialchars_decode($text)) : strip_tags($text);
+            $originalText = $text;
+            $strippedText = strip_tags($text);
 
             // get start and end
-            $explosionPlaceholder = '___####::::####____';
-            $explodedNode = explode($explosionPlaceholder, str_replace($originalText, $explosionPlaceholder, $node));
+            $explosionPlaceholder = '#####__ORIGINAL_TEXT__#####';
+            $explodedNode = explode($explosionPlaceholder, str_replace($originalText, $explosionPlaceholder, $match[0]));
+
+            $start = (isset($explodedNode[0])) ? $explodedNode[0] : null;
+            $end = (isset($explodedNode[1])) ? $explodedNode[1] : null;
+
+            // inner_html
+            $inner_html = self::getInnerHtml($matches, $key, $toBeEscaped);
+
+            // node
+            $node = ($toBeEscaped) ? Strings::htmlentities($match[0]) : $match[0];
+            //$node = self::rebuildNode($originalText, $toBeEscaped, $start, $end);
 
             $elements[] = (object)[
                 'node' => $node,
-                'start' => (isset($explodedNode[0])) ? $explodedNode[0] : null,
-                'end' => (isset($explodedNode[1])) ? $explodedNode[1] : null,
+                'start' => $start,
+                'end' => $end,
                 'terminator' => ($toBeEscaped) ? '&gt;' : '>',
                 'offset' => $match[1],
                 'tagname' => $tagName,
                 'attributes' => $attributes,
                 'base64_decoded' => $base64Decoded,
                 'omittag' => ($matches[4][$key][1] > -1), // boolean
-                'inner_html' => $inner_html = self::getInnerHtml($matches, $key, $toBeEscaped),
+                'inner_html' => $inner_html,
                 'has_children' => is_array($inner_html),
                 'original_text' => $originalText,
                 'stripped_text' => $strippedText,
@@ -69,6 +78,23 @@ class HtmlParser
         }
 
         return $elements;
+    }
+
+    private static function rebuildNode($originalText, $toBeEscaped, $start = null, $end = null)
+    {
+        $node = '';
+
+        if($start !== null){
+            $node .= ($toBeEscaped) ? Strings::htmlentities($start) : $start;
+        }
+
+        $node .= ($toBeEscaped) ? Strings::htmlentities($originalText) : $originalText;
+
+        if($end !== null){
+            $node .= ($toBeEscaped) ? Strings::htmlentities($end) : $end;
+        }
+
+        return $node;
     }
 
     /**
