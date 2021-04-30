@@ -46,7 +46,7 @@ class HtmlParser
             $originalText = $text;
             $strippedText = strip_tags($text);
 
-            // get start and end
+            // get start and end tags
             $explosionPlaceholder = '#####__ORIGINAL_TEXT__#####';
             $explodedNode = explode($explosionPlaceholder, str_replace($originalText, $explosionPlaceholder, $match[0]));
 
@@ -57,8 +57,7 @@ class HtmlParser
             $inner_html = self::getInnerHtml($matches, $key, $toBeEscaped);
 
             // node
-            $node = ($toBeEscaped) ? Strings::htmlentities($match[0]) : $match[0];
-            //$node = self::rebuildNode($originalText, $toBeEscaped, $start, $end);
+            $node = self::rebuildNode($originalText, $toBeEscaped, $start, $end);
 
             $elements[] = (object)[
                 'node' => $node,
@@ -72,7 +71,7 @@ class HtmlParser
                 'omittag' => ($matches[4][$key][1] > -1), // boolean
                 'inner_html' => $inner_html,
                 'has_children' => is_array($inner_html),
-                'original_text' => $originalText,
+                'original_text' => ($toBeEscaped) ? Strings::escapeOnlyHTMLTags($originalText) : $originalText,
                 'stripped_text' => $strippedText,
             ];
         }
@@ -80,18 +79,26 @@ class HtmlParser
         return $elements;
     }
 
+    /**
+     * @param string $originalText
+     * @param bool $toBeEscaped
+     * @param null $start
+     * @param null $end
+     *
+     * @return string
+     */
     private static function rebuildNode($originalText, $toBeEscaped, $start = null, $end = null)
     {
         $node = '';
 
         if($start !== null){
-            $node .= ($toBeEscaped) ? Strings::htmlentities($start) : $start;
+            $node .= ($toBeEscaped) ? Strings::escapeOnlyHTMLTags($start) : $start;
         }
 
-        $node .= ($toBeEscaped) ? Strings::htmlentities($originalText) : $originalText;
+        $node .= ($toBeEscaped) ? Strings::escapeOnlyHTMLTags($originalText) : $originalText;
 
         if($end !== null){
-            $node .= ($toBeEscaped) ? Strings::htmlentities($end) : $end;
+            $node .= ($toBeEscaped) ? Strings::escapeOnlyHTMLTags($end) : $end;
         }
 
         return $node;

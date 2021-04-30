@@ -277,4 +277,24 @@ class Strings
     {
         return preg_split( $pattern, $subject, -1, PREG_SPLIT_NO_EMPTY );
     }
+
+    /**
+     * Escape ONLY HTML tags
+     *
+     * For example:
+     *
+     * <a href="#">link</a> < text
+     *
+     * is converted to:
+     *
+     * &lt;a href="#"&gt;link&lt;/a&gt; < text
+     *
+     * @param string $string
+     *
+     * @return string
+     */
+    public static function escapeOnlyHTMLTags($string)
+    {
+        return preg_replace('/<(.*?)>/iu', '&lt;$1&gt;', $string);
+    }
 }
