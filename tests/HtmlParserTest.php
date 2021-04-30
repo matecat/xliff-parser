@@ -168,6 +168,31 @@ class HtmlParserTest extends BaseTest
         $this->assertEquals($tu->tagname, 'trans-unit');
         $this->assertEquals($tu->attributes['id'], 'pendo-image-e3aaf7b7|alt');
     }
+
+    /**
+     * @test
+     */
+    public function can_escape_correctly_nodes_containing_special_characters()
+    {
+        // this string contains ’
+        $string = '&lt;pc id="source4" dataRefStart="source4"&gt;The rider can’t tell if the driver matched the profile picture.&lt;/pc&gt;';
+        $parsed = HtmlParser::parse($string);
+
+        $pc = $parsed[0];
+
+        $this->assertEquals($pc->node, '&lt;pc id="source4" dataRefStart="source4"&gt;The rider can’t tell if the driver matched the profile picture.&lt;/pc&gt;');
+        $this->assertEquals($pc->original_text, 'The rider can’t tell if the driver matched the profile picture.');
+        $this->assertEquals($pc->stripped_text, 'The rider can’t tell if the driver matched the profile picture.');
+
+        // this string contains > inside text
+        $string = '&lt;pc id="source4" dataRefStart="source4"&gt;Questa stringa contiene un > a stringa.&lt;/pc&gt;';
+        $parsed = HtmlParser::parse($string);
+
+        $pc = $parsed[0];
+        $this->assertEquals($pc->node, '&lt;pc id="source4" dataRefStart="source4"&gt;Questa stringa contiene un > a stringa.&lt;/pc&gt;');
+        $this->assertEquals($pc->original_text, 'Questa stringa contiene un > a stringa.');
+        $this->assertEquals($pc->stripped_text, 'Questa stringa contiene un > a stringa.');
+    }
 }
 
 

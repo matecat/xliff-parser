@@ -217,6 +217,8 @@ class DataRefReplacer
             // this is the conversion for closing <pc> tag
             $d .= '<ph '. ((isset($node->attributes['id'])) ? 'id="'.$node->attributes['id'].'_2"': '') .' dataType="pcEnd" originalData="'.$base64EndOriginalData.'" dataRef="'.$node->attributes['dataRefEnd'].'" equiv-text="base64:' .$base64EncodedEndValue.'"/>';
 
+            // replace content in the original string
+
             $string = str_replace($a, $d, $string);
         }
 
