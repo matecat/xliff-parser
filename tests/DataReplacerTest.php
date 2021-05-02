@@ -589,4 +589,46 @@ class DataReplacerTest extends BaseTest
         $this->assertEquals($expected, $dataReplacer->replace($string));
         $this->assertEquals($string, $dataReplacer->restore($expected));
     }
+
+    /**
+     * @test
+     */
+    public function can_replace_and_restore_data_with_pc_with_nested_pc_structures()
+    {
+        $map = [
+            "source1" => "x",
+            "source2" => "y",
+        ];
+
+        $string = '<pc id="source1" dataRefStart="source1">foo <pc id="source2" dataRefStart="source2">bar</pc> baz</pc>';
+        $expected = '<ph id="source1_1" dataType="pcStart" originalData="PHBjIGlkPSJzb3VyY2UxIiBkYXRhUmVmU3RhcnQ9InNvdXJjZTEiPg==" dataRef="source1" equiv-text="base64:eA=="/>foo <ph id="source2_1" dataType="pcStart" originalData="PHBjIGlkPSJzb3VyY2UyIiBkYXRhUmVmU3RhcnQ9InNvdXJjZTIiPg==" dataRef="source2" equiv-text="base64:eQ=="/>bar<ph id="source2_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="source2" equiv-text="base64:eQ=="/> baz<ph id="source1_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="source1" equiv-text="base64:eA=="/>';
+
+        $dataReplacer = new DataRefReplacer($map);
+
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($string, $dataReplacer->restore($expected));
+    }
+
+    /**
+     * @test
+     */
+    public function can_replace_and_restore_data_with_pc_with_more_complex_nested_pc_structures()
+    {
+        $map = [
+            "source1" => "x",
+            "source2" => "y",
+            "source3" => "z",
+            "source4" => "a",
+            "source5" => "b",
+        ];
+
+        $string = '<pc id="source1" dataRefStart="source1">foo <pc id="source2" dataRefStart="source2">bar lorem</pc> <pc id="source3" dataRefStart="source3">bar <pc id="source4" dataRefStart="source4">bar</pc> <pc id="source5" dataRefStart="source5">bar</pc></pc> cavolino</pc>';
+        $expected = '<ph id="source1_1" dataType="pcStart" originalData="PHBjIGlkPSJzb3VyY2UxIiBkYXRhUmVmU3RhcnQ9InNvdXJjZTEiPg==" dataRef="source1" equiv-text="base64:eA=="/>foo <ph id="source2_1" dataType="pcStart" originalData="PHBjIGlkPSJzb3VyY2UyIiBkYXRhUmVmU3RhcnQ9InNvdXJjZTIiPg==" dataRef="source2" equiv-text="base64:eQ=="/>bar lorem<ph id="source2_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="source2" equiv-text="base64:eQ=="/> <ph id="source3_1" dataType="pcStart" originalData="PHBjIGlkPSJzb3VyY2UzIiBkYXRhUmVmU3RhcnQ9InNvdXJjZTMiPg==" dataRef="source3" equiv-text="base64:eg=="/>bar <ph id="source4_1" dataType="pcStart" originalData="PHBjIGlkPSJzb3VyY2U0IiBkYXRhUmVmU3RhcnQ9InNvdXJjZTQiPg==" dataRef="source4" equiv-text="base64:YQ=="/>bar<ph id="source4_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="source4" equiv-text="base64:YQ=="/> <ph id="source5_1" dataType="pcStart" originalData="PHBjIGlkPSJzb3VyY2U1IiBkYXRhUmVmU3RhcnQ9InNvdXJjZTUiPg==" dataRef="source5" equiv-text="base64:Yg=="/>bar<ph id="source5_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="source5" equiv-text="base64:Yg=="/><ph id="source3_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="source3" equiv-text="base64:eg=="/> cavolino<ph id="source1_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="source1" equiv-text="base64:eA=="/>';
+
+        $dataReplacer = new DataRefReplacer($map);
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($string, $dataReplacer->restore($expected));
+    }
 }
