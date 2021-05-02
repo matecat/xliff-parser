@@ -50,7 +50,7 @@ class DataRefReplacer
 
         // create a dataRefEnd map
         // (needed for correct handling of </pc> closing tags)
-        $dataRefEndMap = self::buildDataRefEndMap($html);
+        $dataRefEndMap = $this->buildDataRefEndMap($html);
 
         // parse and process each node of the original string
         foreach ($html as $node){
@@ -114,13 +114,13 @@ class DataRefReplacer
      *
      * @return array
      */
-    private static function buildDataRefEndMap($html)
+    private function buildDataRefEndMap($html)
     {
         $dataRefEndMap = [];
 
         foreach ($html as $index => $node) {
             if ( $node->tagname === 'pc' ) {
-                self::extractDataRefMapRecursively($node, $dataRefEndMap);
+                $this->extractDataRefMapRecursively($node, $dataRefEndMap);
             }
         }
 
@@ -133,11 +133,11 @@ class DataRefReplacer
      * @param object $node
      * @param $dataRefEndMap
      */
-    private static function extractDataRefMapRecursively( $node, &$dataRefEndMap)
+    private function extractDataRefMapRecursively( $node, &$dataRefEndMap)
     {
-        if(self::nodeContainsNestedPcTags($node)) {
+        if($this->nodeContainsNestedPcTags($node)) {
             foreach ( $node->inner_html as $nestedNode ) {
-                self::extractDataRefMapRecursively($nestedNode, $dataRefEndMap);
+                $this->extractDataRefMapRecursively($nestedNode, $dataRefEndMap);
             }
         }
 
@@ -322,7 +322,7 @@ class DataRefReplacer
      *
      * @return bool
      */
-    private static function nodeContainsNestedPcTags($node)
+    private function nodeContainsNestedPcTags($node)
     {
         if(!$node->has_children){
             return false;
@@ -405,7 +405,7 @@ class DataRefReplacer
 
                 if (isset($originalDataMatches[1])) {
                     $originalData = base64_decode($originalDataMatches[1]);
-                    $originalData = self::purgeTags($originalData);
+                    $originalData = $this->purgeTags($originalData);
                     $string = str_replace($d, $originalData, $string);
                 }
             }
@@ -419,7 +419,7 @@ class DataRefReplacer
      *
      * @return string
      */
-    private static function purgeTags($string)
+    private function purgeTags($string)
     {
         return str_replace(['<', '>', '&lt;', '&gt;'], '', $string);
     }
