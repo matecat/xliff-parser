@@ -109,7 +109,7 @@ class HtmlParser
      *
      * @return mixed
      */
-    private static function getAttributes($content)
+    public static function getAttributes($content)
     {
         $pattern = '/(.*?)=("|\'|\\\")(.*?)("|\'|\\\"|\\\')/';
 
