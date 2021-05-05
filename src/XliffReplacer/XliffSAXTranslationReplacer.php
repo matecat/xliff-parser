@@ -112,6 +112,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
 
         // check if we are entering into a <target>
         if ('target' === $name) {
+
             if($this->currentTransUnitTranslate === 'no'){
                 $this->inTarget = false;
             } else {
@@ -234,6 +235,9 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
             }
 
             if ('target' == $name) {
+
+
+
                 if($this->currentTransUnitTranslate === 'no') {
                     // do nothing
                 } elseif (isset($this->transUnits[ $this->currentTransUnitId ])) {
@@ -371,7 +375,8 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
                 }
 
                 // signal we are leaving a target
-                $this->inTarget = false;
+                $this->segmentHasTarget = true;
+                $this->inTarget         = false;
                 $this->postProcAndFlush($this->outputFP, $tag, $treatAsCDATA = true);
             } elseif (in_array($name, $this->nodesToCopy)) { // we are closing a critical CDATA section
 
@@ -380,9 +385,18 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
                 $this->CDATABuffer    = "";
                 //flush to pointer
                 $this->postProcAndFlush($this->outputFP, $tag);
-            } elseif ('segment' === $name and $this->xliffVersion === 2) { // in xliff v2 we add metadata after closing a <section>
-                if (isset($this->transUnits[ $this->currentTransUnitId ]) and !empty($this->transUnits[ $this->currentTransUnitId ])) {
-                    $tag .= $this->getWordCountGroupForXliffV2($this->counts[ 'raw_word_count' ], $this->counts[ 'eq_word_count' ]);
+            } elseif ('segment' === $name) {
+
+                // if segment has no <target> add it BEFORE </segment>
+                if(!$this->segmentHasTarget){
+                    $tag = $this->createTargetTagBeforeSegmentClosing();
+                }
+
+                // in xliff v2 we add metadata after closing a <section>
+                if($this->xliffVersion === 2){
+                    if (isset($this->transUnits[ $this->currentTransUnitId ]) and !empty($this->transUnits[ $this->currentTransUnitId ])) {
+                        $tag .= $this->getWordCountGroupForXliffV2($this->counts[ 'raw_word_count' ], $this->counts[ 'eq_word_count' ]);
+                    }
                 }
 
                 $this->postProcAndFlush($this->outputFP, $tag);
@@ -533,6 +547,24 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
     private function getWordCountGroup($raw_word_count, $eq_word_count)
     {
         return "\n<count-group name=\"$this->currentTransUnitId\"><count count-type=\"x-matecat-raw\">$raw_word_count</count><count count-type=\"x-matecat-weighted\">$eq_word_count</count></count-group>";
+    }
+
+    /**
+     * This function create a <target> tag BEFORE </segment>
+     *
+     * @return string
+     */
+    private function createTargetTagBeforeSegmentClosing()
+    {
+        if($this->currentTransUnitTranslate === 'yes' and isset($this->transUnits[$this->currentTransUnitId])){
+            $index = $this->transUnits[$this->currentTransUnitId][0];
+
+            if(isset($this->segments[$index]['translation'])){
+                return '<target>'.$this->segments[$index]['translation'].'</target></segment>';
+            }
+        }
+
+        return '</segment>';
     }
 
     /**
