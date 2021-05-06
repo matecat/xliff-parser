@@ -5,6 +5,9 @@
    <segment>
     <source xml:space="preserve">Titolo del documento</source>
    </segment>
+   <segment>
+    <source xml:space="preserve">Titolo del documento2</source>
+   </segment>
   </unit>
   <unit id="tu2">
    <originalData>

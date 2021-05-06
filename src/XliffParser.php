@@ -47,6 +47,7 @@ class XliffParser
         } catch (\Exception $exception) {
             // do nothing
         }
+
     }
 
     /**

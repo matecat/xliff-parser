@@ -89,6 +89,41 @@ $parser = new XliffParser();
 $parser->replaceTranslation( $inputFile, $data, $transUnits, 'fr-fr', $outputFile, new DummyXliffReplacerCallback() );
 ```
 
+### Missing `target` node in the original file
+
+`XliffParser` is capable to create a `target` node if this is missing in the original xliff file.
+  
+Please note that the `<target>` will be placed:
+ 
+- just BEFORE its corresponding closing `</source>` for xliff 1.* files
+- just BEFORE its corresponding closing `</segment>` for xliff 2.* files
+
+Take a look at this example, this is the original `unit` (excerpt form taken from a xliff 2.0 file):
+
+```xml
+<unit id="tu1">
+    <segment>
+        <source xml:space="preserve">Titolo del documento</source>
+    </segment>
+</unit>
+```
+
+And this is the corresponding `unit` in the replaced file:
+
+```xml
+<unit help-id="1" id="tu1">
+   <segment>
+    <source xml:space="preserve">Titolo del documento</source>
+   <target>Document title</target></segment>
+            <mda:metadata>
+                <mda:metagroup category="row_xml_attribute">
+                    <mda:meta type="x-matecat-raw">0</mda:meta>
+                    <mda:meta type="x-matecat-weighted">0</mda:meta>
+                </mda:metagroup>
+            </mda:metadata>
+  </unit>
+```
+
 ### `translate` attribute
 
 Translations will be not replaced in trans-units when `translate` attribute set to `no`.

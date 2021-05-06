@@ -112,6 +112,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
 
         // check if we are entering into a <target>
         if ('target' === $name) {
+
             if($this->currentTransUnitTranslate === 'no'){
                 $this->inTarget = false;
             } else {
@@ -213,6 +214,16 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
                 $this->postProcAndFlush($this->outputFP, $tag);
             }
         }
+
+        // update segmentPositionInTu
+
+        if($this->xliffVersion === 1 and $this->inTU and $name === 'source'){
+            $this->segmentPositionInTu++;
+        }
+
+        if($this->xliffVersion === 2 and $this->inTU and $name === 'segment'){
+            $this->segmentPositionInTu++;
+        }
     }
 
     /**
@@ -234,6 +245,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
             }
 
             if ('target' == $name) {
+
                 if($this->currentTransUnitTranslate === 'no') {
                     // do nothing
                 } elseif (isset($this->transUnits[ $this->currentTransUnitId ])) {
@@ -371,21 +383,43 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
                 }
 
                 // signal we are leaving a target
-                $this->inTarget = false;
+                $this->segmentHasTarget = true;
+                $this->inTarget         = false;
                 $this->postProcAndFlush($this->outputFP, $tag, $treatAsCDATA = true);
             } elseif (in_array($name, $this->nodesToCopy)) { // we are closing a critical CDATA section
 
                 $this->bufferIsActive = false;
-                $tag                  = $this->CDATABuffer . "</$name>";
+                $tag                  = $this->CDATABuffer."</$name>";
+
+                // only for Xliff 1.*
+                // if segment has no <target> add it BEFORE </segment>
+                if($this->xliffVersion === 1 and $name === 'source' and !$this->segmentHasTarget){
+                    $tag .= $this->createTargetTag();
+                }
+
                 $this->CDATABuffer    = "";
                 //flush to pointer
                 $this->postProcAndFlush($this->outputFP, $tag);
-            } elseif ('segment' === $name and $this->xliffVersion === 2) { // in xliff v2 we add metadata after closing a <section>
-                if (isset($this->transUnits[ $this->currentTransUnitId ]) and !empty($this->transUnits[ $this->currentTransUnitId ])) {
-                    $tag .= $this->getWordCountGroupForXliffV2($this->counts[ 'raw_word_count' ], $this->counts[ 'eq_word_count' ]);
+            } elseif ('segment' === $name) {
+
+                // only for Xliff 2.*
+                // if segment has no <target> add it BEFORE </segment>
+                if($this->xliffVersion === 2 and !$this->segmentHasTarget){
+                    $tag = $this->createTargetTag().'</segment>';
+                }
+
+                // in xliff v2 we add metadata after closing a <section>
+                if($this->xliffVersion === 2){
+                    if (isset($this->transUnits[ $this->currentTransUnitId ]) and !empty($this->transUnits[ $this->currentTransUnitId ])) {
+                        $tag .= $this->getWordCountGroupForXliffV2($this->counts[ 'raw_word_count' ], $this->counts[ 'eq_word_count' ]);
+                    }
                 }
 
                 $this->postProcAndFlush($this->outputFP, $tag);
+
+                // we are leaving <segment>, reset $segmentHasTarget
+                $this->segmentHasTarget = false;
+
             } elseif ($this->bufferIsActive) { // this is a tag ( <g | <mrk ) inside a seg or seg-source tag
                 $this->CDATABuffer .= "</$name>";
             // Do NOT Flush
@@ -407,6 +441,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
         if ($this->tuTagName === $name) {
             $this->currentTransUnitTranslate = null;
             $this->inTU = false;
+            $this->segmentPositionInTu = -1;
         }
     }
 
@@ -533,6 +568,24 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
     private function getWordCountGroup($raw_word_count, $eq_word_count)
     {
         return "\n<count-group name=\"$this->currentTransUnitId\"><count count-type=\"x-matecat-raw\">$raw_word_count</count><count count-type=\"x-matecat-weighted\">$eq_word_count</count></count-group>";
+    }
+
+    /**
+     * This function create a <target>
+     *
+     * @return string
+     */
+    private function createTargetTag()
+    {
+        if($this->currentTransUnitTranslate === 'yes' and isset($this->transUnits[$this->currentTransUnitId])){
+            $index = $this->transUnits[$this->currentTransUnitId][$this->segmentPositionInTu];
+
+            if(isset($this->segments[$index]['translation'])){
+                return '<target>'.$this->segments[$index]['translation'].'</target>';
+            }
+        }
+
+        return '';
     }
 
     /**
