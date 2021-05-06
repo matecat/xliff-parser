@@ -93,9 +93,12 @@ $parser->replaceTranslation( $inputFile, $data, $transUnits, 'fr-fr', $outputFil
 
 `XliffParser` is capable to create a `target` node if this is missing in the original xliff file.
   
-Please note that the `<target>` will be placed just BEFORE its corresponding closing `segment`.
+Please note that the `<target>` will be placed:
+ 
+- just BEFORE its corresponding closing `</source>` for xliff 1.* files
+- just BEFORE its corresponding closing `</segment>` for xliff 2.* files
 
-Take a look at this example, this is the original `unit`:
+Take a look at this example, this is the original `unit` (excerpt form taken from a xliff 2.0 file):
 
 ```xml
 <unit id="tu1">

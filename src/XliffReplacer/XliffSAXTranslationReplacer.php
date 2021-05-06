@@ -215,7 +215,13 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
             }
         }
 
-        if($this->inTU and $name === 'segment'){
+        // update segmentPositionInTu
+
+        if($this->xliffVersion === 1 and $this->inTU and $name === 'source'){
+            $this->segmentPositionInTu++;
+        }
+
+        if($this->xliffVersion === 2 and $this->inTU and $name === 'segment'){
             $this->segmentPositionInTu++;
         }
     }
@@ -383,15 +389,23 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
             } elseif (in_array($name, $this->nodesToCopy)) { // we are closing a critical CDATA section
 
                 $this->bufferIsActive = false;
-                $tag                  = $this->CDATABuffer . "</$name>";
+                $tag                  = $this->CDATABuffer."</$name>";
+
+                // only for Xliff 1.*
+                // if segment has no <target> add it BEFORE </segment>
+                if($this->xliffVersion === 1 and $name === 'source' and !$this->segmentHasTarget){
+                    $tag .= $this->createTargetTag();
+                }
+
                 $this->CDATABuffer    = "";
                 //flush to pointer
                 $this->postProcAndFlush($this->outputFP, $tag);
             } elseif ('segment' === $name) {
 
+                // only for Xliff 2.*
                 // if segment has no <target> add it BEFORE </segment>
-                if(!$this->segmentHasTarget){
-                    $tag = $this->createTargetTagBeforeSegmentClosing();
+                if($this->xliffVersion === 2 and !$this->segmentHasTarget){
+                    $tag = $this->createTargetTag().'</segment>';
                 }
 
                 // in xliff v2 we add metadata after closing a <section>
@@ -557,21 +571,21 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
     }
 
     /**
-     * This function create a <target> tag BEFORE </segment>
+     * This function create a <target>
      *
      * @return string
      */
-    private function createTargetTagBeforeSegmentClosing()
+    private function createTargetTag()
     {
         if($this->currentTransUnitTranslate === 'yes' and isset($this->transUnits[$this->currentTransUnitId])){
             $index = $this->transUnits[$this->currentTransUnitId][$this->segmentPositionInTu];
 
             if(isset($this->segments[$index]['translation'])){
-                return '<target>'.$this->segments[$index]['translation'].'</target></segment>';
+                return '<target>'.$this->segments[$index]['translation'].'</target>';
             }
         }
 
-        return '</segment>';
+        return '';
     }
 
     /**

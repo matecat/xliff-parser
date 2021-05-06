@@ -4,7 +4,7 @@
             <group id="ipQsgbM_fDqdQU4hBMLqC3fIZtk">
                 <note></note>
                 <trans-unit help-id="1" id="pendo-image-e3aaf7b7|alt">
-                    <source>Image showing Italian Patreon creators </source>
+                    <source>Image showing Italian Patreon creators </source><target>Bla bla bla</target>
                     <target  xml:lang="it-it" state="translated">Bla bla bla</target>
 <count-group name="pendo-image-e3aaf7b7|alt"><count count-type="x-matecat-raw">1</count><count count-type="x-matecat-weighted">1</count></count-group>
                     <note>insert.io.ImageView</note>
