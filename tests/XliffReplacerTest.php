@@ -103,22 +103,36 @@ class XliffReplacerTest extends BaseTest
     public function can_replace_a_xliff_20_without_target()
     {
         $data = [
-                [
-                    'sid' => 1,
-                    'segment' => 'Titolo del documento',
-                    'internal_id' => 'tu1',
-                    'mrk_id' => '',
-                    'prev_tags' => '',
-                    'succ_tags' => '',
-                    'mrk_prev_tags' => '',
-                    'mrk_succ_tags' => '',
-                    'translation' => 'Document title',
-                    'status' => TranslationStatus::STATUS_TRANSLATED,
-                    'eq_word_count' => 1,
-                    'raw_word_count' => 2,
-                ],
+            [
+                'sid' => 1,
+                'segment' => 'Titolo del documento',
+                'internal_id' => 'tu1',
+                'mrk_id' => '',
+                'prev_tags' => '',
+                'succ_tags' => '',
+                'mrk_prev_tags' => '',
+                'mrk_succ_tags' => '',
+                'translation' => 'Document title',
+                'status' => TranslationStatus::STATUS_TRANSLATED,
+                'eq_word_count' => 1,
+                'raw_word_count' => 2,
+            ],
             [
                 'sid' => 2,
+                'segment' => 'Titolo del documento2',
+                'internal_id' => 'tu1',
+                'mrk_id' => '',
+                'prev_tags' => '',
+                'succ_tags' => '',
+                'mrk_prev_tags' => '',
+                'mrk_succ_tags' => '',
+                'translation' => 'Document title2',
+                'status' => TranslationStatus::STATUS_TRANSLATED,
+                'eq_word_count' => 3,
+                'raw_word_count' => 4,
+            ],
+            [
+                'sid' => 3,
                 'segment' => 'Testo libero contenente <pc id="1" canCopy="no" canDelete="no" dataRefEnd="d1" dataRefStart="d1">corsivo</pc>.',
                 'internal_id' => 'tu2',
                 'mrk_id' => '',
@@ -128,8 +142,8 @@ class XliffReplacerTest extends BaseTest
                 'mrk_succ_tags' => '',
                 'translation' => 'Free text containing <pc id="1" canCopy="no" canDelete="no" dataRefEnd="d1" dataRefStart="d1">cursive</pc>.',
                 'status' => TranslationStatus::STATUS_TRANSLATED,
-                'eq_word_count' => 2,
-                'raw_word_count' => 3,
+                'eq_word_count' => 4,
+                'raw_word_count' => 5,
             ],
         ];
 
@@ -147,9 +161,15 @@ class XliffReplacerTest extends BaseTest
         (new XliffParser())->replaceTranslation($inputFile, $data, $transUnits, 'en-en', $outputFile, false);
         $output = (new XliffParser())->xliffToArray(file_get_contents($outputFile));
         $expected = 'Document title';
+        $expected2 = 'Document title2';
+        $expected3 = 'Free text containing <pc id="1" canCopy="no" canDelete="no" dataRefEnd="d1" dataRefStart="d1">cursive</pc>.';
 
         $this->assertNotEmpty($output['files'][1]['trans-units'][1]['target']['raw-content']);
         $this->assertEquals($expected, $output['files'][1]['trans-units'][1]['target']['raw-content'][0]);
+        $this->assertNotEmpty($output['files'][1]['trans-units'][1]['target']['raw-content']);
+        $this->assertEquals($expected2, $output['files'][1]['trans-units'][1]['target']['raw-content'][1]);
+        $this->assertNotEmpty($output['files'][1]['trans-units'][2]['target']['raw-content']);
+        $this->assertEquals($expected3, $output['files'][1]['trans-units'][2]['target']['raw-content'][0]);
     }
 
     /**

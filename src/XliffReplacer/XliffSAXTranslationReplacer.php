@@ -214,6 +214,10 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
                 $this->postProcAndFlush($this->outputFP, $tag);
             }
         }
+
+        if($this->inTU and $name === 'segment'){
+            $this->segmentPositionInTu++;
+        }
     }
 
     /**
@@ -235,8 +239,6 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
             }
 
             if ('target' == $name) {
-
-
 
                 if($this->currentTransUnitTranslate === 'no') {
                     // do nothing
@@ -400,6 +402,10 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
                 }
 
                 $this->postProcAndFlush($this->outputFP, $tag);
+
+                // we are leaving <segment>, reset $segmentHasTarget
+                $this->segmentHasTarget = false;
+
             } elseif ($this->bufferIsActive) { // this is a tag ( <g | <mrk ) inside a seg or seg-source tag
                 $this->CDATABuffer .= "</$name>";
             // Do NOT Flush
@@ -421,6 +427,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
         if ($this->tuTagName === $name) {
             $this->currentTransUnitTranslate = null;
             $this->inTU = false;
+            $this->segmentPositionInTu = -1;
         }
     }
 
@@ -557,7 +564,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
     private function createTargetTagBeforeSegmentClosing()
     {
         if($this->currentTransUnitTranslate === 'yes' and isset($this->transUnits[$this->currentTransUnitId])){
-            $index = $this->transUnits[$this->currentTransUnitId][0];
+            $index = $this->transUnits[$this->currentTransUnitId][$this->segmentPositionInTu];
 
             if(isset($this->segments[$index]['translation'])){
                 return '<target>'.$this->segments[$index]['translation'].'</target></segment>';

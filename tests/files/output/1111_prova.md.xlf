@@ -3,9 +3,16 @@
   <unit help-id="1" id="tu1">
    <segment>
     <source xml:space="preserve">Titolo del documento</source>
-   
-                    <target>Document title</target>
-                </segment>
+   <target>Document title</target></segment>
+            <mda:metadata>
+                <mda:metagroup category="row_xml_attribute">
+                    <mda:meta type="x-matecat-raw">0</mda:meta>
+                    <mda:meta type="x-matecat-weighted">0</mda:meta>
+                </mda:metagroup>
+            </mda:metadata>
+   <segment>
+    <source xml:space="preserve">Titolo del documento2</source>
+   <target>Document title2</target></segment>
             <mda:metadata>
                 <mda:metagroup category="row_xml_attribute">
                     <mda:meta type="x-matecat-raw">0</mda:meta>
@@ -13,15 +20,13 @@
                 </mda:metagroup>
             </mda:metadata>
   </unit>
-  <unit help-id="2" id="tu2">
+  <unit help-id="3" id="tu2">
    <originalData>
     <data id="d1">_</data>
    </originalData>
    <segment>
     <source xml:space="preserve">Testo libero contenente <pc id="1" canCopy="no" canDelete="no" dataRefEnd="d1" dataRefStart="d1">corsivo</pc>.</source>
-   
-                    <target>Free text containing <pc id="1" canCopy="no" canDelete="no" dataRefEnd="d1" dataRefStart="d1">cursive</pc>.</target>
-                </segment>
+   <target>Free text containing <pc id="1" canCopy="no" canDelete="no" dataRefEnd="d1" dataRefStart="d1">cursive</pc>.</target></segment>
             <mda:metadata>
                 <mda:metagroup category="row_xml_attribute">
                     <mda:meta type="x-matecat-raw">0</mda:meta>
