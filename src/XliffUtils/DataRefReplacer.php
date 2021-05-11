@@ -170,6 +170,11 @@ class DataRefReplacer
     }
 
     /**
+     * This function add equiv-text attribute to <ph>, <ec>, and <sc> tags.
+     *
+     * Please note that <ec> and <sc> tags are converted to <ph> tags (needed by Matecat);
+     * in this case another special attribute (dataType) is added just before equiv-text
+     *
      * @param object $node
      * @param string $string
      *
@@ -197,11 +202,18 @@ class DataRefReplacer
             return $string;
         }
 
+        $dataType = ($node->tagname === 'ec' or $node->tagname === 'sc') ? ' dataType="'.$node->tagname.'"' : '';
+
         // replacement
-        $d = str_replace('/', ' equiv-text="base64:'.$base64EncodedValue.'"/', $a);
+        $d = str_replace('/', $dataType. ' equiv-text="base64:'.$base64EncodedValue.'"/', $a);
 
         $a = str_replace(['<','>','&gt;', '&lt;'], '', $a);
         $d = str_replace(['<','>','&gt;', '&lt;'], '', $d);
+
+        if($node->tagname === 'ec' or $node->tagname === 'sc'){
+            $d = 'ph'.substr($d, 2);
+            $d = trim($d);
+        }
 
         return str_replace($a, $d, $string);
     }
@@ -389,7 +401,15 @@ class DataRefReplacer
                 return $string;
             }
 
-            $d = str_replace(' equiv-text="base64:'.base64_encode($this->map[$b]).'"/'.$c, '/'.$c, $a);
+            // handle <ec> or <sc> tags
+            $dataType = ($this->wasAEcOrScTag($node)) ? ' dataType="'.$node->attributes['dataType'].'"' : '';
+
+            $d = str_replace($dataType.' equiv-text="base64:'.base64_encode($this->map[$b]).'"/'.$c, '/'.$c, $a);
+
+            if($this->wasAEcOrScTag($node)){
+                $d = $node->attributes['dataType'].substr($d, 3);
+                $d = trim($d);
+            }
 
             // replace only content tag, no matter if the string is encoded or not
             // in this way we can handle string with mixed tags (encoded and not-encoded)
@@ -422,5 +442,15 @@ class DataRefReplacer
     private function purgeTags($string)
     {
         return str_replace(['<', '>', '&lt;', '&gt;'], '', $string);
+    }
+
+    /**
+     * @param $node
+     *
+     * @return bool
+     */
+    private function wasAEcOrScTag($node)
+    {
+        return (isset($node->attributes['dataType']) and ( $node->attributes['dataType'] === 'ec' or $node->attributes['dataType'] === 'sc'));
     }
 }
