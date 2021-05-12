@@ -141,9 +141,17 @@ class DataRefReplacer
             }
         }
 
+        if(isset($node->attributes['dataRefEnd'])){
+            $dataRefEnd = $node->attributes['dataRefEnd'];
+        } elseif(isset($node->attributes['dataRefStart'])) {
+            $dataRefEnd = $node->attributes['dataRefStart'];
+        } else {
+            $dataRefEnd = null;
+        }
+
         $dataRefEndMap[] = [
-                'id' => isset($node->attributes['id'] ) ? $node->attributes['id'] : null,
-                'dataRefEnd' => isset($node->attributes['dataRefEnd']) ? $node->attributes['dataRefEnd'] : $node->attributes['dataRefStart'],
+            'id' => isset($node->attributes['id'] ) ? $node->attributes['id'] : null,
+            'dataRefEnd' => $dataRefEnd,
         ];
     }
 
