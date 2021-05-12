@@ -49,6 +49,28 @@ $replaced = $dataReplacer->replace($string);
 
 ```
 
+Please note that `<ec>` and `<sc>` tags are converted to `<ph>` tags (needed by Matecat); in this case another special attribute (`dataType`) is added just before `equiv-text`:
+
+```php
+
+// ...
+use Matecat\XliffParser\XliffUtils\DataRefReplacer;
+
+// provide original data map
+$map = [
+    'd1' => '&lt;br\/&gt;',
+];
+
+$dataReplacer = new DataRefReplacer($map);
+
+$string = '<ph id="source1" dataRef="source1"/> lorem <ec id="source2" dataRef="source2"/> ipsum <sc id="source3" dataRef="source3"/> changed';
+     
+$replaced = $dataReplacer->replace($string);
+
+// $replaced is:
+// <ph id="source1" dataRef="source1" equiv-text="base64:JHtyZWNpcGllbnROYW1lfQ=="/> lorem <ph id="source2" dataRef="source2" dataType="ec" equiv-text="base64:QmFiYm8gTmF0YWxl"/> ipsum <ph id="source3" dataRef="source3" dataType="sc" equiv-text="base64:TGEgQmVmYW5h"/> changed
+```
+
 ### `<pc>` tag
 
 This tag uses `dataRefStart` and `dataRefEnd` attributes.

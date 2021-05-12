@@ -98,7 +98,9 @@ Please note that the `<target>` will be placed:
 - just BEFORE its corresponding closing `</source>` for xliff 1.* files
 - just BEFORE its corresponding closing `</segment>` for xliff 2.* files
 
-Take a look at this example, this is the original `unit` (excerpt form taken from a xliff 2.0 file):
+Take a look at this example.
+
+This is the original `unit` (excerpt form taken from a xliff 2.0 file):
 
 ```xml
 <unit id="tu1">

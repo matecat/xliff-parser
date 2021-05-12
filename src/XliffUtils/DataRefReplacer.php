@@ -170,6 +170,11 @@ class DataRefReplacer
     }
 
     /**
+     * This function add equiv-text attribute to <ph>, <ec>, and <sc> tags.
+     *
+     * Please note that <ec> and <sc> tags are converted to <ph> tags (needed by Matecat);
+     * in this case another special attribute (dataType) is added just before equiv-text
+     *
      * @param object $node
      * @param string $string
      *
@@ -197,11 +202,20 @@ class DataRefReplacer
             return $string;
         }
 
+        // introduce dataType for <ec>/<sc> tag handling
+        $dataType = ($this->isAEcOrScTag($node)) ? ' dataType="'.$node->tagname.'"' : '';
+
         // replacement
-        $d = str_replace('/', ' equiv-text="base64:'.$base64EncodedValue.'"/', $a);
+        $d = str_replace('/', $dataType. ' equiv-text="base64:'.$base64EncodedValue.'"/', $a);
 
         $a = str_replace(['<','>','&gt;', '&lt;'], '', $a);
         $d = str_replace(['<','>','&gt;', '&lt;'], '', $d);
+
+        // convert <ec>/<sc> into <ph>
+        if($this->isAEcOrScTag($node)){
+            $d = 'ph'.substr($d, 2);
+            $d = trim($d);
+        }
 
         return str_replace($a, $d, $string);
     }
@@ -389,7 +403,16 @@ class DataRefReplacer
                 return $string;
             }
 
-            $d = str_replace(' equiv-text="base64:'.base64_encode($this->map[$b]).'"/'.$c, '/'.$c, $a);
+            // grab dataType attribute for <ec>/<sc> tag handling
+            $dataType = ($this->wasAEcOrScTag($node)) ? ' dataType="'.$node->attributes['dataType'].'"' : '';
+
+            $d = str_replace($dataType.' equiv-text="base64:'.base64_encode($this->map[$b]).'"/'.$c, '/'.$c, $a);
+
+            // replace original <ec>/<sc> tag
+            if($this->wasAEcOrScTag($node)){
+                $d = $node->attributes['dataType'].substr($d, 3);
+                $d = trim($d);
+            }
 
             // replace only content tag, no matter if the string is encoded or not
             // in this way we can handle string with mixed tags (encoded and not-encoded)
@@ -399,7 +422,9 @@ class DataRefReplacer
 
             $string = str_replace($a, $d, $string);
 
-            // if <ph> tag has originalData and originalType is pcStart or pcEnd, replace with original data
+            // restoring <pc> tags here
+            // if <ph> tag has originalData and originalType is pcStart or pcEnd,
+            // replace with original data
             if (Strings::contains('dataType="pcStart"', $d) or Strings::contains('dataType="pcEnd"', $d)) {
                 preg_match('/\s?originalData="(.*?)"\s?/', $d, $originalDataMatches);
 
@@ -422,5 +447,30 @@ class DataRefReplacer
     private function purgeTags($string)
     {
         return str_replace(['<', '>', '&lt;', '&gt;'], '', $string);
+    }
+
+    /**
+     * This function checks if a node is a tag <ec> or <sc>
+     *
+     * @param $node
+     *
+     * @return bool
+     */
+    private function isAEcOrScTag($node)
+    {
+        return ($node->tagname === 'ec' or $node->tagname === 'sc');
+    }
+
+    /**
+     * This function checks if a <ph> tag node
+     * was originally a <ec> or <sc>
+     *
+     * @param $node
+     *
+     * @return bool
+     */
+    private function wasAEcOrScTag($node)
+    {
+        return (isset($node->attributes['dataType']) and ( $node->attributes['dataType'] === 'ec' or $node->attributes['dataType'] === 'sc'));
     }
 }

@@ -119,7 +119,7 @@ class DataReplacerTest extends BaseTest
         $this->assertEquals($string, $dataReplacer->restore($expected));
 
         $string = '<ec id="source1" dataRef="source1"/> changed the address';
-        $expected = '<ec id="source1" dataRef="source1" equiv-text="base64:JHtyZWNpcGllbnROYW1lfQ=="/> changed the address';
+        $expected = '<ph id="source1" dataRef="source1" dataType="ec" equiv-text="base64:JHtyZWNpcGllbnROYW1lfQ=="/> changed the address';
         $dataReplacer = new DataRefReplacer($map);
 
         $this->assertEquals($expected, $dataReplacer->replace($string));
@@ -139,7 +139,7 @@ class DataReplacerTest extends BaseTest
         ];
 
         $string = '<ph id="source1" dataRef="source1"/> lorem <ec id="source2" dataRef="source2"/> ipsum <sc id="source3" dataRef="source3"/> changed';
-        $expected = '<ph id="source1" dataRef="source1" equiv-text="base64:JHtyZWNpcGllbnROYW1lfQ=="/> lorem <ec id="source2" dataRef="source2" equiv-text="base64:QmFiYm8gTmF0YWxl"/> ipsum <sc id="source3" dataRef="source3" equiv-text="base64:TGEgQmVmYW5h"/> changed';
+        $expected = '<ph id="source1" dataRef="source1" equiv-text="base64:JHtyZWNpcGllbnROYW1lfQ=="/> lorem <ph id="source2" dataRef="source2" dataType="ec" equiv-text="base64:QmFiYm8gTmF0YWxl"/> ipsum <ph id="source3" dataRef="source3" dataType="sc" equiv-text="base64:TGEgQmVmYW5h"/> changed';
         $dataReplacer = new DataRefReplacer($map);
 
         $this->assertEquals($expected, $dataReplacer->replace($string));
@@ -625,6 +625,28 @@ class DataReplacerTest extends BaseTest
 
         $string = '<pc id="source1" dataRefStart="source1">foo <pc id="source2" dataRefStart="source2">bar lorem</pc> <pc id="source3" dataRefStart="source3">bar <pc id="source4" dataRefStart="source4">bar</pc> <pc id="source5" dataRefStart="source5">bar</pc></pc> cavolino</pc>';
         $expected = '<ph id="source1_1" dataType="pcStart" originalData="PHBjIGlkPSJzb3VyY2UxIiBkYXRhUmVmU3RhcnQ9InNvdXJjZTEiPg==" dataRef="source1" equiv-text="base64:eA=="/>foo <ph id="source2_1" dataType="pcStart" originalData="PHBjIGlkPSJzb3VyY2UyIiBkYXRhUmVmU3RhcnQ9InNvdXJjZTIiPg==" dataRef="source2" equiv-text="base64:eQ=="/>bar lorem<ph id="source2_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="source2" equiv-text="base64:eQ=="/> <ph id="source3_1" dataType="pcStart" originalData="PHBjIGlkPSJzb3VyY2UzIiBkYXRhUmVmU3RhcnQ9InNvdXJjZTMiPg==" dataRef="source3" equiv-text="base64:eg=="/>bar <ph id="source4_1" dataType="pcStart" originalData="PHBjIGlkPSJzb3VyY2U0IiBkYXRhUmVmU3RhcnQ9InNvdXJjZTQiPg==" dataRef="source4" equiv-text="base64:YQ=="/>bar<ph id="source4_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="source4" equiv-text="base64:YQ=="/> <ph id="source5_1" dataType="pcStart" originalData="PHBjIGlkPSJzb3VyY2U1IiBkYXRhUmVmU3RhcnQ9InNvdXJjZTUiPg==" dataRef="source5" equiv-text="base64:Yg=="/>bar<ph id="source5_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="source5" equiv-text="base64:Yg=="/><ph id="source3_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="source3" equiv-text="base64:eg=="/> cavolino<ph id="source1_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="source1" equiv-text="base64:eA=="/>';
+
+        $dataReplacer = new DataRefReplacer($map);
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($string, $dataReplacer->restore($expected));
+    }
+
+    /**
+     * @test
+     */
+    public function can_replace_and_restore_data_with_sc_and_ex_tags()
+    {
+        $map = [
+                "d1" => "&lt;strong&gt;",
+                "d2" => "&lt;\/strong&gt;",
+                "d3" => "&lt;br\/&gt;",
+                "d4" => "&lt;a href=\"mailto:info@elysiancollection.com\"&gt;",
+                "d5" => "&lt;\/a&gt;",
+        ];
+
+        $string = '<sc dataRef="d1" id="1" subType="xlf:b" type="fmt"/>Elysian Collection<ph dataRef="d3" id="2" subType="xlf:lb" type="fmt"/><ec dataRef="d2" startRef="1" subType="xlf:b" type="fmt"/>Bahnhofstrasse 15, Postfach 341, Zermatt CH- 3920, Switzerland<ph dataRef="d3" id="3" subType="xlf:lb" type="fmt"/>Tel: +44 203 468 2235  Email: <pc dataRefEnd="d5" dataRefStart="d4" id="4" type="link">info@elysiancollection.com</pc><sc dataRef="d1" id="5" subType="xlf:b" type="fmt"/><ph dataRef="d3" id="6" subType="xlf:lb" type="fmt"/><ec dataRef="d2" startRef="5" subType="xlf:b" type="fmt"/>';
+        $expected = '<ph dataRef="d1" id="1" subType="xlf:b" type="fmt" dataType="sc" equiv-text="base64:Jmx0O3N0cm9uZyZndDs="/>Elysian Collection<ph dataRef="d3" id="2" subType="xlf:lb" type="fmt" equiv-text="base64:Jmx0O2JyXC8mZ3Q7"/><ph dataRef="d2" startRef="1" subType="xlf:b" type="fmt" dataType="ec" equiv-text="base64:Jmx0O1wvc3Ryb25nJmd0Ow=="/>Bahnhofstrasse 15, Postfach 341, Zermatt CH- 3920, Switzerland<ph dataRef="d3" id="3" subType="xlf:lb" type="fmt" equiv-text="base64:Jmx0O2JyXC8mZ3Q7"/>Tel: +44 203 468 2235  Email: <ph id="4_1" dataType="pcStart" originalData="PHBjIGRhdGFSZWZFbmQ9ImQ1IiBkYXRhUmVmU3RhcnQ9ImQ0IiBpZD0iNCIgdHlwZT0ibGluayI+" dataRef="d4" equiv-text="base64:Jmx0O2EgaHJlZj0ibWFpbHRvOmluZm9AZWx5c2lhbmNvbGxlY3Rpb24uY29tIiZndDs="/>info@elysiancollection.com<ph id="4_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="d5" equiv-text="base64:Jmx0O1wvYSZndDs="/><ph dataRef="d1" id="5" subType="xlf:b" type="fmt" dataType="sc" equiv-text="base64:Jmx0O3N0cm9uZyZndDs="/><ph dataRef="d3" id="6" subType="xlf:lb" type="fmt" equiv-text="base64:Jmx0O2JyXC8mZ3Q7"/><ph dataRef="d2" startRef="5" subType="xlf:b" type="fmt" dataType="ec" equiv-text="base64:Jmx0O1wvc3Ryb25nJmd0Ow=="/>';
 
         $dataReplacer = new DataRefReplacer($map);
 
