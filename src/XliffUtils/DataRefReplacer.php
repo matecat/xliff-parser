@@ -175,6 +175,8 @@ class DataRefReplacer
      * Please note that <ec> and <sc> tags are converted to <ph> tags (needed by Matecat);
      * in this case another special attribute (dataType) is added just before equiv-text
      *
+     * If there is no id tag, it will be copied from dataRef attribute
+     *
      * @param object $node
      * @param string $string
      *
@@ -202,11 +204,14 @@ class DataRefReplacer
             return $string;
         }
 
+        // if there is no id copy it from dataRef
+        $id = (!isset($node->attributes['id'])) ? ' id="'.$b.'" removeId="true"': '';
+
         // introduce dataType for <ec>/<sc> tag handling
         $dataType = ($this->isAEcOrScTag($node)) ? ' dataType="'.$node->tagname.'"' : '';
 
         // replacement
-        $d = str_replace('/', $dataType. ' equiv-text="base64:'.$base64EncodedValue.'"/', $a);
+        $d = str_replace('/', $id.$dataType. ' equiv-text="base64:'.$base64EncodedValue.'"/', $a);
 
         $a = str_replace(['<','>','&gt;', '&lt;'], '', $a);
         $d = str_replace(['<','>','&gt;', '&lt;'], '', $d);
@@ -403,10 +408,13 @@ class DataRefReplacer
                 return $string;
             }
 
+            // remove id?
+            $removeId = (isset($node->attributes['removeId']) and $node->attributes['removeId'] === "true") ? ' id="'.$b.'" removeId="true"' : '';
+
             // grab dataType attribute for <ec>/<sc> tag handling
             $dataType = ($this->wasAEcOrScTag($node)) ? ' dataType="'.$node->attributes['dataType'].'"' : '';
 
-            $d = str_replace($dataType.' equiv-text="base64:'.base64_encode($this->map[$b]).'"/'.$c, '/'.$c, $a);
+            $d = str_replace($removeId.$dataType.' equiv-text="base64:'.base64_encode($this->map[$b]).'"/'.$c, '/'.$c, $a);
 
             // replace original <ec>/<sc> tag
             if($this->wasAEcOrScTag($node)){

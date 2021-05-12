@@ -10,6 +10,24 @@ class DataReplacerTest extends BaseTest
     /**
      * @test
      */
+    public function can_add_id_to_ph_ec_sc_when_is_missing()
+    {
+        $map = [
+            'd1' => '&lt;x/&gt;',
+            'd2' => '&lt;br\/&gt;',
+        ];
+
+        $string = '<ph dataRef="d1" id="d1"/><ec dataRef="d2" startRef="5" subType="xlf:b" type="fmt"/>';
+        $expected = '<ph dataRef="d1" id="d1" equiv-text="base64:Jmx0O3gvJmd0Ow=="/><ph dataRef="d2" startRef="5" subType="xlf:b" type="fmt" id="d2" removeId="true" dataType="ec" equiv-text="base64:Jmx0O2JyXC8mZ3Q7"/>';
+
+        $dataReplacer = new DataRefReplacer($map);
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($string, $dataReplacer->restore($expected));
+    }
+
+    /**
+     * @test
+     */
     public function can_replace_and_restore_data_with_ph_with_same_ids()
     {
         $map = [
@@ -646,7 +664,7 @@ class DataReplacerTest extends BaseTest
         ];
 
         $string = '<sc dataRef="d1" id="1" subType="xlf:b" type="fmt"/>Elysian Collection<ph dataRef="d3" id="2" subType="xlf:lb" type="fmt"/><ec dataRef="d2" startRef="1" subType="xlf:b" type="fmt"/>Bahnhofstrasse 15, Postfach 341, Zermatt CH- 3920, Switzerland<ph dataRef="d3" id="3" subType="xlf:lb" type="fmt"/>Tel: +44 203 468 2235  Email: <pc dataRefEnd="d5" dataRefStart="d4" id="4" type="link">info@elysiancollection.com</pc><sc dataRef="d1" id="5" subType="xlf:b" type="fmt"/><ph dataRef="d3" id="6" subType="xlf:lb" type="fmt"/><ec dataRef="d2" startRef="5" subType="xlf:b" type="fmt"/>';
-        $expected = '<ph dataRef="d1" id="1" subType="xlf:b" type="fmt" dataType="sc" equiv-text="base64:Jmx0O3N0cm9uZyZndDs="/>Elysian Collection<ph dataRef="d3" id="2" subType="xlf:lb" type="fmt" equiv-text="base64:Jmx0O2JyXC8mZ3Q7"/><ph dataRef="d2" startRef="1" subType="xlf:b" type="fmt" dataType="ec" equiv-text="base64:Jmx0O1wvc3Ryb25nJmd0Ow=="/>Bahnhofstrasse 15, Postfach 341, Zermatt CH- 3920, Switzerland<ph dataRef="d3" id="3" subType="xlf:lb" type="fmt" equiv-text="base64:Jmx0O2JyXC8mZ3Q7"/>Tel: +44 203 468 2235  Email: <ph id="4_1" dataType="pcStart" originalData="PHBjIGRhdGFSZWZFbmQ9ImQ1IiBkYXRhUmVmU3RhcnQ9ImQ0IiBpZD0iNCIgdHlwZT0ibGluayI+" dataRef="d4" equiv-text="base64:Jmx0O2EgaHJlZj0ibWFpbHRvOmluZm9AZWx5c2lhbmNvbGxlY3Rpb24uY29tIiZndDs="/>info@elysiancollection.com<ph id="4_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="d5" equiv-text="base64:Jmx0O1wvYSZndDs="/><ph dataRef="d1" id="5" subType="xlf:b" type="fmt" dataType="sc" equiv-text="base64:Jmx0O3N0cm9uZyZndDs="/><ph dataRef="d3" id="6" subType="xlf:lb" type="fmt" equiv-text="base64:Jmx0O2JyXC8mZ3Q7"/><ph dataRef="d2" startRef="5" subType="xlf:b" type="fmt" dataType="ec" equiv-text="base64:Jmx0O1wvc3Ryb25nJmd0Ow=="/>';
+        $expected = '<ph dataRef="d1" id="1" subType="xlf:b" type="fmt" dataType="sc" equiv-text="base64:Jmx0O3N0cm9uZyZndDs="/>Elysian Collection<ph dataRef="d3" id="2" subType="xlf:lb" type="fmt" equiv-text="base64:Jmx0O2JyXC8mZ3Q7"/><ph dataRef="d2" startRef="1" subType="xlf:b" type="fmt" id="d2" removeId="true" dataType="ec" equiv-text="base64:Jmx0O1wvc3Ryb25nJmd0Ow=="/>Bahnhofstrasse 15, Postfach 341, Zermatt CH- 3920, Switzerland<ph dataRef="d3" id="3" subType="xlf:lb" type="fmt" equiv-text="base64:Jmx0O2JyXC8mZ3Q7"/>Tel: +44 203 468 2235  Email: <ph id="4_1" dataType="pcStart" originalData="PHBjIGRhdGFSZWZFbmQ9ImQ1IiBkYXRhUmVmU3RhcnQ9ImQ0IiBpZD0iNCIgdHlwZT0ibGluayI+" dataRef="d4" equiv-text="base64:Jmx0O2EgaHJlZj0ibWFpbHRvOmluZm9AZWx5c2lhbmNvbGxlY3Rpb24uY29tIiZndDs="/>info@elysiancollection.com<ph id="4_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="d5" equiv-text="base64:Jmx0O1wvYSZndDs="/><ph dataRef="d1" id="5" subType="xlf:b" type="fmt" dataType="sc" equiv-text="base64:Jmx0O3N0cm9uZyZndDs="/><ph dataRef="d3" id="6" subType="xlf:lb" type="fmt" equiv-text="base64:Jmx0O2JyXC8mZ3Q7"/><ph dataRef="d2" startRef="5" subType="xlf:b" type="fmt" id="d2" removeId="true" dataType="ec" equiv-text="base64:Jmx0O1wvc3Ryb25nJmd0Ow=="/>';
 
         $dataReplacer = new DataRefReplacer($map);
 
