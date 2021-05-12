@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0" srcLang="en-GB" trgLang="de" version="2.0" xmlns="urn:oasis:names:tc:xliff:document:2.0">
+  <file id="f1" original="231|Home Page - EN">
+      <group id="g193" name="content">
+      <group id="g194" name="714|bodyElements">
+        <group id="g195" name="introWithButtons_1">
+          <unit id="u159" name="heading">
+            <segment>
+              <source>Our Location</source>
+            </segment>
+          </unit>
+          <unit id="u160" name="subHeading">
+            <segment>
+              <source></source>
+            </segment>
+          </unit>
+          <group id="g196" name="text">
+            <group id="u161-g" name="html">
+              <unit id="u161-1" name="p">
+                <segment>
+                  <source>Here, under the enchanting presence of the mighty Matterhorn, find Zermatt, a charming Swiss village that we are privileged to call home.</source>
+                </segment>
+              </unit>
+              <unit id="u161-2" name="p">
+                <originalData>
+                  <data id="d1">&lt;strong&gt;</data>
+                  <data id="d2">&lt;/strong&gt;</data>
+                  <data id="d3">&lt;br/&gt;</data>
+                  <data id="d4">&lt;a href="mailto:info@elysiancollection.com"&gt;</data>
+                  <data id="d5">&lt;/a&gt;</data>
+                </originalData>
+                <segment>
+                  <source>
+                    <sc dataRef="d1" id="1" subType="xlf:b" type="fmt" />Elysian Collection<ph dataRef="d3" id="2" subType="xlf:lb" type="fmt" /><ec dataRef="d2" startRef="1" subType="xlf:b" type="fmt" />Bahnhofstrasse 15, Postfach 341, Zermatt CH- 3920, Switzerland<ph dataRef="d3" id="3" subType="xlf:lb" type="fmt" />Tel: +44 203 468 2235  Email: <pc dataRefEnd="d5" dataRefStart="d4" id="4" type="link">info@elysiancollection.com</pc><sc dataRef="d1" id="5" subType="xlf:b" type="fmt" /><ph dataRef="d3" id="6" subType="xlf:lb" type="fmt" /><ec dataRef="d2" startRef="5" subType="xlf:b" type="fmt" /></source>
+                </segment>
+              </unit>
+              <unit id="u161-3" name="p">
+                <originalData>
+                  <data id="d1">&lt;a rel="noopener" href="https://www.forbes.com/sites/johnkoetsier/2020/06/05/the-100-safest-countries-in-the-world-for-covid-19/#3f405ed468c5" target="_blank" title="read more" data-anchor="#3f405ed468c5"&gt;</data>
+                  <data id="d2">&lt;/a&gt;</data>
+                </originalData>
+                <segment>
+                  <source>Why Switzerland is one of the safest countries in the world right now - <pc dataRefEnd="d2" dataRefStart="d1" id="1" type="link">read more</pc></source>
+                </segment>
+              </unit>
+              <unit id="u161-4" name="p">
+                <segment>
+                  <source> </source>
+                </segment>
+              </unit>
+            </group>
+            <group id="g197" name="2_Umbraco.TinyMCEv3.Tag">
+              <unit id="u162" name="title">
+                <segment>
+                  <source>read more</source>
+                </segment>
+              </unit>
+            </group>
+          </group>
+        </group>
+        <group id="g198" name="coordinatesMap_1">
+          <unit id="u163" name="centerCoordinates">
+            <segment>
+              <source>46.774794, 7.291704</source>
+            </segment>
+          </unit>
+          <group id="g199" name="locations">
+            <group id="g200" name="googleMapsCoordinates_1">
+              <unit id="u164" name="coordinates">
+                <segment>
+                  <source>46.028002, 7.755519</source>
+                </segment>
+              </unit>
+            </group>
+            <group id="g201" name="googleMapsCoordinates_2">
+              <unit id="u165" name="coordinates">
+                <segment>
+                  <source>46.221043, 7.337429</source>
+                </segment>
+              </unit>
+            </group>
+            <group id="g202" name="googleMapsCoordinates_3">
+              <unit id="u166" name="coordinates">
+                <segment>
+                  <source>46.236771, 6.109191</source>
+                </segment>
+              </unit>
+            </group>
+            <group id="g203" name="googleMapsCoordinates_4">
+              <unit id="u167" name="coordinates">
+                <segment>
+                  <source>47.458220, 8.555476</source>
+                </segment>
+              </unit>
+            </group>
+          </group>
+        </group>
+        <group id="g204" name="accordion_1">
+          <unit id="u168" name="heading">
+            <segment>
+              <source></source>
+            </segment>
+          </unit>
+          <group id="g205" name="items">
+            <group id="g206" name="accordionItem_1">
+              <unit id="u169" name="heading">
+                <segment>
+                  <source>Travelling to Zermatt</source>
+                </segment>
+              </unit>
+              <group id="g207" name="text">
+                <group id="u170-g" name="html">
+                  <unit id="u170-1" name="p">
+                    <originalData>
+                      <data id="d1">&lt;strong&gt;</data>
+                      <data id="d2">&lt;/strong&gt;</data>
+                      <data id="d3">&lt;br/&gt;</data>
+                    </originalData>
+                    <segment>
+                      <source>
+                        <pc dataRefEnd="d2" dataRefStart="d1" id="1" subType="xlf:b" type="fmt">Taxi</pc> <ph dataRef="d3" id="2" subType="xlf:lb" type="fmt" />We can organise a luxury road transfer from anywhere in Switzerland, France or Italy and drive you right up to the village entrance. Our trusted partner can provide a range of options from their fleet of Mercedes, so just let us know in advance your vehicle requirements. The town is a car free zone, where only electric taxis operate, so we will arrange for a local taxi to take you from the village entrance to your chalet. We would be delighted to arrange any refreshments or entertainment you may require for the journey.</source>
+                    </segment>
+                  </unit>
+                  <unit id="u170-2" name="p">
+                    <originalData>
+                      <data id="d1">&lt;strong&gt;</data>
+                      <data id="d2">&lt;/strong&gt;</data>
+                      <data id="d3">&lt;br/&gt;</data>
+                    </originalData>
+                    <segment>
+                      <source>
+                        <sc dataRef="d1" id="1" subType="xlf:b" type="fmt" />Helicopter<ph dataRef="d3" id="2" subType="xlf:lb" type="fmt" /><ec dataRef="d2" startRef="1" subType="xlf:b" type="fmt" />Cut down your travel time with a helicopter transfer from the airport. We will greet you at the Helipad with an electric taxi to whisk you to your chalet, about five minute away.</source>
+                    </segment>
+                  </unit>
+                  <unit id="u170-3" name="p">
+                    <originalData>
+                      <data id="d1">&lt;strong&gt;</data>
+                      <data id="d2">&lt;/strong&gt;</data>
+                      <data id="d3">&lt;br/&gt;</data>
+                    </originalData>
+                    <segment>
+                      <source>
+                        <sc dataRef="d1" id="1" subType="xlf:b" type="fmt" />Train <ph dataRef="d3" id="2" subType="xlf:lb" type="fmt" /><ec dataRef="d2" startRef="1" subType="xlf:b" type="fmt" />Trains from Geneva and Zurich  airport to Zermatt leave every hour and are a relaxing and scenic way to travel to the chalet. There is one change at Visp and altogether the journey takes four hours. Your Chalet Manager will meet you at Zermatt Train station with an electric taxi to take you to your chalet.</source>
+                    </segment>
+                  </unit>
+                  <unit id="u170-4" name="p">
+                    <originalData>
+                      <data id="d1">&lt;strong&gt;</data>
+                      <data id="d2">&lt;/strong&gt;</data>
+                      <data id="d3">&lt;br/&gt;</data>
+                    </originalData>
+                    <segment>
+                      <source>
+                        <sc dataRef="d1" id="1" subType="xlf:b" type="fmt" />Driving<ph dataRef="d3" id="2" subType="xlf:lb" type="fmt" /><ec dataRef="d2" startRef="1" subType="xlf:b" type="fmt" />If you decide to drive here, we can organise private valet parking with our trusted partner. From Täsch, you can take the 20 minute scenic train ride to Zermatt or we can organise a luxury private taxi transfer to the village.</source>
+                    </segment>
+                  </unit>
+                </group>
+              </group>
+            </group>
+            <group id="g208" name="accordionItem_2">
+              <unit id="u171" name="heading">
+                <segment>
+                  <source>Getting around Zermatt</source>
+                </segment>
+              </unit>
+              <group id="g209" name="text">
+                <group id="u172-g" name="html">
+                  <unit id="u172-1" name="p">
+                    <originalData>
+                      <data id="d1">&lt;strong&gt;</data>
+                      <data id="d2">&lt;/strong&gt;</data>
+                      <data id="d3">&lt;br/&gt;</data>
+                    </originalData>
+                    <segment>
+                      <source>
+                        <sc dataRef="d1" id="1" subType="xlf:b" type="fmt" />Electric Taxi<ph dataRef="d3" id="2" subType="xlf:lb" type="fmt" /><ec dataRef="d2" startRef="1" subType="xlf:b" type="fmt" />Zermatt is proudly a car free town. Instead, electric taxis are readily available to whizz you around the resort. We can organise a taxi journey for you with just a few minutes notice.</source>
+                    </segment>
+                  </unit>
+                  <unit id="u172-2" name="p">
+                    <originalData>
+                      <data id="d1">&lt;strong&gt;</data>
+                      <data id="d2">&lt;/strong&gt;</data>
+                      <data id="d3">&lt;br/&gt;</data>
+                    </originalData>
+                    <segment>
+                      <source>
+                        <pc dataRefEnd="d2" dataRefStart="d1" id="1" subType="xlf:b" type="fmt">Walk</pc> <ph dataRef="d3" id="2" subType="xlf:lb" type="fmt" />All of our chalets are an easy 10 minutes walk from the town.</source>
+                    </segment>
+                  </unit>
+                </group>
+              </group>
+            </group>
+          </group>
+        </group>
+      </group>
+    </group>
+  </file>
+</xliff>
