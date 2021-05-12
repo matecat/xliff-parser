@@ -202,7 +202,8 @@ class DataRefReplacer
             return $string;
         }
 
-        $dataType = ($node->tagname === 'ec' or $node->tagname === 'sc') ? ' dataType="'.$node->tagname.'"' : '';
+        // introduce dataType for <ec>/<sc> tag handling
+        $dataType = ($this->isAEcOrScTag($node)) ? ' dataType="'.$node->tagname.'"' : '';
 
         // replacement
         $d = str_replace('/', $dataType. ' equiv-text="base64:'.$base64EncodedValue.'"/', $a);
@@ -210,7 +211,8 @@ class DataRefReplacer
         $a = str_replace(['<','>','&gt;', '&lt;'], '', $a);
         $d = str_replace(['<','>','&gt;', '&lt;'], '', $d);
 
-        if($node->tagname === 'ec' or $node->tagname === 'sc'){
+        // convert <ec>/<sc> into <ph>
+        if($this->isAEcOrScTag($node)){
             $d = 'ph'.substr($d, 2);
             $d = trim($d);
         }
@@ -401,11 +403,12 @@ class DataRefReplacer
                 return $string;
             }
 
-            // handle <ec> or <sc> tags
+            // grab dataType attribute for <ec>/<sc> tag handling
             $dataType = ($this->wasAEcOrScTag($node)) ? ' dataType="'.$node->attributes['dataType'].'"' : '';
 
             $d = str_replace($dataType.' equiv-text="base64:'.base64_encode($this->map[$b]).'"/'.$c, '/'.$c, $a);
 
+            // replace original <ec>/<sc> tag
             if($this->wasAEcOrScTag($node)){
                 $d = $node->attributes['dataType'].substr($d, 3);
                 $d = trim($d);
@@ -419,7 +422,9 @@ class DataRefReplacer
 
             $string = str_replace($a, $d, $string);
 
-            // if <ph> tag has originalData and originalType is pcStart or pcEnd, replace with original data
+            // restoring <pc> tags here
+            // if <ph> tag has originalData and originalType is pcStart or pcEnd,
+            // replace with original data
             if (Strings::contains('dataType="pcStart"', $d) or Strings::contains('dataType="pcEnd"', $d)) {
                 preg_match('/\s?originalData="(.*?)"\s?/', $d, $originalDataMatches);
 
@@ -445,6 +450,21 @@ class DataRefReplacer
     }
 
     /**
+     * This function checks if a node is a tag <ec> or <sc>
+     *
+     * @param $node
+     *
+     * @return bool
+     */
+    private function isAEcOrScTag($node)
+    {
+        return ($node->tagname === 'ec' or $node->tagname === 'sc');
+    }
+
+    /**
+     * This function checks if a <ph> tag node
+     * was originally a <ec> or <sc>
+     *
      * @param $node
      *
      * @return bool
