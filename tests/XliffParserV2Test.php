@@ -235,6 +235,20 @@ class XliffParserV2Test extends BaseTest
         $this->assertEquals($segTarget[3]['raw-content'], 'Phrase 4.');
     }
 
+    /**
+     * @test
+     */
+    public function can_parse_xliff_v2_with_ec_and_sc()
+    {
+        // <pc> tags do not be escaped here
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('pcec.xlf'));
+        $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
+
+        $this->assertArrayHasKey('source', $units[4]);
+        $this->assertEquals($units[4]['source']['raw-content'][0], '
+                    <sc dataRef="d1" id="1" subType="xlf:b" type="fmt"/>Elysian Collection<ph dataRef="d3" id="2" subType="xlf:lb" type="fmt"/><ec dataRef="d2" startRef="1" subType="xlf:b" type="fmt"/>Bahnhofstrasse 15, Postfach 341, Zermatt CH- 3920, Switzerland<ph dataRef="d3" id="3" subType="xlf:lb" type="fmt"/>Tel: +44 203 468 2235  Email: <pc dataRefEnd="d5" dataRefStart="d4" id="4" type="link">info@elysiancollection.com</pc><sc dataRef="d1" id="5" subType="xlf:b" type="fmt"/><ph dataRef="d3" id="6" subType="xlf:lb" type="fmt"/><ec dataRef="d2" startRef="5" subType="xlf:b" type="fmt"/>');
+    }
+
 
     /**
      * @test
