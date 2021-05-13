@@ -393,7 +393,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
 
                 // only for Xliff 1.*
                 // if segment has no <target> add it BEFORE </segment>
-                if($this->xliffVersion === 1 and $name === 'source' and !$this->segmentHasTarget){
+                if($this->xliffVersion === 1 and $name === 'trans-unit' and !$this->segmentHasTarget){
                     $tag .= $this->createTargetTag();
                 }
 
