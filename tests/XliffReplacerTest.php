@@ -129,9 +129,24 @@ class XliffReplacerTest extends BaseTest
         $xliffParser->replaceTranslation($inputFile, $data['data'], $data['transUnits'], 'sk-SK', $outputFile);
         $output = $xliffParser->xliffToArray(file_get_contents($outputFile));
 
-        $expected = 'Bla bla bla';
+        $file = $output['files'][3];
+        $transUnit = $file['trans-units'][1];
+        $segSource = $transUnit['seg-source'];
+        $source = $transUnit['source'];
+        $target = $transUnit['target'];
 
-        $this->assertEquals($output['files'][3]['trans-units'][1]['target']['raw-content'], $expected);
+        $this->assertEquals($file['attr']['data-type'], 'x-undefined');
+        $this->assertEquals($file['attr']['original'], 'word/document.xml');
+        $this->assertEquals($file['attr']['source-language'], 'en-GB');
+        $this->assertEquals($file['attr']['target-language'], 'sk-SK');
+        $this->assertEquals($transUnit['attr']['id'], 'NFDBB2FA9-tu1');
+        $this->assertEquals($segSource[0]['mid'], 0);
+        $this->assertEquals($segSource[0]['raw-content'], 'The system for creative people is broken');
+        $this->assertEquals($source['raw-content'], 'The system for creative people is broken');
+        $this->assertEquals($source['attr']['xml:lang'], 'en-GB');
+        $this->assertEquals($target['raw-content'], 'Bla bla bla');
+        $this->assertEquals($target['attr']['xml:lang'], 'sk-SK');
+        $this->assertEquals($target['attr']['state'], 'translated');
     }
 
     /**
@@ -140,20 +155,20 @@ class XliffReplacerTest extends BaseTest
     public function can_replace_a_xliff_10_without_target_lang()
     {
         $data = $this->getData([
-                [
-                        'sid' => 1,
-                        'segment' => 'Image showing Italian Patreon creators',
-                        'internal_id' => 'pendo-image-e3aaf7b7|alt',
-                        'mrk_id' => '',
-                        'prev_tags' => '',
-                        'succ_tags' => '',
-                        'mrk_prev_tags' => '',
-                        'mrk_succ_tags' => '',
-                        'translation' => 'Bla bla bla',
-                        'status' => TranslationStatus::STATUS_TRANSLATED,
-                        'eq_word_count' => 1,
-                        'raw_word_count' => 1,
-                ]
+            [
+                'sid' => 1,
+                'segment' => 'Image showing Italian Patreon creators',
+                'internal_id' => 'pendo-image-e3aaf7b7|alt',
+                'mrk_id' => '',
+                'prev_tags' => '',
+                'succ_tags' => '',
+                'mrk_prev_tags' => '',
+                'mrk_succ_tags' => '',
+                'translation' => 'Bla bla bla',
+                'status' => TranslationStatus::STATUS_TRANSLATED,
+                'eq_word_count' => 1,
+                'raw_word_count' => 1,
+            ]
         ]);
 
         $inputFile = __DIR__.'/../tests/files/no-target.xliff';
@@ -172,20 +187,20 @@ class XliffReplacerTest extends BaseTest
     public function can_replace_a_xliff_10()
     {
         $data = $this->getData([
-                [
-                        'sid' => 1,
-                        'segment' => '<g id="1">&#128076;&#127995;</g>',
-                        'internal_id' => 'NFDBB2FA9-tu519',
-                        'mrk_id' => '',
-                        'prev_tags' => '',
-                        'succ_tags' => '',
-                        'mrk_prev_tags' => '',
-                        'mrk_succ_tags' => '',
-                        'translation' => '<g id="1">&#128076;&#127995;</g>',
-                        'status' => TranslationStatus::STATUS_TRANSLATED,
-                        'eq_word_count' => 1,
-                        'raw_word_count' => 1,
-                ]
+            [
+                'sid' => 1,
+                'segment' => '<g id="1">&#128076;&#127995;</g>',
+                'internal_id' => 'NFDBB2FA9-tu519',
+                'mrk_id' => '',
+                'prev_tags' => '',
+                'succ_tags' => '',
+                'mrk_prev_tags' => '',
+                'mrk_succ_tags' => '',
+                'translation' => '<g id="1">&#128076;&#127995;</g>',
+                'status' => TranslationStatus::STATUS_TRANSLATED,
+                'eq_word_count' => 1,
+                'raw_word_count' => 1,
+            ]
         ]);
 
         $inputFile = __DIR__.'/../tests/files/file-with-emoji.xliff';
@@ -258,12 +273,38 @@ class XliffReplacerTest extends BaseTest
         $expected2 = 'Document title2';
         $expected3 = 'Free text containing <pc id="1" canCopy="no" canDelete="no" dataRefEnd="d1" dataRefStart="d1">cursive</pc>.';
 
-        $this->assertNotEmpty($output['files'][1]['trans-units'][1]['target']['raw-content']);
-        $this->assertEquals($expected, $output['files'][1]['trans-units'][1]['target']['raw-content'][0]);
-        $this->assertNotEmpty($output['files'][1]['trans-units'][1]['target']['raw-content']);
-        $this->assertEquals($expected2, $output['files'][1]['trans-units'][1]['target']['raw-content'][1]);
-        $this->assertNotEmpty($output['files'][1]['trans-units'][2]['target']['raw-content']);
-        $this->assertEquals($expected3, $output['files'][1]['trans-units'][2]['target']['raw-content'][0]);
+        $unit1 = $output['files'][1]['trans-units'][1];
+        $unit2 = $output['files'][1]['trans-units'][2];
+
+        $this->assertEquals($unit1['attr']['id'], 'tu1');
+        $this->assertEquals($unit2['attr']['id'], 'tu2');
+        $this->assertEquals($unit1['source']['attr'][0]['xml:space'], 'preserve');
+        $this->assertEquals($unit1['source']['attr'][1]['xml:space'], 'preserve');
+        $this->assertEquals($unit2['source']['attr'][0]['xml:space'], 'preserve');
+        $this->assertEquals($unit1['source']['raw-content'][0], 'Titolo del documento');
+        $this->assertEquals($unit1['source']['raw-content'][1], 'Titolo del documento2');
+        $this->assertEquals($unit2['source']['raw-content'][0], 'Testo libero contenente <pc id="1" canCopy="no" canDelete="no" dataRefEnd="d1" dataRefStart="d1">corsivo</pc>.');
+        $this->assertEquals($unit1['seg-source'][0]['mid'], 0);
+        $this->assertEquals($unit1['seg-source'][0]['raw-content'], 'Titolo del documento');
+        $this->assertEquals($unit1['seg-source'][1]['mid'], 1);
+        $this->assertEquals($unit1['seg-source'][1]['raw-content'], 'Titolo del documento2');
+        $this->assertEquals($unit2['seg-source'][0]['mid'], 0);
+        $this->assertEquals($unit2['seg-source'][0]['raw-content'], 'Testo libero contenente <pc id="1" canCopy="no" canDelete="no" dataRefEnd="d1" dataRefStart="d1">corsivo</pc>.');
+        $this->assertNotEmpty($unit1['target']['raw-content']);
+        $this->assertNotEmpty($unit1['target']['raw-content']);
+        $this->assertNotEmpty($unit2['target']['raw-content']);
+        $this->assertEquals($expected, $unit1['target']['raw-content'][0]);
+        $this->assertEquals($expected2, $unit1['target']['raw-content'][1]);
+        $this->assertEquals($expected3, $unit2['target']['raw-content'][0]);
+        $this->assertNotEmpty($unit1['seg-target'][0]);
+        $this->assertNotEmpty($unit1['seg-target'][1]);
+        $this->assertNotEmpty($unit2['seg-target'][0]);
+        $this->assertEquals($unit1['seg-target'][0]['mid'], 0);
+        $this->assertEquals($unit1['seg-target'][0]['raw-content'], 'Document title');
+        $this->assertEquals($unit1['seg-target'][1]['mid'], 1);
+        $this->assertEquals($unit1['seg-target'][1]['raw-content'], 'Document title2');
+        $this->assertEquals($unit2['seg-target'][0]['mid'], 0);
+        $this->assertEquals($unit2['seg-target'][0]['raw-content'], 'Free text containing <pc id="1" canCopy="no" canDelete="no" dataRefEnd="d1" dataRefStart="d1">cursive</pc>.');
     }
 
     /**
