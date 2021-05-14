@@ -9,10 +9,10 @@ abstract class AbstractXliffReplacer
     protected $originalFP;
 
     protected $tuTagName;                 // <trans-unit> (forXliff v 1.*) or <unit> (forXliff v 2.*)
-    protected $inTU             = false;  // flag to check whether we are in a <trans-unit>
-    protected $inTarget         = false;  // flag to check whether we are in a <target>, to ignore everything
-    protected $isEmpty          = false;  // flag to check whether we are in an empty tag (<tag/>)
-    protected $segmentHasTarget = false;  // flag to check is there is a <target> node inside parent node (<segment> of xliff 2.0 and <source> for xliff 1.0) in the current trans-unit
+    protected $inTU                = false;  // flag to check whether we are in a <trans-unit>
+    protected $inTarget            = false;  // flag to check whether we are in a <target>, to ignore everything
+    protected $isEmpty             = false;  // flag to check whether we are in an empty tag (<tag/>)
+    protected $targetWasWritten    = false;  // flag to check is <target> was written in the current unit
     protected $segmentPositionInTu = -1;  // the current position of segment in the current <unit> (forXliff v 2.*)
 
     protected $CDATABuffer    = "";       // buffer for special tag

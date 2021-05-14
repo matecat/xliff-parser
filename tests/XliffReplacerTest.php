@@ -103,6 +103,40 @@ class XliffReplacerTest extends BaseTest
     /**
      * @test
      */
+    public function can_replace_an_intermediate_xliff_12_without_target()
+    {
+        $data = $this->getData([
+            [
+                'sid' => 1,
+                'segment' => 'Bla Bla',
+                'internal_id' => 'NFDBB2FA9-tu1',
+                'mrk_id' => '',
+                'prev_tags' => '',
+                'succ_tags' => '',
+                'mrk_prev_tags' => '',
+                'mrk_succ_tags' => '',
+                'translation' => 'Bla bla bla',
+                'status' => TranslationStatus::STATUS_TRANSLATED,
+                'eq_word_count' => 1,
+                'raw_word_count' => 1,
+            ],
+        ]);
+
+        $inputFile = __DIR__.'/../tests/files/intermediate_xliff.xliff';
+        $outputFile = __DIR__.'/../tests/files/output/intermediate_xliff.xliff';
+
+        $xliffParser = new XliffParser();
+        $xliffParser->replaceTranslation($inputFile, $data['data'], $data['transUnits'], 'sk-SK', $outputFile);
+        $output = $xliffParser->xliffToArray(file_get_contents($outputFile));
+
+        $expected = 'Bla bla bla';
+
+        $this->assertEquals($output['files'][3]['trans-units'][1]['target']['raw-content'], $expected);
+    }
+
+    /**
+     * @test
+     */
     public function can_replace_a_xliff_10_without_target_lang()
     {
         $data = $this->getData([

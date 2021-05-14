@@ -95,12 +95,12 @@ $parser->replaceTranslation( $inputFile, $data, $transUnits, 'fr-fr', $outputFil
   
 Please note that the `<target>` will be placed:
  
-- just BEFORE its corresponding closing `</source>` for xliff 1.* files
+- just BEFORE its corresponding closing `</trans-unit>` for xliff 1.* files
 - just BEFORE its corresponding closing `</segment>` for xliff 2.* files
 
-Take a look at this example.
+Take a look at this example taken from a xliff 2.0 file.
 
-This is the original `unit` (excerpt form taken from a xliff 2.0 file):
+This is the original `unit`:
 
 ```xml
 <unit id="tu1">

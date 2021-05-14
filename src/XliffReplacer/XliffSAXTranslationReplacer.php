@@ -383,20 +383,13 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
                 }
 
                 // signal we are leaving a target
-                $this->segmentHasTarget = true;
+                $this->targetWasWritten = true;
                 $this->inTarget         = false;
                 $this->postProcAndFlush($this->outputFP, $tag, $treatAsCDATA = true);
             } elseif (in_array($name, $this->nodesToCopy)) { // we are closing a critical CDATA section
 
                 $this->bufferIsActive = false;
                 $tag                  = $this->CDATABuffer."</$name>";
-
-                // only for Xliff 1.*
-                // if segment has no <target> add it BEFORE </segment>
-                if($this->xliffVersion === 1 and $name === 'trans-unit' and !$this->segmentHasTarget){
-                    $tag .= $this->createTargetTag();
-                }
-
                 $this->CDATABuffer    = "";
                 //flush to pointer
                 $this->postProcAndFlush($this->outputFP, $tag);
@@ -404,10 +397,12 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
 
                 // only for Xliff 2.*
                 // if segment has no <target> add it BEFORE </segment>
-                if($this->xliffVersion === 2 and !$this->segmentHasTarget){
-                    $tag = $this->createTargetTag().'</segment>';
+                if($this->xliffVersion === 2 and !$this->targetWasWritten){
+                    $seg = $this->getCurrentSegment();
+                    $tag = '<target>'.$seg['translation'].'</target></segment>';
                 }
 
+                // only for Xliff 2.*
                 // in xliff v2 we add metadata after closing a <section>
                 if($this->xliffVersion === 2){
                     if (isset($this->transUnits[ $this->currentTransUnitId ]) and !empty($this->transUnits[ $this->currentTransUnitId ])) {
@@ -418,8 +413,29 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
                 $this->postProcAndFlush($this->outputFP, $tag);
 
                 // we are leaving <segment>, reset $segmentHasTarget
-                $this->segmentHasTarget = false;
+                $this->targetWasWritten = false;
 
+            } elseif($name === 'trans-unit') {
+
+                // only for Xliff 1.*
+                // handling </trans-unit> closure
+                if(!$this->targetWasWritten){
+                    $seg = $this->getCurrentSegment();
+                    $lastMrkState = null;
+                    $stateProp   = '';
+                    $tag = '';
+
+                    // if there is translation available insert <target> BEFORE </trans-unit>
+                    if(isset($seg['translation'])){
+                        list($stateProp, $lastMrkState) = $this->setTransUnitState($seg, $stateProp, $lastMrkState);
+                        $tag .= $this->createTargetTag($seg['translation'], $stateProp);
+                    }
+
+                    $tag .= '</trans-unit>';
+                    $this->postProcAndFlush($this->outputFP, $tag);
+                } else {
+                    $this->postProcAndFlush($this->outputFP, '</trans-unit>');
+                }
             } elseif ($this->bufferIsActive) { // this is a tag ( <g | <mrk ) inside a seg or seg-source tag
                 $this->CDATABuffer .= "</$name>";
             // Do NOT Flush
@@ -571,21 +587,34 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
     }
 
     /**
-     * This function create a <target>
-     *
-     * @return string
+     * @return array
      */
-    private function createTargetTag()
+    private function getCurrentSegment()
     {
         if($this->currentTransUnitTranslate === 'yes' and isset($this->transUnits[$this->currentTransUnitId])){
             $index = $this->transUnits[$this->currentTransUnitId][$this->segmentPositionInTu];
 
-            if(isset($this->segments[$index]['translation'])){
-                return '<target>'.$this->segments[$index]['translation'].'</target>';
+            if(isset($this->segments[$index])){
+                return $this->segments[$index];
             }
         }
 
-        return '';
+        return [];
+    }
+
+    /**
+     * This function create a <target>
+     *
+     * @param $translation
+     * @param $stateProp
+     *
+     * @return string
+     */
+    private function createTargetTag($translation, $stateProp)
+    {
+        $targetLang = 'xml:lang="'.$this->targetLang.'"';
+
+        return $this->buildTranslateTag($targetLang, $stateProp, $translation, $this->counts[ 'raw_word_count' ], $this->counts[ 'eq_word_count' ]);
     }
 
     /**
