@@ -2,6 +2,7 @@
 
 namespace Matecat\XliffParser\Utils;
 
+use Matecat\XliffParser\Constants\XliffTags;
 use Matecat\XliffParser\Exception\NotValidJSONException;
 
 class Strings
@@ -113,17 +114,16 @@ class Strings
      * <g id="1">Hello</g>, 4 > 3 &gt; -> <g id="1">Hello</g>, 4 &gt; 3 &gt; 2
      *
      * @param string $content
-     * @param bool $escapeStrings
+     * @param bool   $escapeStrings
      *
      * @return mixed|string
      */
-    public static function fixNonWellFormedXml($content, $escapeStrings = true)
+    public static function fixNonWellFormedXml( $content, $escapeStrings = true)
     {
         if (self::$find_xliff_tags_reg === null) {
-            // List of the tags that we don't want to escape
-            $xliff_tags = [ 'g', 'x', 'bx', 'ex', 'bpt', 'ept', 'ph', 'pc', 'ec', 'sc', 'it', 'mrk' ];
             // Convert the list of tags in a regexp list, for example "g|x|bx|ex"
-            $xliff_tags_reg_list = implode('|', $xliff_tags);
+            $xliffTags = XliffTags::$tags;
+            $xliff_tags_reg_list = implode('|', $xliffTags);
             // Regexp to find all the XLIFF tags:
             //   </?               -> matches the tag start, for both opening and
             //                        closure tags (see the optional slash)

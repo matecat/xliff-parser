@@ -294,13 +294,25 @@ class XliffParserV2 extends AbstractXliffParser
                         $dataValue = str_replace(Placeholder::TAB_PLACEHOLDER, '\t', $dataValue);
 
                         if ('' !== $dataValue) {
+
+                            $jsonOrRawContentArray = $this->JSONOrRawContentArray($dataValue, false);
+
+                            // restore xliff tags
+                            if (isset($jsonOrRawContentArray['json'])){
+                                $jsonOrRawContentArray['json'] = str_replace([Placeholder::LT_PLACEHOLDER, Placeholder::GT_PLACEHOLDER], ['&lt;','&gt;'], $jsonOrRawContentArray['json']);
+                            }
+
+                            if (isset($jsonOrRawContentArray['raw-content'])){
+                                $jsonOrRawContentArray['raw-content'] = str_replace([Placeholder::LT_PLACEHOLDER, Placeholder::GT_PLACEHOLDER], ['&lt;','&gt;'], $jsonOrRawContentArray['raw-content']);
+                            }
+
                             $originalData[] = array_merge(
-                                    $this->JSONOrRawContentArray($dataValue, false),
-                                    [
-                                            'attr' => [
-                                                    'id' => $dataId
-                                            ]
+                                $jsonOrRawContentArray,
+                                [
+                                    'attr' => [
+                                        'id' => $dataId
                                     ]
+                                ]
                             );
                         }
                     }

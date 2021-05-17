@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en-US" trgLang="it-IT" xmlns:its="http://www.w3.org/2005/11/its" xmlns:itsxlf="http://www.w3.org/ns/its-xliff/" its:version="2.0">
+ <file id="f1" original="/home/afalappa/Documenti/filters-sample-docs/markdown/prova.md">
+  <unit id="tu1">
+   <originalData>
+    <data id="d1">&lt;g id="0PEY7rmSqeVk51Xn" ctype="x-html-strong" /&gt;</data>
+   </originalData>
+   <segment>
+    <source xml:space="preserve">Testo libero contenente <pc id="1" canCopy="no" canDelete="no" dataRefEnd="d1" dataRefStart="d1">un tag g</pc>.</source>
+   </segment>
+  </unit>
+  <unit id="tu2">
+   <originalData>
+    <data id="d1">&lt;a href="#"&gt;</data>
+    <data id="d2">&lt;/a&gt;</data>
+   </originalData>
+   <segment>
+    <source xml:space="preserve">Testo libero contenente <pc id="1" canCopy="no" canDelete="no" dataRefEnd="d1" dataRefStart="d2">link</pc>.</source>
+   </segment>
+  </unit>
+ </file>
+</xliff>
+
