@@ -9,9 +9,22 @@ class XliffParserV2Test extends BaseTest
     /**
      * @test
      */
+    public function can_parse_xliff_v2_with_encoded_g_tags_in_originalData()
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('xliff_20_with_g_tags_in_dataref.xlf'));
+        $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
+
+        $originalData = $units[1]['original-data'][0];
+
+        $this->assertEquals($originalData['raw-content'], '&lt;g id="0PEY7rmSqeVk51Xn" ctype="x-html-strong" /&gt;');
+        $this->assertEquals($originalData['attr']['id'], 'd1');
+    }
+
+    /**
+     * @test
+     */
     public function can_parse_xliff_v2_with_new_line_values_in_originalData()
     {
-        // <pc> tags do not be escaped here
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('blank-dataRef.xliff'));
         $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
 
@@ -248,7 +261,6 @@ class XliffParserV2Test extends BaseTest
         $this->assertEquals($units[4]['source']['raw-content'][0], '
                     <sc dataRef="d1" id="1" subType="xlf:b" type="fmt"/>Elysian Collection<ph dataRef="d3" id="2" subType="xlf:lb" type="fmt"/><ec dataRef="d2" startRef="1" subType="xlf:b" type="fmt"/>Bahnhofstrasse 15, Postfach 341, Zermatt CH- 3920, Switzerland<ph dataRef="d3" id="3" subType="xlf:lb" type="fmt"/>Tel: +44 203 468 2235  Email: <pc dataRefEnd="d5" dataRefStart="d4" id="4" type="link">info@elysiancollection.com</pc><sc dataRef="d1" id="5" subType="xlf:b" type="fmt"/><ph dataRef="d3" id="6" subType="xlf:lb" type="fmt"/><ec dataRef="d2" startRef="5" subType="xlf:b" type="fmt"/>');
     }
-
 
     /**
      * @test

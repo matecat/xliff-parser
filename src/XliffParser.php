@@ -3,6 +3,7 @@
 namespace Matecat\XliffParser;
 
 use Matecat\XliffParser\Constants\Placeholder;
+use Matecat\XliffParser\Constants\XliffTags;
 use Matecat\XliffParser\Utils\Strings;
 use Matecat\XliffParser\XliffParser\XliffParserFactory;
 use Matecat\XliffParser\XliffReplacer\XliffReplacerCallbackInterface;
@@ -70,7 +71,7 @@ class XliffParser
             }
 
             if($version === 2){
-                $xliffContent = self::replaceSpacesInOriginalMapData($xliffContent);
+                $xliffContent = self::escapeDataInOriginalMap($xliffContent);
             }
 
             $parser = XliffParserFactory::getInstance($version, $this->logger);
@@ -152,16 +153,27 @@ class XliffParser
     }
 
     /**
-     * Replace spaces (like white space, tab space etc..) with placeholders in the original data map to preserve them
+     * This function replaces:
+     *
+     * - spaces (like white space, tab space etc..)
+     * - xliff tags (see XliffTags::$tags for the full list)
+     *
+     * with placeholders in the <original-data> map to preserve them as they are.
+     *
+     * XliffParserV2::extractTransUnitOriginalData function will restore them
+     *
      * (only for Xliff 2.0)
      *
      * @param $xliffContent
      *
      * @return string
      */
-    private static function replaceSpacesInOriginalMapData($xliffContent)
+    private static function escapeDataInOriginalMap($xliffContent)
     {
-        return preg_replace_callback('/<data(.*?)>(.*?)<\/data>/iU', [XliffParser::class, 'replaceSpace' ], $xliffContent);
+        $xliffContent  = preg_replace_callback('/<data(.*?)>(.*?)<\/data>/iU', [XliffParser::class, 'replaceSpace' ], $xliffContent);
+        $xliffContent  = preg_replace_callback('/<data(.*?)>(.*?)<\/data>/iU', [XliffParser::class, 'replaceXliffTags' ], $xliffContent);
+
+        return $xliffContent;
     }
 
     /**
@@ -176,6 +188,24 @@ class XliffParser
         $content = str_replace(' ', Placeholder::WHITE_SPACE_PLACEHOLDER, $matches[2]);
         $content = str_replace('\n', Placeholder::NEW_LINE_PLACEHOLDER, $content);
         $content = str_replace('\t', Placeholder::TAB_PLACEHOLDER, $content);
+
+        return '<data'.$matches[1].'>'.$content.'</data>';
+    }
+
+    /**
+     * @param $matches
+     *
+     * @return string
+     */
+    private static function replaceXliffTags($matches)
+    {
+        $xliffTags = XliffTags::$tags;
+        $content = $matches[2];
+
+        foreach ($xliffTags as $xliffTag){
+            $content = preg_replace( '|&lt;('.$xliffTag.'.*?)&gt;|si', Placeholder::LT_PLACEHOLDER . "$1" . Placeholder::GT_PLACEHOLDER, $content );
+            $content = preg_replace( '|&lt;(/'.$xliffTag.')&gt;|si', Placeholder::LT_PLACEHOLDER . "$1" . Placeholder::GT_PLACEHOLDER, $content );
+        }
 
         return '<data'.$matches[1].'>'.$content.'</data>';
     }
