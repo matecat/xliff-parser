@@ -48,11 +48,11 @@ class DataReplacerTest extends BaseTest
     public function do_nothing_with_ph_tags_without_dataref()
     {
         $map = [
-                'source3' => '&lt;/a&gt;',
-                'source4' => '&lt;br&gt;',
-                'source5' => '&lt;br&gt;',
-                'source1' => '&lt;br&gt;',
-                'source2' => '&lt;a href=%s&gt;',
+            'source3' => '&lt;/a&gt;',
+            'source4' => '&lt;br&gt;',
+            'source5' => '&lt;br&gt;',
+            'source1' => '&lt;br&gt;',
+            'source2' => '&lt;a href=%s&gt;',
         ];
 
         $string = 'Hi <ph id="mtc_1" equiv-text="base64:JXM="/> .';
@@ -671,4 +671,43 @@ class DataReplacerTest extends BaseTest
         $this->assertEquals($expected, $dataReplacer->replace($string));
         $this->assertEquals($string, $dataReplacer->restore($expected));
     }
+
+    /**
+     * @test
+     */
+    public function do_not_duplicate_equiv_text_in_ph_tags()
+    {
+        $map = [
+            'source1' => '%s',
+        ];
+
+        $string = 'Hi <ph id="source1" dataRef="d1" equiv-text="base64:JXM="/> .';
+        $expected = 'Hi <ph id="source1" dataRef="d1" equiv-text="base64:JXM="/> .';
+
+        $dataReplacer = new DataRefReplacer($map);
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($string, $dataReplacer->restore($expected));
+    }
+
+    /**
+     * @test
+     */
+    public function do_not_duplicate_equiv_text_in_already_transformed_pc_tags()
+    {
+        $map = [
+            "d2" => "&lt;/a&gt;",
+        ];
+
+        $string = '&lt;ph id="1_2" dataType="pcEnd" originalData="Jmx0Oy9wYyZndDs=" dataRef="d2" equiv-text="base64:Jmx0Oy9hJmd0Ow=="/&gt;';
+        $expected = '&lt;ph id="1_2" dataType="pcEnd" originalData="Jmx0Oy9wYyZndDs=" dataRef="d2" equiv-text="base64:Jmx0Oy9hJmd0Ow=="/&gt;';
+        $restored = '&lt;/pc&gt;';
+
+        $dataReplacer = new DataRefReplacer($map);
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($restored, $dataReplacer->restore($expected));
+    }
 }
+
+
