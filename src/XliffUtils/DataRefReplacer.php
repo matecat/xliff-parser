@@ -168,7 +168,7 @@ class DataRefReplacer
                 $string = $this->recursiveCleanFromEquivText($childNode, $string);
             }
         } else {
-            if(isset($node->attributes['id']) and array_key_exists($node->attributes['id'], $this->map)){
+            if(isset($node->attributes['dataRef']) and array_key_exists($node->attributes['dataRef'], $this->map)){
                 $cleaned = preg_replace('/ equiv-text="(.*?)"/', '', $node->node);
                 $string = str_replace($node->node, $cleaned, $string);
             }
