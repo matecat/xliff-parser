@@ -708,6 +708,47 @@ class DataReplacerTest extends BaseTest
         $this->assertEquals($expected, $dataReplacer->replace($string));
         $this->assertEquals($restored, $dataReplacer->restore($expected));
     }
+
+    /**
+     * @test
+     */
+    public function can_parse_nested_not_mapped_pc()
+    {
+        $map = [
+            "source1" => "a",
+            "source2" => "b",
+            "source3" => "c",
+        ];
+
+        $string = '<pc id="source1" dataRefStart="source1">April 24, 2017</pc> | Written by <pc id="source2" dataRefStart="source2"><pc id="1b" type="fmt" subType="m:b">Troy Stevenson</pc></pc><pc id="source3" dataRefStart="source3">,</pc> Global Head of Community Operations';
+        $expected = '<ph id="source1_1" dataType="pcStart" originalData="PHBjIGlkPSJzb3VyY2UxIiBkYXRhUmVmU3RhcnQ9InNvdXJjZTEiPg==" dataRef="source1" equiv-text="base64:YQ=="/>April 24, 2017<ph id="source1_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="source1" equiv-text="base64:YQ=="/> | Written by <ph id="source2_1" dataType="pcStart" originalData="PHBjIGlkPSJzb3VyY2UyIiBkYXRhUmVmU3RhcnQ9InNvdXJjZTIiPg==" dataRef="source2" equiv-text="base64:Yg=="/><pc id="1b" type="fmt" subType="m:b">Troy Stevenson</pc><ph id="source2_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="source2" equiv-text="base64:Yg=="/><ph id="source3_1" dataType="pcStart" originalData="PHBjIGlkPSJzb3VyY2UzIiBkYXRhUmVmU3RhcnQ9InNvdXJjZTMiPg==" dataRef="source3" equiv-text="base64:Yw=="/>,<ph id="source3_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="source3" equiv-text="base64:Yw=="/> Global Head of Community Operations';
+        $restored = '<pc id="source1" dataRefStart="source1">April 24, 2017</pc> | Written by <pc id="source2" dataRefStart="source2"><pc id="1b" type="fmt" subType="m:b">Troy Stevenson</pc></pc><pc id="source3" dataRefStart="source3">,</pc> Global Head of Community Operations';
+
+        $dataReplacer = new DataRefReplacer($map);
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($restored, $dataReplacer->restore($expected));
+    }
+
+    /**
+     * @test
+     */
+    public function can_parse_pc_with_lessThan_symbol_in_the_sentence()
+    {
+        $map = [
+                "source1" => "a",
+                "source2" => "b",
+        ];
+
+        $string = '<pc id="source1" dataRefStart="source1">&lt;<pc id="source2" dataRefStart="source2">Rider </pc></pc>';
+        $expected = '<ph id="source1_1" dataType="pcStart" originalData="PHBjIGlkPSJzb3VyY2UxIiBkYXRhUmVmU3RhcnQ9InNvdXJjZTEiPg==" dataRef="source1" equiv-text="base64:YQ=="/>&lt;<ph id="source2_1" dataType="pcStart" originalData="PHBjIGlkPSJzb3VyY2UyIiBkYXRhUmVmU3RhcnQ9InNvdXJjZTIiPg==" dataRef="source2" equiv-text="base64:Yg=="/>Rider <ph id="source2_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="source2" equiv-text="base64:Yg=="/><ph id="source1_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="source1" equiv-text="base64:YQ=="/>';
+        $restored = '<pc id="source1" dataRefStart="source1">&lt;<pc id="source2" dataRefStart="source2">Rider </pc></pc>';
+
+        $dataReplacer = new DataRefReplacer($map);
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($restored, $dataReplacer->restore($expected));
+    }
 }
 
 
