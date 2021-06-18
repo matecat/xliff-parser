@@ -46,23 +46,25 @@ class DataRefReplacer
         // (recursively) clean string from equiv-text eventually present
         $string = $this->cleanFromEquivText($string);
 
+        // 1. Replace <ph>|<sc>|<ec> tags
         $html = HtmlParser::parse($string);
 
-        // create a dataRefEnd map
-        // (needed for correct handling of </pc> closing tags)
-        $dataRefEndMap = $this->buildDataRefEndMap($html);
-
-        // parse and process each node of the original string
         foreach ($html as $node){
-            // 1. Replace for ph|sc|ec tag
             if ($node->tagname === 'ph' or $node->tagname === 'sc' or $node->tagname === 'ec') {
                 $string = $this->addEquivTextToPhTag($node, $string);
             }
+        }
 
-            // 2. Replace tag <pc>
-            if ($node->tagname === 'pc') {
-                $string = $this->convertPcToPhAndAddEquivText($node, $string, $dataRefEndMap);
-            }
+        // 2. Replace <pc> tags
+        $toBeEscaped = Strings::isAnEscapedHTML($string);
+
+        if($this->stringContainsPcTags($string, $toBeEscaped)){
+            // create a dataRefEnd map
+            // (needed for correct handling of </pc> closing tags)
+            $dataRefEndMap = $this->buildDataRefEndMap($html);
+            $string = self::replaceOpeningPcTags($string, $toBeEscaped);
+            $string = self::replaceClosingPcTags($string, $toBeEscaped, $dataRefEndMap);
+            $string = ($toBeEscaped) ? Strings::escapeOnlyHTMLTags($string) : $string;
         }
 
         return $string;
@@ -268,33 +270,31 @@ class DataRefReplacer
         $regex = ($toBeEscaped) ? '/&lt;pc(.*?)&gt;/iu' : '/<pc(.*?)>/iu';
         preg_match_all($regex, $string, $openingPcMatches);
 
-        if(isset($openingPcMatches[0]) and count($openingPcMatches[0])>0){
-            foreach ($openingPcMatches[0] as $index => $match){
-                $attr = HtmlParser::getAttributes($openingPcMatches[1][$index]);
+        foreach ($openingPcMatches[0] as $index => $match){
+            $attr = HtmlParser::getAttributes($openingPcMatches[1][$index]);
 
-                // CASE 1 - Missing `dataRefStart`
-                if( isset($attr['dataRefEnd']) and !isset($attr['dataRefStart'])  ){
-                    $attr['dataRefStart'] = $attr['dataRefEnd'];
-                }
+            // CASE 1 - Missing `dataRefStart`
+            if( isset($attr['dataRefEnd']) and !isset($attr['dataRefStart'])  ){
+                $attr['dataRefStart'] = $attr['dataRefEnd'];
+            }
 
-                // CASE 2 - Missing `dataRefEnd`
-                if( isset($attr['dataRefStart']) and !isset($attr['dataRefEnd'])  ){
-                    $attr['dataRefEnd'] = $attr['dataRefStart'];
-                }
+            // CASE 2 - Missing `dataRefEnd`
+            if( isset($attr['dataRefStart']) and !isset($attr['dataRefEnd'])  ){
+                $attr['dataRefEnd'] = $attr['dataRefStart'];
+            }
 
-                if(isset($attr['dataRefStart'])){
-                    $startOriginalData = $match; // opening <pc>
-                    $startValue = $this->map[$attr['dataRefStart']];
-                    $base64EncodedStartValue = base64_encode($startValue);
-                    $base64StartOriginalData = base64_encode($startOriginalData);
+            if(isset($attr['dataRefStart'])){
+                $startOriginalData = $match; // opening <pc>
+                $startValue = $this->map[$attr['dataRefStart']];
+                $base64EncodedStartValue = base64_encode($startValue);
+                $base64StartOriginalData = base64_encode($startOriginalData);
 
-                    // conversion for opening <pc> tag
-                    $openingPcConverted  = '<ph '. ((isset($attr['id'])) ? 'id="'.$attr['id'].'_1"' : '') .' dataType="pcStart" originalData="'.$base64StartOriginalData.'" dataRef="'
-                            .$attr['dataRefStart'].'" equiv-text="base64:'
-                            .$base64EncodedStartValue.'"/>';
+                // conversion for opening <pc> tag
+                $openingPcConverted  = '<ph '. ((isset($attr['id'])) ? 'id="'.$attr['id'].'_1"' : '') .' dataType="pcStart" originalData="'.$base64StartOriginalData.'" dataRef="'
+                        .$attr['dataRefStart'].'" equiv-text="base64:'
+                        .$base64EncodedStartValue.'"/>';
 
-                    $string = str_replace($startOriginalData, $openingPcConverted, $string);
-                }
+                $string = str_replace($startOriginalData, $openingPcConverted, $string);
             }
         }
 
@@ -317,31 +317,43 @@ class DataRefReplacer
         preg_match_all($regex, $string, $closingPcMatches, PREG_OFFSET_CAPTURE);
         $delta = 0;
 
-        if(isset($closingPcMatches[0]) and count($closingPcMatches[0])>0) {
-            foreach ( $closingPcMatches[ 0 ] as $index => $match ) {
-                $offset = $match[1];
-                $length = strlen($match[0]);
-                $attr = $dataRefEndMap[$index];
+        foreach ( $closingPcMatches[ 0 ] as $index => $match ) {
+            $offset = $match[1];
+            $length = strlen($match[0]);
+            $attr = $dataRefEndMap[$index];
 
-                if(!empty($attr) and isset($attr['dataRefEnd'])){
-                    $endOriginalData = $match[0]; // </pc>
-                    $endValue = $this->map[$attr['dataRefEnd']];
-                    $base64EncodedEndValue = base64_encode($endValue);
-                    $base64EndOriginalData = base64_encode($endOriginalData);
+            if(!empty($attr) and isset($attr['dataRefEnd'])){
+                $endOriginalData = $match[0]; // </pc>
+                $endValue = $this->map[$attr['dataRefEnd']];
+                $base64EncodedEndValue = base64_encode($endValue);
+                $base64EndOriginalData = base64_encode($endOriginalData);
 
-                    // conversion for closing <pc> tag
-                    $closingPcConverted = '<ph '. ((isset($attr['id'])) ? 'id="'.$attr['id'].'_2"': '') .' dataType="pcEnd" originalData="'.$base64EndOriginalData.'" dataRef="'
-                            .$attr['dataRefEnd'].'" equiv-text="base64:' .$base64EncodedEndValue.'"/>';
+                // conversion for closing <pc> tag
+                $closingPcConverted = '<ph '. ((isset($attr['id'])) ? 'id="'.$attr['id'].'_2"': '') .' dataType="pcEnd" originalData="'.$base64EndOriginalData.'" dataRef="'
+                        .$attr['dataRefEnd'].'" equiv-text="base64:' .$base64EncodedEndValue.'"/>';
 
-                    $realOffset = ($delta === 0) ? $offset : ($offset + $delta);
+                $realOffset = ($delta === 0) ? $offset : ($offset + $delta);
 
-                    $string = substr_replace($string, $closingPcConverted, $realOffset, $length);
-                    $delta = $delta + strlen($closingPcConverted) - $length;
-                }
+                $string = substr_replace($string, $closingPcConverted, $realOffset, $length);
+                $delta = $delta + strlen($closingPcConverted) - $length;
             }
         }
 
         return $string;
+    }
+
+    /**
+     * @param $string
+     * @param $toBeEscaped
+     *
+     * @return bool
+     */
+    private function stringContainsPcTags($string, $toBeEscaped)
+    {
+        $regex = ($toBeEscaped) ? '/&lt;pc(.*?)&gt;/iu' : '/<pc(.*?)>/iu';
+        preg_match_all($regex, $string, $openingPcMatches);
+
+        return (isset($openingPcMatches[0]) and count($openingPcMatches[0])>0);
     }
 
     /**
