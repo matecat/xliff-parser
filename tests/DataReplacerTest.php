@@ -729,6 +729,26 @@ class DataReplacerTest extends BaseTest
         $this->assertEquals($expected, $dataReplacer->replace($string));
         $this->assertEquals($restored, $dataReplacer->restore($expected));
     }
+
+    /**
+     * @test
+     */
+    public function can_parse_pc_with_lessThan_symbol_in_the_sentence()
+    {
+        $map = [
+                "source1" => "a",
+                "source2" => "b",
+        ];
+
+        $string = '<pc id="source1" dataRefStart="source1">&lt;<pc id="source2" dataRefStart="source2">Rider </pc></pc>';
+        $expected = '';
+        $restored = '';
+
+        $dataReplacer = new DataRefReplacer($map);
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($restored, $dataReplacer->restore($expected));
+    }
 }
 
 
