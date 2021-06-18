@@ -741,8 +741,8 @@ class DataReplacerTest extends BaseTest
         ];
 
         $string = '<pc id="source1" dataRefStart="source1">&lt;<pc id="source2" dataRefStart="source2">Rider </pc></pc>';
-        $expected = '';
-        $restored = '';
+        $expected = '<ph id="source1_1" dataType="pcStart" originalData="PHBjIGlkPSJzb3VyY2UxIiBkYXRhUmVmU3RhcnQ9InNvdXJjZTEiPg==" dataRef="source1" equiv-text="base64:YQ=="/>&lt;<ph id="source2_1" dataType="pcStart" originalData="PHBjIGlkPSJzb3VyY2UyIiBkYXRhUmVmU3RhcnQ9InNvdXJjZTIiPg==" dataRef="source2" equiv-text="base64:Yg=="/>Rider <ph id="source2_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="source2" equiv-text="base64:Yg=="/><ph id="source1_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="source1" equiv-text="base64:YQ=="/>';
+        $restored = '<pc id="source1" dataRefStart="source1">&lt;<pc id="source2" dataRefStart="source2">Rider </pc></pc>';
 
         $dataReplacer = new DataRefReplacer($map);
 
