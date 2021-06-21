@@ -9,6 +9,20 @@ class HtmlParserTest extends BaseTest
     /**
      * @test
      */
+    public function can_parse_html_with_less_than_symbol()
+    {
+        $string = '<div id="1">< Ciao <<div id="2"></div></div>';
+        $parsed = HtmlParser::parse($string);
+
+        $this->assertCount(1, $parsed);
+        $this->assertEquals('< Ciao <', $parsed[0]->stripped_text);
+        $this->assertEquals('1', $parsed[0]->attributes['id']);
+        $this->assertEquals('2', $parsed[0]->inner_html[0]->attributes['id']);
+    }
+
+    /**
+     * @test
+     */
     public function can_extract_inner_text()
     {
         $string = '<div class=\'text\'>questo è un testo</div>';
@@ -45,7 +59,7 @@ class HtmlParserTest extends BaseTest
 
         $this->assertCount(1, $parsed);
         $this->assertEquals('text', $parsed[0]->attributes['class']);
-        $this->assertNull($parsed[0]->original_text);
+        $this->assertEquals('', $parsed[0]->original_text);
     }
 
     /**
