@@ -4,8 +4,11 @@ namespace Matecat\XliffParser\Utils;
 
 class HtmlParser
 {
+    const ORIGINAL_TEXT_PLACEHOLDER = '#####__ORIGINAL_TEXT__#####';
+    const LT_PLACEHOLDER = '#####__LT_PLACEHOLDER__#####';
+
     /**
-     * This solution is taken from here and modified:
+     * This solution is taken from here and then modified:
      * https://www.php.net/manual/fr/regexp.reference.recursive.php#95568
      *
      * @param string $html
@@ -20,7 +23,46 @@ class HtmlParser
             $html = Strings::htmlspecialchars_decode($html);
         }
 
+        $html = self::protectNotHtmlLessThanSymbols($html);
+
         return self::extractHtmlNode($html, $toBeEscaped);
+    }
+
+    /**
+     * Protect all < symbols that are not part of html tags.
+     *
+     * Example:
+     *
+     * <div id="1">< Ciao <<div id="2"></div></div>
+     *
+     * is converted to:
+     *
+     * <div id="1">#####__LT_PLACEHOLDER__##### Ciao #####__LT_PLACEHOLDER__#####<div id="2"></div></div>
+     *
+     * @param string $html
+     *
+     * @return string
+     */
+    private static function protectNotHtmlLessThanSymbols($html)
+    {
+        preg_match_all('/<|>/iu', $html, $output_array, PREG_OFFSET_CAPTURE);
+
+        $delta = 0;
+
+        foreach ($output_array[0] as $key => $match) {
+
+            // if < does not have a closing >
+            // then substitute with lt placeholder
+            if( $output_array[0][$key][0] === '<' and isset($output_array[0][$key+1][0]) and $output_array[0][$key+1][0] !== '>'){
+                $length = strlen($match[0]);
+                $offset = $output_array[0][$key][1];
+                $realOffset = ($delta === 0) ? $offset : ($offset + $delta);
+                $html = substr_replace($html, self::LT_PLACEHOLDER, $realOffset, $length);
+                $delta = $delta + strlen(self::LT_PLACEHOLDER) - $length;
+            }
+        }
+
+        return $html;
     }
 
     /**
@@ -47,8 +89,7 @@ class HtmlParser
             $strippedText = strip_tags($text);
 
             // get start and end tags
-            $explosionPlaceholder = '#####__ORIGINAL_TEXT__#####';
-            $explodedNode = explode($explosionPlaceholder, str_replace($originalText, $explosionPlaceholder, $match[0]));
+            $explodedNode = explode(self::ORIGINAL_TEXT_PLACEHOLDER, str_replace($originalText, self::ORIGINAL_TEXT_PLACEHOLDER, $match[0]));
 
             $start = (isset($explodedNode[0])) ? $explodedNode[0] : null;
             $end = (isset($explodedNode[1])) ? $explodedNode[1] : null;
@@ -60,9 +101,9 @@ class HtmlParser
             $node = self::rebuildNode($originalText, $toBeEscaped, $start, $end);
 
             $elements[] = (object)[
-                'node' => $node,
-                'start' => $start,
-                'end' => $end,
+                'node' => self::restoreLessThanSymbols($node),
+                'start' => self::restoreLessThanSymbols($start),
+                'end' => self::restoreLessThanSymbols($end),
                 'terminator' => ($toBeEscaped) ? '&gt;' : '>',
                 'offset' => $match[1],
                 'tagname' => $tagName,
@@ -71,12 +112,22 @@ class HtmlParser
                 'omittag' => ($matches[4][$key][1] > -1), // boolean
                 'inner_html' => $inner_html,
                 'has_children' => is_array($inner_html),
-                'original_text' => ($toBeEscaped) ? Strings::escapeOnlyHTMLTags($originalText) : $originalText,
-                'stripped_text' => $strippedText,
+                'original_text' => ($toBeEscaped) ? self::restoreLessThanSymbols(Strings::escapeOnlyHTMLTags($originalText)) : self::restoreLessThanSymbols($originalText),
+                'stripped_text' => self::restoreLessThanSymbols($strippedText),
             ];
         }
 
         return $elements;
+    }
+
+    /**
+     * @param $text
+     *
+     * @return string|string[]
+     */
+    private static function restoreLessThanSymbols( $text)
+    {
+        return str_replace(self::LT_PLACEHOLDER, '<', $text);
     }
 
     /**
