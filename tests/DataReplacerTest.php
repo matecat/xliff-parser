@@ -749,6 +749,64 @@ class DataReplacerTest extends BaseTest
         $this->assertEquals($expected, $dataReplacer->replace($string));
         $this->assertEquals($restored, $dataReplacer->restore($expected));
     }
+
+    /**
+     * @test
+     */
+    public function can_replace_and_restore_ph_nested_in_pc_tags()
+    {
+        $map = [
+                "source3" => "1",
+                "source8" => "2",
+                "source4" =>"3",
+                "source9"=>"4",
+                "source5"=>"5",
+                "source10"=>"6",
+                "source1"=>"7",
+                "source6"=>"8",
+                "source11" =>"9",
+                "source2"=>"10",
+                "source7"=> "11"
+        ];
+
+        $string = '<pc id="source1" dataRefStart="source1"><ph id="source2" dataRef="source2"/></pc>';
+        $expected = '<ph id="source1_1" dataType="pcStart" originalData="PHBjIGlkPSJzb3VyY2UxIiBkYXRhUmVmU3RhcnQ9InNvdXJjZTEiPg==" dataRef="source1" equiv-text="base64:Nw=="/><ph id="source2" dataRef="source2" equiv-text="base64:MTA="/><ph id="source1_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="source1" equiv-text="base64:Nw=="/>';
+        $restored = '<pc id="source1" dataRefStart="source1"><ph id="source2" dataRef="source2"/></pc>';
+
+        $dataReplacer = new DataRefReplacer($map);
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($restored, $dataReplacer->restore($expected));
+    }
+
+    /**
+     * @test
+     */
+    public function can_replace_and_restore_with_a_complex_string_with_ph_nested_in_pc_tags()
+    {
+        $map = [
+                "source3" => "1",
+                "source8" => "2",
+                "source4" =>"3",
+                "source9"=>"4",
+                "source5"=>"5",
+                "source10"=>"6",
+                "source1"=>"7",
+                "source6"=>"8",
+                "source11" =>"9",
+                "source2"=>"10",
+                "source7"=> "11"
+        ];
+
+        $string = '<pc id="source1" dataRefStart="source1"><ph id="source2" dataRef="source2"/></pc><pc id="source3" dataRefStart="source3"><pc id="source4" dataRefStart="source4">Well done!<ph id="source5" dataRef="source5"/><ph id="source6" dataRef="source6"/>You have completed the course and are now ready to demonstrate your knowledge of<ph id="source7" dataRef="source7"/>how to use Case Management.</pc></pc><pc id="source8" dataRefStart="source8"><ph id="source9" dataRef="source9"/><ph id="source10" dataRef="source10"/><pc id="source11" dataRefStart="source11">Click on the "X" on the right side to exit the course.</pc></pc>';
+        $expected = '<ph id="source1_1" dataType="pcStart" originalData="PHBjIGlkPSJzb3VyY2UxIiBkYXRhUmVmU3RhcnQ9InNvdXJjZTEiPg==" dataRef="source1" equiv-text="base64:Nw=="/><ph id="source2" dataRef="source2" equiv-text="base64:MTA="/><ph id="source1_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="source1" equiv-text="base64:Nw=="/><ph id="source3_1" dataType="pcStart" originalData="PHBjIGlkPSJzb3VyY2UzIiBkYXRhUmVmU3RhcnQ9InNvdXJjZTMiPg==" dataRef="source3" equiv-text="base64:MQ=="/><ph id="source4_1" dataType="pcStart" originalData="PHBjIGlkPSJzb3VyY2U0IiBkYXRhUmVmU3RhcnQ9InNvdXJjZTQiPg==" dataRef="source4" equiv-text="base64:Mw=="/>Well done!<ph id="source5" dataRef="source5" equiv-text="base64:NQ=="/><ph id="source6" dataRef="source6" equiv-text="base64:OA=="/>You have completed the course and are now ready to demonstrate your knowledge of<ph id="source7" dataRef="source7" equiv-text="base64:MTE="/>how to use Case Management.<ph id="source4_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="source4" equiv-text="base64:Mw=="/><ph id="source3_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="source3" equiv-text="base64:MQ=="/><ph id="source8_1" dataType="pcStart" originalData="PHBjIGlkPSJzb3VyY2U4IiBkYXRhUmVmU3RhcnQ9InNvdXJjZTgiPg==" dataRef="source8" equiv-text="base64:Mg=="/><ph id="source9" dataRef="source9" equiv-text="base64:NA=="/><ph id="source10" dataRef="source10" equiv-text="base64:Ng=="/><ph id="source11_1" dataType="pcStart" originalData="PHBjIGlkPSJzb3VyY2UxMSIgZGF0YVJlZlN0YXJ0PSJzb3VyY2UxMSI+" dataRef="source11" equiv-text="base64:OQ=="/>Click on the "X" on the right side to exit the course.<ph id="source11_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="source11" equiv-text="base64:OQ=="/><ph id="source8_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="source8" equiv-text="base64:Mg=="/>';
+        $restored = '<pc id="source1" dataRefStart="source1"><ph id="source2" dataRef="source2"/></pc><pc id="source3" dataRefStart="source3"><pc id="source4" dataRefStart="source4">Well done!<ph id="source5" dataRef="source5"/><ph id="source6" dataRef="source6"/>You have completed the course and are now ready to demonstrate your knowledge of<ph id="source7" dataRef="source7"/>how to use Case Management.</pc></pc><pc id="source8" dataRefStart="source8"><ph id="source9" dataRef="source9"/><ph id="source10" dataRef="source10"/><pc id="source11" dataRefStart="source11">Click on the "X" on the right side to exit the course.</pc></pc>';
+
+        $dataReplacer = new DataRefReplacer($map);
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($restored, $dataReplacer->restore($expected));
+    }
 }
 
 
