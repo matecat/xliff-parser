@@ -8,6 +8,37 @@ class StringsTest extends BaseTest
 {
     /**
      * @test
+     */
+    public function can_get_the_last_character()
+    {
+        $phrase = 'Si presenta con una nuance rubino intensa e compatta dai luminosi riflessi viola.';
+
+        $this->assertEquals('.', Strings::lastChar($phrase));
+
+        $phrase = 'Si presenta con una nuance rubino intensa e compatta dai luminosi riflessi viola. ';
+
+        $this->assertEquals(' ', Strings::lastChar($phrase));
+    }
+
+    /**
+     * @test
+     * @throws \Exception
+     */
+    public function contains_function_can_discriminate_trailing_spaces()
+    {
+        $full = 'Il naso evidenzia raffinati sentori floreali di rosa canina e violetta, frutti rossi croccanti tipo ribes e fragole di bosco, dopo i quali emergono cenni gentili di grafite e liquirizia. Si presenta con una nuance rubino intensa e compatta dai luminosi riflessi viola. ';
+        $phrase = 'Si presenta con una nuance rubino intensa e compatta dai luminosi riflessi viola. ';
+
+        $this->assertTrue(Strings::contains($phrase, $full));
+
+        $full = 'Il naso evidenzia raffinati sentori floreali di rosa canina e violetta, frutti rossi croccanti tipo ribes e fragole di bosco, dopo i quali emergono cenni gentili di grafite e liquirizia. Si presenta con una nuance rubino intensa e compatta dai luminosi riflessi viola.';
+        $phrase = 'Si presenta con una nuance rubino intensa e compatta dai luminosi riflessi viola. ';
+
+        $this->assertFalse(Strings::contains($phrase, $full));
+    }
+
+    /**
+     * @test
      * @throws \Exception
      */
     public function can_detected_escaped_html_entities()

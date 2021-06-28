@@ -184,7 +184,7 @@ class XliffParserV2 extends AbstractXliffParser
 
                         // append value to 'seg-source'
                         if ($this->stringContainsMarks($extractedSource['raw-content'])) {
-                            $segSource = $this->extractContentWithMarksAndExtTags($dom, $childNode, $originalData);
+                            $segSource = $this->extractContentWithMarksAndExtTags($dom, $childNode, $extractedSource['raw-content'], $originalData);
                         } else {
                             $segSource[] = [
                                 'mid'           => count($segSource) > 0 ? count($segSource) : 0,
@@ -210,7 +210,7 @@ class XliffParserV2 extends AbstractXliffParser
 
                         // append value to 'seg-target'
                         if ($this->stringContainsMarks($extractedTarget['raw-content'])) {
-                            $segTarget = $this->extractContentWithMarksAndExtTags($dom, $childNode, $originalData);
+                            $segTarget = $this->extractContentWithMarksAndExtTags($dom, $childNode, $extractedTarget['raw-content'], $originalData);
                         } else {
                             $segTarget[] = [
                                 'mid'           => count($segTarget) > 0 ? count($segTarget) : 0,
