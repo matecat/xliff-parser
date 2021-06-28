@@ -146,13 +146,15 @@ abstract class AbstractXliffParser
     }
 
     /**
+     * Used to extract <seg-source> and <seg-target>
+     *
      * @param \DOMDocument $dom
      * @param \DOMElement  $childNode
      * @param array $originalData
      *
      * @return array
      */
-    protected function extractContentWithMarksAndExtTags(\DOMDocument $dom, \DOMElement $childNode, array $originalData = [])
+    protected function extractContentWithMarksAndExtTags(\DOMDocument $dom, \DOMElement $childNode, $originalRawContent, array $originalData = [])
     {
         $source = [];
 
@@ -177,7 +179,7 @@ abstract class AbstractXliffParser
             $sourceArray = [
                     'mid' => (isset($mid[ 1 ])) ? $mid[ 1 ] : $mi,
                     'ext-prec-tags' => ($mi == 0 ? $markers[ 0 ] : ""),
-                    'raw-content' => (isset($mark_content[ 0 ])) ? $mark_content[ 0 ] : '',
+                    'raw-content' => $this->extractRawContentPreservingTrailingSpaces($mark_content, $originalRawContent),
                     'ext-succ-tags' => (isset($mark_content[ 1 ])) ? $mark_content[ 1 ] : '',
             ];
 
@@ -192,6 +194,34 @@ abstract class AbstractXliffParser
         }
 
         return $source;
+    }
+
+    /**
+     * This function extracts raw content preserving trailing space
+     * contained in $originalRawContent
+     *
+     * @param $mark_content
+     * @param $originalRawContent
+     *
+     * @return string
+     */
+    private function extractRawContentPreservingTrailingSpaces( $mark_content, $originalRawContent)
+    {
+        if(isset($mark_content[ 0 ])){
+            $rawContent = $mark_content[ 0 ];
+
+            // if $rawContent has not a trailing space
+            if(' ' !== Strings::lastChar($rawContent)){
+                // search for string with trailing space in the $originalRawContent
+                if(Strings::contains($rawContent.' ', $originalRawContent)){
+                    $rawContent = $rawContent.' ';
+                }
+            }
+
+            return $rawContent;
+        }
+
+        return '';
     }
 
     /**

@@ -297,4 +297,16 @@ class Strings
     {
         return preg_replace('/<(.*?)>/iu', '&lt;$1&gt;', $string);
     }
+
+    /**
+     * Get the last character of a string
+     *
+     * @param $string
+     *
+     * @return false|string
+     */
+    public static function lastChar($string)
+    {
+        return substr($string, -1);
+    }
 }

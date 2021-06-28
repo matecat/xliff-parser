@@ -2,7 +2,6 @@
 
 namespace Matecat\XliffParser\XliffUtils;
 
-use Matecat\XliffParser\Utils\FlatData;
 use Matecat\XliffParser\Utils\HtmlParser;
 use Matecat\XliffParser\Utils\Strings;
 
@@ -46,13 +45,11 @@ class DataRefReplacer
         // (recursively) clean string from equiv-text eventually present
         $string = $this->cleanFromEquivText($string);
 
-        // 1. Replace <ph>|<sc>|<ec> tags
         $html = HtmlParser::parse($string);
 
+        // 1. Replace <ph>|<sc>|<ec> tags
         foreach ($html as $node){
-            if ($node->tagname === 'ph' or $node->tagname === 'sc' or $node->tagname === 'ec') {
-                $string = $this->addEquivTextToPhTag($node, $string);
-            }
+            $string = $this->recursiveAddEquivTextToPhTag($node, $string);
         }
 
         // 2. Replace <pc> tags
@@ -62,8 +59,8 @@ class DataRefReplacer
             // create a dataRefEnd map
             // (needed for correct handling of </pc> closing tags)
             $dataRefEndMap = $this->buildDataRefEndMap($html);
-            $string = self::replaceOpeningPcTags($string, $toBeEscaped);
-            $string = self::replaceClosingPcTags($string, $toBeEscaped, $dataRefEndMap);
+            $string = $this->replaceOpeningPcTags($string, $toBeEscaped);
+            $string = $this->replaceClosingPcTags($string, $toBeEscaped, $dataRefEndMap);
             $string = ($toBeEscaped) ? Strings::escapeOnlyHTMLTags($string) : $string;
         }
 
@@ -109,6 +106,85 @@ class DataRefReplacer
     }
 
     /**
+     * This function add equiv-text attribute to <ph>, <ec>, and <sc> tags.
+     *
+     * Please note that <ec> and <sc> tags are converted to <ph> tags (needed by Matecat);
+     * in this case another special attribute (dataType) is added just before equiv-text
+     *
+     * If there is no id tag, it will be copied from dataRef attribute
+     *
+     * @param object $node
+     * @param string $string
+     *
+     * @return string
+     */
+    private function recursiveAddEquivTextToPhTag( $node, $string)
+    {
+        if($node->has_children){
+            foreach ($node->inner_html as $childNode){
+                $string = $this->recursiveAddEquivTextToPhTag($childNode, $string);
+            }
+        } else {
+            if ($node->tagname === 'ph' or $node->tagname === 'sc' or $node->tagname === 'ec') {
+                if (!isset($node->attributes['dataRef'])) {
+                    return $string;
+                }
+
+                $a = $node->node;  // complete match. Eg:  <ph id="source1" dataRef="source1"/>
+                $b = $node->attributes['dataRef'];   // map identifier. Eg: source1
+
+                // if isset a value in the map calculate base64 encoded value
+                // otherwise skip
+                if (!isset($this->map[$b])) {
+                    return $string;
+                }
+
+                $value = $this->map[$b];
+                $base64EncodedValue = base64_encode($value);
+
+                if (empty($base64EncodedValue) or $base64EncodedValue === '') {
+                    return $string;
+                }
+
+                // if there is no id copy it from dataRef
+                $id = (!isset($node->attributes['id'])) ? ' id="'.$b.'" removeId="true"': '';
+
+                // introduce dataType for <ec>/<sc> tag handling
+                $dataType = ($this->isAEcOrScTag($node)) ? ' dataType="'.$node->tagname.'"' : '';
+
+                // replacement
+                $d = str_replace('/', $id.$dataType. ' equiv-text="base64:'.$base64EncodedValue.'"/', $a);
+                $a = str_replace(['<','>','&gt;', '&lt;'], '', $a);
+                $d = str_replace(['<','>','&gt;', '&lt;'], '', $d);
+
+                // convert <ec>/<sc> into <ph>
+                if($this->isAEcOrScTag($node)){
+                    $d = 'ph'.substr($d, 2);
+                    $d = trim($d);
+                }
+
+                return str_replace($a, $d, $string);
+            }
+        }
+
+        return $string;
+    }
+
+    /**
+     * @param $string
+     * @param $toBeEscaped
+     *
+     * @return bool
+     */
+    private function stringContainsPcTags($string, $toBeEscaped)
+    {
+        $regex = ($toBeEscaped) ? '/&lt;pc(.*?)&gt;/iu' : '/<pc(.*?)>/iu';
+        preg_match_all($regex, $string, $openingPcMatches);
+
+        return (isset($openingPcMatches[0]) and count($openingPcMatches[0])>0);
+    }
+
+    /**
      * Build the DataRefEndMap needed by replaceClosingPcTags function
      * (only for <pc> tags handling)
      *
@@ -143,18 +219,20 @@ class DataRefReplacer
             }
         }
 
-        if(isset($node->attributes['dataRefEnd'])){
-            $dataRefEnd = $node->attributes['dataRefEnd'];
-        } elseif(isset($node->attributes['dataRefStart'])) {
-            $dataRefEnd = $node->attributes['dataRefStart'];
-        } else {
-            $dataRefEnd = null;
-        }
+        if($node->tagname === 'pc'){
+            if(isset($node->attributes['dataRefEnd'])){
+                $dataRefEnd = $node->attributes['dataRefEnd'];
+            } elseif(isset($node->attributes['dataRefStart'])) {
+                $dataRefEnd = $node->attributes['dataRefStart'];
+            } else {
+                $dataRefEnd = null;
+            }
 
-        $dataRefEndMap[] = [
-            'id' => isset($node->attributes['id'] ) ? $node->attributes['id'] : null,
-            'dataRefEnd' => $dataRefEnd,
-        ];
+            $dataRefEndMap[] = [
+                    'id' => isset($node->attributes['id'] ) ? $node->attributes['id'] : null,
+                    'dataRefEnd' => $dataRefEnd,
+            ];
+        }
     }
 
     /**
@@ -174,84 +252,6 @@ class DataRefReplacer
                 $cleaned = preg_replace('/ equiv-text="(.*?)"/', '', $node->node);
                 $string = str_replace($node->node, $cleaned, $string);
             }
-        }
-
-        return $string;
-    }
-
-    /**
-     * This function add equiv-text attribute to <ph>, <ec>, and <sc> tags.
-     *
-     * Please note that <ec> and <sc> tags are converted to <ph> tags (needed by Matecat);
-     * in this case another special attribute (dataType) is added just before equiv-text
-     *
-     * If there is no id tag, it will be copied from dataRef attribute
-     *
-     * @param object $node
-     * @param string $string
-     *
-     * @return string
-     */
-    private function addEquivTextToPhTag( $node, $string)
-    {
-        if (!isset($node->attributes['dataRef'])) {
-            return $string;
-        }
-
-        $a = $node->node;  // complete match. Eg:  <ph id="source1" dataRef="source1"/>
-        $b = $node->attributes['dataRef'];   // map identifier. Eg: source1
-
-        // if isset a value in the map calculate base64 encoded value
-        // otherwise skip
-        if (!isset($this->map[$b])) {
-            return $string;
-        }
-
-        $value = $this->map[$b];
-        $base64EncodedValue = base64_encode($value);
-
-        if (empty($base64EncodedValue) or $base64EncodedValue === '') {
-            return $string;
-        }
-
-        // if there is no id copy it from dataRef
-        $id = (!isset($node->attributes['id'])) ? ' id="'.$b.'" removeId="true"': '';
-
-        // introduce dataType for <ec>/<sc> tag handling
-        $dataType = ($this->isAEcOrScTag($node)) ? ' dataType="'.$node->tagname.'"' : '';
-
-        // replacement
-        $d = str_replace('/', $id.$dataType. ' equiv-text="base64:'.$base64EncodedValue.'"/', $a);
-
-        $a = str_replace(['<','>','&gt;', '&lt;'], '', $a);
-        $d = str_replace(['<','>','&gt;', '&lt;'], '', $d);
-
-        // convert <ec>/<sc> into <ph>
-        if($this->isAEcOrScTag($node)){
-            $d = 'ph'.substr($d, 2);
-            $d = trim($d);
-        }
-
-        return str_replace($a, $d, $string);
-    }
-
-    /**
-     * This function converts recursively <pc> tags to <ph> tags for Matecat
-     *
-     * @param object $node
-     * @param string $string
-     * @param array  $dataRefEndMap
-     *
-     * @return string
-     */
-    private function convertPcToPhAndAddEquivText($node, $string, $dataRefEndMap = [])
-    {
-        // Proceed with conversion to <ph> only if there is at least `dataRefEnd` OR `dataRefEnd` attribute
-        if (isset($node->attributes['dataRefEnd']) or isset($node->attributes['dataRefStart'])) {
-            $toBeEscaped = Strings::isAnEscapedHTML($node->node);
-            $string = self::replaceOpeningPcTags($string, $toBeEscaped);
-            $string = self::replaceClosingPcTags($string, $toBeEscaped, $dataRefEndMap);
-            $string = ($toBeEscaped) ? Strings::escapeOnlyHTMLTags($string) : $string;
         }
 
         return $string;
@@ -340,20 +340,6 @@ class DataRefReplacer
         }
 
         return $string;
-    }
-
-    /**
-     * @param $string
-     * @param $toBeEscaped
-     *
-     * @return bool
-     */
-    private function stringContainsPcTags($string, $toBeEscaped)
-    {
-        $regex = ($toBeEscaped) ? '/&lt;pc(.*?)&gt;/iu' : '/<pc(.*?)>/iu';
-        preg_match_all($regex, $string, $openingPcMatches);
-
-        return (isset($openingPcMatches[0]) and count($openingPcMatches[0])>0);
     }
 
     /**
