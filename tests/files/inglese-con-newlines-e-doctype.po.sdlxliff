@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:its="http://www.w3.org/2005/11/its" xmlns:itsxlf="http://www.w3.org/ns/its-xliff/" xmlns:okp="okapi-framework:xliff-extensions" its:version="2.0" version="1.2">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:its="http://www.w3.org/2005/11/its" its:version="2.0" version="1.2">
 <file datatype="x-po" filter="com.matecat.filters.basefilters.DefaultFilter" original="inglese-con-newlines-e-doctype.po" source-language="it-IT" target-language="en-US" tool-id="matecat-converter 1.3.1-SNAPSHOT"><header><reference><internal-file form="base64">bXNnaWQgIiIKbXNnc3RyICIiCiJQcm9qZWN0LUlkLVZlcnNpb246IGxhbmdpZnkgdHJhbnNsYXRpb25cbiIKIlBPVC1DcmVhdGlvbi1EYXRlOiAyMDIwLTA4LTI0IDEzOjA4KzAyMDBcbiIKIk1JTUUt
 VmVyc2lvbjogMS4wXG4iCiJDb250ZW50LVR5cGU6IHRleHQvcGxhaW47IGNoYXJzZXQ9VVRGLThcbiIKIkNvbnRlbnQtVHJhbnNmZXItRW5jb2Rpbmc6IDhiaXRcbiIKIlgtR2VuZXJhdG9yOiBsYW5n
 aWZ5XG4iCiJQbHVyYWwtRm9ybXM6IG5wbHVyYWxzPTI7IHBsdXJhbD0obiAhPSAxKTtcbiIKIkxhbmd1YWdlOiBDaGluZXNlIChUcmFkaXRpb25hbClcbiIKCm1zZ2lkICJ7JSBjYXB0dXJlIGVtYWls

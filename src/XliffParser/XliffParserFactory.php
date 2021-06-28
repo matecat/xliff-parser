@@ -2,7 +2,6 @@
 
 namespace Matecat\XliffParser\XliffParser;
 
-use Matecat\XliffParser\XliffUtils\XliffVersionDetector;
 use Psr\Log\LoggerInterface;
 
 class XliffParserFactory

@@ -3,7 +3,7 @@
        xmlns="urn:oasis:names:tc:xliff:document:1.2"
        xmlns:okp="okapi-framework:xliff-extensions"
        xmlns:its="http://www.w3.org/2005/11/its"
-       xmlns:itsxlf="http://www.w3.org/ns/its-xliff/" its:version="2.0">
+       its:version="2.0">
     <file original="word/document.xml" source-language="en" target-language="id" datatype="x-undefined" okp:inputEncoding="UTF-8">
         <body>
             <trans-unit id="NFDBB2FA9-tu1" xml:space="preserve">
