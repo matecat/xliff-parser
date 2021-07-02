@@ -205,7 +205,7 @@ abstract class AbstractXliffParser
      *
      * @return string
      */
-    private function extractRawContentPreservingTrailingSpaces( $mark_content, $originalRawContent)
+    private function extractRawContentPreservingTrailingSpaces( $mark_content, &$originalRawContent)
     {
         if(isset($mark_content[ 0 ])){
             $rawContent = $mark_content[ 0 ];
@@ -214,6 +214,9 @@ abstract class AbstractXliffParser
             if(' ' !== Strings::lastChar($rawContent)){
                 // search for string with trailing space in the $originalRawContent
                 if(Strings::contains($rawContent.' ', $originalRawContent)){
+                    // remove the first match from $originalRawContent
+                    $regex = '/'.str_replace("/","\/", preg_quote(strip_tags($rawContent))).'/iu';
+                    $originalRawContent = preg_replace($regex, '', $originalRawContent, 1);
                     $rawContent = $rawContent.' ';
                 }
             }
