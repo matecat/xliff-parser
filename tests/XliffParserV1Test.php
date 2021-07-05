@@ -9,6 +9,22 @@ class XliffParserV1Test extends BaseTest
     /**
      * @test
      */
+    public function can_preserve_correctly_trailing_spaces_in_source()
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('spazi.sdlxliff'));
+
+        $segSource = $parsed['files'][1]['trans-units'][1]['seg-source'];
+
+        $this->assertEquals('“Sto attraversando la piazza silenziosa. ', $segSource[0]['raw-content']);
+        $this->assertEquals('Il lago giace calmo e sereno. ', $segSource[1]['raw-content']);
+        $this->assertEquals('Le bianche case pallidamente risplendono sulla collina. ', $segSource[2]['raw-content']);
+        $this->assertEquals('Gatti piccoli e grossi attraversano il mio cammino.” ', $segSource[3]['raw-content']);
+        $this->assertEquals('Marianne Werefkin ', $segSource[4]['raw-content']);
+    }
+
+    /**
+     * @test
+     */
     public function parses_xliff_with_multiple_files()
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('calibre.docx.xliff'));
