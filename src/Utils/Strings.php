@@ -309,4 +309,34 @@ class Strings
     {
         return substr($string, -1);
     }
+
+    /**
+     * @param int $segment
+     *
+     * @return int
+     */
+    public static function getTheNumberOfTrailingSpaces($segment)
+    {
+        $number = 0;
+
+        return self::recursiveIncrementNumberOfTrailingSpaces($segment, $number);
+    }
+
+    /**
+     * @param string $segment
+     * @param int $number
+     *
+     * @return mixed
+     */
+    private static function recursiveIncrementNumberOfTrailingSpaces( $segment, &$number)
+    {
+        if(self::lastChar($segment) === ' '){
+            $number++;
+            $segment = substr($segment, 0, -1);
+
+            return self::recursiveIncrementNumberOfTrailingSpaces($segment, $number);
+        }
+
+        return $number;
+    }
 }

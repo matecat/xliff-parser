@@ -8177,12 +8177,7 @@
                         </g>
                     </source>
                     <seg-source>
-                        <g id="671">
-                            <mrk mtype="seg" mid="48">Ciao.</mrk>
-                            <mrk mtype="seg" mid="49">Ciao.</mrk>
-                            <mrk mtype="seg" mid="50">Ciao.</mrk>
-                            <mrk mtype="seg" mid="51">Ciao.</mrk>
-                         </g>
+                        <g id="671"><mrk mtype="seg" mid="48">Ciao.</mrk> <mrk mtype="seg" mid="49">Ciao.</mrk> <mrk mtype="seg" mid="50">Ciao.</mrk> <mrk mtype="seg" mid="51">Ciao.</mrk></g>
                         <g id="770">
                             <mrk mtype="seg" mid="55">Tra le più famose, la
                                 <g id="776">Sonata K. 380</g> è quella che più di tutte si fonde con questo vino.

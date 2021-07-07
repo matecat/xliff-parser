@@ -7,17 +7,17 @@ use Psr\Log\LoggerInterface;
 class XliffParserFactory
 {
     /**
-     * @param $xliffContent
+     * @param int                  $xliffVersion
+     * @param string|null          $xliffProprietary
+     * @param LoggerInterface|null $logger
      *
-     * @return AbstractXliffParser
-     * @throws \Matecat\XliffParser\Exception\NotSupportedVersionException
-     * @throws \Matecat\XliffParser\Exception\NotValidFileException
+     * @return mixed
      */
-    public static function getInstance($version, LoggerInterface $logger = null)
+    public static function getInstance($xliffVersion, $xliffProprietary = null, LoggerInterface $logger = null)
     {
-        $parserClass = 'Matecat\\XliffParser\\XliffParser\\XliffParserV' . $version;
+        $parserClass = 'Matecat\\XliffParser\\XliffParser\\XliffParserV' . $xliffVersion;
 
         /** @var AbstractXliffParser $parser */
-        return new $parserClass($version, $logger);
+        return new $parserClass($xliffVersion, $xliffProprietary, $logger);
     }
 }

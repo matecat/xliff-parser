@@ -15,20 +15,27 @@ abstract class AbstractXliffParser
     protected $logger;
 
     /**
+     * @var string|null
+     */
+    protected $proprietary;
+
+    /**
      * @var int
      */
     protected $version;
 
     /**
-     * XliffParser constructor.
+     * AbstractXliffParser constructor.
      *
-     * @param int             $version
-     * @param LoggerInterface $logger
+     * @param int                  $version
+     * @param string|null          $proprietary
+     * @param LoggerInterface|null $logger
      */
-    public function __construct($version, LoggerInterface $logger = null)
+    public function __construct($version, $proprietary = null, LoggerInterface $logger = null)
     {
         $this->version = $version;
         $this->logger = $logger;
+        $this->proprietary = $proprietary;
     }
 
     /**
@@ -170,6 +177,22 @@ abstract class AbstractXliffParser
 
             preg_match('|mid\s?=\s?["\'](.*?)["\']|si', $markers[ $mi + 1 ], $mid);
 
+            // if it's a Trados file
+            // the trailing spaces after </mrk>
+            // are meaningful
+            $trailingSpaces = '';
+            if($this->proprietary === 'trados'){
+
+                // count the trailing after </mrk>
+                preg_match_all('/<\/mrk>[\s]+/iu', $markers[ $mi + 1 ], $trailingSpacesMatches);
+
+                if(isset($trailingSpacesMatches[0]) and count($trailingSpacesMatches[0]) > 0){
+                    foreach ($trailingSpacesMatches[0] as $match){
+                        $trailingSpaces = str_replace('</mrk>', '', $match);
+                    }
+                }
+            }
+
             //re-build the mrk tag after the split
             $originalMark = trim('<mrk ' . $markers[ $mi + 1 ]);
 
@@ -177,10 +200,10 @@ abstract class AbstractXliffParser
             $mark_content = preg_split('#</mrk>#si', $mark_string);
 
             $sourceArray = [
-                    'mid' => (isset($mid[ 1 ])) ? $mid[ 1 ] : $mi,
-                    'ext-prec-tags' => ($mi == 0 ? $markers[ 0 ] : ""),
-                    'raw-content' => $this->extractRawContentPreservingTrailingSpaces($mark_content, $originalRawContent),
-                    'ext-succ-tags' => (isset($mark_content[ 1 ])) ? $mark_content[ 1 ] : '',
+                'mid' => (isset($mid[ 1 ])) ? $mid[ 1 ] : $mi,
+                'ext-prec-tags' => ($mi == 0 ? $markers[ 0 ] : ""),
+                'raw-content' => (isset($mark_content[ 0 ])) ? $mark_content[ 0 ].$trailingSpaces : '',
+                'ext-succ-tags' => (isset($mark_content[ 1 ])) ? $mark_content[ 1 ] : '',
             ];
 
             if (!empty($originalData)) {
@@ -194,37 +217,6 @@ abstract class AbstractXliffParser
         }
 
         return $source;
-    }
-
-    /**
-     * This function extracts raw content preserving trailing space
-     * contained in $originalRawContent
-     *
-     * @param $mark_content
-     * @param $originalRawContent
-     *
-     * @return string
-     */
-    private function extractRawContentPreservingTrailingSpaces( $mark_content, &$originalRawContent)
-    {
-        if(isset($mark_content[ 0 ])){
-            $rawContent = $mark_content[ 0 ];
-
-            // if $rawContent has not a trailing space
-            if(' ' !== Strings::lastChar($rawContent)){
-                // search for string with trailing space in the $originalRawContent
-                if(Strings::contains($rawContent.' ', $originalRawContent)){
-                    // remove the first match from $originalRawContent
-                    $regex = '/'.str_replace("/","\/", preg_quote(strip_tags($rawContent))).'/iu';
-                    $originalRawContent = preg_replace($regex, '', $originalRawContent, 1);
-                    $rawContent = $rawContent.' ';
-                }
-            }
-
-            return $rawContent;
-        }
-
-        return '';
     }
 
     /**

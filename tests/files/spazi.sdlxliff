@@ -13014,18 +13014,7 @@ ZG9jeFBLBQYAAAAAAQABAD8AAAAS1AIAAAA=
 					<sdl:cxt id="5"/>
 				</sdl:cxts>
 				<trans-unit id="323debc9-54aa-4c38-ba78-242ec5006a11">
-					<source> “Sto attraversando la piazza silenziosa. Il lago giace calmo e sereno.  Le bianche case pallidamente risplendono sulla collina. Gatti piccoli e grossi attraversano il mio cammino.” 
-						<g id="90">Marianne Werefkin  </g>
-					</source>
-					<seg-source>
-						<mrk mtype="seg" mid="117">“Sto attraversando la piazza silenziosa.</mrk>
-						<mrk mtype="seg" mid="118">Il lago giace calmo e sereno.</mrk>
-						<mrk mtype="seg" mid="119">Le bianche case pallidamente risplendono sulla collina.</mrk>
-						<mrk mtype="seg" mid="120">Gatti piccoli e grossi attraversano il mio cammino.”</mrk>
-						<g id="90">
-							<mrk mtype="seg" mid="121">Marianne Werefkin</mrk>
-						</g>
-					</seg-source>
+					<source> “Sto attraversando la piazza silenziosa. Il lago giace calmo e sereno.  Le bianche case pallidamente risplendono sulla collina. Gatti piccoli e grossi attraversano il mio cammino.” <g id="90">Marianne Werefkin  </g></source><seg-source> <mrk mtype="seg" mid="117">“Sto attraversando la piazza silenziosa.</mrk> <mrk mtype="seg" mid="118">Il lago giace calmo e sereno.</mrk>  <mrk mtype="seg" mid="119">Le bianche case pallidamente risplendono sulla collina.</mrk> <mrk mtype="seg" mid="120">Gatti piccoli e grossi attraversano il mio cammino.”</mrk> <g id="90"><mrk mtype="seg" mid="121">Marianne Werefkin</mrk>  </g></seg-source>
 					<target>
 						<mrk mtype="seg" mid="117"/>
 						<mrk mtype="seg" mid="118"/>

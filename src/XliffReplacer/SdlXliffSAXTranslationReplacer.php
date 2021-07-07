@@ -2,6 +2,8 @@
 
 namespace Matecat\XliffParser\XliffReplacer;
 
+use Matecat\XliffParser\Utils\Strings;
+
 class SdlXliffSAXTranslationReplacer extends XliffSAXTranslationReplacer
 {
     protected $markerPos = "";
@@ -139,6 +141,51 @@ class SdlXliffSAXTranslationReplacer extends XliffSAXTranslationReplacer
                 $this->postProcAndFlush($this->outputFP, $tag);
             }
         }
+    }
+
+    /**
+     * prepare segment tagging for xliff insertion
+     *
+     * @param array  $seg
+     * @param string $transUnitTranslation
+     *
+     * @return string
+     */
+    protected function prepareTranslation($seg, $transUnitTranslation = "")
+    {
+        $endTags = "";
+
+        $segment     = Strings::removeDangerousChars($seg [ 'segment' ]);
+        $translation = Strings::removeDangerousChars($seg [ 'translation' ]);
+        $dataRefMap  = (isset($seg['data_ref_map']) and $seg['data_ref_map'] !== null) ? Strings::jsonToArray($seg['data_ref_map']) : [];
+
+        if (is_null($seg [ 'translation' ]) or $seg [ 'translation' ] == '') {
+            $translation = $segment;
+        } else {
+            if ($this->callback) {
+                if ($this->callback->thereAreErrors($segment, $translation, $dataRefMap)) {
+                    $translation = '|||UNTRANSLATED_CONTENT_START|||' . $segment . '|||UNTRANSLATED_CONTENT_END|||';
+                }
+            }
+        }
+
+        // calculate the number of trailing spaces
+        $trailingSpaces = '';
+        for ($s=0; $s < Strings::getTheNumberOfTrailingSpaces($translation); $s++){
+            $trailingSpaces .= ' ';
+        }
+
+        if ($seg[ 'mrk_id' ] !== null and $seg[ 'mrk_id' ] != '') {
+            if ($this->targetLang === 'ja-JP') {
+                $seg[ 'mrk_succ_tags' ] = ltrim($seg[ 'mrk_succ_tags' ]);
+            }
+
+            $translation = "<mrk mid=\"" . $seg[ 'mrk_id' ] . "\" mtype=\"seg\">" . $seg[ 'mrk_prev_tags' ] . rtrim($translation) . $seg[ 'mrk_succ_tags' ] . "</mrk>" . $trailingSpaces;
+        }
+
+        $transUnitTranslation .= $seg[ 'prev_tags' ] . $translation . $endTags . $seg[ 'succ_tags' ];
+
+        return $transUnitTranslation;
     }
 
     /**

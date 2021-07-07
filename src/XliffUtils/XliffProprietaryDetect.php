@@ -16,6 +16,19 @@ class XliffProprietaryDetect
     protected static $fileType = [];
 
     /**
+     * @param string $xliffContent
+     *
+     * @return array
+     */
+    public static function getInfoFromXliffContent($xliffContent)
+    {
+        self::reset();
+        $tmp = self::getFirst1024CharsFromXliff($xliffContent, null);
+
+        return self::getInfoFromTmp($tmp);
+    }
+
+    /**
      * @param $fullPathToFile
      *
      * @return array
@@ -26,6 +39,16 @@ class XliffProprietaryDetect
         $tmp = self::getFirst1024CharsFromXliff(null, $fullPathToFile);
         self::$fileType['info'] = Files::pathInfo($fullPathToFile);
 
+        return self::getInfoFromTmp($tmp);
+    }
+
+    /**
+     * @param $tmp
+     *
+     * @return array
+     */
+    private static function getInfoFromTmp( $tmp)
+    {
         try {
             self::checkVersion($tmp);
         } catch (\Exception $e) {
