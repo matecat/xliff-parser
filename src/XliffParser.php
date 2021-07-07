@@ -8,6 +8,7 @@ use Matecat\XliffParser\Utils\Strings;
 use Matecat\XliffParser\XliffParser\XliffParserFactory;
 use Matecat\XliffParser\XliffReplacer\XliffReplacerCallbackInterface;
 use Matecat\XliffParser\XliffReplacer\XliffReplacerFactory;
+use Matecat\XliffParser\XliffUtils\XliffProprietaryDetect;
 use Matecat\XliffParser\XliffUtils\XliffVersionDetector;
 use Matecat\XliffParser\XliffUtils\XmlParser;
 use Psr\Log\LoggerInterface;
@@ -64,17 +65,19 @@ class XliffParser
         try {
             $xliff = [];
             $xliffContent = self::forceUft8Encoding($xliffContent, $xliff);
-            $version = XliffVersionDetector::detect($xliffContent);
+            $xliffVersion = XliffVersionDetector::detect($xliffContent);
+            $info = XliffProprietaryDetect::getInfoFromXliffContent($xliffContent);
 
-            if($version === 1){
+            if($xliffVersion === 1){
                 $xliffContent = self::removeInternalFileTagFromContent($xliffContent, $xliff);
             }
 
-            if($version === 2){
+            if($xliffVersion === 2){
                 $xliffContent = self::escapeDataInOriginalMap($xliffContent);
             }
 
-            $parser = XliffParserFactory::getInstance($version, $this->logger);
+            $xliffProprietary = (isset($info['proprietary_short_name']) and null !== $info['proprietary_short_name']) ? $info['proprietary_short_name'] : null;
+            $parser = XliffParserFactory::getInstance($xliffVersion, $xliffProprietary, $this->logger);
             $dom = XmlParser::parse($xliffContent);
 
             return $parser->parse($dom, $xliff);

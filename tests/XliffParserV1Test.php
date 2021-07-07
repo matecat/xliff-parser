@@ -9,6 +9,22 @@ class XliffParserV1Test extends BaseTest
     /**
      * @test
      */
+    public function can_preserve_correctly_trailing_spaces_in_source()
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('spazi.sdlxliff'));
+
+        $segSource = $parsed['files'][1]['trans-units'][1]['seg-source'];
+
+        $this->assertEquals('“Sto attraversando la piazza silenziosa. ', $segSource[0]['raw-content']);
+        $this->assertEquals('Il lago giace calmo e sereno.  ', $segSource[1]['raw-content']);
+        $this->assertEquals('Le bianche case pallidamente risplendono sulla collina. ', $segSource[2]['raw-content']);
+        $this->assertEquals('Gatti piccoli e grossi attraversano il mio cammino.” ', $segSource[3]['raw-content']);
+        $this->assertEquals('Marianne Werefkin  ', $segSource[4]['raw-content']);
+    }
+
+    /**
+     * @test
+     */
     public function parses_xliff_with_multiple_files()
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('calibre.docx.xliff'));
@@ -499,5 +515,19 @@ class XliffParserV1Test extends BaseTest
         $this->assertEquals('Il segreto dell’originalità che contrassegna i vini della Fattoria La Valentina è l\'unicità dei terroir: il microclima e i vitigni ormai in simbiosi con il terreno restituiscono vini dal carattere marcato e unico. ', $transUnit['seg-source'][4]['raw-content']);
         $this->assertEquals('Anche Il carattere delle sonate di Domenico Scarlatti è molto personale, a volte "sperimentale" sul piano tecnico: nonostante il suo stile brillante si esplichi in una forma musicale semplice, esprime una varietà e una ricchezza di invenzione sorprendenti. ', $transUnit['seg-source'][5]['raw-content']);
         $this->assertEquals('Quasi tutte le sue sonate, infatti, sono strutturate in un solo movimento, che tecnicamente viene chiamato "Monotematico e bipartito", asservito ad un tempo di danza.', $transUnit['seg-source'][6]['raw-content']);
+    }
+
+    /**
+     * @test
+     */
+    public function can_preserve_trailing_spaces_from_sdlxliff_with_duplicated_content()
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('trailing_space_duplicated.sdlxliff'));
+        $transUnit = $parsed[ 'files' ][ 1 ][ 'trans-units' ][23];
+
+        $this->assertEquals('Ciao. ', $transUnit['seg-source'][0]['raw-content']);
+        $this->assertEquals('Ciao. ', $transUnit['seg-source'][1]['raw-content']);
+        $this->assertEquals('Ciao. ', $transUnit['seg-source'][2]['raw-content']);
+        $this->assertEquals('Ciao.', $transUnit['seg-source'][3]['raw-content']);
     }
 }

@@ -191,4 +191,21 @@ class StringsTest extends BaseTest
         $this->assertFalse(Strings::isAValidUuid($not_valid_uuid));
         $this->assertTrue(Strings::isAValidUuid($uuid));
     }
+
+    /**
+     * @test
+     * @throws \Exception
+     */
+    public function get_the_number_of_trailing_spaces()
+    {
+        $string = "La casa in campagna è bella  ";
+        $string2 = "Dante Alighieri   ";
+        $string3 = "Questa stringa non contiente spazi alla fine della frase.";
+        $string4 = "Questa stringa non contiente uno spazio alla fine della frase. ";
+
+        $this->assertEquals(Strings::getTheNumberOfTrailingSpaces($string), 2);
+        $this->assertEquals(Strings::getTheNumberOfTrailingSpaces($string2), 3);
+        $this->assertEquals(Strings::getTheNumberOfTrailingSpaces($string3), 0);
+        $this->assertEquals(Strings::getTheNumberOfTrailingSpaces($string4), 1);
+    }
 }

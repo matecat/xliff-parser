@@ -511,7 +511,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
      *
      * @return string
      */
-    private function prepareTranslation($seg, $transUnitTranslation = "")
+    protected function prepareTranslation($seg, $transUnitTranslation = "")
     {
         $endTags = "";
 
