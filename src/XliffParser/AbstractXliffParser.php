@@ -17,25 +17,25 @@ abstract class AbstractXliffParser
     /**
      * @var string|null
      */
-    protected $proprietary;
+    protected $xliffProprietary;
 
     /**
      * @var int
      */
-    protected $version;
+    protected $xliffVersion;
 
     /**
      * AbstractXliffParser constructor.
      *
-     * @param int                  $version
-     * @param string|null          $proprietary
+     * @param int                  $xliffVersion
+     * @param string|null          $xliffProprietary
      * @param LoggerInterface|null $logger
      */
-    public function __construct($version, $proprietary = null, LoggerInterface $logger = null)
+    public function __construct( $xliffVersion, $xliffProprietary = null, LoggerInterface $logger = null)
     {
-        $this->version = $version;
-        $this->logger = $logger;
-        $this->proprietary = $proprietary;
+        $this->xliffVersion = $xliffVersion;
+        $this->logger       = $logger;
+        $this->xliffProprietary = $xliffProprietary;
     }
 
     /**
@@ -43,7 +43,7 @@ abstract class AbstractXliffParser
      */
     protected function getTuTagName()
     {
-        return ($this->version === 1) ? 'trans-unit' : 'unit';
+        return ($this->xliffVersion === 1) ? 'trans-unit' : 'unit';
     }
 
     /**
@@ -177,13 +177,10 @@ abstract class AbstractXliffParser
 
             preg_match('|mid\s?=\s?["\'](.*?)["\']|si', $markers[ $mi + 1 ], $mid);
 
-            // if it's a Trados file
-            // the trailing spaces after </mrk>
-            // are meaningful
+            // if it's a Trados file the trailing spaces after </mrk> are meaningful
+            // so we add them to
             $trailingSpaces = '';
-            if($this->proprietary === 'trados'){
-
-                // count the trailing after </mrk>
+            if($this->xliffProprietary === 'trados'){
                 preg_match_all('/<\/mrk>[\s]+/iu', $markers[ $mi + 1 ], $trailingSpacesMatches);
 
                 if(isset($trailingSpacesMatches[0]) and count($trailingSpacesMatches[0]) > 0){
