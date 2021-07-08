@@ -169,7 +169,8 @@ class SdlXliffSAXTranslationReplacer extends XliffSAXTranslationReplacer
             }
         }
 
-        // calculate the number of trailing spaces
+        // for Trados the trailing spaces after </mrk> are meaningful
+        // so we trim the translation from Matecat DB and add them after </mrk>
         $trailingSpaces = '';
         for ($s=0; $s < Strings::getTheNumberOfTrailingSpaces($translation); $s++){
             $trailingSpaces .= ' ';
@@ -183,7 +184,8 @@ class SdlXliffSAXTranslationReplacer extends XliffSAXTranslationReplacer
             $translation = "<mrk mid=\"" . $seg[ 'mrk_id' ] . "\" mtype=\"seg\">" . $seg[ 'mrk_prev_tags' ] . rtrim($translation) . $seg[ 'mrk_succ_tags' ] . "</mrk>" . $trailingSpaces;
         }
 
-        $transUnitTranslation .= $seg[ 'prev_tags' ] . $translation . $endTags . $seg[ 'succ_tags' ];
+        // we need to trim succ_tags here because we already added the trailing spaces after </mrk>
+        $transUnitTranslation .= $seg[ 'prev_tags' ] . $translation . $endTags . ltrim($seg[ 'succ_tags' ]);
 
         return $transUnitTranslation;
     }

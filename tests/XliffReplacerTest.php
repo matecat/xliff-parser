@@ -430,31 +430,6 @@ class XliffReplacerTest extends BaseTest
 
         $this->assertEquals($expected, $output['files'][1]['trans-units'][1]['target']['raw-content']);
     }
-
-    /**
-     * @param $data
-     *
-     * @return array
-     */
-    private function getData($data)
-    {
-        $transUnits = [];
-
-        foreach ($data as $i => $k) {
-            //create a secondary indexing mechanism on segments' array; this will be useful
-            //prepend a string so non-trans unit id ( ex: numerical ) are not overwritten
-            $internalId = $k[ 'internal_id' ];
-
-            $transUnits[ $internalId ] [] = $i;
-
-            $data[ 'matecat|' . $internalId ] [] = $i;
-        }
-
-        return [
-            'data' => $data,
-            'transUnits' => $transUnits,
-        ];
-    }
 }
 
 class RealXliffReplacerCallback implements XliffReplacerCallbackInterface
