@@ -84,4 +84,29 @@ abstract class BaseTest extends TestCase
 
         return $transUnits;
     }
+
+    /**
+     * @param $data
+     *
+     * @return array
+     */
+    protected function getData($data)
+    {
+        $transUnits = [];
+
+        foreach ($data as $i => $k) {
+            //create a secondary indexing mechanism on segments' array; this will be useful
+            //prepend a string so non-trans unit id ( ex: numerical ) are not overwritten
+            $internalId = $k[ 'internal_id' ];
+
+            $transUnits[ $internalId ] [] = $i;
+
+            $data[ 'matecat|' . $internalId ] [] = $i;
+        }
+
+        return [
+                'data' => $data,
+                'transUnits' => $transUnits,
+        ];
+    }
 }
