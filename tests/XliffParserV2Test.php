@@ -9,6 +9,17 @@ class XliffParserV2Test extends BaseTest
     /**
      * @test
      */
+    public function can_parse_xliff_v2_with_char_limit()
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('char-limit.xliff'));
+        $attr  = $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'attr' ];
+
+        $this->assertEquals($attr['sizeRestriction'], 55);
+    }
+
+    /**
+     * @test
+     */
     public function can_parse_xliff_v2_with_encoded_g_tags_in_originalData()
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('xliff_20_with_g_tags_in_dataref.xlf'));

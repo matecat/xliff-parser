@@ -269,6 +269,11 @@ class XliffParserV2 extends AbstractXliffParser
             $metadata[ 'tGroupEnd' ] = $transUnit->attributes->getNamedItem('tGroupEnd')->nodeValue;
         }
 
+        // sizeRestriction
+        if (null !== $transUnit->attributes->getNamedItem('sizeRestriction')) {
+            $metadata[ 'sizeRestriction' ] = (int)$transUnit->attributes->getNamedItem('sizeRestriction')->nodeValue;
+        }
+
         return $metadata;
     }
 
