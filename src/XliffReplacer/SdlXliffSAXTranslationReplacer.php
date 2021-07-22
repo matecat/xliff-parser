@@ -17,8 +17,9 @@ class SdlXliffSAXTranslationReplacer extends XliffSAXTranslationReplacer
         if ($this->tuTagName === $name) {
             $this->inTU = true;
 
-            //get id
-            $this->currentTransUnitId = $attr[ 'id' ];
+            // get id
+            // trim to first 100 characters because this is the limit on Matecat's DB
+            $this->currentTransUnitId = substr($attr[ 'id' ], 0, 100);
 
             // current 'translate' attribute of the current trans-unit
             $this->currentTransUnitTranslate = isset($attr[ 'translate' ]) ? $attr[ 'translate' ] : 'yes';

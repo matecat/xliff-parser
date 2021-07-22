@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
+    <file original="Address Tracker Widget/en.lproj/InfoPlist.strings" datatype="plaintext" source-language="en" target-language="it-IT">
+        <header>
+            <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5"></tool></header>
+        <body>
+            <trans-unit id="CFBundleDisplayName" xml:space="preserve">
+        <source>Address Tracker Widget</source>
+                <target xml:lang="it-IT">Widget Tracker indirizzi</target>
+                <note>Bundle display name</note>
+      </trans-unit>
+            <trans-unit id="CFBundleName" xml:space="preserve">
+        <source>Address Tracker WidgetExtension</source>
+                <target xml:lang="it-IT">Estensione Widget Tracker indirizzo</target>
+                <note>Bundle name</note>
+      </trans-unit>
+        </body>
+    </file>
+    <file original="Address Tracker Widget/en.lproj/Localizable.strings" source-language="en" target-language="it-IT" datatype="plaintext">
+        <header>
+            <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="12.5"></tool></header>
+        <body>
+            <trans-unit id="Periodic notification trigger will be set to minimum one hour intervals. Please note that there is no guarantee it will trigger as it is decided by the system and influenced by multiple power management factors. You can add up to 5 accounts." xml:space="preserve">
+        <source>Periodic notification trigger will be set to minimum one hour intervals. Please note that there is no guarantee it will trigger as it is decided by the system and influenced by multiple power management factors. You can add up to 5 accounts.</source>
+                <target xml:lang="it-IT">Periodic notification trigger will be set to minimum one hour intervals. Please note that there is no guarantee it will trigger as it is decided by the system and influenced by multiple power management factors. You can add up to 5 accounts.</target>
+                <note>No comment provided by engineer.</note>
+      </trans-unit>
+        </body>
+    </file>
+</xliff>
