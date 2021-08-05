@@ -12,7 +12,7 @@ $parser = new XliffParser();
 $parsed = $parser->xliffToArray('path/to/your/file.xliff');
 ```
 
-In case of invalid or not supported xliff file an empty array will be returned.
+In case of invalid or not supported xliff file an Exception is thrown.
 
 ### Segmentation differences 
 
