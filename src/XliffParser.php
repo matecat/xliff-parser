@@ -54,36 +54,35 @@ class XliffParser
 
     /**
      * Parse a xliff file to array
-     * In case of some failure an empty array will be returned
      *
-     * @param string $xliffContent
+     * @param $xliffContent
      *
-     * @return array
+     * @return mixed
+     * @throws Exception\InvalidXmlException
+     * @throws Exception\NotSupportedVersionException
+     * @throws Exception\NotValidFileException
+     * @throws Exception\XmlParsingException
      */
     public function xliffToArray($xliffContent)
     {
-        try {
-            $xliff = [];
-            $xliffContent = self::forceUft8Encoding($xliffContent, $xliff);
-            $xliffVersion = XliffVersionDetector::detect($xliffContent);
-            $info = XliffProprietaryDetect::getInfoFromXliffContent($xliffContent);
+        $xliff = [];
+        $xliffContent = self::forceUft8Encoding($xliffContent, $xliff);
+        $xliffVersion = XliffVersionDetector::detect($xliffContent);
+        $info = XliffProprietaryDetect::getInfoFromXliffContent($xliffContent);
 
-            if($xliffVersion === 1){
-                $xliffContent = self::removeInternalFileTagFromContent($xliffContent, $xliff);
-            }
-
-            if($xliffVersion === 2){
-                $xliffContent = self::escapeDataInOriginalMap($xliffContent);
-            }
-
-            $xliffProprietary = (isset($info['proprietary_short_name']) and null !== $info['proprietary_short_name']) ? $info['proprietary_short_name'] : null;
-            $parser = XliffParserFactory::getInstance($xliffVersion, $xliffProprietary, $this->logger);
-            $dom = XmlParser::parse($xliffContent);
-
-            return $parser->parse($dom, $xliff);
-        } catch (\Exception $exception) {
-            return [];
+        if($xliffVersion === 1){
+            $xliffContent = self::removeInternalFileTagFromContent($xliffContent, $xliff);
         }
+
+        if($xliffVersion === 2){
+            $xliffContent = self::escapeDataInOriginalMap($xliffContent);
+        }
+
+        $xliffProprietary = (isset($info['proprietary_short_name']) and null !== $info['proprietary_short_name']) ? $info['proprietary_short_name'] : null;
+        $parser = XliffParserFactory::getInstance($xliffVersion, $xliffProprietary, $this->logger);
+        $dom = XmlParser::parse($xliffContent);
+
+        return $parser->parse($dom, $xliff);
     }
 
     /**

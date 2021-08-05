@@ -5,6 +5,7 @@ namespace Matecat\XliffParser\XliffParser;
 use Matecat\XliffParser\Constants\Placeholder;
 use Matecat\XliffParser\Exception\DuplicateTransUnitIdInXliff;
 use Matecat\XliffParser\Exception\NotFoundIdInTransUnit;
+use Matecat\XliffParser\Exception\SegmentIdTooLongException;
 use Matecat\XliffParser\Utils\Strings;
 use Matecat\XliffParser\XliffUtils\DataRefReplacer;
 
@@ -251,6 +252,11 @@ class XliffParserV2 extends AbstractXliffParser
         }
 
         $id = $transUnit->attributes->getNamedItem('id')->nodeValue;
+
+        if(strlen($id) > 100){
+            throw new SegmentIdTooLongException('Segment-id too long. Max 100 characters allowed', 400);
+        }
+
         $transUnitIdArrayForUniquenessCheck[] = $id;
         $metadata[ 'id' ] = $id;
 
