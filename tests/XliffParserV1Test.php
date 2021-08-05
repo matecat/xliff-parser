@@ -2,10 +2,33 @@
 
 namespace Matecat\XliffParser\Tests;
 
+use Matecat\XliffParser\Exception\SegmentIdTooLongException;
 use Matecat\XliffParser\XliffParser;
 
 class XliffParserV1Test extends BaseTest
 {
+    /**
+     * @test
+     */
+    public function can_raise_Exception_if_there_are_segments_id_too_long()
+    {
+        try {
+           $parse =  (new XliffParser())->xliffToArray($this->getTestFile('long-segment-id.xliff'));
+        } catch (SegmentIdTooLongException $e) {
+            $this->assertEquals($e->getMessage(), 'Segment-id too long. Max 100 characters allowed');
+        }
+    }
+
+    /**
+     * @test
+     */
+    public function can_parse_a_xliff_from_jsont()
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('from_jsont.xliff'));
+
+        $this->assertCount(7, $parsed['files']);
+    }
+
     /**
      * @test
      */

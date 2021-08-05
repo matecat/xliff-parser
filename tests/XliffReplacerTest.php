@@ -11,69 +11,6 @@ class XliffReplacerTest extends BaseTest
     /**
      * @test
      */
-    public function can_replace_a_xliff_12_with_very_long_segment_id()
-    {
-        $data = $this->getData([
-            [
-                'sid' => 314,
-                'segment' => 'Address Tracker Widget',
-                'internal_id' => 'CFBundleDisplayName',
-                'mrk_id' => '',
-                'prev_tags' => '',
-                'succ_tags' => '',
-                'mrk_prev_tags' => '',
-                'mrk_succ_tags' => '',
-                'translation' => 'Bla bla bla',
-                'status' => TranslationStatus::STATUS_TRANSLATED,
-                'eq_word_count' => 1,
-                'raw_word_count' => 1,
-            ],
-            [
-                'sid' => 315,
-                'segment' => 'Address Tracker WidgetExtension',
-                'internal_id' => 'CFBundleName',
-                'mrk_id' => '',
-                'prev_tags' => '',
-                'succ_tags' => '',
-                'mrk_prev_tags' => '',
-                'mrk_succ_tags' => '',
-                'translation' => 'Bla bla bla bla bla',
-                'status' => TranslationStatus::STATUS_TRANSLATED,
-                'eq_word_count' => 1,
-                'raw_word_count' => 1,
-            ],
-            [
-                'sid' => 316,
-                'segment' => 'Periodic notification trigger will be set to minimum one hour intervals. Please note that there is no guarantee it will trigger as it is decided by the system and influenced by multiple power management factors. You can add up to 5 accounts.',
-                'internal_id' => 'Periodic notification trigger will be set to minimum one hour intervals. Please note that there is n',
-                'mrk_id' => '',
-                'prev_tags' => '',
-                'succ_tags' => '',
-                'mrk_prev_tags' => '',
-                'mrk_succ_tags' => '',
-                'translation' => 'Bla bla bla bla bla bla bla',
-                'status' => TranslationStatus::STATUS_TRANSLATED,
-                'eq_word_count' => 1,
-                'raw_word_count' => 1,
-            ],
-        ]);
-
-        $inputFile = __DIR__.'/../tests/files/long-segment-id.xliff';
-        $outputFile = __DIR__.'/../tests/files/output/long-segment-id.xliff';
-
-        $xliffParser = new XliffParser();
-        $xliffParser->replaceTranslation($inputFile, $data['data'], $data['transUnits'], 'it-IT', $outputFile);
-        $output = $xliffParser->xliffToArray(file_get_contents($outputFile));
-
-        $this->assertEquals($output['files'][1]['trans-units'][1]['target']['raw-content'], 'Bla bla bla');
-        $this->assertEquals($output['files'][1]['trans-units'][2]['target']['raw-content'], 'Bla bla bla bla bla');
-        $this->assertEquals($output['files'][2]['trans-units'][1]['target']['raw-content'], 'Bla bla bla bla bla bla bla');
-    }
-
-
-    /**
-     * @test
-     */
     public function can_replace_a_xliff_12_without_target()
     {
         $data = $this->getData([

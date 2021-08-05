@@ -1,0 +1,522 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff
+        xmlns="urn:oasis:names:tc:xliff:document:1.2"
+        xmlns:its="http://www.w3.org/2005/11/its"
+        xmlns:itsxlf="http://www.w3.org/ns/its-xliff/"
+        xmlns:okp="okapi-framework:xliff-extensions" its:version="2.0" version="1.2"
+        xmlns:mtc="https://www.matecat.com">
+    <file datatype="x-jsont" filter="com.matecat.filters.basefilters.DefaultFilter" original="sample (3).jsont" source-language="en-GB" target-language="it-IT" tool-id="matecat-converter 1.3.7-SNAPSHOT">
+        <header>
+            <reference>
+                <internal-file form="base64">Ww0KICB7DQogICAgImlkX3JlcXVlc3QiOiAicmVxMTIzIiwNCiAgICAiaWRfY29udGVudCI6ICJwaHJhc2UtMSIsDQogICAgImNvbnRlbnRfdHlwZSI6ICJ0ZXh0L3BsYWluIiwNCiAgICAiY29udGVu
+                    dCI6ICJIZWxsbyB3b3JsZCEiLA0KICAgICJjb250ZXh0Ijogew0KICAgICAgImluc3RydWN0aW9ucyI6ICJQcmVzZXJ2ZSB0aGUgZmluYWwgZXhjbGFtYXRpb24gbWFyayIsDQogICAgICAibm90ZXMi
+                    OiAiU3RhbmRhcmQgcHJvZ3JhbW1lciBncmVldGluZyIsDQogICAgICAic2NyZWVuc2hvdCI6ICJodHRwczovL2N1c3RvbWVyLmNvbS9pMThuL3NjcmVlbnNob3QtcGhyYXNlLTEucG5nIiwNCiAgICAg
+                    ICJzdHlsZWd1aWRlIjogImh0dHBzOi8vY3VzdG9tZXIuY29tL2kxOG4vc3R5bGVndWlkZS5wZGYiLA0KICAgICAgInJlZmVyZW5jZXMiOiAiaHR0cHM6Ly9jdXN0b21lci5jb20vaTE4bi9yZWZlcmVu
+                    Y2VzLnR4dCINCiAgICB9DQogIH0sDQogIHsNCiAgICAiaWRfcmVxdWVzdCI6ICJyZXE0NTYiLA0KICAgICJpZF9jb250ZW50IjogInBocmFzZS0yIiwNCiAgICAiY29udGVudF90eXBlIjogInRleHQv
+                    aHRtbCIsDQogICAgImNvbnRlbnQiOiAiPGgzPkludHJvZHVjdGlvbjwvaDM+XG48cD5UaGlzIGlzIGEgPGk+cGFyYWdyYXBoPC9pPiBvZiA8Yj5mb3JtYXR0ZWQ8L2I+IHRleHQuPC9wPlxuPHVsPlxu
+                    ICAgIDxsaT5PbmU8L2xpPlxuICAgIDxsaT5Ud288L2xpPlxuICAgIDxsaT5UaHJlZTwvbGk+XG48L3VsPlxuPHA+QWJvdmUgYSBsaXN0LiBBIGZpbmFsIHNlbnRlbmNlLjwvcD4iLA0KICAgICJjb250
+                    ZXh0Ijogew0KICAgICAgImluc3RydWN0aW9ucyI6ICJJdCBpcyBhbiBIVE1MIHNuaXBwZXQiLA0KICAgICAgIm5vdGVzIjogIlByZXNlcnZlIHRoZSBIVE1MIGZvcm1hdHRpbmciLA0KICAgICAgInNj
+                    cmVlbnNob3QiOiAiaHR0cHM6Ly9jdXN0b21lci5jb20vaTE4bi9zY3JlZW5zaG90LXBocmFzZS0yLnBuZyIsDQogICAgICAicmVmZXJlbmNlcyI6ICJodHRwczovL2N1c3RvbWVyLmNvbS9pMThuL3Jl
+                    ZmVyZW5jZXMudHh0Ig0KICAgIH0NCiAgfSwNCiAgew0KICAgICJpZF9yZXF1ZXN0IjogInJlcTc4OSIsDQogICAgImlkX2NvbnRlbnQiOiAicGhyYXNlLTMiLA0KICAgICJjb250ZW50X3R5cGUiOiAi
+                    dGV4dC94LW1hcmtkb3duIiwNCiAgICAiY29udGVudCI6ICIjIyMgVGhlIFRocmVlIENvbW1hbmRtZW50c1xuXG5BIGZ1bm55IGxpc3Qgb2YgcHJpbmNpcGxlczpcblxuMS4gKipNaW5kIHlvdXIgb3du
+                    IGJ1c2luZXNzKipcbjIuIF9MZXQgdGhlIG90aGVyIHNwZWFrX1xuMy4gYERvIG5vdCBqdWRnZWAiLA0KICAgICJjb250ZXh0Ijogew0KICAgICAgImluc3RydWN0aW9ucyI6ICJJdCBpcyBhIE1hcmtk
+                    b3duIHRleHQiLA0KICAgICAgInNjcmVlbnNob3QiOiAiaHR0cHM6Ly9jdXN0b21lci5jb20vaTE4bi9zY3JlZW5zaG90LXBocmFzZS0yLnBuZyIsDQogICAgICAic3R5bGVndWlkZSI6ICJodHRwczov
+                    L2N1c3RvbWVyLmNvbS9pMThuL3N0eWxlZ3VpZGUucGRmIg0KICAgIH0NCiAgfSwNCiAgew0KICAgICJpZF9yZXF1ZXN0IjogInJlcTU2NyIsDQogICAgImlkX2NvbnRlbnQiOiAicGhyYXNlLTQiLA0K
+                    ICAgICJjb250ZW50X3R5cGUiOiAidGV4dC94bWwiLA0KICAgICJjb250ZW50IjogIjx1aT5cbjxncm91cD5cbjxtZXNzYWdlIGlkPSdidXR0b24xJz5PSzwvbWVzc2FnZT5cbjxtZXNzYWdlIGlkPSdi
+                    dXR0b24yJz5DYW5jZWw8L21lc3NhZ2U+XG48bWVzc2FnZSBpZD0nYnV0dG9uMyc+U3VibWl0PC9tZXNzYWdlPlxuPC9ncm91cD5cbjxtZXNzYWdlIGlkPSdidXR0b240Jz5Mb29rJmFtcDtGZWVsPC9t
+                    ZXNzYWdlPlxuPC91aT4iLA0KICAgICJjb250ZXh0Ijogew0KICAgICAgImluc3RydWN0aW9ucyI6ICJQYXkgYXR0ZW50aW9uIHRvIFhNTCBtYXJrdXAiLA0KICAgICAgIm5vdGVzIjogIkFwcGxpY2F0
+                    aW9uIG1lc3NhZ2VzIGluIGFuIFhNTCBzdHJ1Y3R1cmUiDQogICAgfQ0KICB9LA0KICB7DQogICAgImlkX3JlcXVlc3QiOiAicmVxMjM0IiwNCiAgICAiaWRfY29udGVudCI6ICJwaHJhc2UtNSIsDQog
+                    ICAgImNvbnRlbnRfdHlwZSI6ICJ0ZXh0L3gteWFtbCIsDQogICAgImNvbnRlbnQiOiAid2l6YXJkOlxuICAtIHRpdGxlOiBDaG9vc2UgZmlsZVxuICAgIGxhYmVsOiBTZWxlY3QgbmFtZSBvZiBmaWxl
+                    IHRvIGNyZWF0ZVxuICAtIHRpdGxlOiBPcHRpb25zXG4gICAgbGFiZWw6IFByb2Nlc3Npbmcgb3B0aW9uc1xuICAtIHRpdGxlOiBEZWxpdmVyeVxuICAgIGxhYmVsOiBBZGRyZXNzIG9mIGRlbGl2ZXJ5
+                    XG4gIC0gdGl0bGU6IEJpbGxpbmdcbiAgICBsYWJlbDogUGF5bWVudCBpbmZvcm1hdGlvbiIsDQogICAgImNvbnRleHQiOiB7DQogICAgICAiaW5zdHJ1Y3Rpb25zIjogIlBheSBhdHRlbnRpb24gdG8g
+                    WUFNTCBtYXJrdXAiLA0KICAgICAgIm5vdGVzIjogIldpemFyZCBzdGVwcyBVSSBtZXNzYWdlcyBpbiBhbiBZQU1MIHN0cnVjdHVyZSINCiAgICB9DQogIH0NCl0NCg==</internal-file>
+            </reference>
+        </header>
+        <body/>
+    </file>
+    <file datatype="x-rkm" filter="com.matecat.filters.basefilters.DefaultFilter" original="manifest.rkm" source-language="en-GB" target-language="it-IT" tool-id="matecat-converter 1.3.7-SNAPSHOT">
+        <header>
+            <reference>
+                <internal-file form="base64">PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPCEtLT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09LS0+Cjwh
+                    LS1QTEVBU0UsIERPIE5PVCBSRU5BTUUsIE1PVkUsIE1PRElGWSBPUiBBTFRFUiBJTiBBTlkgV0FZIFRISVMgRklMRS0tPgo8IS0tPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+                    PT09PT09PT09PT09PT09PT09PT09PT09PT0tLT4KPG1hbmlmZXN0IHZlcnNpb249IjIiIGxpYlZlcnNpb249IjEuNDAuMy1UUkFOU0xBVEVEIiBwcm9qZWN0SWQ9Ik5FMTY0RTZDNyIgcGFja2FnZUlk
+                    PSJmNmE2ZWU5OS0yYWI3LTQ5ZmEtODNiZi0xZDA0NmJlZjdiOTgiIHNvdXJjZT0iZW4tR0IiIHRhcmdldD0iaXQtSVQiIG9yaWdpbmFsU3ViRGlyPSJvcmlnaW5hbCIgc2tlbGV0b25TdWJEaXI9InNr
+                    ZWxldG9uIiBzb3VyY2VTdWJEaXI9IndvcmsiIHRhcmdldFN1YkRpcj0id29yayIgbWVyZ2VTdWJEaXI9ImRvbmUiIHRtU3ViRGlyPSIiIGRhdGU9IjIwMjEtMDctMjggMDk6NTg6MjErMDAwMCIgdXNl
+                    QXBwcm92ZWRPbmx5PSIwIiB1cGRhdGVBcHByb3ZlZEZsYWc9IjAiPgo8Y3JlYXRvclBhcmFtZXRlcnM+STNZeENuQnNZV05sYUc5c1pHVnlUVzlrWlM1aVBYUnlkV1VLYVc1amJIVmtaVTV2VkhKaGJu
+                    TnNZWFJsTG1JOWRISjFaUXB6WlhSQmNIQnliM1psWkVGelRtOVVjbUZ1YzJ4aGRHVXVZajFtWVd4elpRcGpiM0I1VTI5MWNtTmxMbUk5ZEhKMVpRcHBibU5zZFdSbFFXeDBWSEpoYm5NdVlqMTBjblZs
+                    Q21sdVkyeDFaR1ZEYjJSbFFYUjBjbk11WWoxbVlXeHpaUXBwYm1Oc2RXUmxTWFJ6TG1JOWRISjFaUXBsYzJOaGNHVkhWQzVpUFhSeWRXVT08L2NyZWF0b3JQYXJhbWV0ZXJzPgo8ZG9jIHhtbDpzcGFj
+                    ZT0icHJlc2VydmUiIGRvY0lkPSIxIiBleHRyYWN0aW9uVHlwZT0ieGxpZmYiIHJlbGF0aXZlSW5wdXRQYXRoPSJzYW1wbGUgKDMpLmpzb250IiBmaWx0ZXJJZD0ib2tmX2pzb250IiBpbnB1dEVuY29k
+                    aW5nPSJJU08tODg1OS0xIiByZWxhdGl2ZVRhcmdldFBhdGg9InNhbXBsZSAoMykub3V0Lmpzb250IiB0YXJnZXRFbmNvZGluZz0iVVRGLTgiIHNlbGVjdGVkPSIxIj5JM1l4Q21WelkyRndaVVp2Y25k
+                    aGNtUlRiR0Z6YUdWekxtSTlabUZzYzJVS2RYTmxRMjlrWlVacGJtUmxjaTVpUFdaaGJITmxDbTkxZEhCMWRGTmxaMjFsYm5SaGRHbHZibFI1Y0dVdWFUMHpDbU52WkdWR2FXNWtaWEpTZFd4bGN5NWpi
+                    M1Z1ZEM1cFBURUtZMjlrWlVacGJtUmxjbEoxYkdWekxuSjFiR1V3UFZ3a1AxeDdLRnRCTFZvd0xUbGhMWHBmTFYwcUtWeDlDbU52WkdWR2FXNWtaWEpTZFd4bGN5NXpZVzF3YkdVOVZXNXBlQ0IyWVhJ
+                    NklDUjdjMjl0WlMxMllYSjlMQ0IyWVhJZ2FXNGdZbkpoWTJWek9pQjdkWE5sY2w5dVlXMWxmUzRLWTI5a1pVWnBibVJsY2xKMWJHVnpMblZ6WlVGc2JGSjFiR1Z6VjJobGJsUmxjM1JwYm1jdVlqMTBj
+                    blZsPC9kb2M+CjwvbWFuaWZlc3Q+</internal-file>
+            </reference>
+        </header>
+        <body/>
+    </file>
+    <file datatype="x-tos-request" original="req123" source-language="en-GB" target-language="it-IT">
+        <body>
+            <group id="sg1">
+                <trans-unit help-id="8542691" id="phrase-1" xml:space="preserve">
+					<source xml:lang="en-GB">Hello world!</source>
+                    <seg-source>
+						<mrk mid="0" mtype="seg">Hello world!</mrk>
+					</seg-source>
+                    <target  xml:lang="it-IT" state="translated">
+						<mrk mid="0" mtype="seg">Ciao mondo!</mrk>
+					</target>
+                    <count-group name="phrase-1">
+						<count count-type="x-matecat-raw">2</count>
+                        <count count-type="x-matecat-weighted">0.4</count>
+					</count-group>
+                    <note annotates="source" from="instructions">Preserve the final exclamation mark</note>
+                    <note annotates="source" from="notes">Standard programmer greeting</note>
+                    <note annotates="source" from="screenshot">https://customer.com/i18n/screenshot-phrase-1.png</note>
+                    <note annotates="source" from="styleguide">https://customer.com/i18n/styleguide.pdf</note>
+                    <note annotates="source" from="references">https://customer.com/i18n/references.txt</note>
+				</trans-unit>
+                <group id="sg2"></group>
+            </group>
+        </body>
+    </file>
+    <file datatype="x-tos-request" original="req456" source-language="en-GB" target-language="it-IT">
+        <body>
+            <group id="sg3">
+                <group id="sg3_ssf1" resname="sub-filter:content">
+                    <trans-unit help-id="8542692" id="sg3_sf1_tu1" resname="content_1" restype="x-h3" xml:space="preserve">
+						<source xml:lang="en-GB">Introduction</source>
+                        <seg-source>
+							<mrk mid="0" mtype="seg">Introduction</mrk>
+						</seg-source>
+                        <target  xml:lang="it-IT" state="translated">
+							<mrk mid="0" mtype="seg">Introduzione</mrk>
+						</target>
+                        <count-group name="sg3_sf1_tu1">
+							<count count-type="x-matecat-raw">3</count>
+                            <count count-type="x-matecat-weighted">0.6</count>
+						</count-group>
+                        <note annotates="source" from="instructions">It is an HTML snippet</note>
+                        <note annotates="source" from="notes">Preserve the HTML formatting</note>
+                        <note annotates="source" from="screenshot">https://customer.com/i18n/screenshot-phrase-2.png</note>
+                        <note annotates="source" from="references">https://customer.com/i18n/references.txt</note>
+					</trans-unit>
+                    <trans-unit help-id="8542693" id="sg3_sf1_tu2" resname="content_4" restype="x-paragraph" xml:space="preserve">
+						<source xml:lang="en-GB">This is a
+							<g id="1">paragraph</g> of
+                            <g id="2">formatted</g> text.
+						</source>
+                        <seg-source>
+							<mrk mid="0" mtype="seg">This is a
+								<g id="1">paragraph</g> of
+                                <g id="2">formatted</g> text.
+							</mrk>
+						</seg-source>
+                        <target  xml:lang="it-IT" state="translated">
+							<mrk mid="0" mtype="seg">Questo è un
+								<g id="1">paragrafo</g> di testo
+                                <g id="2">formattato</g> .
+							</mrk>
+						</target>
+                        <count-group name="sg3_sf1_tu2">
+							<count count-type="x-matecat-raw">10</count>
+                            <count count-type="x-matecat-weighted">2</count>
+						</count-group>
+                        <note annotates="source" from="instructions">It is an HTML snippet</note>
+                        <note annotates="source" from="notes">Preserve the HTML formatting</note>
+                        <note annotates="source" from="screenshot">https://customer.com/i18n/screenshot-phrase-2.png</note>
+                        <note annotates="source" from="references">https://customer.com/i18n/references.txt</note>
+					</trans-unit>
+                    <trans-unit help-id="8542694" id="sg3_sf1_tu3" resname="content_7" restype="x-li" xml:space="preserve">
+						<source xml:lang="en-GB">One</source>
+                        <seg-source>
+							<mrk mid="0" mtype="seg">One</mrk>
+						</seg-source>
+                        <target  xml:lang="it-IT" state="translated">
+							<mrk mid="0" mtype="seg">Uno</mrk>
+						</target>
+                        <count-group name="sg3_sf1_tu3">
+							<count count-type="x-matecat-raw">11</count>
+                            <count count-type="x-matecat-weighted">2.2</count>
+						</count-group>
+                        <note annotates="source" from="instructions">It is an HTML snippet</note>
+                        <note annotates="source" from="notes">Preserve the HTML formatting</note>
+                        <note annotates="source" from="screenshot">https://customer.com/i18n/screenshot-phrase-2.png</note>
+                        <note annotates="source" from="references">https://customer.com/i18n/references.txt</note>
+					</trans-unit>
+                    <trans-unit help-id="8542695" id="sg3_sf1_tu4" resname="content_10" restype="x-li" xml:space="preserve">
+						<source xml:lang="en-GB">Two</source>
+                        <seg-source>
+							<mrk mid="0" mtype="seg">Two</mrk>
+						</seg-source>
+                        <target  xml:lang="it-IT" state="translated">
+							<mrk mid="0" mtype="seg">Due</mrk>
+						</target>
+                        <count-group name="sg3_sf1_tu4">
+							<count count-type="x-matecat-raw">12</count>
+                            <count count-type="x-matecat-weighted">2.4</count>
+						</count-group>
+                        <note annotates="source" from="instructions">It is an HTML snippet</note>
+                        <note annotates="source" from="notes">Preserve the HTML formatting</note>
+                        <note annotates="source" from="screenshot">https://customer.com/i18n/screenshot-phrase-2.png</note>
+                        <note annotates="source" from="references">https://customer.com/i18n/references.txt</note>
+					</trans-unit>
+                    <trans-unit help-id="8542696" id="sg3_sf1_tu5" resname="content_13" restype="x-li" xml:space="preserve">
+						<source xml:lang="en-GB">Three</source>
+                        <seg-source>
+							<mrk mid="0" mtype="seg">Three</mrk>
+						</seg-source>
+                        <target  xml:lang="it-IT" state="translated">
+							<mrk mid="0" mtype="seg">Tre</mrk>
+						</target>
+                        <count-group name="sg3_sf1_tu5">
+							<count count-type="x-matecat-raw">13</count>
+                            <count count-type="x-matecat-weighted">2.6</count>
+						</count-group>
+                        <note annotates="source" from="instructions">It is an HTML snippet</note>
+                        <note annotates="source" from="notes">Preserve the HTML formatting</note>
+                        <note annotates="source" from="screenshot">https://customer.com/i18n/screenshot-phrase-2.png</note>
+                        <note annotates="source" from="references">https://customer.com/i18n/references.txt</note>
+					</trans-unit>
+                    <trans-unit help-id="8542697" id="sg3_sf1_tu6" resname="content_16" restype="x-paragraph" xml:space="preserve">
+						<source xml:lang="en-GB">Above a list. A final sentence.</source>
+                        <seg-source>
+							<mrk mid="0" mtype="seg">Above a list. </mrk>
+                            <mrk mid="1" mtype="seg">A final sentence.</mrk>
+						</seg-source>
+                        <target  xml:lang="it-IT" state="translated">
+							<mrk mid="0" mtype="seg">Sopra un elenco. </mrk>
+                            <mrk mid="1" mtype="seg">Una frase finale.</mrk>
+						</target>
+                        <count-group name="sg3_sf1_tu6">
+							<count count-type="x-matecat-raw">19</count>
+                            <count count-type="x-matecat-weighted">3.8</count>
+						</count-group>
+                        <note annotates="source" from="instructions">It is an HTML snippet</note>
+                        <note annotates="source" from="notes">Preserve the HTML formatting</note>
+                        <note annotates="source" from="screenshot">https://customer.com/i18n/screenshot-phrase-2.png</note>
+                        <note annotates="source" from="references">https://customer.com/i18n/references.txt</note>
+					</trans-unit>
+                </group>
+                <group id="sg4"></group>
+            </group>
+        </body>
+    </file>
+    <file datatype="x-tos-request" original="req789" source-language="en-GB" target-language="it-IT">
+        <body>
+            <group id="sg5">
+                <group id="sg5_ssf2" resname="sub-filter:content">
+                    <trans-unit help-id="8542699" id="sg5_sf2_tu1" resname="content_2" xml:space="preserve">
+						<source xml:lang="en-GB">The Three Commandments</source>
+                        <seg-source>
+							<mrk mid="0" mtype="seg">The Three Commandments</mrk>
+						</seg-source>
+                        <target  xml:lang="it-IT" state="translated">
+							<mrk mid="0" mtype="seg">I tre comandamenti</mrk>
+						</target>
+                        <count-group name="sg5_sf2_tu1">
+							<count count-type="x-matecat-raw">22</count>
+                            <count count-type="x-matecat-weighted">4.4</count>
+						</count-group>
+                        <note annotates="source" from="instructions">It is a Markdown text</note>
+                        <note annotates="source" from="screenshot">https://customer.com/i18n/screenshot-phrase-2.png</note>
+                        <note annotates="source" from="styleguide">https://customer.com/i18n/styleguide.pdf</note>
+					</trans-unit>
+                    <trans-unit help-id="8542700" id="sg5_sf2_tu2" resname="content_5" xml:space="preserve">
+						<source xml:lang="en-GB">A funny list of principles:</source>
+                        <seg-source>
+							<mrk mid="0" mtype="seg">A funny list of principles:</mrk>
+						</seg-source>
+                        <target  xml:lang="it-IT" state="translated">
+							<mrk mid="0" mtype="seg">Un divertente elenco di principi:</mrk>
+						</target>
+                        <count-group name="sg5_sf2_tu2">
+							<count count-type="x-matecat-raw">27</count>
+                            <count count-type="x-matecat-weighted">5.4</count>
+						</count-group>
+                        <note annotates="source" from="instructions">It is a Markdown text</note>
+                        <note annotates="source" from="screenshot">https://customer.com/i18n/screenshot-phrase-2.png</note>
+                        <note annotates="source" from="styleguide">https://customer.com/i18n/styleguide.pdf</note>
+					</trans-unit>
+                    <trans-unit help-id="8542701" id="sg5_sf2_tu3" resname="content_9" xml:space="preserve">
+						<source xml:lang="en-GB">
+							<g id="1">Mind your own business</g>
+						</source>
+                        <seg-source>
+							<mrk mid="0" mtype="seg">
+								<g id="1">Mind your own business</g>
+							</mrk>
+						</seg-source>
+                        <target  xml:lang="it-IT" state="translated">
+							<mrk mid="0" mtype="seg">
+								<g id="1">Fatti gli affari tuoi.</g>
+							</mrk>
+						</target>
+                        <count-group name="sg5_sf2_tu3">
+							<count count-type="x-matecat-raw">31</count>
+                            <count count-type="x-matecat-weighted">6.2</count>
+						</count-group>
+                        <note annotates="source" from="instructions">It is a Markdown text</note>
+                        <note annotates="source" from="screenshot">https://customer.com/i18n/screenshot-phrase-2.png</note>
+                        <note annotates="source" from="styleguide">https://customer.com/i18n/styleguide.pdf</note>
+					</trans-unit>
+                    <trans-unit help-id="8542702" id="sg5_sf2_tu4" resname="content_12" xml:space="preserve">
+						<source xml:lang="en-GB">
+							<g id="1">Let the other speak</g>
+						</source>
+                        <seg-source>
+							<mrk mid="0" mtype="seg">
+								<g id="1">Let the other speak</g>
+							</mrk>
+						</seg-source>
+                        <target  xml:lang="it-IT" state="translated">
+							<mrk mid="0" mtype="seg">
+								<g id="1">Lascia parlare gli altri</g>
+							</mrk>
+						</target>
+                        <count-group name="sg5_sf2_tu4">
+							<count count-type="x-matecat-raw">35</count>
+                            <count count-type="x-matecat-weighted">7</count>
+						</count-group>
+                        <note annotates="source" from="instructions">It is a Markdown text</note>
+                        <note annotates="source" from="screenshot">https://customer.com/i18n/screenshot-phrase-2.png</note>
+                        <note annotates="source" from="styleguide">https://customer.com/i18n/styleguide.pdf</note>
+					</trans-unit>
+                    <trans-unit help-id="8542703" id="sg5_sf2_tu5" resname="content_15" xml:space="preserve">
+						<source xml:lang="en-GB">
+							<g id="1">Do not judge</g>
+						</source>
+                        <seg-source>
+							<mrk mid="0" mtype="seg">
+								<g id="1">Do not judge</g>
+							</mrk>
+						</seg-source>
+                        <target  xml:lang="it-IT" state="translated">
+							<mrk mid="0" mtype="seg">
+								<g id="1">Non giudicare</g>
+							</mrk>
+						</target>
+                        <count-group name="sg5_sf2_tu5">
+							<count count-type="x-matecat-raw">38</count>
+                            <count count-type="x-matecat-weighted">7.6</count>
+						</count-group>
+                        <note annotates="source" from="instructions">It is a Markdown text</note>
+                        <note annotates="source" from="screenshot">https://customer.com/i18n/screenshot-phrase-2.png</note>
+                        <note annotates="source" from="styleguide">https://customer.com/i18n/styleguide.pdf</note>
+					</trans-unit>
+                </group>
+                <group id="sg6"></group>
+            </group>
+        </body>
+    </file>
+    <file datatype="x-tos-request" original="req567" source-language="en-GB" target-language="it-IT">
+        <body>
+            <group id="sg7">
+                <group id="sg7_ssf3" resname="sub-filter:content" restype="x-text/xml">
+                    <trans-unit help-id="8542704" id="sg7_sf3_1" resname="content_1">
+                        <source xml:lang="en-GB">OK</source>
+                        <seg-source>
+                            <mrk mid="0" mtype="seg">OK</mrk>
+                        </seg-source>
+                        <target  xml:lang="it-IT" state="translated">
+                            <mrk mid="0" mtype="seg">OK</mrk>
+                        </target>
+                        <count-group name="sg7_sf3_1">
+                            <count count-type="x-matecat-raw">39</count>
+                            <count count-type="x-matecat-weighted">7.8</count>
+                        </count-group>
+                        <note annotates="source" from="instructions">Pay attention to XML markup</note>
+                        <note annotates="source" from="notes">Application messages in an XML structure</note>
+                    </trans-unit>
+                    <trans-unit help-id="8542705" id="sg7_sf3_2" resname="content_2">
+                        <source xml:lang="en-GB">Cancel</source>
+                        <seg-source>
+                            <mrk mid="0" mtype="seg">Cancel</mrk>
+                        </seg-source>
+                        <target  xml:lang="it-IT" state="translated">
+                            <mrk mid="0" mtype="seg">Annulla</mrk>
+                        </target>
+                        <count-group name="sg7_sf3_2">
+                            <count count-type="x-matecat-raw">40</count>
+                            <count count-type="x-matecat-weighted">8</count>
+                        </count-group>
+                        <note annotates="source" from="instructions">Pay attention to XML markup</note>
+                        <note annotates="source" from="notes">Application messages in an XML structure</note>
+                    </trans-unit>
+                    <trans-unit help-id="8542706" id="sg7_sf3_3" resname="content_3">
+                        <source xml:lang="en-GB">Submit</source>
+                        <seg-source>
+                            <mrk mid="0" mtype="seg">Submit</mrk>
+                        </seg-source>
+                        <target  xml:lang="it-IT" state="translated">
+                            <mrk mid="0" mtype="seg">Invia</mrk>
+                        </target>
+                        <count-group name="sg7_sf3_3">
+                            <count count-type="x-matecat-raw">41</count>
+                            <count count-type="x-matecat-weighted">8.2</count>
+                        </count-group>
+                        <note annotates="source" from="instructions">Pay attention to XML markup</note>
+                        <note annotates="source" from="notes">Application messages in an XML structure</note>
+                    </trans-unit>
+                    <trans-unit help-id="8542707" id="sg7_sf3_4" resname="content_4">
+                        <source xml:lang="en-GB">Look&amp;Feel</source>
+                        <seg-source>
+                            <mrk mid="0" mtype="seg">Look&amp;Feel</mrk>
+                        </seg-source>
+                        <target  xml:lang="it-IT" state="translated">
+                            <mrk mid="0" mtype="seg">Aspetto e funzionalità</mrk>
+                        </target>
+                        <count-group name="sg7_sf3_4">
+                            <count count-type="x-matecat-raw">43</count>
+                            <count count-type="x-matecat-weighted">8.6</count>
+                        </count-group>
+                        <note annotates="source" from="instructions">Pay attention to XML markup</note>
+                        <note annotates="source" from="notes">Application messages in an XML structure</note>
+                    </trans-unit>
+                </group>
+                <group id="sg8"></group>
+            </group>
+        </body>
+    </file>
+    <file datatype="x-tos-request" original="req234" source-language="en-GB" target-language="it-IT">
+        <body>
+            <group id="sg9">
+                <group id="sg9_ssf4" resname="sub-filter:content">
+                    <group id="sg9_sf4_sg1" resname="content_1">
+                        <group id="sg9_sf4_sg2" resname="content_3">
+                            <group id="sg9_sf4_sg3" resname="content_5">
+                                <trans-unit help-id="8542708" id="sg9_sf4_tu1" resname="wizard/title" xml:space="preserve">
+									<source xml:lang="en-GB">Choose file</source>
+                                    <seg-source>
+										<mrk mid="0" mtype="seg">Choose file</mrk>
+									</seg-source>
+                                    <target  xml:lang="it-IT" state="translated">
+										<mrk mid="0" mtype="seg">Scegli il file</mrk>
+									</target>
+                                    <count-group name="sg9_sf4_tu1">
+										<count count-type="x-matecat-raw">45</count>
+                                        <count count-type="x-matecat-weighted">9</count>
+									</count-group>
+                                    <note annotates="source" from="instructions">Pay attention to YAML markup</note>
+                                    <note annotates="source" from="notes">Wizard steps UI messages in an YAML structure</note>
+								</trans-unit>
+                                <trans-unit help-id="8542709" id="sg9_sf4_tu2" resname="wizard/label" xml:space="preserve">
+									<source xml:lang="en-GB">Select name of file to create</source>
+                                    <seg-source>
+										<mrk mid="0" mtype="seg">Select name of file to create</mrk>
+									</seg-source>
+                                    <target  xml:lang="it-IT" state="translated">
+										<mrk mid="0" mtype="seg">Seleziona il nome del file da creare</mrk>
+									</target>
+                                    <count-group name="sg9_sf4_tu2">
+										<count count-type="x-matecat-raw">51</count>
+                                        <count count-type="x-matecat-weighted">10.2</count>
+									</count-group>
+                                    <note annotates="source" from="instructions">Pay attention to YAML markup</note>
+                                    <note annotates="source" from="notes">Wizard steps UI messages in an YAML structure</note>
+								</trans-unit>
+                            </group>
+                            <group id="sg9_sf4_sg4" resname="content_13">
+                                <trans-unit help-id="8542710" id="sg9_sf4_tu3" resname="wizard/title" xml:space="preserve">
+									<source xml:lang="en-GB">Options</source>
+                                    <seg-source>
+										<mrk mid="0" mtype="seg">Options</mrk>
+									</seg-source>
+                                    <target  xml:lang="it-IT" state="translated">
+										<mrk mid="0" mtype="seg">Opzioni</mrk>
+									</target>
+                                    <count-group name="sg9_sf4_tu3">
+										<count count-type="x-matecat-raw">52</count>
+                                        <count count-type="x-matecat-weighted">10.4</count>
+									</count-group>
+                                    <note annotates="source" from="instructions">Pay attention to YAML markup</note>
+                                    <note annotates="source" from="notes">Wizard steps UI messages in an YAML structure</note>
+								</trans-unit>
+                                <trans-unit help-id="8542711" id="sg9_sf4_tu4" resname="wizard/label" xml:space="preserve">
+									<source xml:lang="en-GB">Processing options</source>
+                                    <seg-source>
+										<mrk mid="0" mtype="seg">Processing options</mrk>
+									</seg-source>
+                                    <target  xml:lang="it-IT" state="translated">
+										<mrk mid="0" mtype="seg">Opzioni di elaborazione</mrk>
+									</target>
+                                    <count-group name="sg9_sf4_tu4">
+										<count count-type="x-matecat-raw">54</count>
+                                        <count count-type="x-matecat-weighted">10.8</count>
+									</count-group>
+                                    <note annotates="source" from="instructions">Pay attention to YAML markup</note>
+                                    <note annotates="source" from="notes">Wizard steps UI messages in an YAML structure</note>
+								</trans-unit>
+                            </group>
+                            <group id="sg9_sf4_sg5" resname="content_21">
+                                <trans-unit help-id="8542712" id="sg9_sf4_tu5" resname="wizard/title" xml:space="preserve">
+									<source xml:lang="en-GB">Delivery</source>
+                                    <seg-source>
+										<mrk mid="0" mtype="seg">Delivery</mrk>
+									</seg-source>
+                                    <target  xml:lang="it-IT" state="translated">
+										<mrk mid="0" mtype="seg">Consegna</mrk>
+									</target>
+                                    <count-group name="sg9_sf4_tu5">
+										<count count-type="x-matecat-raw">55</count>
+                                        <count count-type="x-matecat-weighted">11</count>
+									</count-group>
+                                    <note annotates="source" from="instructions">Pay attention to YAML markup</note>
+                                    <note annotates="source" from="notes">Wizard steps UI messages in an YAML structure</note>
+								</trans-unit>
+                                <trans-unit help-id="8542713" id="sg9_sf4_tu6" resname="wizard/label" xml:space="preserve">
+									<source xml:lang="en-GB">Address of delivery</source>
+                                    <seg-source>
+										<mrk mid="0" mtype="seg">Address of delivery</mrk>
+									</seg-source>
+                                    <target  xml:lang="it-IT" state="translated">
+										<mrk mid="0" mtype="seg">Indirizzo di consegna</mrk>
+									</target>
+                                    <count-group name="sg9_sf4_tu6">
+										<count count-type="x-matecat-raw">58</count>
+                                        <count count-type="x-matecat-weighted">11.6</count>
+									</count-group>
+                                    <note annotates="source" from="instructions">Pay attention to YAML markup</note>
+                                    <note annotates="source" from="notes">Wizard steps UI messages in an YAML structure</note>
+								</trans-unit>
+                            </group>
+                            <group id="sg9_sf4_sg6" resname="content_29">
+                                <trans-unit help-id="8542714" id="sg9_sf4_tu7" resname="wizard/title" xml:space="preserve">
+									<source xml:lang="en-GB">Billing</source>
+                                    <seg-source>
+										<mrk mid="0" mtype="seg">Billing</mrk>
+									</seg-source>
+                                    <target  xml:lang="it-IT" state="translated">
+										<mrk mid="0" mtype="seg">Fatturazione</mrk>
+									</target>
+                                    <count-group name="sg9_sf4_tu7">
+										<count count-type="x-matecat-raw">59</count>
+                                        <count count-type="x-matecat-weighted">11.8</count>
+									</count-group>
+                                    <note annotates="source" from="instructions">Pay attention to YAML markup</note>
+                                    <note annotates="source" from="notes">Wizard steps UI messages in an YAML structure</note>
+								</trans-unit>
+                                <trans-unit help-id="8542715" id="sg9_sf4_tu8" resname="wizard/label" xml:space="preserve">
+									<source xml:lang="en-GB">Payment information</source>
+                                    <seg-source>
+										<mrk mid="0" mtype="seg">Payment information</mrk>
+									</seg-source>
+                                    <target  xml:lang="it-IT" state="translated">
+										<mrk mid="0" mtype="seg">Informazioni sul pagamento</mrk>
+									</target>
+                                    <count-group name="sg9_sf4_tu8">
+										<count count-type="x-matecat-raw">61</count>
+                                        <count count-type="x-matecat-weighted">12.2</count>
+									</count-group>
+                                    <note annotates="source" from="instructions">Pay attention to YAML markup</note>
+                                    <note annotates="source" from="notes">Wizard steps UI messages in an YAML structure</note>
+								</trans-unit>
+                            </group>
+                        </group>
+                    </group>
+                </group>
+                <group id="sg10"></group>
+            </group>
+        </body>
+    </file>
+</xliff>
