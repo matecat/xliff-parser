@@ -27,6 +27,7 @@ abstract class AbstractXliffReplacer
     protected $currentTransUnitId;        // id of current <trans-unit>
     protected $currentTransUnitTranslate; // 'translate' attribute of current <trans-unit>
     protected $currentSegmentArray = [];  // id of current <segment> (forXliff v 2.*)
+    protected $unitContainsMda = false;   // check if <unit> already contains a <mda:metadata> (forXliff v 2.*)
 
     protected $targetLang;
 

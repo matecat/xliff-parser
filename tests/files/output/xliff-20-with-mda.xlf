@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?><xliff xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0" srcLang="en-US" trgLang="nl-NL" version="2.0" xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:mtc="https://www.matecat.com">
+    <file id="f1" original="2324|Cyber Security">
+        <group id="g1" name="announcement">
+            <group id="g2" name="11657|announcementContent">
+                <group id="u1-g" name="html">
+                    <unit help-id="1" id="u1-1" name="h2">
+                        <mda:metadata>
+                            <mda:metaGroup id="h2_attributes">
+                                <mda:meta type="class">e-h3 c-alert__head t-no</mda:meta>
+                            </mda:metaGroup>
+                            <mda:metagroup category="row_xml_attribute">
+                                <mda:meta type="x-matecat-raw">0</mda:meta>
+                                <mda:meta type="x-matecat-weighted">0</mda:meta>
+                            </mda:metagroup>
+                        </mda:metadata>
+                        <originalData>
+                            <data id="d1">&lt;strong&gt;</data>
+                            <data id="d2">&lt;/strong&gt;</data>
+                        </originalData>
+                        <segment>
+                            <source>Join our webinar: “<pc dataRefEnd="d2" dataRefStart="d1" id="1" subType="xlf:b" type="fmt">Machine Learning in Cyber Security: What It Is and What It Isn't</pc>”</source>
+                        <target>Bla bla bla</target></segment>
+                    </unit>
+                </group>
+            </group>
+        </group>
+    </file>
+</xliff>

@@ -10,17 +10,15 @@
 
     </mda:meta>
                 </mda:metaGroup>
-            </mda:metadata>
+                <mda:metagroup category="row_xml_attribute">
+                                <mda:meta type="x-matecat-raw">0</mda:meta>
+                                <mda:meta type="x-matecat-weighted">0</mda:meta>
+                            </mda:metagroup>
+                        </mda:metadata>
             <segment id="0" state="translated">
                 <source>Uber Eats Online Ordering Sales Channel Addendum Data Processing Agreement</source>
                 <target>Uber Eats Online Ordering Sales Channel Addendum Accordo sul trattamento dei dati</target>
             </segment>
-            <mda:metadata>
-                <mda:metagroup category="row_xml_attribute">
-                    <mda:meta type="x-matecat-raw">10</mda:meta>
-                    <mda:meta type="x-matecat-weighted">8</mda:meta>
-                </mda:metagroup>
-            </mda:metadata>
         </unit>
         <unit help-id="13571" id="1" memsource:tGroupBegin="1" memsource:tGroupEnd="1">
             <mda:metadata>
@@ -31,17 +29,15 @@
 
     </mda:meta>
                 </mda:metaGroup>
-            </mda:metadata>
+                <mda:metagroup category="row_xml_attribute">
+                                <mda:meta type="x-matecat-raw">10</mda:meta>
+                                <mda:meta type="x-matecat-weighted">8</mda:meta>
+                            </mda:metagroup>
+                        </mda:metadata>
             <segment id="1" state="translated">
                 <source>Got it</source>
                 <target>Ho capito</target>
             </segment>
-            <mda:metadata>
-                <mda:metagroup category="row_xml_attribute">
-                    <mda:meta type="x-matecat-raw">12</mda:meta>
-                    <mda:meta type="x-matecat-weighted">8.6</mda:meta>
-                </mda:metagroup>
-            </mda:metadata>
         </unit>
         <unit help-id="13572" id="2" memsource:tGroupBegin="2" memsource:tGroupEnd="2">
             <mda:metadata>
@@ -52,17 +48,15 @@
 
     </mda:meta>
                 </mda:metaGroup>
-            </mda:metadata>
+                <mda:metagroup category="row_xml_attribute">
+                                <mda:meta type="x-matecat-raw">12</mda:meta>
+                                <mda:meta type="x-matecat-weighted">8.6</mda:meta>
+                            </mda:metagroup>
+                        </mda:metadata>
             <segment id="2" state="translated">
                 <source>Play video</source>
                 <target>Riproduci video</target>
             </segment>
-            <mda:metadata>
-                <mda:metagroup category="row_xml_attribute">
-                    <mda:meta type="x-matecat-raw">14</mda:meta>
-                    <mda:meta type="x-matecat-weighted">9.2</mda:meta>
-                </mda:metagroup>
-            </mda:metadata>
         </unit>
         <unit help-id="13573" id="3" memsource:tGroupBegin="3" memsource:tGroupEnd="3">
             <mda:metadata>
@@ -73,17 +67,15 @@
 
     </mda:meta>
                 </mda:metaGroup>
-            </mda:metadata>
+                <mda:metagroup category="row_xml_attribute">
+                                <mda:meta type="x-matecat-raw">14</mda:meta>
+                                <mda:meta type="x-matecat-weighted">9.2</mda:meta>
+                            </mda:metagroup>
+                        </mda:metadata>
             <segment id="3" state="translated">
                 <source>Opt-Out</source>
                 <target>Opzione di revoca</target>
             </segment>
-            <mda:metadata>
-                <mda:metagroup category="row_xml_attribute">
-                    <mda:meta type="x-matecat-raw">15</mda:meta>
-                    <mda:meta type="x-matecat-weighted">9.8</mda:meta>
-                </mda:metagroup>
-            </mda:metadata>
         </unit>
         <unit help-id="13574" id="4" memsource:tGroupBegin="4" memsource:tGroupEnd="5">
             <mda:metadata>
@@ -94,7 +86,11 @@
 
     </mda:meta>
                 </mda:metaGroup>
-            </mda:metadata>
+                <mda:metagroup category="row_xml_attribute">
+                                <mda:meta type="x-matecat-raw">15</mda:meta>
+                                <mda:meta type="x-matecat-weighted">9.8</mda:meta>
+                            </mda:metagroup>
+                        </mda:metadata>
             <memsource:additionalTagData>
                 <memsource:tag id="source1">
                     <memsource:tagId>1</memsource:tagId>
@@ -113,22 +109,10 @@
                 <source>This website uses third party cookies in order to serve you relevant ads on other websites.</source>
                 <target>Questo sito Web utilizza cookie di terze parti per offrirti annunci pertinenti su altri siti Web.</target>
             </segment>
-            <mda:metadata>
-                <mda:metagroup category="row_xml_attribute">
-                    <mda:meta type="x-matecat-raw">31</mda:meta>
-                    <mda:meta type="x-matecat-weighted">22.6</mda:meta>
-                </mda:metagroup>
-            </mda:metadata>
             <segment id="5" state="translated">
                 <source>Learn more by visiting our <ph id="source1" dataRef="source1"/>Cookie Statement<ph id="source2" dataRef="source2"/>, or opt out of third party ad cookies using the button below.</source>
                 <target>Per saperne di più, visita la nostra Dichiarazione sui cookieo disattiva i cookie pubblicitari di terze parti utilizzando il pulsante sottostante.<ph id="source1" dataRef="source1"/> <ph id="source2" dataRef="source2"/> </target>
             </segment>
-            <mda:metadata>
-                <mda:metagroup category="row_xml_attribute">
-                    <mda:meta type="x-matecat-raw">50</mda:meta>
-                    <mda:meta type="x-matecat-weighted">37.8</mda:meta>
-                </mda:metagroup>
-            </mda:metadata>
         </unit>
         <unit help-id="13576" id="5" memsource:tGroupBegin="6" memsource:tGroupEnd="6">
             <mda:metadata>
@@ -139,17 +123,15 @@
 
     </mda:meta>
                 </mda:metaGroup>
-            </mda:metadata>
+                <mda:metagroup category="row_xml_attribute">
+                                <mda:meta type="x-matecat-raw">50</mda:meta>
+                                <mda:meta type="x-matecat-weighted">37.8</mda:meta>
+                            </mda:metagroup>
+                        </mda:metadata>
             <segment id="6" state="translated">
                 <source>Winners Get Dinners Promotion</source>
                 <target>I vincitori ottengono la promozione delle cene</target>
             </segment>
-            <mda:metadata>
-                <mda:metagroup category="row_xml_attribute">
-                    <mda:meta type="x-matecat-raw">54</mda:meta>
-                    <mda:meta type="x-matecat-weighted">41</mda:meta>
-                </mda:metagroup>
-            </mda:metadata>
         </unit>
     </file>
 </xliff>

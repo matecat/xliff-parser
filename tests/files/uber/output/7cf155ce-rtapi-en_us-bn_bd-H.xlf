@@ -10,7 +10,11 @@
                         Do not convert the place holders ${AMOUNT}, ${RIDER}&lt;/font&gt;
                     </mda:meta>
                 </mda:metaGroup>
-            </mda:metadata>
+                <mda:metagroup category="row_xml_attribute">
+                                <mda:meta type="x-matecat-raw">0</mda:meta>
+                                <mda:meta type="x-matecat-weighted">0</mda:meta>
+                            </mda:metagroup>
+                        </mda:metadata>
             <memsource:additionalTagData>
                 <memsource:tag id="source1"><memsource:tagId>1</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
                 <memsource:tag id="source2"><memsource:tagId>2</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
@@ -23,12 +27,6 @@
                 <source>Did you collect <ph id="source1" dataRef="source1"/> from <ph id="source2" dataRef="source2"/>?</source>
                 <target>Hai raccolto <ph id="source1" dataRef="source1"/> da <ph id="source2" dataRef="source2"/>?</target>
             </segment>
-            <mda:metadata>
-                <mda:metagroup category="row_xml_attribute">
-                    <mda:meta type="x-matecat-raw">200</mda:meta>
-                    <mda:meta type="x-matecat-weighted">100</mda:meta>
-                </mda:metagroup>
-            </mda:metadata>
         </unit>
     </file>
 </xliff>
