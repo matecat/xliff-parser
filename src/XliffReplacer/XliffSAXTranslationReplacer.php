@@ -111,6 +111,10 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
             $this->currentTransUnitTranslate = isset($attr[ 'translate' ]) ? $attr[ 'translate' ] : 'yes';
         }
 
+        if('mda:metadata' === $name){
+            $this->unitContainsMda = true;
+        }
+
         // check if we are entering into a <target>
         if ('target' === $name) {
 
@@ -241,6 +245,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
          * self::tagOpen method
          */
         if (!$this->isEmpty and !($this->inTarget and $name !== 'target')) {
+
             if (!$this->inTarget) {
                 $tag = "</$name>";
             }
@@ -390,8 +395,19 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
             } elseif (in_array($name, $this->nodesToCopy)) { // we are closing a critical CDATA section
 
                 $this->bufferIsActive = false;
-                $tag                  = $this->CDATABuffer."</$name>";
+
+                // only for Xliff 2.*
+                // write here <mda:metagroup> and <mda:meta> if already present in the <unit>
+                if('mda:metadata' === $name and $this->unitContainsMda and $this->xliffVersion === 2){
+                    $tag = $this->CDATABuffer;
+                    $tag .= $this->getWordCountGroupForXliffV2($this->counts[ 'raw_word_count' ], $this->counts[ 'eq_word_count' ], false);
+                    $tag .= "    </mda:metadata>";
+                } else {
+                    $tag = $this->CDATABuffer."</$name>";
+                }
+
                 $this->CDATABuffer    = "";
+
                 //flush to pointer
                 $this->postProcAndFlush($this->outputFP, $tag);
             } elseif ('segment' === $name) {
@@ -406,7 +422,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
                 // only for Xliff 2.*
                 // in xliff v2 we add metadata after closing a <section>
                 if($this->xliffVersion === 2){
-                    if (isset($this->transUnits[ $this->currentTransUnitId ]) and !empty($this->transUnits[ $this->currentTransUnitId ])) {
+                    if (isset($this->transUnits[ $this->currentTransUnitId ]) and !empty($this->transUnits[ $this->currentTransUnitId ]) and !$this->unitContainsMda) {
                         $tag .= $this->getWordCountGroupForXliffV2($this->counts[ 'raw_word_count' ], $this->counts[ 'eq_word_count' ]);
                     }
                 }
@@ -459,6 +475,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
             $this->currentTransUnitTranslate = null;
             $this->inTU = false;
             $this->segmentPositionInTu = -1;
+            $this->unitContainsMda = false;
         }
     }
 
@@ -619,13 +636,22 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
     }
 
     /**
-     * @param $raw_word_count
-     * @param $eq_word_count
+     * @param      $raw_word_count
+     * @param      $eq_word_count
+     * @param bool $withMetadataTag
      *
      * @return string
      */
-    private function getWordCountGroupForXliffV2($raw_word_count, $eq_word_count)
+    private function getWordCountGroupForXliffV2($raw_word_count, $eq_word_count, $withMetadataTag = true)
     {
+        if($withMetadataTag === false){
+            return "    <mda:metagroup category=\"row_xml_attribute\">
+                                <mda:meta type=\"x-matecat-raw\">$raw_word_count</mda:meta>
+                                <mda:meta type=\"x-matecat-weighted\">$eq_word_count</mda:meta>
+                            </mda:metagroup>
+                    ";
+        }
+
         return "
             <mda:metadata>
                 <mda:metagroup category=\"row_xml_attribute\">

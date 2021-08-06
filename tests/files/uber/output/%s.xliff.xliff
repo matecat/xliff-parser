@@ -14,7 +14,11 @@
 
                     </mda:meta>
                 </mda:metaGroup>
-            </mda:metadata>
+                <mda:metagroup category="row_xml_attribute">
+                                <mda:meta type="x-matecat-raw">0</mda:meta>
+                                <mda:meta type="x-matecat-weighted">0</mda:meta>
+                            </mda:metagroup>
+                        </mda:metadata>
             <memsource:additionalTagData>
                 <memsource:tag id="source3">
                     <memsource:tagId>3</memsource:tagId>
@@ -48,12 +52,6 @@
                 <source>Hi %s .</source>
                 <target>Ciao %s .</target>
             </segment>
-            <mda:metadata>
-                <mda:metagroup category="row_xml_attribute">
-                    <mda:meta type="x-matecat-raw">200</mda:meta>
-                    <mda:meta type="x-matecat-weighted">100</mda:meta>
-                </mda:metagroup>
-            </mda:metadata>
         </unit>
     </file>
 </xliff>

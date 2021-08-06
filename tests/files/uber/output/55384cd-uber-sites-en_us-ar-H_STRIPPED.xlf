@@ -9,17 +9,15 @@
                         Repo: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/uber-sites/keys/" target="_blank"&gt;uber-sites&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/uber-sites/key/legal.hub.terms.uber-eats-online-ordering-sales-channel-addendum-data-processing-agreement/overview" target="_blank"&gt;legal.hub.terms.uber-eats-online-ordering-sales-channel-addendum-data-processing-agreement&lt;/a&gt; Description: &lt;font color="blue"&gt;Hyperlink to document on uber.com/legal&lt;/font&gt;
                     </mda:meta>
                 </mda:metaGroup>
-            </mda:metadata>
+                <mda:metagroup category="row_xml_attribute">
+                                <mda:meta type="x-matecat-raw">0</mda:meta>
+                                <mda:meta type="x-matecat-weighted">0</mda:meta>
+                            </mda:metagroup>
+                        </mda:metadata>
             <segment id="0" state="initial">
                 <source>Uber Eats Online Ordering Sales Channel Addendum Data Processing Agreement</source>
                 <target>Ciao</target>
             </segment>
-            <mda:metadata>
-                <mda:metagroup category="row_xml_attribute">
-                    <mda:meta type="x-matecat-raw">200</mda:meta>
-                    <mda:meta type="x-matecat-weighted">100</mda:meta>
-                </mda:metagroup>
-            </mda:metadata>
         </unit>
         <unit help-id="2" id="tu-2" memsource:tGroupBegin="1" memsource:tGroupEnd="1">
             <mda:metadata>
@@ -29,17 +27,15 @@
                         Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/uber-sites/keys" target="_blank"&gt;uber-sites&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/uber-sites/key/cookie.banner.optin.text/overview" target="_blank"&gt;cookie.banner.optin.text&lt;/a&gt; Description: &lt;font color="blue"&gt;Opt in button text for cookie banner&lt;/font&gt;
                     </mda:meta>
                 </mda:metaGroup>
-            </mda:metadata>
+                <mda:metagroup category="row_xml_attribute">
+                                <mda:meta type="x-matecat-raw">200</mda:meta>
+                                <mda:meta type="x-matecat-weighted">100</mda:meta>
+                            </mda:metagroup>
+                        </mda:metadata>
             <segment id="1" state="translated">
                 <source>Got it</source>
                 <target>Ricevuto!</target>
             </segment>
-            <mda:metadata>
-                <mda:metagroup category="row_xml_attribute">
-                    <mda:meta type="x-matecat-raw">500</mda:meta>
-                    <mda:meta type="x-matecat-weighted">300</mda:meta>
-                </mda:metagroup>
-            </mda:metadata>
         </unit>
         <unit help-id="3" id="tu-3" memsource:tGroupBegin="2" memsource:tGroupEnd="2">
             <mda:metadata>
@@ -49,17 +45,15 @@
                         Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/uber-sites/keys" target="_blank"&gt;uber-sites&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/uber-sites/key/common.media.button.play/overview" target="_blank"&gt;common.media.button.play&lt;/a&gt; Description: &lt;font color="blue"&gt;Default text for media/video play buttons&lt;/font&gt;
                     </mda:meta>
                 </mda:metaGroup>
-            </mda:metadata>
+                <mda:metagroup category="row_xml_attribute">
+                                <mda:meta type="x-matecat-raw">500</mda:meta>
+                                <mda:meta type="x-matecat-weighted">300</mda:meta>
+                            </mda:metagroup>
+                        </mda:metadata>
             <segment id="2" state="translated">
                 <source>Play video</source>
                 <target>Riprodurre video</target>
             </segment>
-            <mda:metadata>
-                <mda:metagroup category="row_xml_attribute">
-                    <mda:meta type="x-matecat-raw">800</mda:meta>
-                    <mda:meta type="x-matecat-weighted">500</mda:meta>
-                </mda:metagroup>
-            </mda:metadata>
         </unit>
     </file>
 </xliff>

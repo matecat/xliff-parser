@@ -7,47 +7,27 @@
                     <mda:meta type="key"></mda:meta>
                     <mda:meta type="key-note">Body </mda:meta>
                 </mda:metaGroup>
-            </mda:metadata>
+                <mda:metagroup category="row_xml_attribute">
+                                <mda:meta type="x-matecat-raw">0</mda:meta>
+                                <mda:meta type="x-matecat-weighted">0</mda:meta>
+                            </mda:metagroup>
+                        </mda:metadata>
             <segment id="2" state="translated">
                 <source>Uber Eats - We have been informed that someone else has used your account.</source>
                 <target>Italiano 2</target>
             </segment>
-            <mda:metadata>
-                <mda:metagroup category="row_xml_attribute">
-                    <mda:meta type="x-matecat-raw">5</mda:meta>
-                    <mda:meta type="x-matecat-weighted">20</mda:meta>
-                </mda:metagroup>
-            </mda:metadata>
             <segment id="3" state="translated">
                 <source>This violates the terms of your Services Agreement with Uber.</source>
                 <target>Italiano 3</target>
             </segment>
-            <mda:metadata>
-                <mda:metagroup category="row_xml_attribute">
-                    <mda:meta type="x-matecat-raw">10</mda:meta>
-                    <mda:meta type="x-matecat-weighted">30</mda:meta>
-                </mda:metagroup>
-            </mda:metadata>
             <segment id="4" state="translated">
                 <source>If we receive multiple reports of this nature, your account will be suspended.</source>
                 <target>Italiano 4</target>
             </segment>
-            <mda:metadata>
-                <mda:metagroup category="row_xml_attribute">
-                    <mda:meta type="x-matecat-raw">210</mda:meta>
-                    <mda:meta type="x-matecat-weighted">130</mda:meta>
-                </mda:metagroup>
-            </mda:metadata>
             <segment id="5" state="translated">
                 <source>Thank you for taking this notification into account in your next deliveries.</source>
                 <target>Italiano 5</target>
             </segment>
-            <mda:metadata>
-                <mda:metagroup category="row_xml_attribute">
-                    <mda:meta type="x-matecat-raw">410</mda:meta>
-                    <mda:meta type="x-matecat-weighted">230</mda:meta>
-                </mda:metagroup>
-            </mda:metadata>
         </unit>
     </file>
 </xliff>
