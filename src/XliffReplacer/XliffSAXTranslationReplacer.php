@@ -406,7 +406,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
                 $this->bufferIsActive = false;
 
                 // only for Xliff 2.*
-                // write here <mda:metagroup> and <mda:meta> if already present in the <unit>
+                // write here <mda:metaGroup> and <mda:meta> if already present in the <unit>
                 if('mda:metadata' === $name and $this->unitContainsMda and $this->xliffVersion === 2){
 
                     // we need to update counts here
@@ -701,8 +701,8 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
                 <mda:metaGroup category=\"row_xml_attribute\">
                     <mda:meta type=\"x-matecat-raw\">$raw_word_count</mda:meta>
                     <mda:meta type=\"x-matecat-weighted\">$eq_word_count</mda:meta>
-                </mda:metagroup>
-            </mda:metaGroup>";
+                </mda:metaGroup>
+            </mda:metadata>";
     }
 
     /**
