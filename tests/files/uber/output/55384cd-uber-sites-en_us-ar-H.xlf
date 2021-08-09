@@ -11,8 +11,8 @@
     </mda:meta>
                 </mda:metaGroup>
                 <mda:metagroup category="row_xml_attribute">
-                                <mda:meta type="x-matecat-raw">0</mda:meta>
-                                <mda:meta type="x-matecat-weighted">0</mda:meta>
+                                <mda:meta type="x-matecat-raw">10</mda:meta>
+                                <mda:meta type="x-matecat-weighted">8</mda:meta>
                             </mda:metagroup>
                         </mda:metadata>
             <segment id="0" state="translated">
@@ -49,8 +49,8 @@
     </mda:meta>
                 </mda:metaGroup>
                 <mda:metagroup category="row_xml_attribute">
-                                <mda:meta type="x-matecat-raw">12</mda:meta>
-                                <mda:meta type="x-matecat-weighted">8.6</mda:meta>
+                                <mda:meta type="x-matecat-raw">2</mda:meta>
+                                <mda:meta type="x-matecat-weighted">0.6</mda:meta>
                             </mda:metagroup>
                         </mda:metadata>
             <segment id="2" state="translated">
@@ -68,8 +68,8 @@
     </mda:meta>
                 </mda:metaGroup>
                 <mda:metagroup category="row_xml_attribute">
-                                <mda:meta type="x-matecat-raw">14</mda:meta>
-                                <mda:meta type="x-matecat-weighted">9.2</mda:meta>
+                                <mda:meta type="x-matecat-raw">2</mda:meta>
+                                <mda:meta type="x-matecat-weighted">0.6</mda:meta>
                             </mda:metagroup>
                         </mda:metadata>
             <segment id="3" state="translated">
@@ -87,8 +87,8 @@
     </mda:meta>
                 </mda:metaGroup>
                 <mda:metagroup category="row_xml_attribute">
-                                <mda:meta type="x-matecat-raw">15</mda:meta>
-                                <mda:meta type="x-matecat-weighted">9.8</mda:meta>
+                                <mda:meta type="x-matecat-raw">1</mda:meta>
+                                <mda:meta type="x-matecat-weighted">0.6</mda:meta>
                             </mda:metagroup>
                         </mda:metadata>
             <memsource:additionalTagData>
@@ -124,8 +124,8 @@
     </mda:meta>
                 </mda:metaGroup>
                 <mda:metagroup category="row_xml_attribute">
-                                <mda:meta type="x-matecat-raw">50</mda:meta>
-                                <mda:meta type="x-matecat-weighted">37.8</mda:meta>
+                                <mda:meta type="x-matecat-raw">35</mda:meta>
+                                <mda:meta type="x-matecat-weighted">28</mda:meta>
                             </mda:metagroup>
                         </mda:metadata>
             <segment id="6" state="translated">

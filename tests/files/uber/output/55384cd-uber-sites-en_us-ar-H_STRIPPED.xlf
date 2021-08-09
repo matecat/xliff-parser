@@ -10,8 +10,8 @@
                     </mda:meta>
                 </mda:metaGroup>
                 <mda:metagroup category="row_xml_attribute">
-                                <mda:meta type="x-matecat-raw">0</mda:meta>
-                                <mda:meta type="x-matecat-weighted">0</mda:meta>
+                                <mda:meta type="x-matecat-raw">200</mda:meta>
+                                <mda:meta type="x-matecat-weighted">100</mda:meta>
                             </mda:metagroup>
                         </mda:metadata>
             <segment id="0" state="initial">
@@ -46,8 +46,8 @@
                     </mda:meta>
                 </mda:metaGroup>
                 <mda:metagroup category="row_xml_attribute">
-                                <mda:meta type="x-matecat-raw">500</mda:meta>
-                                <mda:meta type="x-matecat-weighted">300</mda:meta>
+                                <mda:meta type="x-matecat-raw">300</mda:meta>
+                                <mda:meta type="x-matecat-weighted">200</mda:meta>
                             </mda:metagroup>
                         </mda:metadata>
             <segment id="2" state="translated">

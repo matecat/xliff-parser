@@ -11,8 +11,8 @@
                     </mda:meta>
                 </mda:metaGroup>
                 <mda:metagroup category="row_xml_attribute">
-                                <mda:meta type="x-matecat-raw">0</mda:meta>
-                                <mda:meta type="x-matecat-weighted">0</mda:meta>
+                                <mda:meta type="x-matecat-raw">1</mda:meta>
+                                <mda:meta type="x-matecat-weighted">1</mda:meta>
                             </mda:metagroup>
                         </mda:metadata>
             <memsource:additionalTagData>
