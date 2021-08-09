@@ -146,11 +146,22 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
                         $pos = current($this->transUnits[ $this->currentTransUnitId ]);
                     }
 
-                    if ($name === $this->tuTagName and strpos($tag, 'help-id') === false) {
+                    if ($name === $this->tuTagName) {
+
                         $sid = $this->segments[ $pos ][ 'sid' ];
-                        if (!empty($sid)) {
-                            $tag .= "help-id=\"$sid\" ";
+
+                        // add `help-id` to xliff v.1*
+                        // add `mtc:segment-id` to xliff v.2*
+                        if($this->xliffVersion === 1 and strpos($tag, 'help-id') === false){
+                            if (!empty($sid)) {
+                                $tag .= "help-id=\"$sid\" ";
+                            }
+                        } elseif($this->xliffVersion === 2 and strpos($tag, 'mtc:segment-id') === false) {
+                            if (!empty($sid)) {
+                                $tag .= "mtc:segment-id=\"$sid\" ";
+                            }
                         }
+
                     } elseif ('segment' === $name and $this->xliffVersion === 2) { // add state to segment in Xliff v2
                         list($stateProp, $lastMrkState) = $this->setTransUnitState($this->segments[ $pos ], $stateProp, $lastMrkState);
                     }
@@ -678,20 +689,20 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
     private function getWordCountGroupForXliffV2($raw_word_count, $eq_word_count, $withMetadataTag = true)
     {
         if($withMetadataTag === false){
-            return "    <mda:metagroup category=\"row_xml_attribute\">
+            return "    <mda:metaGroup category=\"row_xml_attribute\">
                                 <mda:meta type=\"x-matecat-raw\">$raw_word_count</mda:meta>
                                 <mda:meta type=\"x-matecat-weighted\">$eq_word_count</mda:meta>
-                            </mda:metagroup>
+                            </mda:metaGroup>
                     ";
         }
 
         return "
             <mda:metadata>
-                <mda:metagroup category=\"row_xml_attribute\">
+                <mda:metaGroup category=\"row_xml_attribute\">
                     <mda:meta type=\"x-matecat-raw\">$raw_word_count</mda:meta>
                     <mda:meta type=\"x-matecat-weighted\">$eq_word_count</mda:meta>
                 </mda:metagroup>
-            </mda:metadata>";
+            </mda:metaGroup>";
     }
 
     /**
