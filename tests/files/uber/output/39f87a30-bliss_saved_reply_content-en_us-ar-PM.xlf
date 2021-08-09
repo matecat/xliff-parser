@@ -10,10 +10,10 @@
 
                     </mda:meta>
                 </mda:metaGroup>
-                <mda:metagroup category="row_xml_attribute">
+                <mda:metaGroup category="row_xml_attribute">
                                 <mda:meta type="x-matecat-raw">1</mda:meta>
                                 <mda:meta type="x-matecat-weighted">1</mda:meta>
-                            </mda:metagroup>
+                            </mda:metaGroup>
                         </mda:metadata>
             <memsource:additionalTagData>
                 <memsource:tag id="source3">

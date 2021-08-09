@@ -10,10 +10,10 @@
 
                     </mda:meta>
                 </mda:metaGroup>
-                <mda:metagroup category="row_xml_attribute">
+                <mda:metaGroup category="row_xml_attribute">
                                 <mda:meta type="x-matecat-raw">1</mda:meta>
                                 <mda:meta type="x-matecat-weighted">1</mda:meta>
-                            </mda:metagroup>
+                            </mda:metaGroup>
                         </mda:metadata>
             <memsource:additionalTagData>
                 <memsource:tag id="source1">
@@ -29,7 +29,7 @@
                 <target>Digita il PIN di <ph id="source1" dataRef="source1" /></target>
             </segment>
         </unit>
-        <unit help-id="1" id="1" memsource:tGroupBegin="1" memsource:tGroupEnd="2">
+        <unit mtc:segment-id="1" id="1" memsource:tGroupBegin="1" memsource:tGroupEnd="2">
             <mda:metadata>
                 <mda:metaGroup>
                     <mda:meta type="key">338e14a0-c389-4138-97fa-493a5b317f01</mda:meta>
@@ -38,10 +38,10 @@
 
                     </mda:meta>
                 </mda:metaGroup>
-                <mda:metagroup category="row_xml_attribute">
+                <mda:metaGroup category="row_xml_attribute">
                                 <mda:meta type="x-matecat-raw">1</mda:meta>
                                 <mda:meta type="x-matecat-weighted">1</mda:meta>
-                            </mda:metagroup>
+                            </mda:metaGroup>
                         </mda:metadata>
             <segment id="1" state="translated">
                 <source>Are you sure you want to sign out?</source>
@@ -52,7 +52,7 @@
                 <target>Cambiare questo sperando che sporchi il resto</target>
             </segment>
         </unit>
-        <unit help-id="3" id="2" memsource:tGroupBegin="3" memsource:tGroupEnd="3">
+        <unit mtc:segment-id="3" id="2" memsource:tGroupBegin="3" memsource:tGroupEnd="3">
             <mda:metadata>
                 <mda:metaGroup>
                     <mda:meta type="key">af982b0c-2a41-486e-837d-eca64422cb7d</mda:meta>
@@ -66,10 +66,10 @@
 
                     </mda:meta>
                 </mda:metaGroup>
-                <mda:metagroup category="row_xml_attribute">
+                <mda:metaGroup category="row_xml_attribute">
                                 <mda:meta type="x-matecat-raw">2</mda:meta>
                                 <mda:meta type="x-matecat-weighted">2</mda:meta>
-                            </mda:metagroup>
+                            </mda:metaGroup>
                         </mda:metadata>
             <segment id="3" state="translated">
                 <source>this group of language will automatically complete the review steps</source>

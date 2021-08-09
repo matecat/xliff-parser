@@ -11,7 +11,7 @@
                 }
             </note>
         </notes>
-        <unit help-id="1" id="u1" translate="test">
+        <unit mtc:segment-id="1" id="u1" translate="test">
             <my:elem xmlns:my="myNamespaceURI" id="x1">data</my:elem>
             <notes>
                 <note id="n1">note for unit</note>
@@ -31,13 +31,13 @@
                 <target>|||UNTRANSLATED_CONTENT_START|||<pc id="1">Hello <mrk id="m2" type="term">World</mrk> !</pc>|||UNTRANSLATED_CONTENT_END|||</target>
             </segment>
             <mda:metadata>
-                <mda:metagroup category="row_xml_attribute">
+                <mda:metaGroup category="row_xml_attribute">
                     <mda:meta type="x-matecat-raw">200</mda:meta>
                     <mda:meta type="x-matecat-weighted">100</mda:meta>
-                </mda:metagroup>
+                </mda:metaGroup>
             </mda:metadata>
         </unit>
-        <unit help-id="2" id="u2">
+        <unit mtc:segment-id="2" id="u2">
             <my:elem xmlns:my="myNamespaceURI" id="x2">data</my:elem>
             <notes>
                 <note id="n1">note for unit2</note>
@@ -57,10 +57,10 @@
                 <target>|||UNTRANSLATED_CONTENT_START|||<pc id="1">Hello <mrk id="m2" type="term">World2</mrk> !</pc>|||UNTRANSLATED_CONTENT_END|||</target>
             </segment>
             <mda:metadata>
-                <mda:metagroup category="row_xml_attribute">
+                <mda:metaGroup category="row_xml_attribute">
                     <mda:meta type="x-matecat-raw">500</mda:meta>
                     <mda:meta type="x-matecat-weighted">300</mda:meta>
-                </mda:metagroup>
+                </mda:metaGroup>
             </mda:metadata>
         </unit>
     </file>
