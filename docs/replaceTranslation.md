@@ -150,7 +150,7 @@ In this case the replacer will do not touch `target` and it is simply left as is
 
 ### Xliff 2.*
 
-Every xliff 2.* file generated from the replacer will be compliant with [latest xliff 2.0 specification](http://docs.oasis-open.org/xliff/xliff-core/v2.0/xliff-core-v2.0.html).
+Every xliff 2.* file generated from the replacer will be compliant with [the latest version of the OASIS specification](http://docs.oasis-open.org/xliff/xliff-core/v2.0/xliff-core-v2.0.html).
 
 Replacer will take care of:
 
