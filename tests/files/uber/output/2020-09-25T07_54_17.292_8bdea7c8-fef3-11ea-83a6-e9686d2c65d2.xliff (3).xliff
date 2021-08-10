@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?><xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0" xmlns:slr="urn:oasis:names:tc:xliff:sizerestriction:2.0" xmlns:memsource="http://www.memsource.com/xliff2.0/1.0" version="2.0" memsource:wfLevel="4" srcLang="en-us" trgLang="uk-ua" xmlns:mtc="https://www.matecat.com">
+<?xml version="1.0" encoding="UTF-8"?><xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0" xmlns:slr="urn:oasis:names:tc:xliff:sizerestriction:2.0" xmlns:memsource="http://www.memsource.com/xliff2.0/1.0" version="2.0" memsource:wfLevel="4" srcLang="en-us" trgLang="uk-ua"  xmlns:mtc="https://www.matecat.com">
     <file id="IDb8ZSSCnyDo4SSn_dc6:0-3" memsource:taskId="IDb8ZSSCnyDo4SSn_dc6" canResegment="no" original="ebf94f98-dmitrystest.xml">
         <slr:profiles generalProfile="xliff:codepoints"/>
-        <unit id="0" memsource:tGroupBegin="0" memsource:tGroupEnd="0">
+        <unit id="0" memsource:tGroupBegin="0" memsource:tGroupEnd="0" translate="yes">
             <mda:metadata>
                 <mda:metaGroup>
                     <mda:meta type="key">07adc134-7138-40d2-a670-c420cbcc57e1</mda:meta>
@@ -29,7 +29,7 @@
                 <target>Digita il PIN di <ph id="source1" dataRef="source1" /></target>
             </segment>
         </unit>
-        <unit mtc:segment-id="1" id="1" memsource:tGroupBegin="1" memsource:tGroupEnd="2">
+        <unit mtc:segment-id="1" id="1" memsource:tGroupBegin="1" memsource:tGroupEnd="2" translate="yes">
             <mda:metadata>
                 <mda:metaGroup>
                     <mda:meta type="key">338e14a0-c389-4138-97fa-493a5b317f01</mda:meta>
@@ -52,7 +52,7 @@
                 <target>Cambiare questo sperando che sporchi il resto</target>
             </segment>
         </unit>
-        <unit mtc:segment-id="3" id="2" memsource:tGroupBegin="3" memsource:tGroupEnd="3">
+        <unit mtc:segment-id="3" id="2" memsource:tGroupBegin="3" memsource:tGroupEnd="3" translate="yes">
             <mda:metadata>
                 <mda:metaGroup>
                     <mda:meta type="key">af982b0c-2a41-486e-837d-eca64422cb7d</mda:meta>

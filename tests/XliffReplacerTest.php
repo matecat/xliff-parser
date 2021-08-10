@@ -11,6 +11,40 @@ class XliffReplacerTest extends BaseTest
     /**
      * @test
      */
+    public function can_replace_a_xliff_20_with_mda_without_notes_or_original_data()
+    {
+        $data = $this->getData([
+                [
+                        'sid' => 1,
+                        'segment' => 'Join our webinar: “<pc dataRefEnd="d2" dataRefStart="d1" id="1" subType="xlf:b" type="fmt">Machine Learning in Cyber Security: What It Is and What It Isn\'t</pc>”',
+                        'internal_id' => 'u1',
+                        'mrk_id' => '',
+                        'prev_tags' => '',
+                        'succ_tags' => '',
+                        'mrk_prev_tags' => '',
+                        'mrk_succ_tags' => '',
+                        'translation' => 'Bla bla bla',
+                        'status' => TranslationStatus::STATUS_TRANSLATED,
+                        'eq_word_count' => 1,
+                        'raw_word_count' => 1,
+                ],
+        ]);
+
+        $inputFile = __DIR__.'/../tests/files/xliff20-without-notes-or-original-data.xliff';
+        $outputFile = __DIR__.'/../tests/files/output/xliff20-without-notes-or-original-data.xliff';
+
+        $xliffParser = new XliffParser();
+        $xliffParser->replaceTranslation($inputFile, $data['data'], $data['transUnits'], 'sk-SK', $outputFile);
+
+        $output = file_get_contents($outputFile);
+
+        // check if there is only one <mda:metadata>
+        $this->assertEquals(1, substr_count($output, '<mda:metadata>'));
+    }
+
+    /**
+     * @test
+     */
     public function can_replace_a_xliff_20_with_mda_without_duplicate_it()
     {
         $data = $this->getData([

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:its="http://www.w3.org/2005/11/its" its:version="2.0" version="1.2" xmlns:mtc="https://www.matecat.com">
+<?xml version="1.0" encoding="UTF-8"?><xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:its="http://www.w3.org/2005/11/its" its:version="2.0" version="1.2"  xmlns:mtc="https://www.matecat.com">
     <file datatype="x-docx" filter="com.matecat.filters.basefilters.DefaultFilter" original="Patreon Expansion Translation Test.docx" source-language="en-GB" target-language="sk-SK" tool-id="matecat-converter 1.3.3"><header><reference><internal-file form="base64">UEsDBBQABgAIAAAAIQAykW9XZgEAAKUFAAATAAgCW0NvbnRlbnRfVHlwZXNdLnhtbCCiBAIooAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
@@ -169,7 +169,7 @@
         RVY0WTJ4MVpHVmtRMjlzYjNKekxtazlNQXAwYzFCdmQyVnljRzlwYm5SSmJtTnNkV1JsWkZOc2FXUmxUblZ0WW1WeWN5NXBQVEE9PC9kb2M+CjwvbWFuaWZlc3Q+</internal-file></reference></header><body/></file>
     <file datatype="x-undefined" original="word/document.xml" source-language="en-GB" target-language="sk-SK">
         <body>
-            <trans-unit help-id="1" id="NFDBB2FA9-tu1" xml:space="preserve">
+            <trans-unit help-id="1" id="NFDBB2FA9-tu1" xml:space="preserve" translate="yes">
                 <source xml:lang="en-GB">The system for creative people is broken</source>
                 <seg-source><mrk mid="0" mtype="seg">The system for creative people is broken</mrk></seg-source>
             <target xml:lang="sk-SK" state="translated">Bla bla bla</target>

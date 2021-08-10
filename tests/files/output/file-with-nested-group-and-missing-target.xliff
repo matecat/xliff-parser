@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:its="http://www.w3.org/2005/11/its" its:version="2.0" version="1.2" xmlns:mtc="https://www.matecat.com">
+<?xml version="1.0" encoding="UTF-8"?><xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:its="http://www.w3.org/2005/11/its" its:version="2.0" version="1.2"  xmlns:mtc="https://www.matecat.com">
     <file datatype="x-xlf" original="Ebay-like-small-file-edited.xlf" source-language="hy-am" target-language="sk-SK" tool-id="matecat-converter">
         <header>
             <reference>
@@ -20,27 +20,27 @@
             <group>
                 <group>
                     <group>
-                        <trans-unit help-id="1" id="NFDBB2FA9-tu519" xml:space="preserve">
+                        <trans-unit help-id="1" id="NFDBB2FA9-tu519" xml:space="preserve" translate="yes">
                             <source xml:lang="ru-RU">Bla Bla</source>
                         <target xml:lang="sk-SK" state="translated">Bla bla bla</target>
 <count-group name="NFDBB2FA9-tu519"><count count-type="x-matecat-raw">0</count><count count-type="x-matecat-weighted">0</count></count-group></trans-unit>
                     </group>
                 </group>
-                <trans-unit help-id="2" id="NFDBB2FA9-tu52" xml:space="preserve">
+                <trans-unit help-id="2" id="NFDBB2FA9-tu52" xml:space="preserve" translate="yes">
                     <source xml:lang="ru-RU">Bla Bla Bla Bla</source>
                 <target xml:lang="sk-SK" state="translated">Bla bla bla</target>
 <count-group name="NFDBB2FA9-tu52"><count count-type="x-matecat-raw">0</count><count count-type="x-matecat-weighted">0</count></count-group></trans-unit>
-                <trans-unit help-id="3" id="NFDBB2FA9-tu523" xml:space="preserve">
+                <trans-unit help-id="3" id="NFDBB2FA9-tu523" xml:space="preserve" translate="yes">
                     <source xml:lang="ru-RU">Bla Bla Bla Bla Bla Bla Bla Bla Bla</source>
                 <target xml:lang="sk-SK" state="translated">Bla bla bla</target>
 <count-group name="NFDBB2FA9-tu523"><count count-type="x-matecat-raw">0</count><count count-type="x-matecat-weighted">0</count></count-group></trans-unit>
             </group>
-            <trans-unit help-id="3" id="NFDBB2FA9-tu523" xml:space="preserve">
+            <trans-unit help-id="3" id="NFDBB2FA9-tu523" xml:space="preserve" translate="yes">
                     <source xml:lang="ru-RU">Bla Bla Bla Bla Bla Bla Bla Bla Bla</source>
                 <target  xml:lang="sk-SK" state="translated">Bla bla bla</target>
 <count-group name="NFDBB2FA9-tu523"><count count-type="x-matecat-raw">1</count><count count-type="x-matecat-weighted">1</count></count-group>
                 </trans-unit>
-            <trans-unit help-id="5" id="NFDBB2FA9-tu522" xml:space="preserve">
+            <trans-unit help-id="5" id="NFDBB2FA9-tu522" xml:space="preserve" translate="yes">
                 <source xml:lang="ru-RU">Bla Bla Bla Bla Bla Bla</source>
                 <target  xml:lang="sk-SK" state="translated">Bla bla bla</target>
 <count-group name="NFDBB2FA9-tu522"><count count-type="x-matecat-raw">2</count><count count-type="x-matecat-weighted">2</count></count-group>
