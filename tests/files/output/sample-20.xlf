@@ -15,8 +15,8 @@
             <my:elem xmlns:my="myNamespaceURI" id="x1">data</my:elem>
             <mda:metadata>
                 <mda:metaGroup category="row_xml_attribute">
-                    <mda:meta type="x-matecat-raw">0</mda:meta>
-                    <mda:meta type="x-matecat-weighted">0</mda:meta>
+                    <mda:meta type="x-matecat-raw">200</mda:meta>
+                    <mda:meta type="x-matecat-weighted">100</mda:meta>
                 </mda:metaGroup>
             </mda:metadata><notes>
                 <note id="n1">note for unit</note>
@@ -40,8 +40,8 @@
             <my:elem xmlns:my="myNamespaceURI" id="x2">data</my:elem>
             <mda:metadata>
                 <mda:metaGroup category="row_xml_attribute">
-                    <mda:meta type="x-matecat-raw">200</mda:meta>
-                    <mda:meta type="x-matecat-weighted">100</mda:meta>
+                    <mda:meta type="x-matecat-raw">400</mda:meta>
+                    <mda:meta type="x-matecat-weighted">200</mda:meta>
                 </mda:metaGroup>
             </mda:metadata><notes>
                 <note id="n1">note for unit2</note>

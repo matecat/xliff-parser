@@ -160,9 +160,16 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
             //
             // http://docs.oasis-open.org/xliff/xliff-core/v2.0/os/xliff-core-v2.0-os.html#unit
             //
-            if($this->xliffVersion === 2 and ( $name === 'notes' or $name === 'originalData' ) and $this->unitContainsMda === false ){
+            if($this->xliffVersion === 2 and ( $name === 'notes' or $name === 'originalData' or $name === 'segment' ) and $this->unitContainsMda === false ){
                 if (isset($this->transUnits[ $this->currentTransUnitId ]) and !empty($this->transUnits[ $this->currentTransUnitId ]) and !$this->unitContainsMda) {
+
+                    // we need to update counts here
+                    if($this->counts[ 'raw_word_count' ] === 0 and $this->counts[ 'eq_word_count' ] === 0){
+                        $this->updateCounts();
+                    }
+
                     $tag .= $this->getWordCountGroupForXliffV2($this->counts[ 'raw_word_count' ], $this->counts[ 'eq_word_count' ]);
+                    $this->unitContainsMda = true;
                 }
             }
 
