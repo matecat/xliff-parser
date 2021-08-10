@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?><xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0" xmlns:slr="urn:oasis:names:tc:xliff:sizerestriction:2.0" xmlns:memsource="http://www.memsource.com/xliff2.0/1.0" version="2.0" memsource:wfLevel="1" srcLang="en-us" trgLang="ar" xmlns:mtc="https://www.matecat.com">
+<?xml version="1.0" encoding="UTF-8"?><xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0" xmlns:slr="urn:oasis:names:tc:xliff:sizerestriction:2.0" xmlns:memsource="http://www.memsource.com/xliff2.0/1.0" version="2.0" memsource:wfLevel="1" srcLang="en-us" trgLang="ar"  xmlns:mtc="https://www.matecat.com">
     <file id="QEx16325z55c11A05_dc6:0-6" memsource:taskId="QEx16325z55c11A05_dc6" canResegment="no" original="255384cd-uber-sites.xml">
         <slr:profiles generalProfile="xliff:codepoints"/>
-        <unit mtc:segment-id="13570" id="0" memsource:tGroupBegin="0" memsource:tGroupEnd="0">
+        <unit mtc:segment-id="13570" id="0" memsource:tGroupBegin="0" memsource:tGroupEnd="0" translate="yes">
             <mda:metadata>
                 <mda:metaGroup>
                     <mda:meta type="key">83cddb71-92ff-4868-baf0-780f58d76838</mda:meta>
@@ -20,7 +20,7 @@
                 <target>Uber Eats Online Ordering Sales Channel Addendum Accordo sul trattamento dei dati</target>
             </segment>
         </unit>
-        <unit mtc:segment-id="13571" id="1" memsource:tGroupBegin="1" memsource:tGroupEnd="1">
+        <unit mtc:segment-id="13571" id="1" memsource:tGroupBegin="1" memsource:tGroupEnd="1" translate="yes">
             <mda:metadata>
                 <mda:metaGroup>
                     <mda:meta type="key">a349d3d9-e255-4ace-8c99-f1065854f806</mda:meta>
@@ -39,7 +39,7 @@
                 <target>Ho capito</target>
             </segment>
         </unit>
-        <unit mtc:segment-id="13572" id="2" memsource:tGroupBegin="2" memsource:tGroupEnd="2">
+        <unit mtc:segment-id="13572" id="2" memsource:tGroupBegin="2" memsource:tGroupEnd="2" translate="yes">
             <mda:metadata>
                 <mda:metaGroup>
                     <mda:meta type="key">a40265ea-c911-463a-bd22-2b2f20e54f27</mda:meta>
@@ -58,7 +58,7 @@
                 <target>Riproduci video</target>
             </segment>
         </unit>
-        <unit mtc:segment-id="13573" id="3" memsource:tGroupBegin="3" memsource:tGroupEnd="3">
+        <unit mtc:segment-id="13573" id="3" memsource:tGroupBegin="3" memsource:tGroupEnd="3" translate="yes">
             <mda:metadata>
                 <mda:metaGroup>
                     <mda:meta type="key">a9c1b5cc-5b2b-429a-8bde-663abe68a35b</mda:meta>
@@ -77,7 +77,7 @@
                 <target>Opzione di revoca</target>
             </segment>
         </unit>
-        <unit mtc:segment-id="13574" id="4" memsource:tGroupBegin="4" memsource:tGroupEnd="5">
+        <unit mtc:segment-id="13574" id="4" memsource:tGroupBegin="4" memsource:tGroupEnd="5" translate="yes">
             <mda:metadata>
                 <mda:metaGroup>
                     <mda:meta type="key">e6e55ae1-4d0f-4542-b9c9-329277b62bc6</mda:meta>
@@ -114,7 +114,7 @@
                 <target>Per saperne di più, visita la nostra Dichiarazione sui cookieo disattiva i cookie pubblicitari di terze parti utilizzando il pulsante sottostante.<ph id="source1" dataRef="source1"/> <ph id="source2" dataRef="source2"/> </target>
             </segment>
         </unit>
-        <unit mtc:segment-id="13576" id="5" memsource:tGroupBegin="6" memsource:tGroupEnd="6">
+        <unit mtc:segment-id="13576" id="5" memsource:tGroupBegin="6" memsource:tGroupEnd="6" translate="yes">
             <mda:metadata>
                 <mda:metaGroup>
                     <mda:meta type="key">f2338d11-8fa7-4349-a441-56c9f182c46c</mda:meta>
