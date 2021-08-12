@@ -464,8 +464,6 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
                     $tag .= $this->getWordCountGroupForXliffV2($this->counts[ 'raw_word_count' ], $this->counts[ 'eq_word_count' ], false);
                     $tag .= "    </mda:metadata>";
 
-                    $this->resetCounts();
-
                 } else {
                     $tag = $this->CDATABuffer."</$name>";
                 }
