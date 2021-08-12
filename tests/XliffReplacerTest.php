@@ -373,6 +373,13 @@ class XliffReplacerTest extends BaseTest
         $this->assertEquals($unit1['seg-target'][1]['raw-content'], 'Document title2');
         $this->assertEquals($unit2['seg-target'][0]['mid'], 0);
         $this->assertEquals($unit2['seg-target'][0]['raw-content'], 'Free text containing <pc id="1" canCopy="no" canDelete="no" dataRefEnd="d1" dataRefStart="d1">cursive</pc>.');
+
+        // check counters
+        preg_match_all('/<mda:meta type="x-matecat-raw">(.*?)<\/mda:meta>/s', file_get_contents($outputFile), $rawWords);
+        preg_match_all('/<mda:meta type="x-matecat-weighted">(.*?)<\/mda:meta>/s', file_get_contents($outputFile), $weightedWords);
+
+        $this->assertEquals($rawWords[1][1], 7);
+        $this->assertEquals($weightedWords[1][1], 5);
     }
 
     /**

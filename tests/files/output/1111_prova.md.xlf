@@ -16,8 +16,8 @@
   <unit mtc:segment-id="3" id="tu2" translate="yes">
    <mda:metadata>
                 <mda:metaGroup category="row_xml_attribute">
-                    <mda:meta type="x-matecat-raw">2</mda:meta>
-                    <mda:meta type="x-matecat-weighted">1</mda:meta>
+                    <mda:meta type="x-matecat-raw">7</mda:meta>
+                    <mda:meta type="x-matecat-weighted">5</mda:meta>
                 </mda:metaGroup>
             </mda:metadata><originalData>
     <data id="d1">_</data>
