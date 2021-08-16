@@ -9,6 +9,16 @@ class XliffParserV2Test extends BaseTest
     /**
      * @test
      */
+    public function can_parse_empty_xliff_v2()
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('empty.xliff'));
+
+        $this->assertFalse(isset( $parsed[ 'files' ][ 1 ][ 'trans-units' ]));
+    }
+
+    /**
+     * @test
+     */
     public function can_parse_xliff_v2_with_char_limit()
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('char-limit.xliff'));
