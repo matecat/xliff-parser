@@ -9,6 +9,40 @@ class XliffParserV2Test extends BaseTest
     /**
      * @test
      */
+    public function can_parse_a_xliff_file_with_empty_pc_tags()
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('pc-slash.xlf'));
+        $transUnits = $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ];
+        $expected = '<pc id="source14" dataRefStart="source14"><pc id="source15" dataRefStart="source15"><pc id="source16" dataRefStart="source16"><pc id="source17" dataRefStart="source17"></pc></pc></pc><pc id="source18" dataRefStart="source18"><pc id="source19" dataRefStart="source19"><pc id="source20" dataRefStart="source20">Adjudicate based on the information contained in the Bliss contact supplied in the DACT JIRA; do not access duplicate Bliss contacts.</pc></pc></pc><pc id="source21" dataRefStart="source21"><pc id="source22" dataRefStart="source22"><pc id="source23" dataRefStart="source23"><pc id="source24" dataRefStart="source24">Review All JIRA and Bliss tickets</pc> in the Description section for each incident.</pc></pc></pc><pc id="source25" dataRefStart="source25"><pc id="source26" dataRefStart="source26"><pc id="source27" dataRefStart="source27">Consider all allegations and counter-allegations made against a user meeting any of the above definitions</pc><pc id="source28" dataRefStart="source28"><pc id="source29" dataRefStart="source29"> in the Count decision.</pc></pc></pc></pc></pc>';
+
+        $this->assertEquals($expected, $transUnits[ 'source' ] [ 'raw-content' ] [ 1 ]);
+    }
+
+    /**
+     * @test
+     */
+    public function can_parse_a_xliff_file_collapsing_empty_tags()
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('pc-slash.xlf'), true);
+        $transUnits = $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ];
+        $expected = '<pc id="source14" dataRefStart="source14"><pc id="source15" dataRefStart="source15"><pc id="source16" dataRefStart="source16"><pc id="source17" dataRefStart="source17"/></pc></pc><pc id="source18" dataRefStart="source18"><pc id="source19" dataRefStart="source19"><pc id="source20" dataRefStart="source20">Adjudicate based on the information contained in the Bliss contact supplied in the DACT JIRA; do not access duplicate Bliss contacts.</pc></pc></pc><pc id="source21" dataRefStart="source21"><pc id="source22" dataRefStart="source22"><pc id="source23" dataRefStart="source23"><pc id="source24" dataRefStart="source24">Review All JIRA and Bliss tickets</pc> in the Description section for each incident.</pc></pc></pc><pc id="source25" dataRefStart="source25"><pc id="source26" dataRefStart="source26"><pc id="source27" dataRefStart="source27">Consider all allegations and counter-allegations made against a user meeting any of the above definitions</pc><pc id="source28" dataRefStart="source28"><pc id="source29" dataRefStart="source29"> in the Count decision.</pc></pc></pc></pc></pc>';
+
+        $this->assertEquals($expected, $transUnits[ 'source' ] [ 'raw-content' ] [ 1 ]);
+    }
+
+    /**
+     * @test
+     */
+    public function can_parse_empty_xliff_v2()
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('empty.xliff'));
+
+        $this->assertFalse(isset( $parsed[ 'files' ][ 1 ][ 'trans-units' ]));
+    }
+
+    /**
+     * @test
+     */
     public function can_parse_xliff_v2_with_char_limit()
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('char-limit.xliff'));

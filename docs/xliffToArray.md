@@ -119,6 +119,20 @@ The complete list of supported emojis can be found here:
 
 [https://www.compart.com/en/unicode/category/So](https://www.compart.com/en/unicode/category/So)
 
+### Empty xml tags
+
+By default, **empty tags will be preserved as is (so they are not collapsed)**. If you want to collapse empty xml tags you have to specify it:
+
+```php
+// ...
+use Matecat\XliffParser\XliffParser;
+
+// in this case XliffParser will collapse empty xml tags 
+$parser = new XliffParser();
+$parsed = $parser->xliffToArray('path/to/your/file.xliff', true);
+
+```
+
 ### Examples
 
 In this section you can find two full examples of parsed xliff document.

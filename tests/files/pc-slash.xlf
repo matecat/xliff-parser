@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0" xmlns:slr="urn:oasis:names:tc:xliff:sizerestriction:2.0" xmlns:memsource="http://www.memsource.com/xliff2.0/1.0" version="2.0" memsource:wfLevel="4" srcLang="en-us" trgLang="ja-jp">
+    <file id="AKvBZhRCny702xyM0_dc5:0-246" memsource:taskId="AKvBZhRCny702xyM0_dc5" canResegment="no" original="Apac-global-dact-adjudication-process-dangerous-driving-dact.xlf">
+        <slr:profiles generalProfile="xliff:codepoints"/>
+        <unit id="54" memsource:tGroupBegin="69" memsource:tGroupEnd="70">
+            <mda:metadata><mda:metaGroup><mda:meta type="key">items|23|items|0|paragraph</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <memsource:additionalTagData>
+                <memsource:tag id="source3"><memsource:tagId>3</memsource:tagId><memsource:type>g</memsource:type></memsource:tag>
+                <memsource:tag id="source17"><memsource:tagId>17</memsource:tagId><memsource:type>g</memsource:type></memsource:tag>
+                <memsource:tag id="source28"><memsource:tagId>28</memsource:tagId><memsource:type>g</memsource:type></memsource:tag>
+                <memsource:tag id="source8"><memsource:tagId>8</memsource:tagId><memsource:type>g</memsource:type></memsource:tag>
+                <memsource:tag id="source13"><memsource:tagId>13</memsource:tagId><memsource:type>g</memsource:type></memsource:tag>
+                <memsource:tag id="source24"><memsource:tagId>24</memsource:tagId><memsource:type>g</memsource:type></memsource:tag>
+                <memsource:tag id="source4"><memsource:tagId>4</memsource:tagId><memsource:type>g</memsource:type></memsource:tag>
+                <memsource:tag id="source20"><memsource:tagId>20</memsource:tagId><memsource:type>g</memsource:type></memsource:tag>
+                <memsource:tag id="source18"><memsource:tagId>18</memsource:tagId><memsource:type>g</memsource:type></memsource:tag>
+                <memsource:tag id="source29"><memsource:tagId>29</memsource:tagId><memsource:type>g</memsource:type></memsource:tag>
+                <memsource:tag id="source9"><memsource:tagId>9</memsource:tagId><memsource:type>g</memsource:type></memsource:tag>
+                <memsource:tag id="source14"><memsource:tagId>14</memsource:tagId><memsource:type>g</memsource:type></memsource:tag>
+                <memsource:tag id="source25"><memsource:tagId>25</memsource:tagId><memsource:type>g</memsource:type></memsource:tag>
+                <memsource:tag id="source5"><memsource:tagId>5</memsource:tagId><memsource:type>g</memsource:type></memsource:tag>
+                <memsource:tag id="source10"><memsource:tagId>10</memsource:tagId><memsource:type>g</memsource:type></memsource:tag>
+                <memsource:tag id="source21"><memsource:tagId>21</memsource:tagId><memsource:type>g</memsource:type></memsource:tag>
+                <memsource:tag id="source1"><memsource:tagId>1</memsource:tagId><memsource:type>g</memsource:type></memsource:tag>
+                <memsource:tag id="source19"><memsource:tagId>19</memsource:tagId><memsource:type>g</memsource:type></memsource:tag>
+                <memsource:tag id="source15"><memsource:tagId>15</memsource:tagId><memsource:type>g</memsource:type></memsource:tag>
+                <memsource:tag id="source26"><memsource:tagId>26</memsource:tagId><memsource:type>g</memsource:type></memsource:tag>
+                <memsource:tag id="source6"><memsource:tagId>6</memsource:tagId><memsource:type>g</memsource:type></memsource:tag>
+                <memsource:tag id="source11"><memsource:tagId>11</memsource:tagId><memsource:type>g</memsource:type></memsource:tag>
+                <memsource:tag id="source22"><memsource:tagId>22</memsource:tagId><memsource:type>g</memsource:type></memsource:tag>
+                <memsource:tag id="source2"><memsource:tagId>2</memsource:tagId><memsource:type>g</memsource:type></memsource:tag>
+                <memsource:tag id="source16"><memsource:tagId>16</memsource:tagId><memsource:type>g</memsource:type></memsource:tag>
+                <memsource:tag id="source27"><memsource:tagId>27</memsource:tagId><memsource:type>g</memsource:type></memsource:tag>
+                <memsource:tag id="source7"><memsource:tagId>7</memsource:tagId><memsource:type>g</memsource:type></memsource:tag>
+                <memsource:tag id="source12"><memsource:tagId>12</memsource:tagId><memsource:type>g</memsource:type></memsource:tag>
+                <memsource:tag id="source23"><memsource:tagId>23</memsource:tagId><memsource:type>g</memsource:type></memsource:tag>
+            </memsource:additionalTagData>
+            <originalData>
+                <data id="source3">&lt;g xmlns:xhtml="http://www.w3.org/1999/xhtml" id="KfnZQbenJFBwg4g0" ctype="x-html-SPAN" xhtml:style="font-size: 20px; color: rgb(39, 110, 241);" /&gt;</data>
+                <data id="source17">&lt;g xmlns:xhtml="http://www.w3.org/1999/xhtml" id="K_7dxPva9lulvSTE" ctype="x-html-SPAN" xhtml:style="font-size: 15px;" /&gt;</data>
+                <data id="source28">&lt;g id="029B-4Zwzeji5eL4" ctype="x-html-STRONG" /&gt;</data>
+                <data id="source8">&lt;g xmlns:xhtml="http://www.w3.org/1999/xhtml" id="hWTEe1slGwJCYmBB" ctype="x-html-SPAN" xhtml:style="font-size: 15px;" /&gt;</data>
+                <data id="source13">&lt;g xmlns:xhtml="http://www.w3.org/1999/xhtml" id="K_7dxPva9lulvSTE" ctype="x-html-SPAN" xhtml:style="font-size: 15px;" /&gt;</data>
+                <data id="source24">&lt;g id="g1B7AdS4H-sqLPUc" ctype="x-html-STRONG" /&gt;</data>
+                <data id="source4">&lt;g id="l1uKaqjNLmwZdcmf" ctype="x-html-UL" /&gt;</data>
+                <data id="source20">&lt;g xmlns:xhtml="http://www.w3.org/1999/xhtml" id="GObg65TcvvJl4o0J" ctype="x-html-SPAN" xhtml:style="font-size: 15px;" /&gt;</data>
+                <data id="source18">&lt;g xmlns:xhtml="http://www.w3.org/1999/xhtml" id="dKftk0JMTIcemwQM" ctype="x-html-LI" xhtml:aria-level="1" xhtml:dir="ltr" /&gt;</data>
+                <data id="source29">&lt;g xmlns:xhtml="http://www.w3.org/1999/xhtml" id="u11syiNjIRMxhfby" ctype="x-html-SPAN" xhtml:style="font-size: 15px;" /&gt;</data>
+                <data id="source9">&lt;g xmlns:xhtml="http://www.w3.org/1999/xhtml" id="FkAWBmGP_qAUT1QJ" ctype="x-html-SPAN" xhtml:style="font-size: 15px;" /&gt;</data>
+                <data id="source14">&lt;g id="l1uKaqjNLmwZdcmf" ctype="x-html-UL" /&gt;</data>
+                <data id="source25">&lt;g xmlns:xhtml="http://www.w3.org/1999/xhtml" id="sJZmFQUet0kbMrx7" ctype="x-html-LI" xhtml:aria-level="2" xhtml:dir="ltr" /&gt;</data>
+                <data id="source5">&lt;g xmlns:xhtml="http://www.w3.org/1999/xhtml" id="x5DWRCGiYtXtqS1B" ctype="x-html-LI" xhtml:aria-level="1" xhtml:dir="ltr" /&gt;</data>
+                <data id="source10">&lt;g id="3bkhjsXxpywTdw-y" ctype="x-html-STRONG" /&gt;</data>
+                <data id="source21">&lt;g xmlns:xhtml="http://www.w3.org/1999/xhtml" id="nDJ-A2hpgkzDHh9M" ctype="x-html-LI" xhtml:aria-level="1" xhtml:dir="ltr" /&gt;</data>
+                <data id="source1">&lt;g id="r15MOjxeQDd1JRYj" ctype="x-html-P" /&gt;</data>
+                <data id="source19">&lt;g id="hc4ENvAAapaLvjmW" ctype="x-html-P" /&gt;</data>
+                <data id="source15">&lt;g xmlns:xhtml="http://www.w3.org/1999/xhtml" id="0WhVwuPyDQdoowsh" ctype="x-html-LI" xhtml:aria-level="1" xhtml:dir="ltr" /&gt;</data>
+                <data id="source26">&lt;g id="ymT8d8RYD0u44wdu" ctype="x-html-P" /&gt;</data>
+                <data id="source6">&lt;g id="Ng8scf_2vMQ6YtCL" ctype="x-html-P" /&gt;</data>
+                <data id="source11">&lt;g xmlns:xhtml="http://www.w3.org/1999/xhtml" id="0WhVwuPyDQdoowsh" ctype="x-html-LI" xhtml:aria-level="1" xhtml:dir="ltr" /&gt;</data>
+                <data id="source22">&lt;g id="Eh_BfW-b-jctimN6" ctype="x-html-P" /&gt;</data>
+                <data id="source2">&lt;g id="O0X4hoEmRs65QvFj" ctype="x-html-STRONG" /&gt;</data>
+                <data id="source16">&lt;g id="h3Y_heVCf2o_PcVj" ctype="x-html-P" /&gt;</data>
+                <data id="source27">&lt;g xmlns:xhtml="http://www.w3.org/1999/xhtml" id="0ZL-jmOJskP1zTho" ctype="x-html-SPAN" xhtml:style="font-size: 15px;" /&gt;</data>
+                <data id="source7">&lt;g id="KFhqs1me-qi-n1Tk" ctype="x-html-STRONG" /&gt;</data>
+                <data id="source12">&lt;g id="h3Y_heVCf2o_PcVj" ctype="x-html-P" /&gt;</data>
+                <data id="source23">&lt;g xmlns:xhtml="http://www.w3.org/1999/xhtml" id="cdH4uz7wWSn1LE_e" ctype="x-html-SPAN" xhtml:style="font-size: 15px;" /&gt;</data>
+            </originalData>
+            <segment id="69" state="translated">
+                <source><pc id="source1" dataRefStart="source1"><pc id="source2" dataRefStart="source2"><pc id="source3" dataRefStart="source3">Additional Guidelines:</pc></pc></pc><pc id="source4" dataRefStart="source4"><pc id="source5" dataRefStart="source5"><pc id="source6" dataRefStart="source6"><pc id="source7" dataRefStart="source7"><pc id="source8" dataRefStart="source8">R</pc></pc><pc id="source9" dataRefStart="source9"><pc id="source10" dataRefStart="source10">eview the entire conversation </pc>between Uber Support and the user when reviewing a Bliss contact.</pc></pc></pc><pc id="source11" dataRefStart="source11"><pc id="source12" dataRefStart="source12"><pc id="source13" dataRefStart="source13">Do not reply to a Bliss conversation.</pc></pc></pc></pc></source>
+                <target><pc id="source1" dataRefStart="source1"><pc id="source2" dataRefStart="source2"><pc id="source3" dataRefStart="source3">その他のガイドライン: </pc></pc></pc><pc id="source4" dataRefStart="source4"><pc id="source5" dataRefStart="source5"><pc id="source6" dataRefStart="source6"><pc id="source7" dataRefStart="source7"><pc id="source8" dataRefStart="source8">Bliss の問い合わせを確認する際は、Uber サポートと利用者の</pc></pc><pc id="source9" dataRefStart="source9"><pc id="source10" dataRefStart="source10">やり取りの全体を確認</pc>してください。</pc></pc></pc><pc id="source11" dataRefStart="source11"><pc id="source12" dataRefStart="source12"><pc id="source13" dataRefStart="source13">Bliss でのやり取りには返信しないでください。</pc></pc></pc></pc></target>
+            </segment>
+            <segment id="70" state="translated">
+                <source><pc id="source14" dataRefStart="source14"><pc id="source15" dataRefStart="source15"><pc id="source16" dataRefStart="source16"><pc id="source17" dataRefStart="source17"></pc></pc></pc><pc id="source18" dataRefStart="source18"><pc id="source19" dataRefStart="source19"><pc id="source20" dataRefStart="source20">Adjudicate based on the information contained in the Bliss contact supplied in the DACT JIRA; do not access duplicate Bliss contacts.</pc></pc></pc><pc id="source21" dataRefStart="source21"><pc id="source22" dataRefStart="source22"><pc id="source23" dataRefStart="source23"><pc id="source24" dataRefStart="source24">Review All JIRA and Bliss tickets</pc> in the Description section for each incident.</pc></pc></pc><pc id="source25" dataRefStart="source25"><pc id="source26" dataRefStart="source26"><pc id="source27" dataRefStart="source27">Consider all allegations and counter-allegations made against a user meeting any of the above definitions</pc><pc id="source28" dataRefStart="source28"><pc id="source29" dataRefStart="source29"> in the Count decision.</pc></pc></pc></pc></pc></source>
+                <target><pc id="source14" dataRefStart="source14"><pc id="source15" dataRefStart="source15"><pc id="source16" dataRefStart="source16"><pc id="source17" dataRefStart="source17"></pc></pc></pc><pc id="source18" dataRefStart="source18"><pc id="source19" dataRefStart="source19"><pc id="source20" dataRefStart="source20">DACT JIRA で提供された Bliss の問い合わせに含まれる情報に基づいて審査します。重複した Bliss の問い合わせにはアクセスしないでください。</pc></pc></pc><pc id="source21" dataRefStart="source21"><pc id="source22" dataRefStart="source22"><pc id="source23" dataRefStart="source23"><pc id="source24" dataRefStart="source24">各インシデントの [説明] セクションで</pc>すべての JIRA および Bliss チケットを確認します。</pc></pc></pc><pc id="source25" dataRefStart="source25"><pc id="source26" dataRefStart="source26"><pc id="source27" dataRefStart="source27">対象とするかどうかを判断するにあたり、</pc><pc id="source28" dataRefStart="source28"><pc id="source29" dataRefStart="source29">利用者の申し立てとそれに対する反論をすべて確認し、上記の定義のいずれかを満たすかどうかを検討します。</pc></pc></pc></pc></pc></target>
+            </segment>
+        </unit>
+    </file>
+</xliff>

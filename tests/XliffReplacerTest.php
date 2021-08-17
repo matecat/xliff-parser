@@ -11,6 +11,59 @@ class XliffReplacerTest extends BaseTest
     /**
      * @test
      */
+    public function can_replace_a_xliff_20_with_the_correct_counts()
+    {
+        $data = $this->getData([
+                [
+                        'sid' => 1,
+                        'segment' => 'bla bla bla',
+                        'internal_id' => '0',
+                        'mrk_id' => '',
+                        'prev_tags' => '',
+                        'succ_tags' => '',
+                        'mrk_prev_tags' => '',
+                        'mrk_succ_tags' => '',
+                        'translation' => 'Bla bla bla',
+                        'status' => TranslationStatus::STATUS_TRANSLATED,
+                        'eq_word_count' => 20,
+                        'raw_word_count' => 30,
+                ],
+                [
+                        'sid' => 2,
+                        'segment' => 'bla bla bla',
+                        'internal_id' => '1',
+                        'mrk_id' => '',
+                        'prev_tags' => '',
+                        'succ_tags' => '',
+                        'mrk_prev_tags' => '',
+                        'mrk_succ_tags' => '',
+                        'translation' => 'Bla bla bla',
+                        'status' => TranslationStatus::STATUS_TRANSLATED,
+                        'eq_word_count' => 20,
+                        'raw_word_count' => 30,
+                ],
+        ]);
+
+        $inputFile = __DIR__.'/../tests/files/uber/uber-counts.xliff';
+        $outputFile = __DIR__.'/../tests/files/uber/output/uber-counts.xliff';
+
+        $xliffParser = new XliffParser();
+        $xliffParser->replaceTranslation($inputFile, $data['data'], $data['transUnits'], 'sk-SK', $outputFile);
+
+        $output = file_get_contents($outputFile);
+
+        preg_match_all('/<mda:meta type="x-matecat-raw">(.*)<\/mda:meta>/', $output, $raw);
+        preg_match_all('/<mda:meta type="x-matecat-weighted">(.*)<\/mda:meta>/', $output, $weighted);
+
+        $this->assertEquals(30, $raw[1][0]);
+        $this->assertEquals(60, $raw[1][1]);
+        $this->assertEquals(20, $weighted[1][0]);
+        $this->assertEquals(40, $weighted[1][1]);
+    }
+
+    /**
+     * @test
+     */
     public function can_replace_a_xliff_20_with_mda_without_notes_or_original_data()
     {
         $data = $this->getData([

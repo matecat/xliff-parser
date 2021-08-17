@@ -4,6 +4,7 @@ namespace Matecat\XliffParser;
 
 use Matecat\XliffParser\Constants\Placeholder;
 use Matecat\XliffParser\Constants\XliffTags;
+use Matecat\XliffParser\Utils\HtmlParser;
 use Matecat\XliffParser\Utils\Strings;
 use Matecat\XliffParser\XliffParser\XliffParserFactory;
 use Matecat\XliffParser\XliffReplacer\XliffReplacerCallbackInterface;
@@ -54,7 +55,9 @@ class XliffParser
     /**
      * Parse a xliff file to array
      *
-     * @param $xliffContent
+     * @param      $xliffContent
+     *
+     * @param bool $collapseEmptyTags
      *
      * @return mixed
      * @throws Exception\InvalidXmlException
@@ -62,7 +65,7 @@ class XliffParser
      * @throws Exception\NotValidFileException
      * @throws Exception\XmlParsingException
      */
-    public function xliffToArray($xliffContent)
+    public function xliffToArray( $xliffContent, $collapseEmptyTags = false)
     {
         $xliff = [];
         $xliffContent = self::forceUft8Encoding($xliffContent, $xliff);
@@ -75,6 +78,10 @@ class XliffParser
 
         if($xliffVersion === 2){
             $xliffContent = self::escapeDataInOriginalMap($xliffContent);
+        }
+
+        if($collapseEmptyTags === false){
+            $xliffContent = self::insertPlaceholderInEmptyTags($xliffContent);
         }
 
         $xliffProprietary = (isset($info['proprietary_short_name']) and null !== $info['proprietary_short_name']) ? $info['proprietary_short_name'] : null;
@@ -173,6 +180,40 @@ class XliffParser
     {
         $xliffContent  = preg_replace_callback('/<data(.*?)>(.*?)<\/data>/iU', [XliffParser::class, 'replaceSpace' ], $xliffContent);
         $xliffContent  = preg_replace_callback('/<data(.*?)>(.*?)<\/data>/iU', [XliffParser::class, 'replaceXliffTags' ], $xliffContent);
+
+        return $xliffContent;
+    }
+
+    /**
+     * Insert a placeholder inside empty tags
+     * in order to prevent they are collapsed by parser
+     *
+     * Example:
+     *
+     * <pc id="12" dataRefStart="d1"></pc> ---> <pc id="12" dataRefStart="d1">###___EMPTY_TAG_PLACEHOLDER___###</pc>
+     *
+     * AbstractXliffParser::extractTagContent() will cut out ###___EMPTY_TAG_PLACEHOLDER___### to restore original empty tags
+     *
+     * @param $xliffContent
+     *
+     * @return string
+     */
+    private static function insertPlaceholderInEmptyTags($xliffContent)
+    {
+        preg_match_all('/<([a-zA-Z0-9._-]+)[^>]*><\/\1>/sm', $xliffContent, $emptyTagMatches);
+
+        if(!empty($emptyTagMatches[0])){
+            foreach ($emptyTagMatches as $index => $emptyTagMatch){
+                if(isset($emptyTagMatches[0][$index])){
+                    $match = $emptyTagMatches[0][$index];
+                    $matchedTag = $emptyTagMatches[1][$index];
+                    $subst = Placeholder::EMPTY_TAG_PLACEHOLDER.'</'.$matchedTag.'>';
+                    $replacedTag = str_replace('</'.$matchedTag.'>', $subst, $match);
+
+                    $xliffContent = str_replace($match, $replacedTag, $xliffContent);
+                }
+            }
+        }
 
         return $xliffContent;
     }

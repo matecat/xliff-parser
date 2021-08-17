@@ -161,10 +161,11 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
             // http://docs.oasis-open.org/xliff/xliff-core/v2.0/os/xliff-core-v2.0-os.html#unit
             //
             if($this->xliffVersion === 2 and ( $name === 'notes' or $name === 'originalData' or $name === 'segment' or $name === 'ignorable') and $this->unitContainsMda === false ){
-                if (isset($this->transUnits[ $this->currentTransUnitId ]) and !empty($this->transUnits[ $this->currentTransUnitId ]) and !$this->unitContainsMda) {
+                if (isset($this->transUnits[ $this->currentTransUnitId ]) and !empty($this->transUnits[ $this->currentTransUnitId ]) and !$this->unitContainsMda and !$this->hasWrittenCounts) {
 
                     // we need to update counts here
                     $this->updateCounts();
+                    $this->hasWrittenCounts = true;
 
                     $tag .= $this->getWordCountGroupForXliffV2($this->counts[ 'raw_word_count' ], $this->counts[ 'eq_word_count' ]);
                     $this->unitContainsMda = true;
@@ -369,7 +370,9 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
                         $seg = $this->segments[ $this->currentSegmentArray['sid'] ];
 
                         // update counts
-                        $this->updateSegmentCounts($seg);
+                        if(!$this->hasWrittenCounts){
+                            $this->updateSegmentCounts($seg);
+                        }
 
                         // delete translations so the prepareSegment
                         // will put source content in target tag
@@ -455,10 +458,11 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
 
                 // only for Xliff 2.*
                 // write here <mda:metaGroup> and <mda:meta> if already present in the <unit>
-                if('mda:metadata' === $name and $this->unitContainsMda and $this->xliffVersion === 2){
+                if('mda:metadata' === $name and $this->unitContainsMda and $this->xliffVersion === 2 and !$this->hasWrittenCounts){
 
                     // we need to update counts here
                     $this->updateCounts();
+                    $this->hasWrittenCounts = true;
 
                     $tag = $this->CDATABuffer;
                     $tag .= $this->getWordCountGroupForXliffV2($this->counts[ 'raw_word_count' ], $this->counts[ 'eq_word_count' ], false);
@@ -538,6 +542,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
             $this->inTU = false;
             $this->segmentPositionInTu = -1;
             $this->unitContainsMda = false;
+            $this->hasWrittenCounts = false;
             $this->sourceAttributes = [];
         }
     }
