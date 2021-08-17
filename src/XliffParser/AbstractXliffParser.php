@@ -2,6 +2,7 @@
 
 namespace Matecat\XliffParser\XliffParser;
 
+use Matecat\XliffParser\Constants\Placeholder;
 use Matecat\XliffParser\Utils\Emoji;
 use Matecat\XliffParser\Utils\Strings;
 use Matecat\XliffParser\XliffUtils\DataRefReplacer;
@@ -133,6 +134,8 @@ abstract class AbstractXliffParser
     }
 
     /**
+     * Extract tag content from DOMDocument node
+     *
      * @param \DOMDocument $dom
      * @param \DOMElement  $element
      *
@@ -149,7 +152,7 @@ abstract class AbstractXliffParser
             }
         }
 
-        return $extractedContent;
+        return str_replace(Placeholder::EMPTY_TAG_PLACEHOLDER, '', $extractedContent);
     }
 
     /**
