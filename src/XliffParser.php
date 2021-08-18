@@ -203,15 +203,11 @@ class XliffParser
         preg_match_all('/<([a-zA-Z0-9._-]+)[^>]*><\/\1>/sm', $xliffContent, $emptyTagMatches);
 
         if(!empty($emptyTagMatches[0])){
-            foreach ($emptyTagMatches as $index => $emptyTagMatch){
-                if(isset($emptyTagMatches[0][$index])){
-                    $match = $emptyTagMatches[0][$index];
-                    $matchedTag = $emptyTagMatches[1][$index];
-                    $subst = Placeholder::EMPTY_TAG_PLACEHOLDER.'</'.$matchedTag.'>';
-                    $replacedTag = str_replace('</'.$matchedTag.'>', $subst, $match);
-
-                    $xliffContent = str_replace($match, $replacedTag, $xliffContent);
-                }
+            foreach ($emptyTagMatches[0] as $index => $emptyTagMatch){
+                $matchedTag = $emptyTagMatches[1][$index];
+                $subst = Placeholder::EMPTY_TAG_PLACEHOLDER.'</'.$matchedTag.'>';
+                $replacedTag = str_replace('</'.$matchedTag.'>', $subst, $emptyTagMatch);
+                $xliffContent = str_replace($emptyTagMatch, $replacedTag, $xliffContent);
             }
         }
 
