@@ -339,4 +339,14 @@ class Strings
 
         return $number;
     }
+
+    /**
+     * @param string $string
+     *
+     * @return bool
+     */
+    public static function isHtmlString( $string )
+    {
+        return strip_tags($string) !== $string;
+    }
 }

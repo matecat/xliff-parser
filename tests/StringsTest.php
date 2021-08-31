@@ -9,6 +9,20 @@ class StringsTest extends BaseTest
     /**
      * @test
      */
+    public function can_check_html_tag()
+    {
+        $a = "<div>ciao</div>";
+
+        $this->assertTrue(Strings::isHtmlString($a));
+
+        $a = "< >";
+
+        $this->assertFalse(Strings::isHtmlString($a));
+    }
+
+    /**
+     * @test
+     */
     public function can_get_the_last_character()
     {
         $phrase = 'Si presenta con una nuance rubino intensa e compatta dai luminosi riflessi viola.';

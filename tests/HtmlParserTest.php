@@ -9,6 +9,20 @@ class HtmlParserTest extends BaseTest
     /**
      * @test
      */
+    public function can_parse_html_with_greater_than_symbol()
+    {
+        $string = '<div id="1">Ciao > ciao<div id="2"></div></div>';
+        $parsed = HtmlParser::parse($string);
+
+        $this->assertCount(1, $parsed);
+        $this->assertEquals('Ciao > ciao', $parsed[0]->stripped_text);
+        $this->assertEquals('1', $parsed[0]->attributes['id']);
+        $this->assertEquals('2', $parsed[0]->inner_html[0]->attributes['id']);
+    }
+
+    /**
+     * @test
+     */
     public function can_parse_html_with_less_than_symbol()
     {
         $string = '<div id="1">< Ciao <<div id="2"></div></div>';
@@ -16,6 +30,34 @@ class HtmlParserTest extends BaseTest
 
         $this->assertCount(1, $parsed);
         $this->assertEquals('< Ciao <', $parsed[0]->stripped_text);
+        $this->assertEquals('1', $parsed[0]->attributes['id']);
+        $this->assertEquals('2', $parsed[0]->inner_html[0]->attributes['id']);
+    }
+
+    /**
+     * @test
+     */
+    public function can_parse_html_with_greater_than_and_less_than_symbols()
+    {
+        $string = '<div id="1">Ciao < > ciao<div id="2"></div></div>';
+        $parsed = HtmlParser::parse($string);
+
+        $this->assertCount(1, $parsed);
+        $this->assertEquals('Ciao < > ciao', $parsed[0]->stripped_text);
+        $this->assertEquals('1', $parsed[0]->attributes['id']);
+        $this->assertEquals('2', $parsed[0]->inner_html[0]->attributes['id']);
+    }
+
+    /**
+     * @test
+     */
+    public function can_parse_html_with_greater_than_and_less_than_symbols_in_inversed_order()
+    {
+        $string = '<div id="1">Ciao > < ciao<div id="2"></div></div>';
+        $parsed = HtmlParser::parse($string);
+
+        $this->assertCount(1, $parsed);
+        $this->assertEquals('Ciao > < ciao', $parsed[0]->stripped_text);
         $this->assertEquals('1', $parsed[0]->attributes['id']);
         $this->assertEquals('2', $parsed[0]->inner_html[0]->attributes['id']);
     }
