@@ -66,7 +66,7 @@ class HtmlParser
             if( $current === '<' and isset($next)){
 
                 // 1. if next is > or
-                // 2. next is < and is not html tag (like < > for example)
+                // 2. next is < and is not html tag (like < >)
                 $insideAngularTags = substr($html, $realOffset, ($realNextOffset-$realOffset+1));
 
                 if($next !== '>' or !Strings::isHtmlString($insideAngularTags) ){

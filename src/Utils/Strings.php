@@ -347,6 +347,10 @@ class Strings
      */
     public static function isHtmlString( $string )
     {
+        if($string === '<>'){
+            return false;
+        }
+
         return strip_tags($string) !== $string;
     }
 }

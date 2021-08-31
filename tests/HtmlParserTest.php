@@ -39,11 +39,11 @@ class HtmlParserTest extends BaseTest
      */
     public function can_parse_html_with_greater_than_and_less_than_symbols()
     {
-        $string = '<div id="1">Ciao < > ciao<div id="2"></div></div>';
+        $string = '<div id="1">Ciao <> ciao<div id="2"></div></div>';
         $parsed = HtmlParser::parse($string);
 
         $this->assertCount(1, $parsed);
-        $this->assertEquals('Ciao < > ciao', $parsed[0]->stripped_text);
+        $this->assertEquals('Ciao <> ciao', $parsed[0]->stripped_text);
         $this->assertEquals('1', $parsed[0]->attributes['id']);
         $this->assertEquals('2', $parsed[0]->inner_html[0]->attributes['id']);
     }
@@ -184,15 +184,6 @@ class HtmlParserTest extends BaseTest
         $this->assertEquals($parsed[2]->inner_html[0]->node, '&lt;pc id="4" canCopy="no" canDelete="no" dataRefEnd="d2" dataRefStart="d2"&gt;grassetto + corsivo&lt;/pc&gt;');
     }
 
-//    /**
-//     * @test
-//     */
-//    public function can_parse_a_google_page_html()
-//    {
-//        $html = file_get_contents(__DIR__.'/files/google.html');
-//        $parsed = HtmlParser::parse($html);
-//    }
-
     /**
      * @test
      */
@@ -249,6 +240,20 @@ class HtmlParserTest extends BaseTest
         $this->assertEquals($pc->original_text, 'Questa stringa contiene un > a stringa.');
         $this->assertEquals($pc->stripped_text, 'Questa stringa contiene un > a stringa.');
     }
+
+//    /**
+//     * @test
+//     */
+//    public function can_parse_escaped_html_with_greater_than_symbol()
+//    {
+//        $string = '&lt;div id="1"&gt;Ciao &lt;&gt; ciao&lt;div id="2"&gt;&lt;/div&gt;&lt;/div&gt;';
+//        $parsed = HtmlParser::parse($string);
+//
+//        $this->assertCount(1, $parsed);
+//        $this->assertEquals('Ciao > ciao', $parsed[0]->stripped_text);
+//        $this->assertEquals('1', $parsed[0]->attributes['id']);
+//        $this->assertEquals('2', $parsed[0]->inner_html[0]->attributes['id']);
+//    }
 }
 
 
