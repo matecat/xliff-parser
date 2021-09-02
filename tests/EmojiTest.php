@@ -10,6 +10,27 @@ class EmojiTest extends BaseTest
     /**
      * @test
      */
+    public function doesNotTouchingOriginalTabs()
+    {
+        $string = 'La rana	in Spagna gracida in campagna';
+
+        $this->assertEquals(Emoji::toEntity($string), $string);
+    }
+
+    /**
+     * @test
+     */
+    public function canReplaceInvisibleGlyphs()
+    {
+        $string = '󠇡La rana in Spagna gracida in campagna';
+        $expected = '&#917985;La rana in Spagna gracida in campagna';
+
+        $this->assertEquals(Emoji::toEntity($string), $expected);
+    }
+
+    /**
+     * @test
+     */
     public function canReplaceEmojisWithEntites()
     {
         $dataset = [
