@@ -22,6 +22,26 @@ class XliffParserV1Test extends BaseTest
     /**
      * @test
      */
+    public function can_parse_a_xliff_with_917985()
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('file-917985.xliff'));
+
+        $this->assertEquals('<g id="1">&#917985;</g><g id="2"> </g><g id="3">MOD PO 31 M D/U Scheda tecnica da compilare</g>', $parsed['files'][3]['trans-units'][2]['source']['raw-content']);
+    }
+
+    /**
+     * @test
+     */
+    public function can_parse_a_xliff_with_917760()
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('file-917760.xliff'));
+
+        $this->assertEquals('&#917760;', $parsed['files'][3]['trans-units'][1]['source']['raw-content']);
+    }
+
+    /**
+     * @test
+     */
     public function can_parse_a_xliff_from_jsont()
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('from_jsont.xliff'));
