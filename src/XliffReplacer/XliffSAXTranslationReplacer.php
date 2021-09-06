@@ -322,7 +322,9 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
                     $listOfSegmentsIds = $this->transUnits[ $this->currentTransUnitId ];
 
                     // $currentSegmentId
-                    $this->setCurrentSegmentArray($listOfSegmentsIds);
+                    if(!empty($listOfSegmentsIds)){
+                        $this->setCurrentSegmentArray($listOfSegmentsIds);
+                    }
 
                     /*
                      * At the end of every cycle the segment grouping information is lost: unset( 'matecat|' . $this->currentId )
@@ -370,7 +372,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
                         $seg = $this->segments[ $this->currentSegmentArray['sid'] ];
 
                         // update counts
-                        if(!$this->hasWrittenCounts){
+                        if(!$this->hasWrittenCounts and !empty($seg)){
                             $this->updateSegmentCounts($seg);
                         }
 
@@ -417,7 +419,9 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
                             $seg = $this->segments[ $id ];
 
                             // update counts
-                            $this->updateSegmentCounts($seg);
+                            if(!empty($seg)){
+                                $this->updateSegmentCounts($seg);
+                            }
 
                             // delete translations so the prepareSegment
                             // will put source content in target tag
@@ -552,7 +556,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
      *
      * @param array $listOfSegmentsIds
      */
-    private function setCurrentSegmentArray(array $listOfSegmentsIds)
+    private function setCurrentSegmentArray(array $listOfSegmentsIds = [])
     {
         // $currentSegmentId
         if (empty($this->currentSegmentArray)) {
@@ -583,15 +587,21 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
         $listOfSegmentsIds = $this->transUnits[ $this->currentTransUnitId ];
 
         // $currentSegmentId
-        $this->setCurrentSegmentArray($listOfSegmentsIds);
+        if(!empty($listOfSegmentsIds)){
+            $this->setCurrentSegmentArray($listOfSegmentsIds);
+        }
 
         if ($this->xliffVersion === 2) {
             $seg = $this->segments[ $this->currentSegmentArray[ 'sid' ] ];
-            $this->updateSegmentCounts($seg);
+            if(!empty($seg)){
+                $this->updateSegmentCounts($seg);
+            }
         } else {
             foreach ($listOfSegmentsIds as $pos => $id) {
                 $seg = $this->segments[ $id ];
-                $this->updateSegmentCounts( $seg );
+                if(!empty($seg)){
+                    $this->updateSegmentCounts( $seg );
+                }
             }
         }
 
@@ -601,7 +611,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
     /**
      * @param array $seg
      */
-    private function updateSegmentCounts(array $seg)
+    private function updateSegmentCounts(array $seg = [])
     {
         $this->counts[ 'raw_word_count' ] += $seg['raw_word_count'];
         $this->counts[ 'eq_word_count' ] += (floor($seg[ 'eq_word_count' ] * 100) / 100);
