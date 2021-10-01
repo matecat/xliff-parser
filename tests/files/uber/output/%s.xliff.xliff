@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0" xmlns:slr="urn:oasis:names:tc:xliff:sizerestriction:2.0" xmlns:memsource="http://www.memsource.com/xliff2.0/1.0" version="2.0" memsource:wfLevel="4" srcLang="en-us" trgLang="en-au"  xmlns:mtc="https://www.matecat.com">
+    <file id="NAk3cFPCnyT5d30M0_dc6:0-8" memsource:taskId="NAk3cFPCnyT5d30M0_dc6" canResegment="no" original="cb32da21-self-service-support-service.xml">
+        <slr:profiles generalProfile="xliff:codepoints"/>
+        <unit mtc:segment-id="4" id="4" memsource:tGroupBegin="4" memsource:tGroupEnd="6" translate="yes">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key">dc0431e4-8304-45e7-ac8c-3d93afcc1e1a</mda:meta>
+                    <mda:meta type="key-note">
+                        Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/self-service-support-service/keys" target="_blank"&gt;self-service-support-service&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/self-service-support-service/key/dashcamvideoupload.blissticket.message.text/overview" target="_blank"&gt;dashcamvideoupload.blissticket.message.text&lt;/a&gt; Description: &lt;font color="blue"&gt;Message to driver who opts to upload a dashcam video later.
+
+                        Please do not translate the following: %s, &lt;br&gt;, &lt;a href=%s&gt;, &lt;/a&gt;
+
+                        %s in this case, is the firstname of the rider or driver&lt;/font&gt;
+
+                    </mda:meta>
+                </mda:metaGroup>
+                <mda:metaGroup category="row_xml_attribute">
+                                <mda:meta type="x-matecat-raw">200</mda:meta>
+                                <mda:meta type="x-matecat-weighted">100</mda:meta>
+                            </mda:metaGroup>
+                        </mda:metadata>
+            <memsource:additionalTagData>
+                <memsource:tag id="source3">
+                    <memsource:tagId>3</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source4">
+                    <memsource:tagId>4</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source5">
+                    <memsource:tagId>5</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source1">
+                    <memsource:tagId>1</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source2">
+                    <memsource:tagId>2</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+            </memsource:additionalTagData>
+            <originalData>
+                <data id="source3">&amp;lt;/a&amp;gt;</data>
+                <data id="source4">&amp;lt;br&amp;gt;</data>
+                <data id="source5">&amp;lt;br&amp;gt;</data>
+                <data id="source1">&amp;lt;br&amp;gt;</data>
+                <data id="source2">&amp;lt;a href=%s&amp;gt;</data>
+            </originalData>
+            <segment id="4" state="translated">
+                <source>Hi %s .</source>
+                <target>Ciao %s .</target>
+            </segment>
+        </unit>
+    </file>
+</xliff>

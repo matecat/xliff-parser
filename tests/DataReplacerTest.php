@@ -10,6 +10,62 @@ class DataReplacerTest extends BaseTest
     /**
      * @test
      */
+    public function can_add_id_to_ph_ec_sc_when_is_missing()
+    {
+        $map = [
+            'd1' => '&lt;x/&gt;',
+            'd2' => '&lt;br\/&gt;',
+        ];
+
+        $string = '<ph dataRef="d1" id="d1"/><ec dataRef="d2" startRef="5" subType="xlf:b" type="fmt"/>';
+        $expected = '<ph dataRef="d1" id="d1" equiv-text="base64:Jmx0O3gvJmd0Ow=="/><ph dataRef="d2" startRef="5" subType="xlf:b" type="fmt" id="d2" removeId="true" dataType="ec" equiv-text="base64:Jmx0O2JyXC8mZ3Q7"/>';
+
+        $dataReplacer = new DataRefReplacer($map);
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($string, $dataReplacer->restore($expected));
+    }
+
+    /**
+     * @test
+     */
+    public function can_replace_and_restore_data_with_ph_with_same_ids()
+    {
+        $map = [
+                'd1' => '&lt;br\/&gt;',
+        ];
+
+        $string = 'San Francisco, CA<ph dataRef="d1" id="1" subType="xlf:lb" type="fmt" />650 California St, Ste 2950<ph dataRef="d1" id="2" subType="xlf:lb" type="fmt" />San Francisco<ph dataRef="d1" id="3" subType="xlf:lb" type="fmt" />CA 94108';
+        $expected = 'San Francisco, CA<ph dataRef="d1" id="1" subType="xlf:lb" type="fmt"  equiv-text="base64:Jmx0O2JyXC8mZ3Q7"/>650 California St, Ste 2950<ph dataRef="d1" id="2" subType="xlf:lb" type="fmt"  equiv-text="base64:Jmx0O2JyXC8mZ3Q7"/>San Francisco<ph dataRef="d1" id="3" subType="xlf:lb" type="fmt"  equiv-text="base64:Jmx0O2JyXC8mZ3Q7"/>CA 94108';
+
+        $dataReplacer = new DataRefReplacer($map);
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($string, $dataReplacer->restore($expected));
+    }
+
+    /**
+     * @test
+     */
+    public function do_nothing_with_ph_tags_without_dataref()
+    {
+        $map = [
+            'source3' => '&lt;/a&gt;',
+            'source4' => '&lt;br&gt;',
+            'source5' => '&lt;br&gt;',
+            'source1' => '&lt;br&gt;',
+            'source2' => '&lt;a href=%s&gt;',
+        ];
+
+        $string = 'Hi <ph id="mtc_1" equiv-text="base64:JXM="/> .';
+        $expected = 'Hi <ph id="mtc_1" equiv-text="base64:JXM="/> .';
+
+        $dataReplacer = new DataRefReplacer($map);
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+    }
+
+    /**
+     * @test
+     */
     public function do_nothing_with_empty_map()
     {
         $map = [];
@@ -81,7 +137,7 @@ class DataReplacerTest extends BaseTest
         $this->assertEquals($string, $dataReplacer->restore($expected));
 
         $string = '<ec id="source1" dataRef="source1"/> changed the address';
-        $expected = '<ec id="source1" dataRef="source1" equiv-text="base64:JHtyZWNpcGllbnROYW1lfQ=="/> changed the address';
+        $expected = '<ph id="source1" dataRef="source1" dataType="ec" equiv-text="base64:JHtyZWNpcGllbnROYW1lfQ=="/> changed the address';
         $dataReplacer = new DataRefReplacer($map);
 
         $this->assertEquals($expected, $dataReplacer->replace($string));
@@ -101,7 +157,7 @@ class DataReplacerTest extends BaseTest
         ];
 
         $string = '<ph id="source1" dataRef="source1"/> lorem <ec id="source2" dataRef="source2"/> ipsum <sc id="source3" dataRef="source3"/> changed';
-        $expected = '<ph id="source1" dataRef="source1" equiv-text="base64:JHtyZWNpcGllbnROYW1lfQ=="/> lorem <ec id="source2" dataRef="source2" equiv-text="base64:QmFiYm8gTmF0YWxl"/> ipsum <sc id="source3" dataRef="source3" equiv-text="base64:TGEgQmVmYW5h"/> changed';
+        $expected = '<ph id="source1" dataRef="source1" equiv-text="base64:JHtyZWNpcGllbnROYW1lfQ=="/> lorem <ph id="source2" dataRef="source2" dataType="ec" equiv-text="base64:QmFiYm8gTmF0YWxl"/> ipsum <ph id="source3" dataRef="source3" dataType="sc" equiv-text="base64:TGEgQmVmYW5h"/> changed';
         $dataReplacer = new DataRefReplacer($map);
 
         $this->assertEquals($expected, $dataReplacer->replace($string));
@@ -355,26 +411,6 @@ class DataReplacerTest extends BaseTest
     /**
      * @test
      */
-    public function can_replace_and_restore_data_with_pc_test_4()
-    {
-        $map = [
-                'd1' => '_',
-                'd2' => '**',
-                'd3' => '`',
-        ];
-
-        $string = 'Testo libero contenente <pc id="3" dataRefEnd="d1" dataRefStart="d1"><pc id="4" dataRefEnd="d2" dataRefStart="d2">grassetto + corsivo</pc></pc>';
-        $expected = 'Testo libero contenente <ph id="3_1" dataType="pcStart" originalData="PHBjIGlkPSIzIiBkYXRhUmVmRW5kPSJkMSIgZGF0YVJlZlN0YXJ0PSJkMSI+" dataRef="d1" equiv-text="base64:Xw=="/><ph id="4_1" dataType="pcStart" originalData="PHBjIGlkPSI0IiBkYXRhUmVmRW5kPSJkMiIgZGF0YVJlZlN0YXJ0PSJkMiI+" dataRef="d2" equiv-text="base64:Kio="/>grassetto + corsivo<ph id="4_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="d2" equiv-text="base64:Kio="/><ph id="3_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="d1" equiv-text="base64:Xw=="/>';
-
-        $dataReplacer = new DataRefReplacer($map);
-
-        $this->assertEquals($expected, $dataReplacer->replace($string));
-        $this->assertEquals($string, $dataReplacer->restore($expected));
-    }
-
-    /**
-     * @test
-     */
     public function can_replace_and_restore_data_with_pc_test_5()
     {
         $map = [
@@ -396,12 +432,60 @@ class DataReplacerTest extends BaseTest
     /**
      * @test
      */
-    public function can_replace_and_restore_data_with_pc_test_6()
+    public function do_not_affect_not_matecat_ph_tags_with_equiv_text()
+    {
+        $dataReplacer = new DataRefReplacer([
+            'source1' => '&lt;br&gt;',
+        ]);
+
+        $string = 'Hi <ph id="mtc_1" equiv-text="JXM="/>, <ph id="source1" dataRef="source1"/>You mentioned that you have a dashcam video footage to help us to better understand your recent incident.';
+        $expected = 'Hi <ph id="mtc_1" equiv-text="JXM="/>, <ph id="source1" dataRef="source1" equiv-text="base64:Jmx0O2JyJmd0Ow=="/>You mentioned that you have a dashcam video footage to help us to better understand your recent incident.';
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($string, $dataReplacer->restore($expected));
+
+        $string = 'Hi &lt;ph id="mtc_1" equiv-text="JXM="/&gt;, <ph id="source1" dataRef="source1"/>You mentioned that you have a dashcam video footage to help us to better understand your recent incident.';
+        $expected = 'Hi &lt;ph id="mtc_1" equiv-text="JXM="/&gt;, <ph id="source1" dataRef="source1" equiv-text="base64:Jmx0O2JyJmd0Ow=="/>You mentioned that you have a dashcam video footage to help us to better understand your recent incident.';
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($string, $dataReplacer->restore($expected));
+
+        $string = 'Hi &lt;ph id="mtc_1" equiv-text="JXM="/&gt;, &lt;ph id="source1" dataRef="source1"/&gt;You mentioned that you have a dashcam video footage to help us to better understand your recent incident.';
+        $expected = 'Hi &lt;ph id="mtc_1" equiv-text="JXM="/&gt;, &lt;ph id="source1" dataRef="source1" equiv-text="base64:Jmx0O2JyJmd0Ow=="/&gt;You mentioned that you have a dashcam video footage to help us to better understand your recent incident.';
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($string, $dataReplacer->restore($expected));
+    }
+
+    /**
+     * @test
+     */
+    public function can_replace_and_restore_data_with_nested_pc_tags()
     {
         $map = [
-            'd1' => '_',
-            'd2' => '**',
-            'd3' => '`',
+                'd1' => '_',
+                'd2' => '**',
+                'd3' => '`',
+        ];
+
+        $string = 'Testo libero contenente <pc id="3" dataRefEnd="d1" dataRefStart="d1"><pc id="4" dataRefEnd="d2" dataRefStart="d2">grassetto + corsivo</pc></pc>';
+        $expected = 'Testo libero contenente <ph id="3_1" dataType="pcStart" originalData="PHBjIGlkPSIzIiBkYXRhUmVmRW5kPSJkMSIgZGF0YVJlZlN0YXJ0PSJkMSI+" dataRef="d1" equiv-text="base64:Xw=="/><ph id="4_1" dataType="pcStart" originalData="PHBjIGlkPSI0IiBkYXRhUmVmRW5kPSJkMiIgZGF0YVJlZlN0YXJ0PSJkMiI+" dataRef="d2" equiv-text="base64:Kio="/>grassetto + corsivo<ph id="4_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="d2" equiv-text="base64:Kio="/><ph id="3_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="d1" equiv-text="base64:Xw=="/>';
+
+        $dataReplacer = new DataRefReplacer($map);
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($string, $dataReplacer->restore($expected));
+    }
+
+    /**
+     * @test
+     */
+    public function can_replace_and_restore_data_with_escaped_nested_pc_tags()
+    {
+        $map = [
+                'd1' => '_',
+                'd2' => '**',
+                'd3' => '`',
         ];
 
         $string = 'Testo libero contenente &lt;pc id="1" canCopy="no" canDelete="no" dataRefEnd="d1" dataRefStart="d1"&gt;corsivo&lt;/pc&gt;, &lt;pc id="2" canCopy="no" canDelete="no" dataRefEnd="d2" dataRefStart="d2"&gt;grassetto&lt;/pc&gt;, &lt;pc id="3" canCopy="no" canDelete="no" dataRefEnd="d1" dataRefStart="d1"&gt;&lt;pc id="4" canCopy="no" canDelete="no" dataRefEnd="d2" dataRefStart="d2"&gt;grassetto + corsivo&lt;/pc&gt;&lt;/pc&gt; e &lt;pc id="5" canCopy="no" canDelete="no" dataRefEnd="d3" dataRefStart="d3"&gt;larghezza fissa&lt;/pc&gt;.';
@@ -412,4 +496,317 @@ class DataReplacerTest extends BaseTest
         $this->assertEquals($expected, $dataReplacer->replace($string));
         $this->assertEquals($string, $dataReplacer->restore($expected));
     }
+
+    /**
+     * @test
+     */
+    public function can_replace_and_restore_data_with_pc_and_ph_matecat_tags()
+    {
+        $map = [
+                'source1' => '[',
+        ];
+
+        $string = 'Text <pc id="source1" dataRefStart="source1" dataRefEnd="source1"><ph id="mtc_2" equiv-text="base64:Yg=="/>Uber Community Guidelines<ph id="mtc_3" equiv-text="base64:Yg=="/></pc>.';
+        $expected = 'Text <ph id="source1_1" dataType="pcStart" originalData="PHBjIGlkPSJzb3VyY2UxIiBkYXRhUmVmU3RhcnQ9InNvdXJjZTEiIGRhdGFSZWZFbmQ9InNvdXJjZTEiPg==" dataRef="source1" equiv-text="base64:Ww=="/><ph id="mtc_2" equiv-text="base64:Yg=="/>Uber Community Guidelines<ph id="mtc_3" equiv-text="base64:Yg=="/><ph id="source1_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="source1" equiv-text="base64:Ww=="/>.';
+
+        $dataReplacer = new DataRefReplacer($map);
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($string, $dataReplacer->restore($expected));
+    }
+
+    /**
+     * @test
+     */
+    public function can_replace_and_restore_data_with_pc_and_ph_real_matecat_tags()
+    {
+        $map = [
+                'source1' => '&lt;w:hyperlink r:id="rId6"&gt;&lt;/w:hyperlink&gt;',
+        ];
+
+        $string = 'This code of conduct sets forth the minimum standards by which Uber’s Driver Partners must adhere when using the Uber app in Czech Republic, in addition to the terms of their services agreement with Uber and the &lt;pc id="source1" dataRefStart="source1" dataRefEnd="source1"&gt;&lt;ph id="mtc_2" equiv-text="base64:Jmx0O3BjIGlkPSIxdSIgdHlwZT0iZm10IiBzdWJUeXBlPSJtOnUiJmd0Ow=="/&gt;Uber Community Guidelines&lt;ph id="mtc_3" equiv-text="base64:Jmx0Oy9wYyZndDs="/&gt;&lt;/pc&gt;.';
+        $expected = 'This code of conduct sets forth the minimum standards by which Uber’s Driver Partners must adhere when using the Uber app in Czech Republic, in addition to the terms of their services agreement with Uber and the &lt;ph id="source1_1" dataType="pcStart" originalData="Jmx0O3BjIGlkPSJzb3VyY2UxIiBkYXRhUmVmU3RhcnQ9InNvdXJjZTEiIGRhdGFSZWZFbmQ9InNvdXJjZTEiJmd0Ow==" dataRef="source1" equiv-text="base64:Jmx0O3c6aHlwZXJsaW5rIHI6aWQ9InJJZDYiJmd0OyZsdDsvdzpoeXBlcmxpbmsmZ3Q7"/&gt;&lt;ph id="mtc_2" equiv-text="base64:Jmx0O3BjIGlkPSIxdSIgdHlwZT0iZm10IiBzdWJUeXBlPSJtOnUiJmd0Ow=="/&gt;Uber Community Guidelines&lt;ph id="mtc_3" equiv-text="base64:Jmx0Oy9wYyZndDs="/&gt;&lt;ph id="source1_2" dataType="pcEnd" originalData="Jmx0Oy9wYyZndDs=" dataRef="source1" equiv-text="base64:Jmx0O3c6aHlwZXJsaW5rIHI6aWQ9InJJZDYiJmd0OyZsdDsvdzpoeXBlcmxpbmsmZ3Q7"/&gt;.';
+
+        $dataReplacer = new DataRefReplacer($map);
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($string, $dataReplacer->restore($expected));
+    }
+
+    /**
+     * @test
+     */
+    public function can_restore_data_with_pc_from_matecat_real_case()
+    {
+        $map = [
+                'd1' => '_',
+                'd2' => '**',
+                'd3' => '`',
+        ];
+
+        $string = 'Testo libero contenente <ph id="1_1" dataType="pcStart" originalData="Jmx0O3BjIGlkPSIxIiBjYW5Db3B5PSJubyIgY2FuRGVsZXRlPSJubyIgZGF0YVJlZkVuZD0iZDEiIGRhdGFSZWZTdGFydD0iZDEiJmd0Ow==" dataRef="d1" equiv-text="base64:Xw=="/>';
+        $expected = 'Testo libero contenente <pc id="1" canCopy="no" canDelete="no" dataRefEnd="d1" dataRefStart="d1">';
+
+        $dataRefReplacer = new DataRefReplacer($map);
+
+        $this->assertEquals($expected, $dataRefReplacer->restore($string));
+    }
+
+    /**
+     * @test
+     */
+    public function can_replace_and_restore_data_with_pc_with_missing_dataRefStart()
+    {
+        $map = [
+                'd1' => '&lt;br\/&gt;',
+        ];
+
+        $string = 'Text <pc id="d1" dataRefStart="d1">Uber Community Guidelines</pc>.';
+        $expected = 'Text <ph id="d1_1" dataType="pcStart" originalData="PHBjIGlkPSJkMSIgZGF0YVJlZlN0YXJ0PSJkMSI+" dataRef="d1" equiv-text="base64:Jmx0O2JyXC8mZ3Q7"/>Uber Community Guidelines<ph id="d1_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="d1" equiv-text="base64:Jmx0O2JyXC8mZ3Q7"/>.';
+
+        $dataReplacer = new DataRefReplacer($map);
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($string, $dataReplacer->restore($expected));
+    }
+
+    /**
+     * @test
+     */
+    public function can_replace_and_restore_data_with_pc_with_missing_dataRefEnd()
+    {
+        $map = [
+                'd1' => '&lt;br\/&gt;',
+        ];
+
+        $string = 'Text <pc id="d1" dataRefEnd="d1">Uber Community Guidelines</pc>.';
+        $expected = 'Text <ph id="d1_1" dataType="pcStart" originalData="PHBjIGlkPSJkMSIgZGF0YVJlZkVuZD0iZDEiPg==" dataRef="d1" equiv-text="base64:Jmx0O2JyXC8mZ3Q7"/>Uber Community Guidelines<ph id="d1_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="d1" equiv-text="base64:Jmx0O2JyXC8mZ3Q7"/>.';
+
+        $dataReplacer = new DataRefReplacer($map);
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($string, $dataReplacer->restore($expected));
+    }
+
+    /**
+     * @test
+     */
+    public function can_replace_and_restore_data_with_pc_with_non_standard_characters()
+    {
+        $map = [
+                "source3" => "<g id=\"jcP-TFFSO2CSsuLt\" ctype=\"x-html-strong\" \/>",
+                "source4" => "<g id=\"5StCYYRvqMc0UAz4\" ctype=\"x-html-ul\" \/>",
+                "source5" => "<g id=\"99phhJcEQDLHBjeU\" ctype=\"x-html-li\" \/>",
+                "source1" => "<g id=\"lpuxniQlIW3KrUyw\" ctype=\"x-html-p\" \/>",
+                "source6" => "<g id=\"0HZug1d3LkXJU04E\" ctype=\"x-html-li\" \/>",
+                "source2" => "<g id=\"d3TlPtomlUt0Ej1k\" ctype=\"x-html-p\" \/>",
+                "source7" => "<g id=\"oZ3oW_0KaicFXFDS\" ctype=\"x-html-li\" \/>"
+        ];
+
+        // this string contains ’
+        $string = '&lt;pc id="source4" dataRefStart="source4"&gt;The rider can’t tell if the driver matched the profile picture.&lt;/pc&gt;';
+        $expected = '&lt;ph id="source4_1" dataType="pcStart" originalData="Jmx0O3BjIGlkPSJzb3VyY2U0IiBkYXRhUmVmU3RhcnQ9InNvdXJjZTQiJmd0Ow==" dataRef="source4" equiv-text="base64:PGcgaWQ9IjVTdENZWVJ2cU1jMFVBejQiIGN0eXBlPSJ4LWh0bWwtdWwiIFwvPg=="/&gt;The rider can’t tell if the driver matched the profile picture.&lt;ph id="source4_2" dataType="pcEnd" originalData="Jmx0Oy9wYyZndDs=" dataRef="source4" equiv-text="base64:PGcgaWQ9IjVTdENZWVJ2cU1jMFVBejQiIGN0eXBlPSJ4LWh0bWwtdWwiIFwvPg=="/&gt;';
+
+        $dataReplacer = new DataRefReplacer($map);
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($string, $dataReplacer->restore($expected));
+    }
+
+    /**
+     * @test
+     */
+    public function can_replace_and_restore_data_with_pc_with_nested_pc_structures()
+    {
+        $map = [
+            "source1" => "x",
+            "source2" => "y",
+        ];
+
+        $string = '<pc id="source1" dataRefStart="source1">foo <pc id="source2" dataRefStart="source2">bar</pc> baz</pc>';
+        $expected = '<ph id="source1_1" dataType="pcStart" originalData="PHBjIGlkPSJzb3VyY2UxIiBkYXRhUmVmU3RhcnQ9InNvdXJjZTEiPg==" dataRef="source1" equiv-text="base64:eA=="/>foo <ph id="source2_1" dataType="pcStart" originalData="PHBjIGlkPSJzb3VyY2UyIiBkYXRhUmVmU3RhcnQ9InNvdXJjZTIiPg==" dataRef="source2" equiv-text="base64:eQ=="/>bar<ph id="source2_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="source2" equiv-text="base64:eQ=="/> baz<ph id="source1_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="source1" equiv-text="base64:eA=="/>';
+
+        $dataReplacer = new DataRefReplacer($map);
+
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($string, $dataReplacer->restore($expected));
+    }
+
+    /**
+     * @test
+     */
+    public function can_replace_and_restore_data_with_pc_with_more_complex_nested_pc_structures()
+    {
+        $map = [
+            "source1" => "x",
+            "source2" => "y",
+            "source3" => "z",
+            "source4" => "a",
+            "source5" => "b",
+        ];
+
+        $string = '<pc id="source1" dataRefStart="source1">foo <pc id="source2" dataRefStart="source2">bar lorem</pc> <pc id="source3" dataRefStart="source3">bar <pc id="source4" dataRefStart="source4">bar</pc> <pc id="source5" dataRefStart="source5">bar</pc></pc> cavolino</pc>';
+        $expected = '<ph id="source1_1" dataType="pcStart" originalData="PHBjIGlkPSJzb3VyY2UxIiBkYXRhUmVmU3RhcnQ9InNvdXJjZTEiPg==" dataRef="source1" equiv-text="base64:eA=="/>foo <ph id="source2_1" dataType="pcStart" originalData="PHBjIGlkPSJzb3VyY2UyIiBkYXRhUmVmU3RhcnQ9InNvdXJjZTIiPg==" dataRef="source2" equiv-text="base64:eQ=="/>bar lorem<ph id="source2_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="source2" equiv-text="base64:eQ=="/> <ph id="source3_1" dataType="pcStart" originalData="PHBjIGlkPSJzb3VyY2UzIiBkYXRhUmVmU3RhcnQ9InNvdXJjZTMiPg==" dataRef="source3" equiv-text="base64:eg=="/>bar <ph id="source4_1" dataType="pcStart" originalData="PHBjIGlkPSJzb3VyY2U0IiBkYXRhUmVmU3RhcnQ9InNvdXJjZTQiPg==" dataRef="source4" equiv-text="base64:YQ=="/>bar<ph id="source4_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="source4" equiv-text="base64:YQ=="/> <ph id="source5_1" dataType="pcStart" originalData="PHBjIGlkPSJzb3VyY2U1IiBkYXRhUmVmU3RhcnQ9InNvdXJjZTUiPg==" dataRef="source5" equiv-text="base64:Yg=="/>bar<ph id="source5_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="source5" equiv-text="base64:Yg=="/><ph id="source3_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="source3" equiv-text="base64:eg=="/> cavolino<ph id="source1_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="source1" equiv-text="base64:eA=="/>';
+
+        $dataReplacer = new DataRefReplacer($map);
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($string, $dataReplacer->restore($expected));
+    }
+
+    /**
+     * @test
+     */
+    public function can_replace_and_restore_data_with_sc_and_ex_tags()
+    {
+        $map = [
+                "d1" => "&lt;strong&gt;",
+                "d2" => "&lt;\/strong&gt;",
+                "d3" => "&lt;br\/&gt;",
+                "d4" => "&lt;a href=\"mailto:info@elysiancollection.com\"&gt;",
+                "d5" => "&lt;\/a&gt;",
+        ];
+
+        $string = '<sc dataRef="d1" id="1" subType="xlf:b" type="fmt"/>Elysian Collection<ph dataRef="d3" id="2" subType="xlf:lb" type="fmt"/><ec dataRef="d2" startRef="1" subType="xlf:b" type="fmt"/>Bahnhofstrasse 15, Postfach 341, Zermatt CH- 3920, Switzerland<ph dataRef="d3" id="3" subType="xlf:lb" type="fmt"/>Tel: +44 203 468 2235  Email: <pc dataRefEnd="d5" dataRefStart="d4" id="4" type="link">info@elysiancollection.com</pc><sc dataRef="d1" id="5" subType="xlf:b" type="fmt"/><ph dataRef="d3" id="6" subType="xlf:lb" type="fmt"/><ec dataRef="d2" startRef="5" subType="xlf:b" type="fmt"/>';
+        $expected = '<ph dataRef="d1" id="1" subType="xlf:b" type="fmt" dataType="sc" equiv-text="base64:Jmx0O3N0cm9uZyZndDs="/>Elysian Collection<ph dataRef="d3" id="2" subType="xlf:lb" type="fmt" equiv-text="base64:Jmx0O2JyXC8mZ3Q7"/><ph dataRef="d2" startRef="1" subType="xlf:b" type="fmt" id="d2" removeId="true" dataType="ec" equiv-text="base64:Jmx0O1wvc3Ryb25nJmd0Ow=="/>Bahnhofstrasse 15, Postfach 341, Zermatt CH- 3920, Switzerland<ph dataRef="d3" id="3" subType="xlf:lb" type="fmt" equiv-text="base64:Jmx0O2JyXC8mZ3Q7"/>Tel: +44 203 468 2235  Email: <ph id="4_1" dataType="pcStart" originalData="PHBjIGRhdGFSZWZFbmQ9ImQ1IiBkYXRhUmVmU3RhcnQ9ImQ0IiBpZD0iNCIgdHlwZT0ibGluayI+" dataRef="d4" equiv-text="base64:Jmx0O2EgaHJlZj0ibWFpbHRvOmluZm9AZWx5c2lhbmNvbGxlY3Rpb24uY29tIiZndDs="/>info@elysiancollection.com<ph id="4_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="d5" equiv-text="base64:Jmx0O1wvYSZndDs="/><ph dataRef="d1" id="5" subType="xlf:b" type="fmt" dataType="sc" equiv-text="base64:Jmx0O3N0cm9uZyZndDs="/><ph dataRef="d3" id="6" subType="xlf:lb" type="fmt" equiv-text="base64:Jmx0O2JyXC8mZ3Q7"/><ph dataRef="d2" startRef="5" subType="xlf:b" type="fmt" id="d2" removeId="true" dataType="ec" equiv-text="base64:Jmx0O1wvc3Ryb25nJmd0Ow=="/>';
+
+        $dataReplacer = new DataRefReplacer($map);
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($string, $dataReplacer->restore($expected));
+    }
+
+    /**
+     * @test
+     */
+    public function do_not_duplicate_equiv_text_in_ph_tags()
+    {
+        $map = [
+            'source1' => '%s',
+        ];
+
+        $string = 'Hi <ph id="source1" dataRef="d1" equiv-text="base64:JXM="/> .';
+        $expected = 'Hi <ph id="source1" dataRef="d1" equiv-text="base64:JXM="/> .';
+
+        $dataReplacer = new DataRefReplacer($map);
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($string, $dataReplacer->restore($expected));
+    }
+
+    /**
+     * @test
+     */
+    public function do_not_duplicate_equiv_text_in_already_transformed_pc_tags()
+    {
+        $map = [
+            "d2" => "&lt;/a&gt;",
+        ];
+
+        $string = '&lt;ph id="1_2" dataType="pcEnd" originalData="Jmx0Oy9wYyZndDs=" dataRef="d2" equiv-text="base64:Jmx0Oy9hJmd0Ow=="/&gt;';
+        $expected = '&lt;ph id="1_2" dataType="pcEnd" originalData="Jmx0Oy9wYyZndDs=" dataRef="d2" equiv-text="base64:Jmx0Oy9hJmd0Ow=="/&gt;';
+        $restored = '&lt;/pc&gt;';
+
+        $dataReplacer = new DataRefReplacer($map);
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($restored, $dataReplacer->restore($expected));
+    }
+
+    /**
+     * @test
+     */
+    public function can_parse_nested_not_mapped_pc()
+    {
+        $map = [
+            "source1" => "a",
+            "source2" => "b",
+            "source3" => "c",
+        ];
+
+        $string = '<pc id="source1" dataRefStart="source1">April 24, 2017</pc> | Written by <pc id="source2" dataRefStart="source2"><pc id="1b" type="fmt" subType="m:b">Troy Stevenson</pc></pc><pc id="source3" dataRefStart="source3">,</pc> Global Head of Community Operations';
+        $expected = '<ph id="source1_1" dataType="pcStart" originalData="PHBjIGlkPSJzb3VyY2UxIiBkYXRhUmVmU3RhcnQ9InNvdXJjZTEiPg==" dataRef="source1" equiv-text="base64:YQ=="/>April 24, 2017<ph id="source1_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="source1" equiv-text="base64:YQ=="/> | Written by <ph id="source2_1" dataType="pcStart" originalData="PHBjIGlkPSJzb3VyY2UyIiBkYXRhUmVmU3RhcnQ9InNvdXJjZTIiPg==" dataRef="source2" equiv-text="base64:Yg=="/><pc id="1b" type="fmt" subType="m:b">Troy Stevenson</pc><ph id="source2_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="source2" equiv-text="base64:Yg=="/><ph id="source3_1" dataType="pcStart" originalData="PHBjIGlkPSJzb3VyY2UzIiBkYXRhUmVmU3RhcnQ9InNvdXJjZTMiPg==" dataRef="source3" equiv-text="base64:Yw=="/>,<ph id="source3_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="source3" equiv-text="base64:Yw=="/> Global Head of Community Operations';
+        $restored = '<pc id="source1" dataRefStart="source1">April 24, 2017</pc> | Written by <pc id="source2" dataRefStart="source2"><pc id="1b" type="fmt" subType="m:b">Troy Stevenson</pc></pc><pc id="source3" dataRefStart="source3">,</pc> Global Head of Community Operations';
+
+        $dataReplacer = new DataRefReplacer($map);
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($restored, $dataReplacer->restore($expected));
+    }
+
+    /**
+     * @test
+     */
+    public function can_parse_pc_with_lessThan_symbol_in_the_sentence()
+    {
+        $map = [
+                "source1" => "a",
+                "source2" => "b",
+        ];
+
+        $string = '<pc id="source1" dataRefStart="source1">&lt;<pc id="source2" dataRefStart="source2">Rider </pc></pc>';
+        $expected = '<ph id="source1_1" dataType="pcStart" originalData="PHBjIGlkPSJzb3VyY2UxIiBkYXRhUmVmU3RhcnQ9InNvdXJjZTEiPg==" dataRef="source1" equiv-text="base64:YQ=="/>&lt;<ph id="source2_1" dataType="pcStart" originalData="PHBjIGlkPSJzb3VyY2UyIiBkYXRhUmVmU3RhcnQ9InNvdXJjZTIiPg==" dataRef="source2" equiv-text="base64:Yg=="/>Rider <ph id="source2_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="source2" equiv-text="base64:Yg=="/><ph id="source1_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="source1" equiv-text="base64:YQ=="/>';
+        $restored = '<pc id="source1" dataRefStart="source1">&lt;<pc id="source2" dataRefStart="source2">Rider </pc></pc>';
+
+        $dataReplacer = new DataRefReplacer($map);
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($restored, $dataReplacer->restore($expected));
+    }
+
+    /**
+     * @test
+     */
+    public function can_replace_and_restore_ph_nested_in_pc_tags()
+    {
+        $map = [
+                "source3" => "1",
+                "source8" => "2",
+                "source4" =>"3",
+                "source9"=>"4",
+                "source5"=>"5",
+                "source10"=>"6",
+                "source1"=>"7",
+                "source6"=>"8",
+                "source11" =>"9",
+                "source2"=>"10",
+                "source7"=> "11"
+        ];
+
+        $string = '<pc id="source1" dataRefStart="source1"><ph id="source2" dataRef="source2"/></pc>';
+        $expected = '<ph id="source1_1" dataType="pcStart" originalData="PHBjIGlkPSJzb3VyY2UxIiBkYXRhUmVmU3RhcnQ9InNvdXJjZTEiPg==" dataRef="source1" equiv-text="base64:Nw=="/><ph id="source2" dataRef="source2" equiv-text="base64:MTA="/><ph id="source1_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="source1" equiv-text="base64:Nw=="/>';
+        $restored = '<pc id="source1" dataRefStart="source1"><ph id="source2" dataRef="source2"/></pc>';
+
+        $dataReplacer = new DataRefReplacer($map);
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($restored, $dataReplacer->restore($expected));
+    }
+
+    /**
+     * @test
+     */
+    public function can_replace_and_restore_with_a_complex_string_with_ph_nested_in_pc_tags()
+    {
+        $map = [
+                "source3" => "1",
+                "source8" => "2",
+                "source4" =>"3",
+                "source9"=>"4",
+                "source5"=>"5",
+                "source10"=>"6",
+                "source1"=>"7",
+                "source6"=>"8",
+                "source11" =>"9",
+                "source2"=>"10",
+                "source7"=> "11"
+        ];
+
+        $string = '<pc id="source1" dataRefStart="source1"><ph id="source2" dataRef="source2"/></pc><pc id="source3" dataRefStart="source3"><pc id="source4" dataRefStart="source4">Well done!<ph id="source5" dataRef="source5"/><ph id="source6" dataRef="source6"/>You have completed the course and are now ready to demonstrate your knowledge of<ph id="source7" dataRef="source7"/>how to use Case Management.</pc></pc><pc id="source8" dataRefStart="source8"><ph id="source9" dataRef="source9"/><ph id="source10" dataRef="source10"/><pc id="source11" dataRefStart="source11">Click on the "X" on the right side to exit the course.</pc></pc>';
+        $expected = '<ph id="source1_1" dataType="pcStart" originalData="PHBjIGlkPSJzb3VyY2UxIiBkYXRhUmVmU3RhcnQ9InNvdXJjZTEiPg==" dataRef="source1" equiv-text="base64:Nw=="/><ph id="source2" dataRef="source2" equiv-text="base64:MTA="/><ph id="source1_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="source1" equiv-text="base64:Nw=="/><ph id="source3_1" dataType="pcStart" originalData="PHBjIGlkPSJzb3VyY2UzIiBkYXRhUmVmU3RhcnQ9InNvdXJjZTMiPg==" dataRef="source3" equiv-text="base64:MQ=="/><ph id="source4_1" dataType="pcStart" originalData="PHBjIGlkPSJzb3VyY2U0IiBkYXRhUmVmU3RhcnQ9InNvdXJjZTQiPg==" dataRef="source4" equiv-text="base64:Mw=="/>Well done!<ph id="source5" dataRef="source5" equiv-text="base64:NQ=="/><ph id="source6" dataRef="source6" equiv-text="base64:OA=="/>You have completed the course and are now ready to demonstrate your knowledge of<ph id="source7" dataRef="source7" equiv-text="base64:MTE="/>how to use Case Management.<ph id="source4_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="source4" equiv-text="base64:Mw=="/><ph id="source3_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="source3" equiv-text="base64:MQ=="/><ph id="source8_1" dataType="pcStart" originalData="PHBjIGlkPSJzb3VyY2U4IiBkYXRhUmVmU3RhcnQ9InNvdXJjZTgiPg==" dataRef="source8" equiv-text="base64:Mg=="/><ph id="source9" dataRef="source9" equiv-text="base64:NA=="/><ph id="source10" dataRef="source10" equiv-text="base64:Ng=="/><ph id="source11_1" dataType="pcStart" originalData="PHBjIGlkPSJzb3VyY2UxMSIgZGF0YVJlZlN0YXJ0PSJzb3VyY2UxMSI+" dataRef="source11" equiv-text="base64:OQ=="/>Click on the "X" on the right side to exit the course.<ph id="source11_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="source11" equiv-text="base64:OQ=="/><ph id="source8_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="source8" equiv-text="base64:Mg=="/>';
+        $restored = '<pc id="source1" dataRefStart="source1"><ph id="source2" dataRef="source2"/></pc><pc id="source3" dataRefStart="source3"><pc id="source4" dataRefStart="source4">Well done!<ph id="source5" dataRef="source5"/><ph id="source6" dataRef="source6"/>You have completed the course and are now ready to demonstrate your knowledge of<ph id="source7" dataRef="source7"/>how to use Case Management.</pc></pc><pc id="source8" dataRefStart="source8"><ph id="source9" dataRef="source9"/><ph id="source10" dataRef="source10"/><pc id="source11" dataRefStart="source11">Click on the "X" on the right side to exit the course.</pc></pc>';
+
+        $dataReplacer = new DataRefReplacer($map);
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($restored, $dataReplacer->restore($expected));
+    }
 }
+
+

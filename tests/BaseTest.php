@@ -84,4 +84,89 @@ abstract class BaseTest extends TestCase
 
         return $transUnits;
     }
+
+    /**
+     * @param $data
+     *
+     * @return array
+     */
+    protected function getData($data)
+    {
+        $transUnits = [];
+
+        foreach ($data as $i => $k) {
+            //create a secondary indexing mechanism on segments' array; this will be useful
+            //prepend a string so non-trans unit id ( ex: numerical ) are not overwritten
+            $internalId = $k[ 'internal_id' ];
+
+            $transUnits[ $internalId ] [] = $i;
+
+            $data[ 'matecat|' . $internalId ] [] = $i;
+        }
+
+        return [
+                'data' => $data,
+                'transUnits' => $transUnits,
+        ];
+    }
+
+    /**
+     * @param string $url
+     * @param array  $data
+     *
+     * @return bool|string
+     */
+    protected function httpPost($url, $data)
+    {
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        $body = curl_exec($ch);
+        $error = curl_error($ch);
+        $errorNo = curl_errno($ch);
+        $info = curl_getinfo($ch);
+
+        curl_close($ch);
+
+        $http = new \stdClass();
+        $http->body = $body;
+        $http->error = $error;
+        $http->errorNo = $errorNo;
+        $http->info = $info;
+
+        return $http;
+    }
+
+    /**
+     * @param $xliff20
+     *
+     * @return array
+     * @throws \Exception
+     */
+    protected function validateXliff20($xliff20)
+    {
+        $errors = [];
+
+        $url = 'https://okapi-lynx.appspot.com/validation';
+
+        $response = $this->httpPost($url, [
+            'content' => $xliff20
+        ]);
+
+        if($response->info['http_code'] !== 200){
+            throw new \Exception( ($response->errorNo > 0) ? $response->error : 'An error occurred calling ' . $url . '. Status code '.$response->info['http_code'].' was returned' );
+        }
+
+        preg_match_all('/<pre>(.*?)<\/pre>/s', $response->body, $matches);
+
+        if(!empty($matches[1])){
+            foreach ($matches[1] as $match){
+                $errors[] = $match;
+            }
+        }
+
+        return $errors;
+    }
 }

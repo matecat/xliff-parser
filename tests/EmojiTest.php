@@ -10,6 +10,27 @@ class EmojiTest extends BaseTest
     /**
      * @test
      */
+    public function doesNotTouchingOriginalTabs()
+    {
+        $string = 'La rana	in Spagna gracida in campagna';
+
+        $this->assertEquals(Emoji::toEntity($string), $string);
+    }
+
+    /**
+     * @test
+     */
+    public function canReplaceInvisibleGlyphs()
+    {
+        $string = '󠇡La rana in Spagna gracida in campagna';
+        $expected = '&#917985;La rana in Spagna gracida in campagna';
+
+        $this->assertEquals(Emoji::toEntity($string), $expected);
+    }
+
+    /**
+     * @test
+     */
     public function canReplaceEmojisWithEntites()
     {
         $dataset = [
@@ -18,8 +39,31 @@ class EmojiTest extends BaseTest
             '🗔' => '&#128468;',
             '👨' => '&#128104;',
             '🇺🇸' => '&#127482;&#127480;',
-            '9️⃣' => '&#57;&#65039;&#8419;',
+            '9️⃣' => '9&#65039;&#8419;',
             '👋🏻' => '&#128075;&#127995;',
+            '🡪' => '&#129130;',
+            '࿕' => '&#4053;',
+            '⾮' => '&#12206;',
+            '⌛'  => '&#8987;',
+            '⏯'   => '&#9199;',
+            'ༀ༁༂' => '&#3840;&#3841;&#3842;',
+            '🪂' => '&#129666;',
+            '𝑞' => '&#119902;',
+            '𝑖' => '&#119894;',
+            '𝑽' => '&#119933;',
+            '𝑹' => '&#119929;',
+            '𝑺' => '&#119930;',
+            '𝑻' => '&#119931;',
+            '𝑰' => '&#119920;',
+            '𝑴' => '&#119924;',
+            '𝑆' => '&#119878;',
+            '𝒄' => '&#119940;',
+            '𝒐' => '&#119952;',
+            '𝒔' => '&#119956;',
+            '𝑷' => '&#119927;',
+            '𝑸' => '&#119928;',
+            '𝑨' => '&#119912;',
+            '𧈧'  => '&#160295;',
         ];
 
         foreach ($dataset as $emoji => $entity) {
@@ -28,9 +72,11 @@ class EmojiTest extends BaseTest
     }
 
     /**
+     * Perform 100000 iterations to test script performance
+     *
      * @test
      */
-    public function performance()
+    public function performanceTest()
     {
         $faker = Factory::create();
 

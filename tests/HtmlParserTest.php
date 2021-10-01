@@ -9,6 +9,91 @@ class HtmlParserTest extends BaseTest
     /**
      * @test
      */
+    public function can_parse_html_with_greater_than_symbol()
+    {
+        $string = '<div id="1">Ciao > ciao<div id="2"></div></div>';
+        $parsed = HtmlParser::parse($string);
+
+        $this->assertCount(1, $parsed);
+        $this->assertEquals('Ciao > ciao', $parsed[0]->stripped_text);
+        $this->assertEquals('1', $parsed[0]->attributes['id']);
+        $this->assertEquals('2', $parsed[0]->inner_html[0]->attributes['id']);
+    }
+
+    /**
+     * @test
+     */
+    public function can_parse_html_with_less_than_symbol()
+    {
+        $string = '<div id="1">< Ciao <<div id="2"></div></div>';
+        $parsed = HtmlParser::parse($string);
+
+        $this->assertCount(1, $parsed);
+        $this->assertEquals('< Ciao <', $parsed[0]->stripped_text);
+        $this->assertEquals('1', $parsed[0]->attributes['id']);
+        $this->assertEquals('2', $parsed[0]->inner_html[0]->attributes['id']);
+    }
+
+    /**
+     * @test
+     */
+    public function can_parse_html_with_greater_than_and_less_than_symbols()
+    {
+        $string = '<div id="1">Ciao <> ciao<div id="2"></div></div>';
+        $parsed = HtmlParser::parse($string);
+
+        $this->assertCount(1, $parsed);
+        $this->assertEquals('Ciao <> ciao', $parsed[0]->stripped_text);
+        $this->assertEquals('1', $parsed[0]->attributes['id']);
+        $this->assertEquals('2', $parsed[0]->inner_html[0]->attributes['id']);
+    }
+
+    /**
+     * @test
+     */
+    public function can_parse_html_with_greater_than_and_less_than_symbols_in_inversed_order()
+    {
+        $string = '<div id="1">Ciao > < ciao<div id="2"></div></div>';
+        $parsed = HtmlParser::parse($string);
+
+        $this->assertCount(1, $parsed);
+        $this->assertEquals('Ciao > < ciao', $parsed[0]->stripped_text);
+        $this->assertEquals('1', $parsed[0]->attributes['id']);
+        $this->assertEquals('2', $parsed[0]->inner_html[0]->attributes['id']);
+    }
+
+    /**
+     * @test
+     */
+    public function can_extract_inner_text()
+    {
+        $string = '<div class=\'text\'>questo è un testo</div>';
+        $parsed = HtmlParser::parse($string);
+
+        $this->assertCount(1, $parsed);
+        $this->assertEquals('text', $parsed[0]->attributes['class']);
+        $this->assertEquals('questo è un testo', $parsed[0]->original_text);
+        $this->assertEquals('<div class=\'text\'>', $parsed[0]->start);
+        $this->assertEquals('</div>', $parsed[0]->end);
+    }
+
+    /**
+     * @test
+     */
+    public function can_extract_inner_text_with_nested_html_content()
+    {
+        $string = '<div class=\'text\'><div>ciao questo è un testo</div> con del contenuto html.</div>';
+        $parsed = HtmlParser::parse($string);
+
+        $this->assertCount(1, $parsed);
+        $this->assertEquals('text', $parsed[0]->attributes['class']);
+        $this->assertEquals('<div>ciao questo è un testo</div> con del contenuto html.', $parsed[0]->original_text);
+        $this->assertEquals('ciao questo è un testo con del contenuto html.', $parsed[0]->stripped_text);
+    }
+
+    /**
+     * @test
+     */
     public function can_parse_a_string_with_escaped_single_quotes()
     {
         $string = '<div class=\'text\'></div>';
@@ -16,6 +101,7 @@ class HtmlParserTest extends BaseTest
 
         $this->assertCount(1, $parsed);
         $this->assertEquals('text', $parsed[0]->attributes['class']);
+        $this->assertEquals('', $parsed[0]->original_text);
     }
 
     /**
@@ -83,6 +169,8 @@ class HtmlParserTest extends BaseTest
 
         $this->assertCount(1, $parsed);
         $this->assertCount(1, $parsed[0]->inner_html);
+        $this->assertEquals('Ciao&lt;div&gt;Ciao&lt;/div&gt;', $parsed[0]->original_text);
+        $this->assertEquals('CiaoCiao', $parsed[0]->stripped_text);
     }
 
     /**
@@ -95,15 +183,6 @@ class HtmlParserTest extends BaseTest
 
         $this->assertEquals($parsed[2]->inner_html[0]->node, '&lt;pc id="4" canCopy="no" canDelete="no" dataRefEnd="d2" dataRefStart="d2"&gt;grassetto + corsivo&lt;/pc&gt;');
     }
-
-//    /**
-//     * @test
-//     */
-//    public function can_parse_a_google_page_html()
-//    {
-//        $html = file_get_contents(__DIR__.'/files/google.html');
-//        $parsed = HtmlParser::parse($html);
-//    }
 
     /**
      * @test
@@ -136,6 +215,45 @@ class HtmlParserTest extends BaseTest
         $this->assertEquals($tu->tagname, 'trans-unit');
         $this->assertEquals($tu->attributes['id'], 'pendo-image-e3aaf7b7|alt');
     }
+
+    /**
+     * @test
+     */
+    public function can_escape_correctly_nodes_containing_special_characters()
+    {
+        // this string contains ’
+        $string = '&lt;pc id="source4" dataRefStart="source4"&gt;The rider can’t tell if the driver matched the profile picture.&lt;/pc&gt;';
+        $parsed = HtmlParser::parse($string);
+
+        $pc = $parsed[0];
+
+        $this->assertEquals($pc->node, '&lt;pc id="source4" dataRefStart="source4"&gt;The rider can’t tell if the driver matched the profile picture.&lt;/pc&gt;');
+        $this->assertEquals($pc->original_text, 'The rider can’t tell if the driver matched the profile picture.');
+        $this->assertEquals($pc->stripped_text, 'The rider can’t tell if the driver matched the profile picture.');
+
+        // this string contains > inside text
+        $string = '&lt;pc id="source4" dataRefStart="source4"&gt;Questa stringa contiene un > a stringa.&lt;/pc&gt;';
+        $parsed = HtmlParser::parse($string);
+
+        $pc = $parsed[0];
+        $this->assertEquals($pc->node, '&lt;pc id="source4" dataRefStart="source4"&gt;Questa stringa contiene un > a stringa.&lt;/pc&gt;');
+        $this->assertEquals($pc->original_text, 'Questa stringa contiene un > a stringa.');
+        $this->assertEquals($pc->stripped_text, 'Questa stringa contiene un > a stringa.');
+    }
+
+//    /**
+//     * @test
+//     */
+//    public function can_parse_escaped_html_with_greater_than_symbol()
+//    {
+//        $string = '&lt;div id="1"&gt;Ciao &lt;&gt; ciao&lt;div id="2"&gt;&lt;/div&gt;&lt;/div&gt;';
+//        $parsed = HtmlParser::parse($string);
+//
+//        $this->assertCount(1, $parsed);
+//        $this->assertEquals('Ciao > ciao', $parsed[0]->stripped_text);
+//        $this->assertEquals('1', $parsed[0]->attributes['id']);
+//        $this->assertEquals('2', $parsed[0]->inner_html[0]->attributes['id']);
+//    }
 }
 
 

@@ -8,22 +8,28 @@ abstract class AbstractXliffReplacer
 {
     protected $originalFP;
 
-    protected $tuTagName;                // <trans-unit> (forXliff v 1.*) or <unit> (forXliff v 2.*)
-    protected $inTU     = false;         // flag to check whether we are in a <trans-unit>
-    protected $inTarget = false;         // flag to check whether we are in a <target>, to ignore everything
-    protected $isEmpty  = false;         // flag to check whether we are in an empty tag (<tag/>)
+    protected $tuTagName;                 // <trans-unit> (forXliff v 1.*) or <unit> (forXliff v 2.*)
+    protected $inTU                = false;  // flag to check whether we are in a <trans-unit>
+    protected $inTarget            = false;  // flag to check whether we are in a <target>, to ignore everything
+    protected $isEmpty             = false;  // flag to check whether we are in an empty tag (<tag/>)
+    protected $targetWasWritten    = false;  // flag to check is <target> was written in the current unit
+    protected $segmentPositionInTu = -1;  // the current position of segment in the current <unit> (forXliff v 2.*)
 
-    protected $CDATABuffer    = "";      // buffer for special tag
-    protected $bufferIsActive = false;   // buffer for special tag
+    protected $CDATABuffer    = "";       // buffer for special tag
+    protected $bufferIsActive = false;    // buffer for special tag
 
-    protected $offset        = 0;        // offset for SAX pointer
-    protected $outputFP;                 // output stream pointer
-    protected $currentBuffer;            // the current piece of text it's been parsed
-    protected $len;                      // length of the currentBuffer
-    protected $segments;                 // array of translations
+    protected $offset        = 0;         // offset for SAX pointer
+    protected $outputFP;                  // output stream pointer
+    protected $currentBuffer;             // the current piece of text it's been parsed
+    protected $len;                       // length of the currentBuffer
+    protected $segments;                  // array of translations
     protected $lastTransUnit = [];
-    protected $currentTransUnitId;       // id of current <trans-unit>
-    protected $currentSegmentArray = []; // id of current <segment> (forXliff v 2.*)
+    protected $currentTransUnitId;        // id of current <trans-unit>
+    protected $currentTransUnitTranslate; // 'translate' attribute of current <trans-unit>
+    protected $currentSegmentArray = [];  // id of current <segment> (forXliff v 2.*)
+    protected $unitContainsMda = false;   // check if <unit> already contains a <mda:metadata> (forXliff v 2.*)
+    protected $hasWrittenCounts = false;  // check if <unit> already wrote segment counts (forXliff v 2.*)
+    protected $sourceAttributes = [];     // current <source> attributes (needed when handling xliff files without <target>)
 
     protected $targetLang;
 

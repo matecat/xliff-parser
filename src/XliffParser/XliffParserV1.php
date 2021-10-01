@@ -4,6 +4,7 @@ namespace Matecat\XliffParser\XliffParser;
 
 use Matecat\XliffParser\Exception\DuplicateTransUnitIdInXliff;
 use Matecat\XliffParser\Exception\NotFoundIdInTransUnit;
+use Matecat\XliffParser\Exception\SegmentIdTooLongException;
 
 class XliffParserV1 extends AbstractXliffParser
 {
@@ -152,7 +153,8 @@ class XliffParserV1 extends AbstractXliffParser
 
             // seg-source
             if ($childNode->nodeName === 'seg-source') {
-                $output[ 'files' ][ $i ][ 'trans-units' ][ $j ]['seg-source'] = $this->extractContentWithMarksAndExtTags($dom, $childNode);
+                $rawSegment = $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'source' ]['raw-content'];
+                $output[ 'files' ][ $i ][ 'trans-units' ][ $j ]['seg-source'] = $this->extractContentWithMarksAndExtTags($dom, $childNode, $rawSegment);
             }
 
             // target
@@ -163,7 +165,7 @@ class XliffParserV1 extends AbstractXliffParser
                 $targetRawContent = @$output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'target' ][ 'raw-content' ];
                 $segSource = @$output[ 'files' ][ $i ][ 'trans-units' ][ $j ]['seg-source'];
                 if (isset($targetRawContent) and !empty($targetRawContent) and isset($segSource) and count($segSource) > 0) {
-                    $output[ 'files' ][ $i ][ 'trans-units' ][ $j ]['seg-target'] = $this->extractContentWithMarksAndExtTags($dom, $childNode);
+                    $output[ 'files' ][ $i ][ 'trans-units' ][ $j ]['seg-target'] = $this->extractContentWithMarksAndExtTags($dom, $childNode, $targetRawContent);
                 }
             }
 
@@ -191,6 +193,7 @@ class XliffParserV1 extends AbstractXliffParser
      * @param array       $transUnitIdArrayForUniquenessCheck
      *
      * @return array
+     * @throws \Exception
      */
     private function extractTransUnitMetadata(\DOMElement $transUnit, array $transUnitIdArrayForUniquenessCheck)
     {
@@ -202,6 +205,11 @@ class XliffParserV1 extends AbstractXliffParser
         }
 
         $id = $transUnit->attributes->getNamedItem('id')->nodeValue;
+
+        if(strlen($id) > 100){
+            throw new SegmentIdTooLongException('Segment-id too long. Max 100 characters allowed', 400);
+        }
+
         $transUnitIdArrayForUniquenessCheck[] = $id;
         $metadata[ 'id' ] = $id;
 
@@ -269,7 +277,7 @@ class XliffParserV1 extends AbstractXliffParser
         $at = [];
         $at['attr'] = $this->extractTagAttributes($altTrans);
 
-        if ($altTrans->getElementsByTagName('source')) {
+        if ($altTrans->getElementsByTagName('source')->length > 0) {
             $at['source'] = $altTrans->getElementsByTagName('source')->item(0)->nodeValue;
         }
 

@@ -8,6 +8,81 @@ class StringsTest extends BaseTest
 {
     /**
      * @test
+     */
+    public function can_check_html_tag()
+    {
+        $a = "<div>ciao</div>";
+
+        $this->assertTrue(Strings::isHtmlString($a));
+
+        $a = "< >";
+
+        $this->assertFalse(Strings::isHtmlString($a));
+    }
+
+    /**
+     * @test
+     */
+    public function can_get_the_last_character()
+    {
+        $phrase = 'Si presenta con una nuance rubino intensa e compatta dai luminosi riflessi viola.';
+
+        $this->assertEquals('.', Strings::lastChar($phrase));
+
+        $phrase = 'Si presenta con una nuance rubino intensa e compatta dai luminosi riflessi viola. ';
+
+        $this->assertEquals(' ', Strings::lastChar($phrase));
+    }
+
+    /**
+     * @test
+     * @throws \Exception
+     */
+    public function contains_function_can_discriminate_trailing_spaces()
+    {
+        $full = 'Il naso evidenzia raffinati sentori floreali di rosa canina e violetta, frutti rossi croccanti tipo ribes e fragole di bosco, dopo i quali emergono cenni gentili di grafite e liquirizia. Si presenta con una nuance rubino intensa e compatta dai luminosi riflessi viola. ';
+        $phrase = 'Si presenta con una nuance rubino intensa e compatta dai luminosi riflessi viola. ';
+
+        $this->assertTrue(Strings::contains($phrase, $full));
+
+        $full = 'Il naso evidenzia raffinati sentori floreali di rosa canina e violetta, frutti rossi croccanti tipo ribes e fragole di bosco, dopo i quali emergono cenni gentili di grafite e liquirizia. Si presenta con una nuance rubino intensa e compatta dai luminosi riflessi viola.';
+        $phrase = 'Si presenta con una nuance rubino intensa e compatta dai luminosi riflessi viola. ';
+
+        $this->assertFalse(Strings::contains($phrase, $full));
+    }
+
+    /**
+     * @test
+     * @throws \Exception
+     */
+    public function can_detected_escaped_html_entities()
+    {
+        $this->assertFalse(Strings::isADoubleEscapedEntity("&lt;p class=&quot;cmln__paragraph&quot;&gt;"));
+        $this->assertFalse(Strings::isADoubleEscapedEntity("&lt;/p&gt;"));
+        $this->assertTrue(Strings::isADoubleEscapedEntity("&amp;#39;"));
+        $this->assertTrue(Strings::isADoubleEscapedEntity("&amp;amp;"));
+        $this->assertTrue(Strings::isADoubleEscapedEntity("&amp;apos;"));
+    }
+
+    /**
+     * @test
+     * @throws \Exception
+     */
+    public function can_decode_only_escaped_entities()
+    {
+        $string = "&lt;/p&gt; &amp;#39; &apos;";
+        $expected = "&lt;/p&gt; &#39; &apos;";
+
+        $this->assertEquals(Strings::htmlspecialchars_decode($string, true), $expected);
+
+        $string = "&amp;amp; &amp;apos;";
+        $expected = "&amp; &apos;";
+
+        $this->assertEquals(Strings::htmlspecialchars_decode($string, true), $expected);
+    }
+
+    /**
+     * @test
      * @throws \Exception
      */
     public function can_detect_escaped_html()
@@ -65,6 +140,19 @@ class StringsTest extends BaseTest
 
     /**
      * @test
+     * @throws \Exception
+     */
+    public function can_encode_json()
+    {
+        $json = '{"source3":"&#39;","source4":"&lt;a class=&quot;cmln__link&quot; href=&quot;https:\\/\\/restaurant-dashboard.uber.com\\/&quot; target=&quot;_blank&quot;&gt;","source5":"&lt;\\/a&gt;","source1":"&lt;p class=&quot;cmln__paragraph&quot;&gt;","source6":"&lt;\\/p&gt;","source2":"&#39;"}';
+        $noJson = "csacsacsa";
+
+        $this->assertCount(6, Strings::jsonToArray($json));
+        $this->assertEmpty(Strings::jsonToArray($noJson));
+    }
+
+    /**
+     * @test
      */
     public function can_fix_not_well_formed_xml()
     {
@@ -80,6 +168,7 @@ class StringsTest extends BaseTest
 
         $tests = array(
                 '' => '',
+                '&#129305; Join this (video)call at: {{joinUrl}}' => '&#129305; Join this (video)call at: {{joinUrl}}',
                 'just text' => 'just text',
                 '<gap>Hey</gap>' => '&lt;gap&gt;Hey&lt;/gap&gt;',
                 '<mrk>Hey</mrk>' => '<mrk>Hey</mrk>',
@@ -115,5 +204,22 @@ class StringsTest extends BaseTest
 
         $this->assertFalse(Strings::isAValidUuid($not_valid_uuid));
         $this->assertTrue(Strings::isAValidUuid($uuid));
+    }
+
+    /**
+     * @test
+     * @throws \Exception
+     */
+    public function get_the_number_of_trailing_spaces()
+    {
+        $string = "La casa in campagna è bella  ";
+        $string2 = "Dante Alighieri   ";
+        $string3 = "Questa stringa non contiente spazi alla fine della frase.";
+        $string4 = "Questa stringa non contiente uno spazio alla fine della frase. ";
+
+        $this->assertEquals(Strings::getTheNumberOfTrailingSpaces($string), 2);
+        $this->assertEquals(Strings::getTheNumberOfTrailingSpaces($string2), 3);
+        $this->assertEquals(Strings::getTheNumberOfTrailingSpaces($string3), 0);
+        $this->assertEquals(Strings::getTheNumberOfTrailingSpaces($string4), 1);
     }
 }

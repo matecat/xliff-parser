@@ -1,0 +1,228 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0" xmlns:slr="urn:oasis:names:tc:xliff:sizerestriction:2.0" xmlns:memsource="http://www.memsource.com/xliff2.0/1.0" version="2.0" memsource:wfLevel="4" srcLang="en-us" trgLang="ja-jp">
+    <file id="9WAksyzyNyOauP1L0_dc5:0-13" memsource:taskId="9WAksyzyNyOauP1L0_dc5" canResegment="no" original="4063d059-louvre-v2.xml">
+        <slr:profiles generalProfile="xliff:codepoints"/>
+        <unit id="0" memsource:tGroupBegin="0" memsource:tGroupEnd="0">
+            <mda:metadata><mda:metaGroup><mda:meta type="key">0842668f-6c16-4551-bd66-c8c320ef06fc</mda:meta>
+                <mda:meta type="key-note">
+                    Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/louvre-v2/keys" target="_blank"&gt;louvre-v2&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/louvre-v2/key/v1-4b2af3e81442331e9986fc7d4676eaf3/overview" target="_blank"&gt;v1-4b2af3e81442331e9986fc7d4676eaf3&lt;/a&gt; Description: &lt;font color="blue"&gt;Content Type: Signup
+                    Preview Link: https://chameleon-preview.uberinternal.com/preview-v2/page/d714f236-ecd0-4ac7-ad0a-3146b4053378
+                    Additional Info:
+                    TEXT_LINE&lt;/font&gt;
+
+                </mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="0" state="translated">
+                <source>Work on your schedule</source>
+                <target>働く時間は自由</target>
+            </segment>
+        </unit>
+        <unit id="1" memsource:tGroupBegin="1" memsource:tGroupEnd="1">
+            <mda:metadata><mda:metaGroup><mda:meta type="key">24824294-45d1-458b-a77f-7cac020fff91</mda:meta>
+                <mda:meta type="key-note">
+                    Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/louvre-v2/keys" target="_blank"&gt;louvre-v2&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/louvre-v2/key/v1-cedcf6fe65a8f2849fe11e316d6c9923/overview" target="_blank"&gt;v1-cedcf6fe65a8f2849fe11e316d6c9923&lt;/a&gt; Description: &lt;font color="blue"&gt;Content Type: Signup
+                    Preview Link: https://chameleon-preview.uberinternal.com/preview-v2/page/d714f236-ecd0-4ac7-ad0a-3146b4053378?country=IT
+                    Additional Info:
+                    TEXT_LINE&lt;/font&gt;
+
+                </mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="1" state="translated">
+                <source>Sign up now</source>
+                <target>ご登録はこちら</target>
+            </segment>
+        </unit>
+        <unit id="2" memsource:tGroupBegin="2" memsource:tGroupEnd="2">
+            <mda:metadata><mda:metaGroup><mda:meta type="key">3786a032-29ac-4455-bebd-9f75b21bd316</mda:meta>
+                <mda:meta type="key-note">
+                    Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/louvre-v2/keys" target="_blank"&gt;louvre-v2&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/louvre-v2/key/v1-cc66d8bfc5f4ede0080deec886b68bdc/overview" target="_blank"&gt;v1-cc66d8bfc5f4ede0080deec886b68bdc&lt;/a&gt; Description: &lt;font color="blue"&gt;Content Type: Signup
+                    Preview Link: https://chameleon-preview.uberinternal.com/preview-v2/page/d714f236-ecd0-4ac7-ad0a-3146b4053378
+                    Additional Info:
+                    TEXT_LINE&lt;/font&gt;
+
+                </mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="2" state="translated">
+                <source>Choose your wheels</source>
+                <target>配達手段を選べる</target>
+            </segment>
+        </unit>
+        <unit id="3" memsource:tGroupBegin="3" memsource:tGroupEnd="4">
+            <mda:metadata><mda:metaGroup><mda:meta type="key">5190201e-3ab6-4565-9ed4-7b07c1787149</mda:meta>
+                <mda:meta type="key-note">
+                    Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/louvre-v2/keys" target="_blank"&gt;louvre-v2&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/louvre-v2/key/v1-248d43e84d15f9846ce4f544345d5730/overview" target="_blank"&gt;v1-248d43e84d15f9846ce4f544345d5730&lt;/a&gt; Description: &lt;font color="blue"&gt;Content Type: Signup
+                    Preview Link: https://chameleon-preview.uberinternal.com/preview-v2/page/d714f236-ecd0-4ac7-ad0a-3146b4053378
+                    Additional Info:
+                    MARKDOWN&lt;/font&gt;
+
+                </mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <memsource:additionalTagData>
+                <memsource:tag id="source3"><memsource:tagId>3</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+                <memsource:tag id="source1"><memsource:tagId>1</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+                <memsource:tag id="source2"><memsource:tagId>2</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+            </memsource:additionalTagData>
+            <originalData>
+                <data id="source3">&amp;lt;/p&amp;gt;</data>
+                <data id="source1">&amp;lt;p class=&amp;quot;cmln__paragraph&amp;quot;&amp;gt;</data>
+                <data id="source2">&amp;amp;#39;</data>
+            </originalData>
+            <segment id="3" state="translated">
+                <source><ph id="source1" dataRef="source1"/>Deliver for a few hours in the mornings, every night, or just on weekends—it<ph id="source2" dataRef="source2"/>s up to you.</source>
+                <target><ph id="source1" dataRef="source1"/>仕事のペースはすべて自分次第。朝だけ、夜だけ、土日のみなど、好きな時間に配達ができます。短時間でも OK。</target>
+            </segment>
+            <segment id="4" state="translated">
+                <source>You are your own boss and you can choose when and how much you work.<ph id="source3" dataRef="source3"/></source>
+                <target>個人事業主として、働く時間や仕事量を選べます。<ph id="source3" dataRef="source3"/></target>
+            </segment>
+        </unit>
+        <unit id="4" memsource:tGroupBegin="5" memsource:tGroupEnd="5">
+            <mda:metadata><mda:metaGroup><mda:meta type="key">5d3d7e6d-4f68-4ab4-bb54-7d18d2265172</mda:meta>
+                <mda:meta type="key-note">
+                    Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/louvre-v2/keys" target="_blank"&gt;louvre-v2&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/louvre-v2/key/v1-cabb9c2d39b620c6162ca1b5244e5a5b/overview" target="_blank"&gt;v1-cabb9c2d39b620c6162ca1b5244e5a5b&lt;/a&gt; Description: &lt;font color="blue"&gt;Content Type: Signup
+                    Preview Link: https://chameleon-preview.uberinternal.com/preview-v2/page/d714f236-ecd0-4ac7-ad0a-3146b4053378?country=IT
+                    Additional Info:
+                    TEXT_LINE&lt;/font&gt;
+
+                </mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="5" state="translated">
+                <source>Deliver with Uber</source>
+                <target>Uber での配達</target>
+            </segment>
+        </unit>
+        <unit id="5" memsource:tGroupBegin="6" memsource:tGroupEnd="6">
+            <mda:metadata><mda:metaGroup><mda:meta type="key">60199a79-1daf-4031-a95f-f2b1ab867daf</mda:meta>
+                <mda:meta type="key-note">
+                    Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/louvre-v2/keys" target="_blank"&gt;louvre-v2&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/louvre-v2/key/v1-5839c174921dfdcb24960ee626214c62/overview" target="_blank"&gt;v1-5839c174921dfdcb24960ee626214c62&lt;/a&gt; Description: &lt;font color="blue"&gt;Content Type: Signup
+                    Preview Link: https://chameleon-preview.uberinternal.com/preview-v2/page/d714f236-ecd0-4ac7-ad0a-3146b4053378
+                    Additional Info:
+                    TEXT_LINE&lt;/font&gt;
+
+                </mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="6" state="translated">
+                <source>Deliver when you want</source>
+                <target>好きなときに配達する</target>
+            </segment>
+        </unit>
+        <unit id="6" memsource:tGroupBegin="7" memsource:tGroupEnd="8">
+            <mda:metadata><mda:metaGroup><mda:meta type="key">818d0bab-0eea-41e3-be9b-cff4c3a7ee84</mda:meta>
+                <mda:meta type="key-note">
+                    Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/louvre-v2/keys" target="_blank"&gt;louvre-v2&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/louvre-v2/key/v1-5a834ba6c8dfe5d5ef7968475380c3b9/overview" target="_blank"&gt;v1-5a834ba6c8dfe5d5ef7968475380c3b9&lt;/a&gt; Description: &lt;font color="blue"&gt;Content Type: Signup
+                    Preview Link: https://chameleon-preview.uberinternal.com/preview-v2/page/d714f236-ecd0-4ac7-ad0a-3146b4053378
+                    Additional Info:
+                    MARKDOWN&lt;/font&gt;
+
+                </mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <memsource:additionalTagData>
+                <memsource:tag id="source1"><memsource:tagId>1</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+                <memsource:tag id="source2"><memsource:tagId>2</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+            </memsource:additionalTagData>
+            <originalData>
+                <data id="source1">&amp;lt;p class=&amp;quot;cmln__paragraph&amp;quot;&amp;gt;</data>
+                <data id="source2">&amp;lt;/p&amp;gt;</data>
+            </originalData>
+            <segment id="7" state="translated">
+                <source><ph id="source1" dataRef="source1"/>You’ll make money by bringing people the things they love.</source>
+                <target>注文者に商品を届けて収入を手にしましょう。</target>
+            </segment>
+            <segment id="8" state="translated">
+                <source>Between deliveries, it’s just you.<ph id="source2" dataRef="source2"/></source>
+                <target>配達の合間はあなた一人の時間。</target>
+            </segment>
+        </unit>
+        <unit id="7" memsource:tGroupBegin="9" memsource:tGroupEnd="9">
+            <mda:metadata><mda:metaGroup><mda:meta type="key">8aa8e2c0-3c56-4f92-b073-f89d7861fd9f</mda:meta>
+                <mda:meta type="key-note">
+                    Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/louvre-v2/keys" target="_blank"&gt;louvre-v2&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/louvre-v2/key/v1-10ac3d04253ef7e1ddc73e6091c0cd55/overview" target="_blank"&gt;v1-10ac3d04253ef7e1ddc73e6091c0cd55&lt;/a&gt; Description: &lt;font color="blue"&gt;Content Type: Signup
+                    Preview Link: https://chameleon-preview.uberinternal.com/preview-v2/page/d714f236-ecd0-4ac7-ad0a-3146b4053378?country=IT
+                    Additional Info:
+                    TEXT_LINE&lt;/font&gt;
+
+                </mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="9" state="translated">
+                <source>Next</source>
+                <target>次へ</target>
+            </segment>
+        </unit>
+        <unit id="8" memsource:tGroupBegin="10" memsource:tGroupEnd="10">
+            <mda:metadata><mda:metaGroup><mda:meta type="key">b7cc1fca-eda5-4aae-b8fb-84eb7d60103b</mda:meta>
+                <mda:meta type="key-note">
+                    Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/louvre-v2/keys" target="_blank"&gt;louvre-v2&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/louvre-v2/key/v1-0012249c8c39c2e6465c5059eacd649e/overview" target="_blank"&gt;v1-0012249c8c39c2e6465c5059eacd649e&lt;/a&gt; Description: &lt;font color="blue"&gt;Content Type: Signup
+                    Preview Link: https://chameleon-preview.uberinternal.com/preview-v2/page/d714f236-ecd0-4ac7-ad0a-3146b4053378
+                    Additional Info:
+                    TEXT_LINE&lt;/font&gt;
+
+                </mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="10" state="translated">
+                <source>Earn good money</source>
+                <target>効率よく収入を得る</target>
+            </segment>
+        </unit>
+        <unit id="9" memsource:tGroupBegin="11" memsource:tGroupEnd="11">
+            <mda:metadata><mda:metaGroup><mda:meta type="key">d71b2632-cfcb-40ea-a701-ef648c93a10a</mda:meta>
+                <mda:meta type="key-note">
+                    Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/louvre-v2/keys" target="_blank"&gt;louvre-v2&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/louvre-v2/key/v1-52eb6f867a1f75e5e4b9af9a0b36f346/overview" target="_blank"&gt;v1-52eb6f867a1f75e5e4b9af9a0b36f346&lt;/a&gt; Description: &lt;font color="blue"&gt;Content Type: Signup
+                    Preview Link: https://chameleon-preview.uberinternal.com/preview-v2/page/d714f236-ecd0-4ac7-ad0a-3146b4053378
+                    Additional Info:
+                    MARKDOWN&lt;/font&gt;
+
+                </mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <memsource:additionalTagData>
+                <memsource:tag id="source1"><memsource:tagId>1</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+                <memsource:tag id="source2"><memsource:tagId>2</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+            </memsource:additionalTagData>
+            <originalData>
+                <data id="source1">&amp;lt;p class=&amp;quot;cmln__paragraph&amp;quot;&amp;gt;</data>
+                <data id="source2">&amp;lt;/p&amp;gt;</data>
+            </originalData>
+            <segment id="11" state="translated">
+                <source><ph id="source1" dataRef="source1"/>Depending on the rules in your city, you may be able to deliver with your car, bike or scooter.<ph id="source2" dataRef="source2"/></source>
+                <target><ph id="source1" dataRef="source1"/>各都市の規則によりますが、スクーターやバイク、自転車、自家用車などで配達することができます。<ph id="source2" dataRef="source2"/></target>
+            </segment>
+        </unit>
+        <unit id="10" memsource:tGroupBegin="12" memsource:tGroupEnd="12">
+            <mda:metadata><mda:metaGroup><mda:meta type="key">e51ed80e-38bc-4c3b-8e54-4d72cdb74abb</mda:meta>
+                <mda:meta type="key-note">
+                    Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/louvre-v2/keys" target="_blank"&gt;louvre-v2&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/louvre-v2/key/v1-8c9dca00cf74bdf8514d073b1c42f683/overview" target="_blank"&gt;v1-8c9dca00cf74bdf8514d073b1c42f683&lt;/a&gt; Description: &lt;font color="blue"&gt;Content Type: Signup
+                    Preview Link: https://chameleon-preview.uberinternal.com/preview-v2/page/d714f236-ecd0-4ac7-ad0a-3146b4053378?country=IT
+                    Additional Info:
+                    MARKDOWN&lt;/font&gt;
+
+                </mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <memsource:additionalTagData>
+                <memsource:tag id="source1"><memsource:tagId>1</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+                <memsource:tag id="source2"><memsource:tagId>2</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+            </memsource:additionalTagData>
+            <originalData>
+                <data id="source1">&amp;lt;p class=&amp;quot;cmln__paragraph&amp;quot;&amp;gt;</data>
+                <data id="source2">&amp;lt;/p&amp;gt;</data>
+            </originalData>
+            <segment id="12" state="translated">
+                <source><ph id="source1" dataRef="source1"/>Earn on your own schedule<ph id="source2" dataRef="source2"/></source>
+                <target><ph id="source1" dataRef="source1"/>好きなときに働く<ph id="source2" dataRef="source2"/></target>
+            </segment>
+        </unit>
+        <unit id="11" memsource:tGroupBegin="13" memsource:tGroupEnd="13">
+            <mda:metadata><mda:metaGroup><mda:meta type="key">fd5ca437-24af-4c31-b879-5ba64dda7a5b</mda:meta>
+                <mda:meta type="key-note">
+                    Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/louvre-v2/keys" target="_blank"&gt;louvre-v2&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/louvre-v2/key/v1-e0c4332e8c13be976552a059f106354f/overview" target="_blank"&gt;v1-e0c4332e8c13be976552a059f106354f&lt;/a&gt; Description: &lt;font color="blue"&gt;Content Type: Signup
+                    Preview Link: https://chameleon-preview.uberinternal.com/preview-v2/page/d714f236-ecd0-4ac7-ad0a-3146b4053378?country=IT
+                    Additional Info:
+                    TEXT_LINE&lt;/font&gt;
+
+                </mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="13" state="translated">
+                <source>Get Started</source>
+                <target>始める</target>
+            </segment>
+        </unit>
+    </file>
+</xliff>

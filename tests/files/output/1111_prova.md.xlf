@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?><xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en-US" trgLang="it-IT" xmlns:its="http://www.w3.org/2005/11/its" its:version="2.0" xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0" xmlns:mtc="https://www.matecat.com">
+ <file id="f1" original="/home/afalappa/Documenti/filters-sample-docs/markdown/prova.md">
+  <unit mtc:segment-id="1" id="tu1" translate="yes">
+   <mda:metadata>
+                <mda:metaGroup category="row_xml_attribute">
+                    <mda:meta type="x-matecat-raw">2</mda:meta>
+                    <mda:meta type="x-matecat-weighted">1</mda:meta>
+                </mda:metaGroup>
+            </mda:metadata><segment>
+    <source xml:space="preserve">Titolo del documento</source>
+   <target xml:space="preserve">Document title</target></segment>
+   <segment>
+    <source xml:space="preserve">Titolo del documento2</source>
+   <target xml:space="preserve">Document title2</target></segment>
+  </unit>
+  <unit mtc:segment-id="3" id="tu2" translate="yes">
+   <mda:metadata>
+                <mda:metaGroup category="row_xml_attribute">
+                    <mda:meta type="x-matecat-raw">7</mda:meta>
+                    <mda:meta type="x-matecat-weighted">5</mda:meta>
+                </mda:metaGroup>
+            </mda:metadata><originalData>
+    <data id="d1">_</data>
+   </originalData>
+   <segment>
+    <source xml:space="preserve">Testo libero contenente <pc id="1" canCopy="no" canDelete="no" dataRefEnd="d1" dataRefStart="d1">corsivo</pc>.</source>
+   <target xml:space="preserve">Free text containing <pc id="1" canCopy="no" canDelete="no" dataRefEnd="d1" dataRefStart="d1">cursive</pc>.</target></segment>
+  </unit>
+ </file>
+</xliff>

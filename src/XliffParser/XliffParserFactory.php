@@ -2,24 +2,22 @@
 
 namespace Matecat\XliffParser\XliffParser;
 
-use Matecat\XliffParser\XliffUtils\XliffVersionDetector;
 use Psr\Log\LoggerInterface;
 
 class XliffParserFactory
 {
     /**
-     * @param $xliffContent
+     * @param int                  $xliffVersion
+     * @param string|null          $xliffProprietary
+     * @param LoggerInterface|null $logger
      *
-     * @return AbstractXliffParser
-     * @throws \Matecat\XliffParser\Exception\NotSupportedVersionException
-     * @throws \Matecat\XliffParser\Exception\NotValidFileException
+     * @return mixed
      */
-    public static function getInstance($xliffContent, LoggerInterface $logger = null)
+    public static function getInstance($xliffVersion, $xliffProprietary = null, LoggerInterface $logger = null)
     {
-        $version = XliffVersionDetector::detect($xliffContent);
-        $parserClass = 'Matecat\\XliffParser\\XliffParser\\XliffParserV' . $version;
+        $parserClass = 'Matecat\\XliffParser\\XliffParser\\XliffParserV' . $xliffVersion;
 
         /** @var AbstractXliffParser $parser */
-        return new $parserClass($version, $logger);
+        return new $parserClass($xliffVersion, $xliffProprietary, $logger);
     }
 }

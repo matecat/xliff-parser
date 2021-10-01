@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?><xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0" xmlns:slr="urn:oasis:names:tc:xliff:sizerestriction:2.0" xmlns:memsource="http://www.memsource.com/xliff2.0/1.0" version="2.0" memsource:wfLevel="1" srcLang="en-us" trgLang="ar" xmlns:mtc="https://www.matecat.com">
+<?xml version="1.0" encoding="UTF-8"?><xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0" xmlns:slr="urn:oasis:names:tc:xliff:sizerestriction:2.0" xmlns:memsource="http://www.memsource.com/xliff2.0/1.0" version="2.0" memsource:wfLevel="1" srcLang="en-us" trgLang="ar"  xmlns:mtc="https://www.matecat.com">
     <file id="lz4IqI5bNAMW4wRn_dc5:0-33" memsource:taskId="lz4IqI5bNAMW4wRn_dc5" canResegment="no" original="39f87a30-bliss_saved_reply_content.xml">
         <slr:profiles generalProfile="xliff:codepoints"/>
-        <unit id="0" memsource:tGroupBegin="0" memsource:tGroupEnd="10">
+        <unit id="0" memsource:tGroupBegin="0" memsource:tGroupEnd="10" translate="yes">
             <mda:metadata>
                 <mda:metaGroup>
                     <mda:meta type="key">79d2551e-637a-4117-bc81-2ccaa87bddea</mda:meta>
@@ -10,7 +10,11 @@
 
                     </mda:meta>
                 </mda:metaGroup>
-            </mda:metadata>
+                <mda:metaGroup category="row_xml_attribute">
+                                <mda:meta type="x-matecat-raw">1</mda:meta>
+                                <mda:meta type="x-matecat-weighted">1</mda:meta>
+                            </mda:metaGroup>
+                        </mda:metadata>
             <memsource:additionalTagData>
                 <memsource:tag id="source3">
                     <memsource:tagId>3</memsource:tagId>
@@ -289,112 +293,46 @@
                 <source>Hi <ph id="source1" dataRef="source1"/>,<ph id="source2" dataRef="source2"/><ph id="source3" dataRef="source3"/><ph id="source4" dataRef="source4"/><ph id="source5" dataRef="source5"/>Thanks for reaching out.<ph id="source6" dataRef="source6"/><ph id="source7" dataRef="source7"/><ph id="source8" dataRef="source8"/><ph id="source9" dataRef="source9"/><ph id="source10" dataRef="source10"/>Vouchers can be used to treat customers or employees by covering the cost of rides and meals.<ph id="source11" dataRef="source11"/><ph id="source12" dataRef="source12"/><ph id="source13" dataRef="source13"/><ph id="source14" dataRef="source14"/><ph id="source15" dataRef="source15"/>To start creating vouchers:<ph id="source16" dataRef="source16"/><ph id="source17" dataRef="source17"/><ph id="source18" dataRef="source18"/><ph id="source19" dataRef="source19"/><ph id="source20" dataRef="source20"/>1.</source>
                 <target>ciao</target>
             </segment>
-            <mda:metadata>
-                <mda:metagroup category="row_xml_attribute">
-                    <mda:meta type="x-matecat-raw">1</mda:meta>
-                    <mda:meta type="x-matecat-weighted">1</mda:meta>
-                </mda:metagroup>
-            </mda:metadata>
             <segment id="1" state="translated">
                 <source>Visit <ph id="source21" dataRef="source21"/>Uber's website<ph id="source22" dataRef="source22"/>.<ph id="source23" dataRef="source23"/><ph id="source24" dataRef="source24"/>2.</source>
                 <target>ciao 1</target>
             </segment>
-            <mda:metadata>
-                <mda:metagroup category="row_xml_attribute">
-                    <mda:meta type="x-matecat-raw">2</mda:meta>
-                    <mda:meta type="x-matecat-weighted">2</mda:meta>
-                </mda:metagroup>
-            </mda:metadata>
             <segment id="2" state="translated">
                 <source>Click <ph id="source25" dataRef="source25"/>Get Started<ph id="source26" dataRef="source26"/> and fill out your personal information.</source>
                 <target>ciao 2</target>
             </segment>
-            <mda:metadata>
-                <mda:metagroup category="row_xml_attribute">
-                    <mda:meta type="x-matecat-raw">3</mda:meta>
-                    <mda:meta type="x-matecat-weighted">3</mda:meta>
-                </mda:metagroup>
-            </mda:metadata>
             <segment id="3" state="translated">
                 <source>Please note, you must use a corporate email address when signing up.<ph id="source27" dataRef="source27"/><ph id="source28" dataRef="source28"/>3.</source>
                 <target>ciao 3</target>
             </segment>
-            <mda:metadata>
-                <mda:metagroup category="row_xml_attribute">
-                    <mda:meta type="x-matecat-raw">4</mda:meta>
-                    <mda:meta type="x-matecat-weighted">4</mda:meta>
-                </mda:metagroup>
-            </mda:metadata>
             <segment id="4" state="translated">
                 <source>Verify your email address.</source>
                 <target>ciao 4</target>
             </segment>
-            <mda:metadata>
-                <mda:metagroup category="row_xml_attribute">
-                    <mda:meta type="x-matecat-raw">5</mda:meta>
-                    <mda:meta type="x-matecat-weighted">5</mda:meta>
-                </mda:metagroup>
-            </mda:metadata>
             <segment id="5" state="translated">
                 <source>After that, you’ll be able to visit the Uber Vouchers website.<ph id="source29" dataRef="source29"/><ph id="source30" dataRef="source30"/>4.</source>
                 <target>ciao 5</target>
             </segment>
-            <mda:metadata>
-                <mda:metagroup category="row_xml_attribute">
-                    <mda:meta type="x-matecat-raw">6</mda:meta>
-                    <mda:meta type="x-matecat-weighted">6</mda:meta>
-                </mda:metagroup>
-            </mda:metadata>
             <segment id="6" state="translated">
                 <source>From the <ph id="source31" dataRef="source31"/>Uber Vouchers website<ph id="source32" dataRef="source32"/>, you can create ride or meal voucher campaigns.</source>
                 <target>ciao 6</target>
             </segment>
-            <mda:metadata>
-                <mda:metagroup category="row_xml_attribute">
-                    <mda:meta type="x-matecat-raw">7</mda:meta>
-                    <mda:meta type="x-matecat-weighted">7</mda:meta>
-                </mda:metagroup>
-            </mda:metadata>
             <segment id="7" state="translated">
                 <source>Vouchers cannot exceed $200 per ride or meal, and the total voucher campaign cannot exceed $2,000 ($2,500 in Canada).<ph id="source33" dataRef="source33"/><ph id="source34" dataRef="source34"/><ph id="source35" dataRef="source35"/><ph id="source36" dataRef="source36"/><ph id="source37" dataRef="source37"/>When you reach the <ph id="source38" dataRef="source38"/>Checkout<ph id="source39" dataRef="source39"/> section, you’ll be asked to enter a credit card.</source>
                 <target>ciao 7</target>
             </segment>
-            <mda:metadata>
-                <mda:metagroup category="row_xml_attribute">
-                    <mda:meta type="x-matecat-raw">8</mda:meta>
-                    <mda:meta type="x-matecat-weighted">8</mda:meta>
-                </mda:metagroup>
-            </mda:metadata>
             <segment id="8" state="translated">
                 <source>You’ll be charged the full amount of the voucher campaign.</source>
                 <target>ciao 8</target>
             </segment>
-            <mda:metadata>
-                <mda:metagroup category="row_xml_attribute">
-                    <mda:meta type="x-matecat-raw">9</mda:meta>
-                    <mda:meta type="x-matecat-weighted">9</mda:meta>
-                </mda:metagroup>
-            </mda:metadata>
             <segment id="9" state="translated">
                 <source>You’ll be refunded the unused amount within 10 days of your last active campaign ending.<ph id="source40" dataRef="source40"/><ph id="source41" dataRef="source41"/><ph id="source42" dataRef="source42"/><ph id="source43" dataRef="source43"/><ph id="source44" dataRef="source44"/>To track voucher usage during the campaign, you can visit the <ph id="source45" dataRef="source45"/>Uber for Business website<ph id="source46" dataRef="source46"/>.</source>
                 <target>ciao 9</target>
             </segment>
-            <mda:metadata>
-                <mda:metagroup category="row_xml_attribute">
-                    <mda:meta type="x-matecat-raw">10</mda:meta>
-                    <mda:meta type="x-matecat-weighted">10</mda:meta>
-                </mda:metagroup>
-            </mda:metadata>
             <segment id="10" state="translated">
                 <source>The remaining voucher balance will be listed in the Billing section under <ph id="source47" dataRef="source47"/>Wallet<ph id="source48" dataRef="source48"/>.<ph id="source49" dataRef="source49"/><ph id="source50" dataRef="source50"/><ph id="source51" dataRef="source51"/><ph id="source52" dataRef="source52"/><ph id="source53" dataRef="source53"/>Please let us know if you have any questions.<ph id="source54" dataRef="source54"/></source>
                 <target>ciao 10</target>
             </segment>
-            <mda:metadata>
-                <mda:metagroup category="row_xml_attribute">
-                    <mda:meta type="x-matecat-raw">11</mda:meta>
-                    <mda:meta type="x-matecat-weighted">11</mda:meta>
-                </mda:metagroup>
-            </mda:metadata>
         </unit>
     </file>
 </xliff>

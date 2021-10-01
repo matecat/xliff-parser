@@ -12,7 +12,7 @@ $parser = new XliffParser();
 $parsed = $parser->xliffToArray('path/to/your/file.xliff');
 ```
 
-In case of invalid or not supported xliff file an empty array will be returned.
+In case of invalid or not supported xliff file an Exception is thrown.
 
 ### Segmentation differences 
 
@@ -95,6 +95,43 @@ Quick example:
 An `equiv-text` attribute will be added to the corresponding tag (content will be encoded in base64).
 
 A full documentation for dataRef replacement is available [here](https://github.com/matecat/xliff-parser/blob/master/docs/dataRef.md).
+
+### Emojis 🌻
+
+All emojis contained in the original xliff are converted to their corresponding decimal entities. Example:
+
+```xml
+<trans-unit id="328_0" resname="2_F339">
+    <source>🤙 Join this (video)call at: {{joinUrl}}</source>
+    <target />
+</trans-unit>
+```
+
+Is extracted as:
+
+```php
+    ... => [
+        'raw-content' => '&#129305; Join this (video)call at: {{joinUrl}}'
+    ]
+```
+
+The complete list of supported emojis can be found here:
+
+[https://www.compart.com/en/unicode/category/So](https://www.compart.com/en/unicode/category/So)
+
+### Empty xml tags
+
+By default, **empty tags will be preserved as is (so they are not collapsed)**. If you want to collapse empty xml tags you have to specify it:
+
+```php
+// ...
+use Matecat\XliffParser\XliffParser;
+
+// in this case XliffParser will collapse empty xml tags 
+$parser = new XliffParser();
+$parsed = $parser->xliffToArray('path/to/your/file.xliff', true);
+
+```
 
 ### Examples
 

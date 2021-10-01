@@ -16,6 +16,42 @@ class UberFilesTest extends BaseTest
     /**
      * @test
      */
+    public function can_replace_translation_with_a_placeholder()
+    {
+        $data = [
+                [
+                    'sid' => 4,
+                    'segment' => 'Hi %s .',
+                    'internal_id' => 4,
+                    'mrk_id' => '',
+                    'prev_tags' => '',
+                    'succ_tags' => '',
+                    'mrk_prev_tags' => '',
+                    'mrk_succ_tags' => '',
+                    'translation' => 'Ciao %s .',
+                    'status' => TranslationStatus::STATUS_TRANSLATED,
+                    'eq_word_count' => 100,
+                    'raw_word_count' => 200,
+                ],
+        ];
+
+        $transUnits = $this->getTransUnitsForReplacementTest($data);
+        $inputFile = __DIR__.'/../tests/files/uber/%s.xliff.xliff';
+        $outputFile = __DIR__.'/../tests/files/uber/output/%s.xliff.xliff';
+        $targetLang = 'it-it';
+
+        // set $setSourceInTarget to true
+        (new XliffParser())->replaceTranslation($inputFile, $data, $transUnits, $targetLang, $outputFile, false);
+        $output = (new XliffParser())->xliffToArray(file_get_contents($outputFile));
+
+        $expected = 'Ciao %s .';
+
+        $this->assertEquals($expected, $output['files'][1]['trans-units'][1]['target']['raw-content'][0]);
+    }
+
+    /**
+     * @test
+     */
     public function can_replace_translation_with_a_real_matecat_example()
     {
         $transUnits = [

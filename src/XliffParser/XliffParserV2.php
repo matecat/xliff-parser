@@ -2,8 +2,10 @@
 
 namespace Matecat\XliffParser\XliffParser;
 
+use Matecat\XliffParser\Constants\Placeholder;
 use Matecat\XliffParser\Exception\DuplicateTransUnitIdInXliff;
 use Matecat\XliffParser\Exception\NotFoundIdInTransUnit;
+use Matecat\XliffParser\Exception\SegmentIdTooLongException;
 use Matecat\XliffParser\Utils\Strings;
 use Matecat\XliffParser\XliffUtils\DataRefReplacer;
 
@@ -183,7 +185,7 @@ class XliffParserV2 extends AbstractXliffParser
 
                         // append value to 'seg-source'
                         if ($this->stringContainsMarks($extractedSource['raw-content'])) {
-                            $segSource = $this->extractContentWithMarksAndExtTags($dom, $childNode, $originalData);
+                            $segSource = $this->extractContentWithMarksAndExtTags($dom, $childNode, $extractedSource['raw-content'], $originalData);
                         } else {
                             $segSource[] = [
                                 'mid'           => count($segSource) > 0 ? count($segSource) : 0,
@@ -209,7 +211,7 @@ class XliffParserV2 extends AbstractXliffParser
 
                         // append value to 'seg-target'
                         if ($this->stringContainsMarks($extractedTarget['raw-content'])) {
-                            $segTarget = $this->extractContentWithMarksAndExtTags($dom, $childNode, $originalData);
+                            $segTarget = $this->extractContentWithMarksAndExtTags($dom, $childNode, $extractedTarget['raw-content'], $originalData);
                         } else {
                             $segTarget[] = [
                                 'mid'           => count($segTarget) > 0 ? count($segTarget) : 0,
@@ -250,6 +252,11 @@ class XliffParserV2 extends AbstractXliffParser
         }
 
         $id = $transUnit->attributes->getNamedItem('id')->nodeValue;
+
+        if(strlen($id) > 100){
+            throw new SegmentIdTooLongException('Segment-id too long. Max 100 characters allowed', 400);
+        }
+
         $transUnitIdArrayForUniquenessCheck[] = $id;
         $metadata[ 'id' ] = $id;
 
@@ -266,6 +273,11 @@ class XliffParserV2 extends AbstractXliffParser
         // tGroupEnd
         if (null !== $transUnit->attributes->getNamedItem('tGroupEnd')) {
             $metadata[ 'tGroupEnd' ] = $transUnit->attributes->getNamedItem('tGroupEnd')->nodeValue;
+        }
+
+        // sizeRestriction
+        if (null !== $transUnit->attributes->getNamedItem('sizeRestriction')) {
+            $metadata[ 'sizeRestriction' ] = (int)$transUnit->attributes->getNamedItem('sizeRestriction')->nodeValue;
         }
 
         return $metadata;
@@ -287,18 +299,33 @@ class XliffParserV2 extends AbstractXliffParser
                 foreach ($childNode->childNodes as $data) {
                     if (null!== $data->attributes and null !== $data->attributes->getNamedItem('id')) {
                         $dataId = $data->attributes->getNamedItem('id')->nodeValue;
-                    }
 
-                    $dataValue = trim($data->nodeValue);
-                    if ('' !== $dataValue) {
-                        $originalData[] = array_merge(
-                            $this->JSONOrRawContentArray($dataValue),
-                            [
-                                'attr' => [
-                                'id' => $dataId
-                            ]
-                        ]
-                        );
+                        $dataValue = str_replace(Placeholder::WHITE_SPACE_PLACEHOLDER, ' ', $data->nodeValue);
+                        $dataValue = str_replace(Placeholder::NEW_LINE_PLACEHOLDER,'\n', $dataValue);
+                        $dataValue = str_replace(Placeholder::TAB_PLACEHOLDER, '\t', $dataValue);
+
+                        if ('' !== $dataValue) {
+
+                            $jsonOrRawContentArray = $this->JSONOrRawContentArray($dataValue, false);
+
+                            // restore xliff tags
+                            if (isset($jsonOrRawContentArray['json'])){
+                                $jsonOrRawContentArray['json'] = str_replace([Placeholder::LT_PLACEHOLDER, Placeholder::GT_PLACEHOLDER], ['&lt;','&gt;'], $jsonOrRawContentArray['json']);
+                            }
+
+                            if (isset($jsonOrRawContentArray['raw-content'])){
+                                $jsonOrRawContentArray['raw-content'] = str_replace([Placeholder::LT_PLACEHOLDER, Placeholder::GT_PLACEHOLDER], ['&lt;','&gt;'], $jsonOrRawContentArray['raw-content']);
+                            }
+
+                            $originalData[] = array_merge(
+                                $jsonOrRawContentArray,
+                                [
+                                    'attr' => [
+                                        'id' => $dataId
+                                    ]
+                                ]
+                            );
+                        }
                     }
                 }
             }

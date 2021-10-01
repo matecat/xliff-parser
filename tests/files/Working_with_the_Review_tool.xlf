@@ -1,0 +1,1043 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff
+        version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-strict.xsd" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"
+        MadCap:translationStatus="bundled">
+    <file
+            xml:space="preserve"
+            original="Working with the Review tool.htm"
+            source-language="en-us"
+            MadCap:file-filter=""
+            datatype="xhtml"
+            target-language="zh-cn">
+    <header>
+      <skl><external-file
+          href="Working with the Review tool.htm.skl" /></skl>
+        <phase-group>
+        <phase
+                phase-name="translation"
+                process-name="translation" />
+            <phase
+                    phase-name="completion"
+                    process-name="translation" />
+            <phase
+                    phase-name="approval"
+                    process-name="review" />
+            <phase
+                    phase-name="pretrans"
+                    process-name="pre-translation" />
+      </phase-group>
+        <count-group
+                name="MadCap Statistics">
+        <count
+                count-type="total"
+                unit="segment">65</count>
+            <count
+                    count-type="x-subflow"
+                    unit="trans-unit">8</count>
+      </count-group>
+        <tool
+                tool-id="MadCap Lingo 11 r2"
+                tool-name="Lingo"
+                tool-version="11.1.7517.27792"
+                tool-company="MadCap Software" />
+    </header>
+        <body><trans-unit
+        id="1"
+        restype="x-xhtml-madcap:keyword-term"
+        phase-name="pretrans"
+        translate="no"><source>Tools:Review</source><seg-source><mrk
+            mtype="seg"
+            mid="1">Tools:Review</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="2"
+                restype="x-xhtml-madcap:keyword-term"
+                phase-name="pretrans"
+                translate="no"><source>Review tool</source><seg-source><mrk
+            mtype="seg"
+            mid="1">Review tool</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="3"
+                restype="x-xhtml-madcap:keyword-term"
+                phase-name="pretrans"
+                translate="no"><source>Review tool:Zooming in and out of images</source><seg-source><mrk
+            mtype="seg"
+            mid="1">Review tool:Zooming in and out of images</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="4"
+                restype="x-xhtml-madcap:keyword-term"
+                phase-name="pretrans"
+                translate="no"><source>Zooming in and out of  images</source><seg-source><mrk
+            mtype="seg"
+            mid="1">Zooming in and out of  images</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="5"
+                restype="x-xhtml-madcap:keyword-term"
+                phase-name="pretrans"
+                translate="no"><source>Review tool:Adjusting brightness</source><seg-source><mrk
+            mtype="seg"
+            mid="1">Review tool:Adjusting brightness</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="6"
+                restype="x-xhtml-madcap:keyword-term"
+                phase-name="pretrans"
+                translate="no"><source>Brightness:Review tool</source><seg-source><mrk
+            mtype="seg"
+            mid="1">Brightness:Review tool</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="7"
+                restype="x-xhtml-madcap:keyword-term"
+                phase-name="pretrans"
+                translate="no"><source>Review tool:Capturing viewfinder images</source><seg-source><mrk
+            mtype="seg"
+            mid="1">Review tool:Capturing viewfinder images</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="8"
+                restype="x-xhtml-madcap:keyword-term"
+                phase-name="pretrans"
+                translate="no"><source>Capturing Review tool images</source><seg-source><mrk
+            mtype="seg"
+            mid="1">Capturing Review tool images</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="9"
+                restype="x-xml-h3"
+                phase-name="pretrans"><source>Working with the Review tool <bpt
+                id="5" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.B_5D_LiteRoW" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt>(iTero Element 5D Plus)<ept
+                id="5" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept></source><seg-source><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:conditions="iTero.5DeLite"
+            MadCap:parentConditions="|iTero.5DeLite">Working with the Review tool <bpt
+                id="5" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.B_5D_LiteRoW" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt>(iTero Element 5D Plus)<ept
+                id="5" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept></mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="10"
+                restype="x-xml-p"
+                phase-name="pretrans"><source><bpt
+            id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;span class="strong"&gt;</bpt>Note:<ept
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/span&gt;</ept> This section is for iTero Element 5D Plus systems only. If you have an iTero Element 5D Plus Lite system, please see section <ph
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:xref href="Working with the Review tool (iTero Element 5D Plus Lite).htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;1.0.1&lt;/MadCap:xref&gt;</ph>.</source><seg-source><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:conditions="iTero.B_5D_LiteRoW"
+            MadCap:parentConditions="|iTero.5DeLite"><bpt
+              id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;span class="strong"&gt;</bpt>Note:<ept
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/span&gt;</ept> This section is for iTero Element 5D Plus systems only.</mrk><mrk
+                mtype="protected"
+                mid="2"
+                MadCap:conditions="iTero.B_5D_LiteRoW"
+                MadCap:parentConditions="|iTero.5DeLite"> </mrk><mrk
+                mtype="seg"
+                mid="3"
+                MadCap:conditions="iTero.B_5D_LiteRoW"
+                MadCap:parentConditions="|iTero.5DeLite">If you have an iTero Element 5D Plus Lite system, please see section <ph
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:xref href="Working with the Review tool (iTero Element 5D Plus Lite).htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;1.0.1&lt;/MadCap:xref&gt;</ph>.</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /><mrk
+                mtype="protected"
+                mid="2"
+                MadCap:segmentStatus="Untranslated"
+                MadCap:matchPercent="0" /><mrk
+                mtype="seg"
+                mid="3"
+                MadCap:segmentStatus="Untranslated"
+                MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="11"
+                restype="x-xml-p"
+                phase-name="pretrans"><source>The View mode includes a <bpt
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;span class="strong"&gt;</bpt>Review tool<ept
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/span&gt;</ept> that enables you to view the <bpt
+                id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.A_5D" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt>NIRI and <ept
+                id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept>colored intraoral images captured during the scan, for every area of interest. These images are displayed<bpt
+                id="3" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.A_5D" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt> one below the other<ept
+                id="3" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept> in the image pane, on the right of the <bpt
+                id="4" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;span class="emphasis"&gt;</bpt>View<ept
+                id="4" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/span&gt;</ept> window.</source><seg-source><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:conditions="iTero.5DeLite"
+            MadCap:parentConditions="|iTero.5DeLite">The View mode includes a <bpt
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;span class="strong"&gt;</bpt>Review tool<ept
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/span&gt;</ept> that enables you to view the <bpt
+                id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.A_5D" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt>NIRI and <ept
+                id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept>colored intraoral images captured during the scan, for every area of interest.</mrk><mrk
+                mtype="protected"
+                mid="2"
+                MadCap:conditions="iTero.5DeLite"
+                MadCap:parentConditions="|iTero.5DeLite"> </mrk><mrk
+                mtype="seg"
+                mid="3"
+                MadCap:conditions="iTero.5DeLite"
+                MadCap:parentConditions="|iTero.5DeLite">These images are displayed<bpt
+                id="3" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.A_5D" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt> one below the other<ept
+                id="3" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept> in the image pane, on the right of the <bpt
+                id="4" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;span class="emphasis"&gt;</bpt>View<ept
+                id="4" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/span&gt;</ept> window.</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /><mrk
+                mtype="protected"
+                mid="2"
+                MadCap:segmentStatus="Untranslated"
+                MadCap:matchPercent="0" /><mrk
+                mtype="seg"
+                mid="3"
+                MadCap:segmentStatus="Untranslated"
+                MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="12"
+                restype="x-xml-p"
+                phase-name="pretrans"><source>In addition, you can:</source><seg-source><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:conditions="iTero.5DeLite"
+            MadCap:parentConditions="|iTero.5DeLite">In addition, you can:</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="13"
+                restype="x-xml-p"
+                phase-name="pretrans"><source>Zoom in and out of the image<bpt
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.A_5D" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt>s<ept
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept> in the image pane, as described in section <ph
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:xref href="#_Ref115928" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;1.0.1.1&lt;/MadCap:xref&gt;</ph></source><seg-source><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:conditions="iTero.5DeLite"
+            MadCap:parentConditions="|||iTero.5DeLite">Zoom in and out of the image<bpt
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.A_5D" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt>s<ept
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept> in the image pane, as described in section <ph
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:xref href="#_Ref115928" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;1.0.1.1&lt;/MadCap:xref&gt;</ph></mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="14"
+                restype="x-xml-p"
+                phase-name="pretrans"><source>Adjust the brightness and contrast of the image<bpt
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.A_5D" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt>s<ept
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept> in the image pane, as described in section <ph
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:xref href="#_Ref1573089" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;1.0.1.2&lt;/MadCap:xref&gt;</ph></source><seg-source><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:conditions="iTero.5DeLite"
+            MadCap:parentConditions="|||iTero.5DeLite">Adjust the brightness and contrast of the image<bpt
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.A_5D" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt>s<ept
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept> in the image pane, as described in section <ph
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:xref href="#_Ref1573089" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;1.0.1.2&lt;/MadCap:xref&gt;</ph></mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="15"
+                restype="x-xml-p"
+                phase-name="pretrans"><source>Capture screenshots of the image<bpt
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.A_5D" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt>s<ept
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept>, as described in section <ph
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:xref href="Working with the Snapshot.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;1.0.1&lt;/MadCap:xref&gt;</ph></source><seg-source><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:conditions="iTero.5DeLite"
+            MadCap:parentConditions="|||iTero.5DeLite">Capture screenshots of the image<bpt
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.A_5D" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt>s<ept
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept>, as described in section <ph
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:xref href="Working with the Snapshot.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;1.0.1&lt;/MadCap:xref&gt;</ph></mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="16"
+                restype="x-xml-p"
+                phase-name="pretrans"><source>When reviewing the 3D model as a NIRI image, the upper and lower jaw orientation has been set to look as if you are looking into the patient’s mouth.</source><seg-source><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:conditions="iTero.A_5D"
+            MadCap:parentConditions="|iTero.5DeLite">When reviewing the 3D model as a NIRI image, the upper and lower jaw orientation has been set to look as if you are looking into the patient’s mouth.</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="17"
+                restype="x-xml-p"
+                phase-name="pretrans"><source><bpt
+            id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;span class="strong"&gt;</bpt>Note:<ept
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/span&gt;</ept> If you notice an issue with a NIRI image, please contact Customer Support.</source><seg-source><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:conditions="iTero.A_5D"
+            MadCap:parentConditions="|iTero.5DeLite"><bpt
+              id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;span class="strong"&gt;</bpt>Note:<ept
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/span&gt;</ept> If you notice an issue with a NIRI image, please contact Customer Support.</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="18"
+                restype="x-xml-p"
+                phase-name="pretrans"><source>To activate the Review tool:</source><seg-source><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:conditions="iTero.5DeLite"
+            MadCap:parentConditions="|iTero.5DeLite">To activate the Review tool:</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="19"
+                restype="x-xml-p"
+                phase-name="pretrans"><source>In the <bpt
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;span class="emphasis"&gt;</bpt>View<ept
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/span&gt;</ept> window, tap <ph
+                id="1"
+                ctype="image" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;img src="../Resources/Images/iTero/Working with the Review tool.png" class="toolbar" /&gt;</ph> and then drag the loupe from the right pane over an area of interest.</source><seg-source><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:conditions="iTero.5DeLite"
+            MadCap:parentConditions="|||iTero.5DeLite">In the <bpt
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;span class="emphasis"&gt;</bpt>View<ept
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/span&gt;</ept> window, tap <ph
+                id="1"
+                ctype="image" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;img src="../Resources/Images/iTero/Working with the Review tool.png" class="toolbar" /&gt;</ph> and then drag the loupe from the right pane over an area of interest.</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="20"
+                restype="x-xml-p"
+                phase-name="pretrans"><source>Review tool with the Snapshot tool on the toolbar and the loupe in the right pane</source><seg-source><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:conditions="iTero.5DeLite"
+            MadCap:parentConditions="|||iTero.5DeLite">Review tool with the Snapshot tool on the toolbar and the loupe in the right pane</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="21"
+                restype="x-xml-p"
+                phase-name="pretrans"><source>The area within the loupe is displayed in the image pane on the right. The display in the image pane changes according to the position of the loupe.</source><seg-source><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:conditions="iTero.5DeLite"
+            MadCap:parentConditions="|||iTero.5DeLite">The area within the loupe is displayed in the image pane on the right.</mrk><mrk
+                mtype="protected"
+                mid="2"
+                MadCap:conditions="iTero.5DeLite"
+                MadCap:parentConditions="|||iTero.5DeLite"> </mrk><mrk
+                mtype="seg"
+                mid="3"
+                MadCap:conditions="iTero.5DeLite"
+                MadCap:parentConditions="|||iTero.5DeLite">The display in the image pane changes according to the position of the loupe.</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /><mrk
+                mtype="protected"
+                mid="2"
+                MadCap:segmentStatus="Untranslated"
+                MadCap:matchPercent="0" /><mrk
+                mtype="seg"
+                mid="3"
+                MadCap:segmentStatus="Untranslated"
+                MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="22"
+                restype="x-xml-p"
+                phase-name="pretrans"><source>A NIRI and colored intraoral image are displayed one below the other in the image pane on the right. The NIRI and colored intraoral images in the image pane match the direction of the loupe and are updated simultaneously while moving the loupe over the 3D display.</source><seg-source><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:conditions="iTero.A_5D"
+            MadCap:parentConditions="|||iTero.5DeLite">A NIRI and colored intraoral image are displayed one below the other in the image pane on the right.</mrk><mrk
+                mtype="protected"
+                mid="2"
+                MadCap:conditions="iTero.A_5D"
+                MadCap:parentConditions="|||iTero.5DeLite"> </mrk><mrk
+                mtype="seg"
+                mid="3"
+                MadCap:conditions="iTero.A_5D"
+                MadCap:parentConditions="|||iTero.5DeLite">The NIRI and colored intraoral images in the image pane match the direction of the loupe and are updated simultaneously while moving the loupe over the 3D display.</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /><mrk
+                mtype="protected"
+                mid="2"
+                MadCap:segmentStatus="Untranslated"
+                MadCap:matchPercent="0" /><mrk
+                mtype="seg"
+                mid="3"
+                MadCap:segmentStatus="Untranslated"
+                MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="23"
+                restype="x-xml-p"
+                phase-name="pretrans"><source>Image pane on the right showing the area of interest<bpt
+                id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.A_5D" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt> as both NIRI and colored intraoral images<ept
+                id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept></source><seg-source><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:conditions="iTero.5DeLite"
+            MadCap:parentConditions="|||iTero.5DeLite">Image pane on the right showing the area of interest<bpt
+                id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.A_5D" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt> as both NIRI and colored intraoral images<ept
+                id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept></mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="24"
+                restype="x-xml-h4"
+                phase-name="pretrans"><source>Zooming in to and out of the images in the image pane</source><seg-source><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:conditions="iTero.5DeLite"
+            MadCap:parentConditions="|iTero.5DeLite">Zooming in to and out of the images in the image pane</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="25"
+                restype="x-xml-p"
+                phase-name="pretrans"><source>In order to better evaluate the scanned images in the image pane, you can zoom in to and out of the image<bpt
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.A_5D" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt>s<ept
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept>, as well as adjust the contrast and brightness of <bpt
+                id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.A_5D" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt>each<ept
+                id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept><bpt
+                id="3" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.Lite" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt>the<ept
+                id="3" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept> image.</source><seg-source><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:conditions="iTero.5DeLite"
+            MadCap:parentConditions="|iTero.5DeLite">In order to better evaluate the scanned images in the image pane, you can zoom in to and out of the image<bpt
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.A_5D" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt>s<ept
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept>, as well as adjust the contrast and brightness of <bpt
+                id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.A_5D" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt>each<ept
+                id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept><bpt
+                id="3" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.Lite" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt>the<ept
+                id="3" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept> image.</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="26"
+                restype="x-xml-p"
+                phase-name="pretrans"><source>You can zoom in to or out of the selected area of the image<bpt
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.A_5D" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt>s<ept
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept> displayed in the image pane using the following methods:</source><seg-source><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:conditions="iTero.5DeLite"
+            MadCap:parentConditions="|iTero.5DeLite">You can zoom in to or out of the selected area of the image<bpt
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.A_5D" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt>s<ept
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept> displayed in the image pane using the following methods:</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="27"
+                restype="x-xml-p"
+                phase-name="pretrans"><source>Using a spreading or pinching gesture on<bpt
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.A_5D" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt> one of<ept
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept> the image<bpt
+                id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.A_5D" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt>s<ept
+                id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept> displayed in the image pane</source><seg-source><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:conditions="iTero.5DeLite"
+            MadCap:parentConditions="|||iTero.5DeLite">Using a spreading or pinching gesture on<bpt
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.A_5D" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt> one of<ept
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept> the image<bpt
+                id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.A_5D" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt>s<ept
+                id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept> displayed in the image pane</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="28"
+                restype="x-xml-p"
+                phase-name="pretrans"><source>Double-tapping <bpt
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.A_5D" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt>an<ept
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept><bpt
+                id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.Lite" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt>the<ept
+                id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept> image in the image pane to toggle zoom in/zoom out</source><seg-source><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:conditions="iTero.5DeLite"
+            MadCap:parentConditions="|||iTero.5DeLite">Double-tapping <bpt
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.A_5D" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt>an<ept
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept><bpt
+                id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.Lite" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt>the<ept
+                id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept> image in the image pane to toggle zoom in/zoom out</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="29"
+                restype="x-xml-p"
+                phase-name="pretrans"><source>Tapping the zoom button displayed on the<bpt
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.A_5D" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt> required<ept
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept> image</source><seg-source><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:conditions="iTero.5DeLite"
+            MadCap:parentConditions="|||iTero.5DeLite">Tapping the zoom button displayed on the<bpt
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.A_5D" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt> required<ept
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept> image</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="30"
+                restype="x-xml-p"
+                phase-name="pretrans"><source>Zooming in or out using the first two methods will enlarge or decrease the size of both image pane images simultaneously, but keep the image pane windows the same size.</source><seg-source><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:conditions="iTero.A_5D"
+            MadCap:parentConditions="|iTero.5DeLite">Zooming in or out using the first two methods will enlarge or decrease the size of both image pane images simultaneously, but keep the image pane windows the same size.</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="31"
+                restype="x-xml-p"
+                phase-name="pretrans"><source>Zooming in using the zoom tool will enlarge the image pane and display only the relevant image.</source><seg-source><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:conditions="iTero.A_5D"
+            MadCap:parentConditions="|iTero.5DeLite">Zooming in using the zoom tool will enlarge the image pane and display only the relevant image.</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="32"
+                restype="x-xml-p"
+                phase-name="pretrans"><source>To zoom in or out using the zoom button:</source><seg-source><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:conditions="iTero.5DeLite"
+            MadCap:parentConditions="|iTero.5DeLite">To zoom in or out using the zoom button:</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="33"
+                restype="x-xml-p"
+                phase-name="pretrans"><source>Tap <ph
+                id="1"
+                ctype="image" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;img src="../Resources/Images/iTero/Working with the Review tool_3.png" /&gt;</ph> on <bpt
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.A_5D" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt>either the NIRI or <ept
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept>the colored intraoral image to zoom in<bpt
+                id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.A_5D" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt> to that view<ept
+                id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept><bpt
+                id="3" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.Lite" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt> to the area of interest<ept
+                id="3" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept>.</source><seg-source><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:conditions="iTero.5DeLite"
+            MadCap:parentConditions="|||iTero.5DeLite">Tap <ph
+                id="1"
+                ctype="image" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;img src="../Resources/Images/iTero/Working with the Review tool_3.png" /&gt;</ph> on <bpt
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.A_5D" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt>either the NIRI or <ept
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept>the colored intraoral image to zoom in<bpt
+                id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.A_5D" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt> to that view<ept
+                id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept><bpt
+                id="3" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.Lite" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt> to the area of interest<ept
+                id="3" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept>.</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="34"
+                restype="x-xml-p"
+                phase-name="pretrans"><source>Zoom-in button<bpt
+                id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.A_5D" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt>s<ept
+                id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept> on the image<bpt
+                id="3" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.A_5D" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt>s<ept
+                id="3" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept> in the image pane</source><seg-source><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:conditions="iTero.5DeLite"
+            MadCap:parentConditions="|||iTero.5DeLite">Zoom-in button<bpt
+                id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.A_5D" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt>s<ept
+                id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept> on the image<bpt
+                id="3" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.A_5D" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt>s<ept
+                id="3" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept> in the image pane</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="35"
+                restype="x-xml-p"
+                phase-name="pretrans"><source>The image in the image pane is enlarged<bpt
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.A_5D" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt> and only the specific image is displayed<ept
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept>.</source><seg-source><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:conditions="iTero.5DeLite"
+            MadCap:parentConditions="|||iTero.5DeLite">The image in the image pane is enlarged<bpt
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.A_5D" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt> and only the specific image is displayed<ept
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept>.</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="36"
+                restype="x-xml-p"
+                phase-name="pretrans"><source>
+                    <bpt
+                            id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.A_5D" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt>Only the<ept
+                id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept>
+                    <bpt
+                            id="3" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.Lite" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt>The<ept
+                id="3" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept> zoomed-in image is displayed in the enlarged image pane window</source><seg-source><mrk
+            mtype="protected"
+            mid="1"
+            MadCap:conditions="iTero.5DeLite"
+            MadCap:parentConditions="|||iTero.5DeLite"> </mrk><mrk
+                mtype="seg"
+                mid="2"
+                MadCap:conditions="iTero.5DeLite"
+                MadCap:parentConditions="|||iTero.5DeLite"><bpt
+              id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.A_5D" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt>Only the<ept
+                id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept> <bpt
+                id="3" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.Lite" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt>The<ept
+                id="3" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept> zoomed-in image is displayed in the enlarged image pane window</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="protected"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /><mrk
+                mtype="seg"
+                mid="2"
+                MadCap:segmentStatus="Untranslated"
+                MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="37"
+                restype="x-xml-p"
+                phase-name="pretrans"><source>Tap <ph
+                id="1"
+                ctype="image" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;img src="../Resources/Images/iTero/Working with the Review tool_6.png" /&gt;</ph> on the enlarged 2D image to return the image to the default size.</source><seg-source><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:conditions="iTero.5DeLite"
+            MadCap:parentConditions="|||iTero.5DeLite">Tap <ph
+                id="1"
+                ctype="image" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;img src="../Resources/Images/iTero/Working with the Review tool_6.png" /&gt;</ph> on the enlarged 2D image to return the image to the default size.</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="38"
+                restype="x-xml-h4"
+                phase-name="pretrans"><source>Adjusting the brightness and contrast of images in the image pane</source><seg-source><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:conditions="iTero.5DeLite"
+            MadCap:parentConditions="|iTero.5DeLite">Adjusting the brightness and contrast of images in the image pane</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="39"
+                restype="x-xml-p"
+                phase-name="pretrans"><source>You can set the brightness and contrast of <bpt
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.A_5D" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt>each of the images<ept
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept><bpt
+                id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.Lite" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt>the image<ept
+                id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept> displayed in the image pane by adjusting the relevant sliders in the brightness and contrast toolbar.</source><seg-source><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:conditions="iTero.5DeLite"
+            MadCap:parentConditions="|iTero.5DeLite">You can set the brightness and contrast of <bpt
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.A_5D" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt>each of the images<ept
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept><bpt
+                id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.Lite" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt>the image<ept
+                id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept> displayed in the image pane by adjusting the relevant sliders in the brightness and contrast toolbar.</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="40"
+                restype="x-xml-p"
+                phase-name="pretrans"><source><bpt
+            id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;span class="strong"&gt;</bpt>Brightness <ept
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/span&gt;</ept>refers to the overall lightness or darkness of an image. Increasing the brightness makes every pixel in the image lighter, and vice versa.</source><seg-source><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:conditions="iTero.5DeLite"
+            MadCap:parentConditions="|||iTero.5DeLite"><bpt
+              id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;span class="strong"&gt;</bpt>Brightness <ept
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/span&gt;</ept>refers to the overall lightness or darkness of an image.</mrk><mrk
+                mtype="protected"
+                mid="2"
+                MadCap:conditions="iTero.5DeLite"
+                MadCap:parentConditions="|||iTero.5DeLite"> </mrk><mrk
+                mtype="seg"
+                mid="3"
+                MadCap:conditions="iTero.5DeLite"
+                MadCap:parentConditions="|||iTero.5DeLite">Increasing the brightness makes every pixel in the image lighter, and vice versa.</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /><mrk
+                mtype="protected"
+                mid="2"
+                MadCap:segmentStatus="Untranslated"
+                MadCap:matchPercent="0" /><mrk
+                mtype="seg"
+                mid="3"
+                MadCap:segmentStatus="Untranslated"
+                MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="41"
+                restype="x-xml-p"
+                phase-name="pretrans"><source><bpt
+            id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;span class="strong"&gt;</bpt>Contrast<ept
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/span&gt;</ept> is the difference in <bpt
+                id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;span class="strong"&gt;</bpt>brightness<ept
+                id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/span&gt;</ept> between objects in an image. Increasing the contrast makes light areas lighter and dark areas darker, and vice versa.</source><seg-source><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:conditions="iTero.5DeLite"
+            MadCap:parentConditions="|||iTero.5DeLite"><bpt
+              id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;span class="strong"&gt;</bpt>Contrast<ept
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/span&gt;</ept> is the difference in <bpt
+                id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;span class="strong"&gt;</bpt>brightness<ept
+                id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/span&gt;</ept> between objects in an image.</mrk><mrk
+                mtype="protected"
+                mid="2"
+                MadCap:conditions="iTero.5DeLite"
+                MadCap:parentConditions="|||iTero.5DeLite"> </mrk><mrk
+                mtype="seg"
+                mid="3"
+                MadCap:conditions="iTero.5DeLite"
+                MadCap:parentConditions="|||iTero.5DeLite">Increasing the contrast makes light areas lighter and dark areas darker, and vice versa.</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /><mrk
+                mtype="protected"
+                mid="2"
+                MadCap:segmentStatus="Untranslated"
+                MadCap:matchPercent="0" /><mrk
+                mtype="seg"
+                mid="3"
+                MadCap:segmentStatus="Untranslated"
+                MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="42"
+                restype="x-xml-p"
+                phase-name="pretrans"><source>By default, the brightness and contrast toolbar is collapsed.</source><seg-source><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:conditions="iTero.5DeLite"
+            MadCap:parentConditions="|iTero.5DeLite">By default, the brightness and contrast toolbar is collapsed.</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="43"
+                restype="x-xml-p"
+                phase-name="pretrans"><source><bpt
+            id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;span class="strong"&gt;</bpt>Note:<ept
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/span&gt;</ept> The color and brightness controls are displayed only when<bpt
+                id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.A_5D" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt> images are<ept
+                id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept><bpt
+                id="3" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.Lite" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt> an image is<ept
+                id="3" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept> displayed in the image pane, and not when the loupe is in its default position in the right pane.</source><seg-source><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:conditions="iTero.5DeLite"
+            MadCap:parentConditions="|iTero.5DeLite"><bpt
+              id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;span class="strong"&gt;</bpt>Note:<ept
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/span&gt;</ept> The color and brightness controls are displayed only when<bpt
+                id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.A_5D" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt> images are<ept
+                id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept><bpt
+                id="3" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.Lite" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt> an image is<ept
+                id="3" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept> displayed in the image pane, and not when the loupe is in its default position in the right pane.</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="44"
+                restype="x-xml-p"
+                phase-name="pretrans"><source>The contrast and brightness image controls are reset to their default values when selecting a different jaw, pushing the loupe back to its default position, or when exiting the tool.</source><seg-source><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:conditions="iTero.5DeLite"
+            MadCap:parentConditions="|iTero.5DeLite">The contrast and brightness image controls are reset to their default values when selecting a different jaw, pushing the loupe back to its default position, or when exiting the tool.</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="45"
+                restype="x-xml-p"
+                phase-name="pretrans"><source>To adjust the brightness and contrast of the images in the image pane:</source><seg-source><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:conditions="iTero.5DeLite"
+            MadCap:parentConditions="|iTero.5DeLite">To adjust the brightness and contrast of the images in the image pane:</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="46"
+                restype="x-xml-p"
+                phase-name="pretrans"><source>Tap <ph
+                id="1"
+                ctype="image" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;img src="../Resources/Images/iTero/Working with the Review tool_7.png" /&gt;</ph> on the left edge of the image pane to display the brightness and contrast adjustment toolbar.</source><seg-source><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:conditions="iTero.5DeLite"
+            MadCap:parentConditions="|||iTero.5DeLite">Tap <ph
+                id="1"
+                ctype="image" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;img src="../Resources/Images/iTero/Working with the Review tool_7.png" /&gt;</ph> on the left edge of the image pane to display the brightness and contrast adjustment toolbar.</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="47"
+                restype="x-xml-p"
+                phase-name="pretrans"><source>Brightness and contrast toolbar is collapsed</source><seg-source><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:conditions="iTero.5DeLite"
+            MadCap:parentConditions="|||iTero.5DeLite">Brightness and contrast toolbar is collapsed</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="48"
+                restype="x-xml-p"
+                phase-name="pretrans"><source>A brightness and contrast adjustment toolbar is displayed on<bpt
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.A_5D" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt> each of the windows in<ept
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept> the image pane. By default, the brightness level is set to the lowest position and the contrast is set to the middle position.</source><seg-source><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:conditions="iTero.5DeLite"
+            MadCap:parentConditions="|||iTero.5DeLite">A brightness and contrast adjustment toolbar is displayed on<bpt
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.A_5D" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt> each of the windows in<ept
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept> the image pane.</mrk><mrk
+                mtype="protected"
+                mid="2"
+                MadCap:conditions="iTero.5DeLite"
+                MadCap:parentConditions="|||iTero.5DeLite"> </mrk><mrk
+                mtype="seg"
+                mid="3"
+                MadCap:conditions="iTero.5DeLite"
+                MadCap:parentConditions="|||iTero.5DeLite">By default, the brightness level is set to the lowest position and the contrast is set to the middle position.</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /><mrk
+                mtype="protected"
+                mid="2"
+                MadCap:segmentStatus="Untranslated"
+                MadCap:matchPercent="0" /><mrk
+                mtype="seg"
+                mid="3"
+                MadCap:segmentStatus="Untranslated"
+                MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="49"
+                restype="x-xml-p"
+                phase-name="pretrans"><source>Brightness and contrast toolbar<bpt
+                id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.A_5D" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt>s<ept
+                id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept></source><seg-source><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:conditions="iTero.5DeLite"
+            MadCap:parentConditions="|||iTero.5DeLite">Brightness and contrast toolbar<bpt
+                id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:conditionalText MadCap:conditions="iTero.A_5D" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;</bpt>s<ept
+                id="2" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/MadCap:conditionalText&gt;</ept></mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="50"
+                restype="x-xml-p"
+                phase-name="pretrans"><source>Move the slider up or down to adjust the brightness <ph
+                id="1"
+                ctype="image" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;img src="../Resources/Images/iTero/Working with the Review tool_10.png" class="inline" /&gt;</ph>or contrast.</source><seg-source><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:conditions="iTero.5DeLite"
+            MadCap:parentConditions="|||iTero.5DeLite">Move the slider up or down to adjust the brightness <ph
+                id="1"
+                ctype="image" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;img src="../Resources/Images/iTero/Working with the Review tool_10.png" class="inline" /&gt;</ph>or contrast.</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="51"
+                restype="x-xml-p"
+                phase-name="pretrans"><source><bpt
+            id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;span class="strong"&gt;</bpt>Tip:<ept
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/span&gt;</ept> You can tap anywhere in the slider area and drag up or down to adjust the settings.</source><seg-source><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:conditions="iTero.5DeLite"
+            MadCap:parentConditions="|||iTero.5DeLite"><bpt
+              id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;span class="strong"&gt;</bpt>Tip:<ept
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;/span&gt;</ept> You can tap anywhere in the slider area and drag up or down to adjust the settings.</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="52"
+                restype="x-xml-p"
+                phase-name="pretrans"><source>Tap <ph
+                id="1"
+                ctype="image" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;img src="../Resources/Images/iTero/Working with the Review tool_12.png" /&gt;</ph> to collapse the toolbar.</source><seg-source><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:conditions="iTero.5DeLite"
+            MadCap:parentConditions="|||iTero.5DeLite">Tap <ph
+                id="1"
+                ctype="image" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;img src="../Resources/Images/iTero/Working with the Review tool_12.png" /&gt;</ph> to collapse the toolbar.</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="53"
+                restype="x-xml-h4"
+                phase-name="pretrans"><source>Capturing the Review tool images</source><seg-source><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:conditions="iTero.5DeLite"
+            MadCap:parentConditions="|iTero.5DeLite">Capturing the Review tool images</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="54"
+                restype="x-xml-p"
+                phase-name="pretrans"><source>If required, you can capture the images displayed when using the Review tool. These images become part of the patient’s export package, and can later be downloaded from MyiTero.</source><seg-source><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:conditions="iTero.5DeLite"
+            MadCap:parentConditions="|iTero.5DeLite">If required, you can capture the images displayed when using the Review tool.</mrk><mrk
+                mtype="protected"
+                mid="2"
+                MadCap:conditions="iTero.5DeLite"
+                MadCap:parentConditions="|iTero.5DeLite"> </mrk><mrk
+                mtype="seg"
+                mid="3"
+                MadCap:conditions="iTero.5DeLite"
+                MadCap:parentConditions="|iTero.5DeLite">These images become part of the patient’s export package, and can later be downloaded from MyiTero.</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /><mrk
+                mtype="protected"
+                mid="2"
+                MadCap:segmentStatus="Untranslated"
+                MadCap:matchPercent="0" /><mrk
+                mtype="seg"
+                mid="3"
+                MadCap:segmentStatus="Untranslated"
+                MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="55"
+                restype="x-xml-p"
+                phase-name="pretrans"><source>For more information, see section <ph
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:xref href="Working with the Snapshot.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;1.0.1, below.&lt;/MadCap:xref&gt;</ph></source><seg-source><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:conditions="iTero.5DeLite"
+            MadCap:parentConditions="|iTero.5DeLite">For more information, see section <ph
+                id="1" xmlns="urn:oasis:names:tc:xliff:document:1.2">&lt;MadCap:xref href="Working with the Snapshot.htm" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd"&gt;1.0.1, below.&lt;/MadCap:xref&gt;</ph></mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /></target></trans-unit><trans-unit
+                id="56"
+                restype="x-xml-p"
+                phase-name="pretrans"><source>To capture Review tool images:</source><seg-source><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:conditions="iTero.DO NOT USE"
+            MadCap:parentConditions="|iTero.5DeLite">To capture Review tool images:</mrk></seg-source><target
+                state="needs-translation"><mrk
+            mtype="seg"
+            mid="1"
+            MadCap:segmentStatus="Untranslated"
+            MadCap:matchPercent="0" /></target></trans-unit></body>
+  </file>
+</xliff>

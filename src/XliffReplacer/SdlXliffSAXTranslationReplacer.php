@@ -2,6 +2,8 @@
 
 namespace Matecat\XliffParser\XliffReplacer;
 
+use Matecat\XliffParser\Utils\Strings;
+
 class SdlXliffSAXTranslationReplacer extends XliffSAXTranslationReplacer
 {
     protected $markerPos = "";
@@ -14,13 +16,22 @@ class SdlXliffSAXTranslationReplacer extends XliffSAXTranslationReplacer
         // check if we are entering into a <trans-unit> (xliff v1.*) or <unit> (xliff v2.*)
         if ($this->tuTagName === $name) {
             $this->inTU = true;
-            //get id
-            $this->currentTransUnitId = $attr[ 'id' ];
+
+            // get id
+            // trim to first 100 characters because this is the limit on Matecat's DB
+            $this->currentTransUnitId = substr($attr[ 'id' ], 0, 100);
+
+            // current 'translate' attribute of the current trans-unit
+            $this->currentTransUnitTranslate = isset($attr[ 'translate' ]) ? $attr[ 'translate' ] : 'yes';
         }
 
         // check if we are entering into a <target>
         if ('target' == $name) {
-            $this->inTarget = true;
+            if($this->currentTransUnitTranslate === 'no'){
+                $this->inTarget = false;
+            } else {
+                $this->inTarget = true;
+            }
         }
 
         // reset Marker positions
@@ -131,6 +142,53 @@ class SdlXliffSAXTranslationReplacer extends XliffSAXTranslationReplacer
                 $this->postProcAndFlush($this->outputFP, $tag);
             }
         }
+    }
+
+    /**
+     * prepare segment tagging for xliff insertion
+     *
+     * @param array  $seg
+     * @param string $transUnitTranslation
+     *
+     * @return string
+     */
+    protected function prepareTranslation($seg, $transUnitTranslation = "")
+    {
+        $endTags = "";
+
+        $segment     = Strings::removeDangerousChars($seg [ 'segment' ]);
+        $translation = Strings::removeDangerousChars($seg [ 'translation' ]);
+        $dataRefMap  = (isset($seg['data_ref_map']) and $seg['data_ref_map'] !== null) ? Strings::jsonToArray($seg['data_ref_map']) : [];
+
+        if (is_null($seg [ 'translation' ]) or $seg [ 'translation' ] == '') {
+            $translation = $segment;
+        } else {
+            if ($this->callback) {
+                if ($this->callback->thereAreErrors($segment, $translation, $dataRefMap)) {
+                    $translation = '|||UNTRANSLATED_CONTENT_START|||' . $segment . '|||UNTRANSLATED_CONTENT_END|||';
+                }
+            }
+        }
+
+        // for Trados the trailing spaces after </mrk> are meaningful
+        // so we trim the translation from Matecat DB and add them after </mrk>
+        $trailingSpaces = '';
+        for ($s=0; $s < Strings::getTheNumberOfTrailingSpaces($translation); $s++){
+            $trailingSpaces .= ' ';
+        }
+
+        if ($seg[ 'mrk_id' ] !== null and $seg[ 'mrk_id' ] != '') {
+            if ($this->targetLang === 'ja-JP') {
+                $seg[ 'mrk_succ_tags' ] = ltrim($seg[ 'mrk_succ_tags' ]);
+            }
+
+            $translation = "<mrk mid=\"" . $seg[ 'mrk_id' ] . "\" mtype=\"seg\">" . $seg[ 'mrk_prev_tags' ] . rtrim($translation) . $seg[ 'mrk_succ_tags' ] . "</mrk>" . $trailingSpaces;
+        }
+
+        // we need to trim succ_tags here because we already added the trailing spaces after </mrk>
+        $transUnitTranslation .= $seg[ 'prev_tags' ] . $translation . $endTags . ltrim($seg[ 'succ_tags' ]);
+
+        return $transUnitTranslation;
     }
 
     /**

@@ -49,6 +49,28 @@ $replaced = $dataReplacer->replace($string);
 
 ```
 
+Please note that `<ec>` and `<sc>` tags are converted to `<ph>` tags (needed by Matecat); in this case another special attribute (`dataType`) is added just before `equiv-text`:
+
+```php
+
+// ...
+use Matecat\XliffParser\XliffUtils\DataRefReplacer;
+
+// provide original data map
+$map = [
+    'd1' => '&lt;br\/&gt;',
+];
+
+$dataReplacer = new DataRefReplacer($map);
+
+$string = '<ph id="source1" dataRef="source1"/> lorem <ec id="source2" dataRef="source2"/> ipsum <sc id="source3" dataRef="source3"/> changed';
+     
+$replaced = $dataReplacer->replace($string);
+
+// $replaced is:
+// <ph id="source1" dataRef="source1" equiv-text="base64:JHtyZWNpcGllbnROYW1lfQ=="/> lorem <ph id="source2" dataRef="source2" dataType="ec" equiv-text="base64:QmFiYm8gTmF0YWxl"/> ipsum <ph id="source3" dataRef="source3" dataType="sc" equiv-text="base64:TGEgQmVmYW5h"/> changed
+```
+
 ### `<pc>` tag
 
 This tag uses `dataRefStart` and `dataRefEnd` attributes.
@@ -103,9 +125,36 @@ $replaced = $dataReplacer->replace($string);
 
 In this case a special `originalData` attribute is appended to each `<ph>` generated tag to restore original `<pc>` tag (see below).
 
+### `<pc>` tag with missing `dataRefStart` or `dataRefEnd` attributes
+
+In case of missing `dataRefStart` or `dataRefEnd` attributes, `DataRefReplacer` will assume that missing attributes have the same value of the corresponding ones. Example:
+
+```php
+
+// ...
+use Matecat\XliffParser\XliffUtils\DataRefReplacer;
+
+$map = [
+    'd1' => '&lt;br\/&gt;',
+];
+
+$dataReplacer = new DataRefReplacer($map);
+
+$string = 'Text <pc id="d1" dataRefEnd="d1">Uber Community Guidelines</pc>.';
+
+$replaced = $dataReplacer->replace($string);
+
+// the string is considered as it were:
+// Text <pc id="d1" dataRefStart="d1" dataRefEnd="d1">Uber Community Guidelines</pc>.
+// $replaced is:
+// Text <ph id="d1_1" dataType="pcStart" originalData="PHBjIGlkPSJkMSIgZGF0YVJlZkVuZD0iZDEiPg==" dataRef="d1" equiv-text="base64:Jmx0O2JyXC8mZ3Q7"/>Uber Community Guidelines<ph id="d1_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="d1" equiv-text="base64:Jmx0O2JyXC8mZ3Q7"/>.
+```
+
 ## Restoring original content
 
-`DataRefReplacer` is also capable to restore original content:
+`DataRefReplacer` is also capable to restore original content.
+
+### restoring `<ph>` tags
 
 ```php
 
@@ -122,9 +171,31 @@ $dataReplacer = new DataRefReplacer($map);
 
 $string = 'Did you collect <ph id="source1" dataRef="source1" equiv-text="base64:JHtBTU9VTlR9"/> from <ph id="source2" dataRef="source2" equiv-text="base64:JHtSSURFUn0="/>?';
 
-$replaced =$dataReplacer->restore($string);
+$restored = $dataReplacer->restore($string);
 
-// $replaced is:
+// $restored is:
 // Did you collect <ph id="source1" dataRef="source1"/> from <ph id="source2" dataRef="source2"/>?
 
+```
+
+### restoring `<pc>` tags
+
+```php
+
+//...
+use Matecat\XliffParser\XliffUtils\DataRefReplacer;
+
+// provide original data map
+$map = [
+    'd1' => '&lt;br\/&gt;',
+];
+
+$dataReplacer = new DataRefReplacer($map);
+
+$string = 'Text <ph id="d1_1" dataType="pcStart" originalData="PHBjIGlkPSJkMSIgZGF0YVJlZlN0YXJ0PSJkMSI+" dataRef="d1" equiv-text="base64:Jmx0O2JyXC8mZ3Q7"/>Uber Community Guidelines<ph id="d1_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="d1" equiv-text="base64:Jmx0O2JyXC8mZ3Q7"/>.';
+
+$restored = $dataReplacer->restore($string);
+
+// $restored is:
+// Text <pc id="d1" dataRefStart="d1">Uber Community Guidelines</pc>.
 ```

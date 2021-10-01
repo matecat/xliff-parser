@@ -33,7 +33,7 @@ class DummyXliffReplacerCallback implements XliffReplacerCallbackInterface
     /**
      * @inheritDoc
      */
-    public function thereAreErrors( $segment, $translation )
+    public function thereAreErrors( $segment, $translation, array $dataRefMap = [] )
     {
         return false;
     }
@@ -88,3 +88,72 @@ $outputFile = __DIR__.'/../tests/files/output/sample-20.xlf';
 $parser = new XliffParser();
 $parser->replaceTranslation( $inputFile, $data, $transUnits, 'fr-fr', $outputFile, new DummyXliffReplacerCallback() );
 ```
+
+### Missing `target` node in the original file
+
+`XliffParser` is capable to create a `target` node if this is missing in the original xliff file.
+  
+Please note that the `<target>` will be placed:
+ 
+- just BEFORE its corresponding closing `</trans-unit>` for xliff 1.* files
+- just BEFORE its corresponding closing `</segment>` for xliff 2.* files
+
+Take a look at this example taken from a xliff 2.0 file.
+
+This is the original `unit`:
+
+```xml
+<unit id="tu1">
+    <segment>
+        <source xml:space="preserve">Titolo del documento</source>
+    </segment>
+</unit>
+```
+
+And this is the corresponding `unit` in the replaced file:
+
+```xml
+<unit help-id="1" id="tu1">
+   <segment>
+    <source xml:space="preserve">Titolo del documento</source>
+   <target>Document title</target></segment>
+            <mda:metadata>
+                <mda:metagroup category="row_xml_attribute">
+                    <mda:meta type="x-matecat-raw">0</mda:meta>
+                    <mda:meta type="x-matecat-weighted">0</mda:meta>
+                </mda:metagroup>
+            </mda:metadata>
+  </unit>
+```
+
+### `translate` attribute
+
+Translations will be not replaced in trans-units when `translate` attribute set to `no`.
+
+Consider this `trans-unit` taken from a classic xliff v1.2 file:
+
+```xml
+<trans-unit help-id="1" id="1" restype="x-xhtml-madcap:keyword-term" phase-name="pretrans" translate="no">
+	<source>Tools:Review</source>
+	<seg-source>
+		<mrk mtype="seg" mid="1">Tools:Review</mrk>
+	</seg-source>
+	<target state="needs-translation">
+		<mrk mtype="seg" mid="1" MadCap:segmentStatus="Untranslated" MadCap:matchPercent="0"/>
+	</target>
+</trans-unit>
+```
+
+In this case the replacer will do not touch `target` and it is simply left as is.
+
+## Validation
+
+### Xliff 2.*
+
+Every xliff 2.* file generated from the replacer will be compliant with [the latest version of the OASIS specification](http://docs.oasis-open.org/xliff/xliff-core/v2.0/xliff-core-v2.0.html).
+
+Replacer will take care of:
+
+- adding missing namespaces (like `xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0`) if needed
+- copying attributes from `<source>` to `<target>` if needed
+- adding `<mda:metadata>` before `<notes>`/`<originalData>`/`<segment>`/`<ignorable>` tags

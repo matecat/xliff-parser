@@ -9,6 +9,117 @@ class XliffParserV2Test extends BaseTest
     /**
      * @test
      */
+    public function can_parse_a_xliff_file_with_empty_pc_tags()
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('pc-slash.xlf'));
+        $transUnits = $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ];
+        $expected1 = '<pc id="source4" dataRefStart="source4"><pc id="source5" dataRefStart="source5">She will learn if the user has received at least <pc id="source6" dataRefStart="source6">one notification</pc> for a Dangerous Driving report for tickets other than ticket 1.</pc></pc><pc id="source7" dataRefStart="source7"><pc id="source8" dataRefStart="source8"></pc></pc><pc id="source9" dataRefStart="source9"><pc id="source10" dataRefStart="source10">When she checked, Hilary found that this customer has 2 prior reports!</pc></pc>';
+        $expected2 = '<pc id="source14" dataRefStart="source14"><pc id="source15" dataRefStart="source15"><pc id="source16" dataRefStart="source16"><pc id="source17" dataRefStart="source17"></pc></pc></pc><pc id="source18" dataRefStart="source18"><pc id="source19" dataRefStart="source19"><pc id="source20" dataRefStart="source20">Adjudicate based on the information contained in the Bliss contact supplied in the DACT JIRA; do not access duplicate Bliss contacts.</pc></pc></pc><pc id="source21" dataRefStart="source21"><pc id="source22" dataRefStart="source22"><pc id="source23" dataRefStart="source23"><pc id="source24" dataRefStart="source24">Review All JIRA and Bliss tickets</pc> in the Description section for each incident.</pc></pc></pc><pc id="source25" dataRefStart="source25"><pc id="source26" dataRefStart="source26"><pc id="source27" dataRefStart="source27">Consider all allegations and counter-allegations made against a user meeting any of the above definitions</pc><pc id="source28" dataRefStart="source28"><pc id="source29" dataRefStart="source29"> in the Count decision.</pc></pc></pc></pc></pc>';
+
+        $this->assertEquals($expected1, $transUnits[ 'source' ] [ 'raw-content' ] [ 0 ]);
+        $this->assertEquals($expected2, $transUnits[ 'source' ] [ 'raw-content' ] [ 1 ]);
+    }
+
+    /**
+     * @test
+     */
+    public function can_parse_a_xliff_file_collapsing_empty_tags()
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('pc-slash.xlf'), true);
+        $transUnits = $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ];
+        $expected = '<pc id="source14" dataRefStart="source14"><pc id="source15" dataRefStart="source15"><pc id="source16" dataRefStart="source16"><pc id="source17" dataRefStart="source17"/></pc></pc><pc id="source18" dataRefStart="source18"><pc id="source19" dataRefStart="source19"><pc id="source20" dataRefStart="source20">Adjudicate based on the information contained in the Bliss contact supplied in the DACT JIRA; do not access duplicate Bliss contacts.</pc></pc></pc><pc id="source21" dataRefStart="source21"><pc id="source22" dataRefStart="source22"><pc id="source23" dataRefStart="source23"><pc id="source24" dataRefStart="source24">Review All JIRA and Bliss tickets</pc> in the Description section for each incident.</pc></pc></pc><pc id="source25" dataRefStart="source25"><pc id="source26" dataRefStart="source26"><pc id="source27" dataRefStart="source27">Consider all allegations and counter-allegations made against a user meeting any of the above definitions</pc><pc id="source28" dataRefStart="source28"><pc id="source29" dataRefStart="source29"> in the Count decision.</pc></pc></pc></pc></pc>';
+
+        $this->assertEquals($expected, $transUnits[ 'source' ] [ 'raw-content' ] [ 1 ]);
+    }
+
+    /**
+     * @test
+     */
+    public function can_parse_empty_xliff_v2()
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('empty.xliff'));
+
+        $this->assertFalse(isset( $parsed[ 'files' ][ 1 ][ 'trans-units' ]));
+    }
+
+    /**
+     * @test
+     */
+    public function can_parse_xliff_v2_with_char_limit()
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('char-limit.xliff'));
+        $attr  = $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'attr' ];
+
+        $this->assertEquals($attr['sizeRestriction'], 55);
+    }
+
+    /**
+     * @test
+     */
+    public function can_parse_xliff_v2_with_encoded_g_tags_in_originalData()
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('xliff_20_with_g_tags_in_dataref.xlf'));
+        $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
+
+        $originalData = $units[1]['original-data'][0];
+
+        $this->assertEquals($originalData['raw-content'], '&lt;g id="0PEY7rmSqeVk51Xn" ctype="x-html-strong" /&gt;');
+        $this->assertEquals($originalData['attr']['id'], 'd1');
+    }
+
+    /**
+     * @test
+     */
+    public function can_parse_xliff_v2_with_new_line_values_in_originalData()
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('blank-dataRef.xliff'));
+        $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
+
+        $this->assertArrayHasKey('original-data', $units[4]);
+        $this->assertEquals($units[4]['original-data'][0]['raw-content'], '  ');
+    }
+
+    /**
+     * @test
+     */
+    public function can_parse_xliff_v2_with_pc_tags()
+    {
+        // <pc> tags do not be escaped here
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('1111_prova.md.xlf'));
+        $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
+
+        $this->assertEquals('Testo libero contenente <pc id="1" canCopy="no" canDelete="no" dataRefEnd="d1" dataRefStart="d1">corsivo</pc>.', $units[2][ 'source' ]['raw-content'][0]);
+    }
+
+    /**
+     * @test
+     */
+    public function can_parse_xliff_v2_with_double_encoded_map()
+    {
+        // &amp;#39;
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('uber/39.xliff.xliff'));
+        $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
+
+        $this->assertEquals("&lt;p class=&quot;cmln__paragraph&quot;&gt;", $units[4][ 'original-data' ][1]['raw-content']);
+        $this->assertEquals("&#39;", $units[4][ 'original-data' ][2]['raw-content']);
+        $this->assertEquals("&lt;/p&gt;", $units[4][ 'original-data' ][0]['raw-content']);
+
+        // &amp;amp;
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('uber/&.xliff.xliff'));
+        $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
+
+        $this->assertEquals("&amp;", $units[2][ 'original-data' ][7]['raw-content']);
+
+        // &amp;apos;
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('uber/apos.xliff.xliff'));
+        $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
+
+        $this->assertEquals("&apos;", $units[5][ 'original-data' ][0]['raw-content']);
+    }
+
+    /**
+     * @test
+     */
     public function can_parse_xliff_v2_metadata()
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('uber-v2.xliff'));
@@ -100,10 +211,10 @@ class XliffParserV2Test extends BaseTest
         $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
         $this->assertCount(2, $units);
 
-        $this->assertStringContainsString('&lt;pc id="1"&gt;Hello <mrk id="m1" type="term">World</mrk>!&lt;/pc&gt;', $units[ 1 ][ 'source' ][ 'raw-content' ][0]);
-        $this->assertStringContainsString('&lt;pc id="2"&gt;Hello <mrk id="m2" type="term">World2</mrk>!&lt;/pc&gt;', $units[ 2 ][ 'source' ][ 'raw-content' ][0]);
-        $this->assertStringContainsString('&lt;pc id="1"&gt;Bonjour le <mrk id="m1" type="term">Monde</mrk> !&lt;/pc&gt;', $units[ 1 ][ 'target' ][ 'raw-content' ][0]);
-        $this->assertStringContainsString('&lt;pc id="2"&gt;Bonjour le <mrk id="m2" type="term">Monde2</mrk> !&lt;/pc&gt;', $units[ 2 ][ 'target' ][ 'raw-content' ][0]);
+        $this->assertStringContainsString('<pc id="1">Hello <mrk id="m1" type="term">World</mrk>!</pc>', $units[ 1 ][ 'source' ][ 'raw-content' ][0]);
+        $this->assertStringContainsString('<pc id="2">Hello <mrk id="m2" type="term">World2</mrk>!</pc>', $units[ 2 ][ 'source' ][ 'raw-content' ][0]);
+        $this->assertStringContainsString('<pc id="1">Bonjour le <mrk id="m1" type="term">Monde</mrk> !</pc>', $units[ 1 ][ 'target' ][ 'raw-content' ][0]);
+        $this->assertStringContainsString('<pc id="2">Bonjour le <mrk id="m2" type="term">Monde2</mrk> !</pc>', $units[ 2 ][ 'target' ][ 'raw-content' ][0]);
         $this->assertEquals($units[ 1 ][ 'source' ][ 'attr' ], []);
         $this->assertEquals($units[ 2 ][ 'source' ][ 'attr' ], []);
         $this->assertEquals($units[ 1 ][ 'target' ][ 'attr' ], []);
@@ -155,7 +266,7 @@ class XliffParserV2Test extends BaseTest
         $this->assertEquals($target['raw-content'][1], 'Phrase 2. ');
         $this->assertEquals($source['raw-content'][2], 'Sentence 3. ');
         $this->assertEquals($target['raw-content'][2], 'Phrase 3. ');
-        $this->assertEquals($source['raw-content'][3], '&lt;pc id="1"&gt;pc&lt;/pc&gt; Sentence 4.');
+        $this->assertEquals($source['raw-content'][3], '<pc id="1">pc</pc> Sentence 4.');
         $this->assertEquals($target['raw-content'][3], 'Phrase 4.');
 
         $this->assertEquals($source['attr'][ 3 ], [
@@ -180,10 +291,23 @@ class XliffParserV2Test extends BaseTest
         $this->assertEquals($segTarget[1]['raw-content'], 'Phrase 2. ');
         $this->assertEquals($segSource[2]['raw-content'], 'Sentence 3. ');
         $this->assertEquals($segTarget[2]['raw-content'], 'Phrase 3. ');
-        $this->assertEquals($segSource[3]['raw-content'], '&lt;pc id="1"&gt;pc&lt;/pc&gt; Sentence 4.');
+        $this->assertEquals($segSource[3]['raw-content'], '<pc id="1">pc</pc> Sentence 4.');
         $this->assertEquals($segTarget[3]['raw-content'], 'Phrase 4.');
     }
 
+    /**
+     * @test
+     */
+    public function can_parse_xliff_v2_with_ec_and_sc()
+    {
+        // <pc> tags do not be escaped here
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('pcec.xlf'));
+        $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
+
+        $this->assertArrayHasKey('source', $units[4]);
+        $this->assertEquals($units[4]['source']['raw-content'][0], '
+                    <sc dataRef="d1" id="1" subType="xlf:b" type="fmt"/>Elysian Collection<ph dataRef="d3" id="2" subType="xlf:lb" type="fmt"/><ec dataRef="d2" startRef="1" subType="xlf:b" type="fmt"/>Bahnhofstrasse 15, Postfach 341, Zermatt CH- 3920, Switzerland<ph dataRef="d3" id="3" subType="xlf:lb" type="fmt"/>Tel: +44 203 468 2235  Email: <pc dataRefEnd="d5" dataRefStart="d4" id="4" type="link">info@elysiancollection.com</pc><sc dataRef="d1" id="5" subType="xlf:b" type="fmt"/><ph dataRef="d3" id="6" subType="xlf:lb" type="fmt"/><ec dataRef="d2" startRef="5" subType="xlf:b" type="fmt"/>');
+    }
 
     /**
      * @test
@@ -229,30 +353,30 @@ class XliffParserV2Test extends BaseTest
                         ],
                          'source' => [
                              'raw-content' => [
-                                 0 => '&lt;pc id="1"&gt;Hello <mrk id="m1" type="term">World</mrk>!&lt;/pc&gt;'
+                                 0 => '<pc id="1">Hello <mrk id="m1" type="term">World</mrk>!</pc>'
                              ],
                              'attr'    => [],
                          ],
                          'target' => [
                             'raw-content' => [
-                                0 => '&lt;pc id="1"&gt;Bonjour le <mrk id="m1" type="term">Monde</mrk> !&lt;/pc&gt;',
+                                0 => '<pc id="1">Bonjour le <mrk id="m1" type="term">Monde</mrk> !</pc>',
                             ],
                              'attr'    => [],
                          ],
                         'seg-source' => [
                             0 => [
                                 'mid' => 0,
-                                'ext-prec-tags' => '&lt;pc id="1"&gt;Hello ',
+                                'ext-prec-tags' => '<pc id="1">Hello ',
                                 'raw-content' => 'World',
-                                'ext-succ-tags' => '!&lt;/pc&gt;',
+                                'ext-succ-tags' => '!</pc>;',
                             ]
                         ],
                         'seg-target' => [
                             0 => [
                                 'mid' => 0,
-                                'ext-prec-tags' => '&lt;pc id="1"&gt;Bonjour le ',
+                                'ext-prec-tags' => '<pc id="1">Bonjour le ',
                                 'raw-content' => 'Monde',
-                                'ext-succ-tags' => ' !&lt;/pc&gt;',
+                                'ext-succ-tags' => ' !</pc>',
                             ]
                         ]
                     ],
@@ -272,30 +396,30 @@ class XliffParserV2Test extends BaseTest
                     ],
                     'source' => [
                         'raw-content' => [
-                            0 => '&lt;pc id="2"&gt;Hello <mrk id="m2" type="term">World2</mrk>!&lt;/pc&gt;',
+                            0 => '<pc id="2">Hello <mrk id="m2" type="term">World2</mrk>!</pc>',
                         ],
                         'attr'    => [],
                     ],
                     'target' => [
                         'raw-content' => [
-                            0 => '&lt;pc id="2"&gt;Bonjour le <mrk id="m2" type="term">Monde2</mrk> !&lt;/pc&gt;',
+                            0 => '<pc id="2">Bonjour le <mrk id="m2" type="term">Monde2</mrk> !</pc>',
                         ],
                         'attr'    => [],
                     ],
                     'seg-source' => [
                         0 => [
                             'mid' => 0,
-                            'ext-prec-tags' => '&lt;pc id="2"&gt;Hello ',
+                            'ext-prec-tags' => '<pc id="2">Hello ',
                             'raw-content' => 'World2',
-                            'ext-succ-tags' => '!&lt;/pc&gt;',
+                            'ext-succ-tags' => '!</pc>',
                         ]
                     ],
                     'seg-target' => [
                         0 => [
                             'mid' => 0,
-                            'ext-prec-tags' => '&lt;pc id="2"&gt;Bonjour le ',
+                            'ext-prec-tags' => '<pc id="2">Bonjour le ',
                             'raw-content' => 'Monde2',
-                            'ext-succ-tags' => ' !&lt;/pc&gt;',
+                            'ext-succ-tags' => ' !</pc>',
                         ]
                     ]
                 ],

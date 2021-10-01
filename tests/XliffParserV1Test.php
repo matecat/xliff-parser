@@ -2,11 +2,80 @@
 
 namespace Matecat\XliffParser\Tests;
 
+use Matecat\XliffParser\Exception\SegmentIdTooLongException;
 use Matecat\XliffParser\XliffParser;
-use Matecat\XliffParser\XliffUtils\XliffProprietaryDetect;
 
 class XliffParserV1Test extends BaseTest
 {
+    /**
+     * @test
+     */
+    public function can_raise_Exception_if_there_are_segments_id_too_long()
+    {
+        try {
+           $parse =  (new XliffParser())->xliffToArray($this->getTestFile('long-segment-id.xliff'));
+        } catch (SegmentIdTooLongException $e) {
+            $this->assertEquals($e->getMessage(), 'Segment-id too long. Max 100 characters allowed');
+        }
+    }
+
+    /**
+     * @test
+     */
+    public function can_parse_a_xliff_with_917985()
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('file-917985.xliff'));
+
+        $this->assertEquals('<g id="1">&#917985;</g><g id="2"> </g><g id="3">MOD PO 31 M D/U Scheda tecnica da compilare</g>', $parsed['files'][3]['trans-units'][2]['source']['raw-content']);
+    }
+
+    /**
+     * @test
+     */
+    public function can_parse_a_xliff_with_917760()
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('file-917760.xliff'));
+
+        $this->assertEquals('&#917760;', $parsed['files'][3]['trans-units'][1]['source']['raw-content']);
+    }
+
+    /**
+     * @test
+     */
+    public function can_parse_a_xliff_from_jsont()
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('from_jsont.xliff'));
+
+        $this->assertCount(7, $parsed['files']);
+    }
+
+    /**
+     * @test
+     */
+    public function can_preserve_correctly_trailing_spaces_in_source()
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('spazi.sdlxliff'));
+
+        $segSource = $parsed['files'][1]['trans-units'][1]['seg-source'];
+
+        $this->assertEquals('“Sto attraversando la piazza silenziosa. ', $segSource[0]['raw-content']);
+        $this->assertEquals('Il lago giace calmo e sereno.  ', $segSource[1]['raw-content']);
+        $this->assertEquals('Le bianche case pallidamente risplendono sulla collina. ', $segSource[2]['raw-content']);
+        $this->assertEquals('Gatti piccoli e grossi attraversano il mio cammino.” ', $segSource[3]['raw-content']);
+        $this->assertEquals('Marianne Werefkin  ', $segSource[4]['raw-content']);
+    }
+
+    /**
+     * @test
+     */
+    public function parses_xliff_with_multiple_files()
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('calibre.docx.xliff'));
+
+        $this->assertNotEmpty($parsed['files']);
+        $this->assertCount(5, $parsed['files']);
+    }
+
     /**
      * @test
      */
@@ -201,9 +270,7 @@ class XliffParserV1Test extends BaseTest
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('file-with-emoji.xliff'));
 
         $this->assertNotEmpty($parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'source' ][ 'raw-content' ]);
-
-        // the emoticons are not displayed in the IDE but they are present
-        $this->assertEquals('<g id="1">👌🏻</g>', $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'source' ][ 'raw-content' ]);
+        $this->assertEquals('<g id="1">&#128076;&#127995;</g>', $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'source' ][ 'raw-content' ]);
     }
 
     /**
@@ -418,8 +485,18 @@ class XliffParserV1Test extends BaseTest
     </trans-unit>";
 
         preg_match('|<target>(.*?)</target>|siu', $x, $tmp);
-        //xml validation from DomDocument replaces 'x="&lt;endcmp/>"' with 'x="&lt;endcmp/&gt;"'
+
         $this->assertNotEquals($tmp[ 1 ], $parsed[ 'files' ][ 0 ][ 'trans-units' ][ 0 ][ 'target' ][ 'raw-content' ]);
+    }
+
+    /**
+     * @test
+     */
+    public function can_parse_xliff_v1_with_translate_no()
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('Working_with_the_Review_tool.xlf'));
+
+        $this->assertCount(56, $parsed['files'][1]['trans-units']);
     }
 
     /**
@@ -429,11 +506,7 @@ class XliffParserV1Test extends BaseTest
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('xliff12-with-emoji.xliff'));
 
-        var_dump(
-                XliffProprietaryDetect::fileMustBeConverted($this->getTestFile('xliff12-with-emoji.xliff'))
-        );
-
-        $this->assertEquals('🤙 Join this (video)call at: {{joinUrl}}', $parsed['files'][1]['trans-units'][1]['source']['raw-content']); // there is an emoji here
+        $this->assertEquals('&#129305; Join this (video)call at: {{joinUrl}}', $parsed['files'][1]['trans-units'][1]['source']['raw-content']); // there is an emoji here
         $this->assertEquals('', $parsed['files'][1]['trans-units'][1]['target']['raw-content']);
     }
 
@@ -444,7 +517,60 @@ class XliffParserV1Test extends BaseTest
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('xliff12-with-emoji-encoded.xliff'));
 
-        $this->assertEquals('🤙 Join this (video)call at: {{joinUrl}}', $parsed['files'][1]['trans-units'][1]['source']['raw-content']); // there is an emoji here
+        $this->assertEquals('&#129305; Join this (video)call at: {{joinUrl}}', $parsed['files'][1]['trans-units'][1]['source']['raw-content']); // there is an emoji here
         $this->assertEquals('', $parsed['files'][1]['trans-units'][1]['target']['raw-content']);
+    }
+
+    /**
+     * @test
+     */
+    public function can_parse_a_very_large_xliff_v12()
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('ENIMAC_XT CARTESIAN 3_REV.1.0_ITA.docx (7).sdlxliff'));
+
+        $this->assertNotNull($parsed['files'][1]['reference'][0]['base64']);
+        $this->assertCount(1503, $parsed['files'][1]['trans-units']);
+    }
+
+    /**
+     * @test
+     */
+    public function can_parse_a_po_converted_in_sdlxliff()
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('inglese-con-newlines-e-doctype.po.sdlxliff'));
+        $transUnits = $parsed[ 'files' ][ 3 ][ 'trans-units' ];
+
+        $this->assertCount(3, $transUnits);
+    }
+
+    /**
+     * @test
+     */
+    public function can_preserve_trailing_spaces_from_sdlxliff()
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('trailing_space.sdlxliff'));
+        $transUnit = $parsed[ 'files' ][ 1 ][ 'trans-units' ][23];
+
+        $this->assertEquals('Si presenta con una nuance rubino intensa e compatta dai luminosi riflessi viola. ', $transUnit['seg-source'][0]['raw-content']);
+        $this->assertEquals('Il naso evidenzia raffinati sentori floreali di rosa canina e violetta, frutti rossi croccanti tipo ribes e fragole di bosco, dopo i quali emergono cenni gentili di grafite e liquirizia. ', $transUnit['seg-source'][1]['raw-content']);
+        $this->assertEquals('La beva si profila subito piena e di grande corpo, con uno spessore tannico che determina un insieme saporito e voluttuoso. ', $transUnit['seg-source'][2]['raw-content']);
+        $this->assertEquals('Di lunghissima persistenza, reca un’impronta di vivida freschezza, supportata da un costante allungo minerale. ', $transUnit['seg-source'][3]['raw-content']);
+        $this->assertEquals('Il segreto dell’originalità che contrassegna i vini della Fattoria La Valentina è l\'unicità dei terroir: il microclima e i vitigni ormai in simbiosi con il terreno restituiscono vini dal carattere marcato e unico. ', $transUnit['seg-source'][4]['raw-content']);
+        $this->assertEquals('Anche Il carattere delle sonate di Domenico Scarlatti è molto personale, a volte "sperimentale" sul piano tecnico: nonostante il suo stile brillante si esplichi in una forma musicale semplice, esprime una varietà e una ricchezza di invenzione sorprendenti. ', $transUnit['seg-source'][5]['raw-content']);
+        $this->assertEquals('Quasi tutte le sue sonate, infatti, sono strutturate in un solo movimento, che tecnicamente viene chiamato "Monotematico e bipartito", asservito ad un tempo di danza.', $transUnit['seg-source'][6]['raw-content']);
+    }
+
+    /**
+     * @test
+     */
+    public function can_preserve_trailing_spaces_from_sdlxliff_with_duplicated_content()
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('trailing_space_duplicated.sdlxliff'));
+        $transUnit = $parsed[ 'files' ][ 1 ][ 'trans-units' ][23];
+
+        $this->assertEquals('Ciao. ', $transUnit['seg-source'][0]['raw-content']);
+        $this->assertEquals('Ciao. ', $transUnit['seg-source'][1]['raw-content']);
+        $this->assertEquals('Ciao. ', $transUnit['seg-source'][2]['raw-content']);
+        $this->assertEquals('Ciao.', $transUnit['seg-source'][3]['raw-content']);
     }
 }
