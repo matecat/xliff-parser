@@ -231,6 +231,11 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
                 $tag .= ' xmlns:mtc="https://www.matecat.com" ';
             }
 
+            // trgLang
+            if ($name === 'xliff') {
+                $tag = preg_replace('/trgLang="(.*?)"/', 'trgLang="'.$this->targetLang.'"', $tag);
+            }
+
             //this logic helps detecting empty tags
             //get current position of SAX pointer in all the stream of data is has read so far:
             //it points at the end of current tag
