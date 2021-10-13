@@ -10,6 +10,24 @@ class DataReplacerTest extends BaseTest
     /**
      * @test
      */
+    public function can_replace_ph_with_null_values_in_original_map()
+    {
+        $map = [
+            'd1' => null
+        ];
+
+        $dataReplacer = new DataRefReplacer($map);
+
+        $string = '<ph dataRef="d1" id="d1"/> ciao';
+        $expected = '<ph dataRef="d1" id="d1" equiv-text="base64:TlVMTA=="/> ciao';
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($string, $dataReplacer->restore($expected));
+    }
+
+    /**
+     * @test
+     */
     public function can_add_id_to_ph_ec_sc_when_is_missing()
     {
         $map = [

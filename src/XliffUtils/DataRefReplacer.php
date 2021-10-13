@@ -133,10 +133,16 @@ class DataRefReplacer
                 $a = $node->node;  // complete match. Eg:  <ph id="source1" dataRef="source1"/>
                 $b = $node->attributes['dataRef'];   // map identifier. Eg: source1
 
+
                 // if isset a value in the map calculate base64 encoded value
                 // otherwise skip
-                if (!isset($this->map[$b])) {
+                if(!in_array($b, array_keys($this->map))){
                     return $string;
+                }
+
+                // check if is null, in this case convert it to NULL string
+                if(is_null($this->map[$b])){
+                    $this->map[$b] = 'NULL';
                 }
 
                 $value = $this->map[$b];
