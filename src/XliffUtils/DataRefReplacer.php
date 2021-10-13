@@ -291,7 +291,7 @@ class DataRefReplacer
 
             if(isset($attr['dataRefStart'])){
                 $startOriginalData = $match; // opening <pc>
-                $startValue = $this->map[$attr['dataRefStart']];
+                $startValue = $this->map[$attr['dataRefStart']] ? $this->map[$attr['dataRefStart']] : 'NULL'; //handling null values in original data map
                 $base64EncodedStartValue = base64_encode($startValue);
                 $base64StartOriginalData = base64_encode($startOriginalData);
 
@@ -330,7 +330,7 @@ class DataRefReplacer
 
             if(!empty($attr) and isset($attr['dataRefEnd'])){
                 $endOriginalData = $match[0]; // </pc>
-                $endValue = $this->map[$attr['dataRefEnd']];
+                $endValue = $this->map[$attr['dataRefEnd']] ? $this->map[$attr['dataRefEnd']] : 'NULL';
                 $base64EncodedEndValue = base64_encode($endValue);
                 $base64EndOriginalData = base64_encode($endOriginalData);
 
@@ -416,8 +416,13 @@ class DataRefReplacer
             // if isset a value in the map calculate base64 encoded value
             // or it is an empty string
             // otherwise skip
-            if (!isset($this->map[$b]) or empty($this->map[$b]) or $this->map[$b] === '') {
+            if(!in_array($b, array_keys($this->map))  ){
                 return $string;
+            }
+
+            // check if is null, in this case convert it to NULL string
+            if(is_null($this->map[$b])){
+                $this->map[$b] = 'NULL';
             }
 
             // remove id?
