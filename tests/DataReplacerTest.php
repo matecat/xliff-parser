@@ -10,6 +10,42 @@ class DataReplacerTest extends BaseTest
     /**
      * @test
      */
+    public function can_replace_ph_with_null_values_in_original_map()
+    {
+        $map = [
+            'd1' => null
+        ];
+
+        $dataReplacer = new DataRefReplacer($map);
+
+        $string = '<ph dataRef="d1" id="d1"/> ciao';
+        $expected = '<ph dataRef="d1" id="d1" equiv-text="base64:TlVMTA=="/> ciao';
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($string, $dataReplacer->restore($expected));
+    }
+
+    /**
+     * @test
+     */
+    public function can_replace_pc_with_null_values_in_original_map()
+    {
+        $map = [
+            'source1' => null
+        ];
+
+        $dataReplacer = new DataRefReplacer($map);
+
+        $string = '<pc id="source1" dataRefStart="source1">ciao</pc>';
+        $expected = '<ph id="source1_1" dataType="pcStart" originalData="PHBjIGlkPSJzb3VyY2UxIiBkYXRhUmVmU3RhcnQ9InNvdXJjZTEiPg==" dataRef="source1" equiv-text="base64:TlVMTA=="/>ciao<ph id="source1_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="source1" equiv-text="base64:TlVMTA=="/>';
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($string, $dataReplacer->restore($expected));
+    }
+
+    /**
+     * @test
+     */
     public function can_add_id_to_ph_ec_sc_when_is_missing()
     {
         $map = [
