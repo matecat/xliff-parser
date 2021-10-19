@@ -10,6 +10,26 @@ class DataReplacerTest extends BaseTest
     /**
      * @test
      */
+    public function can_replace_pc_with_adjacent_angle_brackets()
+    {
+        $map = [
+            'source1' => 'a',
+            'source2' => 'b',
+            'source3' => 'c',
+        ];
+
+        $dataReplacer = new DataRefReplacer($map);
+
+        $string = '&lt;pc id="source1" dataRefStart="source1"&gt;Age (if exact date is not available&lt;/pc&gt;&lt;pc id="source2" dataRefStart="source2"&gt; &lt;day,month,year&gt;&nbsp; &lt;/pc&gt;&lt;pc id="source3" dataRefStart="source3"&gt;or we have work/education history to prove the age difference)&lt;/pc&gt;';
+        $expected = '&lt;ph id="source1_1" dataType="pcStart" originalData="Jmx0O3BjIGlkPSJzb3VyY2UxIiBkYXRhUmVmU3RhcnQ9InNvdXJjZTEiJmd0Ow==" dataRef="source1" equiv-text="base64:YQ=="/&gt;Age (if exact date is not available&lt;ph id="source1_2" dataType="pcEnd" originalData="Jmx0Oy9wYyZndDs=" dataRef="source1" equiv-text="base64:YQ=="/&gt;&lt;ph id="source2_1" dataType="pcStart" originalData="Jmx0O3BjIGlkPSJzb3VyY2UyIiBkYXRhUmVmU3RhcnQ9InNvdXJjZTIiJmd0Ow==" dataRef="source2" equiv-text="base64:Yg=="/&gt; &lt;day,month,year&gt;&nbsp; &lt;ph id="source2_2" dataType="pcEnd" originalData="Jmx0Oy9wYyZndDs=" dataRef="source2" equiv-text="base64:Yg=="/&gt;&lt;ph id="source3_1" dataType="pcStart" originalData="Jmx0O3BjIGlkPSJzb3VyY2UzIiBkYXRhUmVmU3RhcnQ9InNvdXJjZTMiJmd0Ow==" dataRef="source3" equiv-text="base64:Yw=="/&gt;or we have work/education history to prove the age difference)&lt;ph id="source3_2" dataType="pcEnd" originalData="Jmx0Oy9wYyZndDs=" dataRef="source3" equiv-text="base64:Yw=="/&gt;';
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($string, $dataReplacer->restore($expected));
+    }
+
+    /**
+     * @test
+     */
     public function can_replace_ph_with_null_values_in_original_map()
     {
         $map = [
