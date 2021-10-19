@@ -184,7 +184,7 @@ class DataRefReplacer
      */
     private function stringContainsPcTags($string, $toBeEscaped)
     {
-        $regex = ($toBeEscaped) ? '/&lt;pc(.*?)&gt;/iu' : '/<pc(.*?)>/iu';
+        $regex = ($toBeEscaped) ? '/&lt;pc (.*?)&gt;/iu' : '/<pc (.*?)>/iu';
         preg_match_all($regex, $string, $openingPcMatches);
 
         return (isset($openingPcMatches[0]) and count($openingPcMatches[0])>0);
@@ -273,7 +273,7 @@ class DataRefReplacer
      */
     private function replaceOpeningPcTags($string, $toBeEscaped)
     {
-        $regex = ($toBeEscaped) ? '/&lt;pc(.*?)&gt;/iu' : '/<pc(.*?)>/iu';
+        $regex = ($toBeEscaped) ? '/&lt;pc (.*?)&gt;/iu' : '/<pc (.*?)>/iu';
         preg_match_all($regex, $string, $openingPcMatches);
 
         foreach ($openingPcMatches[0] as $index => $match){

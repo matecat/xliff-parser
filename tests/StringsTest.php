@@ -12,12 +12,22 @@ class StringsTest extends BaseTest
     public function can_check_html_tag()
     {
         $a = "<div>ciao</div>";
+        $b = "< >";
+        $c = "<day,month,year>";
+        $d = "<a href='#'>";
+        $e = "<h1>";
+        $f = "<a href='#@,'>";
+        $g = '<ph id=\"source1\" dataRef=\"source1\"/>';
+        $h = '<trans-unit id="pendo-image-e3aaf7b7|alt">';
 
         $this->assertTrue(Strings::isHtmlString($a));
-
-        $a = "< >";
-
-        $this->assertFalse(Strings::isHtmlString($a));
+        $this->assertFalse(Strings::isHtmlString($b));
+        $this->assertFalse(Strings::isHtmlString($c));
+        $this->assertTrue(Strings::isHtmlString($d));
+        $this->assertTrue(Strings::isHtmlString($e));
+        $this->assertTrue(Strings::isHtmlString($f));
+        $this->assertTrue(Strings::isHtmlString($g));
+        $this->assertTrue(Strings::isHtmlString($h));
     }
 
     /**
