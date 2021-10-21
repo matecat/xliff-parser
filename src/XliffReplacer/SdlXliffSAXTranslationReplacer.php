@@ -164,7 +164,7 @@ class SdlXliffSAXTranslationReplacer extends XliffSAXTranslationReplacer
             $translation = $segment;
         } else {
             if ($this->callback) {
-                if ($this->callback->thereAreErrors($segment, $translation, $dataRefMap)) {
+                if ($this->callback->thereAreErrors($seg['sid'], $segment, $translation, $dataRefMap)) {
                     $translation = '|||UNTRANSLATED_CONTENT_START|||' . $segment . '|||UNTRANSLATED_CONTENT_END|||';
                 }
             }
