@@ -9,6 +9,17 @@ class XliffParserV2Test extends BaseTest
     /**
      * @test
      */
+    public function can_parse_a_xliff_file_with_empty_size_restriction_metadata()
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('size-restriction.xliff'));
+
+        $this->assertFalse(isset($parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ] [ 'attr' ] ['sizeRestriction']));
+        $this->assertEquals($parsed[ 'files' ][ 1 ][ 'trans-units' ][ 14 ] [ 'attr' ]['sizeRestriction'], 60);
+    }
+
+    /**
+     * @test
+     */
     public function can_parse_a_xliff_file_with_empty_pc_tags()
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('pc-slash.xlf'));

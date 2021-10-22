@@ -276,7 +276,7 @@ class XliffParserV2 extends AbstractXliffParser
         }
 
         // sizeRestriction
-        if (null !== $transUnit->attributes->getNamedItem('sizeRestriction')) {
+        if (null !== $transUnit->attributes->getNamedItem('sizeRestriction') and  '' !== $transUnit->attributes->getNamedItem('sizeRestriction')->nodeValue ) {
             $metadata[ 'sizeRestriction' ] = (int)$transUnit->attributes->getNamedItem('sizeRestriction')->nodeValue;
         }
 
