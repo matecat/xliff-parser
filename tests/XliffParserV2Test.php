@@ -13,7 +13,7 @@ class XliffParserV2Test extends BaseTest
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('size-restriction.xliff'));
 
-        $this->assertEquals($parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ] [ 'attr' ] ['sizeRestriction'], null);
+        $this->assertFalse(isset($parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ] [ 'attr' ] ['sizeRestriction']));
         $this->assertEquals($parsed[ 'files' ][ 1 ][ 'trans-units' ][ 14 ] [ 'attr' ]['sizeRestriction'], 60);
     }
 
