@@ -10,7 +10,7 @@
 
                     </mda:meta>
                 </mda:metaGroup>
-                <mda:metaGroup category="row_xml_attribute">
+                <mda:metaGroup id="word_count_tu_1" category="row_xml_attribute">
                                 <mda:meta type="x-matecat-raw">1</mda:meta>
                                 <mda:meta type="x-matecat-weighted">1</mda:meta>
                             </mda:metaGroup>
@@ -38,7 +38,7 @@
 
                     </mda:meta>
                 </mda:metaGroup>
-                <mda:metaGroup category="row_xml_attribute">
+                <mda:metaGroup id="word_count_tu_2" category="row_xml_attribute">
                                 <mda:meta type="x-matecat-raw">2</mda:meta>
                                 <mda:meta type="x-matecat-weighted">2</mda:meta>
                             </mda:metaGroup>
@@ -66,7 +66,7 @@
 
                     </mda:meta>
                 </mda:metaGroup>
-                <mda:metaGroup category="row_xml_attribute">
+                <mda:metaGroup id="word_count_tu_3" category="row_xml_attribute">
                                 <mda:meta type="x-matecat-raw">3</mda:meta>
                                 <mda:meta type="x-matecat-weighted">3</mda:meta>
                             </mda:metaGroup>

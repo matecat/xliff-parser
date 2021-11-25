@@ -2,7 +2,7 @@
   <file id="Localization selector (English selected)">
     <unit mtc:segment-id="1" id="I11:359;122:3567" translate="yes">
       <mda:metadata>
-                <mda:metaGroup category="row_xml_attribute">
+                <mda:metaGroup id="word_count_tu_1" category="row_xml_attribute">
                     <mda:meta type="x-matecat-raw">1</mda:meta>
                     <mda:meta type="x-matecat-weighted">1</mda:meta>
                 </mda:metaGroup>

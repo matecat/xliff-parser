@@ -14,7 +14,7 @@
 
                     </mda:meta>
                 </mda:metaGroup>
-                <mda:metaGroup category="row_xml_attribute">
+                <mda:metaGroup id="word_count_tu_1" category="row_xml_attribute">
                                 <mda:meta type="x-matecat-raw">200</mda:meta>
                                 <mda:meta type="x-matecat-weighted">100</mda:meta>
                             </mda:metaGroup>

@@ -8,7 +8,7 @@
                             <mda:metaGroup id="h2_attributes">
                                 <mda:meta type="class">e-h3 c-alert__head t-no</mda:meta>
                             </mda:metaGroup>
-                            <mda:metaGroup category="row_xml_attribute">
+                            <mda:metaGroup id="word_count_tu_1" category="row_xml_attribute">
                                 <mda:meta type="x-matecat-raw">1</mda:meta>
                                 <mda:meta type="x-matecat-weighted">1</mda:meta>
                             </mda:metaGroup>
