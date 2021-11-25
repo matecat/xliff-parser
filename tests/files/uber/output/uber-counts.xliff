@@ -6,7 +6,7 @@
                 <mda:metaGroup>
                     <mda:meta type="key">title</mda:meta>
                 </mda:metaGroup>
-                <mda:metaGroup category="row_xml_attribute">
+                <mda:metaGroup id="word_count_tu_1" category="row_xml_attribute">
                                 <mda:meta type="x-matecat-raw">30</mda:meta>
                                 <mda:meta type="x-matecat-weighted">20</mda:meta>
                             </mda:metaGroup>
@@ -21,7 +21,7 @@
                 <mda:metaGroup>
                     <mda:meta type="key">description</mda:meta>
                 </mda:metaGroup>
-                <mda:metaGroup category="row_xml_attribute">
+                <mda:metaGroup id="word_count_tu_2" category="row_xml_attribute">
                                 <mda:meta type="x-matecat-raw">60</mda:meta>
                                 <mda:meta type="x-matecat-weighted">40</mda:meta>
                             </mda:metaGroup>

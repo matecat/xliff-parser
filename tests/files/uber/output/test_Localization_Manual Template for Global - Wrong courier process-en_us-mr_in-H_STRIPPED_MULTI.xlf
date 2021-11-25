@@ -7,7 +7,7 @@
                     <mda:meta type="key"></mda:meta>
                     <mda:meta type="key-note">Body </mda:meta>
                 </mda:metaGroup>
-                <mda:metaGroup category="row_xml_attribute">
+                <mda:metaGroup id="word_count_tu_1" category="row_xml_attribute">
                                 <mda:meta type="x-matecat-raw">5</mda:meta>
                                 <mda:meta type="x-matecat-weighted">20</mda:meta>
                             </mda:metaGroup>

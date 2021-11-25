@@ -92,6 +92,12 @@ class XliffReplacerTest extends BaseTest
         $this->assertEquals(60, $raw[1][1]);
         $this->assertEquals(20, $weighted[1][0]);
         $this->assertEquals(40, $weighted[1][1]);
+
+        // check for metaGroup attributes
+        preg_match_all('/<mda:metaGroup id="(.*)" category="(.*)">/', $output, $metaGroup);
+
+        $this->assertEquals('word_count_tu_1', $metaGroup[1][0]);
+        $this->assertEquals('word_count_tu_2', $metaGroup[1][1]);
     }
 
     /**

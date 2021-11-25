@@ -8,6 +8,11 @@ use Matecat\XliffParser\Utils\Strings;
 class XliffSAXTranslationReplacer extends AbstractXliffReplacer
 {
     /**
+     * @var int
+     */
+    private $mdaGroupCounter = 0;
+
+    /**
      * @var array
      */
     private $nodesToCopy = [
@@ -751,8 +756,11 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
      */
     private function getWordCountGroupForXliffV2($raw_word_count, $eq_word_count, $withMetadataTag = true)
     {
+        $this->mdaGroupCounter++;
+        $id = 'word_count_tu_'. $this->mdaGroupCounter;
+
         if($withMetadataTag === false){
-            return "    <mda:metaGroup category=\"row_xml_attribute\">
+            return "    <mda:metaGroup id=\"".$id."\" category=\"row_xml_attribute\">
                                 <mda:meta type=\"x-matecat-raw\">$raw_word_count</mda:meta>
                                 <mda:meta type=\"x-matecat-weighted\">$eq_word_count</mda:meta>
                             </mda:metaGroup>
@@ -760,7 +768,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
         }
 
         return "<mda:metadata>
-                <mda:metaGroup category=\"row_xml_attribute\">
+                <mda:metaGroup id=\"".$id."\" category=\"row_xml_attribute\">
                     <mda:meta type=\"x-matecat-raw\">$raw_word_count</mda:meta>
                     <mda:meta type=\"x-matecat-weighted\">$eq_word_count</mda:meta>
                 </mda:metaGroup>

@@ -2,7 +2,7 @@
  <file id="f1" original="/home/afalappa/Documenti/filters-sample-docs/markdown/prova.md">
   <unit mtc:segment-id="1" id="tu1" translate="yes">
    <mda:metadata>
-                <mda:metaGroup category="row_xml_attribute">
+                <mda:metaGroup id="word_count_tu_1" category="row_xml_attribute">
                     <mda:meta type="x-matecat-raw">2</mda:meta>
                     <mda:meta type="x-matecat-weighted">1</mda:meta>
                 </mda:metaGroup>
@@ -15,7 +15,7 @@
   </unit>
   <unit mtc:segment-id="3" id="tu2" translate="yes">
    <mda:metadata>
-                <mda:metaGroup category="row_xml_attribute">
+                <mda:metaGroup id="word_count_tu_2" category="row_xml_attribute">
                     <mda:meta type="x-matecat-raw">7</mda:meta>
                     <mda:meta type="x-matecat-weighted">5</mda:meta>
                 </mda:metaGroup>
