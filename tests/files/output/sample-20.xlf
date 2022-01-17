@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en" trgLang="fr" xmlns:mtc="https://www.matecat.com">
+<?xml version="1.0" encoding="UTF-8"?><xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en" trgLang="fr-fr" xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0" xmlns:mtc="https://www.matecat.com">
     <file id="f1" original="389108a4-rtapi.xml">
         <notes>
             <note id="n1">note for file.</note>
@@ -11,9 +11,14 @@
                 }
             </note>
         </notes>
-        <unit help-id="1" id="u1" translate="test">
+        <unit mtc:segment-id="1" id="u1" translate="yes">
             <my:elem xmlns:my="myNamespaceURI" id="x1">data</my:elem>
-            <notes>
+            <mda:metadata>
+                <mda:metaGroup id="word_count_tu_1" category="row_xml_attribute">
+                    <mda:meta type="x-matecat-raw">200</mda:meta>
+                    <mda:meta type="x-matecat-weighted">100</mda:meta>
+                </mda:metaGroup>
+            </mda:metadata><notes>
                 <note id="n1">note for unit</note>
                 <note id="n2">another note for unit.</note>
                 <note id="n3">
@@ -30,16 +35,15 @@
                 </source>
                 <target>|||UNTRANSLATED_CONTENT_START|||<pc id="1">Hello <mrk id="m2" type="term">World</mrk> !</pc>|||UNTRANSLATED_CONTENT_END|||</target>
             </segment>
-            <mda:metadata>
-                <mda:metagroup category="row_xml_attribute">
-                    <mda:meta type="x-matecat-raw">200</mda:meta>
-                    <mda:meta type="x-matecat-weighted">100</mda:meta>
-                </mda:metagroup>
-            </mda:metadata>
         </unit>
-        <unit help-id="2" id="u2">
+        <unit mtc:segment-id="2" id="u2" translate="yes">
             <my:elem xmlns:my="myNamespaceURI" id="x2">data</my:elem>
-            <notes>
+            <mda:metadata>
+                <mda:metaGroup id="word_count_tu_2" category="row_xml_attribute">
+                    <mda:meta type="x-matecat-raw">500</mda:meta>
+                    <mda:meta type="x-matecat-weighted">300</mda:meta>
+                </mda:metaGroup>
+            </mda:metadata><notes>
                 <note id="n1">note for unit2</note>
                 <note id="n2">another note for unit2.</note>
                 <note id="n3">
@@ -56,12 +60,6 @@
                 </source>
                 <target>|||UNTRANSLATED_CONTENT_START|||<pc id="1">Hello <mrk id="m2" type="term">World2</mrk> !</pc>|||UNTRANSLATED_CONTENT_END|||</target>
             </segment>
-            <mda:metadata>
-                <mda:metagroup category="row_xml_attribute">
-                    <mda:meta type="x-matecat-raw">500</mda:meta>
-                    <mda:meta type="x-matecat-weighted">300</mda:meta>
-                </mda:metagroup>
-            </mda:metadata>
         </unit>
     </file>
 </xliff>

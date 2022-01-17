@@ -309,4 +309,53 @@ class Strings
     {
         return substr($string, -1);
     }
+
+    /**
+     * @param int $segment
+     *
+     * @return int
+     */
+    public static function getTheNumberOfTrailingSpaces($segment)
+    {
+        $number = 0;
+
+        return self::recursiveIncrementNumberOfTrailingSpaces($segment, $number);
+    }
+
+    /**
+     * @param string $segment
+     * @param int $number
+     *
+     * @return mixed
+     */
+    private static function recursiveIncrementNumberOfTrailingSpaces( $segment, &$number)
+    {
+        if(self::lastChar($segment) === ' '){
+            $number++;
+            $segment = substr($segment, 0, -1);
+
+            return self::recursiveIncrementNumberOfTrailingSpaces($segment, $number);
+        }
+
+        return $number;
+    }
+
+    /**
+     * @TODO We need to improve this
+     * @param string $string
+     *
+     * @return bool
+     */
+    public static function isHtmlString($string)
+    {
+        $string = stripslashes($string);
+
+        if($string === '<>'){
+            return false;
+        }
+
+        preg_match("/<\/?[a-zA-Z1-6-]+((\s+\w+(\s*=\s*(?:\".*?\"|'.*?'|[^'\">\s]+))?)+\s*|\s*)\/?>/",$string, $matches);
+
+        return count($matches) !== 0;
+    }
 }

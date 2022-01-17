@@ -32,8 +32,10 @@ class DummyXliffReplacerCallback implements XliffReplacerCallbackInterface
 {
     /**
      * @inheritDoc
+     * 
+     * @return bool
      */
-    public function thereAreErrors( $segment, $translation, array $dataRefMap = [] )
+    public function thereAreErrors( $segmentId, $segment, $translation, array $dataRefMap = [] )
     {
         return false;
     }
@@ -145,3 +147,15 @@ Consider this `trans-unit` taken from a classic xliff v1.2 file:
 ```
 
 In this case the replacer will do not touch `target` and it is simply left as is.
+
+## Validation
+
+### Xliff 2.*
+
+Every xliff 2.* file generated from the replacer will be compliant with [the latest version of the OASIS specification](http://docs.oasis-open.org/xliff/xliff-core/v2.0/xliff-core-v2.0.html).
+
+Replacer will take care of:
+
+- adding missing namespaces (like `xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0`) if needed
+- copying attributes from `<source>` to `<target>` if needed
+- adding `<mda:metadata>` before `<notes>`/`<originalData>`/`<segment>`/`<ignorable>` tags

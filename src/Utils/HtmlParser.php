@@ -45,20 +45,34 @@ class HtmlParser
      */
     private static function protectNotHtmlLessThanSymbols($html)
     {
-        preg_match_all('/<|>/iu', $html, $output_array, PREG_OFFSET_CAPTURE);
+        preg_match_all('/<|>/iu', $html, $matches, PREG_OFFSET_CAPTURE);
 
         $delta = 0;
 
-        foreach ($output_array[0] as $key => $match) {
+        foreach ($matches[0] as $key => $match) {
 
-            // if < does not have a closing >
-            // then substitute with lt placeholder
-            if( $output_array[0][$key][0] === '<' and isset($output_array[0][$key+1][0]) and $output_array[0][$key+1][0] !== '>'){
-                $length = strlen($match[0]);
-                $offset = $output_array[0][$key][1];
-                $realOffset = ($delta === 0) ? $offset : ($offset + $delta);
-                $html = substr_replace($html, self::LT_PLACEHOLDER, $realOffset, $length);
-                $delta = $delta + strlen(self::LT_PLACEHOLDER) - $length;
+            $current = $matches[ 0 ][ $key ][ 0 ];
+
+            if(isset($matches[0][$key+1][0])){
+                $next = $matches[0][$key+1][0];
+                $nextOffset = $matches[0][$key+1][1];
+                $realNextOffset = ($delta === 0) ? $nextOffset : ($nextOffset + $delta);
+            }
+
+            $length = strlen($match[0]);
+            $offset = $matches[0][$key][1];
+            $realOffset = ($delta === 0) ? $offset : ($offset + $delta);
+
+            if( $current === '<' and isset($next)){
+
+                // 1. if next is > or
+                // 2. next is < and is not html tag (like < >)
+                $insideAngularTags = substr($html, $realOffset, ($realNextOffset-$realOffset+1));
+
+                if($next !== '>' or !Strings::isHtmlString($insideAngularTags) ){
+                    $html = substr_replace($html, self::LT_PLACEHOLDER, $realOffset, $length);
+                    $delta = $delta + strlen(self::LT_PLACEHOLDER) - $length;
+                }
             }
         }
 

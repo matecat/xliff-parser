@@ -2,6 +2,7 @@
 
 namespace Matecat\XliffParser\XliffParser;
 
+use Matecat\XliffParser\Constants\Placeholder;
 use Matecat\XliffParser\Utils\Emoji;
 use Matecat\XliffParser\Utils\Strings;
 use Matecat\XliffParser\XliffUtils\DataRefReplacer;
@@ -15,20 +16,27 @@ abstract class AbstractXliffParser
     protected $logger;
 
     /**
-     * @var int
+     * @var string|null
      */
-    protected $version;
+    protected $xliffProprietary;
 
     /**
-     * XliffParser constructor.
-     *
-     * @param int             $version
-     * @param LoggerInterface $logger
+     * @var int
      */
-    public function __construct($version, LoggerInterface $logger = null)
+    protected $xliffVersion;
+
+    /**
+     * AbstractXliffParser constructor.
+     *
+     * @param int                  $xliffVersion
+     * @param string|null          $xliffProprietary
+     * @param LoggerInterface|null $logger
+     */
+    public function __construct( $xliffVersion, $xliffProprietary = null, LoggerInterface $logger = null)
     {
-        $this->version = $version;
-        $this->logger = $logger;
+        $this->xliffVersion = $xliffVersion;
+        $this->logger       = $logger;
+        $this->xliffProprietary = $xliffProprietary;
     }
 
     /**
@@ -36,7 +44,7 @@ abstract class AbstractXliffParser
      */
     protected function getTuTagName()
     {
-        return ($this->version === 1) ? 'trans-unit' : 'unit';
+        return ($this->xliffVersion === 1) ? 'trans-unit' : 'unit';
     }
 
     /**
@@ -126,6 +134,8 @@ abstract class AbstractXliffParser
     }
 
     /**
+     * Extract tag content from DOMDocument node
+     *
      * @param \DOMDocument $dom
      * @param \DOMElement  $element
      *
@@ -142,7 +152,7 @@ abstract class AbstractXliffParser
             }
         }
 
-        return $extractedContent;
+        return str_replace(Placeholder::EMPTY_TAG_PLACEHOLDER, '', $extractedContent);
     }
 
     /**
@@ -170,6 +180,19 @@ abstract class AbstractXliffParser
 
             preg_match('|mid\s?=\s?["\'](.*?)["\']|si', $markers[ $mi + 1 ], $mid);
 
+            // if it's a Trados file the trailing spaces after </mrk> are meaningful
+            // so we add them to
+            $trailingSpaces = '';
+            if($this->xliffProprietary === 'trados'){
+                preg_match_all('/<\/mrk>[\s]+/iu', $markers[ $mi + 1 ], $trailingSpacesMatches);
+
+                if(isset($trailingSpacesMatches[0]) and count($trailingSpacesMatches[0]) > 0){
+                    foreach ($trailingSpacesMatches[0] as $match){
+                        $trailingSpaces = str_replace('</mrk>', '', $match);
+                    }
+                }
+            }
+
             //re-build the mrk tag after the split
             $originalMark = trim('<mrk ' . $markers[ $mi + 1 ]);
 
@@ -177,10 +200,10 @@ abstract class AbstractXliffParser
             $mark_content = preg_split('#</mrk>#si', $mark_string);
 
             $sourceArray = [
-                    'mid' => (isset($mid[ 1 ])) ? $mid[ 1 ] : $mi,
-                    'ext-prec-tags' => ($mi == 0 ? $markers[ 0 ] : ""),
-                    'raw-content' => $this->extractRawContentPreservingTrailingSpaces($mark_content, $originalRawContent),
-                    'ext-succ-tags' => (isset($mark_content[ 1 ])) ? $mark_content[ 1 ] : '',
+                'mid' => (isset($mid[ 1 ])) ? $mid[ 1 ] : $mi,
+                'ext-prec-tags' => ($mi == 0 ? $markers[ 0 ] : ""),
+                'raw-content' => (isset($mark_content[ 0 ])) ? $mark_content[ 0 ].$trailingSpaces : '',
+                'ext-succ-tags' => (isset($mark_content[ 1 ])) ? $mark_content[ 1 ] : '',
             ];
 
             if (!empty($originalData)) {
@@ -194,34 +217,6 @@ abstract class AbstractXliffParser
         }
 
         return $source;
-    }
-
-    /**
-     * This function extracts raw content preserving trailing space
-     * contained in $originalRawContent
-     *
-     * @param $mark_content
-     * @param $originalRawContent
-     *
-     * @return string
-     */
-    private function extractRawContentPreservingTrailingSpaces( $mark_content, $originalRawContent)
-    {
-        if(isset($mark_content[ 0 ])){
-            $rawContent = $mark_content[ 0 ];
-
-            // if $rawContent has not a trailing space
-            if(' ' !== Strings::lastChar($rawContent)){
-                // search for string with trailing space in the $originalRawContent
-                if(Strings::contains($rawContent.' ', $originalRawContent)){
-                    $rawContent = $rawContent.' ';
-                }
-            }
-
-            return $rawContent;
-        }
-
-        return '';
     }
 
     /**

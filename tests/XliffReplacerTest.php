@@ -11,6 +11,166 @@ class XliffReplacerTest extends BaseTest
     /**
      * @test
      */
+    public function can_replace_a_xliff_20_without_trgLang_attribute()
+    {
+        $data = $this->getData([
+                [
+                        'sid' => 1,
+                        'segment' => 'Deutsch',
+                        'internal_id' => 'I11:359;122:3567',
+                        'mrk_id' => '',
+                        'prev_tags' => '',
+                        'succ_tags' => '',
+                        'mrk_prev_tags' => '',
+                        'mrk_succ_tags' => '',
+                        'translation' => 'Alemán',
+                        'status' => TranslationStatus::STATUS_TRANSLATED,
+                        'eq_word_count' => 1,
+                        'raw_word_count' => 1,
+                ],
+        ]);
+
+        $inputFile = __DIR__.'/../tests/files/no-trgLang.xliff';
+        $outputFile = __DIR__.'/../tests/files/output/no-trgLang.xliff';
+
+        $xliffParser = new XliffParser();
+        $xliffParser->replaceTranslation($inputFile, $data['data'], $data['transUnits'], 'es-ES', $outputFile);
+
+        $output = $xliffParser->xliffToArray(file_get_contents($outputFile));
+
+        $this->assertEquals('es-ES', $output['files'][1]['attr']['target-language']);
+    }
+
+    /**
+     * @test
+     */
+    public function can_replace_a_xliff_20_with_the_correct_counts()
+    {
+        $data = $this->getData([
+                [
+                        'sid' => 1,
+                        'segment' => 'bla bla bla',
+                        'internal_id' => '0',
+                        'mrk_id' => '',
+                        'prev_tags' => '',
+                        'succ_tags' => '',
+                        'mrk_prev_tags' => '',
+                        'mrk_succ_tags' => '',
+                        'translation' => 'Bla bla bla',
+                        'status' => TranslationStatus::STATUS_TRANSLATED,
+                        'eq_word_count' => 20,
+                        'raw_word_count' => 30,
+                ],
+                [
+                        'sid' => 2,
+                        'segment' => 'bla bla bla',
+                        'internal_id' => '1',
+                        'mrk_id' => '',
+                        'prev_tags' => '',
+                        'succ_tags' => '',
+                        'mrk_prev_tags' => '',
+                        'mrk_succ_tags' => '',
+                        'translation' => 'Bla bla bla',
+                        'status' => TranslationStatus::STATUS_TRANSLATED,
+                        'eq_word_count' => 20,
+                        'raw_word_count' => 30,
+                ],
+        ]);
+
+        $inputFile = __DIR__.'/../tests/files/uber/uber-counts.xliff';
+        $outputFile = __DIR__.'/../tests/files/uber/output/uber-counts.xliff';
+
+        $xliffParser = new XliffParser();
+        $xliffParser->replaceTranslation($inputFile, $data['data'], $data['transUnits'], 'sk-SK', $outputFile);
+
+        $output = file_get_contents($outputFile);
+
+        preg_match_all('/<mda:meta type="x-matecat-raw">(.*)<\/mda:meta>/', $output, $raw);
+        preg_match_all('/<mda:meta type="x-matecat-weighted">(.*)<\/mda:meta>/', $output, $weighted);
+
+        $this->assertEquals(30, $raw[1][0]);
+        $this->assertEquals(60, $raw[1][1]);
+        $this->assertEquals(20, $weighted[1][0]);
+        $this->assertEquals(40, $weighted[1][1]);
+
+        // check for metaGroup attributes
+        preg_match_all('/<mda:metaGroup id="(.*)" category="(.*)">/', $output, $metaGroup);
+
+        $this->assertEquals('word_count_tu_1', $metaGroup[1][0]);
+        $this->assertEquals('word_count_tu_2', $metaGroup[1][1]);
+    }
+
+    /**
+     * @test
+     */
+    public function can_replace_a_xliff_20_with_mda_without_notes_or_original_data()
+    {
+        $data = $this->getData([
+                [
+                        'sid' => 1,
+                        'segment' => 'Join our webinar: “<pc dataRefEnd="d2" dataRefStart="d1" id="1" subType="xlf:b" type="fmt">Machine Learning in Cyber Security: What It Is and What It Isn\'t</pc>”',
+                        'internal_id' => 'u1',
+                        'mrk_id' => '',
+                        'prev_tags' => '',
+                        'succ_tags' => '',
+                        'mrk_prev_tags' => '',
+                        'mrk_succ_tags' => '',
+                        'translation' => 'Bla bla bla',
+                        'status' => TranslationStatus::STATUS_TRANSLATED,
+                        'eq_word_count' => 1,
+                        'raw_word_count' => 1,
+                ],
+        ]);
+
+        $inputFile = __DIR__.'/../tests/files/xliff20-without-notes-or-original-data.xliff';
+        $outputFile = __DIR__.'/../tests/files/output/xliff20-without-notes-or-original-data.xliff';
+
+        $xliffParser = new XliffParser();
+        $xliffParser->replaceTranslation($inputFile, $data['data'], $data['transUnits'], 'sk-SK', $outputFile);
+
+        $output = file_get_contents($outputFile);
+
+        // check if there is only one <mda:metadata>
+        $this->assertEquals(1, substr_count($output, '<mda:metadata>'));
+    }
+
+    /**
+     * @test
+     */
+    public function can_replace_a_xliff_20_with_mda_without_duplicate_it()
+    {
+        $data = $this->getData([
+            [
+                'sid' => 1,
+                'segment' => 'Join our webinar: “<pc dataRefEnd="d2" dataRefStart="d1" id="1" subType="xlf:b" type="fmt">Machine Learning in Cyber Security: What It Is and What It Isn\'t</pc>”',
+                'internal_id' => 'u1-1',
+                'mrk_id' => '',
+                'prev_tags' => '',
+                'succ_tags' => '',
+                'mrk_prev_tags' => '',
+                'mrk_succ_tags' => '',
+                'translation' => 'Bla bla bla',
+                'status' => TranslationStatus::STATUS_TRANSLATED,
+                'eq_word_count' => 1,
+                'raw_word_count' => 1,
+            ],
+        ]);
+
+        $inputFile = __DIR__.'/../tests/files/xliff-20-with-mda.xlf';
+        $outputFile = __DIR__.'/../tests/files/output/xliff-20-with-mda.xlf';
+
+        $xliffParser = new XliffParser();
+        $xliffParser->replaceTranslation($inputFile, $data['data'], $data['transUnits'], 'sk-SK', $outputFile);
+
+        $output = file_get_contents($outputFile);
+
+        // check if there is only one <mda:metadata>
+        $this->assertEquals(1, substr_count($output, '<mda:metadata>'));
+    }
+
+    /**
+     * @test
+     */
     public function can_replace_a_xliff_12_without_target()
     {
         $data = $this->getData([
@@ -28,62 +188,62 @@ class XliffReplacerTest extends BaseTest
                 'eq_word_count' => 1,
                 'raw_word_count' => 1,
             ],
-                [
-                        'sid' => 2,
-                        'segment' => 'Bla Bla',
-                        'internal_id' => 'NFDBB2FA9-tu52',
-                        'mrk_id' => '',
-                        'prev_tags' => '',
-                        'succ_tags' => '',
-                        'mrk_prev_tags' => '',
-                        'mrk_succ_tags' => '',
-                        'translation' => 'Bla bla bla',
-                        'status' => TranslationStatus::STATUS_TRANSLATED,
-                        'eq_word_count' => 1,
-                        'raw_word_count' => 1,
-                ],
-                [
-                        'sid' => 3,
-                        'segment' => 'Bla Bla',
-                        'internal_id' => 'NFDBB2FA9-tu523',
-                        'mrk_id' => '',
-                        'prev_tags' => '',
-                        'succ_tags' => '',
-                        'mrk_prev_tags' => '',
-                        'mrk_succ_tags' => '',
-                        'translation' => 'Bla bla bla',
-                        'status' => TranslationStatus::STATUS_TRANSLATED,
-                        'eq_word_count' => 1,
-                        'raw_word_count' => 1,
-                ],
-                [
-                        'sid' => 4,
-                        'segment' => 'Bla Bla',
-                        'internal_id' => 'NFDBB2FA9-tu523',
-                        'mrk_id' => '',
-                        'prev_tags' => '',
-                        'succ_tags' => '',
-                        'mrk_prev_tags' => '',
-                        'mrk_succ_tags' => '',
-                        'translation' => 'Bla bla bla',
-                        'status' => TranslationStatus::STATUS_TRANSLATED,
-                        'eq_word_count' => 1,
-                        'raw_word_count' => 1,
-                ],
-                [
-                        'sid' => 5,
-                        'segment' => 'Bla Bla',
-                        'internal_id' => 'NFDBB2FA9-tu522',
-                        'mrk_id' => '',
-                        'prev_tags' => '',
-                        'succ_tags' => '',
-                        'mrk_prev_tags' => '',
-                        'mrk_succ_tags' => '',
-                        'translation' => 'Bla bla bla',
-                        'status' => TranslationStatus::STATUS_TRANSLATED,
-                        'eq_word_count' => 1,
-                        'raw_word_count' => 1,
-                ],
+            [
+                'sid' => 2,
+                'segment' => 'Bla Bla',
+                'internal_id' => 'NFDBB2FA9-tu52',
+                'mrk_id' => '',
+                'prev_tags' => '',
+                'succ_tags' => '',
+                'mrk_prev_tags' => '',
+                'mrk_succ_tags' => '',
+                'translation' => 'Bla bla bla',
+                'status' => TranslationStatus::STATUS_TRANSLATED,
+                'eq_word_count' => 1,
+                'raw_word_count' => 1,
+            ],
+            [
+                'sid' => 3,
+                'segment' => 'Bla Bla',
+                'internal_id' => 'NFDBB2FA9-tu523',
+                'mrk_id' => '',
+                'prev_tags' => '',
+                'succ_tags' => '',
+                'mrk_prev_tags' => '',
+                'mrk_succ_tags' => '',
+                'translation' => 'Bla bla bla',
+                'status' => TranslationStatus::STATUS_TRANSLATED,
+                'eq_word_count' => 1,
+                'raw_word_count' => 1,
+            ],
+            [
+                'sid' => 4,
+                'segment' => 'Bla Bla',
+                'internal_id' => 'NFDBB2FA9-tu523',
+                'mrk_id' => '',
+                'prev_tags' => '',
+                'succ_tags' => '',
+                'mrk_prev_tags' => '',
+                'mrk_succ_tags' => '',
+                'translation' => 'Bla bla bla',
+                'status' => TranslationStatus::STATUS_TRANSLATED,
+                'eq_word_count' => 1,
+                'raw_word_count' => 1,
+            ],
+            [
+                'sid' => 5,
+                'segment' => 'Bla Bla',
+                'internal_id' => 'NFDBB2FA9-tu522',
+                'mrk_id' => '',
+                'prev_tags' => '',
+                'succ_tags' => '',
+                'mrk_prev_tags' => '',
+                'mrk_succ_tags' => '',
+                'translation' => 'Bla bla bla',
+                'status' => TranslationStatus::STATUS_TRANSLATED,
+                'eq_word_count' => 1,
+                'raw_word_count' => 1,
+            ],
         ]);
 
         $inputFile = __DIR__.'/../tests/files/file-with-nested-group-and-missing-target.xliff';
@@ -305,6 +465,13 @@ class XliffReplacerTest extends BaseTest
         $this->assertEquals($unit1['seg-target'][1]['raw-content'], 'Document title2');
         $this->assertEquals($unit2['seg-target'][0]['mid'], 0);
         $this->assertEquals($unit2['seg-target'][0]['raw-content'], 'Free text containing <pc id="1" canCopy="no" canDelete="no" dataRefEnd="d1" dataRefStart="d1">cursive</pc>.');
+
+        // check counters
+        preg_match_all('/<mda:meta type="x-matecat-raw">(.*?)<\/mda:meta>/s', file_get_contents($outputFile), $rawWords);
+        preg_match_all('/<mda:meta type="x-matecat-weighted">(.*?)<\/mda:meta>/s', file_get_contents($outputFile), $weightedWords);
+
+        $this->assertEquals($rawWords[1][1], 7);
+        $this->assertEquals($weightedWords[1][1], 5);
     }
 
     /**
@@ -430,31 +597,6 @@ class XliffReplacerTest extends BaseTest
 
         $this->assertEquals($expected, $output['files'][1]['trans-units'][1]['target']['raw-content']);
     }
-
-    /**
-     * @param $data
-     *
-     * @return array
-     */
-    private function getData($data)
-    {
-        $transUnits = [];
-
-        foreach ($data as $i => $k) {
-            //create a secondary indexing mechanism on segments' array; this will be useful
-            //prepend a string so non-trans unit id ( ex: numerical ) are not overwritten
-            $internalId = $k[ 'internal_id' ];
-
-            $transUnits[ $internalId ] [] = $i;
-
-            $data[ 'matecat|' . $internalId ] [] = $i;
-        }
-
-        return [
-            'data' => $data,
-            'transUnits' => $transUnits,
-        ];
-    }
 }
 
 class RealXliffReplacerCallback implements XliffReplacerCallbackInterface
@@ -462,7 +604,7 @@ class RealXliffReplacerCallback implements XliffReplacerCallbackInterface
     /**
      * @inheritDoc
      */
-    public function thereAreErrors($segment, $translation, array $dataRefMap = [])
+    public function thereAreErrors($segmentId, $segment, $translation, array $dataRefMap = [])
     {
         return false;
     }
@@ -473,7 +615,7 @@ class DummyXliffReplacerCallback implements XliffReplacerCallbackInterface
     /**
      * @inheritDoc
      */
-    public function thereAreErrors($segment, $translation, array $dataRefMap = [])
+    public function thereAreErrors($segmentId, $segment, $translation, array $dataRefMap = [])
     {
         return false;
     }
@@ -484,7 +626,7 @@ class DummyXliffReplacerCallbackWhichReturnTrue implements XliffReplacerCallback
     /**
      * @inheritDoc
      */
-    public function thereAreErrors($segment, $translation, array $dataRefMap = [])
+    public function thereAreErrors($segmentId, $segment, $translation, array $dataRefMap = [])
     {
         return true;
     }

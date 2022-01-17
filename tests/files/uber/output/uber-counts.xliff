@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?><xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0" xmlns:slr="urn:oasis:names:tc:xliff:sizerestriction:2.0" xmlns:memsource="http://www.memsource.com/xliff2.0/1.0" version="2.0" memsource:wfLevel="4" srcLang="en-us" trgLang="sk-SK"  xmlns:mtc="https://www.matecat.com">
+    <file id="wgbnncDCihLpS8do_dc5:0-136" memsource:taskId="wgbnncDCihLpS8do_dc5" canResegment="no" original="Original-comm-ops-bliss-case-management-irt.xlf">
+        <slr:profiles generalProfile="xliff:codepoints"/>
+        <unit mtc:segment-id="1" id="0" memsource:tGroupBegin="0" memsource:tGroupEnd="0" translate="yes">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key">title</mda:meta>
+                </mda:metaGroup>
+                <mda:metaGroup id="word_count_tu_1" category="row_xml_attribute">
+                                <mda:meta type="x-matecat-raw">30</mda:meta>
+                                <mda:meta type="x-matecat-weighted">20</mda:meta>
+                            </mda:metaGroup>
+                        </mda:metadata>
+            <segment id="0" state="translated">
+                <source>[Original] CommOps - Bliss Case Management | IRT</source>
+                <target>Bla bla bla</target>
+            </segment>
+        </unit>
+        <unit mtc:segment-id="2" id="1" memsource:tGroupBegin="1" memsource:tGroupEnd="1" translate="yes">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key">description</mda:meta>
+                </mda:metaGroup>
+                <mda:metaGroup id="word_count_tu_2" category="row_xml_attribute">
+                                <mda:meta type="x-matecat-raw">60</mda:meta>
+                                <mda:meta type="x-matecat-weighted">40</mda:meta>
+                            </mda:metaGroup>
+                        </mda:metadata>
+            <memsource:additionalTagData>
+                <memsource:tag id="source3">
+                    <memsource:tagId>3</memsource:tagId>
+                    <memsource:type>g</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source4">
+                    <memsource:tagId>4</memsource:tagId>
+                    <memsource:type>g</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source5">
+                    <memsource:tagId>5</memsource:tagId>
+                    <memsource:type>g</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source1">
+                    <memsource:tagId>1</memsource:tagId>
+                    <memsource:type>g</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source6">
+                    <memsource:tagId>6</memsource:tagId>
+                    <memsource:type>g</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source2">
+                    <memsource:tagId>2</memsource:tagId>
+                    <memsource:type>g</memsource:type>
+                </memsource:tag>
+            </memsource:additionalTagData>
+            <originalData>
+                <data id="source3">&lt;g id="FZeZbEnOOCuoXU8p" ctype="x-html-li" /&gt;</data>
+                <data id="source4">&lt;g id="ekAn_gpuk9dt2045" ctype="x-html-em" /&gt;</data>
+                <data id="source5">&lt;g id="2GXJuLuCQvpxRyXr" ctype="x-html-li" /&gt;</data>
+                <data id="source1">&lt;g id="pjhS8s1QKKabD6Mi" ctype="x-html-p" /&gt;</data>
+                <data id="source6">&lt;g id="Jhw7OYkd29RZKbWK" ctype="x-html-em" /&gt;</data>
+                <data id="source2">&lt;g id="1uY1L0OmmYuASqoU" ctype="x-html-ul" /&gt;</data>
+            </originalData>
+            <segment id="1" state="translated">
+                <source>
+                    <pc id="source1" dataRefStart="source1">By the end of this eLearning, you should be able to:</pc>
+                    <pc id="source2" dataRefStart="source2">
+                        <pc id="source3" dataRefStart="source3">
+                            <pc id="source4" dataRefStart="source4">Define Bliss Case Management functionalities and uses</pc>
+                        </pc>
+                        <pc id="source5" dataRefStart="source5">
+                            <pc id="source6" dataRefStart="source6">Use Bliss Case Management to support resolution of applicable contacts</pc>
+                        </pc>
+                    </pc>
+                </source>
+                <target>Bla bla bla</target>
+            </segment>
+        </unit>
+    </file>
+</xliff>

@@ -9,6 +9,30 @@ class StringsTest extends BaseTest
     /**
      * @test
      */
+    public function can_check_html_tag()
+    {
+        $a = "<div>ciao</div>";
+        $b = "< >";
+        $c = "<day,month,year>";
+        $d = "<a href='#'>";
+        $e = "<h1>";
+        $f = "<a href='#@,'>";
+        $g = '<ph id=\"source1\" dataRef=\"source1\"/>';
+        $h = '<trans-unit id="pendo-image-e3aaf7b7|alt">';
+
+        $this->assertTrue(Strings::isHtmlString($a));
+        $this->assertFalse(Strings::isHtmlString($b));
+        $this->assertFalse(Strings::isHtmlString($c));
+        $this->assertTrue(Strings::isHtmlString($d));
+        $this->assertTrue(Strings::isHtmlString($e));
+        $this->assertTrue(Strings::isHtmlString($f));
+        $this->assertTrue(Strings::isHtmlString($g));
+        $this->assertTrue(Strings::isHtmlString($h));
+    }
+
+    /**
+     * @test
+     */
     public function can_get_the_last_character()
     {
         $phrase = 'Si presenta con una nuance rubino intensa e compatta dai luminosi riflessi viola.';
@@ -190,5 +214,22 @@ class StringsTest extends BaseTest
 
         $this->assertFalse(Strings::isAValidUuid($not_valid_uuid));
         $this->assertTrue(Strings::isAValidUuid($uuid));
+    }
+
+    /**
+     * @test
+     * @throws \Exception
+     */
+    public function get_the_number_of_trailing_spaces()
+    {
+        $string = "La casa in campagna è bella  ";
+        $string2 = "Dante Alighieri   ";
+        $string3 = "Questa stringa non contiente spazi alla fine della frase.";
+        $string4 = "Questa stringa non contiente uno spazio alla fine della frase. ";
+
+        $this->assertEquals(Strings::getTheNumberOfTrailingSpaces($string), 2);
+        $this->assertEquals(Strings::getTheNumberOfTrailingSpaces($string2), 3);
+        $this->assertEquals(Strings::getTheNumberOfTrailingSpaces($string3), 0);
+        $this->assertEquals(Strings::getTheNumberOfTrailingSpaces($string4), 1);
     }
 }

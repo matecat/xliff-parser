@@ -150,6 +150,37 @@ $replaced = $dataReplacer->replace($string);
 // Text <ph id="d1_1" dataType="pcStart" originalData="PHBjIGlkPSJkMSIgZGF0YVJlZkVuZD0iZDEiPg==" dataRef="d1" equiv-text="base64:Jmx0O2JyXC8mZ3Q7"/>Uber Community Guidelines<ph id="d1_2" dataType="pcEnd" originalData="PC9wYz4=" dataRef="d1" equiv-text="base64:Jmx0O2JyXC8mZ3Q7"/>.
 ```
 
+### `null` values in originalData map
+
+If the `originalData` map contains `null` values like this one:
+
+```php
+$map = [
+    'source1' => null
+];
+```
+
+Then the `DataRefReplacer` will replace the corresponding tag with a `NULL` string. Example:
+
+```php
+// ...
+use Matecat\XliffParser\XliffUtils\DataRefReplacer;
+
+$map = [
+    'd1' => null
+];
+
+$dataReplacer = new DataRefReplacer($map);
+
+$string = '<ph dataRef="d1" id="d1"/> ciao';
+
+$replaced = $dataReplacer->replace($string);
+
+// $replaced is:
+// <ph dataRef="d1" id="d1" equiv-text="base64:TlVMTA=="/> ciao
+
+```
+
 ## Restoring original content
 
 `DataRefReplacer` is also capable to restore original content.

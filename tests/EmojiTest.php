@@ -10,11 +10,33 @@ class EmojiTest extends BaseTest
     /**
      * @test
      */
+    public function doesNotTouchingOriginalTabs()
+    {
+        $string = 'La rana	in Spagna gracida in campagna';
+
+        $this->assertEquals(Emoji::toEntity($string), $string);
+    }
+
+    /**
+     * @test
+     */
+    public function canReplaceInvisibleGlyphs()
+    {
+        $string = '󠇡La rana in Spagna gracida in campagna';
+        $expected = '&#917985;La rana in Spagna gracida in campagna';
+
+        $this->assertEquals(Emoji::toEntity($string), $expected);
+    }
+
+    /**
+     * @test
+     */
     public function canReplaceEmojisWithEntites()
     {
         $dataset = [
             '🤙 Join this (video)call at: {{joinUrl}}' => '&#129305; Join this (video)call at: {{joinUrl}}',
             'Look 😀 It works! 🐻🌻' => 'Look &#128512; It works! &#128059;&#127803;',
+            '􀄿' => '&#1048895;',
             '🗔' => '&#128468;',
             '👨' => '&#128104;',
             '🇺🇸' => '&#127482;&#127480;',
@@ -43,6 +65,7 @@ class EmojiTest extends BaseTest
             '𝑸' => '&#119928;',
             '𝑨' => '&#119912;',
             "󠅸" => '&#917880;',
+            '𧈧'  => '&#160295;',
         ];
 
         foreach ($dataset as $emoji => $entity) {

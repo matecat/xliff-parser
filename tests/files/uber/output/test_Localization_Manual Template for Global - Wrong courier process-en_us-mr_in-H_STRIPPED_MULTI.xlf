@@ -1,53 +1,33 @@
-<?xml version="1.0" encoding="UTF-8"?><xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0" xmlns:slr="urn:oasis:names:tc:xliff:sizerestriction:2.0" xmlns:memsource="http://www.memsource.com/xliff2.0/1.0" version="2.0" memsource:wfLevel="1" srcLang="en-us" trgLang="mr-in" xmlns:mtc="https://www.matecat.com">
+<?xml version="1.0" encoding="UTF-8"?><xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0" xmlns:slr="urn:oasis:names:tc:xliff:sizerestriction:2.0" xmlns:memsource="http://www.memsource.com/xliff2.0/1.0" version="2.0" memsource:wfLevel="1" srcLang="en-us" trgLang="it-it"  xmlns:mtc="https://www.matecat.com">
     <file id="Ulx06325z5BLr0iv1_dc5:0-24" memsource:taskId="Ulx06325z5BLr0iv1_dc5" canResegment="no" original="test_[Localization] Manual Template for Global - Wrong courier process.xlsx">
         <slr:profiles generalProfile="xliff:codepoints"/>
-        <unit help-id="2" id="2" memsource:tGroupBegin="2" memsource:tGroupEnd="5" slr:sizeRestriction="500">
+        <unit mtc:segment-id="2" id="2" memsource:tGroupBegin="2" memsource:tGroupEnd="5" slr:sizeRestriction="500" translate="yes">
             <mda:metadata>
                 <mda:metaGroup>
                     <mda:meta type="key"></mda:meta>
                     <mda:meta type="key-note">Body </mda:meta>
                 </mda:metaGroup>
-            </mda:metadata>
+                <mda:metaGroup id="word_count_tu_1" category="row_xml_attribute">
+                                <mda:meta type="x-matecat-raw">5</mda:meta>
+                                <mda:meta type="x-matecat-weighted">20</mda:meta>
+                            </mda:metaGroup>
+                        </mda:metadata>
             <segment id="2" state="translated">
                 <source>Uber Eats - We have been informed that someone else has used your account.</source>
                 <target>Italiano 2</target>
             </segment>
-            <mda:metadata>
-                <mda:metagroup category="row_xml_attribute">
-                    <mda:meta type="x-matecat-raw">5</mda:meta>
-                    <mda:meta type="x-matecat-weighted">20</mda:meta>
-                </mda:metagroup>
-            </mda:metadata>
             <segment id="3" state="translated">
                 <source>This violates the terms of your Services Agreement with Uber.</source>
                 <target>Italiano 3</target>
             </segment>
-            <mda:metadata>
-                <mda:metagroup category="row_xml_attribute">
-                    <mda:meta type="x-matecat-raw">10</mda:meta>
-                    <mda:meta type="x-matecat-weighted">30</mda:meta>
-                </mda:metagroup>
-            </mda:metadata>
             <segment id="4" state="translated">
                 <source>If we receive multiple reports of this nature, your account will be suspended.</source>
                 <target>Italiano 4</target>
             </segment>
-            <mda:metadata>
-                <mda:metagroup category="row_xml_attribute">
-                    <mda:meta type="x-matecat-raw">210</mda:meta>
-                    <mda:meta type="x-matecat-weighted">130</mda:meta>
-                </mda:metagroup>
-            </mda:metadata>
             <segment id="5" state="translated">
                 <source>Thank you for taking this notification into account in your next deliveries.</source>
                 <target>Italiano 5</target>
             </segment>
-            <mda:metadata>
-                <mda:metagroup category="row_xml_attribute">
-                    <mda:meta type="x-matecat-raw">410</mda:meta>
-                    <mda:meta type="x-matecat-weighted">230</mda:meta>
-                </mda:metagroup>
-            </mda:metadata>
         </unit>
     </file>
 </xliff>
