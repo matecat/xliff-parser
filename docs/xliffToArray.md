@@ -8,8 +8,10 @@ To convert a xliff file into an array:
 // ...
 use Matecat\XliffParser\XliffParser;
 
+$xmlContent = file_get_contents('path/to/your/file.xliff');
 $parser = new XliffParser();
-$parsed = $parser->xliffToArray('path/to/your/file.xliff');
+$parsed = $parser->xliffToArray($xmlContent);
+
 ```
 
 In case of invalid or not supported xliff file an Exception is thrown.
