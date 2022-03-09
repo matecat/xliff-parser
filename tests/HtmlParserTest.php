@@ -9,6 +9,23 @@ class HtmlParserTest extends BaseTest
     /**
      * @test
      */
+    public function can_parse_a_valid_html5_page()
+    {
+        $string = file_get_contents(__DIR__.'/files/page.html');
+        $parsed = HtmlParser::parse($string);
+
+        $this->assertCount(1, $parsed);
+        $this->assertCount(2, $parsed[0]->inner_html);
+        $this->assertEquals('head', $parsed[0]->inner_html[0]->tagname);
+        $this->assertEquals('body', $parsed[0]->inner_html[1]->tagname);
+        $this->assertCount(4, $parsed[0]->inner_html[0]->inner_html);
+        $this->assertCount(1, $parsed[0]->inner_html[1]->inner_html);
+        $this->assertCount(5, $parsed[0]->inner_html[1]->inner_html[0]->inner_html);
+    }
+
+    /**
+     * @test
+     */
     public function can_parse_html_with_greater_than_symbol()
     {
         $string = '<div id="1">Ciao > ciao<div id="2"></div></div>';
@@ -241,19 +258,31 @@ class HtmlParserTest extends BaseTest
         $this->assertEquals($pc->stripped_text, 'Questa stringa contiene un > a stringa.');
     }
 
-//    /**
-//     * @test
-//     */
-//    public function can_parse_escaped_html_with_greater_than_symbol()
-//    {
-//        $string = '&lt;div id="1"&gt;Ciao &lt;&gt; ciao&lt;div id="2"&gt;&lt;/div&gt;&lt;/div&gt;';
-//        $parsed = HtmlParser::parse($string);
-//
-//        $this->assertCount(1, $parsed);
-//        $this->assertEquals('Ciao > ciao', $parsed[0]->stripped_text);
-//        $this->assertEquals('1', $parsed[0]->attributes['id']);
-//        $this->assertEquals('2', $parsed[0]->inner_html[0]->attributes['id']);
-//    }
+    /**
+     * @test
+     */
+    public function can_parse_html_with_not_closed_html_tags()
+    {
+        $string = 'Ciao <div id="3" >ciao</div><div>';
+        $parsed = HtmlParser::parse($string);
+
+        $this->assertCount(1, $parsed);
+        $this->assertEquals('ciao', $parsed[0]->stripped_text);
+        $this->assertEquals('3', $parsed[0]->attributes['id']);
+    }
+
+    /**
+     * @test
+     */
+    public function can_parse_escaped_html_with_greater_than_symbol()
+    {
+        $string = 'Ödemenizin kapatılması için Ödemenizin kapatılması için &lt;Outage&gt; beklemenizi rica ediyoruz. &lt;ph dataRef="source1" id="source1"/&gt;';
+        $parsed = HtmlParser::parse($string);
+
+        $this->assertCount(1, $parsed);
+        $this->assertEquals('source1', $parsed[0]->attributes['id']);
+        $this->assertEquals('source1', $parsed[0]->attributes['dataRef']);
+    }
 }
 
 

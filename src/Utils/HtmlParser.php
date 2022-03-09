@@ -6,6 +6,7 @@ class HtmlParser
 {
     const ORIGINAL_TEXT_PLACEHOLDER = '#####__ORIGINAL_TEXT__#####';
     const LT_PLACEHOLDER = '#####__LT_PLACEHOLDER__#####';
+    const GT_PLACEHOLDER = '#####__GT_PLACEHOLDER__#####';
 
     /**
      * This solution is taken from here and then modified:
@@ -23,6 +24,7 @@ class HtmlParser
             $html = Strings::htmlspecialchars_decode($html);
         }
 
+        $html = self::protectNotClosedHtmlTags($html);
         $html = self::protectNotHtmlLessThanSymbols($html);
 
         return self::extractHtmlNode($html, $toBeEscaped);
@@ -80,6 +82,95 @@ class HtmlParser
     }
 
     /**
+     * Protect not closed html tags.
+     *
+     * Example:
+     *
+     * Ciao <div> this div is not closed. <div>Instead, this is a closed div.</div>
+     *
+     * is converted to:
+     *
+     * Ciao #####__LT_PLACEHOLDER__#####div#####__GT_PLACEHOLDER__##### this div is not closed. <div>Instead, this is a closed div.</div>
+     *
+     * @param $html
+     *
+     * @return mixed
+     */
+    private static function protectNotClosedHtmlTags( $html)
+    {
+        preg_match_all('/<|>/iu', $html, $matches, PREG_OFFSET_CAPTURE);
+
+        $tags = [];
+        $offsets = [];
+        $originalLengths = [];
+
+        // 1. Map all tags
+        foreach ($matches[0] as $key => $match) {
+            $current       = $matches[ 0 ][ $key ][ 0 ];
+            $currentOffset = $matches[ 0 ][ $key ][ 1 ];
+
+            // check every string inside angular brackets (< and >)
+            if( $current === '<' and isset($matches[0][$key+1][0]) and $matches[0][$key+1][0] === '>' ){
+                $nextOffset = $matches[0][$key+1][1];
+                $tag = substr($html, ($currentOffset + 1), ( $nextOffset - $currentOffset - 1 ));
+                $trimmedTag = trim($tag);
+
+                // if the tag is self closed do nothing
+                if(Strings::lastChar($tag) !== '/'){
+                    $tags[] = $trimmedTag;
+                    $offsets[] = $currentOffset;
+                    $originalLengths[] = strlen($tag) + 2; // add 2 to length because there are < and >
+                }
+            }
+        }
+
+        // 2. Removing closed tags
+        $indexes = [];
+
+        if(count($tags) > 0){
+            foreach ($tags as $index => $tag){
+
+                if(Strings::contains('/', $tag)){
+                    $complementaryTag = $tag;
+                } else {
+                    $complementaryTag = '/'.explode(' ', $tag)[0];
+                }
+
+                $complementaryTagIndex = array_search($complementaryTag, $tags);
+
+                if(false !== $complementaryTagIndex){
+                    $indexes[] = $index;
+                    $indexes[] = $complementaryTagIndex;
+                }
+            }
+        }
+
+        $indexes = array_unique($indexes);
+        foreach ($indexes as $index){
+            unset($tags[$index]);
+        }
+
+        // 3. Loop not closed tags
+        $delta = 0;
+
+        if(count($tags)){
+            foreach ($tags as $index => $tag){
+
+                $length = $originalLengths[$index];
+                $offset = $offsets[$index];
+                $realOffset = ($delta === 0) ? $offset : ($offset + $delta);
+
+                $replacement = self::LT_PLACEHOLDER . $tag . self::GT_PLACEHOLDER;
+
+                $html = substr_replace($html, $replacement, $realOffset, $length);
+                $delta = $delta + strlen($replacement) - $length;
+            }
+        }
+
+        return $html;
+    }
+
+    /**
      * @param string $html
      * @param bool $toBeEscaped
      *
@@ -115,9 +206,9 @@ class HtmlParser
             $node = self::rebuildNode($originalText, $toBeEscaped, $start, $end);
 
             $elements[] = (object)[
-                'node' => self::restoreLessThanSymbols($node),
-                'start' => self::restoreLessThanSymbols($start),
-                'end' => self::restoreLessThanSymbols($end),
+                'node' => self::restoreLessThanAndGreaterThanSymbols($node),
+                'start' => self::restoreLessThanAndGreaterThanSymbols($start),
+                'end' => self::restoreLessThanAndGreaterThanSymbols($end),
                 'terminator' => ($toBeEscaped) ? '&gt;' : '>',
                 'offset' => $match[1],
                 'tagname' => $tagName,
@@ -126,8 +217,8 @@ class HtmlParser
                 'omittag' => ($matches[4][$key][1] > -1), // boolean
                 'inner_html' => $inner_html,
                 'has_children' => is_array($inner_html),
-                'original_text' => ($toBeEscaped) ? self::restoreLessThanSymbols(Strings::escapeOnlyHTMLTags($originalText)) : self::restoreLessThanSymbols($originalText),
-                'stripped_text' => self::restoreLessThanSymbols($strippedText),
+                'original_text' => ($toBeEscaped) ? self::restoreLessThanAndGreaterThanSymbols(Strings::escapeOnlyHTMLTags($originalText)) : self::restoreLessThanAndGreaterThanSymbols($originalText),
+                'stripped_text' => self::restoreLessThanAndGreaterThanSymbols($strippedText),
             ];
         }
 
@@ -139,9 +230,9 @@ class HtmlParser
      *
      * @return string|string[]
      */
-    private static function restoreLessThanSymbols( $text)
+    private static function restoreLessThanAndGreaterThanSymbols( $text)
     {
-        return str_replace(self::LT_PLACEHOLDER, '<', $text);
+        return str_replace([self::LT_PLACEHOLDER, self::GT_PLACEHOLDER], ['<','>'], $text);
     }
 
     /**
