@@ -354,7 +354,7 @@ class Strings
             return false;
         }
 
-        preg_match("/<\/?[a-zA-Z1-6-]+((\s+\w+(\s*=\s*(?:\".*?\"|'.*?'|[^'\">\s]+))?)+\s*|\s*)\/?>/",$string, $matches);
+        preg_match("/<\/?[a-zA-Z1-6-]+((\s+[a-zA-Z1-6-]+(\s*=\s*(?:\".*?\"|'.*?'|[^'\">\s]+))?)+\s*|\s*)\/?>/",$string, $matches);
 
         return count($matches) !== 0;
     }

@@ -863,6 +863,24 @@ class DataReplacerTest extends BaseTest
         $this->assertEquals($expected, $dataReplacer->replace($string));
         $this->assertEquals($restored, $dataReplacer->restore($expected));
     }
+
+    /**
+     * @test
+     */
+    public function test_with_lt_and_gt()
+    {
+        $map = [
+            'source1' => 'a',
+        ];
+
+        $string    = 'Ödemenizin kapatılması için Ödemenizin kapatılması için &lt;Outage SLA time&gt; beklemenizi rica ediyoruz. &lt;ph dataRef="source1" id="source1"/&gt;';
+        $expected  = 'Ödemenizin kapatılması için Ödemenizin kapatılması için &lt;Outage SLA time&gt; beklemenizi rica ediyoruz. &lt;ph dataRef="source1" id="source1" equiv-text="base64:YQ=="/&gt;';
+        $restored  = 'Ödemenizin kapatılması için Ödemenizin kapatılması için &lt;Outage SLA time&gt; beklemenizi rica ediyoruz. &lt;ph dataRef="source1" id="source1"/&gt;';
+        $dataReplacer = new DataRefReplacer($map);
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($restored, $dataReplacer->restore($expected));
+    }
 }
 
 
