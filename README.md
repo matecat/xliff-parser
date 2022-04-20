@@ -2,6 +2,12 @@
 
 This library is a simple, agnostic Xliff parser specifically written for [Matecat](https://www.matecat.com).
 
+## Installation
+
+```shell
+composer require matecat/xliff-parser
+```
+
 ## Xliff Support
 
 Xliff supported versions:
