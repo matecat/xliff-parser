@@ -881,6 +881,24 @@ class DataReplacerTest extends BaseTest
         $this->assertEquals($expected, $dataReplacer->replace($string));
         $this->assertEquals($restored, $dataReplacer->restore($expected));
     }
+
+    /**
+     * @test
+     */
+    public function can_replace_self_closing_pc_with_values_in_original_map()
+    {
+        $map = [
+                'd1' => 'Hello'
+        ];
+
+        $dataReplacer = new DataRefReplacer($map);
+
+        $string = '<pc dataRefStart="d1" id="d1"/> ciao';
+        $expected = '<ph id="d1" dataType="pcSelf" originalData="PHBjIGRhdGFSZWZTdGFydD0iZDEiIGlkPSJkMSIvPg==" dataRef="d1" equiv-text="base64:SGVsbG8="/> ciao';
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($string, $dataReplacer->restore($expected));
+    }
 }
 
 

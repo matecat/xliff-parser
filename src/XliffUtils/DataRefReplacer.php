@@ -56,6 +56,10 @@ class DataRefReplacer
         $toBeEscaped = Strings::isAnEscapedHTML($string);
 
         if($this->stringContainsPcTags($string, $toBeEscaped)){
+
+            // replace self-closed <pc />
+            $string = $this->replaceSelfClosedPcTags($string, $toBeEscaped);
+
             // create a dataRefEnd map
             // (needed for correct handling of </pc> closing tags)
             $dataRefEndMap = $this->buildDataRefEndMap($html);
@@ -188,6 +192,32 @@ class DataRefReplacer
         preg_match_all($regex, $string, $openingPcMatches);
 
         return (isset($openingPcMatches[0]) and count($openingPcMatches[0])>0);
+    }
+
+    /**
+     * @param $string
+     * @param $toBeEscaped
+     *
+     * @return mixed
+     */
+    private function replaceSelfClosedPcTags($string, $toBeEscaped)
+    {
+        $regex = ($toBeEscaped) ? '/&lt;pc[^>]+?\/&gt;/iu' : '/<pc[^>]+?\/>/iu';
+        preg_match_all($regex, $string, $selfClosedPcMatches);
+
+        foreach ($selfClosedPcMatches[0] as $match){
+
+            $html = HtmlParser::parse($match);
+            $node = $html[0];
+            $attributes = $node->attributes;
+
+            if(isset($attributes['dataRefStart']) and array_key_exists($node->attributes['dataRefStart'], $this->map)){
+                $replacement = '<ph id="'.$attributes['id'].'" dataType="pcSelf" originalData="'.base64_encode($match).'" dataRef="'.$attributes['dataRefStart'].'" equiv-text="base64:'.base64_encode($this->map[$node->attributes['dataRefStart']]).'"/>';
+                $string = str_replace($match, $replacement, $string);
+            }
+        }
+
+        return $string;
     }
 
     /**
@@ -446,6 +476,17 @@ class DataRefReplacer
             $d = self::purgeTags($d);
 
             $string = str_replace($a, $d, $string);
+
+            // restoring <pc/> self-closed here
+            if(Strings::contains('dataType="pcSelf"', $d)){
+                preg_match('/\s?originalData="(.*?)"\s?/', $d, $originalDataMatches);
+
+                if (isset($originalDataMatches[1])) {
+                    $originalData = base64_decode($originalDataMatches[1]);
+                    $originalData = $this->purgeTags($originalData);
+                    $string = str_replace($d, $originalData, $string);
+                }
+            }
 
             // restoring <pc> tags here
             // if <ph> tag has originalData and originalType is pcStart or pcEnd,
