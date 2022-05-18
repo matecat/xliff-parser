@@ -202,7 +202,11 @@ class DataRefReplacer
      */
     private function replaceSelfClosedPcTags($string, $toBeEscaped)
     {
-        $regex = ($toBeEscaped) ? '/&lt;pc[^>]+?\/&gt;/iu' : '/<pc[^>]+?\/>/iu';
+        if($toBeEscaped){
+            $string = str_replace(['&lt;','&gt;'],['<','>'],$string);
+        }
+
+        $regex = '/<pc[^>]+?\/>/iu';
         preg_match_all($regex, $string, $selfClosedPcMatches);
 
         foreach ($selfClosedPcMatches[0] as $match){
@@ -215,6 +219,10 @@ class DataRefReplacer
                 $replacement = '<ph id="'.$attributes['id'].'" dataType="pcSelf" originalData="'.base64_encode($match).'" dataRef="'.$attributes['dataRefStart'].'" equiv-text="base64:'.base64_encode($this->map[$node->attributes['dataRefStart']]).'"/>';
                 $string = str_replace($match, $replacement, $string);
             }
+        }
+
+        if($toBeEscaped){
+            $string = str_replace(['<','>'],['&lt;','&gt;'],$string);
         }
 
         return $string;
@@ -255,7 +263,8 @@ class DataRefReplacer
             }
         }
 
-        if($node->tagname === 'pc'){
+        // EXCLUDE self closed <pc/>
+        if($node->tagname === 'pc' and $node->self_closed === false){
             if(isset($node->attributes['dataRefEnd'])){
                 $dataRefEnd = $node->attributes['dataRefEnd'];
             } elseif(isset($node->attributes['dataRefStart'])) {

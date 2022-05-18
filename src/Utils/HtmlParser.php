@@ -205,15 +205,22 @@ class HtmlParser
             // node
             $node = self::rebuildNode($originalText, $toBeEscaped, $start, $end);
 
+            // terminator
+            $terminator = ($toBeEscaped) ? '&gt;' : '>';
+
+            // self closed
+            $selfClosed = Strings::contains('/>', trim($start));
+
             $elements[] = (object)[
                 'node' => self::restoreLessThanAndGreaterThanSymbols($node),
                 'start' => self::restoreLessThanAndGreaterThanSymbols($start),
                 'end' => self::restoreLessThanAndGreaterThanSymbols($end),
-                'terminator' => ($toBeEscaped) ? '&gt;' : '>',
+                'terminator' => $terminator,
                 'offset' => $match[1],
                 'tagname' => $tagName,
                 'attributes' => $attributes,
                 'base64_decoded' => $base64Decoded,
+                'self_closed' => $selfClosed,
                 'omittag' => ($matches[4][$key][1] > -1), // boolean
                 'inner_html' => $inner_html,
                 'has_children' => is_array($inner_html),
