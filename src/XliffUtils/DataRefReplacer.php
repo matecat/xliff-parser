@@ -263,7 +263,8 @@ class DataRefReplacer
             }
         }
 
-        if($node->tagname === 'pc'){
+        // EXCLUDE self closed <pc/>
+        if($node->tagname === 'pc' and $node->self_closed === false){
             if(isset($node->attributes['dataRefEnd'])){
                 $dataRefEnd = $node->attributes['dataRefEnd'];
             } elseif(isset($node->attributes['dataRefStart'])) {
