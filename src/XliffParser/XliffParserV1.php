@@ -195,7 +195,7 @@ class XliffParserV1 extends AbstractXliffParser
      * @return array
      * @throws \Exception
      */
-    private function extractTransUnitMetadata(\DOMElement $transUnit, array $transUnitIdArrayForUniquenessCheck)
+    private function extractTransUnitMetadata(\DOMElement $transUnit, array &$transUnitIdArrayForUniquenessCheck)
     {
         $metadata = [];
 
