@@ -5,8 +5,12 @@ namespace Matecat\XliffParser\Utils;
 class Emoji
 {
     /**
-     * Map were generated here:
-     * https://www.compart.com/en/unicode/graphql?query=%7BunicodeObject(type%3Acategory%2Cid%3A%22So%22)%7Bchars(limit%3A100000%2Coffset%3A%200)%7Bid%20text%7D%7D%7D
+     * Note: for not visibile characters:
+     * Launch IDE debug, and evaluate the expression:
+     *
+     * html_entity_decode("xxxx");
+     *
+     * and then copy the value
      *
      * @var array
      */
@@ -7404,6 +7408,12 @@ class Emoji
             '􀂅' => '&#1048709;',
             '􀄿' => '&#1048895;',
             '􀀘' => '&#1048600;',
+            '🪘'  => '&#129688;',
+            '🧋'  => '&#129483;',
+            '󠄞🪵'  => '&#129717;',
+            '􀁜'  => '&#1048668;',
+            '󠆌'   => '&#917900;',
+            '󠄞'   => '&#917790;',
     ];
 
     /**
