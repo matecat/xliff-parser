@@ -341,16 +341,21 @@ class Strings
     }
 
     /**
+     * @TODO We need to improve this
      * @param string $string
      *
      * @return bool
      */
-    public static function isHtmlString( $string )
+    public static function isHtmlString($string)
     {
+        $string = stripslashes($string);
+
         if($string === '<>'){
             return false;
         }
 
-        return strip_tags($string) !== $string;
+        preg_match("/<\/?[a-zA-Z1-6-]+((\s+[a-zA-Z1-6-]+(\s*=\s*(?:\".*?\"|'.*?'|[^'\">\s]+))?)+\s*|\s*)\/?>/",$string, $matches);
+
+        return count($matches) !== 0;
     }
 }

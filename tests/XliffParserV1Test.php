@@ -573,4 +573,16 @@ class XliffParserV1Test extends BaseTest
         $this->assertEquals('Ciao. ', $transUnit['seg-source'][2]['raw-content']);
         $this->assertEquals('Ciao.', $transUnit['seg-source'][3]['raw-content']);
     }
+
+    /**
+     * @test
+     */
+    public function raise_exception_on_duplicate_ids()
+    {
+        try {
+            (new XliffParser())->xliffToArray($this->getTestFile('v1-duplicate-ids.xliff'));
+        } catch (\Exception $exception){
+            $this->assertEquals('Invalid trans-unit id, duplicate found.', $exception->getMessage());
+        }
+    }
 }

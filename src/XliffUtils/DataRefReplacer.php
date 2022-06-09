@@ -56,6 +56,10 @@ class DataRefReplacer
         $toBeEscaped = Strings::isAnEscapedHTML($string);
 
         if($this->stringContainsPcTags($string, $toBeEscaped)){
+
+            // replace self-closed <pc />
+            $string = $this->replaceSelfClosedPcTags($string, $toBeEscaped);
+
             // create a dataRefEnd map
             // (needed for correct handling of </pc> closing tags)
             $dataRefEndMap = $this->buildDataRefEndMap($html);
@@ -133,10 +137,16 @@ class DataRefReplacer
                 $a = $node->node;  // complete match. Eg:  <ph id="source1" dataRef="source1"/>
                 $b = $node->attributes['dataRef'];   // map identifier. Eg: source1
 
+
                 // if isset a value in the map calculate base64 encoded value
                 // otherwise skip
-                if (!isset($this->map[$b])) {
+                if(!in_array($b, array_keys($this->map))){
                     return $string;
+                }
+
+                // check if is null, in this case convert it to NULL string
+                if(is_null($this->map[$b])){
+                    $this->map[$b] = 'NULL';
                 }
 
                 $value = $this->map[$b];
@@ -178,10 +188,44 @@ class DataRefReplacer
      */
     private function stringContainsPcTags($string, $toBeEscaped)
     {
-        $regex = ($toBeEscaped) ? '/&lt;pc(.*?)&gt;/iu' : '/<pc(.*?)>/iu';
+        $regex = ($toBeEscaped) ? '/&lt;pc (.*?)&gt;/iu' : '/<pc (.*?)>/iu';
         preg_match_all($regex, $string, $openingPcMatches);
 
         return (isset($openingPcMatches[0]) and count($openingPcMatches[0])>0);
+    }
+
+    /**
+     * @param $string
+     * @param $toBeEscaped
+     *
+     * @return mixed
+     */
+    private function replaceSelfClosedPcTags($string, $toBeEscaped)
+    {
+        if($toBeEscaped){
+            $string = str_replace(['&lt;','&gt;'],['<','>'],$string);
+        }
+
+        $regex = '/<pc[^>]+?\/>/iu';
+        preg_match_all($regex, $string, $selfClosedPcMatches);
+
+        foreach ($selfClosedPcMatches[0] as $match){
+
+            $html = HtmlParser::parse($match);
+            $node = $html[0];
+            $attributes = $node->attributes;
+
+            if(isset($attributes['dataRefStart']) and array_key_exists($node->attributes['dataRefStart'], $this->map)){
+                $replacement = '<ph id="'.$attributes['id'].'" dataType="pcSelf" originalData="'.base64_encode($match).'" dataRef="'.$attributes['dataRefStart'].'" equiv-text="base64:'.base64_encode($this->map[$node->attributes['dataRefStart']]).'"/>';
+                $string = str_replace($match, $replacement, $string);
+            }
+        }
+
+        if($toBeEscaped){
+            $string = str_replace(['<','>'],['&lt;','&gt;'],$string);
+        }
+
+        return $string;
     }
 
     /**
@@ -219,7 +263,8 @@ class DataRefReplacer
             }
         }
 
-        if($node->tagname === 'pc'){
+        // EXCLUDE self closed <pc/>
+        if($node->tagname === 'pc' and $node->self_closed === false){
             if(isset($node->attributes['dataRefEnd'])){
                 $dataRefEnd = $node->attributes['dataRefEnd'];
             } elseif(isset($node->attributes['dataRefStart'])) {
@@ -267,7 +312,7 @@ class DataRefReplacer
      */
     private function replaceOpeningPcTags($string, $toBeEscaped)
     {
-        $regex = ($toBeEscaped) ? '/&lt;pc(.*?)&gt;/iu' : '/<pc(.*?)>/iu';
+        $regex = ($toBeEscaped) ? '/&lt;pc (.*?)&gt;/iu' : '/<pc (.*?)>/iu';
         preg_match_all($regex, $string, $openingPcMatches);
 
         foreach ($openingPcMatches[0] as $index => $match){
@@ -285,7 +330,7 @@ class DataRefReplacer
 
             if(isset($attr['dataRefStart'])){
                 $startOriginalData = $match; // opening <pc>
-                $startValue = $this->map[$attr['dataRefStart']];
+                $startValue = $this->map[$attr['dataRefStart']] ? $this->map[$attr['dataRefStart']] : 'NULL'; //handling null values in original data map
                 $base64EncodedStartValue = base64_encode($startValue);
                 $base64StartOriginalData = base64_encode($startOriginalData);
 
@@ -324,7 +369,7 @@ class DataRefReplacer
 
             if(!empty($attr) and isset($attr['dataRefEnd'])){
                 $endOriginalData = $match[0]; // </pc>
-                $endValue = $this->map[$attr['dataRefEnd']];
+                $endValue = $this->map[$attr['dataRefEnd']] ? $this->map[$attr['dataRefEnd']] : 'NULL';
                 $base64EncodedEndValue = base64_encode($endValue);
                 $base64EndOriginalData = base64_encode($endOriginalData);
 
@@ -410,8 +455,13 @@ class DataRefReplacer
             // if isset a value in the map calculate base64 encoded value
             // or it is an empty string
             // otherwise skip
-            if (!isset($this->map[$b]) or empty($this->map[$b]) or $this->map[$b] === '') {
+            if(!in_array($b, array_keys($this->map))  ){
                 return $string;
+            }
+
+            // check if is null, in this case convert it to NULL string
+            if(is_null($this->map[$b])){
+                $this->map[$b] = 'NULL';
             }
 
             // remove id?
@@ -435,6 +485,17 @@ class DataRefReplacer
             $d = self::purgeTags($d);
 
             $string = str_replace($a, $d, $string);
+
+            // restoring <pc/> self-closed here
+            if(Strings::contains('dataType="pcSelf"', $d)){
+                preg_match('/\s?originalData="(.*?)"\s?/', $d, $originalDataMatches);
+
+                if (isset($originalDataMatches[1])) {
+                    $originalData = base64_decode($originalDataMatches[1]);
+                    $originalData = $this->purgeTags($originalData);
+                    $string = str_replace($d, $originalData, $string);
+                }
+            }
 
             // restoring <pc> tags here
             // if <ph> tag has originalData and originalType is pcStart or pcEnd,

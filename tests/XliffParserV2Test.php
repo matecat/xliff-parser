@@ -9,6 +9,17 @@ class XliffParserV2Test extends BaseTest
     /**
      * @test
      */
+    public function can_parse_a_xliff_file_with_empty_size_restriction_metadata()
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('size-restriction.xliff'));
+
+        $this->assertFalse(isset($parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ] [ 'attr' ] ['sizeRestriction']));
+        $this->assertEquals($parsed[ 'files' ][ 1 ][ 'trans-units' ][ 14 ] [ 'attr' ]['sizeRestriction'], 60);
+    }
+
+    /**
+     * @test
+     */
     public function can_parse_a_xliff_file_with_empty_pc_tags()
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('pc-slash.xlf'));
@@ -427,5 +438,17 @@ class XliffParserV2Test extends BaseTest
         ];
 
         $this->assertArraySimilar($parsed[ 'files' ][ 1 ], $exp);
+    }
+
+    /**
+     * @test
+     */
+    public function raise_exception_on_duplicate_ids()
+    {
+        try {
+            (new XliffParser())->xliffToArray($this->getTestFile('v2-duplicate-ids.xliff'));
+        } catch (\Exception $exception){
+            $this->assertEquals('Invalid trans-unit id, duplicate found.', $exception->getMessage());
+        }
     }
 }

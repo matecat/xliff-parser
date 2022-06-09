@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0" xmlns:slr="urn:oasis:names:tc:xliff:sizerestriction:2.0" xmlns:memsource="http://www.memsource.com/xliff2.0/1.0" version="2.0" memsource:wfLevel="4" srcLang="en-us" trgLang="zh-tw"  xmlns:mtc="https://www.matecat.com">
+<?xml version="1.0" encoding="UTF-8"?><xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0" xmlns:slr="urn:oasis:names:tc:xliff:sizerestriction:2.0" xmlns:memsource="http://www.memsource.com/xliff2.0/1.0" version="2.0" memsource:wfLevel="4" srcLang="en-us" trgLang="sk-SK"  xmlns:mtc="https://www.matecat.com">
     <file id="wgbnncDCihLpS8do_dc5:0-136" memsource:taskId="wgbnncDCihLpS8do_dc5" canResegment="no" original="Original-comm-ops-bliss-case-management-irt.xlf">
         <slr:profiles generalProfile="xliff:codepoints"/>
         <unit mtc:segment-id="1" id="0" memsource:tGroupBegin="0" memsource:tGroupEnd="0" translate="yes">
@@ -6,7 +6,7 @@
                 <mda:metaGroup>
                     <mda:meta type="key">title</mda:meta>
                 </mda:metaGroup>
-                <mda:metaGroup category="row_xml_attribute">
+                <mda:metaGroup id="word_count_tu_1" category="row_xml_attribute">
                                 <mda:meta type="x-matecat-raw">30</mda:meta>
                                 <mda:meta type="x-matecat-weighted">20</mda:meta>
                             </mda:metaGroup>
@@ -21,7 +21,7 @@
                 <mda:metaGroup>
                     <mda:meta type="key">description</mda:meta>
                 </mda:metaGroup>
-                <mda:metaGroup category="row_xml_attribute">
+                <mda:metaGroup id="word_count_tu_2" category="row_xml_attribute">
                                 <mda:meta type="x-matecat-raw">60</mda:meta>
                                 <mda:meta type="x-matecat-weighted">40</mda:meta>
                             </mda:metaGroup>

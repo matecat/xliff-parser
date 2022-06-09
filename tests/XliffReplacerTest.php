@@ -11,6 +11,39 @@ class XliffReplacerTest extends BaseTest
     /**
      * @test
      */
+    public function can_replace_a_xliff_20_without_trgLang_attribute()
+    {
+        $data = $this->getData([
+                [
+                        'sid' => 1,
+                        'segment' => 'Deutsch',
+                        'internal_id' => 'I11:359;122:3567',
+                        'mrk_id' => '',
+                        'prev_tags' => '',
+                        'succ_tags' => '',
+                        'mrk_prev_tags' => '',
+                        'mrk_succ_tags' => '',
+                        'translation' => 'Alemán',
+                        'status' => TranslationStatus::STATUS_TRANSLATED,
+                        'eq_word_count' => 1,
+                        'raw_word_count' => 1,
+                ],
+        ]);
+
+        $inputFile = __DIR__.'/../tests/files/no-trgLang.xliff';
+        $outputFile = __DIR__.'/../tests/files/output/no-trgLang.xliff';
+
+        $xliffParser = new XliffParser();
+        $xliffParser->replaceTranslation($inputFile, $data['data'], $data['transUnits'], 'es-ES', $outputFile);
+
+        $output = $xliffParser->xliffToArray(file_get_contents($outputFile));
+
+        $this->assertEquals('es-ES', $output['files'][1]['attr']['target-language']);
+    }
+
+    /**
+     * @test
+     */
     public function can_replace_a_xliff_20_with_the_correct_counts()
     {
         $data = $this->getData([
@@ -59,6 +92,12 @@ class XliffReplacerTest extends BaseTest
         $this->assertEquals(60, $raw[1][1]);
         $this->assertEquals(20, $weighted[1][0]);
         $this->assertEquals(40, $weighted[1][1]);
+
+        // check for metaGroup attributes
+        preg_match_all('/<mda:metaGroup id="(.*)" category="(.*)">/', $output, $metaGroup);
+
+        $this->assertEquals('word_count_tu_1', $metaGroup[1][0]);
+        $this->assertEquals('word_count_tu_2', $metaGroup[1][1]);
     }
 
     /**
@@ -565,7 +604,7 @@ class RealXliffReplacerCallback implements XliffReplacerCallbackInterface
     /**
      * @inheritDoc
      */
-    public function thereAreErrors($segment, $translation, array $dataRefMap = [])
+    public function thereAreErrors($segmentId, $segment, $translation, array $dataRefMap = [])
     {
         return false;
     }
@@ -576,7 +615,7 @@ class DummyXliffReplacerCallback implements XliffReplacerCallbackInterface
     /**
      * @inheritDoc
      */
-    public function thereAreErrors($segment, $translation, array $dataRefMap = [])
+    public function thereAreErrors($segmentId, $segment, $translation, array $dataRefMap = [])
     {
         return false;
     }
@@ -587,7 +626,7 @@ class DummyXliffReplacerCallbackWhichReturnTrue implements XliffReplacerCallback
     /**
      * @inheritDoc
      */
-    public function thereAreErrors($segment, $translation, array $dataRefMap = [])
+    public function thereAreErrors($segmentId, $segment, $translation, array $dataRefMap = [])
     {
         return true;
     }

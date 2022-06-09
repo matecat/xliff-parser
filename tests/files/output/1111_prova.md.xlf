@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?><xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en-US" trgLang="it-IT" xmlns:its="http://www.w3.org/2005/11/its" its:version="2.0" xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0" xmlns:mtc="https://www.matecat.com">
+<?xml version="1.0" encoding="UTF-8"?><xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en-US" trgLang="en-en" xmlns:its="http://www.w3.org/2005/11/its" its:version="2.0" xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0" xmlns:mtc="https://www.matecat.com">
  <file id="f1" original="/home/afalappa/Documenti/filters-sample-docs/markdown/prova.md">
   <unit mtc:segment-id="1" id="tu1" translate="yes">
    <mda:metadata>
-                <mda:metaGroup category="row_xml_attribute">
+                <mda:metaGroup id="word_count_tu_1" category="row_xml_attribute">
                     <mda:meta type="x-matecat-raw">2</mda:meta>
                     <mda:meta type="x-matecat-weighted">1</mda:meta>
                 </mda:metaGroup>
@@ -15,7 +15,7 @@
   </unit>
   <unit mtc:segment-id="3" id="tu2" translate="yes">
    <mda:metadata>
-                <mda:metaGroup category="row_xml_attribute">
+                <mda:metaGroup id="word_count_tu_2" category="row_xml_attribute">
                     <mda:meta type="x-matecat-raw">7</mda:meta>
                     <mda:meta type="x-matecat-weighted">5</mda:meta>
                 </mda:metaGroup>

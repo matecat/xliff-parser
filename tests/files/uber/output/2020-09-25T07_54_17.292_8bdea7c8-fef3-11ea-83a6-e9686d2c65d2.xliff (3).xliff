@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0" xmlns:slr="urn:oasis:names:tc:xliff:sizerestriction:2.0" xmlns:memsource="http://www.memsource.com/xliff2.0/1.0" version="2.0" memsource:wfLevel="4" srcLang="en-us" trgLang="uk-ua"  xmlns:mtc="https://www.matecat.com">
+<?xml version="1.0" encoding="UTF-8"?><xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0" xmlns:slr="urn:oasis:names:tc:xliff:sizerestriction:2.0" xmlns:memsource="http://www.memsource.com/xliff2.0/1.0" version="2.0" memsource:wfLevel="4" srcLang="en-us" trgLang="it-it"  xmlns:mtc="https://www.matecat.com">
     <file id="IDb8ZSSCnyDo4SSn_dc6:0-3" memsource:taskId="IDb8ZSSCnyDo4SSn_dc6" canResegment="no" original="ebf94f98-dmitrystest.xml">
         <slr:profiles generalProfile="xliff:codepoints"/>
         <unit id="0" memsource:tGroupBegin="0" memsource:tGroupEnd="0" translate="yes">
@@ -10,7 +10,7 @@
 
                     </mda:meta>
                 </mda:metaGroup>
-                <mda:metaGroup category="row_xml_attribute">
+                <mda:metaGroup id="word_count_tu_1" category="row_xml_attribute">
                                 <mda:meta type="x-matecat-raw">1</mda:meta>
                                 <mda:meta type="x-matecat-weighted">1</mda:meta>
                             </mda:metaGroup>
@@ -38,7 +38,7 @@
 
                     </mda:meta>
                 </mda:metaGroup>
-                <mda:metaGroup category="row_xml_attribute">
+                <mda:metaGroup id="word_count_tu_2" category="row_xml_attribute">
                                 <mda:meta type="x-matecat-raw">2</mda:meta>
                                 <mda:meta type="x-matecat-weighted">2</mda:meta>
                             </mda:metaGroup>
@@ -66,7 +66,7 @@
 
                     </mda:meta>
                 </mda:metaGroup>
-                <mda:metaGroup category="row_xml_attribute">
+                <mda:metaGroup id="word_count_tu_3" category="row_xml_attribute">
                                 <mda:meta type="x-matecat-raw">3</mda:meta>
                                 <mda:meta type="x-matecat-weighted">3</mda:meta>
                             </mda:metaGroup>

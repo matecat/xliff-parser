@@ -7402,11 +7402,16 @@ class Emoji
             '🛼' => '&#128764;',
             '🥷' => '&#129399;',
             '🤌' => '&#127996;',
+            '􀀘'  => '&#1048600;',
+            "󠅸"  => '&#917880;',  // invisible glyph
             '󠄀'   => '&#917760;',
            	'󠇡'   => '&#917985;',
             '𧈧'  => '&#160295;',
             '􀂅' => '&#1048709;',
             '􀄿' => '&#1048895;',
+            '🪴' => '&#129716;',
+            '🫖' => '&#129750;',
+            '🫒' => '&#129746;',
             '􀀘' => '&#1048600;',
             '🪘'  => '&#129688;',
             '🧋'  => '&#129483;',
@@ -7423,7 +7428,7 @@ class Emoji
      */
     public static function toEntity($str)
     {
-        $letters = preg_split( '//u', $str, null, PREG_SPLIT_NO_EMPTY );
+        $letters = preg_split( '//u', $str, -1, PREG_SPLIT_NO_EMPTY );
         foreach( $letters as $letter ){
             if(@self::$chmap[ $letter ]){
                 $str = str_replace( $letter, self::$chmap[ $letter ], $str );

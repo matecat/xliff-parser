@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><xliff xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0" srcLang="en-US" trgLang="nl-NL" version="2.0" xmlns="urn:oasis:names:tc:xliff:document:2.0"  xmlns:mtc="https://www.matecat.com">
+<?xml version="1.0" encoding="UTF-8"?><xliff xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0" srcLang="en-US" trgLang="sk-SK" version="2.0" xmlns="urn:oasis:names:tc:xliff:document:2.0"  xmlns:mtc="https://www.matecat.com">
     <file id="f1" original="2324|Cyber Security">
         <group id="g1" name="announcement">
             <group id="g2" name="11657|announcementContent">
@@ -8,7 +8,7 @@
                             <mda:metaGroup id="h2_attributes">
                                 <mda:meta type="class">e-h3 c-alert__head t-no</mda:meta>
                             </mda:metaGroup>
-                            <mda:metaGroup category="row_xml_attribute">
+                            <mda:metaGroup id="word_count_tu_1" category="row_xml_attribute">
                                 <mda:meta type="x-matecat-raw">1</mda:meta>
                                 <mda:meta type="x-matecat-weighted">1</mda:meta>
                             </mda:metaGroup>
