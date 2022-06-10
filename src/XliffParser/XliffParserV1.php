@@ -91,6 +91,13 @@ class XliffParserV1 extends AbstractXliffParser
             }
             unset($temp);
 
+            //Custom MateCat namespace Attribute mtc:
+            preg_match('|mtc:(.*?)|si', $attribute->localName, $temp);
+            if (isset($temp[ 1 ])) {
+                $customAttr[ $attribute->localName ] = $attribute->value;
+            }
+            unset($temp);
+
             if (!empty($customAttr)) {
                 $metadata['custom'] = $customAttr;
             }
