@@ -35,15 +35,15 @@
                 <target xml:lang="sk-SK" state="translated">Bla bla bla</target>
 <count-group name="NFDBB2FA9-tu523"><count count-type="x-matecat-raw">0</count><count count-type="x-matecat-weighted">0</count></count-group></trans-unit>
             </group>
-            <trans-unit help-id="3" id="NFDBB2FA9-tu523" xml:space="preserve" translate="yes">
+            <trans-unit help-id="4" id="NFDBB2FA9-tu524" xml:space="preserve" translate="yes">
                     <source xml:lang="ru-RU">Bla Bla Bla Bla Bla Bla Bla Bla Bla</source>
                 <target  xml:lang="sk-SK" state="translated">Bla bla bla</target>
-<count-group name="NFDBB2FA9-tu523"><count count-type="x-matecat-raw">1</count><count count-type="x-matecat-weighted">1</count></count-group>
+<count-group name="NFDBB2FA9-tu524"><count count-type="x-matecat-raw">1</count><count count-type="x-matecat-weighted">1</count></count-group>
                 </trans-unit>
-            <trans-unit help-id="5" id="NFDBB2FA9-tu522" xml:space="preserve" translate="yes">
+            <trans-unit help-id="5" id="NFDBB2FA9-tu525" xml:space="preserve" translate="yes">
                 <source xml:lang="ru-RU">Bla Bla Bla Bla Bla Bla</source>
                 <target  xml:lang="sk-SK" state="translated">Bla bla bla</target>
-<count-group name="NFDBB2FA9-tu522"><count count-type="x-matecat-raw">2</count><count count-type="x-matecat-weighted">2</count></count-group>
+<count-group name="NFDBB2FA9-tu525"><count count-type="x-matecat-raw">2</count><count count-type="x-matecat-weighted">2</count></count-group>
             </trans-unit>
         </body>
     </file>

@@ -219,7 +219,7 @@ class XliffReplacerTest extends BaseTest
             [
                 'sid' => 4,
                 'segment' => 'Bla Bla',
-                'internal_id' => 'NFDBB2FA9-tu523',
+                'internal_id' => 'NFDBB2FA9-tu524',
                 'mrk_id' => '',
                 'prev_tags' => '',
                 'succ_tags' => '',
@@ -233,7 +233,7 @@ class XliffReplacerTest extends BaseTest
             [
                 'sid' => 5,
                 'segment' => 'Bla Bla',
-                'internal_id' => 'NFDBB2FA9-tu522',
+                'internal_id' => 'NFDBB2FA9-tu525',
                 'mrk_id' => '',
                 'prev_tags' => '',
                 'succ_tags' => '',

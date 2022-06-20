@@ -589,7 +589,7 @@ class XliffParserV1Test extends BaseTest
     /**
      * @test
      */
-    public function gfgfdgfdgfds()
+    public function can_extract_mtc_custom_file_attributes()
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('newformat.jsont.xlf'));
 
