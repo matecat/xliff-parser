@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:its="http://www.w3.org/2005/11/its" xmlns:itsxlf="http://www.w3.org/ns/its-xliff/" xmlns:mtc="https://www.matecat.com" xmlns:okp="okapi-framework:xliff-extensions" its:version="2.0" version="1.2">
+<file datatype="x-jsont" filter="net.translated.matecat.filters.MateJsontFilter" original="newformat.jsont" source-language="en-US" target-language="it-IT" tool-id="matecat-converter 1.3.13-SNAPSHOT"><header><reference><internal-file form="base64">WwogICAgewogICAgICAgICJpZF9yZXF1ZXN0IjogIjEyMyIsCiAgICAgICAgImlkX29yZGVyX2dyb3VwIjogIm1pb2dydXBwbyIsCiAgICAgICAgImlkX29yZGVyIjogIm1pb29yZGluZSIsCiAgICAg
+ICAgImlkX2NvbnRlbnQiOiAibXktaWQtMiIsCiAgICAgICAgImNvbnRlbnQiOiAiVGhlc2UgYXJlIHNvbWUgc2VudGVuY2VzIHRvIHRyYW5zbGF0ZSEiLAogICAgICAgICJjb250ZXh0IjogewogICAg
+ICAgICAgICAibm90ZXMiOiAiU29tZSBub3RlcyB0byB0cmFuc2xhdG9yIiwKICAgICAgICAgICAgImluc3RydWN0aW9ucyI6ICJpbnN0cnVjdGlvbnMucGRmIiwKICAgICAgICAgICAgInJlZmVyZW5j
+ZXMiOiAicmVmZXJlbmNlcy5wZGYiLAogICAgICAgICAgICAic3R5bGVndWlkZSI6ICJzdHlsZS5kb2N4IiwKICAgICAgICAgICAgInNjcmVlbnNob3QiOiAicGF0aC90by9zY3JlZW5zaG90LmdpZiIK
+ICAgICAgICB9CiAgICB9LAogICAgewogICAgICAgICJpZF9yZXF1ZXN0IjogIjc4OSIsCiAgICAgICAgImlkX29yZGVyX2dyb3VwIjogIm1pb2dydXBwbzIiLAogICAgICAgICJpZF9vcmRlciI6ICJt
+aW9vcmRpbmUzIiwKICAgICAgICAiaWRfY29udGVudCI6ICJteS1pZC0zIiwKICAgICAgICAiY29udGVudF90eXBlIjogInRleHQvaHRtbCIsCiAgICAgICAgImNvbnRlbnQiOiAiPGgyPkRpc2NsYWlt
+ZXI8L2gyPjxwPldlIGFyZSA8Yj5ub3Q8L2I+IHJlc3BvbnNpYmxlIGZvciB0aGUgPGk+d29yZGluZyBhbmQgb3BpbmlvbnM8L2k+IGV4cHJlc3NlZCBpbiB0aGlzIHRlc3Qgc2VudGVuY2VzLiBFdmVy
+eSBvcGluaW9uIGlzIG9mIHRoZSBzcGVha2VyLjwvcD48aHI+PHA+QGNvcHk7IDIwMjEgRm9vQmFyJnJlZzsgSW5jLjwvcD4iLAogICAgICAgICJjb250ZXh0IjogewogICAgICAgICAgICAibm90ZXMi
+OiAiSGV5IHRyYW5zbGF0b3IsIHRoaXMgaXMgYSB3ZWJwYWdlLCBwYXkgYXR0ZW50aW9uIiwKICAgICAgICAgICAgImluc3RydWN0aW9ucyI6ICJteS1pbnN0cnVjdGlvbnMucGRmIiwKICAgICAgICAg
+ICAgInJlZmVyZW5jZXMiOiAiZ29vZ2xlLXJlZmVyZW5jZXMudHh0IiwKICAgICAgICAgICAgInN0eWxlZ3VpZGUiOiAidGhlc3R5bGUuZG9jeCIsCiAgICAgICAgICAgICJzY3JlZW5zaG90IjogInBh
+dGgvdG8vd2VicGFnZS5wbmciCiAgICAgICAgfQogICAgfQpd</internal-file></reference></header><body/></file>
+<file datatype="x-rkm" filter="net.translated.matecat.filters.MateJsontFilter" original="manifest.rkm" source-language="en-US" target-language="it-IT" tool-id="matecat-converter 1.3.13-SNAPSHOT"><header><reference><internal-file form="base64">PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPCEtLT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09LS0+Cjwh
+LS1QTEVBU0UsIERPIE5PVCBSRU5BTUUsIE1PVkUsIE1PRElGWSBPUiBBTFRFUiBJTiBBTlkgV0FZIFRISVMgRklMRS0tPgo8IS0tPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PT09PT09PT09PT09PT09PT09PT0tLT4KPG1hbmlmZXN0IHZlcnNpb249IjIiIGxpYlZlcnNpb249IjEuNDAuMy1UUkFOU0xBVEVEIiBwcm9qZWN0SWQ9Ik5FMkZFODZFNCIgcGFja2FnZUlk
+PSI2MjMyZGRiYS1kNWQzLTRkZmEtOWY5OC05ODgxNzliNGUyZWUiIHNvdXJjZT0iZW4tVVMiIHRhcmdldD0iaXQtSVQiIG9yaWdpbmFsU3ViRGlyPSJvcmlnaW5hbCIgc2tlbGV0b25TdWJEaXI9InNr
+ZWxldG9uIiBzb3VyY2VTdWJEaXI9IndvcmsiIHRhcmdldFN1YkRpcj0id29yayIgbWVyZ2VTdWJEaXI9ImRvbmUiIHRtU3ViRGlyPSIiIGRhdGU9IjIwMjItMDYtMTYgMDg6MzI6MDQrMDAwMCIgdXNl
+QXBwcm92ZWRPbmx5PSIwIiB1cGRhdGVBcHByb3ZlZEZsYWc9IjAiPgo8Y3JlYXRvclBhcmFtZXRlcnM+STNZeENuQnNZV05sYUc5c1pHVnlUVzlrWlM1aVBYUnlkV1VLYVc1amJIVmtaVTV2VkhKaGJu
+TnNZWFJsTG1JOWRISjFaUXB6WlhSQmNIQnliM1psWkVGelRtOVVjbUZ1YzJ4aGRHVXVZajFtWVd4elpRcGpiM0I1VTI5MWNtTmxMbUk5ZEhKMVpRcHBibU5zZFdSbFFXeDBWSEpoYm5NdVlqMTBjblZs
+Q21sdVkyeDFaR1ZEYjJSbFFYUjBjbk11WWoxbVlXeHpaUXBwYm1Oc2RXUmxTWFJ6TG1JOWRISjFaUXBsYzJOaGNHVkhWQzVpUFhSeWRXVT08L2NyZWF0b3JQYXJhbWV0ZXJzPgo8ZG9jIHhtbDpzcGFj
+ZT0icHJlc2VydmUiIGRvY0lkPSIxIiBleHRyYWN0aW9uVHlwZT0ieGxpZmYiIHJlbGF0aXZlSW5wdXRQYXRoPSJuZXdmb3JtYXQuanNvbnQiIGZpbHRlcklkPSJva2ZfanNvbnQiIGlucHV0RW5jb2Rp
+bmc9IlVURi04IiByZWxhdGl2ZVRhcmdldFBhdGg9Im5ld2Zvcm1hdC5vdXQuanNvbnQiIHRhcmdldEVuY29kaW5nPSJVVEYtOCIgc2VsZWN0ZWQ9IjEiPkkzWXhDbVZ6WTJGd1pVWnZjbmRoY21SVGJH
+RnphR1Z6TG1JOVptRnNjMlVLZFhObFEyOWtaVVpwYm1SbGNpNWlQV1poYkhObENtOTFkSEIxZEZObFoyMWxiblJoZEdsdmJsUjVjR1V1YVQwekNtTnZaR1ZHYVc1a1pYSlNkV3hsY3k1amIzVnVkQzVw
+UFRFS1kyOWtaVVpwYm1SbGNsSjFiR1Z6TG5KMWJHVXdQVndrUDF4N0tGdEJMVm93TFRsaExYcGZMVjBxS1Z4OUNtTnZaR1ZHYVc1a1pYSlNkV3hsY3k1ellXMXdiR1U5Vlc1cGVDQjJZWEk2SUNSN2My
+OXRaUzEyWVhKOUxDQjJZWElnYVc0Z1luSmhZMlZ6T2lCN2RYTmxjbDl1WVcxbGZTNEtZMjlrWlVacGJtUmxjbEoxYkdWekxuVnpaVUZzYkZKMWJHVnpWMmhsYmxSbGMzUnBibWN1WWoxMGNuVmw8L2Rv
+Yz4KPC9tYW5pZmVzdD4=</internal-file></reference></header><body/></file>
+<file datatype="x-tos-request" mtc:id-content="my-id-2" mtc:id-order="mioordine" mtc:id-order-group="miogruppo" mtc:instructions="instructions.pdf" mtc:references="references.pdf" mtc:styleguide="style.docx" original="123" source-language="en-US" target-language="it-IT">
+<body>
+<group id="sg1">
+<trans-unit id="tu1" xml:space="preserve">
+<source xml:lang="en-US">These are some sentences to translate!</source>
+<seg-source><mrk mid="0" mtype="seg">These are some sentences to translate!</mrk></seg-source>
+<target xml:lang="it-IT"><mrk mid="0" mtype="seg">Queste sono alcune frasi da tradurre!</mrk></target>
+<note annotates="source" from="notes">Some notes to translator</note>
+<note annotates="source" from="screenshot">path/to/screenshot.gif</note>
+</trans-unit>
+<group id="sg2">
+</group>
+</group>
+</body>
+</file>
+<file datatype="x-tos-request" mtc:id-content="my-id-3" mtc:id-order="mioordine3" mtc:id-order-group="miogruppo2" mtc:instructions="my-instructions.pdf" mtc:references="google-references.txt" mtc:styleguide="thestyle.docx" original="789" source-language="en-US" target-language="it-IT">
+<body>
+<group id="sg3">
+<group id="sg3_ssf1" resname="sub-filter:content">
+<trans-unit id="sg3_sf1_tu1" resname="content_1" restype="x-h2" xml:space="preserve">
+<source xml:lang="en-US">Disclaimer</source>
+<seg-source><mrk mid="0" mtype="seg">Disclaimer</mrk></seg-source>
+<target xml:lang="it-IT"><mrk mid="0" mtype="seg">Avvertenze</mrk></target>
+<note annotates="source" from="notes">Hey translator, this is a webpage, pay attention</note>
+<note annotates="source" from="screenshot">path/to/webpage.png</note>
+</trans-unit>
+<trans-unit id="sg3_sf1_tu2" resname="content_3" restype="x-paragraph" xml:space="preserve">
+<source xml:lang="en-US">We are <g id="1">not</g> responsible for the <g id="2">wording and opinions</g> expressed in this test sentences. Every opinion is of the speaker.</source>
+<seg-source><mrk mid="0" mtype="seg">We are <g id="1">not</g> responsible for the <g id="2">wording and opinions</g> expressed in this test sentences. </mrk><mrk mid="1" mtype="seg">Every opinion is of the speaker.</mrk></seg-source>
+<target xml:lang="it-IT"><mrk mid="0" mtype="seg">Noi <g id="1">non</g> siamo responsabili per le <g id="2">parole ed opinioni</g> espresse in queste frasi di test. </mrk><mrk mid="1" mtype="seg">Ogni opinione appartiene allo speaker.</mrk></target>
+<note annotates="source" from="notes">Hey translator, this is a webpage, pay attention</note>
+<note annotates="source" from="screenshot">path/to/webpage.png</note>
+</trans-unit>
+<trans-unit id="sg3_sf1_tu3" resname="content_5" xml:space="preserve">
+<source xml:lang="en-US"><x id="1"/></source>
+<seg-source><mrk mid="0" mtype="seg"><x id="1"/></mrk></seg-source>
+<target xml:lang="it-IT"><mrk mid="0" mtype="seg"><x id="1"/></mrk></target>
+<note annotates="source" from="notes">Hey translator, this is a webpage, pay attention</note>
+<note annotates="source" from="screenshot">path/to/webpage.png</note>
+</trans-unit>
+<trans-unit id="sg3_sf1_tu4" resname="content_6" restype="x-paragraph" xml:space="preserve">
+<source xml:lang="en-US">@copy; 2021 FooBar® Inc.</source>
+<seg-source><mrk mid="0" mtype="seg">@copy; 2021 FooBar® Inc.</mrk></seg-source>
+<target xml:lang="it-IT"><mrk mid="0" mtype="seg">@copy; 2021 FooBar® S.R.L.</mrk></target>
+<note annotates="source" from="notes">Hey translator, this is a webpage, pay attention</note>
+<note annotates="source" from="screenshot">path/to/webpage.png</note>
+</trans-unit>
+</group>
+<group id="sg4">
+</group>
+</group>
+</body>
+</file>
+</xliff>
