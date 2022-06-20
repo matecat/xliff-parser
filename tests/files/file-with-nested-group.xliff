@@ -36,11 +36,11 @@
                     <target xml:lang="sk-SK">Ble Ble Ble Ble Ble Ble Ble Ble</target>
                 </trans-unit>
             </group>
-            <trans-unit id="NFDBB2FA9-tu523" xml:space="preserve">
+            <trans-unit id="NFDBB2FA9-tu524" xml:space="preserve">
                     <source xml:lang="ru-RU">Bla Bla Bla Bla Bla Bla Bla Bla Bla</source>
                 <target xml:lang="sk-SK">Ble Ble Ble Ble Ble Ble Ble Ble</target>
                 </trans-unit>
-            <trans-unit id="NFDBB2FA9-tu522" xml:space="preserve">
+            <trans-unit id="NFDBB2FA9-tu525" xml:space="preserve">
                 <source xml:lang="ru-RU">Bla Bla Bla Bla Bla Bla</source>
                 <target xml:lang="sk-SK">Ble Ble Ble Ble Ble Ble</target>
             </trans-unit>
