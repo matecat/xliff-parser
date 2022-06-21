@@ -589,15 +589,15 @@ class XliffParserV1Test extends BaseTest
     /**
      * @test
      */
-    public function can_extract_mtc_custom_file_attributes()
+    public function can_extract_custom_file_attributes()
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('newformat.jsont.xlf'));
 
-        $this->assertEquals($parsed['files'][3]['attr']['custom']['id-content'], 'my-id-2');
-        $this->assertEquals($parsed['files'][3]['attr']['custom']['id-order'], 'mioordine');
-        $this->assertEquals($parsed['files'][3]['attr']['custom']['id-order-group'], 'miogruppo');
-        $this->assertEquals($parsed['files'][3]['attr']['custom']['instructions'], 'instructions.pdf');
-        $this->assertEquals($parsed['files'][3]['attr']['custom']['references'], 'references.pdf');
-        $this->assertEquals($parsed['files'][3]['attr']['custom']['styleguide'], 'style.docx');
+        $this->assertEquals($parsed['files'][3]['attr']['custom']['mtc:id-content'], 'my-id-2');
+        $this->assertEquals($parsed['files'][3]['attr']['custom']['mtc:id-order'], 'mioordine');
+        $this->assertEquals($parsed['files'][3]['attr']['custom']['mtc:id-order-group'], 'miogruppo');
+        $this->assertEquals($parsed['files'][3]['attr']['custom']['mtc:instructions'], 'instructions.pdf');
+        $this->assertEquals($parsed['files'][3]['attr']['custom']['mtc:references'], 'references.pdf');
+        $this->assertEquals($parsed['files'][3]['attr']['custom']['mtc:styleguide'], 'style.docx');
     }
 }

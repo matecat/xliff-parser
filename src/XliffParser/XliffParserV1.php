@@ -94,7 +94,7 @@ class XliffParserV1 extends AbstractXliffParser
             // Custom MateCat namespace Attribute mtc:
             preg_match('|mtc:(.*?)|si', $attribute->nodeName, $temp);
             if (isset($temp[ 1 ])) {
-                $customAttr[ $attribute->localName ] = $attribute->value;
+                $customAttr[ $attribute->nodeName ] = $attribute->value;
             }
             unset($temp);
 
