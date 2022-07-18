@@ -244,10 +244,19 @@ class XliffParserV1 extends AbstractXliffParser
     {
         $notes = [];
         foreach ($transUnit->getElementsByTagName('note') as $note) {
+
             $noteValue = $this->extractTagContent($dom, $note);
 
             if ('' !== $noteValue) {
-                $notes[] = $this->JSONOrRawContentArray($noteValue);
+
+                $extractedNote = $this->JSONOrRawContentArray($noteValue);
+
+                // extract all the attributes
+                foreach ($note->attributes as $attribute){
+                    $extractedNote[$attribute->name] = $attribute->value;
+                }
+
+                $notes[] = $extractedNote;
             }
         }
 
