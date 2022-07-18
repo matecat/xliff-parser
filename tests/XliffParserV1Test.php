@@ -593,11 +593,12 @@ class XliffParserV1Test extends BaseTest
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('newformat.jsont.xlf'));
 
-        $this->assertEquals($parsed['files'][3]['attr']['custom']['mtc:id-content'], 'my-id-2');
-        $this->assertEquals($parsed['files'][3]['attr']['custom']['mtc:id-order'], 'mioordine');
-        $this->assertEquals($parsed['files'][3]['attr']['custom']['mtc:id-order-group'], 'miogruppo');
-        $this->assertEquals($parsed['files'][3]['attr']['custom']['mtc:instructions'], 'instructions.pdf');
-        $this->assertEquals($parsed['files'][3]['attr']['custom']['mtc:references'], 'references.pdf');
-        $this->assertEquals($parsed['files'][3]['attr']['custom']['mtc:styleguide'], 'style.docx');
+        $this->assertEquals($parsed['files'][3]['attr']['custom']['mtc:id-order'], 'xxx');
+        $this->assertEquals($parsed['files'][3]['attr']['custom']['mtc:id-order-group'], 'yyy');
+        $this->assertEquals($parsed['files'][3]['attr']['custom']['mtc:instructions'], 'istruzione123');
+
+        $this->assertEquals($parsed['files'][3]['trans-units'][1]['notes'][0]['from'], 'id_request');
+        $this->assertEquals($parsed['files'][3]['trans-units'][1]['notes'][1]['from'], 'id_content');
+        $this->assertEquals($parsed['files'][3]['trans-units'][1]['notes'][2]['from'], 'notes');
     }
 }
