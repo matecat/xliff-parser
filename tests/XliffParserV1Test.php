@@ -600,5 +600,8 @@ class XliffParserV1Test extends BaseTest
         $this->assertEquals($parsed['files'][3]['trans-units'][1]['notes'][0]['from'], 'id_request');
         $this->assertEquals($parsed['files'][3]['trans-units'][1]['notes'][1]['from'], 'id_content');
         $this->assertEquals($parsed['files'][3]['trans-units'][1]['notes'][2]['from'], 'notes');
+        $this->assertEquals($parsed['files'][3]['trans-units'][1]['notes'][0]['raw-content'], '111');
+        $this->assertEquals($parsed['files'][3]['trans-units'][1]['notes'][1]['raw-content'], 'page1.txt');
+        $this->assertEquals($parsed['files'][3]['trans-units'][1]['notes'][2]['raw-content'], 'questa è una nota1');
     }
 }
