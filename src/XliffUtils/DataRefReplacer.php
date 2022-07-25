@@ -56,6 +56,10 @@ class DataRefReplacer
         $toBeEscaped = Strings::isAnEscapedHTML($string);
 
         if($this->stringContainsPcTags($string, $toBeEscaped)){
+
+            // replace self-closed <pc />
+            $string = $this->replaceSelfClosedPcTags($string, $toBeEscaped);
+
             // create a dataRefEnd map
             // (needed for correct handling of </pc> closing tags)
             $dataRefEndMap = $this->buildDataRefEndMap($html);
@@ -191,6 +195,40 @@ class DataRefReplacer
     }
 
     /**
+     * @param $string
+     * @param $toBeEscaped
+     *
+     * @return mixed
+     */
+    private function replaceSelfClosedPcTags($string, $toBeEscaped)
+    {
+        if($toBeEscaped){
+            $string = str_replace(['&lt;','&gt;'],['<','>'],$string);
+        }
+
+        $regex = '/<pc[^>]+?\/>/iu';
+        preg_match_all($regex, $string, $selfClosedPcMatches);
+
+        foreach ($selfClosedPcMatches[0] as $match){
+
+            $html = HtmlParser::parse($match);
+            $node = $html[0];
+            $attributes = $node->attributes;
+
+            if(isset($attributes['dataRefStart']) and array_key_exists($node->attributes['dataRefStart'], $this->map)){
+                $replacement = '<ph id="'.$attributes['id'].'" dataType="pcSelf" originalData="'.base64_encode($match).'" dataRef="'.$attributes['dataRefStart'].'" equiv-text="base64:'.base64_encode($this->map[$node->attributes['dataRefStart']]).'"/>';
+                $string = str_replace($match, $replacement, $string);
+            }
+        }
+
+        if($toBeEscaped){
+            $string = str_replace(['<','>'],['&lt;','&gt;'],$string);
+        }
+
+        return $string;
+    }
+
+    /**
      * Build the DataRefEndMap needed by replaceClosingPcTags function
      * (only for <pc> tags handling)
      *
@@ -225,7 +263,8 @@ class DataRefReplacer
             }
         }
 
-        if($node->tagname === 'pc'){
+        // EXCLUDE self closed <pc/>
+        if($node->tagname === 'pc' and $node->self_closed === false){
             if(isset($node->attributes['dataRefEnd'])){
                 $dataRefEnd = $node->attributes['dataRefEnd'];
             } elseif(isset($node->attributes['dataRefStart'])) {
@@ -446,6 +485,17 @@ class DataRefReplacer
             $d = self::purgeTags($d);
 
             $string = str_replace($a, $d, $string);
+
+            // restoring <pc/> self-closed here
+            if(Strings::contains('dataType="pcSelf"', $d)){
+                preg_match('/\s?originalData="(.*?)"\s?/', $d, $originalDataMatches);
+
+                if (isset($originalDataMatches[1])) {
+                    $originalData = base64_decode($originalDataMatches[1]);
+                    $originalData = $this->purgeTags($originalData);
+                    $string = str_replace($d, $originalData, $string);
+                }
+            }
 
             // restoring <pc> tags here
             // if <ph> tag has originalData and originalType is pcStart or pcEnd,

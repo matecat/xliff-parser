@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:its="http://www.w3.org/2005/11/its" xmlns:itsxlf="http://www.w3.org/ns/its-xliff/" xmlns:mtc="https://www.matecat.com" xmlns:okp="okapi-framework:xliff-extensions" its:version="2.0" version="1.2">
+    <file datatype="x-jsont2" filter="net.translated.matecat.filters.MateJsont2Filter" original="sample-2.jsont2" source-language="en" target-language="fr-FR" tool-id="matecat-converter"><header><reference><internal-file form="base64">WwogIHsKICAgICJoYXNoIjogIjEyMzEyMzEyMyIsCiAgICAiaWRfb3JkZXIiOiAieHh4IiwKICAgICJpZF9vcmRlcl9ncm91cCI6ICJ5eXkiLAogICAgImluc3RydWN0aW9ucyI6ICJpc3RydXppb25l
+        MTIzIiwKICAgICJyZXF1ZXN0cyI6IFsKICAgICAgewogICAgICAgICJpZF9yZXF1ZXN0IjogIjExMSIsCiAgICAgICAgImlkX2NvbnRlbnQiOiAicGFnZTEudHh0IiwKICAgICAgICAiY29udGVudCI6
+        ICJTb25vIHVuIHBhcmFncmFmbyEgRSBpbyB1biBhbHRybyBzZWdtZW50byIsCiAgICAgICAgImNvbnRleHQiOiB7CiAgICAgICAgICAibm90ZXMiOiAicXVlc3RhIMOoIHVuYSBub3RhMSIKICAgICAg
+        ICB9CiAgICAgIH0KICAgIF0KICB9LAogIHsKICAgICJoYXNoIjogIjQ1NjQ1NjQ1NiIsCiAgICAiaWRfb3JkZXIiOiAic29tZSIsCiAgICAic3R5bGVndWlkZSI6ICJxdWVzdGEgw6ggdW5hIHN0eWxl
+        Z3VpZGUyIiwKICAgICJyZXF1ZXN0cyI6IFsKICAgICAgewogICAgICAgICJpZF9yZXF1ZXN0IjogIjIyMiIsCiAgICAgICAgImlkX2NvbnRlbnQiOiAicGFnZTMuaHRtbCIsCiAgICAgICAgImNvbnRl
+        bnRfdHlwZSI6ICJ0ZXh0L2h0bWwiLAogICAgICAgICJjb250ZW50IjogIjxoMT5Tb25vPC9oMT48cD51biBzZWNvbmRvIHRlc3RvPC9wPiIsCiAgICAgICAgImNvbnRleHQiOiB7CiAgICAgICAgICAi
+        c2NyZWVuc2hvdCI6ICJxdWVzdG8gw6ggdW5vIHNjcmVlbnNob3QyIgogICAgICAgIH0KICAgICAgfQogICAgXQogIH0KXQo=</internal-file></reference></header><body/></file>
+    <file datatype="x-rkm" filter="net.translated.matecat.filters.MateJsont2Filter" original="manifest.rkm" source-language="en" target-language="fr-FR" tool-id="matecat-converter"><header><reference><internal-file form="base64">PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPCEtLT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09LS0+Cjwh
+        LS1QTEVBU0UsIERPIE5PVCBSRU5BTUUsIE1PVkUsIE1PRElGWSBPUiBBTFRFUiBJTiBBTlkgV0FZIFRISVMgRklMRS0tPgo8IS0tPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+        PT09PT09PT09PT09PT09PT09PT09PT09PT0tLT4KPG1hbmlmZXN0IHZlcnNpb249IjIiIGxpYlZlcnNpb249IjEuNDAuMy1UUkFOU0xBVEVEIiBwcm9qZWN0SWQ9IlAyQ0MzNDEyRCIgcGFja2FnZUlk
+        PSIxYTdiMTgyYi05ZGQ0LTQ3ZmMtOTMzZi0xMTUzN2ViMWZhN2YiIHNvdXJjZT0iZW4iIHRhcmdldD0iaXQiIG9yaWdpbmFsU3ViRGlyPSJvcmlnaW5hbCIgc2tlbGV0b25TdWJEaXI9InNrZWxldG9u
+        IiBzb3VyY2VTdWJEaXI9IndvcmsiIHRhcmdldFN1YkRpcj0id29yayIgbWVyZ2VTdWJEaXI9ImRvbmUiIHRtU3ViRGlyPSIiIGRhdGU9IjIwMjItMDctMTIgMTU6NTU6MDQrMDIwMCIgdXNlQXBwcm92
+        ZWRPbmx5PSIwIiB1cGRhdGVBcHByb3ZlZEZsYWc9IjAiPgo8Y3JlYXRvclBhcmFtZXRlcnM+STNZeENuQnNZV05sYUc5c1pHVnlUVzlrWlM1aVBYUnlkV1VLYVc1amJIVmtaVTV2VkhKaGJuTnNZWFJs
+        TG1JOWRISjFaUXB6WlhSQmNIQnliM1psWkVGelRtOVVjbUZ1YzJ4aGRHVXVZajFtWVd4elpRcGpiM0I1VTI5MWNtTmxMbUk5ZEhKMVpRcHBibU5zZFdSbFFXeDBWSEpoYm5NdVlqMTBjblZsQ21sdVky
+        eDFaR1ZEYjJSbFFYUjBjbk11WWoxbVlXeHpaUXBwYm1Oc2RXUmxTWFJ6TG1JOWRISjFaUXBsYzJOaGNHVkhWQzVpUFhSeWRXVT08L2NyZWF0b3JQYXJhbWV0ZXJzPgo8ZG9jIHhtbDpzcGFjZT0icHJl
+        c2VydmUiIGRvY0lkPSIxIiBleHRyYWN0aW9uVHlwZT0ieGxpZmYiIHJlbGF0aXZlSW5wdXRQYXRoPSJzYW1wbGUtMi5qc29udDIiIGZpbHRlcklkPSJva2ZfanNvbnQyIiBpbnB1dEVuY29kaW5nPSJV
+        VEYtOCIgcmVsYXRpdmVUYXJnZXRQYXRoPSJzYW1wbGUtMi5vdXQuanNvbnQyIiB0YXJnZXRFbmNvZGluZz0iVVRGLTgiIHNlbGVjdGVkPSIxIj5JM1l4Q21WelkyRndaVVp2Y25kaGNtUlRiR0Z6YUdW
+        ekxtSTlabUZzYzJVS2RYTmxRMjlrWlVacGJtUmxjaTVpUFdaaGJITmxDbTkxZEhCMWRGTmxaMjFsYm5SaGRHbHZibFI1Y0dVdWFUMHpDbU52WkdWR2FXNWtaWEpTZFd4bGN5NWpiM1Z1ZEM1cFBURUtZ
+        MjlrWlVacGJtUmxjbEoxYkdWekxuSjFiR1V3UFZ3a1AxeDdLRnRCTFZvd0xUbGhMWHBmTFYwcUtWeDlDbU52WkdWR2FXNWtaWEpTZFd4bGN5NXpZVzF3YkdVOVZXNXBlQ0IyWVhJNklDUjdjMjl0WlMx
+        MllYSjlMQ0IyWVhJZ2FXNGdZbkpoWTJWek9pQjdkWE5sY2w5dVlXMWxmUzRLWTI5a1pVWnBibVJsY2xKMWJHVnpMblZ6WlVGc2JGSjFiR1Z6VjJobGJsUmxjM1JwYm1jdVlqMTBjblZsPC9kb2M+Cjwv
+        bWFuaWZlc3Q+</internal-file></reference></header><body/></file>
+    <file datatype="x-tos-request" mtc:id-order="xxx" mtc:id-order-group="yyy" mtc:instructions="istruzione123" original="123123123" source-language="en" target-language="fr-FR">
+        <body>
+            <group id="sg1">
+                <group id="sg2">
+                    <trans-unit help-id="691" id="tu1" xml:space="preserve" translate="yes">
+<source xml:lang="en">Sono un paragrafo! E io un altro segmento</source>
+                        <seg-source><mrk mid="0" mtype="seg">Sono un paragrafo! </mrk><mrk mid="1" mtype="seg">E io un altro segmento</mrk></seg-source>
+                        <target  xml:lang="fr-FR" state="translated"><mrk mid="0" mtype="seg">This is a <pc id="source1">key</pc><pc id="1b" subType="m:b" type="fmt"> concept that encompasses the </pc><pc id="2b" subType="m:b" type="fmt">body</pc> of our escalation interactions.</mrk><mrk mid="1" mtype="seg">Et moi un autre segment</mrk></target>
+                        <count-group name="tu1"><count count-type="x-matecat-raw">8</count><count count-type="x-matecat-weighted">6.79</count></count-group>
+                        <note annotates="source" from="id_request">111</note>
+                        <note annotates="source" from="id_content">page1.txt</note>
+                        <note annotates="source" from="notes">questa è una nota1</note>
+
+                        {"notes":"",....}
+</trans-unit>
+                    <group id="sg3">
+                    </group>
+                </group>
+            </group>
+        </body>
+    </file>
+    <file datatype="x-tos-request" mtc:id-order="some" mtc:instructions="istruzione123" mtc:styleguide="questa è una styleguide2" original="456456456" source-language="en" target-language="fr-FR">
+        <body>
+            <group id="sg4">
+                <group id="sg5">
+                    <group id="sg5_ssf1" resname="sub-filter:content">
+                        <trans-unit help-id="693" id="sg5_sf1_tu1" resname="content_1" restype="x-h1" xml:space="preserve" translate="yes">
+<source xml:lang="en">Sono</source>
+                            <seg-source><mrk mid="0" mtype="seg">Sono</mrk></seg-source>
+                            <target  xml:lang="fr-FR" state="translated"><mrk mid="0" mtype="seg">Ces jeunes</mrk></target>
+                            <count-group name="sg5_sf1_tu1"><count count-type="x-matecat-raw">9</count><count count-type="x-matecat-weighted">7.09</count></count-group>
+                            <note annotates="source" from="id_request">222</note>
+                            <note annotates="source" from="id_content">page3.html</note>
+                            <note annotates="source" from="screenshot">questo è uno screenshot2</note>
+</trans-unit>
+                        <trans-unit help-id="694" id="sg5_sf1_tu2" resname="content_3" restype="x-paragraph" xml:space="preserve" translate="yes">
+<source xml:lang="en">un secondo testo</source>
+                            <seg-source><mrk mid="0" mtype="seg">un secondo testo</mrk></seg-source>
+                            <target  xml:lang="fr-FR" state="translated"><mrk mid="0" mtype="seg">DEUXIÈME TEXTE</mrk></target>
+                            <count-group name="sg5_sf1_tu2"><count count-type="x-matecat-raw">12</count><count count-type="x-matecat-weighted">8.89</count></count-group>
+                            <note annotates="source" from="id_request">222</note>
+                            <note annotates="source" from="id_content">page3.html</note>
+                            <note annotates="source" from="screenshot">questo è uno screenshot2</note>
+</trans-unit>
+                    </group>
+                    <group id="sg6">
+                    </group>
+                </group>
+            </group>
+        </body>
+    </file>
+</xliff>

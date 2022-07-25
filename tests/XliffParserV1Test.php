@@ -573,4 +573,35 @@ class XliffParserV1Test extends BaseTest
         $this->assertEquals('Ciao. ', $transUnit['seg-source'][2]['raw-content']);
         $this->assertEquals('Ciao.', $transUnit['seg-source'][3]['raw-content']);
     }
+
+    /**
+     * @test
+     */
+    public function raise_exception_on_duplicate_ids()
+    {
+        try {
+            (new XliffParser())->xliffToArray($this->getTestFile('v1-duplicate-ids.xliff'));
+        } catch (\Exception $exception){
+            $this->assertEquals('Invalid trans-unit id, duplicate found.', $exception->getMessage());
+        }
+    }
+
+    /**
+     * @test
+     */
+    public function can_extract_custom_file_attributes()
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('newformat.jsont.xlf'));
+
+        $this->assertEquals($parsed['files'][3]['attr']['custom']['mtc:id-order'], 'xxx');
+        $this->assertEquals($parsed['files'][3]['attr']['custom']['mtc:id-order-group'], 'yyy');
+        $this->assertEquals($parsed['files'][3]['attr']['custom']['mtc:instructions'], 'istruzione123');
+
+        $this->assertEquals($parsed['files'][3]['trans-units'][1]['notes'][0]['from'], 'id_request');
+        $this->assertEquals($parsed['files'][3]['trans-units'][1]['notes'][1]['from'], 'id_content');
+        $this->assertEquals($parsed['files'][3]['trans-units'][1]['notes'][2]['from'], 'notes');
+        $this->assertEquals($parsed['files'][3]['trans-units'][1]['notes'][0]['raw-content'], '111');
+        $this->assertEquals($parsed['files'][3]['trans-units'][1]['notes'][1]['raw-content'], 'page1.txt');
+        $this->assertEquals($parsed['files'][3]['trans-units'][1]['notes'][2]['raw-content'], 'questa è una nota1');
+    }
 }

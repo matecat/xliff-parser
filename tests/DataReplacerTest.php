@@ -863,6 +863,67 @@ class DataReplacerTest extends BaseTest
         $this->assertEquals($expected, $dataReplacer->replace($string));
         $this->assertEquals($restored, $dataReplacer->restore($expected));
     }
+
+    /**
+     * @test
+     */
+    public function test_with_lt_and_gt()
+    {
+        $map = [
+            'source1' => 'a',
+        ];
+
+        $string    = 'Ödemenizin kapatılması için Ödemenizin kapatılması için &lt;Outage SLA time&gt; beklemenizi rica ediyoruz. &lt;ph dataRef="source1" id="source1"/&gt;';
+        $expected  = 'Ödemenizin kapatılması için Ödemenizin kapatılması için &lt;Outage SLA time&gt; beklemenizi rica ediyoruz. &lt;ph dataRef="source1" id="source1" equiv-text="base64:YQ=="/&gt;';
+        $restored  = 'Ödemenizin kapatılması için Ödemenizin kapatılması için &lt;Outage SLA time&gt; beklemenizi rica ediyoruz. &lt;ph dataRef="source1" id="source1"/&gt;';
+        $dataReplacer = new DataRefReplacer($map);
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($restored, $dataReplacer->restore($expected));
+    }
+
+    /**
+     * @test
+     */
+    public function can_replace_self_closing_pc_with_values_in_original_map()
+    {
+        $map = [
+            "d1" =>"Hello"
+        ];
+
+        $dataReplacer = new DataRefReplacer($map);
+
+        $string = '<pc dataRefStart="d1" id="d1"/> ciao';
+        $expected = '<ph id="d1" dataType="pcSelf" originalData="PHBjIGRhdGFSZWZTdGFydD0iZDEiIGlkPSJkMSIvPg==" dataRef="d1" equiv-text="base64:SGVsbG8="/> ciao';
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($string, $dataReplacer->restore($expected));
+    }
+
+    /**
+     * @test
+     */
+    public function more_tests_with_self_closed_pc_tags()
+    {
+        $map = [
+            "source3" =>"x-style",
+            "source8" => "x-text",
+            "source4"=>"x-text",
+            "source9"=>"&lt;ept id=\"span_3\" \/&gt;",
+            "source5" => "x-text",
+            "source10" => "&lt;ept id=\"block_0\" \/&gt;",
+            "source1" => "x-block",
+            "source6" => "&lt;ept id=\"span_2\" \/&gt;",
+            "source2" => "&lt;ph id=\"generic_1\"&gt;&lt;Style FlowDirection=\"LeftToRight\" LeadingMargin=\"0\" TrailingMargin=\"0\" FirstLineMargin=\"0\" Justification=\"Left\" ListLevel=\"0\" LineSpacingRule=\"Single\" LineSpacing=\"20\" SpacingBefore=\"0\" SpacingAfter=\"0\"&gt;&lt;ListStyle ListType=\"None\" ListTypeFormat=\"Parentheses\" Color=\"#212121\" BulletChar=\"\u00fc\" BulletFont=\"Arial\"&gt;&lt;BulletPicture Size=\"0x0\" \/&gt;&lt;\/ListStyle&gt;&lt;\/Style&gt;&lt;\/ph&gt;",
+            "source7" => "x-style"
+        ];
+
+        $dataReplacer = new DataRefReplacer($map);
+
+        $string = '&lt;pc dataRefStart="source5" id="source5"/&gt;&lt;ph dataRef="source6" id="source6"/&gt;&lt;ph dataRef="source7" id="source7"/&gt;&lt;pc dataRefStart="source8" id="source8"&gt;Let’s start!&lt;/pc&gt;&lt;ph dataRef="source9" id="source9"/&gt;&lt;ph dataRef="source10" id="source10"/&gt;';
+        $expected = '&lt;ph id="source5" dataType="pcSelf" originalData="PHBjIGRhdGFSZWZTdGFydD0ic291cmNlNSIgaWQ9InNvdXJjZTUiLz4=" dataRef="source5" equiv-text="base64:eC10ZXh0"/&gt;&lt;ph dataRef="source6" id="source6" equiv-text="base64:Jmx0O2VwdCBpZD0ic3Bhbl8yIiBcLyZndDs="/&gt;&lt;ph dataRef="source7" id="source7" equiv-text="base64:eC1zdHlsZQ=="/&gt;&lt;ph id="source8_1" dataType="pcStart" originalData="Jmx0O3BjIGRhdGFSZWZTdGFydD0ic291cmNlOCIgaWQ9InNvdXJjZTgiJmd0Ow==" dataRef="source8" equiv-text="base64:eC10ZXh0"/&gt;Let’s start!&lt;ph id="source8_2" dataType="pcEnd" originalData="Jmx0Oy9wYyZndDs=" dataRef="source8" equiv-text="base64:eC10ZXh0"/&gt;&lt;ph dataRef="source9" id="source9" equiv-text="base64:Jmx0O2VwdCBpZD0ic3Bhbl8zIiBcLyZndDs="/&gt;&lt;ph dataRef="source10" id="source10" equiv-text="base64:Jmx0O2VwdCBpZD0iYmxvY2tfMCIgXC8mZ3Q7"/&gt;';
+
+        $this->assertEquals($expected, $dataReplacer->replace($string));
+        $this->assertEquals($string, $dataReplacer->restore($expected));
+    }
 }
-
-

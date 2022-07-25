@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:tos="GMAPS: https://www.matecat.com/translated-os" encoding="UTF-8" version="1.2">
+    <tool tool-id="TranslationOS" tos:allow-segmentation="yes"/>
+    <file datatype="html" original="052c458d-faaa-437f-b9d2-96af06b706c5" source-language="en-US" target-language="ko-KO" tos:description="Airbnb city portal is an external portal for governments that will serve as a medium for jurisdictions to better understand–and regulate–home sharing within their communities.">
+        <body>
+            <trans-unit id="01234" translate="no">
+    		    <source xml:lang="en-US">DON'T TRANSLATE</source><target>DON'T TRANSLATE</target>
+    		</trans-unit>
+    		<trans-unit id="606beaf1-a66d-4464-9bdf-cedd857b79a7">
+		        <source xml:lang="en-US">Daegu</source>
+		        <note>City: Daegu</note><note>State: Daegu</note>
+		        <note>Country code: KR</note>
+		        <note>Type: geo</note>
+		        <note>Wikidata : https://www.wikidata.org/wiki/Q20927</note>
+		        <note>Wikipedia : https://en.wikipedia.org/wiki/Daegu</note>
+		        <note>Geo: 35.8714354,128.601445</note>
+		        <note>Gmaps: https://www.google.com/maps/place/Daegu%2CDaegu%2CDaegu%2CKR%2C/@35.8714354,128.601445,12z</note>
+            </trans-unit>
+            <trans-unit id="606beaf1-a66d-4464-9bdf-cedd857b79a7">
+		        <source xml:lang="en-US">Daegu</source>
+		        <note>City: Daegu</note><note>State: Daegu</note>
+		        <note>Country code: KR</note>
+		        <note>Type: geo names</note>
+		        <note>Wikidata : https://www.wikidata.org/wiki/Q20927</note>
+		        <note>Wikipedia : https://en.wikipedia.org/wiki/Daegu</note>
+		        <note>Geo: 35.8714354,128.601445</note>
+		        <note>Gmaps: https://www.google.com/maps/place/Daegu%2CDaegu%2CDaegu%2CKR%2C/@35.8714354,128.601445,12z</note>
+            </trans-unit>
+		</body>
+    </file>
+</xliff>

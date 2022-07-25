@@ -19,6 +19,7 @@ class StringsTest extends BaseTest
         $f = "<a href='#@,'>";
         $g = '<ph id=\"source1\" dataRef=\"source1\"/>';
         $h = '<trans-unit id="pendo-image-e3aaf7b7|alt">';
+        $i = '<meta http-equiv="X-UA-Compatible" content="ie=edge"/>';
 
         $this->assertTrue(Strings::isHtmlString($a));
         $this->assertFalse(Strings::isHtmlString($b));
@@ -28,6 +29,7 @@ class StringsTest extends BaseTest
         $this->assertTrue(Strings::isHtmlString($f));
         $this->assertTrue(Strings::isHtmlString($g));
         $this->assertTrue(Strings::isHtmlString($h));
+        $this->assertTrue(Strings::isHtmlString($i));
     }
 
     /**
