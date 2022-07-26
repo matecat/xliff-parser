@@ -40,6 +40,7 @@ class EmojiTest extends BaseTest
             '󠆌'   => '&#917900;',
             '🤙 Join this (video)call at: {{joinUrl}}' => '&#129305; Join this (video)call at: {{joinUrl}}',
             'Look 😀 It works! 🐻🌻' => 'Look &#128512; It works! &#128059;&#127803;',
+            '🪵'  => '&#129717;',
             '􀄿' => '&#1048895;',
             '🗔' => '&#128468;',
             '👨' => '&#128104;',
