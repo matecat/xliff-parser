@@ -84,10 +84,17 @@ class XliffParserV1 extends AbstractXliffParser
                     break;
             }
 
-            //Custom MateCat x-Attribute
+            // Custom MateCat x-Attribute
             preg_match('|x-(.*?)|si', $attribute->localName, $temp);
             if (isset($temp[ 1 ])) {
                 $customAttr[ $attribute->localName ] = $attribute->value;
+            }
+            unset($temp);
+
+            // Custom MateCat namespace Attribute mtc:
+            preg_match('|mtc:(.*?)|si', $attribute->nodeName, $temp);
+            if (isset($temp[ 1 ])) {
+                $customAttr[ $attribute->nodeName ] = $attribute->value;
             }
             unset($temp);
 
@@ -237,10 +244,19 @@ class XliffParserV1 extends AbstractXliffParser
     {
         $notes = [];
         foreach ($transUnit->getElementsByTagName('note') as $note) {
+
             $noteValue = $this->extractTagContent($dom, $note);
 
             if ('' !== $noteValue) {
-                $notes[] = $this->JSONOrRawContentArray($noteValue);
+
+                $extractedNote = $this->JSONOrRawContentArray($noteValue);
+
+                // extract all the attributes
+                foreach ($note->attributes as $attribute){
+                    $extractedNote[$attribute->name] = $attribute->value;
+                }
+
+                $notes[] = $extractedNote;
             }
         }
 

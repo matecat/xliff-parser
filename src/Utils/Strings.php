@@ -30,6 +30,10 @@ class Strings
      */
     public static function isJSON($string)
     {
+        if(is_numeric($string)){
+            return false;
+        }
+
         try {
             $string = Strings::cleanCDATA($string);
 
