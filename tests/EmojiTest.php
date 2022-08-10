@@ -34,6 +34,8 @@ class EmojiTest extends BaseTest
     public function canReplaceEmojisWithEntites()
     {
         $dataset = [
+            '🪄' => '&#129668;',
+            '􀎵' => '&#1049525;',
             '󠄀'   => '&#917760;',
             '󠇡'   => '&#917985;',
             '󠄞'  => '&#917790;',
