@@ -34,6 +34,7 @@ class EmojiTest extends BaseTest
     public function canReplaceEmojisWithEntites()
     {
         $dataset = [
+            '󠇯' => '&#917999;',
             '🪄' => '&#129668;',
             '􀎵' => '&#1049525;',
             '󠄀'   => '&#917760;',
@@ -76,6 +77,8 @@ class EmojiTest extends BaseTest
             '🪴' => '&#129716;',
             '🫖' => '&#129750;',
             '🫒' => '&#129746;',
+            '🪟' => '&#129695;',
+            '󰀄' => '&#983044;',
         ];
 
         foreach ($dataset as $emoji => $entity) {
