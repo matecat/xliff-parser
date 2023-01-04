@@ -1,5 +1,9 @@
 # Xliff Parser
 
+[![license](https://img.shields.io/github/license/matecat/xliff-parser.svg)]()
+[![Packagist](https://img.shields.io/packagist/v/matecat/xliff-parser.svg)]()
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/matecat/xliff-parser/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/matecat/xliff-parser/?branch=master)
+
 This library is a simple, agnostic Xliff parser specifically written for [Matecat](https://www.matecat.com).
 
 ## Installation
