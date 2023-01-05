@@ -175,12 +175,10 @@ class XliffProprietaryDetect
 
     /**
      * @param string $fullPath
-     * @param null $enforceOnXliff
-     * @param null $filterAddress
+     * @param boolean $enforceOnXliff
+     * @param string $filterAddress
      *
      * @return bool|int
-     * @throws NotSupportedVersionException
-     * @throws NotValidFileException
      */
     public static function fileMustBeConverted($fullPath, $enforceOnXliff = null, $filterAddress = null)
     {

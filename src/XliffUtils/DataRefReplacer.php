@@ -16,7 +16,7 @@ class DataRefReplacer {
      *
      * @param array $map
      */
-    public function __construct( array $map ) {
+    public function __construct( array $map = null ) {
         $this->map = $map;
     }
 

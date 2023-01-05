@@ -303,7 +303,7 @@ class Strings {
     }
 
     /**
-     * @param int $segment
+     * @param string $segment
      *
      * @return int
      */

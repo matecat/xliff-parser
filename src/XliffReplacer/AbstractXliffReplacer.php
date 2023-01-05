@@ -55,7 +55,7 @@ abstract class AbstractXliffReplacer {
      * AbstractXliffReplacer constructor.
      *
      * @param string                              $originalXliffPath
-     * @param string                              $xliffVersion
+     * @param int                                 $xliffVersion
      * @param array                               $segments
      * @param array                               $transUnits
      * @param string                              $trgLang

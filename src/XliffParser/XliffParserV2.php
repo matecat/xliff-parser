@@ -131,6 +131,7 @@ class XliffParserV2 extends AbstractXliffParser {
         // original-data (exclusive for V2)
         // http://docs.oasis-open.org/xliff/xliff-core/v2.0/xliff-core-v2.0.html#originaldata
         $originalData = $this->extractTransUnitOriginalData( $transUnit );
+        $dataRefMap   = null;
         if ( !empty( $originalData ) ) {
             $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'original-data' ] = $originalData;
             $dataRefMap                                                        = $this->getDataRefMap( $originalData );
