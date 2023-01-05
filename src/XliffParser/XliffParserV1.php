@@ -2,6 +2,7 @@
 
 namespace Matecat\XliffParser\XliffParser;
 
+use DOMAttr;
 use DOMDocument;
 use DOMElement;
 use DOMNode;
@@ -61,7 +62,7 @@ class XliffParserV1 extends AbstractXliffParser {
         $metadata   = [];
         $customAttr = [];
 
-        /** @var \DOMAttr $attribute */
+        /** @var DOMAttr $attribute */
         foreach ( $file->attributes as $attribute ) {
             switch ( $attribute->localName ) {
                 // original
@@ -204,29 +205,41 @@ class XliffParserV1 extends AbstractXliffParser {
     private function extractTransUnitMetadata( DOMElement $transUnit, array &$transUnitIdArrayForUniquenessCheck ) {
         $metadata = [];
 
-        // id
+        // id MUST NOT be null
         if ( null === $transUnit->attributes->getNamedItem( 'id' ) ) {
             throw new NotFoundIdInTransUnit( 'Invalid trans-unit id found. EMPTY value', 400 );
         }
 
-        $id = $transUnit->attributes->getNamedItem( 'id' )->nodeValue;
+        /**
+         * @var string  $key
+         * @var DOMAttr $element
+         */
+        foreach ( $transUnit->attributes as $key => $element ) {
 
-        if ( strlen( $id ) > 100 ) {
-            throw new SegmentIdTooLongException( 'Segment-id too long. Max 100 characters allowed', 400 );
-        }
+            if ( $element->nodeName === "id" ) {
 
-        $transUnitIdArrayForUniquenessCheck[] = $id;
-        $metadata[ 'id' ]                     = $id;
+                $id = $element->nodeValue;
 
-        // translate
-        if ( null !== $transUnit->attributes->getNamedItem( 'translate' ) ) {
-            $metadata[ 'translate' ] = $transUnit->attributes->getNamedItem( 'translate' )->nodeValue;
-        }
+                if ( strlen( $id ) > 100 ) {
+                    throw new SegmentIdTooLongException( 'Segment-id too long. Max 100 characters allowed', 400 );
+                }
 
-        // approved
-        // http://docs.oasis-open.org/xliff/v1.2/os/xliff-core.html#approved
-        if ( null !== $transUnit->attributes->getNamedItem( 'approved' ) ) {
-            $metadata[ 'approved' ] = filter_var( $transUnit->attributes->getNamedItem( 'approved' )->nodeValue, FILTER_VALIDATE_BOOLEAN );
+                $transUnitIdArrayForUniquenessCheck[] = $id;
+                $metadata[ 'id' ]                     = $id;
+
+            } elseif ( $element->nodeName === "approved" ) {
+                // approved as BOOLEAN
+                // http://docs.oasis-open.org/xliff/v1.2/os/xliff-core.html#approved
+                $metadata[ $element->nodeName ] = filter_var( $element->nodeValue, FILTER_VALIDATE_BOOLEAN );
+            } elseif ( $element->nodeName === "maxwidth" ) {
+                // we ignore ( but we get ) the attribute size-unit="char" assuming that a restriction is everytime done by character
+                // we duplicate the info to allow Xliff V1 and V2 to work the same
+                $metadata[ 'sizeRestriction' ]  = filter_var( $element->nodeValue, FILTER_SANITIZE_NUMBER_INT );
+                $metadata[ $element->nodeName ] = filter_var( $element->nodeValue, FILTER_SANITIZE_NUMBER_INT );
+            } else {
+                $metadata[ $element->nodeName ] = $element->nodeValue;
+            }
+
         }
 
         return $metadata;

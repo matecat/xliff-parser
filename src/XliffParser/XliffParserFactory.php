@@ -10,7 +10,7 @@ class XliffParserFactory {
      * @param string|null          $xliffProprietary
      * @param LoggerInterface|null $logger
      *
-     * @return mixed
+     * @return AbstractXliffParser
      */
     public static function getInstance( $xliffVersion, $xliffProprietary = null, LoggerInterface $logger = null ) {
         $parserClass = 'Matecat\\XliffParser\\XliffParser\\XliffParserV' . $xliffVersion;

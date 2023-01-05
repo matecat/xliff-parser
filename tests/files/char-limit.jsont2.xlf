@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:its="http://www.w3.org/2005/11/its"
+    xmlns:itsxlf="http://www.w3.org/ns/its-xliff/" xmlns:mtc="https://www.matecat.com"
+    xmlns:okp="okapi-framework:xliff-extensions" its:version="2.0" version="1.2">
+    <file datatype="x-jsont2" filter="net.translated.matecat.filters.MateJsont2Filter"
+        original="sample.jsont2" source-language="en-US" target-language="it-IT"
+        tool-id="matecat-converter 1.3.14-SNAPSHOT">
+        <header>
+            <reference>
+                <internal-file form="base64">WwogICAgewogICAgICAgICJoYXNoIjogIjNlN2NiNzYwNTE3Y2VjYTJkNjA3NTg1N2JjY2RkMWE4YjNjYmY0MzlmMmRiMjVjMmU5OWNiNGUwMTMxNWYwMzQiLAogICAgICAgICJpZF9vcmRlciI6ICJt
+                    aW9vcmRpbmUiLAogICAgICAgICJpZF9vcmRlcl9ncm91cCI6ICJtaW9ncnVwcG9vcmRpbmkiLAogICAgICAgICJpbnN0cnVjdGlvbnMiOiBudWxsLAogICAgICAgICJzdHlsZWd1aWRlIjogbnVsbCwK
+                    ICAgICAgICAicmVmZXJlbmNlcyI6IG51bGwsCiAgICAgICAgInJlcXVlc3RzIjogWwogICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAiaWRfcmVxdWVzdCI6IDY2NiwKICAgICAgICAgICAgICAg
+                    ICJpZF9jb250ZW50IjogIm1pb2NvbnRlbnV0bzEiLAogICAgICAgICAgICAgICAgImNvbnRlbnRfdHlwZSI6ICJ0ZXh0L3BsYWluIiwKICAgICAgICAgICAgICAgICJjb250ZW50IjogIlRoaXMgaXMg
+                    dGhlIGNvbnRlbnQgdG8gdHJhbnNsYXRlLiIsCiAgICAgICAgICAgICAgICAiY29udGV4dCI6IHsKICAgICAgICAgICAgICAgICAgICAibm90ZXMiOiBudWxsLAogICAgICAgICAgICAgICAgICAgICJz
+                    Y3JlZW5zaG90IjogbnVsbAogICAgICAgICAgICAgICAgfQogICAgICAgICAgICB9LAogICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAiaWRfcmVxdWVzdCI6IDc3NywKICAgICAgICAgICAgICAg
+                    ICJpZF9jb250ZW50IjogIm1pb2NvbnRlbnV0bzIiLAogICAgICAgICAgICAgICAgImNvbnRlbnRfdHlwZSI6ICJ0ZXh0L2h0bWwiLAogICAgICAgICAgICAgICAgImNvbnRlbnQiOiAiPGgzPkludHJv
+                    ZHVjdGlvbjwvaDM+PHA+VGhpcyBpcyBhIGZhYnVsb3VzIDxiPnBhZ2U8L2I+LjwvcD48cD5Bbm90aGVyIG1pZ2h0eSBzZW50ZW5jZS48L3A+IiwKICAgICAgICAgICAgICAgICJjb250ZXh0Ijogewog
+                    ICAgICAgICAgICAgICAgICAgICJub3RlcyI6ICJOb3RlcyBmb3IgSFRNTCBzbmlwcGV0IiwKICAgICAgICAgICAgICAgICAgICAic2NyZWVuc2hvdCI6IG51bGwKICAgICAgICAgICAgICAgIH0KICAg
+                    ICAgICAgICAgfQogICAgICAgIF0KICAgIH0sCiAgICB7CiAgICAgICAgImhhc2giOiAiM2U3Y2I3NjA1MTdjZWNhMmQ2MDc1ODU3eHh4eHh4eHh4eHh4eHh4eGIyNWMyZTk5Y2I0ZTAxMzE1ZjAzNCIs
+                    CiAgICAgICAgImlkX29yZGVyIjogImFsdHJvbWlvb3JkaW5lIiwKICAgICAgICAiaWRfb3JkZXJfZ3JvdXAiOiAiYWx0cm9taW9ncnVwcG9vcmRpbmkiLAogICAgICAgICJpbnN0cnVjdGlvbnMiOiBu
+                    dWxsLAogICAgICAgICJzdHlsZWd1aWRlIjogbnVsbCwKICAgICAgICAicmVmZXJlbmNlcyI6IG51bGwsCiAgICAgICAgInJlcXVlc3RzIjogWwogICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAi
+                    aWRfcmVxdWVzdCI6IDg4OCwKICAgICAgICAgICAgICAgICJpZF9jb250ZW50IjogIm1pb2NvbnRlbnV0bzMiLAogICAgICAgICAgICAgICAgImNvbnRlbnRfdHlwZSI6ICJ0ZXh0L3BsYWluIiwKICAg
+                    ICAgICAgICAgICAgICJjb250ZW50IjogIlRoaXMgaXMgYW5vdGhlciBzZXBhcmF0ZSBjb250ZW50IHRvIHRyYW5zbGF0ZS4iLAogICAgICAgICAgICAgICAgImNvbnRleHQiOiB7CiAgICAgICAgICAg
+                    ICAgICAgICAgIm5vdGVzIjogIk5vdGVzIGZvciBzZXBhcmF0ZSBwbGFpbiB0ZXh0IGNvbnRlbnQiLAogICAgICAgICAgICAgICAgICAgICJzY3JlZW5zaG90IjogbnVsbAogICAgICAgICAgICAgICAg
+                    fQogICAgICAgICAgICB9CiAgICAgICAgXQogICAgfQpd</internal-file>
+            </reference>
+        </header>
+        <body />
+    </file>
+    <file datatype="x-rkm" filter="net.translated.matecat.filters.MateJsont2Filter"
+        original="manifest.rkm" source-language="en-US" target-language="it-IT"
+        tool-id="matecat-converter 1.3.14-SNAPSHOT">
+        <header>
+            <reference>
+                <internal-file form="base64">PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPCEtLT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09LS0+Cjwh
+                    LS1QTEVBU0UsIERPIE5PVCBSRU5BTUUsIE1PVkUsIE1PRElGWSBPUiBBTFRFUiBJTiBBTlkgV0FZIFRISVMgRklMRS0tPgo8IS0tPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+                    PT09PT09PT09PT09PT09PT09PT09PT09PT0tLT4KPG1hbmlmZXN0IHZlcnNpb249IjIiIGxpYlZlcnNpb249IjEuNDAuNC1UUkFOU0xBVEVEIiBwcm9qZWN0SWQ9Ik5FMkZFODZFNCIgcGFja2FnZUlk
+                    PSJhZjhmNmRiNy05YWM0LTQyMDUtOTJiNy1hZjg1Y2E4MDgwYTEiIHNvdXJjZT0iZW4tVVMiIHRhcmdldD0iaXQtSVQiIG9yaWdpbmFsU3ViRGlyPSJvcmlnaW5hbCIgc2tlbGV0b25TdWJEaXI9InNr
+                    ZWxldG9uIiBzb3VyY2VTdWJEaXI9IndvcmsiIHRhcmdldFN1YkRpcj0id29yayIgbWVyZ2VTdWJEaXI9ImRvbmUiIHRtU3ViRGlyPSIiIGRhdGU9IjIwMjItMTItMTkgMTA6Mjg6NDIrMDEwMCIgdXNl
+                    QXBwcm92ZWRPbmx5PSIwIiB1cGRhdGVBcHByb3ZlZEZsYWc9IjAiPgo8Y3JlYXRvclBhcmFtZXRlcnM+STNZeENuQnNZV05sYUc5c1pHVnlUVzlrWlM1aVBYUnlkV1VLYVc1amJIVmtaVTV2VkhKaGJu
+                    TnNZWFJsTG1JOWRISjFaUXB6WlhSQmNIQnliM1psWkVGelRtOVVjbUZ1YzJ4aGRHVXVZajFtWVd4elpRcGpiM0I1VTI5MWNtTmxMbUk5ZEhKMVpRcHBibU5zZFdSbFFXeDBWSEpoYm5NdVlqMTBjblZs
+                    Q21sdVkyeDFaR1ZEYjJSbFFYUjBjbk11WWoxbVlXeHpaUXBwYm1Oc2RXUmxTWFJ6TG1JOWRISjFaUXBsYzJOaGNHVkhWQzVpUFhSeWRXVT08L2NyZWF0b3JQYXJhbWV0ZXJzPgo8ZG9jIHhtbDpzcGFj
+                    ZT0icHJlc2VydmUiIGRvY0lkPSIxIiBleHRyYWN0aW9uVHlwZT0ieGxpZmYiIHJlbGF0aXZlSW5wdXRQYXRoPSJzYW1wbGUuanNvbnQyIiBmaWx0ZXJJZD0ib2tmX2pzb250MiIgaW5wdXRFbmNvZGlu
+                    Zz0iVVRGLTgiIHJlbGF0aXZlVGFyZ2V0UGF0aD0ic2FtcGxlLm91dC5qc29udDIiIHRhcmdldEVuY29kaW5nPSJVVEYtOCIgc2VsZWN0ZWQ9IjEiPkkzWXhDbVZ6WTJGd1pVWnZjbmRoY21SVGJHRnph
+                    R1Z6TG1JOVptRnNjMlVLZFhObFEyOWtaVVpwYm1SbGNpNWlQV1poYkhObENtOTFkSEIxZEZObFoyMWxiblJoZEdsdmJsUjVjR1V1YVQwekNtTnZaR1ZHYVc1a1pYSlNkV3hsY3k1amIzVnVkQzVwUFRF
+                    S1kyOWtaVVpwYm1SbGNsSjFiR1Z6TG5KMWJHVXdQVndrUDF4N0tGdEJMVm93TFRsaExYcGZMVjBxS1Z4OUNtTnZaR1ZHYVc1a1pYSlNkV3hsY3k1ellXMXdiR1U5Vlc1cGVDQjJZWEk2SUNSN2MyOXRa
+                    UzEyWVhKOUxDQjJZWElnYVc0Z1luSmhZMlZ6T2lCN2RYTmxjbDl1WVcxbGZTNEtZMjlrWlVacGJtUmxjbEoxYkdWekxuVnpaVUZzYkZKMWJHVnpWMmhsYmxSbGMzUnBibWN1WWoxMGNuVmw8L2RvYz4K
+                    PC9tYW5pZmVzdD4=</internal-file>
+            </reference>
+        </header>
+        <body />
+    </file>
+    <file datatype="x-tos-request" mtc:id-order="mioordine" mtc:id-order-group="miogruppoordini"
+        original="3e7cb760517ceca2d6075857bccdd1a8b3cbf439f2db25c2e99cb4e01315f034"
+        source-language="en-US" target-language="it-IT">
+        <body>
+            <group id="sg1">
+                <group id="sg2">
+                    <trans-unit id="tu1" xml:space="preserve" maxwidth="55" size-unit="char">
+                        <source xml:lang="en-US">This is the content to translate.</source>
+                        <seg-source><mrk mid="0" mtype="seg">This is the content to translate.</mrk></seg-source>
+                        <target xml:lang="it-IT"><mrk mid="0" mtype="seg">This is the content to translate.</mrk></target>
+                        <note annotates="source" from="id_request">666</note>
+                        <note>translation_context|¶|miocontenuto1</note>
+                        <note annotates="source" from="id_content">miocontenuto1</note>
+                    </trans-unit>
+                    <group id="sg3">
+                    </group>
+                </group>
+                <group id="sg4">
+                    <group id="sg5">
+                        <trans-unit id="tu2" xml:space="preserve" maxwidth="123" size-unit="char">
+                            <source xml:lang="en-US">&lt;h3&gt;Introduction&lt;/h3&gt;&lt;p&gt;This is a fabulous &lt;b&gt;page&lt;/b&gt;.&lt;/p&gt;&lt;p&gt;Another mighty sentence.&lt;/p&gt;</source>
+                            <seg-source><mrk mid="0" mtype="seg">&lt;h3&gt;Introduction&lt;/h3&gt;&lt;p&gt;This is a fabulous &lt;b&gt;page&lt;/b&gt;.&lt;/p&gt;&lt;p&gt;Another mighty sentence.&lt;/p&gt;</mrk></seg-source>
+                            <target xml:lang="it-IT"><mrk mid="0" mtype="seg">&lt;h3&gt;Introduction&lt;/h3&gt;&lt;p&gt;This is a fabulous &lt;b&gt;page&lt;/b&gt;.&lt;/p&gt;&lt;p&gt;Another mighty sentence.&lt;/p&gt;</mrk></target>
+                            <note annotates="source" from="id_request">777</note>
+                            <note>translation_context|¶|miocontenuto2</note>
+                            <note annotates="source" from="id_content">miocontenuto2</note>
+                            <note annotates="source" from="notes">Notes for HTML snippet</note>
+                        </trans-unit>
+                    </group>
+                    <group id="sg6">
+                    </group>
+                </group>
+            </group>
+        </body>
+    </file>
+    <file datatype="x-tos-request" mtc:id-order="altromioordine"
+        mtc:id-order-group="altromiogruppoordini"
+        original="3e7cb760517ceca2d6075857xxxxxxxxxxxxxxxxb25c2e99cb4e01315f034"
+        source-language="en-US" target-language="it-IT">
+        <body>
+            <group id="sg6">
+                <group id="sg7">
+                    <trans-unit id="tu3" xml:space="preserve">
+                        <source xml:lang="en-US">This is another separate content to translate.</source>
+                        <seg-source><mrk mid="0" mtype="seg">This is another separate content to translate.</mrk></seg-source>
+                        <target xml:lang="it-IT"><mrk mid="0" mtype="seg">This is another separate content to translate.</mrk></target>
+                        <note annotates="source" from="id_request">888</note>
+                        <note>translation_context|¶|miocontenuto3</note>
+                        <note annotates="source" from="id_content">miocontenuto3</note>
+                        <note annotates="source" from="notes">Notes for separate plain text content</note>
+                    </trans-unit>
+                    <group id="sg8">
+                    </group>
+                </group>
+            </group>
+        </body>
+    </file>
+</xliff>
