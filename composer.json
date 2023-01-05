@@ -13,6 +13,11 @@
       "name": "Mauro Cassani",
       "email": "maurocassani1978@gmail.com",
       "homepage": "https://github.com/mauretto78"
+    },
+    {
+      "name": "Domenico Lupinetti",
+      "email": "ostico@gmail.com",
+      "homepage": "https://github.com/ostico"
     }
   ],
   "autoload": {
