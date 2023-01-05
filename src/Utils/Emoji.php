@@ -5,7 +5,7 @@ namespace Matecat\XliffParser\Utils;
 class Emoji
 {
     /**
-     * Note: for not visibile characters:
+     * Note: for not visible characters:
      * Launch IDE debug, and evaluate the expression:
      *
      * html_entity_decode("xxxx");
@@ -7421,6 +7421,9 @@ class Emoji
             '🪵'  => '&#129717;',
             '􀎵' => '&#1049525;',
             '🪄' => '&#129668;',
+            '🪟' => '&#129695;',
+            '󰀄' => '&#983044;',
+            '󠇯' => '&#917999;',
     ];
 
     /**
