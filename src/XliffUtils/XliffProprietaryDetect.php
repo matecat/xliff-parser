@@ -180,7 +180,7 @@ class XliffProprietaryDetect
      *
      * @return bool|int
      */
-    public static function fileMustBeConverted($fullPath, $enforceOnXliff = null, $filterAddress = null)
+    public static function fileMustBeConverted($fullPath, $enforceOnXliff = false, $filterAddress = null)
     {
         $convert = true;
 
@@ -222,7 +222,7 @@ class XliffProprietaryDetect
 
                 $convert = -1;
             //stop execution
-            } elseif (!$fileType[ 'proprietary' ]) {
+            } else {
                 $convert = false;
                 //ok don't convert a standard sdlxliff
             }
