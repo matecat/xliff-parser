@@ -2,6 +2,8 @@
 
 namespace Matecat\XliffParser\XliffParser;
 
+use DOMDocument;
+use DOMElement;
 use Matecat\XliffParser\Constants\Placeholder;
 use Matecat\XliffParser\Exception\DuplicateTransUnitIdInXliff;
 use Matecat\XliffParser\Exception\NotFoundIdInTransUnit;
@@ -15,10 +17,10 @@ class XliffParserV2 extends AbstractXliffParser
      * @inheritDoc
      * @throws \Exception
      */
-    public function parse(\DOMDocument $dom, $output = [])
+    public function parse( DOMDocument $dom, $output = [])
     {
         $i = 1;
-        /** @var \DOMElement $file */
+        /** @var DOMElement $file */
         foreach ($dom->getElementsByTagName('file') as $file) {
 
             // metadata
@@ -30,7 +32,7 @@ class XliffParserV2 extends AbstractXliffParser
             // trans-units
             $transUnitIdArrayForUniquenessCheck = [];
             $j = 1;
-            /** @var \DOMElement $transUnit */
+            /** @var DOMElement $transUnit */
             foreach ($file->childNodes as $childNode) {
                 $this->extractTuFromNode($childNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j);
             }
@@ -49,11 +51,11 @@ class XliffParserV2 extends AbstractXliffParser
     }
 
     /**
-     * @param \DOMDocument $dom
+     * @param DOMDocument $dom
      *
      * @return array
      */
-    private function extractMetadata(\DOMDocument $dom)
+    private function extractMetadata( DOMDocument $dom)
     {
         $metadata = [];
 
@@ -79,12 +81,12 @@ class XliffParserV2 extends AbstractXliffParser
     }
 
     /**
-     * @param \DOMElement $file
+     * @param DOMElement $file
      *
      * @return array
      * @throws \Exception
      */
-    private function extractNotes(\DOMElement $file)
+    private function extractNotes( DOMElement $file)
     {
         $notes = [];
 
@@ -126,7 +128,7 @@ class XliffParserV2 extends AbstractXliffParser
 
         // uuid
         foreach ($output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'notes' ] as $note){
-            if(isset($note['raw-content']) and Strings::isAValidUuid($note['raw-content'])){
+            if(isset($note['raw-content']) && Strings::isAValidUuid($note['raw-content'])){
                 $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'attr' ]['uuid'] = $note['raw-content'];
             }
         }
@@ -160,7 +162,7 @@ class XliffParserV2 extends AbstractXliffParser
         $segSource = [];
         $segTarget = [];
 
-        /** @var \DOMElement $segment */
+        /** @var DOMElement $segment */
         $c = 0;
         foreach ($transUnit->childNodes as $segment) {
             if ($segment->nodeName === 'segment') {
@@ -237,12 +239,12 @@ class XliffParserV2 extends AbstractXliffParser
     }
 
     /**
-     * @param \DOMElement $transUnit
+     * @param DOMElement $transUnit
      * @param             $transUnitIdArrayForUniquenessCheck
      *
      * @return array
      */
-    private function extractTransUnitMetadata(\DOMElement $transUnit, &$transUnitIdArrayForUniquenessCheck)
+    private function extractTransUnitMetadata( DOMElement $transUnit, &$transUnitIdArrayForUniquenessCheck)
     {
         $metadata = [];
 
@@ -276,7 +278,7 @@ class XliffParserV2 extends AbstractXliffParser
         }
 
         // sizeRestriction
-        if (null !== $transUnit->attributes->getNamedItem('sizeRestriction') and  '' !== $transUnit->attributes->getNamedItem('sizeRestriction')->nodeValue ) {
+        if (null !== $transUnit->attributes->getNamedItem('sizeRestriction') &&  '' !== $transUnit->attributes->getNamedItem('sizeRestriction')->nodeValue ) {
             $metadata[ 'sizeRestriction' ] = (int)$transUnit->attributes->getNamedItem('sizeRestriction')->nodeValue;
         }
 
@@ -284,12 +286,12 @@ class XliffParserV2 extends AbstractXliffParser
     }
 
     /**
-     * @param \DOMElement $transUnit
+     * @param DOMElement $transUnit
      *
      * @return array
      * @throws \Exception
      */
-    private function extractTransUnitOriginalData(\DOMElement $transUnit)
+    private function extractTransUnitOriginalData( DOMElement $transUnit)
     {
         $originalData = [];
 
@@ -297,7 +299,7 @@ class XliffParserV2 extends AbstractXliffParser
         foreach ($transUnit->childNodes as $childNode) {
             if ($childNode->nodeName === 'originalData') {
                 foreach ($childNode->childNodes as $data) {
-                    if (null!== $data->attributes and null !== $data->attributes->getNamedItem('id')) {
+                    if (null!== $data->attributes && null !== $data->attributes->getNamedItem('id')) {
                         $dataId = $data->attributes->getNamedItem('id')->nodeValue;
 
                         $dataValue = str_replace(Placeholder::WHITE_SPACE_PLACEHOLDER, ' ', $data->nodeValue);
@@ -335,11 +337,11 @@ class XliffParserV2 extends AbstractXliffParser
     }
 
     /**
-     * @param \DOMElement $transUnit
+     * @param DOMElement $transUnit
      *
      * @return array
      */
-    private function extractTransUnitAdditionalTagData(\DOMElement $transUnit)
+    private function extractTransUnitAdditionalTagData( DOMElement $transUnit)
     {
         $additionalTagData = [];
 
@@ -351,21 +353,27 @@ class XliffParserV2 extends AbstractXliffParser
 
                     // id
                     if ($data->nodeName === 'memsource:tag') {
-                        if (null!== $data->attributes and null !== $data->attributes->getNamedItem('id')) {
+                        if (null!== $data->attributes && null !== $data->attributes->getNamedItem('id')) {
                             $dataId = $data->attributes->getNamedItem('id')->nodeValue;
                             $dataArray['attr']['id'] = $dataId;
                         }
                     }
 
-                    // content
-                    foreach ($data->childNodes as $datum) {
-                        if ($datum->nodeName === 'memsource:tagId') {
-                            $dataArray['raw-content']['tagId'] = $datum->nodeValue;
+                    // in PHP 7.4 $data->childNodes is an empty DomNodeList, it is iterable with size 0
+                    // PHP 5.6 check: in php 5.6 $data->childNodes can be null
+                    if( $data->childNodes != null ){
+
+                        // content
+                        foreach ($data->childNodes as $datum) {
+                            if ($datum->nodeName === 'memsource:tagId') {
+                                $dataArray['raw-content']['tagId'] = $datum->nodeValue;
+                            }
+
+                            if ($datum->nodeName === 'memsource:type') {
+                                $dataArray['raw-content']['type'] = $datum->nodeValue;
+                            }
                         }
 
-                        if ($datum->nodeName === 'memsource:type') {
-                            $dataArray['raw-content']['type'] = $datum->nodeValue;
-                        }
                     }
 
                     if (!empty($dataArray)) {
@@ -381,17 +389,17 @@ class XliffParserV2 extends AbstractXliffParser
     /**
      * Check if segment id is present within tGroupBegin and tGroupEnd attributes
      *
-     * @param \DOMElement $segment
+     * @param DOMElement $segment
      * @param array $attr
      */
-    private function checkSegmentIdConsistency(\DOMElement $segment, array $attr)
+    private function checkSegmentIdConsistency( DOMElement $segment, array $attr)
     {
-        if (isset($attr[ 'tGroupBegin' ]) and isset($attr[ 'tGroupEnd' ]) and $segment->attributes->getNamedItem('id')) {
+        if (isset($attr[ 'tGroupBegin' ]) && isset($attr[ 'tGroupEnd' ]) && $segment->attributes->getNamedItem('id')) {
             $id = $segment->attributes->getNamedItem('id')->nodeValue;
             $min = (int)$attr[ 'tGroupBegin' ];
             $max = (int)$attr[ 'tGroupEnd' ];
 
-            if (false === (($min <= $id) and ($id <= $max))) {
+            if (false === (($min <= $id) && ($id <= $max))) {
                 if ($this->logger) {
                     $this->logger->warning('Segment #' . $id . ' is not included within tGroupBegin and tGroupEnd');
                 }
@@ -400,12 +408,12 @@ class XliffParserV2 extends AbstractXliffParser
     }
 
     /**
-     * @param \DOMElement $transUnit
+     * @param DOMElement $transUnit
      *
      * @return array
      * @throws \Exception
      */
-    private function extractTransUnitNotes(\DOMElement $transUnit)
+    private function extractTransUnitNotes( DOMElement $transUnit)
     {
         $notes = [];
 
@@ -424,7 +432,7 @@ class XliffParserV2 extends AbstractXliffParser
                 foreach ($childNode->childNodes as $metadata) {
                     if ($metadata->nodeName === 'mda:metaGroup') {
                         foreach ($metadata->childNodes as $meta) {
-                            if (null!== $meta->attributes and null !== $meta->attributes->getNamedItem('type')) {
+                            if (null!== $meta->attributes && null !== $meta->attributes->getNamedItem('type')) {
                                 $type = $meta->attributes->getNamedItem('type')->nodeValue;
                                 $metaValue = trim($meta->nodeValue);
 

@@ -2,7 +2,7 @@
 
 namespace Matecat\XliffParser\Tests;
 
-use Matecat\XliffParser\XliffParser;
+use Exception;
 
 class XliffReplacerValidationTest extends BaseTest
 {
@@ -17,7 +17,7 @@ class XliffReplacerValidationTest extends BaseTest
         try {
             $validate = $this->validateXliff20($output);
             $this->assertEmpty($validate);
-        } catch (\Exception $exception){
+        } catch ( Exception $exception){
             $this->markTestSkipped('The xliff validation service is out of order.');
         }
     }
@@ -33,7 +33,7 @@ class XliffReplacerValidationTest extends BaseTest
         try {
             $validate = $this->validateXliff20($output);
             $this->assertEmpty($validate);
-        } catch (\Exception $exception){
+        } catch ( Exception $exception){
             $this->markTestSkipped('The xliff validation service is out of order.');
         }
     }
@@ -49,7 +49,7 @@ class XliffReplacerValidationTest extends BaseTest
         try {
             $validate = $this->validateXliff20($output);
             $this->assertEmpty($validate);
-        } catch (\Exception $exception){
+        } catch ( Exception $exception){
             $this->markTestSkipped('The xliff validation service is out of order.');
         }
     }
@@ -65,7 +65,7 @@ class XliffReplacerValidationTest extends BaseTest
         try {
             $validate = $this->validateXliff20($output);
             $this->assertEmpty($validate);
-        } catch (\Exception $exception){
+        } catch ( Exception $exception){
             $this->markTestSkipped('The xliff validation service is out of order.');
         }
     }

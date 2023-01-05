@@ -53,14 +53,14 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
             $escape_AMP = false;
 
             // 9 is the max length of an entity. So, suppose that the & is at the end of buffer,
-            // add 9 Bytes and substitute the entities, if the & is present and it is not at the end
-            //it can't be a entity, exit the loop
+            // add 9 Bytes and substitute the entities, if the & is present, and it is not at the end
+            //it can't be an entity, exit the loop
 
             while (true) {
                 $_ampPos = strpos($temporary_check_buffer, '&');
 
                 //check for real entity or escape it to safely exit from the loop!!!
-                if ($_ampPos === false or strlen(substr($temporary_check_buffer, $_ampPos)) > 9) {
+                if ($_ampPos === false || strlen(substr($temporary_check_buffer, $_ampPos)) > 9) {
                     $escape_AMP = true;
                     break;
                 }
@@ -113,14 +113,14 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
             $this->currentTransUnitId = substr($attr[ 'id' ], 0, 100);
 
             // `translate` attribute can be only yes or no
-            if(isset($attr[ 'translate' ]) and $attr[ 'translate' ] === 'no'){
+            if(isset($attr[ 'translate' ]) && $attr[ 'translate' ] === 'no'){
                 $attr[ 'translate' ] = 'no';
             } else {
                 $attr[ 'translate' ] = 'yes';
             }
 
             // current 'translate' attribute of the current trans-unit
-            $this->currentTransUnitTranslate = isset($attr[ 'translate' ]) ? $attr[ 'translate' ] : 'yes';
+            $this->currentTransUnitTranslate = $attr[ 'translate' ];
         }
 
         if('source' === $name){
@@ -165,8 +165,8 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
             //
             // http://docs.oasis-open.org/xliff/xliff-core/v2.0/os/xliff-core-v2.0-os.html#unit
             //
-            if($this->xliffVersion === 2 and ( $name === 'notes' or $name === 'originalData' or $name === 'segment' or $name === 'ignorable') and $this->unitContainsMda === false ){
-                if (isset($this->transUnits[ $this->currentTransUnitId ]) and !empty($this->transUnits[ $this->currentTransUnitId ]) and !$this->unitContainsMda and !$this->hasWrittenCounts) {
+            if($this->xliffVersion === 2 && ( $name === 'notes' || $name === 'originalData' || $name === 'segment' || $name === 'ignorable') && $this->unitContainsMda === false ){
+                if (isset($this->transUnits[ $this->currentTransUnitId ]) && !empty($this->transUnits[ $this->currentTransUnitId ]) && !$this->unitContainsMda && !$this->hasWrittenCounts) {
 
                     // we need to update counts here
                     $this->updateCounts();
@@ -186,7 +186,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
             foreach ($attr as $k => $v) {
 
                 //if tag name is file, we must replace the target-language attribute
-                if ($name === 'file' and $k === 'target-language' and !empty($this->targetLang)) {
+                if ($name === 'file' && $k === 'target-language' && !empty($this->targetLang)) {
                     //replace Target language with job language provided from constructor
                     $tag .= "$k=\"$this->targetLang\" ";
                 } else {
@@ -201,18 +201,18 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
 
                         // add `help-id` to xliff v.1*
                         // add `mtc:segment-id` to xliff v.2*
-                        if($this->xliffVersion === 1 and strpos($tag, 'help-id') === false){
+                        if($this->xliffVersion === 1 && strpos($tag, 'help-id') === false){
                             if (!empty($sid)) {
                                 $tag .= "help-id=\"$sid\" ";
                             }
-                        } elseif($this->xliffVersion === 2 and strpos($tag, 'mtc:segment-id') === false) {
+                        } elseif($this->xliffVersion === 2 && strpos($tag, 'mtc:segment-id') === false) {
                             if (!empty($sid)) {
                                 $tag .= "mtc:segment-id=\"$sid\" ";
                             }
                         }
 
-                    } elseif ('segment' === $name and $this->xliffVersion === 2) { // add state to segment in Xliff v2
-                        list($stateProp, $lastMrkState) = $this->setTransUnitState($this->segments[ $pos ], $stateProp, $lastMrkState);
+                    } elseif ('segment' === $name && $this->xliffVersion === 2) { // add state to segment in Xliff v2
+                        [$stateProp, $lastMrkState] = $this->setTransUnitState($this->segments[ $pos ], $stateProp, $lastMrkState);
                     }
 
                     //normal tag flux, put attributes in it
@@ -227,12 +227,12 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
             }
 
             // add oasis xliff 20 namespace
-            if ($this->xliffVersion === 2 and $name === 'xliff' and !array_key_exists('xmlns:mda', $attr)) {
+            if ($this->xliffVersion === 2 && $name === 'xliff' && !array_key_exists('xmlns:mda', $attr)) {
                 $tag .= 'xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0"';
             }
 
             // add MateCat specific namespace, we want maybe add non-XLIFF attributes
-            if ($name === 'xliff' and !array_key_exists('xmlns:mtc', $attr)) {
+            if ($name === 'xliff' && !array_key_exists('xmlns:mtc', $attr)) {
                 $tag .= ' xmlns:mtc="https://www.matecat.com" ';
             }
 
@@ -253,11 +253,9 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
             if (isset($this->currentBuffer[ $idx - $this->offset ])) {
                 //if this tag entire lenght fitted in the buffer, the last char must be the last
                 //symbol before the '>'; if it's an empty tag, it is assumed that it's a '/'
-                $tmp_offset = $idx - $this->offset;
                 $lastChar   = $this->currentBuffer[ $idx - $this->offset ];
             } else {
                 //if it's out, simple use the last character of the chunk
-                $tmp_offset = $this->len - 1;
                 $lastChar   = $this->currentBuffer[ $this->len - 1 ];
             }
 
@@ -265,7 +263,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
             $tag = rtrim($tag);
 
             //detect empty tag
-            $this->isEmpty = ($lastChar == '/' or $name == 'x');
+            $this->isEmpty = ($lastChar == '/' || $name == 'x');
             if ($this->isEmpty) {
                 $tag .= '/';
             }
@@ -274,11 +272,11 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
             $tag .= ">";
 
             //set a a Buffer for the segSource Source tag
-            if ($this->bufferIsActive or in_array($name, $this->nodesToCopy)) { // we are opening a critical CDATA section
+            if ($this->bufferIsActive || in_array($name, $this->nodesToCopy)) { // we are opening a critical CDATA section
 
                 //WARNING BECAUSE SOURCE AND SEG-SOURCE TAGS CAN BE EMPTY IN SOME CASES!!!!!
                 //so check for isEmpty also in conjunction with name
-                if ($this->isEmpty and ('source' === $name or 'seg-source' === $name)) {
+                if ($this->isEmpty && ('source' === $name || 'seg-source' === $name)) {
                     $this->postProcAndFlush($this->outputFP, $tag);
                 } else {
                     //these are NOT source/seg-source/value empty tags, THERE IS A CONTENT, write it in buffer
@@ -292,11 +290,11 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
 
         // update segmentPositionInTu
 
-        if($this->xliffVersion === 1 and $this->inTU and $name === 'source'){
+        if($this->xliffVersion === 1 && $this->inTU && $name === 'source'){
             $this->segmentPositionInTu++;
         }
 
-        if($this->xliffVersion === 2 and $this->inTU and $name === 'segment'){
+        if($this->xliffVersion === 2 && $this->inTU && $name === 'segment'){
             $this->segmentPositionInTu++;
         }
     }
@@ -314,7 +312,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
          *
          * self::tagOpen method
          */
-        if (!$this->isEmpty and !($this->inTarget and $name !== 'target')) {
+        if (!$this->isEmpty && !($this->inTarget && $name !== 'target')) {
 
             if (!$this->inTarget) {
                 $tag = "</$name>";
@@ -349,12 +347,13 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
 
                     $this->lastTransUnit = [];
 
-                    $warning    = false;
-                    $last_value = null;
-                    for ($i = 0; $i < count($listOfSegmentsIds); $i++) {
+                    $warning       = false;
+                    $last_value    = null;
+                    $segmentsCount = count( $listOfSegmentsIds );
+                    for ($i = 0; $i < $segmentsCount; $i++) {
                         if (isset($listOfSegmentsIds[ $i ])) {
                             $id = $listOfSegmentsIds[ $i ];
-                            if (isset($this->segments[ $id ]) and ($i == 0 or $last_value + 1 == $listOfSegmentsIds[ $i ])) {
+                            if (isset($this->segments[ $id ]) && ($i == 0 || $last_value + 1 == $listOfSegmentsIds[ $i ])) {
                                 $last_value            = $listOfSegmentsIds[ $i ];
                                 $this->lastTransUnit[] = $this->segments[ $id ];
                             }
@@ -382,7 +381,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
                         $seg = $this->segments[ $this->currentSegmentArray['sid'] ];
 
                         // update counts
-                        if(!$this->hasWrittenCounts and !empty($seg)){
+                        if(!$this->hasWrittenCounts && !empty($seg)){
                             $this->updateSegmentCounts($seg);
                         }
 
@@ -396,7 +395,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
                         // append $translation
                         $translation = $this->prepareTranslation($seg, $translation);
 
-                        list($stateProp, $lastMrkState) = $this->setTransUnitState($seg, $stateProp, $lastMrkState);
+                        [$stateProp, $lastMrkState] = $this->setTransUnitState($seg, $stateProp, $lastMrkState);
                     } else {
                         foreach ($listOfSegmentsIds as $pos => $id) {
 
@@ -411,13 +410,13 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
                              * pre-assign zero to the new mrk if this is the first one ( in this segment )
                              * If it is null leave it NULL
                              */
-                            if ((int)$this->segments[ $id ][ "mrk_id" ] < 0 and $this->segments[ $id ][ "mrk_id" ] !== null) {
+                            if ((int)$this->segments[ $id ][ "mrk_id" ] < 0 && $this->segments[ $id ][ "mrk_id" ] !== null) {
                                 $this->segments[ $id ][ "mrk_id" ] = 0;
                             }
 
                             /*
                              * WARNING:
-                             * For those seg-source that does'nt have a mrk ( having a mrk id === null )
+                             * For those seg-source that doesn't have a mrk ( having a mrk id === null )
                              * ( null <= -1 ) === true
                              * so, cast to int
                              */
@@ -449,7 +448,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
 
                             $lastMrkId = $this->segments[ $id ][ "mrk_id" ];
 
-                            list($stateProp, $lastMrkState) = $this->setTransUnitState($seg, $stateProp, $lastMrkState);
+                            [$stateProp, $lastMrkState] = $this->setTransUnitState($seg, $stateProp, $lastMrkState);
                         }
                     }
 
@@ -472,7 +471,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
 
                 // only for Xliff 2.*
                 // write here <mda:metaGroup> and <mda:meta> if already present in the <unit>
-                if('mda:metadata' === $name and $this->unitContainsMda and $this->xliffVersion === 2 and !$this->hasWrittenCounts){
+                if('mda:metadata' === $name && $this->unitContainsMda && $this->xliffVersion === 2 && !$this->hasWrittenCounts){
 
                     // we need to update counts here
                     $this->updateCounts();
@@ -494,7 +493,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
 
                 // only for Xliff 2.*
                 // if segment has no <target> add it BEFORE </segment>
-                if($this->xliffVersion === 2 and !$this->targetWasWritten){
+                if($this->xliffVersion === 2 && !$this->targetWasWritten){
 
                     $seg = $this->getCurrentSegment();
 
@@ -524,7 +523,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
 
                     // if there is translation available insert <target> BEFORE </trans-unit>
                     if(isset($seg['translation'])){
-                        list($stateProp, $lastMrkState) = $this->setTransUnitState($seg, $stateProp, $lastMrkState);
+                        [$stateProp, $lastMrkState] = $this->setTransUnitState($seg, $stateProp, $lastMrkState);
                         $tag .= $this->createTargetTag($seg['translation'], $stateProp);
                     }
 
@@ -540,7 +539,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
                 // flush to pointer
                 $this->postProcAndFlush($this->outputFP, $tag);
             }
-        } elseif ($this->CDATABuffer === '<note/>' and $this->bufferIsActive === true) {
+        } elseif ($this->CDATABuffer === '<note/>' && $this->bufferIsActive === true) {
             $this->postProcAndFlush($this->outputFP, '<note/>');
             $this->bufferIsActive = false;
             $this->CDATABuffer    = '';
@@ -647,9 +646,9 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
 
         $segment     = Strings::removeDangerousChars($seg [ 'segment' ]);
         $translation = Strings::removeDangerousChars($seg [ 'translation' ]);
-        $dataRefMap  = (isset($seg['data_ref_map']) and $seg['data_ref_map'] !== null) ? Strings::jsonToArray($seg['data_ref_map']) : [];
+        $dataRefMap  = (isset($seg['data_ref_map']) && $seg['data_ref_map'] !== null) ? Strings::jsonToArray($seg['data_ref_map']) : [];
 
-        if (is_null($seg [ 'translation' ]) or $seg [ 'translation' ] == '') {
+        if (is_null($seg [ 'translation' ]) || $seg [ 'translation' ] == '') {
             $translation = $segment;
         } else {
             if ($this->callback) {
@@ -664,7 +663,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
             return $translation;
         }
 
-        if ($seg[ 'mrk_id' ] !== null and $seg[ 'mrk_id' ] != '') {
+        if ($seg[ 'mrk_id' ] !== null && $seg[ 'mrk_id' ] != '') {
             if ($this->targetLang === 'ja-JP') {
                 $seg[ 'mrk_succ_tags' ] = ltrim($seg[ 'mrk_succ_tags' ]);
             }
@@ -721,7 +720,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
      */
     private function getCurrentSegment()
     {
-        if($this->currentTransUnitTranslate === 'yes' and isset($this->transUnits[$this->currentTransUnitId])){
+        if($this->currentTransUnitTranslate === 'yes' && isset($this->transUnits[$this->currentTransUnitId])){
             $index = $this->transUnits[$this->currentTransUnitId][$this->segmentPositionInTu];
 
             if(isset($this->segments[$index])){
@@ -788,14 +787,14 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
 
             case TranslationStatus::STATUS_FIXED:
             case TranslationStatus::STATUS_APPROVED:
-                if ($lastMrkState == null or $lastMrkState == TranslationStatus::STATUS_APPROVED) {
+                if ($lastMrkState == null || $lastMrkState == TranslationStatus::STATUS_APPROVED) {
                     $state_prop   = ($this->xliffVersion === 2) ? "state=\"reviewed\"": "state=\"signed-off\"";
                     $lastMrkState = TranslationStatus::STATUS_APPROVED;
                 }
                 break;
 
             case TranslationStatus::STATUS_TRANSLATED:
-                if ($lastMrkState == null or $lastMrkState == TranslationStatus::STATUS_TRANSLATED or $lastMrkState == TranslationStatus::STATUS_APPROVED) {
+                if ($lastMrkState == null || $lastMrkState == TranslationStatus::STATUS_TRANSLATED || $lastMrkState == TranslationStatus::STATUS_APPROVED) {
                     $state_prop   = "state=\"translated\"";
                     $lastMrkState = TranslationStatus::STATUS_TRANSLATED;
                 }
@@ -803,14 +802,14 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
 
             case TranslationStatus::STATUS_REJECTED:  // if there is a mark REJECTED and there is not a DRAFT, all the trans-unit is REJECTED. In V2 there is no way to mark
             case TranslationStatus::STATUS_REBUTTED:
-                if (($lastMrkState == null) or ($lastMrkState != TranslationStatus::STATUS_NEW or $lastMrkState != TranslationStatus::STATUS_DRAFT)) {
+                if (($lastMrkState == null) || ($lastMrkState != TranslationStatus::STATUS_NEW || $lastMrkState != TranslationStatus::STATUS_DRAFT)) {
                     $state_prop   = ($this->xliffVersion === 2) ? "state=\"initial\"" : "state=\"needs-review-translation\"";
                     $lastMrkState = TranslationStatus::STATUS_REJECTED;
                 }
                 break;
 
             case TranslationStatus::STATUS_NEW:
-                if (($lastMrkState == null) or $lastMrkState != TranslationStatus::STATUS_DRAFT) {
+                if (($lastMrkState == null) || $lastMrkState != TranslationStatus::STATUS_DRAFT) {
                     $state_prop   = ($this->xliffVersion === 2) ? "state=\"initial\"" : "state=\"new\"";
                     $lastMrkState = TranslationStatus::STATUS_NEW;
                 }
@@ -841,7 +840,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
     protected function characterData($parser, $data)
     {
         // don't write <target> data
-        if (!$this->inTarget and !$this->bufferIsActive) {
+        if (!$this->inTarget && !$this->bufferIsActive) {
             $this->postProcAndFlush($this->outputFP, $data);
         } elseif ($this->bufferIsActive) {
             $this->CDATABuffer .= $data;

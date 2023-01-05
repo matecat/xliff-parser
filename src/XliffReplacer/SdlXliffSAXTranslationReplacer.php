@@ -54,17 +54,17 @@ class SdlXliffSAXTranslationReplacer extends XliffSAXTranslationReplacer
             foreach ($attr as $k => $v) {
 
                 // if tag name is file, we must replace the target-language attribute
-                if ($name == 'file' and $k == 'target-language' and !empty($this->target_lang)) {
+                if ($name == 'file' && $k == 'target-language' && !empty($this->targetLang)) {
                     //replace Target language with job language provided from constructor
-                    $tag .= "$k=\"$this->target_lang\" ";
+                    $tag .= "$k=\"$this->targetLang\" ";
 
                     if (null !== $this->logger) {
-                        $this->logger->debug($k . " => " . $this->target_lang);
+                        $this->logger->debug($k . " => " . $this->targetLang);
                     }
                 } elseif ('sdl:seg' == $name) {
 
                     // write the confidence level for this segment ( Translated, Draft, etc. )
-                    if (isset($this->segments[ 'matecat|' . $this->currentTransUnitId ]) and $_sdlStatus_confWritten == false) {
+                    if (isset($this->segments[ 'matecat|' . $this->currentTransUnitId ]) && $_sdlStatus_confWritten == false) {
 
                         // append definition attribute
                         $tag .= $this->prepareTargetStatuses($this->lastTransUnit[ $this->markerPos ]);
@@ -90,7 +90,7 @@ class SdlXliffSAXTranslationReplacer extends XliffSAXTranslationReplacer
             // it points at the end of current tag
             $idx = xml_get_current_byte_index($parser);
 
-            // check whether the bounds of current tag are entirely in current buffer or the end of the current tag
+            // check whether the bounds of current tag are entirely in current buffer || the end of the current tag
             // is outside current buffer (in the latter case, it's in next buffer to be read by the while loop);
             // this check is necessary because we may have truncated a tag in half with current read,
             // and the other half may be encountered in the next buffer it will be passed
@@ -109,7 +109,7 @@ class SdlXliffSAXTranslationReplacer extends XliffSAXTranslationReplacer
             $tag = rtrim($tag);
 
             // detect empty tag
-            $this->isEmpty = ($lastChar == '/' or $name == 'x');
+            $this->isEmpty = ($lastChar == '/' || $name == 'x');
             if ($this->isEmpty) {
                 $tag .= '/';
             }
@@ -119,19 +119,19 @@ class SdlXliffSAXTranslationReplacer extends XliffSAXTranslationReplacer
 
             // set a a Buffer for the segSource Source tag
             if ('source' == $name
-                    or 'seg-source' === $name
-                    or $this->bufferIsActive
-                    or 'value' === $name
-                    or 'bpt' === $name
-                    or 'ept' === $name
-                    or 'ph' === $name
-                    or 'st' === $name
-                    or 'note' === $name
-                    or 'context' === $name) { // we are opening a critical CDATA section
+                    || 'seg-source' === $name
+                    || $this->bufferIsActive
+                    || 'value' === $name
+                    || 'bpt' === $name
+                    || 'ept' === $name
+                    || 'ph' === $name
+                    || 'st' === $name
+                    || 'note' === $name
+                    || 'context' === $name) { // we are opening a critical CDATA section
 
                 // WARNING BECAUSE SOURCE AND SEG-SOURCE TAGS CAN BE EMPTY IN SOME CASES!!!!!
                 // so check for isEmpty also in conjunction with name
-                if ($this->isEmpty and ('source' == $name or 'seg-source' == $name)) {
+                if ($this->isEmpty && ('source' == $name || 'seg-source' == $name)) {
                     $this->postProcAndFlush($this->outputFP, $tag);
                 } else {
                     //these are NOT source/seg-source/value empty tags, THERE IS A CONTENT, write it in buffer
@@ -158,9 +158,9 @@ class SdlXliffSAXTranslationReplacer extends XliffSAXTranslationReplacer
 
         $segment     = Strings::removeDangerousChars($seg [ 'segment' ]);
         $translation = Strings::removeDangerousChars($seg [ 'translation' ]);
-        $dataRefMap  = (isset($seg['data_ref_map']) and $seg['data_ref_map'] !== null) ? Strings::jsonToArray($seg['data_ref_map']) : [];
+        $dataRefMap  = (isset($seg['data_ref_map']) && $seg['data_ref_map'] !== null) ? Strings::jsonToArray($seg['data_ref_map']) : [];
 
-        if (is_null($seg [ 'translation' ]) or $seg [ 'translation' ] == '') {
+        if (is_null($seg [ 'translation' ]) || $seg [ 'translation' ] == '') {
             $translation = $segment;
         } else {
             if ($this->callback) {
@@ -177,7 +177,7 @@ class SdlXliffSAXTranslationReplacer extends XliffSAXTranslationReplacer
             $trailingSpaces .= ' ';
         }
 
-        if ($seg[ 'mrk_id' ] !== null and $seg[ 'mrk_id' ] != '') {
+        if ($seg[ 'mrk_id' ] !== null && $seg[ 'mrk_id' ] != '') {
             if ($this->targetLang === 'ja-JP') {
                 $seg[ 'mrk_succ_tags' ] = ltrim($seg[ 'mrk_succ_tags' ]);
             }

@@ -2,6 +2,7 @@
 
 namespace Matecat\XliffParser\Tests;
 
+use Exception;
 use Matecat\XliffParser\XliffParser;
 use Matecat\XliffParser\XliffUtils\XmlParser;
 use PHPUnit\Framework\TestCase;
@@ -58,7 +59,7 @@ abstract class BaseTest extends TestCase
             if (is_array($value)) {
                 $this->assertArraySimilar($value, $array[$key]);
             } else {
-                $this->assertStringContainsString(trim($value), trim($array[$key]));
+                $this->assertContains(trim($value), trim($array[$key]));
             }
         }
     }
@@ -143,7 +144,7 @@ abstract class BaseTest extends TestCase
      * @param $xliff20
      *
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
     protected function validateXliff20($xliff20)
     {
@@ -156,10 +157,10 @@ abstract class BaseTest extends TestCase
         ]);
 
         if($response->info['http_code'] !== 200){
-            throw new \Exception( ($response->errorNo > 0) ? $response->error : 'An error occurred calling ' . $url . '. Status code '.$response->info['http_code'].' was returned' );
+            throw new Exception( ($response->errorNo > 0) ? $response->error : 'An error occurred calling ' . $url . '. Status code '.$response->info['http_code'].' was returned' );
         }
 
-        preg_match_all('/<pre>(.*?)<\/pre>/s', $response->body, $matches);
+        preg_match_all('#<pre>(.*?)</pre>#s', $response->body, $matches);
 
         if(!empty($matches[1])){
             foreach ($matches[1] as $match){

@@ -71,11 +71,11 @@ abstract class AbstractXliffParser
                 if ($nestedChildNode->nodeName === 'group') {
                     $this->extractTuFromNode($nestedChildNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j);
                 } elseif ($nestedChildNode->nodeName === $this->getTuTagName()) {
-                    static::extractTransUnit($nestedChildNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j);
+                    $this->extractTransUnit($nestedChildNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j);
                 }
             }
         } elseif ($childNode->nodeName === $this->getTuTagName()) {
-            static::extractTransUnit($childNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j);
+            $this->extractTransUnit($childNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j);
         }
     }
 

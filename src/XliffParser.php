@@ -4,7 +4,6 @@ namespace Matecat\XliffParser;
 
 use Matecat\XliffParser\Constants\Placeholder;
 use Matecat\XliffParser\Constants\XliffTags;
-use Matecat\XliffParser\Utils\HtmlParser;
 use Matecat\XliffParser\Utils\Strings;
 use Matecat\XliffParser\XliffParser\XliffParserFactory;
 use Matecat\XliffParser\XliffReplacer\XliffReplacerCallbackInterface;
