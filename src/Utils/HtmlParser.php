@@ -50,6 +50,8 @@ class HtmlParser
         preg_match_all('/<|>/iu', $html, $matches, PREG_OFFSET_CAPTURE);
 
         $delta = 0;
+        $realNextOffset = 0;
+        $next = null;
 
         foreach ($matches[0] as $key => $match) {
 
@@ -65,13 +67,13 @@ class HtmlParser
             $offset = $matches[0][$key][1];
             $realOffset = ($delta === 0) ? $offset : ($offset + $delta);
 
-            if( $current === '<' and isset($next)){
+            if( $current === '<' && isset($next)){
 
                 // 1. if next is > or
                 // 2. next is < and is not html tag (like < >)
                 $insideAngularTags = substr($html, $realOffset, ($realNextOffset-$realOffset+1));
 
-                if($next !== '>' or !Strings::isHtmlString($insideAngularTags) ){
+                if($next !== '>' || !Strings::isHtmlString($insideAngularTags) ){
                     $html = substr_replace($html, self::LT_PLACEHOLDER, $realOffset, $length);
                     $delta = $delta + strlen(self::LT_PLACEHOLDER) - $length;
                 }
@@ -92,9 +94,9 @@ class HtmlParser
      *
      * Ciao #####__LT_PLACEHOLDER__#####div#####__GT_PLACEHOLDER__##### this div is not closed. <div>Instead, this is a closed div.</div>
      *
-     * @param $html
+     * @param string $html
      *
-     * @return mixed
+     * @return string
      */
     private static function protectNotClosedHtmlTags( $html)
     {
@@ -110,7 +112,7 @@ class HtmlParser
             $currentOffset = $matches[ 0 ][ $key ][ 1 ];
 
             // check every string inside angular brackets (< and >)
-            if( $current === '<' and isset($matches[0][$key+1][0]) and $matches[0][$key+1][0] === '>' ){
+            if( $current === '<' && isset($matches[0][$key+1][0]) && $matches[0][$key+1][0] === '>' ){
                 $nextOffset = $matches[0][$key+1][1];
                 $tag = substr($html, ($currentOffset + 1), ( $nextOffset - $currentOffset - 1 ));
                 $trimmedTag = trim($tag);
@@ -189,7 +191,7 @@ class HtmlParser
             $attributes = isset($matches[2][$key][0]) ? self::getAttributes($matches[2][$key][0]) : [];
             $base64Decoded = (isset($attributes['equiv-text'])) ? base64_decode(str_replace("base64:", "", $attributes['equiv-text'])): null;
             $tagName = $matches[1][$key][0];
-            $text = (isset($matches[6][$key][0]) and '' !== $matches[6][$key][0]) ? $matches[6][$key][0] : null;
+            $text = (isset($matches[6][$key][0]) && '' !== $matches[6][$key][0]) ? $matches[6][$key][0] : null;
             $originalText = $text;
             $strippedText = strip_tags($text);
 
@@ -280,7 +282,7 @@ class HtmlParser
 
         $attributes = [];
 
-        if (isset($matches[1]) and count($matches[1]) > 0) {
+        if (isset($matches[1]) && count($matches[1]) > 0) {
             foreach ($matches[1] as $key => $match) {
                 $attributes[trim($match[0])] = $matches[3][$key][0];
             }

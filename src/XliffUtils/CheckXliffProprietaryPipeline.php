@@ -49,7 +49,7 @@ class CheckXliffProprietaryPipeline
             }
         }
 
-        if (!empty($fileType) and $this->isValid($fileType)) {
+        if (!empty($fileType) && $this->isValid($fileType)) {
             return $fileType;
         }
 

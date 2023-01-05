@@ -2,6 +2,8 @@
 
 namespace Matecat\XliffParser\XliffParser;
 
+use DOMDocument;
+use DOMElement;
 use Matecat\XliffParser\Constants\Placeholder;
 use Matecat\XliffParser\Utils\Emoji;
 use Matecat\XliffParser\Utils\Strings;
@@ -48,23 +50,23 @@ abstract class AbstractXliffParser
     }
 
     /**
-     * @param \DOMDocument $dom
+     * @param DOMDocument $dom
      *
      * @return array
      */
-    abstract public function parse(\DOMDocument $dom, $output = []);
+    abstract public function parse( DOMDocument $dom, $output = []);
 
     /**
      * Extract trans-unit content from the current node
      *
      * @param              $childNode
      * @param              $transUnitIdArrayForUniquenessCheck
-     * @param \DOMDocument $dom
+     * @param DOMDocument $dom
      * @param              $output
      * @param              $i
      * @param              $j
      */
-    protected function extractTuFromNode($childNode, &$transUnitIdArrayForUniquenessCheck, \DOMDocument $dom, &$output, &$i, &$j)
+    protected function extractTuFromNode($childNode, &$transUnitIdArrayForUniquenessCheck, DOMDocument $dom, &$output, &$i, &$j)
     {
         if ($childNode->nodeName === 'group') {
             foreach ($childNode->childNodes as $nestedChildNode) {
@@ -94,12 +96,12 @@ abstract class AbstractXliffParser
     abstract protected function extractTransUnit($transUnit, &$transUnitIdArrayForUniquenessCheck, $dom, &$output, &$i, &$j);
 
     /**
-     * @param \DOMDocument $dom
-     * @param \DOMElement  $node
+     * @param DOMDocument $dom
+     * @param DOMElement  $node
      *
      * @return array
      */
-    protected function extractContent(\DOMDocument $dom, \DOMElement $node)
+    protected function extractContent( DOMDocument $dom, DOMElement $node)
     {
         return [
             'raw-content' => $this->extractTagContent($dom, $node),
@@ -116,11 +118,11 @@ abstract class AbstractXliffParser
      * $attr->nodeName == 'align' :: $attr->nodeValue == 'center'
      * $attr->nodeName == 'style' :: $attr->nodeValue == 'font-size: 12px;'
      *
-     * @param \DOMElement $element
+     * @param DOMElement $element
      *
      * @return array
      */
-    protected function extractTagAttributes(\DOMElement $element)
+    protected function extractTagAttributes( DOMElement $element)
     {
         $tagAttributes = [];
 
@@ -136,12 +138,12 @@ abstract class AbstractXliffParser
     /**
      * Extract tag content from DOMDocument node
      *
-     * @param \DOMDocument $dom
-     * @param \DOMElement  $element
+     * @param DOMDocument $dom
+     * @param DOMElement  $element
      *
      * @return string
      */
-    protected function extractTagContent(\DOMDocument $dom, \DOMElement $element)
+    protected function extractTagContent( DOMDocument $dom, DOMElement $element)
     {
         $childNodes = $element->hasChildNodes();
         $extractedContent = '';
@@ -158,13 +160,14 @@ abstract class AbstractXliffParser
     /**
      * Used to extract <seg-source> and <seg-target>
      *
-     * @param \DOMDocument $dom
-     * @param \DOMElement  $childNode
-     * @param array $originalData
+     * @param DOMDocument $dom
+     * @param DOMElement  $childNode
+     * @param string      $originalRawContent
+     * @param array       $originalData
      *
      * @return array
      */
-    protected function extractContentWithMarksAndExtTags(\DOMDocument $dom, \DOMElement $childNode, $originalRawContent, array $originalData = [])
+    protected function extractContentWithMarksAndExtTags( DOMDocument $dom, DOMElement $childNode, $originalRawContent, array $originalData = [])
     {
         $source = [];
 
@@ -186,7 +189,7 @@ abstract class AbstractXliffParser
             if($this->xliffProprietary === 'trados'){
                 preg_match_all('/<\/mrk>[\s]+/iu', $markers[ $mi + 1 ], $trailingSpacesMatches);
 
-                if(isset($trailingSpacesMatches[0]) and count($trailingSpacesMatches[0]) > 0){
+                if(isset($trailingSpacesMatches[0]) && count($trailingSpacesMatches[0]) > 0){
                     foreach ($trailingSpacesMatches[0] as $match){
                         $trailingSpaces = str_replace('</mrk>', '', $match);
                     }

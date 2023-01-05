@@ -2,8 +2,11 @@
 
 namespace Matecat\XliffParser\XliffUtils;
 
+use DOMDocument;
+use Exception;
 use Matecat\XliffParser\Exception\InvalidXmlException;
 use Matecat\XliffParser\Exception\XmlParsingException;
+use RuntimeException;
 
 /**
  * This class is copied from Symfony\Component\Config\Util\XmlUtils:
@@ -19,23 +22,23 @@ class XmlParser
      * @param string               $content          An XML string
      * @param string|callable|null $schemaOrCallable An XSD schema file path, a callable, or null to disable validation
      *
-     * @return \DOMDocument
+     * @return DOMDocument
      *
      * @throws XmlParsingException When parsing of XML file returns error
      * @throws InvalidXmlException When parsing of XML with schema or callable produces any errors unrelated to the XML parsing itself
-     * @throws \RuntimeException   When DOM extension is missing
+     * @throws RuntimeException   When DOM extension is missing
      */
     public static function parse($content, $schemaOrCallable = null)
     {
         if (!extension_loaded('dom')) {
-            throw new \RuntimeException('Extension DOM is required.');
+            throw new RuntimeException('Extension DOM is required.');
         }
 
         $internalErrors = libxml_use_internal_errors(true);
         $disableEntities = libxml_disable_entity_loader(true);
         libxml_clear_errors();
 
-        $dom = new \DOMDocument('1.0', 'UTF-8');
+        $dom = new DOMDocument('1.0', 'UTF-8');
         $dom->validateOnParse = true;
         if (!$dom->loadXML($content, LIBXML_NONET | (defined('LIBXML_COMPACT') ? LIBXML_COMPACT : 0))) {
             libxml_disable_entity_loader($disableEntities);
@@ -62,7 +65,7 @@ class XmlParser
             if (is_callable($schemaOrCallable)) {
                 try {
                     $valid = call_user_func($schemaOrCallable, $dom, $internalErrors);
-                } catch (\Exception $e) {
+                } catch ( Exception $e) {
                     $valid = false;
                 }
             } elseif (!is_array($schemaOrCallable) && is_file((string) $schemaOrCallable)) {

@@ -60,7 +60,7 @@ class Files
     /**
      * @param $path
      *
-     * @return string
+     * @return false|string
      */
     public static function getExtension($path)
     {
@@ -92,10 +92,8 @@ class Files
             case 'tmx':
             case 'xlf':
                 return true;
-                break;
             default:
                 return false;
-                break;
         }
     }
 

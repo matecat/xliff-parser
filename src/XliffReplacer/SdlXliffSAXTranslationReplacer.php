@@ -64,7 +64,7 @@ class SdlXliffSAXTranslationReplacer extends XliffSAXTranslationReplacer
                 } elseif ('sdl:seg' == $name) {
 
                     // write the confidence level for this segment ( Translated, Draft, etc. )
-                    if (isset($this->segments[ 'matecat|' . $this->currentTransUnitId ]) && $_sdlStatus_confWritten == false) {
+                    if (isset($this->segments[ 'matecat|' . $this->currentTransUnitId ]) && $_sdlStatus_confWritten === false) {
 
                         // append definition attribute
                         $tag .= $this->prepareTargetStatuses($this->lastTransUnit[ $this->markerPos ]);
@@ -98,11 +98,11 @@ class SdlXliffSAXTranslationReplacer extends XliffSAXTranslationReplacer
                 // if this tag entire lenght fitted in the buffer, the last char must be the last
                 // symbol before the '>'; if it's an empty tag, it is assumed that it's a '/'
                 $tmp_offset = $idx - $this->offset;
-                $lastChar   = $this->currentBuffer[ $idx - $this->offset ];
+                $lastChar   = $this->currentBuffer[ $tmp_offset ];
             } else {
                 //if it's out, simple use the last character of the chunk
                 $tmp_offset = $this->len - 1;
-                $lastChar   = $this->currentBuffer[ $this->len - 1 ];
+                $lastChar   = $this->currentBuffer[ $tmp_offset ];
             }
 
             // trim last space

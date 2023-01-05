@@ -3,6 +3,7 @@
 namespace Matecat\XliffParser\XliffReplacer;
 
 use Psr\Log\LoggerInterface;
+use RuntimeException;
 
 abstract class AbstractXliffReplacer
 {
@@ -120,11 +121,10 @@ abstract class AbstractXliffReplacer
     {
         $this->outputFP = fopen($outputFilePath, 'w+');
 
-        // setting $this->originalFP
         $streamArgs = null;
 
         if (!($this->originalFP = fopen($originalXliffPath, "r", false, stream_context_create($streamArgs)))) {
-            die("could not open XML input");
+            throw new RuntimeException( "could not open XML input" );
         }
     }
 
@@ -152,6 +152,8 @@ abstract class AbstractXliffReplacer
 
     /**
      * Init Sax parser
+     *
+     * @return resource
      */
     protected function initSaxParser()
     {

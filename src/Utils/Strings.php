@@ -153,7 +153,8 @@ class Strings
 
         // Prepare placeholders
         $tags_placeholders = [];
-        for ($i = 0; $i < count($tags); $i++) {
+        $tagsNum = count($tags);
+        for ($i = 0; $i < $tagsNum; $i++) {
             $tag                       = $tags[ $i ];
             $tags_placeholders[ $tag ] = "#@!XLIFF-TAG-$i!@#";
         }
@@ -179,7 +180,7 @@ class Strings
     /**
      * @param $string
      *
-     * @return string|string[]|null
+     * @return string
      */
     public static function removeDangerousChars($string)
     {
@@ -192,7 +193,7 @@ class Strings
         $string = preg_replace($regexpAscii, '', $string);
         $string = preg_replace($regexpEntity, '', $string);
 
-        return $string;
+        return !empty( $string ) ? $string : "";
     }
 
     /**
@@ -330,7 +331,7 @@ class Strings
      * @param string $segment
      * @param int $number
      *
-     * @return mixed
+     * @return int
      */
     private static function recursiveIncrementNumberOfTrailingSpaces( $segment, &$number)
     {

@@ -4,6 +4,7 @@ namespace Matecat\XliffParser\XliffReplacer;
 
 use Matecat\XliffParser\Constants\TranslationStatus;
 use Matecat\XliffParser\Utils\Strings;
+use RuntimeException;
 
 class XliffSAXTranslationReplacer extends AbstractXliffReplacer
 {
@@ -44,8 +45,6 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
             // obfuscate entities because sax automatically does html_entity_decode
             $temporary_check_buffer = preg_replace("/&(.*?);/", self::$INTERNAL_TAG_PLACEHOLDER . '$1' . self::$INTERNAL_TAG_PLACEHOLDER, $this->currentBuffer);
 
-            $lastByte = $temporary_check_buffer[ strlen($temporary_check_buffer) - 1 ];
-
             //avoid cutting entities in half:
             //the last fread could have truncated an entity (say, '&lt;' in '&l'), thus invalidating the escaping
             //***** and if there is an & that it is not an entity, this is an infinite loop !!!!!
@@ -83,12 +82,12 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
 
             //parse chunk of text
             if (!xml_parse($xmlParser, $this->currentBuffer, feof($this->originalFP))) {
-                //if unable, die
-                die(sprintf(
-                    "XML error: %s at line %d",
-                    xml_error_string(xml_get_error_code($xmlParser)),
-                    xml_get_current_line_number($xmlParser)
-                ));
+                //if unable, raise an exception
+                throw new RuntimeException( sprintf(
+                        "XML error: %s at line %d",
+                        xml_error_string( xml_get_error_code( $xmlParser ) ),
+                        xml_get_current_line_number( $xmlParser )
+                ) );
             }
             //get accumulated this->offset in document: as long as SAX pointer advances, we keep track of total bytes it has seen so far; this way, we can translate its global pointer in an address local to the current buffer of text to retrieve last char of tag
             $this->offset += $this->len;
@@ -212,7 +211,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
                         }
 
                     } elseif ('segment' === $name && $this->xliffVersion === 2) { // add state to segment in Xliff v2
-                        [$stateProp, $lastMrkState] = $this->setTransUnitState($this->segments[ $pos ], $stateProp, $lastMrkState);
+                        list( $stateProp, $lastMrkState ) = $this->setTransUnitState($this->segments[ $pos ], $stateProp, $lastMrkState);
                     }
 
                     //normal tag flux, put attributes in it
@@ -347,25 +346,13 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
 
                     $this->lastTransUnit = [];
 
-                    $warning       = false;
                     $last_value    = null;
                     $segmentsCount = count( $listOfSegmentsIds );
-                    for ($i = 0; $i < $segmentsCount; $i++) {
-                        if (isset($listOfSegmentsIds[ $i ])) {
-                            $id = $listOfSegmentsIds[ $i ];
-                            if (isset($this->segments[ $id ]) && ($i == 0 || $last_value + 1 == $listOfSegmentsIds[ $i ])) {
-                                $last_value            = $listOfSegmentsIds[ $i ];
-                                $this->lastTransUnit[] = $this->segments[ $id ];
-                            }
-                        } else {
-                            $warning = true;
-                        }
-                    }
-
-                    if ($warning) {
-                        if (null !== $this->logger) {
-                            $this->logger->warning("WARNING: PHP Notice polling. CurrentId: '" . $this->currentTransUnitId . "' - Filename: '" . $this->segments[ 0 ][ 'filename' ] . "' - First Segment: '" . $this->segments[
-                                    0 ][ 'sid' ] . "'");
+                    for ( $i = 0; $i < $segmentsCount; $i++ ) {
+                        $id = $listOfSegmentsIds[ $i ];
+                        if ( isset( $this->segments[ $id ] ) && ( $i == 0 || $last_value + 1 == $listOfSegmentsIds[ $i ] ) ) {
+                            $last_value            = $listOfSegmentsIds[ $i ];
+                            $this->lastTransUnit[] = $this->segments[ $id ];
                         }
                     }
 
@@ -395,7 +382,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
                         // append $translation
                         $translation = $this->prepareTranslation($seg, $translation);
 
-                        [$stateProp, $lastMrkState] = $this->setTransUnitState($seg, $stateProp, $lastMrkState);
+                        list( $stateProp, $lastMrkState ) = $this->setTransUnitState($seg, $stateProp, $lastMrkState);
                     } else {
                         foreach ($listOfSegmentsIds as $pos => $id) {
 
@@ -448,7 +435,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
 
                             $lastMrkId = $this->segments[ $id ][ "mrk_id" ];
 
-                            [$stateProp, $lastMrkState] = $this->setTransUnitState($seg, $stateProp, $lastMrkState);
+                            list( $stateProp, $lastMrkState ) = $this->setTransUnitState($seg, $stateProp, $lastMrkState);
                         }
                     }
 
@@ -523,7 +510,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
 
                     // if there is translation available insert <target> BEFORE </trans-unit>
                     if(isset($seg['translation'])){
-                        [$stateProp, $lastMrkState] = $this->setTransUnitState($seg, $stateProp, $lastMrkState);
+                        list( $stateProp, $lastMrkState ) = $this->setTransUnitState($seg, $stateProp, $lastMrkState);
                         $tag .= $this->createTargetTag($seg['translation'], $stateProp);
                     }
 
@@ -826,7 +813,8 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer
                 if ($lastMrkState == null) { //this is the first MRK ID
                     $state_prop   = "state=\"translated\"";
                     $lastMrkState = TranslationStatus::STATUS_TRANSLATED;
-                } else { /* Do nothing and preserve the last state */
+                } else {
+                    /* Do nothing and preserve the last state */
                 }
                 break;
         }

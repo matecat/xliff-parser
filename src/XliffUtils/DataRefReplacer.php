@@ -384,7 +384,7 @@ class DataRefReplacer
             }
         }
 
-        return $string;
+        return !is_array( $string ) ? $string : implode( $string );
     }
 
     /**

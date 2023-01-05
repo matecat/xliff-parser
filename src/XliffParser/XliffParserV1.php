@@ -2,6 +2,8 @@
 
 namespace Matecat\XliffParser\XliffParser;
 
+use DOMElement;
+use Exception;
 use Matecat\XliffParser\Exception\DuplicateTransUnitIdInXliff;
 use Matecat\XliffParser\Exception\NotFoundIdInTransUnit;
 use Matecat\XliffParser\Exception\SegmentIdTooLongException;
@@ -10,12 +12,12 @@ class XliffParserV1 extends AbstractXliffParser
 {
     /**
      * @inheritDoc
-     * @throws \Exception
+     * @throws Exception
      */
     public function parse(\DOMDocument $dom, $output = [])
     {
         $i = 1;
-        /** @var \DOMElement $file */
+        /** @var DOMElement $file */
         foreach ($dom->getElementsByTagName('file') as $file) {
 
             // metadata
@@ -51,11 +53,11 @@ class XliffParserV1 extends AbstractXliffParser
     }
 
     /**
-     * @param \DOMElement $file
+     * @param DOMElement $file
      *
      * @return array
      */
-    private function extractMetadata(\DOMElement $file)
+    private function extractMetadata( DOMElement $file)
     {
         $metadata = [];
         $customAttr = [];
@@ -107,11 +109,11 @@ class XliffParserV1 extends AbstractXliffParser
     }
 
     /**
-     * @param \DOMElement $file
+     * @param DOMElement $file
      *
      * @return array
      */
-    private function extractReference(\DOMElement $file)
+    private function extractReference( DOMElement $file)
     {
         $reference = [];
 
@@ -140,7 +142,7 @@ class XliffParserV1 extends AbstractXliffParser
      * @param $i
      * @param $j
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function extractTransUnit($transUnit, &$transUnitIdArrayForUniquenessCheck, $dom, &$output, &$i, &$j)
     {
@@ -151,7 +153,7 @@ class XliffParserV1 extends AbstractXliffParser
         $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'notes' ] = $this->extractTransUnitNotes($dom, $transUnit);
 
         // content
-        /** @var \DOMElement $childNode */
+        /** @var DOMElement $childNode */
         foreach ($transUnit->childNodes as $childNode) {
             // source
             if ($childNode->nodeName === 'source') {
@@ -171,7 +173,7 @@ class XliffParserV1 extends AbstractXliffParser
                 // seg-target
                 $targetRawContent = @$output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'target' ][ 'raw-content' ];
                 $segSource = @$output[ 'files' ][ $i ][ 'trans-units' ][ $j ]['seg-source'];
-                if (isset($targetRawContent) and !empty($targetRawContent) and isset($segSource) and count($segSource) > 0) {
+                if (isset($targetRawContent) && !empty($targetRawContent) && isset($segSource) && count($segSource) > 0) {
                     $output[ 'files' ][ $i ][ 'trans-units' ][ $j ]['seg-target'] = $this->extractContentWithMarksAndExtTags($dom, $childNode, $targetRawContent);
                 }
             }
@@ -196,13 +198,13 @@ class XliffParserV1 extends AbstractXliffParser
     }
 
     /**
-     * @param \DOMElement $transUnit
+     * @param DOMElement $transUnit
      * @param array       $transUnitIdArrayForUniquenessCheck
      *
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
-    private function extractTransUnitMetadata(\DOMElement $transUnit, array &$transUnitIdArrayForUniquenessCheck)
+    private function extractTransUnitMetadata( DOMElement $transUnit, array &$transUnitIdArrayForUniquenessCheck)
     {
         $metadata = [];
 
@@ -235,12 +237,12 @@ class XliffParserV1 extends AbstractXliffParser
     }
 
     /**
-     * @param \DOMElement $transUnit
+     * @param DOMElement $transUnit
      *
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
-    private function extractTransUnitNotes(\DOMDocument $dom, \DOMElement $transUnit)
+    private function extractTransUnitNotes(\DOMDocument $dom, DOMElement $transUnit)
     {
         $notes = [];
         foreach ($transUnit->getElementsByTagName('note') as $note) {
@@ -264,11 +266,11 @@ class XliffParserV1 extends AbstractXliffParser
     }
 
     /**
-     * @param \DOMElement $contextGroup
+     * @param DOMElement $contextGroup
      *
      * @return array
      */
-    private function extractTransUnitContextGroup(\DOMDocument $dom, \DOMElement $contextGroup)
+    private function extractTransUnitContextGroup(\DOMDocument $dom, DOMElement $contextGroup)
     {
         $cg = [];
         $cg['attr'] = $this->extractTagAttributes($contextGroup);
@@ -284,11 +286,11 @@ class XliffParserV1 extends AbstractXliffParser
     }
 
     /**
-     * @param \DOMElement $altTrans
+     * @param DOMElement $altTrans
      *
      * @return array
      */
-    private function extractTransUnitAltTrans(\DOMElement $altTrans)
+    private function extractTransUnitAltTrans( DOMElement $altTrans)
     {
         $at = [];
         $at['attr'] = $this->extractTagAttributes($altTrans);
@@ -305,11 +307,11 @@ class XliffParserV1 extends AbstractXliffParser
     }
 
     /**
-     * @param \DOMElement $locked
+     * @param DOMElement $locked
      *
      * @return bool
      */
-    private function extractLocked(\DOMElement $locked)
+    private function extractLocked( DOMElement $locked)
     {
         return null !== $locked->getAttribute('locked');
     }

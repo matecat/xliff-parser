@@ -54,9 +54,9 @@ class XliffParser
     /**
      * Parse a xliff file to array
      *
-     * @param      $xliffContent
+     * @param string $xliffContent
      *
-     * @param bool $collapseEmptyTags
+     * @param bool   $collapseEmptyTags
      *
      * @return mixed
      * @throws Exception\InvalidXmlException
@@ -83,7 +83,7 @@ class XliffParser
             $xliffContent = self::insertPlaceholderInEmptyTags($xliffContent);
         }
 
-        $xliffProprietary = (isset($info['proprietary_short_name']) and null !== $info['proprietary_short_name']) ? $info['proprietary_short_name'] : null;
+        $xliffProprietary = (isset($info['proprietary_short_name']) && null !== $info['proprietary_short_name']) ? $info['proprietary_short_name'] : null;
         $parser = XliffParserFactory::getInstance($xliffVersion, $xliffProprietary, $this->logger);
         $dom = XmlParser::parse($xliffContent);
 
@@ -97,7 +97,7 @@ class XliffParser
      * @param $xliffContent
      * @param $xliff
      *
-     * @return false|string
+     * @return string
      */
     private static function forceUft8Encoding($xliffContent, &$xliff)
     {
@@ -105,8 +105,8 @@ class XliffParser
 
         if ($enc !== 'UTF-8') {
             $xliff[ 'parser-warnings' ][] = "Input identified as $enc ans converted UTF-8. May not be a problem if the content is English only";
-
-            return iconv($enc, 'UTF-8', $xliffContent);
+            $s = iconv( $enc, 'UTF-8', $xliffContent );
+            $xliffContent = $s !== false ? $s : "";
         }
 
         return $xliffContent;

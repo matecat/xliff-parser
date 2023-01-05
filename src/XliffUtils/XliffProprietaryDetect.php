@@ -2,6 +2,7 @@
 
 namespace Matecat\XliffParser\XliffUtils;
 
+use Exception;
 use Matecat\XliffParser\Utils\Files;
 use Matecat\XliffParser\XliffUtils\CheckPipeline\CheckGlobalSight;
 use Matecat\XliffParser\XliffUtils\CheckPipeline\CheckMateCATConverter;
@@ -51,7 +52,7 @@ class XliffProprietaryDetect
     {
         try {
             self::checkVersion($tmp);
-        } catch (\Exception $e) {
+        } catch ( Exception $ignore) {
             // do nothing
             // self::$fileType[ 'version' ] is left empty
         }
@@ -97,17 +98,17 @@ class XliffProprietaryDetect
     }
 
     /**
-     * @param null $stringData
-     * @param null $fullPathToFile
+     * @param string $stringData
+     * @param string $fullPathToFile
      *
-     * @return array|bool
+     * @return array|false
      */
     private static function getFirst1024CharsFromXliff($stringData = null, $fullPathToFile = null)
     {
-        if (!empty($stringData) and empty($fullPathToFile)) {
+        if (!empty($stringData) && empty($fullPathToFile)) {
             $pathInfo = [];
             $stringData = substr($stringData, 0, 1024);
-        } elseif (empty($stringData) and !empty($fullPathToFile)) {
+        } elseif (empty($stringData) && !empty($fullPathToFile)) {
             $pathInfo = Files::pathInfo($fullPathToFile);
 
             if (is_file($fullPathToFile)) {
@@ -120,7 +121,7 @@ class XliffProprietaryDetect
             $pathInfo = Files::pathInfo($fullPathToFile);
         }
 
-        if (!empty($pathInfo) and !Files::isXliff($fullPathToFile)) {
+        if (!empty($pathInfo) && !Files::isXliff($fullPathToFile)) {
             return false;
         }
 
@@ -186,7 +187,7 @@ class XliffProprietaryDetect
         $fileType = self::getInfo($fullPath);
         $memoryFileType = Files::getMemoryFileType($fullPath);
 
-        if (Files::isXliff($fullPath) or $memoryFileType) {
+        if (Files::isXliff($fullPath) || $memoryFileType) {
             if (!empty($filterAddress)) {
 
                 //conversion enforce
@@ -194,7 +195,7 @@ class XliffProprietaryDetect
 
                     //if file is not proprietary AND Enforce is disabled
                     //we take it as is
-                    if (!$fileType[ 'proprietary' ] or $memoryFileType) {
+                    if (!$fileType[ 'proprietary' ] || $memoryFileType) {
                         $convert = false;
                         //ok don't convert a standard sdlxliff
                     }
@@ -203,9 +204,9 @@ class XliffProprietaryDetect
                     //we force all xliff files but not files produced by SDL Studio because we can handle them
                     if (
                             $fileType[ 'proprietary_short_name' ] == 'matecat_converter'
-                            or $fileType[ 'proprietary_short_name' ] == 'trados'
-                            or $fileType[ 'proprietary_short_name' ] == 'xliff_v2'
-                            or $memoryFileType
+                            || $fileType[ 'proprietary_short_name' ] == 'trados'
+                            || $fileType[ 'proprietary_short_name' ] == 'xliff_v2'
+                            || $memoryFileType
                     ) {
                         $convert = false;
                         //ok don't convert a standard sdlxliff
