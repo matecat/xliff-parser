@@ -30,7 +30,9 @@
     "ext-openssl": "*",
     "ext-xml": "*",
     "ext-iconv": "*",
-    "ext-libxml": "*"
+    "ext-libxml": "*",
+    "ext-json": "*",
+    "ext-simplexml": "*"
   },
   "require-dev": {
     "phpunit/phpunit": "^5",

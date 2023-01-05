@@ -5,8 +5,7 @@ namespace Matecat\XliffParser\XliffUtils;
 use Matecat\XliffParser\Utils\HtmlParser;
 use Matecat\XliffParser\Utils\Strings;
 
-class DataRefReplacer
-{
+class DataRefReplacer {
     /**
      * @var array
      */
@@ -17,8 +16,7 @@ class DataRefReplacer
      *
      * @param array $map
      */
-    public function __construct( array $map)
-    {
+    public function __construct( array $map ) {
         $this->map = $map;
     }
 
@@ -33,39 +31,38 @@ class DataRefReplacer
      *
      * @return string
      */
-    public function replace($string)
-    {
+    public function replace( $string ) {
         // if map is empty
         // or the string has not a dataRef attribute
         // return string as is
-        if (empty($this->map) || !$this->hasAnyDataRefAttribute($string)) {
+        if ( empty( $this->map ) || !$this->hasAnyDataRefAttribute( $string ) ) {
             return $string;
         }
 
         // (recursively) clean string from equiv-text eventually present
-        $string = $this->cleanFromEquivText($string);
+        $string = $this->cleanFromEquivText( $string );
 
-        $html = HtmlParser::parse($string);
+        $html = HtmlParser::parse( $string );
 
         // 1. Replace <ph>|<sc>|<ec> tags
-        foreach ($html as $node){
-            $string = $this->recursiveAddEquivTextToPhTag($node, $string);
+        foreach ( $html as $node ) {
+            $string = $this->recursiveAddEquivTextToPhTag( $node, $string );
         }
 
         // 2. Replace <pc> tags
-        $toBeEscaped = Strings::isAnEscapedHTML($string);
+        $toBeEscaped = Strings::isAnEscapedHTML( $string );
 
-        if($this->stringContainsPcTags($string, $toBeEscaped)){
+        if ( $this->stringContainsPcTags( $string, $toBeEscaped ) ) {
 
             // replace self-closed <pc />
-            $string = $this->replaceSelfClosedPcTags($string, $toBeEscaped);
+            $string = $this->replaceSelfClosedPcTags( $string, $toBeEscaped );
 
             // create a dataRefEnd map
             // (needed for correct handling of </pc> closing tags)
-            $dataRefEndMap = $this->buildDataRefEndMap($html);
-            $string = $this->replaceOpeningPcTags($string, $toBeEscaped);
-            $string = $this->replaceClosingPcTags($string, $toBeEscaped, $dataRefEndMap);
-            $string = ($toBeEscaped) ? Strings::escapeOnlyHTMLTags($string) : $string;
+            $dataRefEndMap = $this->buildDataRefEndMap( $html );
+            $string        = $this->replaceOpeningPcTags( $string, $toBeEscaped );
+            $string        = $this->replaceClosingPcTags( $string, $toBeEscaped, $dataRefEndMap );
+            $string        = ( $toBeEscaped ) ? Strings::escapeOnlyHTMLTags( $string ) : $string;
         }
 
         return $string;
@@ -76,18 +73,17 @@ class DataRefReplacer
      *
      * @return bool
      */
-    private function hasAnyDataRefAttribute($string)
-    {
+    private function hasAnyDataRefAttribute( $string ) {
         $dataRefTags = [
-            'dataRef',
-            'dataRefStart',
-            'dataRefEnd',
+                'dataRef',
+                'dataRefStart',
+                'dataRefEnd',
         ];
 
-        foreach ($dataRefTags as $tag){
-            preg_match('/ '.$tag.'=[\\\\"](.*?)[\\\\"]/', $string, $matches);
+        foreach ( $dataRefTags as $tag ) {
+            preg_match( '/ ' . $tag . '=[\\\\"](.*?)[\\\\"]/', $string, $matches );
 
-            if(count($matches) > 0){
+            if ( count( $matches ) > 0 ) {
                 return true;
             }
         }
@@ -98,12 +94,11 @@ class DataRefReplacer
      *
      * @return string
      */
-    private function cleanFromEquivText($string)
-    {
-        $html = HtmlParser::parse($string);
+    private function cleanFromEquivText( $string ) {
+        $html = HtmlParser::parse( $string );
 
-        foreach ($html as $node){
-            $string = $this->recursiveCleanFromEquivText($node, $string);
+        foreach ( $html as $node ) {
+            $string = $this->recursiveCleanFromEquivText( $node, $string );
         }
 
         return $string;
@@ -122,58 +117,57 @@ class DataRefReplacer
      *
      * @return string
      */
-    private function recursiveAddEquivTextToPhTag( $node, $string)
-    {
-        if($node->has_children){
-            foreach ($node->inner_html as $childNode){
-                $string = $this->recursiveAddEquivTextToPhTag($childNode, $string);
+    private function recursiveAddEquivTextToPhTag( $node, $string ) {
+        if ( $node->has_children ) {
+            foreach ( $node->inner_html as $childNode ) {
+                $string = $this->recursiveAddEquivTextToPhTag( $childNode, $string );
             }
         } else {
-            if ($node->tagname === 'ph' || $node->tagname === 'sc' || $node->tagname === 'ec') {
-                if (!isset($node->attributes['dataRef'])) {
+            if ( $node->tagname === 'ph' || $node->tagname === 'sc' || $node->tagname === 'ec' ) {
+                if ( !isset( $node->attributes[ 'dataRef' ] ) ) {
                     return $string;
                 }
 
                 $a = $node->node;  // complete match. Eg:  <ph id="source1" dataRef="source1"/>
-                $b = $node->attributes['dataRef'];   // map identifier. Eg: source1
+                $b = $node->attributes[ 'dataRef' ];   // map identifier. Eg: source1
 
 
                 // if isset a value in the map calculate base64 encoded value
                 // otherwise skip
-                if(!in_array($b, array_keys($this->map))){
+                if ( !in_array( $b, array_keys( $this->map ) ) ) {
                     return $string;
                 }
 
                 // check if is null, in this case convert it to NULL string
-                if(is_null($this->map[$b])){
-                    $this->map[$b] = 'NULL';
+                if ( is_null( $this->map[ $b ] ) ) {
+                    $this->map[ $b ] = 'NULL';
                 }
 
-                $value = $this->map[$b];
-                $base64EncodedValue = base64_encode($value);
+                $value              = $this->map[ $b ];
+                $base64EncodedValue = base64_encode( $value );
 
-                if (empty($base64EncodedValue) || $base64EncodedValue === '') {
+                if ( empty( $base64EncodedValue ) || $base64EncodedValue === '' ) {
                     return $string;
                 }
 
                 // if there is no id copy it from dataRef
-                $id = (!isset($node->attributes['id'])) ? ' id="'.$b.'" removeId="true"': '';
+                $id = ( !isset( $node->attributes[ 'id' ] ) ) ? ' id="' . $b . '" removeId="true"' : '';
 
                 // introduce dataType for <ec>/<sc> tag handling
-                $dataType = ($this->isAEcOrScTag($node)) ? ' dataType="'.$node->tagname.'"' : '';
+                $dataType = ( $this->isAEcOrScTag( $node ) ) ? ' dataType="' . $node->tagname . '"' : '';
 
                 // replacement
-                $d = str_replace('/', $id.$dataType. ' equiv-text="base64:'.$base64EncodedValue.'"/', $a);
-                $a = str_replace(['<','>','&gt;', '&lt;'], '', $a);
-                $d = str_replace(['<','>','&gt;', '&lt;'], '', $d);
+                $d = str_replace( '/', $id . $dataType . ' equiv-text="base64:' . $base64EncodedValue . '"/', $a );
+                $a = str_replace( [ '<', '>', '&gt;', '&lt;' ], '', $a );
+                $d = str_replace( [ '<', '>', '&gt;', '&lt;' ], '', $d );
 
                 // convert <ec>/<sc> into <ph>
-                if($this->isAEcOrScTag($node)){
-                    $d = 'ph'.substr($d, 2);
-                    $d = trim($d);
+                if ( $this->isAEcOrScTag( $node ) ) {
+                    $d = 'ph' . substr( $d, 2 );
+                    $d = trim( $d );
                 }
 
-                return str_replace($a, $d, $string);
+                return str_replace( $a, $d, $string );
             }
         }
 
@@ -186,12 +180,11 @@ class DataRefReplacer
      *
      * @return bool
      */
-    private function stringContainsPcTags($string, $toBeEscaped)
-    {
-        $regex = ($toBeEscaped) ? '/&lt;pc (.*?)&gt;/iu' : '/<pc (.*?)>/iu';
-        preg_match_all($regex, $string, $openingPcMatches);
+    private function stringContainsPcTags( $string, $toBeEscaped ) {
+        $regex = ( $toBeEscaped ) ? '/&lt;pc (.*?)&gt;/iu' : '/<pc (.*?)>/iu';
+        preg_match_all( $regex, $string, $openingPcMatches );
 
-        return (isset($openingPcMatches[0]) && count($openingPcMatches[0])>0);
+        return ( isset( $openingPcMatches[ 0 ] ) && count( $openingPcMatches[ 0 ] ) > 0 );
     }
 
     /**
@@ -200,29 +193,28 @@ class DataRefReplacer
      *
      * @return mixed
      */
-    private function replaceSelfClosedPcTags($string, $toBeEscaped)
-    {
-        if($toBeEscaped){
-            $string = str_replace(['&lt;','&gt;'],['<','>'],$string);
+    private function replaceSelfClosedPcTags( $string, $toBeEscaped ) {
+        if ( $toBeEscaped ) {
+            $string = str_replace( [ '&lt;', '&gt;' ], [ '<', '>' ], $string );
         }
 
         $regex = '/<pc[^>]+?\/>/iu';
-        preg_match_all($regex, $string, $selfClosedPcMatches);
+        preg_match_all( $regex, $string, $selfClosedPcMatches );
 
-        foreach ($selfClosedPcMatches[0] as $match){
+        foreach ( $selfClosedPcMatches[ 0 ] as $match ) {
 
-            $html = HtmlParser::parse($match);
-            $node = $html[0];
+            $html       = HtmlParser::parse( $match );
+            $node       = $html[ 0 ];
             $attributes = $node->attributes;
 
-            if(isset($attributes['dataRefStart']) && array_key_exists($node->attributes['dataRefStart'], $this->map)){
-                $replacement = '<ph id="'.$attributes['id'].'" dataType="pcSelf" originalData="'.base64_encode($match).'" dataRef="'.$attributes['dataRefStart'].'" equiv-text="base64:'.base64_encode($this->map[$node->attributes['dataRefStart']]).'"/>';
-                $string = str_replace($match, $replacement, $string);
+            if ( isset( $attributes[ 'dataRefStart' ] ) && array_key_exists( $node->attributes[ 'dataRefStart' ], $this->map ) ) {
+                $replacement = '<ph id="' . $attributes[ 'id' ] . '" dataType="pcSelf" originalData="' . base64_encode( $match ) . '" dataRef="' . $attributes[ 'dataRefStart' ] . '" equiv-text="base64:' . base64_encode( $this->map[ $node->attributes[ 'dataRefStart' ] ] ) . '"/>';
+                $string      = str_replace( $match, $replacement, $string );
             }
         }
 
-        if($toBeEscaped){
-            $string = str_replace(['<','>'],['&lt;','&gt;'],$string);
+        if ( $toBeEscaped ) {
+            $string = str_replace( [ '<', '>' ], [ '&lt;', '&gt;' ], $string );
         }
 
         return $string;
@@ -236,13 +228,12 @@ class DataRefReplacer
      *
      * @return array
      */
-    private function buildDataRefEndMap($html)
-    {
+    private function buildDataRefEndMap( $html ) {
         $dataRefEndMap = [];
 
-        foreach ($html as $index => $node) {
+        foreach ( $html as $index => $node ) {
             if ( $node->tagname === 'pc' ) {
-                $this->extractDataRefMapRecursively($node, $dataRefEndMap);
+                $this->extractDataRefMapRecursively( $node, $dataRefEndMap );
             }
         }
 
@@ -253,28 +244,27 @@ class DataRefReplacer
      * Extract (recursively) the dataRefEnd map from single nodes
      *
      * @param object $node
-     * @param $dataRefEndMap
+     * @param        $dataRefEndMap
      */
-    private function extractDataRefMapRecursively( $node, &$dataRefEndMap)
-    {
-        if($this->nodeContainsNestedPcTags($node)) {
+    private function extractDataRefMapRecursively( $node, &$dataRefEndMap ) {
+        if ( $this->nodeContainsNestedPcTags( $node ) ) {
             foreach ( $node->inner_html as $nestedNode ) {
-                $this->extractDataRefMapRecursively($nestedNode, $dataRefEndMap);
+                $this->extractDataRefMapRecursively( $nestedNode, $dataRefEndMap );
             }
         }
 
         // EXCLUDE self closed <pc/>
-        if($node->tagname === 'pc' && $node->self_closed === false){
-            if(isset($node->attributes['dataRefEnd'])){
-                $dataRefEnd = $node->attributes['dataRefEnd'];
-            } elseif(isset($node->attributes['dataRefStart'])) {
-                $dataRefEnd = $node->attributes['dataRefStart'];
+        if ( $node->tagname === 'pc' && $node->self_closed === false ) {
+            if ( isset( $node->attributes[ 'dataRefEnd' ] ) ) {
+                $dataRefEnd = $node->attributes[ 'dataRefEnd' ];
+            } elseif ( isset( $node->attributes[ 'dataRefStart' ] ) ) {
+                $dataRefEnd = $node->attributes[ 'dataRefStart' ];
             } else {
                 $dataRefEnd = null;
             }
 
             $dataRefEndMap[] = [
-                    'id' => isset($node->attributes['id'] ) ? $node->attributes['id'] : null,
+                    'id'         => isset( $node->attributes[ 'id' ] ) ? $node->attributes[ 'id' ] : null,
                     'dataRefEnd' => $dataRefEnd,
             ];
         }
@@ -282,20 +272,19 @@ class DataRefReplacer
 
     /**
      * @param object $node
-     * @param $string
+     * @param        $string
      *
      * @return string|string[]
      */
-    private function recursiveCleanFromEquivText($node, $string)
-    {
-        if($node->has_children){
-            foreach ($node->inner_html as $childNode){
-                $string = $this->recursiveCleanFromEquivText($childNode, $string);
+    private function recursiveCleanFromEquivText( $node, $string ) {
+        if ( $node->has_children ) {
+            foreach ( $node->inner_html as $childNode ) {
+                $string = $this->recursiveCleanFromEquivText( $childNode, $string );
             }
         } else {
-            if(isset($node->attributes['dataRef']) && array_key_exists($node->attributes['dataRef'], $this->map)){
-                $cleaned = preg_replace('/ equiv-text="(.*?)"/', '', $node->node);
-                $string = str_replace($node->node, $cleaned, $string);
+            if ( isset( $node->attributes[ 'dataRef' ] ) && array_key_exists( $node->attributes[ 'dataRef' ], $this->map ) ) {
+                $cleaned = preg_replace( '/ equiv-text="(.*?)"/', '', $node->node );
+                $string  = str_replace( $node->node, $cleaned, $string );
             }
         }
 
@@ -306,40 +295,39 @@ class DataRefReplacer
      * Replace opening <pc> tags with correct reference in the $string
      *
      * @param string $string
-     * @param bool $toBeEscaped
+     * @param bool   $toBeEscaped
      *
      * @return string
      */
-    private function replaceOpeningPcTags($string, $toBeEscaped)
-    {
-        $regex = ($toBeEscaped) ? '/&lt;pc (.*?)&gt;/iu' : '/<pc (.*?)>/iu';
-        preg_match_all($regex, $string, $openingPcMatches);
+    private function replaceOpeningPcTags( $string, $toBeEscaped ) {
+        $regex = ( $toBeEscaped ) ? '/&lt;pc (.*?)&gt;/iu' : '/<pc (.*?)>/iu';
+        preg_match_all( $regex, $string, $openingPcMatches );
 
-        foreach ($openingPcMatches[0] as $index => $match){
-            $attr = HtmlParser::getAttributes($openingPcMatches[1][$index]);
+        foreach ( $openingPcMatches[ 0 ] as $index => $match ) {
+            $attr = HtmlParser::getAttributes( $openingPcMatches[ 1 ][ $index ] );
 
             // CASE 1 - Missing `dataRefStart`
-            if( isset($attr['dataRefEnd']) && !isset($attr['dataRefStart'])  ){
-                $attr['dataRefStart'] = $attr['dataRefEnd'];
+            if ( isset( $attr[ 'dataRefEnd' ] ) && !isset( $attr[ 'dataRefStart' ] ) ) {
+                $attr[ 'dataRefStart' ] = $attr[ 'dataRefEnd' ];
             }
 
             // CASE 2 - Missing `dataRefEnd`
-            if( isset($attr['dataRefStart']) && !isset($attr['dataRefEnd'])  ){
-                $attr['dataRefEnd'] = $attr['dataRefStart'];
+            if ( isset( $attr[ 'dataRefStart' ] ) && !isset( $attr[ 'dataRefEnd' ] ) ) {
+                $attr[ 'dataRefEnd' ] = $attr[ 'dataRefStart' ];
             }
 
-            if(isset($attr['dataRefStart'])){
-                $startOriginalData = $match; // opening <pc>
-                $startValue = $this->map[$attr['dataRefStart']] ? $this->map[$attr['dataRefStart']] : 'NULL'; //handling null values in original data map
-                $base64EncodedStartValue = base64_encode($startValue);
-                $base64StartOriginalData = base64_encode($startOriginalData);
+            if ( isset( $attr[ 'dataRefStart' ] ) ) {
+                $startOriginalData       = $match; // opening <pc>
+                $startValue              = $this->map[ $attr[ 'dataRefStart' ] ] ? $this->map[ $attr[ 'dataRefStart' ] ] : 'NULL'; //handling null values in original data map
+                $base64EncodedStartValue = base64_encode( $startValue );
+                $base64StartOriginalData = base64_encode( $startOriginalData );
 
                 // conversion for opening <pc> tag
-                $openingPcConverted  = '<ph '. ((isset($attr['id'])) ? 'id="'.$attr['id'].'_1"' : '') .' dataType="pcStart" originalData="'.$base64StartOriginalData.'" dataRef="'
-                        .$attr['dataRefStart'].'" equiv-text="base64:'
-                        .$base64EncodedStartValue.'"/>';
+                $openingPcConverted = '<ph ' . ( ( isset( $attr[ 'id' ] ) ) ? 'id="' . $attr[ 'id' ] . '_1"' : '' ) . ' dataType="pcStart" originalData="' . $base64StartOriginalData . '" dataRef="'
+                        . $attr[ 'dataRefStart' ] . '" equiv-text="base64:'
+                        . $base64EncodedStartValue . '"/>';
 
-                $string = str_replace($startOriginalData, $openingPcConverted, $string);
+                $string = str_replace( $startOriginalData, $openingPcConverted, $string );
             }
         }
 
@@ -356,31 +344,30 @@ class DataRefReplacer
      *
      * @return string
      */
-    private function replaceClosingPcTags($string, $toBeEscaped, $dataRefEndMap = [])
-    {
-        $regex = ($toBeEscaped) ? '/&lt;\/pc&gt;/iu' : '/<\/pc>/iu';
-        preg_match_all($regex, $string, $closingPcMatches, PREG_OFFSET_CAPTURE);
+    private function replaceClosingPcTags( $string, $toBeEscaped, $dataRefEndMap = [] ) {
+        $regex = ( $toBeEscaped ) ? '/&lt;\/pc&gt;/iu' : '/<\/pc>/iu';
+        preg_match_all( $regex, $string, $closingPcMatches, PREG_OFFSET_CAPTURE );
         $delta = 0;
 
         foreach ( $closingPcMatches[ 0 ] as $index => $match ) {
-            $offset = $match[1];
-            $length = strlen($match[0]);
-            $attr = $dataRefEndMap[$index];
+            $offset = $match[ 1 ];
+            $length = strlen( $match[ 0 ] );
+            $attr   = $dataRefEndMap[ $index ];
 
-            if(!empty($attr) && isset($attr['dataRefEnd'])){
-                $endOriginalData = $match[0]; // </pc>
-                $endValue = $this->map[$attr['dataRefEnd']] ? $this->map[$attr['dataRefEnd']] : 'NULL';
-                $base64EncodedEndValue = base64_encode($endValue);
-                $base64EndOriginalData = base64_encode($endOriginalData);
+            if ( !empty( $attr ) && isset( $attr[ 'dataRefEnd' ] ) ) {
+                $endOriginalData       = $match[ 0 ]; // </pc>
+                $endValue              = $this->map[ $attr[ 'dataRefEnd' ] ] ?: 'NULL';
+                $base64EncodedEndValue = base64_encode( $endValue );
+                $base64EndOriginalData = base64_encode( $endOriginalData );
 
                 // conversion for closing <pc> tag
-                $closingPcConverted = '<ph '. ((isset($attr['id'])) ? 'id="'.$attr['id'].'_2"': '') .' dataType="pcEnd" originalData="'.$base64EndOriginalData.'" dataRef="'
-                        .$attr['dataRefEnd'].'" equiv-text="base64:' .$base64EncodedEndValue.'"/>';
+                $closingPcConverted = '<ph ' . ( ( isset( $attr[ 'id' ] ) ) ? 'id="' . $attr[ 'id' ] . '_2"' : '' ) . ' dataType="pcEnd" originalData="' . $base64EndOriginalData . '" dataRef="'
+                        . $attr[ 'dataRefEnd' ] . '" equiv-text="base64:' . $base64EncodedEndValue . '"/>';
 
-                $realOffset = ($delta === 0) ? $offset : ($offset + $delta);
+                $realOffset = ( $delta === 0 ) ? $offset : ( $offset + $delta );
 
-                $string = substr_replace($string, $closingPcConverted, $realOffset, $length);
-                $delta = $delta + strlen($closingPcConverted) - $length;
+                $string = substr_replace( $string, $closingPcConverted, $realOffset, $length );
+                $delta  = $delta + strlen( $closingPcConverted ) - $length;
             }
         }
 
@@ -392,14 +379,13 @@ class DataRefReplacer
      *
      * @return bool
      */
-    private function nodeContainsNestedPcTags($node)
-    {
-        if(!$node->has_children){
+    private function nodeContainsNestedPcTags( $node ) {
+        if ( !$node->has_children ) {
             return false;
         }
 
-        foreach ($node->inner_html as $nestedNode) {
-            if($nestedNode->tagname === 'pc' && (isset($node->attributes['dataRefEnd']) || isset($node->attributes['dataRefStart']))){
+        foreach ( $node->inner_html as $nestedNode ) {
+            if ( $nestedNode->tagname === 'pc' && ( isset( $node->attributes[ 'dataRefEnd' ] ) || isset( $node->attributes[ 'dataRefStart' ] ) ) ) {
                 return true;
             }
         }
@@ -412,19 +398,18 @@ class DataRefReplacer
      *
      * @return string
      */
-    public function restore($string)
-    {
+    public function restore( $string ) {
         // if map is empty return string as is
-        if (empty($this->map)) {
-            return  $string;
+        if ( empty( $this->map ) ) {
+            return $string;
         }
 
         // replace eventual empty equiv-text=""
-        $string = str_replace(' equiv-text=""', '', $string);
-        $html = HtmlParser::parse($string);
+        $string = str_replace( ' equiv-text=""', '', $string );
+        $html   = HtmlParser::parse( $string );
 
-        foreach ($html as $node){
-            $string = $this->recursiveRemoveOriginalData($node, $string);
+        foreach ( $html as $node ) {
+            $string = $this->recursiveRemoveOriginalData( $node, $string );
         }
 
         return $string;
@@ -432,81 +417,80 @@ class DataRefReplacer
 
     /**
      * @param object $node
-     * @param $string
+     * @param        $string
      *
      * @return string|string[]
      */
-    private function recursiveRemoveOriginalData($node, $string)
-    {
-        if($node->has_children){
-            foreach ($node->inner_html as $childNode){
-                $string = $this->recursiveRemoveOriginalData($childNode, $string);
+    private function recursiveRemoveOriginalData( $node, $string ) {
+        if ( $node->has_children ) {
+            foreach ( $node->inner_html as $childNode ) {
+                $string = $this->recursiveRemoveOriginalData( $childNode, $string );
             }
         } else {
 
-            if(!isset($node->attributes['dataRef'])){
+            if ( !isset( $node->attributes[ 'dataRef' ] ) ) {
                 return $string;
             }
 
             $a = $node->node;                  // complete match. Eg:  <ph id="source1" dataRef="source1"/>
-            $b = $node->attributes['dataRef']; // map identifier. Eg: source1
+            $b = $node->attributes[ 'dataRef' ]; // map identifier. Eg: source1
             $c = $node->terminator;            // terminator: Eg: >
 
             // if isset a value in the map calculate base64 encoded value
             // or it is an empty string
             // otherwise skip
-            if(!in_array($b, array_keys($this->map))  ){
+            if ( !in_array( $b, array_keys( $this->map ) ) ) {
                 return $string;
             }
 
             // check if is null, in this case convert it to NULL string
-            if(is_null($this->map[$b])){
-                $this->map[$b] = 'NULL';
+            if ( is_null( $this->map[ $b ] ) ) {
+                $this->map[ $b ] = 'NULL';
             }
 
             // remove id?
-            $removeId = (isset($node->attributes['removeId']) && $node->attributes['removeId'] === "true") ? ' id="'.$b.'" removeId="true"' : '';
+            $removeId = ( isset( $node->attributes[ 'removeId' ] ) && $node->attributes[ 'removeId' ] === "true" ) ? ' id="' . $b . '" removeId="true"' : '';
 
             // grab dataType attribute for <ec>/<sc> tag handling
-            $dataType = ($this->wasAEcOrScTag($node)) ? ' dataType="'.$node->attributes['dataType'].'"' : '';
+            $dataType = ( $this->wasAEcOrScTag( $node ) ) ? ' dataType="' . $node->attributes[ 'dataType' ] . '"' : '';
 
-            $d = str_replace($removeId.$dataType.' equiv-text="base64:'.base64_encode($this->map[$b]).'"/'.$c, '/'.$c, $a);
+            $d = str_replace( $removeId . $dataType . ' equiv-text="base64:' . base64_encode( $this->map[ $b ] ) . '"/' . $c, '/' . $c, $a );
 
             // replace original <ec>/<sc> tag
-            if($this->wasAEcOrScTag($node)){
-                $d = $node->attributes['dataType'].substr($d, 3);
-                $d = trim($d);
+            if ( $this->wasAEcOrScTag( $node ) ) {
+                $d = $node->attributes[ 'dataType' ] . substr( $d, 3 );
+                $d = trim( $d );
             }
 
             // replace only content tag, no matter if the string is encoded or not
             // in this way we can handle string with mixed tags (encoded and not-encoded)
             // in the same string
-            $a = $this->purgeTags($a);
-            $d = $this->purgeTags($d);
+            $a = $this->purgeTags( $a );
+            $d = $this->purgeTags( $d );
 
-            $string = str_replace($a, $d, $string);
+            $string = str_replace( $a, $d, $string );
 
             // restoring <pc/> self-closed here
-            if(Strings::contains('dataType="pcSelf"', $d)){
-                preg_match('/\s?originalData="(.*?)"\s?/', $d, $originalDataMatches);
+            if ( Strings::contains( 'dataType="pcSelf"', $d ) ) {
+                preg_match( '/\s?originalData="(.*?)"\s?/', $d, $originalDataMatches );
 
-                if (isset($originalDataMatches[1])) {
-                    $originalData = base64_decode($originalDataMatches[1]);
-                    $originalData = $this->purgeTags($originalData);
-                    $string = str_replace($d, $originalData, $string);
+                if ( isset( $originalDataMatches[ 1 ] ) ) {
+                    $originalData = base64_decode( $originalDataMatches[ 1 ] );
+                    $originalData = $this->purgeTags( $originalData );
+                    $string       = str_replace( $d, $originalData, $string );
                 }
             }
 
             // restoring <pc> tags here
             // if <ph> tag has originalData and originalType is pcStart or pcEnd,
             // replace with original data
-            if (Strings::contains('dataType="pcStart"', $d) || Strings::contains('dataType="pcEnd"', $d)) {
-                preg_match('/\s?originalData="(.*?)"\s?/', $d, $originalDataMatches);
+            if ( Strings::contains( 'dataType="pcStart"', $d ) || Strings::contains( 'dataType="pcEnd"', $d ) ) {
+                preg_match( '/\s?originalData="(.*?)"\s?/', $d, $originalDataMatches );
 
-                if (isset($originalDataMatches[1])) {
-                    $originalData = base64_decode($originalDataMatches[1]);
-                    $originalData = $this->purgeTags($originalData);
-                    $string = str_replace($d, $originalData, $string);
+                if ( isset( $originalDataMatches[ 1 ] ) ) {
+                    $originalData = base64_decode( $originalDataMatches[ 1 ] );
+                    $originalData = $this->purgeTags( $originalData );
+                    $string       = str_replace( $d, $originalData, $string );
                 }
             }
         }
@@ -519,9 +503,8 @@ class DataRefReplacer
      *
      * @return string
      */
-    private function purgeTags($string)
-    {
-        return str_replace(['<', '>', '&lt;', '&gt;'], '', $string);
+    private function purgeTags( $string ) {
+        return str_replace( [ '<', '>', '&lt;', '&gt;' ], '', $string );
     }
 
     /**
@@ -531,9 +514,8 @@ class DataRefReplacer
      *
      * @return bool
      */
-    private function isAEcOrScTag($node)
-    {
-        return ($node->tagname === 'ec' || $node->tagname === 'sc');
+    private function isAEcOrScTag( $node ) {
+        return ( $node->tagname === 'ec' || $node->tagname === 'sc' );
     }
 
     /**
@@ -544,8 +526,7 @@ class DataRefReplacer
      *
      * @return bool
      */
-    private function wasAEcOrScTag($node)
-    {
-        return (isset($node->attributes['dataType']) && ( $node->attributes['dataType'] === 'ec' || $node->attributes['dataType'] === 'sc'));
+    private function wasAEcOrScTag( $node ) {
+        return ( isset( $node->attributes[ 'dataType' ] ) && ( $node->attributes[ 'dataType' ] === 'ec' || $node->attributes[ 'dataType' ] === 'sc' ) );
     }
 }

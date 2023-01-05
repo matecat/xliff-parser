@@ -3,6 +3,8 @@
 namespace Matecat\XliffParser\XliffUtils;
 
 use Exception;
+use Matecat\XliffParser\Exception\NotSupportedVersionException;
+use Matecat\XliffParser\Exception\NotValidFileException;
 use Matecat\XliffParser\Utils\Files;
 use Matecat\XliffParser\XliffUtils\CheckPipeline\CheckGlobalSight;
 use Matecat\XliffParser\XliffUtils\CheckPipeline\CheckMateCATConverter;
@@ -135,8 +137,8 @@ class XliffProprietaryDetect
     /**
      * @param $tmp
      *
-     * @throws \Matecat\XliffParser\Exception\NotSupportedVersionException
-     * @throws \Matecat\XliffParser\Exception\NotValidFileException
+     * @throws NotSupportedVersionException
+     * @throws NotValidFileException
      */
     protected static function checkVersion($tmp)
     {
@@ -149,8 +151,8 @@ class XliffProprietaryDetect
      * @param string $stringData
      *
      * @return array
-     * @throws \Matecat\XliffParser\Exception\NotSupportedVersionException
-     * @throws \Matecat\XliffParser\Exception\NotValidFileException
+     * @throws NotSupportedVersionException
+     * @throws NotValidFileException
      */
     public static function getInfoByStringData($stringData)
     {
@@ -177,8 +179,8 @@ class XliffProprietaryDetect
      * @param null $filterAddress
      *
      * @return bool|int
-     * @throws \Matecat\XliffParser\Exception\NotSupportedVersionException
-     * @throws \Matecat\XliffParser\Exception\NotValidFileException
+     * @throws NotSupportedVersionException
+     * @throws NotValidFileException
      */
     public static function fileMustBeConverted($fullPath, $enforceOnXliff = null, $filterAddress = null)
     {

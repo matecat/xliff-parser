@@ -18,8 +18,6 @@ class XliffReplacerFactory
      * @param XliffReplacerCallbackInterface|null $callback
      *
      * @return SdlXliffSAXTranslationReplacer|XliffSAXTranslationReplacer
-     * @throws \Matecat\XliffParser\Exception\NotSupportedVersionException
-     * @throws \Matecat\XliffParser\Exception\NotValidFileException
      */
     public static function getInstance($originalXliffPath, &$data, &$transUnits, $targetLang, $outputFilePath, $setSourceInTarget, LoggerInterface $logger = null, XliffReplacerCallbackInterface
     $callback = null)
