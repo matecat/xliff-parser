@@ -2,6 +2,5 @@
 
 namespace Matecat\XliffParser\Exception;
 
-class NotFoundIdInTransUnit extends \DomainException
-{
+class NotFoundIdInTransUnit extends \DomainException {
 }
