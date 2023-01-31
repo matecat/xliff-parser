@@ -27,7 +27,6 @@ class Strings {
      * @param $string
      *
      * @return bool
-     * @throws Exception
      */
     public static function isJSON( $string ) {
         if ( is_numeric( $string ) ) {
@@ -36,18 +35,25 @@ class Strings {
 
         try {
             $string = Strings::cleanCDATA( $string );
-
-            if ( empty( $string ) ) {
-                throw new Exception();
-            }
-
-            json_decode( $string );
-            self::raiseJsonExceptionError();
-        } catch ( Exception $exception ) {
+        } catch ( Exception $e ) {
             return false;
         }
 
-        return true;
+        $string = trim( $string );
+        if ( empty( $string ) ) {
+            return false;
+        }
+
+        // String representation in json is "quoted", but we want to accept only object or arrays.
+        // exclude strings and numbers and other primitive types
+        if ( in_array( $string [ 0 ], [ "{", "[" ] ) ) {
+            json_decode( $string );
+
+            return empty( self::getLastJsonError()[ 0 ] );
+        } else {
+            return false; // Not accepted: string or primitive types.
+        }
+
     }
 
     /**
@@ -56,17 +62,34 @@ class Strings {
      * @return array
      */
     public static function jsonToArray( $string ) {
-        return ( is_array( json_decode( $string, true ) ) ) ? json_decode( $string, true ) : [];
+        $decodedJSON = json_decode( $string, true );
+
+        return ( is_array( $decodedJSON ) ) ? $decodedJSON : [];
     }
 
     /**
      * @param bool $raise
      *
-     * @return string|null
+     * @return void
      * @throws NotValidJSONException
      */
-    private static function raiseJsonExceptionError( $raise = true ) {
+    private static function raiseLastJsonException() {
+
+        list( $msg, $error ) = self::getLastJsonError();
+
+        if ( $error != JSON_ERROR_NONE ) {
+            throw new NotValidJSONException( $msg, $error );
+        }
+
+    }
+
+    /**
+     * @return array
+     */
+    private static function getLastJsonError() {
+
         if ( function_exists( "json_last_error" ) ) {
+
             $error = json_last_error();
 
             switch ( $error ) {
@@ -93,12 +116,11 @@ class Strings {
                     break;
             }
 
-            if ( $raise && $error != JSON_ERROR_NONE ) {
-                throw new NotValidJSONException( $msg, $error );
-            } elseif ( $error != JSON_ERROR_NONE ) {
-                return $msg;
-            }
+            return [ $msg, $error ];
         }
+
+        return [ null, JSON_ERROR_NONE ];
+
     }
 
     /**
@@ -181,7 +203,7 @@ class Strings {
      */
     public static function removeDangerousChars( $string ) {
         // clean invalid xml entities ( characters with ascii < 32 and different from 0A, 0D and 09
-        $regexpEntity = '/&#x(0[0-8BCEF]|1[0-9A-F]|7F);/u';
+        $regexpEntity = '/&#x(0[0-8BCEF]|1[\dA-F]|7F);/u';
 
         // remove binary chars in some xliff files
         $regexpAscii = '/[\x{00}-\x{08}\x{0B}\x{0C}\x{0E}-\x{1F}\x{7F}]/u';
@@ -193,13 +215,13 @@ class Strings {
     }
 
     /**
-     * @param $needle
-     * @param $haystack
+     * @param string $needle
+     * @param string $haystack
      *
      * @return bool
      */
     public static function contains( $needle, $haystack ) {
-        return strpos( $haystack, $needle ) !== false;
+        return mb_strpos( $haystack, $needle ) !== false;
     }
 
     /**
@@ -250,16 +272,16 @@ class Strings {
      * @return bool
      */
     public static function isAnEscapedHTML( $str ) {
-        return preg_match( "/\/[a-z]*&gt;/i", $str ) != 0;
+        return preg_match( '#/[a-z]*&gt;#i', $str ) != 0;
     }
 
     /**
-     * @param string $str
+     * @param string $uuid
      *
      * @return bool
      */
     public static function isAValidUuid( $uuid ) {
-        return preg_match( '/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/', $uuid ) === 1;
+        return preg_match( '/^[\da-f]{8}-[\da-f]{4}-4[\da-f]{3}-[89ab][\da-f]{3}-[\da-f]{12}$/', $uuid ) === 1;
     }
 
     /**
@@ -296,10 +318,10 @@ class Strings {
      *
      * @param $string
      *
-     * @return false|string
+     * @return string
      */
     public static function lastChar( $string ) {
-        return substr( $string, -1 );
+        return mb_substr( $string, -1 );
     }
 
     /**
@@ -308,26 +330,7 @@ class Strings {
      * @return int
      */
     public static function getTheNumberOfTrailingSpaces( $segment ) {
-        $number = 0;
-
-        return self::recursiveIncrementNumberOfTrailingSpaces( $segment, $number );
-    }
-
-    /**
-     * @param string $segment
-     * @param int    $number
-     *
-     * @return int
-     */
-    private static function recursiveIncrementNumberOfTrailingSpaces( $segment, &$number ) {
-        if ( self::lastChar( $segment ) === ' ' ) {
-            $number++;
-            $segment = substr( $segment, 0, -1 );
-
-            return self::recursiveIncrementNumberOfTrailingSpaces( $segment, $number );
-        }
-
-        return $number;
+        return mb_strlen( $segment ) - mb_strlen( rtrim( $segment, ' ' ) );
     }
 
     /**
@@ -344,7 +347,7 @@ class Strings {
             return false;
         }
 
-        preg_match( "/<\/?[a-zA-Z1-6-]+((\s+[a-zA-Z1-6-]+(\s*=\s*(?:\".*?\"|'.*?'|[^'\">\s]+))?)+\s*|\s*)\/?>/", $string, $matches );
+        preg_match( "#</?[a-zA-Z1-6-]+((\s+[a-zA-Z1-6-]+(\s*=\s*(?:\".*?\"|'.*?'|[^'\">\s]+))?)+\s*|\s*)/?>#", $string, $matches );
 
         return count( $matches ) !== 0;
     }
