@@ -4,8 +4,7 @@ namespace Matecat\XliffParser\XliffUtils;
 
 use Matecat\XliffParser\XliffUtils\CheckPipeline\CheckInterface;
 
-class CheckXliffProprietaryPipeline
-{
+class CheckXliffProprietaryPipeline {
     /**
      * @var string
      */
@@ -21,43 +20,40 @@ class CheckXliffProprietaryPipeline
      *
      * @param $tmp
      */
-    public function __construct($tmp)
-    {
-        $this->tmp = $tmp;
+    public function __construct( $tmp ) {
+        $this->tmp   = $tmp;
         $this->steps = [];
     }
 
     /**
      * @param CheckInterface $step
      */
-    public function addCheck(CheckInterface $step)
-    {
+    public function addCheck( CheckInterface $step ) {
         $this->steps[] = $step;
     }
 
     /**
      * @return array
      */
-    public function run()
-    {
+    public function run() {
         $fileType = [];
 
         /** @var CheckInterface $step */
-        foreach ($this->steps as $step) {
-            if (null !== $step->check($this->tmp)) {
-                $fileType = $step->check($this->tmp);
+        foreach ( $this->steps as $step ) {
+            if ( null !== $step->check( $this->tmp ) ) {
+                $fileType = $step->check( $this->tmp );
             }
         }
 
-        if (!empty($fileType) and $this->isValid($fileType)) {
+        if ( !empty( $fileType ) && $this->isValid( $fileType ) ) {
             return $fileType;
         }
 
         return [
-            'proprietary' => false,
-            'proprietary_name' => null,
-            'proprietary_short_name' => null,
-            'converter_version' => null,
+                'proprietary'            => false,
+                'proprietary_name'       => null,
+                'proprietary_short_name' => null,
+                'converter_version'      => null,
         ];
     }
 
@@ -66,15 +62,14 @@ class CheckXliffProprietaryPipeline
      *
      * @return bool
      */
-    private function isValid($fileType)
-    {
+    private function isValid( $fileType ) {
         $mandatoryKeys = [
-            'proprietary',
-            'proprietary_name',
-            'proprietary_short_name',
-            'converter_version',
+                'proprietary',
+                'proprietary_name',
+                'proprietary_short_name',
+                'converter_version',
         ];
 
-        return array_keys($fileType) === $mandatoryKeys;
+        return array_keys( $fileType ) === $mandatoryKeys;
     }
 }

@@ -2,12 +2,11 @@
 
 namespace Matecat\XliffParser\XliffUtils\CheckPipeline;
 
-interface CheckInterface
-{
+interface CheckInterface {
     /**
      * @param string $tmp
      *
      * @return array|null
      */
-    public function check($tmp);
+    public function check( $tmp );
 }

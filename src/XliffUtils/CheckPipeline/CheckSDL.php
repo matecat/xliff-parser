@@ -2,14 +2,12 @@
 
 namespace Matecat\XliffParser\XliffUtils\CheckPipeline;
 
-class CheckSDL implements CheckInterface
-{
-    public function check($tmp)
-    {
+class CheckSDL implements CheckInterface {
+    public function check( $tmp ) {
         $fileType = [];
 
-        if (isset($tmp[ 0 ])) {
-            if (stripos($tmp[ 0 ], 'sdl:version') !== false) {
+        if ( isset( $tmp[ 0 ] ) ) {
+            if ( stripos( $tmp[ 0 ], 'sdl:version' ) !== false ) {
                 //little trick, we consider not proprietary Sdlxliff files because we can handle them
                 $fileType[ 'proprietary' ]            = false;
                 $fileType[ 'proprietary_name' ]       = 'SDL Studio ';

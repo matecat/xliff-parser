@@ -2,8 +2,7 @@
 
 namespace Matecat\XliffParser\Constants;
 
-class XliffTags
-{
+class XliffTags {
     /**
      * List of allowed Xliff tags
      */

@@ -2,6 +2,5 @@
 
 namespace Matecat\XliffParser\Exception;
 
-class NotSupportedVersionException extends \Exception
-{
+class NotSupportedVersionException extends \Exception {
 }

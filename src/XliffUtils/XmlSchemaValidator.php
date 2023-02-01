@@ -2,6 +2,5 @@
 
 namespace Matecat\XliffParser\XliffUtils;
 
-class XmlSchemaValidator
-{
+class XmlSchemaValidator {
 }

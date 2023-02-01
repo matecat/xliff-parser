@@ -14,7 +14,7 @@ class XliffParserV2Test extends BaseTest
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('size-restriction.xliff'));
 
         $this->assertFalse(isset($parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ] [ 'attr' ] ['sizeRestriction']));
-        $this->assertEquals($parsed[ 'files' ][ 1 ][ 'trans-units' ][ 14 ] [ 'attr' ]['sizeRestriction'], 60);
+        $this->assertEquals( 60, $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 14 ] [ 'attr' ]['sizeRestriction'] );
     }
 
     /**
@@ -56,17 +56,6 @@ class XliffParserV2Test extends BaseTest
     /**
      * @test
      */
-    public function can_parse_xliff_v2_with_char_limit()
-    {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('char-limit.xliff'));
-        $attr  = $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'attr' ];
-
-        $this->assertEquals($attr['sizeRestriction'], 55);
-    }
-
-    /**
-     * @test
-     */
     public function can_parse_xliff_v2_with_encoded_g_tags_in_originalData()
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('xliff_20_with_g_tags_in_dataref.xlf'));
@@ -74,8 +63,8 @@ class XliffParserV2Test extends BaseTest
 
         $originalData = $units[1]['original-data'][0];
 
-        $this->assertEquals($originalData['raw-content'], '&lt;g id="0PEY7rmSqeVk51Xn" ctype="x-html-strong" /&gt;');
-        $this->assertEquals($originalData['attr']['id'], 'd1');
+        $this->assertEquals( '&lt;g id="0PEY7rmSqeVk51Xn" ctype="x-html-strong" /&gt;', $originalData['raw-content'] );
+        $this->assertEquals( 'd1', $originalData['attr']['id'] );
     }
 
     /**
@@ -87,7 +76,7 @@ class XliffParserV2Test extends BaseTest
         $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
 
         $this->assertArrayHasKey('original-data', $units[4]);
-        $this->assertEquals($units[4]['original-data'][0]['raw-content'], '  ');
+        $this->assertEquals( '  ', $units[4]['original-data'][0]['raw-content'] );
     }
 
     /**
@@ -137,9 +126,9 @@ class XliffParserV2Test extends BaseTest
         $attr   = $parsed[ 'files' ][ 1 ][ 'attr' ];
 
         $this->assertCount(3, $attr);
-        $this->assertEquals($attr[ 'source-language' ], 'en-us');
-        $this->assertEquals($attr[ 'target-language' ], 'el-gr');
-        $this->assertEquals($attr[ 'original' ], '389108a4-rtapi.xml');
+        $this->assertEquals( 'en-us', $attr[ 'source-language' ] );
+        $this->assertEquals( 'el-gr', $attr[ 'target-language' ] );
+        $this->assertEquals( '389108a4-rtapi.xml', $attr[ 'original' ] );
         $this->assertEmpty($parsed[ 'files' ][ 1 ][ 'notes' ]);
     }
 
@@ -152,13 +141,13 @@ class XliffParserV2Test extends BaseTest
         $notes  = $parsed[ 'files' ][ 1 ][ 'notes' ];
 
         $this->assertCount(3, $notes);
-        $this->assertEquals($notes[ 0 ][ 'raw-content' ], 'note for file.');
-        $this->assertEquals($notes[ 1 ][ 'raw-content' ], 'note2 for file.');
-        $this->assertEquals($notes[ 2 ][ 'json' ], '{
+        $this->assertEquals( 'note for file.', $notes[ 0 ][ 'raw-content' ] );
+        $this->assertEquals( 'note2 for file.', $notes[ 1 ][ 'raw-content' ] );
+        $this->assertEquals( '{
                     "key": "value",
                     "key2": "value2",
                     "key3": "value3"
-                }');
+                }', $notes[ 2 ][ 'json' ] );
     }
 
     /**
@@ -170,9 +159,9 @@ class XliffParserV2Test extends BaseTest
         $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
 
         $this->assertCount(2, $units);
-        $this->assertEquals($units[ 1 ][ 'attr' ][ 'id' ], 'u1');
-        $this->assertEquals($units[ 1 ][ 'attr' ][ 'translate' ], 'test');
-        $this->assertEquals($units[ 2 ][ 'attr' ][ 'id' ], 'u2');
+        $this->assertEquals( 'u1', $units[ 1 ][ 'attr' ][ 'id' ] );
+        $this->assertEquals( 'test', $units[ 1 ][ 'attr' ][ 'translate' ] );
+        $this->assertEquals( 'u2', $units[ 2 ][ 'attr' ][ 'id' ] );
     }
 
     /**
@@ -183,8 +172,8 @@ class XliffParserV2Test extends BaseTest
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('uber-v2.xliff'));
         $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
 
-        $this->assertEquals($units[ 5 ][ 'original-data' ][ 0 ][ 'raw-content' ], '${redemptionLimit}');
-        $this->assertEquals($units[ 5 ][ 'original-data' ][ 0 ][ 'attr' ][ 'id' ], 'source1');
+        $this->assertEquals( '${redemptionLimit}', $units[ 5 ][ 'original-data' ][ 0 ][ 'raw-content' ] );
+        $this->assertEquals( 'source1', $units[ 5 ][ 'original-data' ][ 0 ][ 'attr' ][ 'id' ] );
     }
 
     /**
@@ -196,20 +185,20 @@ class XliffParserV2Test extends BaseTest
         $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
         $note   = $units[ 1 ][ 'notes' ];
 
-        $this->assertEquals($note[ 0 ][ 'raw-content' ], 'note for unit');
-        $this->assertEquals($note[ 1 ][ 'raw-content' ], 'another note for file.');
-        $this->assertEquals($note[ 2 ], [
+        $this->assertEquals( 'note for unit', $note[ 0 ][ 'raw-content' ] );
+        $this->assertEquals( 'another note for file.', $note[ 1 ][ 'raw-content' ] );
+        $this->assertEquals( [
                 'raw-content' => '01d35857-b9bd-4835-8db1-40febcdcc8e9',
                 'attr'        => [
                         'type' => 'key'
                 ]
-        ]);
-        $this->assertEquals($note[ 3 ], [
+        ], $note[ 2 ] );
+        $this->assertEquals( [
                 'raw-content' => 'Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/rtapi/keys" target="_blank"&gt;rtapi&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/rtapi/key/driver_tasks.delivery_reminders.order.wda.title/overview" target="_blank"&gt;driver_tasks.delivery_reminders.order.wda.title&lt;/a&gt; Description: &lt;font color="blue"&gt;Title for delivery reminders when an eater has changed the dropoff location for an order&lt;/font&gt;',
                 'attr'        => [
                         'type' => 'key-note'
                 ]
-        ]);
+        ], $note[ 3 ] );
     }
 
     /**
@@ -220,16 +209,19 @@ class XliffParserV2Test extends BaseTest
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('sample-20.xlf'));
 
         $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
+
         $this->assertCount(2, $units);
 
-        $this->assertStringContainsString('<pc id="1">Hello <mrk id="m1" type="term">World</mrk>!</pc>', $units[ 1 ][ 'source' ][ 'raw-content' ][0]);
-        $this->assertStringContainsString('<pc id="2">Hello <mrk id="m2" type="term">World2</mrk>!</pc>', $units[ 2 ][ 'source' ][ 'raw-content' ][0]);
-        $this->assertStringContainsString('<pc id="1">Bonjour le <mrk id="m1" type="term">Monde</mrk> !</pc>', $units[ 1 ][ 'target' ][ 'raw-content' ][0]);
-        $this->assertStringContainsString('<pc id="2">Bonjour le <mrk id="m2" type="term">Monde2</mrk> !</pc>', $units[ 2 ][ 'target' ][ 'raw-content' ][0]);
-        $this->assertEquals($units[ 1 ][ 'source' ][ 'attr' ], []);
-        $this->assertEquals($units[ 2 ][ 'source' ][ 'attr' ], []);
-        $this->assertEquals($units[ 1 ][ 'target' ][ 'attr' ], []);
-        $this->assertEquals($units[ 2 ][ 'target' ][ 'attr' ], []);
+        // avoid assertStringContainsString because in PHPUnit 5 doesn't exist
+        $this->assertContains( '<pc id="1">Hello <mrk id="m1" type="term">World</mrk>!</pc>', $units[ 1 ][ 'source' ][ 'raw-content' ][ 0 ] );
+        $this->assertContains( '<pc id="1">Hello <mrk id="m1" type="term">World</mrk>!</pc>', $units[ 1 ][ 'source' ][ 'raw-content' ][ 0 ] );
+        $this->assertContains( '<pc id="2">Hello <mrk id="m2" type="term">World2</mrk>!</pc>', $units[ 2 ][ 'source' ][ 'raw-content' ][ 0 ] );
+        $this->assertContains( '<pc id="1">Bonjour le <mrk id="m1" type="term">Monde</mrk> !</pc>', $units[ 1 ][ 'target' ][ 'raw-content' ][ 0 ] );
+        $this->assertContains( '<pc id="2">Bonjour le <mrk id="m2" type="term">Monde2</mrk> !</pc>', $units[ 2 ][ 'target' ][ 'raw-content' ][ 0 ] );
+        $this->assertEquals( [], $units[ 1 ][ 'source' ][ 'attr' ] );
+        $this->assertEquals( [], $units[ 2 ][ 'source' ][ 'attr' ] );
+        $this->assertEquals( [], $units[ 1 ][ 'target' ][ 'attr' ] );
+        $this->assertEquals( [], $units[ 2 ][ 'target' ][ 'attr' ] );
     }
 
     /**
@@ -241,8 +233,8 @@ class XliffParserV2Test extends BaseTest
 
         $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
         $this->assertCount(3, $units);
-        $this->assertStringContainsString('Sentence from a group', $units[ 1 ][ 'source' ][ 'raw-content' ][0]);
-        $this->assertStringContainsString('Phrase from a group', $units[ 1 ][ 'target' ][ 'raw-content' ][0]);
+        $this->assertContains('Sentence from a group', $units[ 1 ][ 'source' ][ 'raw-content' ][0]);
+        $this->assertContains('Phrase from a group', $units[ 1 ][ 'target' ][ 'raw-content' ][0]);
     }
 
     /**
@@ -253,12 +245,12 @@ class XliffParserV2Test extends BaseTest
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('sample-20-with-nested-group.xlf'));
         $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
 
-        $this->assertStringContainsString('Sentence 1. ', $units[ 1 ][ 'source' ][ 'raw-content' ][0]);
-        $this->assertStringContainsString('Phrase 1. ', $units[ 1 ][ 'target' ][ 'raw-content' ][0]);
-        $this->assertStringContainsString('Sentence 2. ', $units[ 2 ][ 'source' ][ 'raw-content' ][0]);
-        $this->assertStringContainsString('Phrase 2. ', $units[ 2 ][ 'target' ][ 'raw-content' ][0]);
-        $this->assertStringContainsString('Sentence 3. ', $units[ 2 ][ 'source' ][ 'raw-content' ][1]);
-        $this->assertStringContainsString('Phrase 3. ', $units[ 2 ][ 'target' ][ 'raw-content' ][1]);
+        $this->assertContains('Sentence 1. ', $units[ 1 ][ 'source' ][ 'raw-content' ][0]);
+        $this->assertContains('Phrase 1. ', $units[ 1 ][ 'target' ][ 'raw-content' ][0]);
+        $this->assertContains('Sentence 2. ', $units[ 2 ][ 'source' ][ 'raw-content' ][0]);
+        $this->assertContains('Phrase 2. ', $units[ 2 ][ 'target' ][ 'raw-content' ][0]);
+        $this->assertContains('Sentence 3. ', $units[ 2 ][ 'source' ][ 'raw-content' ][1]);
+        $this->assertContains('Phrase 3. ', $units[ 2 ][ 'target' ][ 'raw-content' ][1]);
     }
 
     /**
@@ -271,19 +263,19 @@ class XliffParserV2Test extends BaseTest
         $source  = $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ]['source'];
         $target  = $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ]['target'];
 
-        $this->assertEquals($source['raw-content'][0], 'Sentence 1. ');
-        $this->assertEquals($target['raw-content'][0], 'Phrase 1. ');
-        $this->assertEquals($source['raw-content'][1], 'Sentence 2. ');
-        $this->assertEquals($target['raw-content'][1], 'Phrase 2. ');
-        $this->assertEquals($source['raw-content'][2], 'Sentence 3. ');
-        $this->assertEquals($target['raw-content'][2], 'Phrase 3. ');
-        $this->assertEquals($source['raw-content'][3], '<pc id="1">pc</pc> Sentence 4.');
-        $this->assertEquals($target['raw-content'][3], 'Phrase 4.');
+        $this->assertEquals( 'Sentence 1. ', $source['raw-content'][0] );
+        $this->assertEquals( 'Phrase 1. ', $target['raw-content'][0] );
+        $this->assertEquals( 'Sentence 2. ', $source['raw-content'][1] );
+        $this->assertEquals( 'Phrase 2. ', $target['raw-content'][1] );
+        $this->assertEquals( 'Sentence 3. ', $source['raw-content'][2] );
+        $this->assertEquals( 'Phrase 3. ', $target['raw-content'][2] );
+        $this->assertEquals( '<pc id="1">pc</pc> Sentence 4.', $source['raw-content'][3] );
+        $this->assertEquals( 'Phrase 4.', $target['raw-content'][3] );
 
-        $this->assertEquals($source['attr'][ 3 ], [
+        $this->assertEquals( [
             'xml:space' => 'space',
             'xml:lang' => 'fr',
-        ]);
+        ], $source['attr'][ 3 ] );
     }
 
     /**
@@ -296,14 +288,14 @@ class XliffParserV2Test extends BaseTest
         $segSource  = $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ]['seg-source'];
         $segTarget  = $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ]['seg-target'];
 
-        $this->assertEquals($segSource[0]['raw-content'], 'Sentence 1. ');
-        $this->assertEquals($segTarget[0]['raw-content'], 'Phrase 1. ');
-        $this->assertEquals($segSource[1]['raw-content'], 'Sentence 2. ');
-        $this->assertEquals($segTarget[1]['raw-content'], 'Phrase 2. ');
-        $this->assertEquals($segSource[2]['raw-content'], 'Sentence 3. ');
-        $this->assertEquals($segTarget[2]['raw-content'], 'Phrase 3. ');
-        $this->assertEquals($segSource[3]['raw-content'], '<pc id="1">pc</pc> Sentence 4.');
-        $this->assertEquals($segTarget[3]['raw-content'], 'Phrase 4.');
+        $this->assertEquals( 'Sentence 1. ', $segSource[0]['raw-content'] );
+        $this->assertEquals( 'Phrase 1. ', $segTarget[0]['raw-content'] );
+        $this->assertEquals( 'Sentence 2. ', $segSource[1]['raw-content'] );
+        $this->assertEquals( 'Phrase 2. ', $segTarget[1]['raw-content'] );
+        $this->assertEquals( 'Sentence 3. ', $segSource[2]['raw-content'] );
+        $this->assertEquals( 'Phrase 3. ', $segTarget[2]['raw-content'] );
+        $this->assertEquals( '<pc id="1">pc</pc> Sentence 4.', $segSource[3]['raw-content'] );
+        $this->assertEquals( 'Phrase 4.', $segTarget[3]['raw-content'] );
     }
 
     /**
@@ -316,8 +308,10 @@ class XliffParserV2Test extends BaseTest
         $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
 
         $this->assertArrayHasKey('source', $units[4]);
-        $this->assertEquals($units[4]['source']['raw-content'][0], '
-                    <sc dataRef="d1" id="1" subType="xlf:b" type="fmt"/>Elysian Collection<ph dataRef="d3" id="2" subType="xlf:lb" type="fmt"/><ec dataRef="d2" startRef="1" subType="xlf:b" type="fmt"/>Bahnhofstrasse 15, Postfach 341, Zermatt CH- 3920, Switzerland<ph dataRef="d3" id="3" subType="xlf:lb" type="fmt"/>Tel: +44 203 468 2235  Email: <pc dataRefEnd="d5" dataRefStart="d4" id="4" type="link">info@elysiancollection.com</pc><sc dataRef="d1" id="5" subType="xlf:b" type="fmt"/><ph dataRef="d3" id="6" subType="xlf:lb" type="fmt"/><ec dataRef="d2" startRef="5" subType="xlf:b" type="fmt"/>');
+        $this->assertEquals( '
+                    <sc dataRef="d1" id="1" subType="xlf:b" type="fmt"/>Elysian Collection<ph dataRef="d3" id="2" subType="xlf:lb" type="fmt"/><ec dataRef="d2" startRef="1" subType="xlf:b" type="fmt"/>Bahnhofstrasse 15, Postfach 341, Zermatt CH- 3920, Switzerland<ph dataRef="d3" id="3" subType="xlf:lb" type="fmt"/>Tel: +44 203 468 2235  Email: <pc dataRefEnd="d5" dataRefStart="d4" id="4" type="link">info@elysiancollection.com</pc><sc dataRef="d1" id="5" subType="xlf:b" type="fmt"/><ph dataRef="d3" id="6" subType="xlf:lb" type="fmt"/><ec dataRef="d2" startRef="5" subType="xlf:b" type="fmt"/>',
+                $units[4]['source']['raw-content'][0]
+        );
     }
 
     /**

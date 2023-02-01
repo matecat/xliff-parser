@@ -2,6 +2,5 @@
 
 namespace Matecat\XliffParser\Exception;
 
-class XmlParsingException extends \Exception
-{
+class XmlParsingException extends \Exception {
 }

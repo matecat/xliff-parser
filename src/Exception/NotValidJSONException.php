@@ -2,6 +2,5 @@
 
 namespace Matecat\XliffParser\Exception;
 
-class NotValidJSONException extends \Exception
-{
+class NotValidJSONException extends \Exception {
 }

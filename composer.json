@@ -13,6 +13,11 @@
       "name": "Mauro Cassani",
       "email": "maurocassani1978@gmail.com",
       "homepage": "https://github.com/mauretto78"
+    },
+    {
+      "name": "Domenico Lupinetti",
+      "email": "ostico@gmail.com",
+      "homepage": "https://github.com/ostico"
     }
   ],
   "autoload": {
@@ -24,10 +29,19 @@
     "psr-4": { "Matecat\\XliffParser\\Tests\\": "tests/" }
   },
   "require": {
-    "php": ">=5.5"
+    "php": ">=5.5",
+    "psr/log": "*",
+    "ext-dom": "*",
+    "ext-openssl": "*",
+    "ext-xml": "*",
+    "ext-iconv": "*",
+    "ext-libxml": "*",
+    "ext-json": "*",
+    "ext-simplexml": "*"
   },
   "require-dev": {
-    "phpunit/phpunit": "^8.2",
-    "fzaninotto/faker": "^1.9"
+    "phpunit/phpunit": "^5",
+    "fzaninotto/faker": "^1.9",
+    "ext-curl": "*"
   }
 }

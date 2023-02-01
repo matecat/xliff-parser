@@ -4,7 +4,6 @@ namespace Matecat\XliffParser\Tests;
 
 use Matecat\XliffParser\Constants\TranslationStatus;
 use Matecat\XliffParser\XliffParser;
-use Matecat\XliffParser\XliffReplacer\XliffReplacerCallbackInterface;
 
 class SdlXliffReplacerTest extends BaseTest
 {
