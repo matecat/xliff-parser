@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0" xmlns:slr="urn:oasis:names:tc:xliff:sizerestriction:2.0" xmlns:memsource="http://www.memsource.com/xliff2.0/1.0" version="2.0" memsource:wfLevel="4" srcLang="en-us" trgLang="zh-tw">
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:slr="urn:oasis:names:tc:xliff:sizerestriction:2.0" xmlns:memsource="http://www.memsource.com/xliff2.0/1.0" version="2.0" memsource:wfLevel="4" srcLang="en-us" trgLang="zh-tw">
     <file id="vo8VPVCyNy2Hoqho_dc6:0--1" memsource:taskId="vo8VPVCyNy2Hoqho_dc6" canResegment="no" original="Rider-eater-risk-action-taxonomy-account-banned.xlf">
         <slr:profiles generalProfile="xliff:codepoints"/>
     </file>

@@ -2,20 +2,20 @@
 
 namespace Matecat\XliffParser\Tests;
 
+use CURLFile;
+use Exception;
 use Matecat\XliffParser\XliffParser;
 use Matecat\XliffParser\XliffUtils\XmlParser;
 use PHPUnit\Framework\TestCase;
 
-abstract class BaseTest extends TestCase
-{
+abstract class BaseTest extends TestCase {
     /**
      * @param string $file
      *
      * @return false|string
      */
-    protected function getTestFile($file)
-    {
-        return file_get_contents(__DIR__ .'/files/'.$file);
+    protected function getTestFile( $file ) {
+        return file_get_contents( __DIR__ . '/files/' . $file );
     }
 
     /**
@@ -25,20 +25,18 @@ abstract class BaseTest extends TestCase
      * @throws \Matecat\XliffParser\Exception\InvalidXmlException
      * @throws \Matecat\XliffParser\Exception\XmlParsingException
      */
-    protected function getTestFileAsDOMElement($file)
-    {
-        return XmlParser::parse(file_get_contents(__DIR__ .'/files/'.$file));
+    protected function getTestFileAsDOMElement( $file ) {
+        return XmlParser::parse( file_get_contents( __DIR__ . '/files/' . $file ) );
     }
 
     /**
      * @param string $file
-     * @param array $expected
+     * @param array  $expected
      */
-    protected function assertXliffEquals($file, array $expected = [])
-    {
+    protected function assertXliffEquals( $file, array $expected = [] ) {
         $parser = new XliffParser();
 
-        $this->assertEquals($expected, $parser->xliffToArray($this->getTestFile($file)));
+        $this->assertEquals( $expected, $parser->xliffToArray( $this->getTestFile( $file ) ) );
     }
 
     /**
@@ -50,15 +48,14 @@ abstract class BaseTest extends TestCase
      * @param array $expected
      * @param array $array
      */
-    protected function assertArraySimilar(array $expected, array $array)
-    {
-        $this->assertTrue(count(array_diff_key($array, $expected)) === 0);
+    protected function assertArraySimilar( array $expected, array $array ) {
+        $this->assertTrue( count( array_diff_key( $array, $expected ) ) === 0 );
 
-        foreach ($expected as $key => $value) {
-            if (is_array($value)) {
-                $this->assertArraySimilar($value, $array[$key]);
+        foreach ( $expected as $key => $value ) {
+            if ( is_array( $value ) ) {
+                $this->assertArraySimilar( $value, $array[ $key ] );
             } else {
-                $this->assertStringContainsString(trim($value), trim($array[$key]));
+                $this->assertContains( trim( $value ), trim( $array[ $key ] ) );
             }
         }
     }
@@ -68,11 +65,10 @@ abstract class BaseTest extends TestCase
      *
      * @return array
      */
-    protected function getTransUnitsForReplacementTest($data)
-    {
+    protected function getTransUnitsForReplacementTest( $data ) {
         $transUnits = [];
 
-        foreach ($data as $i => $k) {
+        foreach ( $data as $i => $k ) {
             //create a secondary indexing mechanism on segments' array; this will be useful
             //prepend a string so non-trans unit id ( ex: numerical ) are not overwritten
             $internalId = $k[ 'internal_id' ];
@@ -90,11 +86,10 @@ abstract class BaseTest extends TestCase
      *
      * @return array
      */
-    protected function getData($data)
-    {
+    protected function getData( $data ) {
         $transUnits = [];
 
-        foreach ($data as $i => $k) {
+        foreach ( $data as $i => $k ) {
             //create a secondary indexing mechanism on segments' array; this will be useful
             //prepend a string so non-trans unit id ( ex: numerical ) are not overwritten
             $internalId = $k[ 'internal_id' ];
@@ -105,7 +100,7 @@ abstract class BaseTest extends TestCase
         }
 
         return [
-                'data' => $data,
+                'data'       => $data,
                 'transUnits' => $transUnits,
         ];
     }
@@ -116,25 +111,26 @@ abstract class BaseTest extends TestCase
      *
      * @return bool|string
      */
-    protected function httpPost($url, $data)
-    {
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    protected function httpPost( $url, $data, $headers ) {
 
-        $body = curl_exec($ch);
-        $error = curl_error($ch);
-        $errorNo = curl_errno($ch);
-        $info = curl_getinfo($ch);
+        $ch = curl_init( $url );
+        curl_setopt( $ch, CURLOPT_POST, true );
+        curl_setopt( $ch, CURLOPT_POSTFIELDS, $data );
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        curl_setopt( $ch, CURLOPT_HTTPHEADER, $headers );
 
-        curl_close($ch);
+        $body    = curl_exec( $ch );
+        $error   = curl_error( $ch );
+        $errorNo = curl_errno( $ch );
+        $info    = curl_getinfo( $ch );
 
-        $http = new \stdClass();
-        $http->body = $body;
-        $http->error = $error;
+        curl_close( $ch );
+
+        $http          = new \stdClass();
+        $http->body    = $body;
+        $http->error   = $error;
         $http->errorNo = $errorNo;
-        $http->info = $info;
+        $http->info    = $info;
 
         return $http;
     }
@@ -143,30 +139,38 @@ abstract class BaseTest extends TestCase
      * @param $xliff20
      *
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
-    protected function validateXliff20($xliff20)
-    {
-        $errors = [];
+    protected function validateXliff20( $xliff20 ) {
 
-        $url = 'https://okapi-lynx.appspot.com/validation';
+        $sessionCurl = curl_init( "https://dev.maxprograms.com/Validation/version" );
+        curl_setopt( $sessionCurl, CURLOPT_RETURNTRANSFER, true );
+        $sessionValue = json_decode( curl_exec( $sessionCurl ) );
 
-        $response = $this->httpPost($url, [
-            'content' => $xliff20
-        ]);
+        $url = 'https://dev.maxprograms.com/Validation/upload';
 
-        if($response->info['http_code'] !== 200){
-            throw new \Exception( ($response->errorNo > 0) ? $response->error : 'An error occurred calling ' . $url . '. Status code '.$response->info['http_code'].' was returned' );
+        $response = $this->httpPost( $url,
+                [
+                        'xliff' => new CURLFile( $xliff20, "application/xliff+xml", "file.xliff" )
+                ],
+                [
+                        'Content-Type: multipart/form-data',
+                        'schematron: no',
+                        'session: ' . $sessionValue->session
+                ]
+        );
+
+        if ( $response->info[ 'http_code' ] !== 200 ) {
+            throw new Exception( ( $response->errorNo > 0 ) ? $response->error : 'An error occurred calling ' . $url . '. Status code ' . $response->info[ 'http_code' ] . ' was returned' );
         }
 
-        preg_match_all('/<pre>(.*?)<\/pre>/s', $response->body, $matches);
+        $result = json_decode( $response->body );
 
-        if(!empty($matches[1])){
-            foreach ($matches[1] as $match){
-                $errors[] = $match;
-            }
+        if( $result->status == "error" ){
+            return [ $result->reason ];
         }
 
-        return $errors;
+        return [];
+
     }
 }

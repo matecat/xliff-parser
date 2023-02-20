@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:its="http://www.w3.org/2005/11/its" xmlns:itsxlf="http://www.w3.org/ns/its-xliff/" xmlns:okp="okapi-framework:xliff-extensions" its:version="2.0" version="1.2">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:its="http://www.w3.org/2005/11/its" its:version="2.0" version="1.2">
     <file datatype="x-odt" filter="com.matecat.filters.basefilters.DefaultFilter" original="prova.odt" source-language="it-IT" target-language="en-US" tool-id="matecat-converter 1.3.7-SNAPSHOT"><header><reference><internal-file form="base64">UEsDBBQAAAgAAElFIlNexjIMJwAAACcAAAAIAAAAbWltZXR5cGVhcHBsaWNhdGlvbi92bmQub2FzaXMub3BlbmRvY3VtZW50LnRleHRQSwMEFAAACAAASUUiUwTsj0OwBwAAsAcAABgAAABUaHVtYm5h
         aWxzL3RodW1ibmFpbC5wbmeJUE5HDQoaCgAAAA1JSERSAAAAtQAAAQAIAwAAAML9x+kAAAIWUExURWtgWnJkW2huaHN2eH94dmpxh3l/i3SCjHqFi4N+fIKEgIqGjI6NjYWLlo2PlYyNm4eRmo2Ql4qS
         m5GOjZiLg5OOlJ6VjJOSlJOVm5OZnpqVk5mXmJ+alZuam4+drpKVopOappKbqJudo5iaqZWgpZaiqpyhopykrZeksJmjsaKQhaKXkKCalaKdmqmdlaCboqShm62ilqyinK+pnLWllrKmnLKonLqtnKOj

@@ -2,22 +2,23 @@
 
 namespace Matecat\XliffParser\Utils;
 
+use Exception;
 use Matecat\XliffParser\Constants\XliffTags;
 use Matecat\XliffParser\Exception\NotValidJSONException;
+use SimpleXMLElement;
 
-class Strings
-{
+class Strings {
     private static $find_xliff_tags_reg = null;
-    private static $htmlEntityRegex = '/&amp;[#a-zA-Z0-9]{1,20};/u';
+    private static $htmlEntityRegex     = '/&amp;[#a-zA-Z0-9]{1,20};/u';
 
     /**
      * @param string $testString
      *
      * @return string
+     * @throws Exception
      */
-    public static function cleanCDATA($testString)
-    {
-        $cleanXMLContent = new \SimpleXMLElement('<rootNoteNode>' . $testString . '</rootNoteNode>', LIBXML_NOCDATA);
+    public static function cleanCDATA( $testString ) {
+        $cleanXMLContent = new SimpleXMLElement( '<rootNoteNode>' . $testString . '</rootNoteNode>', LIBXML_NOCDATA );
 
         return $cleanXMLContent->__toString();
     }
@@ -26,28 +27,33 @@ class Strings
      * @param $string
      *
      * @return bool
-     * @throws \Exception
      */
-    public static function isJSON($string)
-    {
-        if(is_numeric($string)){
+    public static function isJSON( $string ) {
+        if ( is_numeric( $string ) ) {
             return false;
         }
 
         try {
-            $string = Strings::cleanCDATA($string);
-
-            if (empty($string)) {
-                throw new \Exception();
-            }
-
-            json_decode($string);
-            self::raiseJsonExceptionError();
-        } catch (\Exception $exception) {
+            $string = Strings::cleanCDATA( $string );
+        } catch ( Exception $e ) {
             return false;
         }
 
-        return true;
+        $string = trim( $string );
+        if ( empty( $string ) ) {
+            return false;
+        }
+
+        // String representation in json is "quoted", but we want to accept only object or arrays.
+        // exclude strings and numbers and other primitive types
+        if ( in_array( $string [ 0 ], [ "{", "[" ] ) ) {
+            json_decode( $string );
+
+            return empty( self::getLastJsonError()[ 0 ] );
+        } else {
+            return false; // Not accepted: string or primitive types.
+        }
+
     }
 
     /**
@@ -55,23 +61,38 @@ class Strings
      *
      * @return array
      */
-    public static function jsonToArray($string)
-    {
-        return (is_array(json_decode($string, true))) ? json_decode($string, true) : [];
+    public static function jsonToArray( $string ) {
+        $decodedJSON = json_decode( $string, true );
+
+        return ( is_array( $decodedJSON ) ) ? $decodedJSON : [];
     }
 
     /**
      * @param bool $raise
      *
-     * @return string|null
+     * @return void
      * @throws NotValidJSONException
      */
-    private static function raiseJsonExceptionError($raise = true)
-    {
-        if (function_exists("json_last_error")) {
+    private static function raiseLastJsonException() {
+
+        list( $msg, $error ) = self::getLastJsonError();
+
+        if ( $error != JSON_ERROR_NONE ) {
+            throw new NotValidJSONException( $msg, $error );
+        }
+
+    }
+
+    /**
+     * @return array
+     */
+    private static function getLastJsonError() {
+
+        if ( function_exists( "json_last_error" ) ) {
+
             $error = json_last_error();
 
-            switch ($error) {
+            switch ( $error ) {
                 case JSON_ERROR_NONE:
                     $msg = null; # - No errors
                     break;
@@ -95,12 +116,11 @@ class Strings
                     break;
             }
 
-            if ($raise && $error != JSON_ERROR_NONE) {
-                throw new NotValidJSONException($msg, $error);
-            } elseif ($error != JSON_ERROR_NONE) {
-                return $msg;
-            }
+            return [ $msg, $error ];
         }
+
+        return [ null, JSON_ERROR_NONE ];
+
     }
 
     /**
@@ -120,14 +140,13 @@ class Strings
      * @param string $content
      * @param bool   $escapeStrings
      *
-     * @return mixed|string
+     * @return string
      */
-    public static function fixNonWellFormedXml( $content, $escapeStrings = true)
-    {
-        if (self::$find_xliff_tags_reg === null) {
+    public static function fixNonWellFormedXml( $content, $escapeStrings = true ) {
+        if ( self::$find_xliff_tags_reg === null ) {
             // Convert the list of tags in a regexp list, for example "g|x|bx|ex"
-            $xliffTags = XliffTags::$tags;
-            $xliff_tags_reg_list = implode('|', $xliffTags);
+            $xliffTags           = XliffTags::$tags;
+            $xliff_tags_reg_list = implode( '|', $xliffTags );
             // Regexp to find all the XLIFF tags:
             //   </?               -> matches the tag start, for both opening and
             //                        closure tags (see the optional slash)
@@ -148,29 +167,30 @@ class Strings
         }
 
         // Find all the XLIFF tags
-        preg_match_all(self::$find_xliff_tags_reg, $content, $matches);
+        preg_match_all( self::$find_xliff_tags_reg, $content, $matches );
         $tags = (array)$matches[ 0 ];
 
         // Prepare placeholders
         $tags_placeholders = [];
-        for ($i = 0; $i < count($tags); $i++) {
+        $tagsNum           = count( $tags );
+        for ( $i = 0; $i < $tagsNum; $i++ ) {
             $tag                       = $tags[ $i ];
             $tags_placeholders[ $tag ] = "#@!XLIFF-TAG-$i!@#";
         }
 
         // Replace all XLIFF tags with placeholders that will not be escaped
-        foreach ($tags_placeholders as $tag => $placeholder) {
-            $content = str_replace($tag, $placeholder, $content);
+        foreach ( $tags_placeholders as $tag => $placeholder ) {
+            $content = str_replace( $tag, $placeholder, $content );
         }
 
         // Escape the string with the remaining non-XLIFF tags
-        if($escapeStrings){
-            $content = htmlspecialchars($content, ENT_NOQUOTES, 'UTF-8', false);
+        if ( $escapeStrings ) {
+            $content = htmlspecialchars( $content, ENT_NOQUOTES, 'UTF-8', false );
         }
 
         // Put again in place the original XLIFF tags replacing placeholders
-        foreach ($tags_placeholders as $tag => $placeholder) {
-            $content = str_replace($placeholder, $tag, $content);
+        foreach ( $tags_placeholders as $tag => $placeholder ) {
+            $content = str_replace( $placeholder, $tag, $content );
         }
 
         return $content;
@@ -179,31 +199,29 @@ class Strings
     /**
      * @param $string
      *
-     * @return string|string[]|null
+     * @return string
      */
-    public static function removeDangerousChars($string)
-    {
+    public static function removeDangerousChars( $string ) {
         // clean invalid xml entities ( characters with ascii < 32 and different from 0A, 0D and 09
-        $regexpEntity = '/&#x(0[0-8BCEF]|1[0-9A-F]|7F);/u';
+        $regexpEntity = '/&#x(0[0-8BCEF]|1[\dA-F]|7F);/u';
 
         // remove binary chars in some xliff files
-        $regexpAscii  = '/[\x{00}-\x{08}\x{0B}\x{0C}\x{0E}-\x{1F}\x{7F}]/u';
+        $regexpAscii = '/[\x{00}-\x{08}\x{0B}\x{0C}\x{0E}-\x{1F}\x{7F}]/u';
 
-        $string = preg_replace($regexpAscii, '', $string);
-        $string = preg_replace($regexpEntity, '', $string);
+        $string = preg_replace( $regexpAscii, '', $string );
+        $string = preg_replace( $regexpEntity, '', $string );
 
-        return $string;
+        return !empty( $string ) ? $string : "";
     }
 
     /**
-     * @param $needle
-     * @param $haystack
+     * @param string $needle
+     * @param string $haystack
      *
      * @return bool
      */
-    public static function contains($needle, $haystack)
-    {
-        return strpos($haystack, $needle) !== false;
+    public static function contains( $needle, $haystack ) {
+        return mb_strpos( $haystack, $needle ) !== false;
     }
 
     /**
@@ -211,9 +229,8 @@ class Strings
      *
      * @return string
      */
-    public static function htmlentities($string)
-    {
-        return htmlentities($string, ENT_NOQUOTES);
+    public static function htmlentities( $string ) {
+        return htmlentities( $string, ENT_NOQUOTES );
     }
 
     /**
@@ -222,16 +239,15 @@ class Strings
      *
      * @return string
      */
-    public static function htmlspecialchars_decode($string, $onlyEscapedEntities = false)
-    {
-        if(false === $onlyEscapedEntities){
-            return htmlspecialchars_decode($string, ENT_NOQUOTES);
+    public static function htmlspecialchars_decode( $string, $onlyEscapedEntities = false ) {
+        if ( false === $onlyEscapedEntities ) {
+            return htmlspecialchars_decode( $string, ENT_NOQUOTES );
         }
 
-        return preg_replace_callback(self::$htmlEntityRegex,
-            function ($match){
-                return self::htmlspecialchars_decode($match[0]);
-        }, $string);
+        return preg_replace_callback( self::$htmlEntityRegex,
+                function ( $match ) {
+                    return self::htmlspecialchars_decode( $match[ 0 ] );
+                }, $string );
     }
 
     /**
@@ -246,8 +262,7 @@ class Strings
      *
      * @return bool
      */
-    public static function isADoubleEscapedEntity( $str )
-    {
+    public static function isADoubleEscapedEntity( $str ) {
         return preg_match( self::$htmlEntityRegex, $str ) != 0;
     }
 
@@ -256,19 +271,17 @@ class Strings
      *
      * @return bool
      */
-    public static function isAnEscapedHTML( $str )
-    {
-        return preg_match( "/\/[a-z]*&gt;/i", $str ) != 0;
+    public static function isAnEscapedHTML( $str ) {
+        return preg_match( '#/[a-z]*&gt;#i', $str ) != 0;
     }
 
     /**
-     * @param string $str
+     * @param string $uuid
      *
      * @return bool
      */
-    public static function isAValidUuid( $uuid )
-    {
-        return preg_match('/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/', $uuid) === 1;
+    public static function isAValidUuid( $uuid ) {
+        return preg_match( '/^[\da-f]{8}-[\da-f]{4}-4[\da-f]{3}-[89ab][\da-f]{3}-[\da-f]{12}$/', $uuid ) === 1;
     }
 
     /**
@@ -277,8 +290,7 @@ class Strings
      *
      * @return array|false|string[]
      */
-    public static function preg_split($pattern, $subject)
-    {
+    public static function preg_split( $pattern, $subject ) {
         return preg_split( $pattern, $subject, -1, PREG_SPLIT_NO_EMPTY );
     }
 
@@ -297,9 +309,8 @@ class Strings
      *
      * @return string
      */
-    public static function escapeOnlyHTMLTags($string)
-    {
-        return preg_replace('/<(.*?)>/iu', '&lt;$1&gt;', $string);
+    public static function escapeOnlyHTMLTags( $string ) {
+        return preg_replace( '/<(.*?)>/iu', '&lt;$1&gt;', $string );
     }
 
     /**
@@ -307,59 +318,37 @@ class Strings
      *
      * @param $string
      *
-     * @return false|string
+     * @return string
      */
-    public static function lastChar($string)
-    {
-        return substr($string, -1);
-    }
-
-    /**
-     * @param int $segment
-     *
-     * @return int
-     */
-    public static function getTheNumberOfTrailingSpaces($segment)
-    {
-        $number = 0;
-
-        return self::recursiveIncrementNumberOfTrailingSpaces($segment, $number);
+    public static function lastChar( $string ) {
+        return mb_substr( $string, -1 );
     }
 
     /**
      * @param string $segment
-     * @param int $number
      *
-     * @return mixed
+     * @return int
      */
-    private static function recursiveIncrementNumberOfTrailingSpaces( $segment, &$number)
-    {
-        if(self::lastChar($segment) === ' '){
-            $number++;
-            $segment = substr($segment, 0, -1);
-
-            return self::recursiveIncrementNumberOfTrailingSpaces($segment, $number);
-        }
-
-        return $number;
+    public static function getTheNumberOfTrailingSpaces( $segment ) {
+        return mb_strlen( $segment ) - mb_strlen( rtrim( $segment, ' ' ) );
     }
 
     /**
      * @TODO We need to improve this
+     *
      * @param string $string
      *
      * @return bool
      */
-    public static function isHtmlString($string)
-    {
-        $string = stripslashes($string);
+    public static function isHtmlString( $string ) {
+        $string = stripslashes( $string );
 
-        if($string === '<>'){
+        if ( $string === '<>' ) {
             return false;
         }
 
-        preg_match("/<\/?[a-zA-Z1-6-]+((\s+[a-zA-Z1-6-]+(\s*=\s*(?:\".*?\"|'.*?'|[^'\">\s]+))?)+\s*|\s*)\/?>/",$string, $matches);
+        preg_match( "#</?[a-zA-Z1-6-]+((\s+[a-zA-Z1-6-]+(\s*=\s*(?:\".*?\"|'.*?'|[^'\">\s]+))?)+\s*|\s*)/?>#", $string, $matches );
 
-        return count($matches) !== 0;
+        return count( $matches ) !== 0;
     }
 }
