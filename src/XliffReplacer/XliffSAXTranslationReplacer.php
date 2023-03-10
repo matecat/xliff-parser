@@ -187,11 +187,11 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer {
                     $tag .= "$k=\"$this->targetLang\" ";
                 } else {
                     $pos = 0;
-                    if ( $this->currentTransUnitId ) {
+                    if ( $this->currentTransUnitId and isset($this->transUnits[ $this->currentTransUnitId ])) {
                         $pos = current( $this->transUnits[ $this->currentTransUnitId ] );
                     }
 
-                    if ( $name === $this->tuTagName ) {
+                    if ( $name === $this->tuTagName and isset($this->segments[ $pos ]) and isset($this->segments[ $pos ][ 'sid' ]) ) {
 
                         $sid = $this->segments[ $pos ][ 'sid' ];
 
