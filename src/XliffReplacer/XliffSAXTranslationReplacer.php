@@ -630,7 +630,8 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer {
             $translation = $segment;
         } else {
             if ( $this->callback ) {
-                if ( $this->callback->thereAreErrors( $seg[ 'sid' ], $segment, $translation, $dataRefMap ) ) {
+                $error = (isset($seg['error'])) ? $seg['error'] : null;
+                if ( $this->callback->thereAreErrors( $seg[ 'sid' ], $segment, $translation, $dataRefMap, $error ) ) {
                     $translation = '|||UNTRANSLATED_CONTENT_START|||' . $segment . '|||UNTRANSLATED_CONTENT_END|||';
                 }
             }
