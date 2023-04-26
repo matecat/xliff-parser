@@ -604,7 +604,7 @@ class RealXliffReplacerCallback implements XliffReplacerCallbackInterface
     /**
      * @inheritDoc
      */
-    public function thereAreErrors($segmentId, $segment, $translation, array $dataRefMap = [])
+    public function thereAreErrors($segmentId, $segment, $translation, array $dataRefMap = [], $error = null)
     {
         return false;
     }
@@ -615,7 +615,7 @@ class DummyXliffReplacerCallback implements XliffReplacerCallbackInterface
     /**
      * @inheritDoc
      */
-    public function thereAreErrors($segmentId, $segment, $translation, array $dataRefMap = [])
+    public function thereAreErrors($segmentId, $segment, $translation, array $dataRefMap = [], $error = null)
     {
         return false;
     }
@@ -626,7 +626,7 @@ class DummyXliffReplacerCallbackWhichReturnTrue implements XliffReplacerCallback
     /**
      * @inheritDoc
      */
-    public function thereAreErrors($segmentId, $segment, $translation, array $dataRefMap = [])
+    public function thereAreErrors($segmentId, $segment, $translation, array $dataRefMap = [], $error = null)
     {
         return true;
     }
