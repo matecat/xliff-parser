@@ -445,4 +445,21 @@ class XliffParserV2Test extends BaseTest
             $this->assertEquals('Invalid trans-unit id, duplicate found.', $exception->getMessage());
         }
     }
+
+    /**
+     * @test
+     */
+    public function can_parse_segment_state_attribute()
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('with-segment-state.xliff'));
+
+        $this->assertEquals('0', $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'seg-source' ][ 0 ][ 'attr' ][ 'id' ]);
+        $this->assertEquals('initial', $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'seg-source' ][ 0 ][ 'attr' ][ 'state' ]);
+        $this->assertEquals('4', $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'seg-source' ][ 1 ][ 'attr' ][ 'id' ]);
+        $this->assertEquals('finale', $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'seg-source' ][ 1 ][ 'attr' ][ 'state' ]);
+        $this->assertEquals('0', $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'seg-target' ][ 0 ][ 'attr' ][ 'id' ]);
+        $this->assertEquals('initial', $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'seg-target' ][ 0 ][ 'attr' ][ 'state' ]);
+        $this->assertEquals('4', $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'seg-target' ][ 1 ][ 'attr' ][ 'id' ]);
+        $this->assertEquals('finale', $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'seg-target' ][ 1 ][ 'attr' ][ 'state' ]);
+    }
 }
