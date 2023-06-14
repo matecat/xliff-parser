@@ -186,6 +186,7 @@ class XliffParserV2 extends AbstractXliffParser {
                             $segSource = $this->extractContentWithMarksAndExtTags( $dom, $childNode, $extractedSource[ 'raw-content' ], $originalData );
                         } else {
                             $segSource[] = [
+                                    'attr'             => $this->extractTagAttributes( $segment),
                                     'mid'              => count( $segSource ) > 0 ? count( $segSource ) : 0,
                                     'ext-prec-tags'    => '',
                                     'raw-content'      => $extractedSource[ 'raw-content' ],
@@ -212,6 +213,7 @@ class XliffParserV2 extends AbstractXliffParser {
                             $segTarget = $this->extractContentWithMarksAndExtTags( $dom, $childNode, $extractedTarget[ 'raw-content' ], $originalData );
                         } else {
                             $segTarget[] = [
+                                    'attr'             => $this->extractTagAttributes( $segment),
                                     'mid'              => count( $segTarget ) > 0 ? count( $segTarget ) : 0,
                                     'ext-prec-tags'    => '',
                                     'raw-content'      => $extractedTarget[ 'raw-content' ],
