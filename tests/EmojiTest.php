@@ -88,6 +88,8 @@ class EmojiTest extends BaseTest
             '􀀋' => '&#1048587;',
             '􀀌' => '&#1048588;',
             '🛜' => '&#128732;',
+            '􀀂'  => '&#1048578;',
+            '𡞱' => '&#137137;',
         ];
 
         foreach ($dataset as $emoji => $entity) {
