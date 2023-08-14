@@ -211,7 +211,7 @@ class Strings {
         $string = preg_replace( $regexpAscii, '', $string );
         $string = preg_replace( $regexpEntity, '', $string );
 
-        return !empty( $string ) ? $string : "";
+        return !empty( $string ) || strlen( $string ) > 0 ? $string : "";
     }
 
     /**
