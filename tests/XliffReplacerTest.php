@@ -344,6 +344,40 @@ class XliffReplacerTest extends BaseTest
     /**
      * @test
      */
+    public function should_replace_a_translation_with_0_as_string ()
+    {
+        $data = $this->getData([
+                [
+                        'sid' => 1,
+                        'segment' => 'Image showing Italian Patreon creators',
+                        'internal_id' => 'pendo-image-e3aaf7b7|alt',
+                        'mrk_id' => '',
+                        'prev_tags' => '',
+                        'succ_tags' => '',
+                        'mrk_prev_tags' => '',
+                        'mrk_succ_tags' => '',
+                        'translation' => '0', // <----
+                        'status' => TranslationStatus::STATUS_TRANSLATED,
+                        'eq_word_count' => 1,
+                        'raw_word_count' => 1,
+                ]
+        ]);
+
+        $inputFile = __DIR__.'/../tests/files/no-target.xliff';
+        $outputFile = __DIR__.'/../tests/files/output/no-target.xliff';
+
+        $xliffParser = new XliffParser();
+        $xliffParser->replaceTranslation($inputFile, $data['data'], $data['transUnits'], 'it-it', $outputFile);
+        $output = $xliffParser->xliffToArray(file_get_contents($outputFile));
+
+        $this->assertEquals($output['files'][1]['trans-units'][1]['target']['raw-content'], '0');
+
+
+    }
+
+    /**
+     * @test
+     */
     public function can_replace_a_xliff_10()
     {
         $data = $this->getData([

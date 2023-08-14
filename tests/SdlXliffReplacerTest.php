@@ -86,7 +86,7 @@ class SdlXliffReplacerTest extends BaseTest
         ]);
 
         $inputFile = __DIR__.'/../tests/files/sdlxliff/piazza.sdlxliff';
-        $outputFile = __DIR__.'/../tests/files/output/sdlxliff/piazza.sdlxliff';
+        $outputFile = __DIR__.'/../tests/files/output/piazza.sdlxliff';
 
         $xliffParser = new XliffParser();
         $xliffParser->replaceTranslation($inputFile, $data['data'], $data['transUnits'], 'sk-SK', $outputFile);
