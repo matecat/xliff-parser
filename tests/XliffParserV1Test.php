@@ -192,18 +192,24 @@ class XliffParserV1Test extends BaseTest
 
         $segSource = $parsed[ 'files' ][ 3 ]['trans-units'][ 1 ][ 'seg-source' ][ 0 ];
         $segTarget = $parsed[ 'files' ][ 3 ]['trans-units'][ 1 ][ 'seg-target' ][ 0 ];
-        $expected = [
+        $expected1 = [
                 'mid' => 0,
                 'ext-prec-tags' => '<g id="1">',
                 'raw-content' => 'An English string with g tags',
                 'ext-succ-tags' => '</g>',
-                'attr' => [
-                    'id' => '251971551065'
-                ]
+        ];
+        $expected2 = [
+            'mid' => 0,
+            'ext-prec-tags' => '<g id="1">',
+            'raw-content' => 'An English string with g tags',
+            'ext-succ-tags' => '</g>',
+            'attr' => [
+                'xml:lang' => 'fr-fr'
+            ]
         ];
 
-        $this->assertEquals($expected, $segSource);
-        $this->assertEquals($expected, $segTarget);
+        $this->assertEquals($expected1, $segSource);
+        $this->assertEquals($expected2, $segTarget);
     }
 
     /**
@@ -629,7 +635,6 @@ class XliffParserV1Test extends BaseTest
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('xliff12-with-segment-state.xliff'));
 
         for($i = 1; $i <= count($parsed['files'][1]['trans-units']); $i++){
-            $this->assertEquals($parsed['files'][1]['trans-units'][$i]['seg-source'][0]['attr']['state'], $states[$i-1]);
             $this->assertEquals($parsed['files'][1]['trans-units'][$i]['seg-target'][0]['attr']['state'], $states[$i-1]);
         }
     }

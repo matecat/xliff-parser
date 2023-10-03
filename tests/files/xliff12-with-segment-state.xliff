@@ -1,71 +1,115 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:its="http://www.w3.org/2005/11/its" xmlns:itsxlf="http://www.w3.org/ns/its-xliff/" xmlns:okp="okapi-framework:xliff-extensions" its:version="2.0" version="1.2">
-<file datatype="x-application/json" original="editor.json" source-language="en" target-language="it">
-<body>
-<group id="sg1">
-<group id="sg2">
-<!-- XLIFF 1.2 spec state definition: new - Indicates that the item is new. For example, translation units that were not in a previous version of the document.-->
-<trans-unit id="tu1" resname="uploadImage" xml:space="preserve" state="new">
-<source xml:lang="en">Upload an image</source>
-<seg-source><mrk mid="0" mtype="seg">Upload an image</mrk></seg-source>
-<target xml:lang="it"><mrk mid="0" mtype="seg">Upload an image</mrk></target>
-</trans-unit>
-<!-- XLIFF 1.2 spec state definition: needs-translation - Indicates that the item needs to be translated.-->
-<trans-unit id="tu2" resname="enterImage" xml:space="preserve" state="needs-translation">
-<source xml:lang="en">Enter image link</source>
-<seg-source><mrk mid="0" mtype="seg">Enter image link</mrk></seg-source>
-<target xml:lang="it"><mrk mid="0" mtype="seg">Enter image link</mrk></target>
-</trans-unit>
-<!-- XLIFF 1.2 spec state definition: needs-adaptation - Indicates only non-textual information needs adaptation.-->
-<trans-unit id="tu3" resname="pleaseUploadImage" xml:space="preserve" state="needs-adaptation">
-<source xml:lang="en">Please upload an image</source>
-<seg-source><mrk mid="0" mtype="seg">Please upload an image</mrk></seg-source>
-<target xml:lang="it"><mrk mid="0" mtype="seg">Please upload an image</mrk></target>
-</trans-unit>
-<!-- XLIFF 1.2 spec state definition: needs-l10n - Indicates both text and non-textual information needs adaptation.-->
-<trans-unit id="tu4" resname="yourImageFile" xml:space="preserve" state="needs-l10n">
-<source xml:lang="en">Your image file</source>
-<seg-source><mrk mid="0" mtype="seg">Your image file</mrk></seg-source>
-<target xml:lang="it"><mrk mid="0" mtype="seg">Your image file</mrk></target>
-</trans-unit>
-<!-- XLIFF 1.2 spec state definition: needs-review-translation - Indicates that only the text of the item needs to be reviewed.-->
-<trans-unit id="tu5" resname="imageUrlLabel" xml:space="preserve" state="needs-review-translation">
-<source xml:lang="en">Image URL</source>
-<seg-source><mrk mid="0" mtype="seg">Image URL</mrk></seg-source>
-<target xml:lang="it"><mrk mid="0" mtype="seg">Image URL</mrk></target>
-</trans-unit>
-<!-- XLIFF 1.2 spec state definition: needs-review-adaptation - Indicates only non-textual information needs review.-->
-<trans-unit id="tu6" resname="imageUrlPlaceholder" xml:space="preserve" state="needs-review-adaptation">
-<source xml:lang="en">Enter an image URL</source>
-<seg-source><mrk mid="0" mtype="seg">Enter an image URL</mrk></seg-source>
-<target xml:lang="it"><mrk mid="0" mtype="seg">Enter an image URL</mrk></target>
-</trans-unit>
-<!-- XLIFF 1.2 spec state definition: needs-review-l10n - Indicates both text and non-textual information needs review.-->
-<trans-unit id="tu7" resname="supportedImageFormats" xml:space="preserve" state="needs-review-l10n">
-<source xml:lang="en">Supports GIF, JPG, and PNG files.</source>
-<seg-source><mrk mid="0" mtype="seg">Supports GIF, JPG, and PNG files.</mrk></seg-source>
-<target xml:lang="it"><mrk mid="0" mtype="seg">Supports GIF, JPG, and PNG files.</mrk></target>
-</trans-unit>
-<!-- XLIFF 1.2 spec state definition: translated - Indicates that the item has been translated.-->
-<trans-unit id="tu8" resname="useThisFile" xml:space="preserve" state="translated">
-<source xml:lang="en">Use this file</source>
-<seg-source><mrk mid="0" mtype="seg">Use this file</mrk></seg-source>
-<target xml:lang="it"><mrk mid="0" mtype="seg">Use this file</mrk></target>
-</trans-unit>
-<!-- XLIFF 1.2 spec state definition: signed-off - Indicates that changes are reviewed and approved.-->
-<trans-unit id="tu9" resname="doNotClose" xml:space="preserve" state="signed-off">
-<source xml:lang="en">Do not close the page until this upload is complete.</source>
-<seg-source><mrk mid="0" mtype="seg">Do not close the page until this upload is complete.</mrk></seg-source>
-<target xml:lang="it"><mrk mid="0" mtype="seg">Do not close the page until this upload is complete.</mrk></target>
-</trans-unit>
-<!-- XLIFF 1.2 spec state definition: final - Indicates the terminating state.-->
-<trans-unit id="tu10" resname="uploadVideo" xml:space="preserve" state="final">
-<source xml:lang="en">Upload a video</source>
-<seg-source><mrk mid="0" mtype="seg">Upload a video</mrk></seg-source>
-<target xml:lang="it"><mrk mid="0" mtype="seg">Upload a video</mrk></target>
-</trans-unit>
-</group>
-</group>
-</body>
-</file>
+<xliff
+	xmlns="urn:oasis:names:tc:xliff:document:1.2"
+	xmlns:its="http://www.w3.org/2005/11/its"
+	xmlns:itsxlf="http://www.w3.org/ns/its-xliff/"
+	xmlns:okp="okapi-framework:xliff-extensions" its:version="2.0" version="1.2">
+	<file datatype="x-application/json" original="editor.json" source-language="en" target-language="it">
+		<body>
+			<group id="sg1">
+				<group id="sg2">
+					<!-- XLIFF 1.2 spec state definition: new - Indicates that the item is new. For example, translation units that were not in a previous version of the document.-->
+					<trans-unit id="tu1" resname="uploadImage" xml:space="preserve">
+						<source xml:lang="en">Upload an image</source>
+						<seg-source>
+							<mrk mid="0" mtype="seg">Upload an image</mrk>
+						</seg-source>
+						<target xml:lang="it" state="new">
+							<mrk mid="0" mtype="seg">Upload an image</mrk>
+						</target>
+					</trans-unit>
+					<!-- XLIFF 1.2 spec state definition: needs-translation - Indicates that the item needs to be translated.-->
+					<trans-unit id="tu2" resname="enterImage" xml:space="preserve">
+						<source xml:lang="en">Enter image link</source>
+						<seg-source>
+							<mrk mid="0" mtype="seg">Enter image link</mrk>
+						</seg-source>
+						<target xml:lang="it" state="needs-translation">
+							<mrk mid="0" mtype="seg">Enter image link</mrk>
+						</target>
+					</trans-unit>
+					<!-- XLIFF 1.2 spec state definition: needs-adaptation - Indicates only non-textual information needs adaptation.-->
+					<trans-unit id="tu3" resname="pleaseUploadImage" xml:space="preserve">
+						<source xml:lang="en">Please upload an image</source>
+						<seg-source>
+							<mrk mid="0" mtype="seg">Please upload an image</mrk>
+						</seg-source>
+						<target xml:lang="it" state="needs-adaptation">
+							<mrk mid="0" mtype="seg">Please upload an image</mrk>
+						</target>
+					</trans-unit>
+					<!-- XLIFF 1.2 spec state definition: needs-l10n - Indicates both text and non-textual information needs adaptation.-->
+					<trans-unit id="tu4" resname="yourImageFile" xml:space="preserve">
+						<source xml:lang="en">Your image file</source>
+						<seg-source>
+							<mrk mid="0" mtype="seg">Your image file</mrk>
+						</seg-source>
+						<target xml:lang="it" state="needs-l10n">
+							<mrk mid="0" mtype="seg">Your image file</mrk>
+						</target>
+					</trans-unit>
+					<!-- XLIFF 1.2 spec state definition: needs-review-translation - Indicates that only the text of the item needs to be reviewed.-->
+					<trans-unit id="tu5" resname="imageUrlLabel" xml:space="preserve">
+						<source xml:lang="en">Image URL</source>
+						<seg-source>
+							<mrk mid="0" mtype="seg">Image URL</mrk>
+						</seg-source>
+						<target xml:lang="it" state="needs-review-translation">
+							<mrk mid="0" mtype="seg">Image URL</mrk>
+						</target>
+					</trans-unit>
+					<!-- XLIFF 1.2 spec state definition: needs-review-adaptation - Indicates only non-textual information needs review.-->
+					<trans-unit id="tu6" resname="imageUrlPlaceholder" xml:space="preserve">
+						<source xml:lang="en">Enter an image URL</source>
+						<seg-source>
+							<mrk mid="0" mtype="seg">Enter an image URL</mrk>
+						</seg-source>
+						<target xml:lang="it" state="needs-review-adaptation">
+							<mrk mid="0" mtype="seg">Enter an image URL</mrk>
+						</target>
+					</trans-unit>
+					<!-- XLIFF 1.2 spec state definition: needs-review-l10n - Indicates both text and non-textual information needs review.-->
+					<trans-unit id="tu7" resname="supportedImageFormats" xml:space="preserve">
+						<source xml:lang="en">Supports GIF, JPG, and PNG files.</source>
+						<seg-source>
+							<mrk mid="0" mtype="seg">Supports GIF, JPG, and PNG files.</mrk>
+						</seg-source>
+						<target xml:lang="it" state="needs-review-l10n">
+							<mrk mid="0" mtype="seg">Supports GIF, JPG, and PNG files.</mrk>
+						</target>
+					</trans-unit>
+					<!-- XLIFF 1.2 spec state definition: translated - Indicates that the item has been translated.-->
+					<trans-unit id="tu8" resname="useThisFile" xml:space="preserve">
+						<source xml:lang="en">Use this file</source>
+						<seg-source>
+							<mrk mid="0" mtype="seg">Use this file</mrk>
+						</seg-source>
+						<target xml:lang="it" state="translated">
+							<mrk mid="0" mtype="seg">Use this file</mrk>
+						</target>
+					</trans-unit>
+					<!-- XLIFF 1.2 spec state definition: signed-off - Indicates that changes are reviewed and approved.-->
+					<trans-unit id="tu9" resname="doNotClose" xml:space="preserve">
+						<source xml:lang="en">Do not close the page until this upload is complete.</source>
+						<seg-source>
+							<mrk mid="0" mtype="seg">Do not close the page until this upload is complete.</mrk>
+						</seg-source>
+						<target xml:lang="it" state="signed-off">
+							<mrk mid="0" mtype="seg">Do not close the page until this upload is complete.</mrk>
+						</target>
+					</trans-unit>
+					<!-- XLIFF 1.2 spec state definition: final - Indicates the terminating state.-->
+					<trans-unit id="tu10" resname="uploadVideo" xml:space="preserve">
+						<source xml:lang="en">Upload a video</source>
+						<seg-source>
+							<mrk mid="0" mtype="seg">Upload a video</mrk>
+						</seg-source>
+						<target xml:lang="it" state="final">
+							<mrk mid="0" mtype="seg">Upload a video</mrk>
+						</target>
+					</trans-unit>
+				</group>
+			</group>
+		</body>
+	</file>
 </xliff>
