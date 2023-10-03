@@ -604,4 +604,30 @@ class XliffParserV1Test extends BaseTest
         $this->assertEquals($parsed['files'][3]['trans-units'][1]['notes'][1]['raw-content'], 'page1.txt');
         $this->assertEquals($parsed['files'][3]['trans-units'][1]['notes'][2]['raw-content'], 'questa è una nota1');
     }
+
+    /**
+     * @test
+     */
+    public function can_parse_segment_state_attribute()
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('xliff12-with-segment-state.xliff'));
+
+        $states = [
+            'new',
+            'needs-translation',
+            'needs-adaptation',
+            'needs-l10n',
+            'needs-review-translation',
+            'needs-review-adaptation',
+            'needs-review-l10n',
+            'translated',
+            'signed-off',
+            'final',
+        ];
+
+        for($i = 1; $i <= count($parsed['files'][1]['trans-units']); $i++){
+            $this->assertEquals($parsed['files'][1]['trans-units'][$i]['seg-source'][0]['attr']['state'], $states[$i-1]);
+            $this->assertEquals($parsed['files'][1]['trans-units'][$i]['seg-target'][0]['attr']['state'], $states[$i-1]);
+        }
+    }
 }
