@@ -197,6 +197,9 @@ class XliffParserV1Test extends BaseTest
                 'ext-prec-tags' => '<g id="1">',
                 'raw-content' => 'An English string with g tags',
                 'ext-succ-tags' => '</g>',
+                'attr' => [
+                    'id' => '251971551065'
+                ]
         ];
 
         $this->assertEquals($expected, $segSource);
@@ -610,8 +613,6 @@ class XliffParserV1Test extends BaseTest
      */
     public function can_parse_segment_state_attribute()
     {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('xliff12-with-segment-state.xliff'));
-
         $states = [
             'new',
             'needs-translation',
@@ -624,6 +625,8 @@ class XliffParserV1Test extends BaseTest
             'signed-off',
             'final',
         ];
+
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('xliff12-with-segment-state.xliff'));
 
         for($i = 1; $i <= count($parsed['files'][1]['trans-units']); $i++){
             $this->assertEquals($parsed['files'][1]['trans-units'][$i]['seg-source'][0]['attr']['state'], $states[$i-1]);
