@@ -162,6 +162,7 @@ class XliffParserV1 extends AbstractXliffParser {
             if ( $childNode->nodeName === 'seg-source' ) {
                 $rawSegment                                                     = $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'source' ][ 'raw-content' ];
                 $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'seg-source' ] = $this->extractContentWithMarksAndExtTags( $dom, $childNode, $rawSegment );
+                $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'seg-source' ][ 0 ]['attr'] = $this->extractTagAttributes($transUnit);
             }
 
             // target
@@ -173,6 +174,7 @@ class XliffParserV1 extends AbstractXliffParser {
                 $segSource        = @$output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'seg-source' ];
                 if ( isset( $targetRawContent ) && !empty( $targetRawContent ) && isset( $segSource ) && count( $segSource ) > 0 ) {
                     $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'seg-target' ] = $this->extractContentWithMarksAndExtTags( $dom, $childNode, $targetRawContent );
+                    $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'seg-target' ][ 0 ]['attr'] = $this->extractTagAttributes($transUnit);
                 }
             }
 
