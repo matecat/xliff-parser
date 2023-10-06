@@ -209,6 +209,8 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer {
 
                     } elseif ( 'segment' === $name && $this->xliffVersion === 2 ) { // add state to segment in Xliff v2
                         list( $stateProp, $lastMrkState ) = $this->setTransUnitState( $this->segments[ $pos ], $stateProp, $lastMrkState );
+                    } elseif ( 'target' === $name && $this->xliffVersion === 1 ) { // add state to target in Xliff v1
+                        list( $stateProp, $lastMrkState ) = $this->setTransUnitState( $this->segments[ $pos ], $stateProp, $lastMrkState );
                     }
 
                     //normal tag flux, put attributes in it
@@ -761,7 +763,13 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer {
             case TranslationStatus::STATUS_FIXED:
             case TranslationStatus::STATUS_APPROVED:
                 if ( $lastMrkState == null || $lastMrkState == TranslationStatus::STATUS_APPROVED ) {
-                    $state_prop   = ( $this->xliffVersion === 2 ) ? "state=\"reviewed\"" : "state=\"signed-off\"";
+
+                    if( isset($seg[ 'r2' ]) and $seg[ 'r2' ] == 1 ){
+                        $state_prop   = "state=\"final\"";
+                    } else {
+                        $state_prop   = ( $this->xliffVersion === 2 ) ? "state=\"reviewed\"" : "state=\"signed-off\"";
+                    }
+
                     $lastMrkState = TranslationStatus::STATUS_APPROVED;
                 }
                 break;
@@ -782,16 +790,19 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer {
                 break;
 
             case TranslationStatus::STATUS_NEW:
-                if ( ( $lastMrkState == null ) || $lastMrkState != TranslationStatus::STATUS_DRAFT ) {
+                if ( ( $lastMrkState == null ) || $lastMrkState != TranslationStatus::STATUS_NEW ) {
                     $state_prop   = ( $this->xliffVersion === 2 ) ? "state=\"initial\"" : "state=\"new\"";
                     $lastMrkState = TranslationStatus::STATUS_NEW;
                 }
                 break;
 
             case TranslationStatus::STATUS_DRAFT:
-                $state_prop   = "state=\"needs-translation\"";
-                $lastMrkState = TranslationStatus::STATUS_DRAFT;
+                if ( ( $lastMrkState == null ) || $lastMrkState != TranslationStatus::STATUS_DRAFT ) {
+                    $state_prop   = ( $this->xliffVersion === 2 ) ? "state=\"initial\"" : "state=\"new\"";
+                    $lastMrkState = TranslationStatus::STATUS_DRAFT;
+                }
                 break;
+
             default:
                 // this is the case when a segment is not showed in cattool, so the row in
                 // segment_translations does not exists and
