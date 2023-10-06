@@ -192,15 +192,24 @@ class XliffParserV1Test extends BaseTest
 
         $segSource = $parsed[ 'files' ][ 3 ]['trans-units'][ 1 ][ 'seg-source' ][ 0 ];
         $segTarget = $parsed[ 'files' ][ 3 ]['trans-units'][ 1 ][ 'seg-target' ][ 0 ];
-        $expected = [
+        $expected1 = [
                 'mid' => 0,
                 'ext-prec-tags' => '<g id="1">',
                 'raw-content' => 'An English string with g tags',
                 'ext-succ-tags' => '</g>',
         ];
+        $expected2 = [
+            'mid' => 0,
+            'ext-prec-tags' => '<g id="1">',
+            'raw-content' => 'An English string with g tags',
+            'ext-succ-tags' => '</g>',
+            'attr' => [
+                'xml:lang' => 'fr-fr'
+            ]
+        ];
 
-        $this->assertEquals($expected, $segSource);
-        $this->assertEquals($expected, $segTarget);
+        $this->assertEquals($expected1, $segSource);
+        $this->assertEquals($expected2, $segTarget);
     }
 
     /**
@@ -603,5 +612,30 @@ class XliffParserV1Test extends BaseTest
         $this->assertEquals($parsed['files'][3]['trans-units'][1]['notes'][0]['raw-content'], '111');
         $this->assertEquals($parsed['files'][3]['trans-units'][1]['notes'][1]['raw-content'], 'page1.txt');
         $this->assertEquals($parsed['files'][3]['trans-units'][1]['notes'][2]['raw-content'], 'questa è una nota1');
+    }
+
+    /**
+     * @test
+     */
+    public function can_parse_segment_state_attribute()
+    {
+        $states = [
+            'new',
+            'needs-translation',
+            'needs-adaptation',
+            'needs-l10n',
+            'needs-review-translation',
+            'needs-review-adaptation',
+            'needs-review-l10n',
+            'translated',
+            'signed-off',
+            'final',
+        ];
+
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('xliff12-with-segment-state.xliff'));
+
+        for($i = 1; $i <= count($parsed['files'][1]['trans-units']); $i++){
+            $this->assertEquals($parsed['files'][1]['trans-units'][$i]['seg-target'][0]['attr']['state'], $states[$i-1]);
+        }
     }
 }
