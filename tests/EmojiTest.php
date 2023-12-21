@@ -113,4 +113,15 @@ class EmojiTest extends BaseTest
             $this->assertNotEquals('', Emoji::toEntity($faker->emoji));
         }
     }
+
+    /**
+     * Perform 100000 iterations to test script performance
+     *
+     * @test
+     */
+    public function entityToEmojiTest() {
+        $segment = 'Questo &#10005; è un emoji a croce &#1048918;&#129689; manina &#128075;&#127995;';
+        $this->assertEquals( 'Questo ✕ è un emoji a croce 􀅖🪙 manina 👋🏻', Emoji::toEmoji( $segment ) );
+    }
+
 }
