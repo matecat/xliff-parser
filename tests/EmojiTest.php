@@ -137,7 +137,7 @@ class EmojiTest extends BaseTest
             '💪🏽',
             '💪🏾',
             '💪🏿',
-            '💪🏼'
+            '💪🏿'
         ];
 
         foreach ($emojis as $i => $emoji){
