@@ -124,4 +124,28 @@ class EmojiTest extends BaseTest
         $this->assertEquals( 'Questo ✕ è un emoji a croce 􀅖🪙 manina 👋🏻', Emoji::toEmoji( $segment ) );
     }
 
+    /**
+     * This test is performed on the same emoji (flexed arm) in different shades
+     *
+     * @test
+     */
+    public function canEncodeAndDecodeDifferentShades()
+    {
+        $emojis = [
+            '🤌',
+            '💪🏻',
+            '💪🏽',
+            '💪🏾',
+            '💪🏿',
+            '💪🏼'
+        ];
+
+        foreach ($emojis as $i => $emoji){
+
+            $entity = Emoji::toEntity($emoji);
+            $toEmoji = Emoji::toEmoji($entity);
+
+            $this->assertEquals($emojis[$i], $toEmoji);
+        }
+    }
 }
