@@ -542,6 +542,8 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer {
             $this->unitContainsMda           = false;
             $this->hasWrittenCounts          = false;
             $this->sourceAttributes          = [];
+
+            $this->resetCounts();
         }
     }
 

@@ -3,4 +3,5 @@
 .phpunit.result.cache
 composer.lock
 vendor
+tests/files/uber/output
 tests/files/output

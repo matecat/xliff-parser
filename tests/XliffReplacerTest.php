@@ -89,9 +89,9 @@ class XliffReplacerTest extends BaseTest
         preg_match_all('/<mda:meta type="x-matecat-weighted">(.*)<\/mda:meta>/', $output, $weighted);
 
         $this->assertEquals(30, $raw[1][0]);
-        $this->assertEquals(60, $raw[1][1]);
+        $this->assertEquals(30, $raw[1][1]);
         $this->assertEquals(20, $weighted[1][0]);
-        $this->assertEquals(40, $weighted[1][1]);
+        $this->assertEquals(20, $weighted[1][1]);
 
         // check for metaGroup attributes
         preg_match_all('/<mda:metaGroup id="(.*)" category="(.*)">/', $output, $metaGroup);
@@ -504,8 +504,8 @@ class XliffReplacerTest extends BaseTest
         preg_match_all('/<mda:meta type="x-matecat-raw">(.*?)<\/mda:meta>/s', file_get_contents($outputFile), $rawWords);
         preg_match_all('/<mda:meta type="x-matecat-weighted">(.*?)<\/mda:meta>/s', file_get_contents($outputFile), $weightedWords);
 
-        $this->assertEquals($rawWords[1][1], 7);
-        $this->assertEquals($weightedWords[1][1], 5);
+        $this->assertEquals($rawWords[1][1], 5);
+        $this->assertEquals($weightedWords[1][1], 4);
     }
 
     /**
