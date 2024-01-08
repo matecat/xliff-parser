@@ -168,7 +168,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer {
                     $this->updateCounts();
                     $this->hasWrittenCounts = true;
 
-                    $tag                   .= $this->getWordCountGroupForXliffV2( $this->counts[ 'raw_word_count' ], $this->counts[ 'eq_word_count' ] );
+                    $tag                   .= $this->getWordCountGroupForXliffV2();
                     $this->unitContainsMda = true;
                 }
             }
@@ -289,10 +289,12 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer {
         // update segmentPositionInTu
 
         if ( $this->xliffVersion === 1 && $this->inTU && $name === 'source' ) {
+            $asdasdsa = $attr;
             $this->segmentPositionInTu++;
         }
 
         if ( $this->xliffVersion === 2 && $this->inTU && $name === 'segment' ) {
+            $asdasdsa = $attr;
             $this->segmentPositionInTu++;
         }
     }
@@ -463,7 +465,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer {
                     $this->hasWrittenCounts = true;
 
                     $tag = $this->CDATABuffer;
-                    $tag .= $this->getWordCountGroupForXliffV2( $this->counts[ 'raw_word_count' ], $this->counts[ 'eq_word_count' ], false );
+                    $tag .= $this->getWordCountGroupForXliffV2( false );
                     $tag .= "    </mda:metadata>";
 
                 } else {
@@ -542,6 +544,8 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer {
             $this->unitContainsMda           = false;
             $this->hasWrittenCounts          = false;
             $this->sourceAttributes          = [];
+
+            $this->resetCounts();
         }
     }
 
@@ -604,11 +608,24 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer {
      * @param array $seg
      */
     private function updateSegmentCounts( array $seg = [] ) {
-        $this->counts[ 'raw_word_count' ] += $seg[ 'raw_word_count' ];
-        $this->counts[ 'eq_word_count' ]  += ( floor( $seg[ 'eq_word_count' ] * 100 ) / 100 );
+
+        $raw_word_count = $seg[ 'raw_word_count' ];
+        $eq_word_count = ( floor( $seg[ 'eq_word_count' ] * 100 ) / 100 );
+
+
+        $listOfSegmentsIds = $this->transUnits[ $this->currentTransUnitId ];
+
+        $this->counts[ 'segments_count_array' ][ $seg[ 'sid' ] ] = [
+            'raw_word_count' => $raw_word_count,
+            'eq_word_count' => $eq_word_count,
+        ];
+
+        $this->counts[ 'raw_word_count' ] += $raw_word_count;
+        $this->counts[ 'eq_word_count' ]  += $eq_word_count;
     }
 
     private function resetCounts() {
+        $this->counts[ 'segments_count_array' ] = [];
         $this->counts[ 'raw_word_count' ] = 0;
         $this->counts[ 'eq_word_count' ]  = 0;
     }
@@ -724,30 +741,43 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer {
     }
 
     /**
-     * @param      $raw_word_count
-     * @param      $eq_word_count
      * @param bool $withMetadataTag
      *
      * @return string
      */
-    private function getWordCountGroupForXliffV2( $raw_word_count, $eq_word_count, $withMetadataTag = true ) {
-        $this->mdaGroupCounter++;
-        $id = 'word_count_tu_' . $this->mdaGroupCounter;
+    private function getWordCountGroupForXliffV2( $withMetadataTag = true ) {
 
-        if ( $withMetadataTag === false ) {
-            return "    <mda:metaGroup id=\"" . $id . "\" category=\"row_xml_attribute\">
-                                <mda:meta type=\"x-matecat-raw\">$raw_word_count</mda:meta>
-                                <mda:meta type=\"x-matecat-weighted\">$eq_word_count</mda:meta>
-                            </mda:metaGroup>
-                    ";
+        $this->mdaGroupCounter++;
+        $segments_count_array = $this->counts[ 'segments_count_array' ];
+
+        $id = $this->currentSegmentArray;
+
+
+
+        $return = '';
+
+        if ( $withMetadataTag === true ) {
+            $return .= '<mda:metadata>';
         }
 
-        return "<mda:metadata>
-                <mda:metaGroup id=\"" . $id . "\" category=\"row_xml_attribute\">
-                    <mda:meta type=\"x-matecat-raw\">$raw_word_count</mda:meta>
-                    <mda:meta type=\"x-matecat-weighted\">$eq_word_count</mda:meta>
-                </mda:metaGroup>
-            </mda:metadata>";
+        $index = 0;
+        foreach ($segments_count_array as $segments_count_item){
+
+            $id = 'word_count_tu['. $this->currentTransUnitId . '][' . $index.']';
+            $index++;
+
+            $return .= "    <mda:metaGroup id=\"" . $id . "\" category=\"row_xml_attribute\">
+                                <mda:meta type=\"x-matecat-raw\">". $segments_count_item['raw_word_count']."</mda:meta>
+                                <mda:meta type=\"x-matecat-weighted\">". $segments_count_item['eq_word_count']."</mda:meta>
+                            </mda:metaGroup>";
+        }
+
+        if ( $withMetadataTag === true ) {
+            $return .= '</mda:metadata>';
+        }
+
+        return $return;
+
     }
 
     /**

@@ -72,8 +72,8 @@ class XliffReplacerTest extends BaseTest
                         'mrk_succ_tags' => '',
                         'translation' => 'Bla bla bla',
                         'status' => TranslationStatus::STATUS_TRANSLATED,
-                        'eq_word_count' => 20,
-                        'raw_word_count' => 30,
+                        'eq_word_count' => 40,
+                        'raw_word_count' => 60,
                 ],
         ]);
 
@@ -96,8 +96,8 @@ class XliffReplacerTest extends BaseTest
         // check for metaGroup attributes
         preg_match_all('/<mda:metaGroup id="(.*)" category="(.*)">/', $output, $metaGroup);
 
-        $this->assertEquals('word_count_tu_1', $metaGroup[1][0]);
-        $this->assertEquals('word_count_tu_2', $metaGroup[1][1]);
+        $this->assertEquals('word_count_tu[0][0]', $metaGroup[1][0]);
+        $this->assertEquals('word_count_tu[1][0]', $metaGroup[1][1]);
     }
 
     /**
@@ -504,8 +504,8 @@ class XliffReplacerTest extends BaseTest
         preg_match_all('/<mda:meta type="x-matecat-raw">(.*?)<\/mda:meta>/s', file_get_contents($outputFile), $rawWords);
         preg_match_all('/<mda:meta type="x-matecat-weighted">(.*?)<\/mda:meta>/s', file_get_contents($outputFile), $weightedWords);
 
-        $this->assertEquals($rawWords[1][1], 7);
-        $this->assertEquals($weightedWords[1][1], 5);
+        $this->assertEquals($rawWords[1][1], 5);
+        $this->assertEquals($weightedWords[1][1], 4);
     }
 
     /**
