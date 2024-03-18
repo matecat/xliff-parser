@@ -7458,7 +7458,7 @@ class Emoji {
     public static function toEntity( $str ) {
         $letters = preg_split( '//u', $str, null, PREG_SPLIT_NO_EMPTY );
         foreach ( $letters as $letter ) {
-            if ( @self::$chmap[ $letter ] ) {
+            if ( self::$chmap[ $letter ] ?? false ) {
                 $str = str_replace( $letter, self::$chmap[ $letter ], $str );
             }
         }
