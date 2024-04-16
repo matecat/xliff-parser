@@ -638,4 +638,17 @@ class XliffParserV1Test extends BaseTest
             $this->assertEquals($parsed['files'][1]['trans-units'][$i]['seg-target'][0]['attr']['state'], $states[$i-1]);
         }
     }
+
+    /**
+     * @test
+     */
+    public function can_parse_context_group()
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('context-group.xlf'));
+
+        $this->assertEquals($parsed['files'][1]['trans-units'][1]['context-group'][0]['contexts'][0]['raw-content'], "PSMS-ID-ec2d50b6-d0ce-4672-b8df-9ea82616d85c::1");
+        $this->assertEquals($parsed['files'][1]['trans-units'][1]['context-group'][0]['contexts'][1]['raw-content'], "Translation Context: Admin Portal Title text");
+        $this->assertEquals($parsed['files'][1]['trans-units'][2]['context-group'][0]['contexts'][0]['raw-content'], "PSMS-ID-ec2d50b6-d0ce-4672-b8df-9ea82616d85c::1");
+        $this->assertEquals($parsed['files'][1]['trans-units'][2]['context-group'][0]['contexts'][1]['raw-content'], "Translation Context: Admin Portal Title text");
+    }
 }

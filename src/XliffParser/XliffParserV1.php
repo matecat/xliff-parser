@@ -140,10 +140,11 @@ class XliffParserV1 extends AbstractXliffParser {
      * @param $output
      * @param $i
      * @param $j
+     * @param $contextGroups
      *
      * @throws Exception
      */
-    protected function extractTransUnit( $transUnit, &$transUnitIdArrayForUniquenessCheck, $dom, &$output, &$i, &$j ) {
+    protected function extractTransUnit( $transUnit, &$transUnitIdArrayForUniquenessCheck, $dom, &$output, &$i, &$j, $contextGroups = [] ) {
         // metadata
         $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'attr' ] = $this->extractTransUnitMetadata( $transUnit, $transUnitIdArrayForUniquenessCheck );
 
@@ -184,6 +185,12 @@ class XliffParserV1 extends AbstractXliffParser {
         }
 
         // context-group
+        if(!empty($contextGroups)){
+            foreach ($contextGroups as $contextGroup){
+                $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'context-group' ][] = $this->extractTransUnitContextGroup( $dom, $contextGroup );
+            }
+        }
+
         foreach ( $transUnit->getElementsByTagName( 'context-group' ) as $contextGroup ) {
             $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'context-group' ][] = $this->extractTransUnitContextGroup( $dom, $contextGroup );
         }

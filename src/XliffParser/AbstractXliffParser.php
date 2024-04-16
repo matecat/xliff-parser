@@ -57,24 +57,31 @@ abstract class AbstractXliffParser {
     /**
      * Extract trans-unit content from the current node
      *
-     * @param              $childNode
+     * @param $childNode
      * @param              $transUnitIdArrayForUniquenessCheck
-     * @param DOMDocument  $dom
+     * @param DOMDocument $dom
      * @param              $output
      * @param              $i
      * @param              $j
+     * @param array $contextGroups
      */
-    protected function extractTuFromNode( $childNode, &$transUnitIdArrayForUniquenessCheck, DOMDocument $dom, &$output, &$i, &$j ) {
+    protected function extractTuFromNode( $childNode, &$transUnitIdArrayForUniquenessCheck, DOMDocument $dom, &$output, &$i, &$j, $contextGroups = [] ) {
         if ( $childNode->nodeName === 'group' ) {
+
+            // group context-groups
+            foreach ( $childNode->getElementsByTagName( 'context-group' ) as $contextGroup ) {
+                $contextGroups[] = $contextGroup;
+            }
+
             foreach ( $childNode->childNodes as $nestedChildNode ) {
                 if ( $nestedChildNode->nodeName === 'group' ) {
-                    $this->extractTuFromNode( $nestedChildNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j );
+                    $this->extractTuFromNode( $nestedChildNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j, $contextGroups );
                 } elseif ( $nestedChildNode->nodeName === $this->getTuTagName() ) {
-                    $this->extractTransUnit( $nestedChildNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j );
+                    $this->extractTransUnit( $nestedChildNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j, $contextGroups );
                 }
             }
         } elseif ( $childNode->nodeName === $this->getTuTagName() ) {
-            $this->extractTransUnit( $childNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j );
+            $this->extractTransUnit( $childNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j, $contextGroups );
         }
     }
 
@@ -87,10 +94,11 @@ abstract class AbstractXliffParser {
      * @param $output
      * @param $i
      * @param $j
+     * @param $contextGroups
      *
      * @return mixed
      */
-    abstract protected function extractTransUnit( $transUnit, &$transUnitIdArrayForUniquenessCheck, $dom, &$output, &$i, &$j );
+    abstract protected function extractTransUnit( $transUnit, &$transUnitIdArrayForUniquenessCheck, $dom, &$output, &$i, &$j,$contextGroups = [] );
 
     /**
      * @param DOMDocument $dom
