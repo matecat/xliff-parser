@@ -651,4 +651,14 @@ class XliffParserV1Test extends BaseTest
         $this->assertEquals($parsed['files'][1]['trans-units'][2]['context-group'][0]['contexts'][0]['raw-content'], "PSMS-ID-ec2d50b6-d0ce-4672-b8df-9ea82616d85c::1");
         $this->assertEquals($parsed['files'][1]['trans-units'][2]['context-group'][0]['contexts'][1]['raw-content'], "Translation Context: Admin Portal Title text");
     }
+
+    /**
+     * @test
+     */
+    public function can_skip_too_deep_nested_group()
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('context-group-nested.xlf'));
+
+        $this->assertCount(2, $parsed['files'][1]['trans-units']);
+    }
 }

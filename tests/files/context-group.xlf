@@ -14,11 +14,11 @@
 					<context context-type="x-key-note">Translation Context: Admin Portal Title text</context>
 				</context-group>
 				<group id="32">
-				    <trans-unit id="aaaaaaa" xml:space="preserve" translate="yes">
+				    <trans-unit id="tu1" xml:space="preserve" translate="yes">
                         <source xml:lang="en-US">First segment</source>
                         <target  xml:lang="it-IT" state="new">Primo segmento</target>
                     </trans-unit>
-                    <trans-unit id="bbbbbbbb" xml:space="preserve" translate="yes">
+                    <trans-unit id="tu2" xml:space="preserve" translate="yes">
                         <source xml:lang="en-US">Second segment</source>
                         <target  xml:lang="it-IT" state="new">Segmento segmento</target>
                     </trans-unit>

@@ -12,6 +12,9 @@ use Matecat\XliffParser\XliffUtils\DataRefReplacer;
 use Psr\Log\LoggerInterface;
 
 abstract class AbstractXliffParser {
+
+    const MAX_GROUP_RECURSION_LEVEL = 5;
+
     /**
      * @var LoggerInterface
      */
@@ -64,18 +67,29 @@ abstract class AbstractXliffParser {
      * @param              $i
      * @param              $j
      * @param array $contextGroups
+     * @param int $recursionLevel
      */
-    protected function extractTuFromNode( $childNode, &$transUnitIdArrayForUniquenessCheck, DOMDocument $dom, &$output, &$i, &$j, $contextGroups = [] ) {
+    protected function extractTuFromNode( $childNode, &$transUnitIdArrayForUniquenessCheck, DOMDocument $dom, &$output, &$i, &$j, $contextGroups = [], $recursionLevel = 0 ) {
         if ( $childNode->nodeName === 'group' ) {
 
-            // group context-groups
-            foreach ( $childNode->getElementsByTagName( 'context-group' ) as $contextGroup ) {
-                $contextGroups[] = $contextGroup;
+            // add nested context-groups
+            foreach ( $childNode->childNodes as $nestedChildNode ) {
+                if ( $nestedChildNode->nodeName ===  'context-group' ) {
+                    $contextGroups[] = $nestedChildNode;
+                }
             }
 
             foreach ( $childNode->childNodes as $nestedChildNode ) {
+
+                // nested groups
                 if ( $nestedChildNode->nodeName === 'group' ) {
-                    $this->extractTuFromNode( $nestedChildNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j, $contextGroups );
+
+                    // avoid infinite recursion
+                    $recursionLevel++;
+                    if($recursionLevel < self::MAX_GROUP_RECURSION_LEVEL){
+                        $this->extractTuFromNode( $nestedChildNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j, $contextGroups, $recursionLevel );
+                    }
+
                 } elseif ( $nestedChildNode->nodeName === $this->getTuTagName() ) {
                     $this->extractTransUnit( $nestedChildNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j, $contextGroups );
                 }
