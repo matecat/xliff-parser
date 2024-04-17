@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff
+	xmlns="urn:oasis:names:tc:xliff:document:1.2"
+	xmlns:okp="okapi-framework:xliff-extensions" version="1.2"
+	xmlns:mtc="https://www.matecat.com">
+	<file datatype="x-mxliff" original="context-group.xlf" source-language="en-US" target-language="it-IT">
+	    <slr:profiles generalProfile="xliff:codepoints"/>
+	</file>
+	<file datatype="x-undefined" original="GitFarm-AuthAdminPortalFrontend-8f058d3-uok6BxzR-operations-af-ZA.xlf" source-language="en-US" target-language="it-IT">
+		<body>
+		    <group id="0">
+                <group id="1">
+                    <group id="2">
+                        <group id="3">
+                            <group id="4">
+                                <group id="5">
+                                      <group id="0">
+                                        <group id="1">
+                                            <group id="2">
+                                                <group id="3">
+                                                    <group id="4">
+                                                        <group id="5">
+                                                            <context-group purpose="information">
+                                                                <context context-type="x-key">PSMS-ID-ec2d50b6-d0ce-4672-b8df-9ea82616d85c::1</context>
+                                                                <context context-type="x-key-note">Translation Context: Admin Portal Title text</context>
+                                                            </context-group>
+                                                            <group id="32">
+                                                                <trans-unit id="tu1" xml:space="preserve" translate="yes">
+                                                                    <source xml:lang="en-US">First segment</source>
+                                                                    <target  xml:lang="it-IT" state="new">Primo segmento</target>
+                                                                </trans-unit>
+                                                                <trans-unit id="tu2" xml:space="preserve" translate="yes">
+                                                                    <source xml:lang="en-US">Second segment</source>
+                                                                    <target  xml:lang="it-IT" state="new">Segmento segmento</target>
+                                                                </trans-unit>
+                                                            </group>
+                                                        </group>
+                                                    </group>
+                                                </group>
+                                            </group>
+                                        </group>
+                                    </group>
+                                </group>
+                            </group>
+                        </group>
+                    </group>
+                </group>
+            </group>
+		    <group id="66">
+                <group id="32">
+                    <trans-unit id="tu32" xml:space="preserve" translate="yes">
+                        <source xml:lang="en-US">First segment</source>
+                        <target  xml:lang="it-IT" state="new">Primo segmento</target>
+                    </trans-unit>
+                    <trans-unit id="tu33" xml:space="preserve" translate="yes">
+                        <source xml:lang="en-US">Second segment</source>
+                        <target  xml:lang="it-IT" state="new">Segmento segmento</target>
+                    </trans-unit>
+                </group>
+                <context-group purpose="information">
+                    <context context-type="x-key">PSMS-ID-ec2d50b6-d0ce-4672-b8df-9ea82616d85c::1</context>
+                    <context context-type="x-key-note">Translation Context: Admin Portal Title text</context>
+                </context-group>
+		    </group>
+		</body>
+	</file>
+</xliff>

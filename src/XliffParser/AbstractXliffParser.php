@@ -12,6 +12,9 @@ use Matecat\XliffParser\XliffUtils\DataRefReplacer;
 use Psr\Log\LoggerInterface;
 
 abstract class AbstractXliffParser {
+
+    const MAX_GROUP_RECURSION_LEVEL = 5;
+
     /**
      * @var LoggerInterface
      */
@@ -57,24 +60,42 @@ abstract class AbstractXliffParser {
     /**
      * Extract trans-unit content from the current node
      *
-     * @param              $childNode
+     * @param $childNode
      * @param              $transUnitIdArrayForUniquenessCheck
-     * @param DOMDocument  $dom
+     * @param DOMDocument $dom
      * @param              $output
      * @param              $i
      * @param              $j
+     * @param array $contextGroups
+     * @param int $recursionLevel
      */
-    protected function extractTuFromNode( $childNode, &$transUnitIdArrayForUniquenessCheck, DOMDocument $dom, &$output, &$i, &$j ) {
+    protected function extractTuFromNode( $childNode, &$transUnitIdArrayForUniquenessCheck, DOMDocument $dom, &$output, &$i, &$j, $contextGroups = [], $recursionLevel = 0 ) {
         if ( $childNode->nodeName === 'group' ) {
+
+            // add nested context-groups
             foreach ( $childNode->childNodes as $nestedChildNode ) {
+                if ( $nestedChildNode->nodeName ===  'context-group' ) {
+                    $contextGroups[] = $nestedChildNode;
+                }
+            }
+
+            foreach ( $childNode->childNodes as $nestedChildNode ) {
+
+                // nested groups
                 if ( $nestedChildNode->nodeName === 'group' ) {
-                    $this->extractTuFromNode( $nestedChildNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j );
+
+                    // avoid infinite recursion
+                    $recursionLevel++;
+                    if($recursionLevel < self::MAX_GROUP_RECURSION_LEVEL){
+                        $this->extractTuFromNode( $nestedChildNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j, $contextGroups, $recursionLevel );
+                    }
+
                 } elseif ( $nestedChildNode->nodeName === $this->getTuTagName() ) {
-                    $this->extractTransUnit( $nestedChildNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j );
+                    $this->extractTransUnit( $nestedChildNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j, $contextGroups );
                 }
             }
         } elseif ( $childNode->nodeName === $this->getTuTagName() ) {
-            $this->extractTransUnit( $childNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j );
+            $this->extractTransUnit( $childNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j, $contextGroups );
         }
     }
 
@@ -87,10 +108,11 @@ abstract class AbstractXliffParser {
      * @param $output
      * @param $i
      * @param $j
+     * @param $contextGroups
      *
      * @return mixed
      */
-    abstract protected function extractTransUnit( $transUnit, &$transUnitIdArrayForUniquenessCheck, $dom, &$output, &$i, &$j );
+    abstract protected function extractTransUnit( $transUnit, &$transUnitIdArrayForUniquenessCheck, $dom, &$output, &$i, &$j,$contextGroups = [] );
 
     /**
      * @param DOMDocument $dom
