@@ -9,7 +9,6 @@ use Matecat\XliffParser\Exception\DuplicateTransUnitIdInXliff;
 use Matecat\XliffParser\Exception\NotFoundIdInTransUnit;
 use Matecat\XliffParser\Exception\SegmentIdTooLongException;
 use Matecat\XliffParser\Utils\Strings;
-use Matecat\XliffParser\XliffUtils\DataRefReplacer;
 
 class XliffParserV2 extends AbstractXliffParser {
     /**
@@ -132,10 +131,8 @@ class XliffParserV2 extends AbstractXliffParser {
         // original-data (exclusive for V2)
         // http://docs.oasis-open.org/xliff/xliff-core/v2.0/xliff-core-v2.0.html#originaldata
         $originalData = $this->extractTransUnitOriginalData( $transUnit );
-        $dataRefMap   = null;
         if ( !empty( $originalData ) ) {
             $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'original-data' ] = $originalData;
-            $dataRefMap                                                        = $this->getDataRefMap( $originalData );
         }
 
         // additionalTagData (exclusive for V2)
@@ -174,24 +171,19 @@ class XliffParserV2 extends AbstractXliffParser {
                         $extractedSource               = $this->extractContent( $dom, $childNode );
                         $source[ 'raw-content' ][ $c ] = $extractedSource[ 'raw-content' ];
 
-                        if ( !empty( $originalData ) ) {
-                            $source[ 'replaced-content' ][ $c ] = ( new DataRefReplacer( $dataRefMap ) )->replace( $source[ 'raw-content' ][ $c ] );
-                        }
-
                         if ( !empty( $extractedSource[ 'attr' ] ) ) {
                             $source[ 'attr' ][ $c ] = $extractedSource[ 'attr' ];
                         }
 
                         // append value to 'seg-source'
                         if ( $this->stringContainsMarks( $extractedSource[ 'raw-content' ] ) ) {
-                            $segSource = $this->extractContentWithMarksAndExtTags( $dom, $childNode, $extractedSource[ 'raw-content' ], $originalData );
+                            $segSource = $this->extractContentWithMarksAndExtTags( $dom, $childNode );
                         } else {
                             $segSource[] = [
                                     'attr'             => $this->extractTagAttributes( $segment),
                                     'mid'              => count( $segSource ) > 0 ? count( $segSource ) : 0,
                                     'ext-prec-tags'    => '',
                                     'raw-content'      => $extractedSource[ 'raw-content' ],
-                                    'replaced-content' => ( !empty( $originalData ) ) ? ( new DataRefReplacer( $dataRefMap ) )->replace( $extractedSource[ 'raw-content' ] ) : null,
                                     'ext-succ-tags'    => '',
                             ];
                         }
@@ -201,24 +193,19 @@ class XliffParserV2 extends AbstractXliffParser {
                         $extractedTarget               = $this->extractContent( $dom, $childNode );
                         $target[ 'raw-content' ][ $c ] = $extractedTarget[ 'raw-content' ];
 
-                        if ( !empty( $originalData ) ) {
-                            $target[ 'replaced-content' ][ $c ] = ( new DataRefReplacer( $dataRefMap ) )->replace( $target[ 'raw-content' ][ $c ] );
-                        }
-
                         if ( !empty( $extractedTarget[ 'attr' ] ) ) {
                             $target[ 'attr' ][ $c ] = $extractedTarget[ 'attr' ];
                         }
 
                         // append value to 'seg-target'
                         if ( $this->stringContainsMarks( $extractedTarget[ 'raw-content' ] ) ) {
-                            $segTarget = $this->extractContentWithMarksAndExtTags( $dom, $childNode, $extractedTarget[ 'raw-content' ], $originalData );
+                            $segTarget = $this->extractContentWithMarksAndExtTags( $dom, $childNode );
                         } else {
                             $segTarget[] = [
                                     'attr'             => $this->extractTagAttributes( $segment),
                                     'mid'              => count( $segTarget ) > 0 ? count( $segTarget ) : 0,
                                     'ext-prec-tags'    => '',
                                     'raw-content'      => $extractedTarget[ 'raw-content' ],
-                                    'replaced-content' => ( !empty( $originalData ) ) ? ( new DataRefReplacer( $dataRefMap ) )->replace( $extractedTarget[ 'raw-content' ] ) : null,
                                     'ext-succ-tags'    => '',
                             ];
                         }

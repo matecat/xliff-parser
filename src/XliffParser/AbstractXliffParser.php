@@ -5,10 +5,9 @@ namespace Matecat\XliffParser\XliffParser;
 use DOMDocument;
 use DOMElement;
 use DOMNode;
+use Matecat\EmojiParser\Emoji;
 use Matecat\XliffParser\Constants\Placeholder;
-use Matecat\XliffParser\Utils\Emoji;
 use Matecat\XliffParser\Utils\Strings;
-use Matecat\XliffParser\XliffUtils\DataRefReplacer;
 use Psr\Log\LoggerInterface;
 
 abstract class AbstractXliffParser {
@@ -178,12 +177,10 @@ abstract class AbstractXliffParser {
      *
      * @param DOMDocument $dom
      * @param DOMElement  $childNode
-     * @param string      $originalRawContent
-     * @param array       $originalData
      *
      * @return array
      */
-    protected function extractContentWithMarksAndExtTags( DOMDocument $dom, DOMElement $childNode, $originalRawContent, array $originalData = [] ) {
+    protected function extractContentWithMarksAndExtTags( DOMDocument $dom, DOMElement $childNode ) {
         $source = [];
 
         // example:
@@ -223,11 +220,6 @@ abstract class AbstractXliffParser {
                     'raw-content'   => ( isset( $mark_content[ 0 ] ) ) ? $mark_content[ 0 ] . $trailingSpaces : '',
                     'ext-succ-tags' => ( isset( $mark_content[ 1 ] ) ) ? $mark_content[ 1 ] : '',
             ];
-
-            if ( !empty( $originalData ) ) {
-                $dataRefMap                        = $this->getDataRefMap( $originalData );
-                $sourceArray[ 'replaced-content' ] = ( new DataRefReplacer( $dataRefMap ) )->replace( $mark_content[ 0 ] );
-            }
 
             $source[] = $sourceArray;
 
