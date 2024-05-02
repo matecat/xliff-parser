@@ -44,6 +44,7 @@ If you found an issue or had an idea please refer [to this section](https://gith
 
 ## Authors
 
+* **Domenico Lupinetti** - [github](https://github.com/ostico)
 * **Mauro Cassani** - [github](https://github.com/mauretto78)
 
 ## License
