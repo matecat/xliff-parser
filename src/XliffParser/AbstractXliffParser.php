@@ -12,7 +12,7 @@ use Psr\Log\LoggerInterface;
 
 abstract class AbstractXliffParser {
 
-    const MAX_GROUP_RECURSION_LEVEL = 5;
+    const MAX_GROUP_RECURSION_LEVEL = 10;
 
     /**
      * @var LoggerInterface
@@ -59,33 +59,39 @@ abstract class AbstractXliffParser {
     /**
      * Extract trans-unit content from the current node
      *
-     * @param $childNode
+     * @param DOMElement   $childNode
      * @param              $transUnitIdArrayForUniquenessCheck
-     * @param DOMDocument $dom
+     * @param DOMDocument  $dom
      * @param              $output
      * @param              $i
      * @param              $j
-     * @param array $contextGroups
-     * @param int $recursionLevel
+     * @param array        $contextGroups
+     * @param int          $recursionLevel
      */
-    protected function extractTuFromNode( $childNode, &$transUnitIdArrayForUniquenessCheck, DOMDocument $dom, &$output, &$i, &$j, $contextGroups = [], $recursionLevel = 0 ) {
+    protected function extractTuFromNode( DOMNode $childNode, &$transUnitIdArrayForUniquenessCheck, DOMDocument $dom, &$output, &$i, &$j, $contextGroups = [], $recursionLevel = 0 ) {
+
+        if ( $childNode->nodeType != XML_ELEMENT_NODE ) {
+            return;
+        }
+
         if ( $childNode->nodeName === 'group' ) {
 
             // add nested context-groups
             foreach ( $childNode->childNodes as $nestedChildNode ) {
-                if ( $nestedChildNode->nodeName ===  'context-group' ) {
+                if ( $nestedChildNode->nodeName === 'context-group' ) {
                     $contextGroups[] = $nestedChildNode;
                 }
             }
+
+            // avoid infinite recursion
+            $recursionLevel++;
 
             foreach ( $childNode->childNodes as $nestedChildNode ) {
 
                 // nested groups
                 if ( $nestedChildNode->nodeName === 'group' ) {
 
-                    // avoid infinite recursion
-                    $recursionLevel++;
-                    if($recursionLevel < self::MAX_GROUP_RECURSION_LEVEL){
+                    if ( $recursionLevel < self::MAX_GROUP_RECURSION_LEVEL ) {
                         $this->extractTuFromNode( $nestedChildNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j, $contextGroups, $recursionLevel );
                     }
 
@@ -111,7 +117,7 @@ abstract class AbstractXliffParser {
      *
      * @return mixed
      */
-    abstract protected function extractTransUnit( $transUnit, &$transUnitIdArrayForUniquenessCheck, $dom, &$output, &$i, &$j,$contextGroups = [] );
+    abstract protected function extractTransUnit( DOMElement $transUnit, &$transUnitIdArrayForUniquenessCheck, $dom, &$output, &$i, &$j, $contextGroups = [] );
 
     /**
      * @param DOMDocument $dom

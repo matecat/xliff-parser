@@ -3,9 +3,14 @@
 namespace Matecat\XliffParser\Tests;
 
 use CURLFile;
+use DOMDocument;
 use Exception;
+use Matecat\XliffParser\Exception\NotSupportedVersionException;
+use Matecat\XliffParser\Exception\NotValidFileException;
 use Matecat\XliffParser\XliffParser;
-use Matecat\XliffParser\XliffUtils\XmlParser;
+use Matecat\XmlParser\Exception\InvalidXmlException;
+use Matecat\XmlParser\Exception\XmlParsingException;
+use Matecat\XmlParser\XmlDomLoader;
 use PHPUnit\Framework\TestCase;
 
 abstract class BaseTest extends TestCase {
@@ -21,17 +26,22 @@ abstract class BaseTest extends TestCase {
     /**
      * @param $file
      *
-     * @return \DOMDocument
-     * @throws \Matecat\XliffParser\Exception\InvalidXmlException
-     * @throws \Matecat\XliffParser\Exception\XmlParsingException
+     * @return DOMDocument
+     * @throws InvalidXmlException
+     * @throws XmlParsingException
      */
     protected function getTestFileAsDOMElement( $file ) {
-        return XmlParser::parse( file_get_contents( __DIR__ . '/files/' . $file ) );
+        return XmlDomLoader::load( file_get_contents( __DIR__ . '/files/' . $file ) );
     }
 
     /**
      * @param string $file
      * @param array  $expected
+     *
+     * @throws InvalidXmlException
+     * @throws XmlParsingException
+     * @throws NotSupportedVersionException
+     * @throws NotValidFileException
      */
     protected function assertXliffEquals( $file, array $expected = [] ) {
         $parser = new XliffParser();
@@ -166,7 +176,7 @@ abstract class BaseTest extends TestCase {
 
         $result = json_decode( $response->body );
 
-        if( $result->status == "error" ){
+        if ( $result->status == "error" ) {
             return [ $result->reason ];
         }
 

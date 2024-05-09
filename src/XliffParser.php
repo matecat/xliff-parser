@@ -2,15 +2,21 @@
 
 namespace Matecat\XliffParser;
 
+use Exception;
 use Matecat\XliffParser\Constants\Placeholder;
 use Matecat\XliffParser\Constants\XliffTags;
+use Matecat\XliffParser\Exception\NotSupportedVersionException;
+use Matecat\XliffParser\Exception\NotValidFileException;
 use Matecat\XliffParser\Utils\Strings;
 use Matecat\XliffParser\XliffParser\XliffParserFactory;
 use Matecat\XliffParser\XliffReplacer\XliffReplacerCallbackInterface;
 use Matecat\XliffParser\XliffReplacer\XliffReplacerFactory;
 use Matecat\XliffParser\XliffUtils\XliffProprietaryDetect;
 use Matecat\XliffParser\XliffUtils\XliffVersionDetector;
-use Matecat\XliffParser\XliffUtils\XmlParser;
+use Matecat\XmlParser\Config;
+use Matecat\XmlParser\Exception\InvalidXmlException;
+use Matecat\XmlParser\Exception\XmlParsingException;
+use Matecat\XmlParser\XmlDomLoader;
 use Psr\Log\LoggerInterface;
 
 class XliffParser {
@@ -43,7 +49,7 @@ class XliffParser {
         try {
             $parser = XliffReplacerFactory::getInstance( $originalXliffPath, $data, $transUnits, $targetLang, $outputFile, $setSourceInTarget, $this->logger, $callback );
             $parser->replaceTranslation();
-        } catch ( \Exception $exception ) {
+        } catch ( Exception $exception ) {
             // do nothing
         }
     }
@@ -55,11 +61,11 @@ class XliffParser {
      *
      * @param bool   $collapseEmptyTags
      *
-     * @return mixed
-     * @throws Exception\InvalidXmlException
-     * @throws Exception\NotSupportedVersionException
-     * @throws Exception\NotValidFileException
-     * @throws Exception\XmlParsingException
+     * @return array
+     * @throws NotSupportedVersionException
+     * @throws NotValidFileException
+     * @throws InvalidXmlException
+     * @throws XmlParsingException
      */
     public function xliffToArray( $xliffContent, $collapseEmptyTags = false ) {
         $xliff        = [];
@@ -79,9 +85,17 @@ class XliffParser {
             $xliffContent = self::insertPlaceholderInEmptyTags( $xliffContent );
         }
 
-        $xliffProprietary = ( isset( $info[ 'proprietary_short_name' ] ) && null !== $info[ 'proprietary_short_name' ] ) ? $info[ 'proprietary_short_name' ] : null;
+        $xliffProprietary = isset( $info[ 'proprietary_short_name' ] ) ? $info[ 'proprietary_short_name' ] : null;
         $parser           = XliffParserFactory::getInstance( $xliffVersion, $xliffProprietary, $this->logger );
-        $dom              = XmlParser::parse( $xliffContent );
+
+        $dom = XmlDomLoader::load(
+                $xliffContent,
+                new Config(
+                        null,
+                        false,
+                        LIBXML_NONET
+                )
+        );
 
         return $parser->parse( $dom, $xliff );
     }
@@ -119,20 +133,20 @@ class XliffParser {
      */
     private static function removeInternalFileTagFromContent( $xliffContent, &$xliff ) {
         $index = 1;
-        $a     = Strings::preg_split( '|<internal-file[\s>]|si', $xliffContent );
+        $a     = Strings::preg_split( '|<internal-file[\s>]|i', $xliffContent );
 
         // no match, return original string
         if ( count( $a ) === 1 ) {
             return $a[ 0 ];
         }
 
-        $b                                           = Strings::preg_split( '|</internal-file>|si', $a[ 1 ] );
+        $b                                           = Strings::preg_split( '|</internal-file>|i', $a[ 1 ] );
         $strippedContent                             = $a[ 0 ] . $b[ 1 ];
         $xliff[ 'files' ][ $index ][ 'reference' ][] = self::extractBase64( $b[ 0 ] );
         $index++;
 
         if ( isset( $a[ 2 ] ) ) {
-            $c                                           = Strings::preg_split( '|</internal-file[\s>]|si', $a[ 2 ] );
+            $c                                           = Strings::preg_split( '|</internal-file[\s>]|i', $a[ 2 ] );
             $strippedContent                             .= $c[ 1 ];
             $xliff[ 'files' ][ $index ][ 'reference' ][] = self::extractBase64( $c[ 0 ] );
         }
@@ -169,8 +183,8 @@ class XliffParser {
      * @return string
      */
     private static function escapeDataInOriginalMap( $xliffContent ) {
-        $xliffContent = preg_replace_callback( '/<data(.*?)>(.*?)<\/data>/iU', [ XliffParser::class, 'replaceSpace' ], $xliffContent );
-        $xliffContent = preg_replace_callback( '/<data(.*?)>(.*?)<\/data>/iU', [ XliffParser::class, 'replaceXliffTags' ], $xliffContent );
+        $xliffContent = preg_replace_callback( '|<data(.*?)>(.*?)</data>|iU', [ XliffParser::class, 'replaceSpace' ], $xliffContent );
+        $xliffContent = preg_replace_callback( '|<data(.*?)>(.*?)</data>|iU', [ XliffParser::class, 'replaceXliffTags' ], $xliffContent );
 
         return $xliffContent;
     }
@@ -190,7 +204,7 @@ class XliffParser {
      * @return string
      */
     private static function insertPlaceholderInEmptyTags( $xliffContent ) {
-        preg_match_all( '/<([a-zA-Z0-9._-]+)[^>]*><\/\1>/sm', $xliffContent, $emptyTagMatches );
+        preg_match_all( '|<([a-zA-Z0-9._-]+)[^>]*></\1>|m', $xliffContent, $emptyTagMatches );
 
         if ( !empty( $emptyTagMatches[ 0 ] ) ) {
             foreach ( $emptyTagMatches[ 0 ] as $index => $emptyTagMatch ) {

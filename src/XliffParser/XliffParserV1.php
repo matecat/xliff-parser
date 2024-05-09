@@ -144,7 +144,7 @@ class XliffParserV1 extends AbstractXliffParser {
      *
      * @throws Exception
      */
-    protected function extractTransUnit( $transUnit, &$transUnitIdArrayForUniquenessCheck, $dom, &$output, &$i, &$j, $contextGroups = [] ) {
+    protected function extractTransUnit( DOMElement $transUnit, &$transUnitIdArrayForUniquenessCheck, $dom, &$output, &$i, &$j, $contextGroups = [] ) {
         // metadata
         $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'attr' ] = $this->extractTransUnitMetadata( $transUnit, $transUnitIdArrayForUniquenessCheck );
 

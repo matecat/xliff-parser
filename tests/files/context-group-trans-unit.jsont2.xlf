@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:mtc="https://www.matecat.com" version="1.2">
+    <file datatype="x-jsont2" filter="net.translated.matecat.filters.MateJsont2Filter" original="7GDi98OHZl_st.jsont2" source-language="en-US" target-language="it-IT" tool-id="matecat-converter 1.3.22-SNAPSHOT">
+        <header>
+            <reference>
+                <internal-file form="base64">W3siaGFzaCI6IjQ4ZTVmNzllYjNkZTAyNzkwMzM5NGRlMWZkNzg5OGNiOTg1MzJmZGI3MGQxNTgxMjBjNjZlYjYxNmFhZDc2YjAiLCJpZF9vcmRlciI6IlNjcmVlbkNvbW1lbnRQbHVyYWwiLCJpZF9v
+                    cmRlcl9ncm91cCI6IjIzMjgwMDMiLCJpbnN0cnVjdGlvbnMiOm51bGwsInN0eWxlZ3VpZGUiOm51bGwsInJlZmVyZW5jZXMiOm51bGwsInJlcXVlc3RzIjpbeyJpZF9yZXF1ZXN0IjoxMTY2Njg0Niwi
+                    aWRfY29udGVudCI6IjM4MzYxMzc0MTktZGF0ZTptb250aF9uYW1lczo1IiwiY29udGVudF90eXBlIjoidGV4dC9wbGFpbiIsImNoYXJfbGltaXQiOm51bGwsImNvbnRlbnQiOiJKdW5lIiwiY29udGV4
+                    dCI6eyJub3RlcyI6bnVsbCwic2NyZWVuc2hvdCI6bnVsbH19LHsiaWRfcmVxdWVzdCI6MTE2NjY4NDgsImlkX2NvbnRlbnQiOiIzODM2MTM3NDIzLWRhdGU6bW9udGhfbmFtZXM6NiIsImNvbnRlbnRf
+                    dHlwZSI6InRleHQvcGxhaW4iLCJjaGFyX2xpbWl0IjpudWxsLCJjb250ZW50IjoiSnVseSIsImNvbnRleHQiOnsibm90ZXMiOm51bGwsInNjcmVlbnNob3QiOiJodHRwczovL2ZpbGVzLnN0YWdpbmcu
+                    dHJhbnNsYXRlZC5jb20vY29udGV4dC80OGU1Zjc5ZWIzZGUwMjc5MDMzOTRkZTFmZDc4OThjYjk4NTMyZmRiNzBkMTU4MTIwYzY2ZWI2MTZhYWQ3NmIwLzExNjY2ODQ4L3NjcmVlbnNob3QudXJsIn19
+                    LHsiaWRfcmVxdWVzdCI6MTE2NjY4NTAsImlkX2NvbnRlbnQiOiIzODM2MTM3NDI3LWRhdGU6bW9udGhfbmFtZXM6NyIsImNvbnRlbnRfdHlwZSI6InRleHQvcGxhaW4iLCJjaGFyX2xpbWl0IjpudWxs
+                    LCJjb250ZW50IjoiQXVndXN0IiwiY29udGV4dCI6eyJub3RlcyI6bnVsbCwic2NyZWVuc2hvdCI6Imh0dHBzOi8vZmlsZXMuc3RhZ2luZy50cmFuc2xhdGVkLmNvbS9jb250ZXh0LzQ4ZTVmNzllYjNk
+                    ZTAyNzkwMzM5NGRlMWZkNzg5OGNiOTg1MzJmZGI3MGQxNTgxMjBjNjZlYjYxNmFhZDc2YjAvMTE2NjY4NTAvc2NyZWVuc2hvdC51cmwifX0seyJpZF9yZXF1ZXN0IjoxMTY2Njg1MiwiaWRfY29udGVu
+                    dCI6IjM4MzYxMzc0MzEtZGF0ZTptb250aF9uYW1lczo4IiwiY29udGVudF90eXBlIjoidGV4dC9wbGFpbiIsImNoYXJfbGltaXQiOm51bGwsImNvbnRlbnQiOiJTZXB0ZW1iZXIiLCJjb250ZXh0Ijp7
+                    Im5vdGVzIjoiQ29tbWVudHM6ICZsdDtwJmd0O0NvbW1ybnQgb24gU2VwdGVtYmVyJmx0Oy9wJmd0OyIsInNjcmVlbnNob3QiOm51bGx9fSx7ImlkX3JlcXVlc3QiOjExNjY2ODU0LCJpZF9jb250ZW50
+                    IjoiMzgzNjEzNzQzNS1kYXRlOm1vbnRoX25hbWVzOjkiLCJjb250ZW50X3R5cGUiOiJ0ZXh0L3BsYWluIiwiY2hhcl9saW1pdCI6bnVsbCwiY29udGVudCI6Ik9jdG9iZXIiLCJjb250ZXh0Ijp7Im5v
+                    dGVzIjoiQ29tbWVudHM6ICZsdDtwJmd0O0NvbW1lbnQgb24gb2N0b2JlciZsdDsvcCZndDsiLCJzY3JlZW5zaG90IjpudWxsfX0seyJpZF9yZXF1ZXN0IjoxMTY2Njg1NiwiaWRfY29udGVudCI6IjM4
+                    MzYxMzc0NTktZGF0ZXRpbWU6ZGlzdGFuY2VfaW5fd29yZHM6YWJvdXRfeF9ob3VycyIsImNvbnRlbnRfdHlwZSI6ImFwcGxpY2F0aW9uL2pzb24iLCJjaGFyX2xpbWl0IjpudWxsLCJjb250ZW50Ijoi
+                    e1wib25lXCI6XCJhYm91dCAxIGhvdXJcIixcIm90aGVyXCI6XCJhYm91dCAle2NvdW50fSBob3Vyc1wifSIsImNvbnRleHQiOnsibm90ZXMiOm51bGwsInNjcmVlbnNob3QiOm51bGx9fV19XQ==
+                </internal-file>
+            </reference>
+        </header>
+        <body/>
+    </file>
+    <file datatype="x-rkm" filter="net.translated.matecat.filters.MateJsont2Filter" original="manifest.rkm" source-language="en-US" target-language="it-IT" tool-id="matecat-converter 1.3.22-SNAPSHOT">
+        <header>
+            <reference>
+                <internal-file form="base64">PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPCEtLT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09LS0+Cjwh
+                    LS1QTEVBU0UsIERPIE5PVCBSRU5BTUUsIE1PVkUsIE1PRElGWSBPUiBBTFRFUiBJTiBBTlkgV0FZIFRISVMgRklMRS0tPgo8IS0tPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+                    PT09PT09PT09PT09PT09PT09PT09PT09PT0tLT4KPG1hbmlmZXN0IHZlcnNpb249IjIiIGxpYlZlcnNpb249IjEuNDAuNC1UUkFOU0xBVEVEIiBwcm9qZWN0SWQ9Ik5FMkZFODZFNCIgcGFja2FnZUlk
+                    PSJmZDdlY2NiMS1lMjA0LTRlNDUtYjRkZC0wZjQ3MjYwODM1NjAiIHNvdXJjZT0iZW4tVVMiIHRhcmdldD0iaXQtSVQiIG9yaWdpbmFsU3ViRGlyPSJvcmlnaW5hbCIgc2tlbGV0b25TdWJEaXI9InNr
+                    ZWxldG9uIiBzb3VyY2VTdWJEaXI9IndvcmsiIHRhcmdldFN1YkRpcj0id29yayIgbWVyZ2VTdWJEaXI9ImRvbmUiIHRtU3ViRGlyPSIiIGRhdGU9IjIwMjQtMDUtMDIgMTY6NTc6MzQrMDAwMCIgdXNl
+                    QXBwcm92ZWRPbmx5PSIwIiB1cGRhdGVBcHByb3ZlZEZsYWc9IjAiPgo8Y3JlYXRvclBhcmFtZXRlcnM+STNZeENuQnNZV05sYUc5c1pHVnlUVzlrWlM1aVBYUnlkV1VLYVc1amJIVmtaVTV2VkhKaGJu
+                    TnNZWFJsTG1JOWRISjFaUXB6WlhSQmNIQnliM1psWkVGelRtOVVjbUZ1YzJ4aGRHVXVZajFtWVd4elpRcGpiM0I1VTI5MWNtTmxMbUk5ZEhKMVpRcHBibU5zZFdSbFFXeDBWSEpoYm5NdVlqMTBjblZs
+                    Q21sdVkyeDFaR1ZEYjJSbFFYUjBjbk11WWoxbVlXeHpaUXBwYm1Oc2RXUmxTWFJ6TG1JOVptRnNjMlVLWlhOallYQmxSMVF1WWoxMGNuVmw8L2NyZWF0b3JQYXJhbWV0ZXJzPgo8ZG9jIHhtbDpzcGFj
+                    ZT0icHJlc2VydmUiIGRvY0lkPSIxIiBleHRyYWN0aW9uVHlwZT0ieGxpZmYiIHJlbGF0aXZlSW5wdXRQYXRoPSI3R0RpOThPSFpsX3N0Lmpzb250MiIgZmlsdGVySWQ9Im9rZl9qc29udDIiIGlucHV0
+                    RW5jb2Rpbmc9IlVURi04IiByZWxhdGl2ZVRhcmdldFBhdGg9IjdHRGk5OE9IWmxfc3Qub3V0Lmpzb250MiIgdGFyZ2V0RW5jb2Rpbmc9IlVURi04IiBzZWxlY3RlZD0iMSI+STNZeENtVnpZMkZ3WlVa
+                    dmNuZGhjbVJUYkdGemFHVnpMbUk5Wm1Gc2MyVUtkWE5sUTI5a1pVWnBibVJsY2k1aVBXWmhiSE5sQ205MWRIQjFkRk5sWjIxbGJuUmhkR2x2YmxSNWNHVXVhVDB6Q21OdlpHVkdhVzVrWlhKU2RXeGxj
+                    eTVqYjNWdWRDNXBQVEVLWTI5a1pVWnBibVJsY2xKMWJHVnpMbkoxYkdVd1BWd2tQMXg3S0Z0QkxWb3dMVGxoTFhwZkxWMHFLVng5Q21OdlpHVkdhVzVrWlhKU2RXeGxjeTV6WVcxd2JHVTlWVzVwZUNC
+                    MllYSTZJQ1I3YzI5dFpTMTJZWEo5TENCMllYSWdhVzRnWW5KaFkyVnpPaUI3ZFhObGNsOXVZVzFsZlM0S1kyOWtaVVpwYm1SbGNsSjFiR1Z6TG5WelpVRnNiRkoxYkdWelYyaGxibFJsYzNScGJtY3VZ
+                    ajEwY25WbDwvZG9jPgo8L21hbmlmZXN0Pg==
+                </internal-file>
+            </reference>
+        </header>
+        <body/>
+    </file>
+    <file datatype="x-tos-request" mtc:id-order="ScreenCommentPlural" mtc:id-order-group="2328003" original="48e5f79eb3de027903394de1fd7898cb98532fdb70d158120c66eb616aad76b0" source-language="en-US" target-language="it-IT">
+        <body>
+            <group id="sg1">
+                <group id="sg2">
+                    <trans-unit id="tu1" xml:space="preserve">
+<source xml:lang="en-US">June</source>
+                        <seg-source><mrk mid="0" mtype="seg">June</mrk></seg-source>
+                        <target xml:lang="it-IT"><mrk mid="0" mtype="seg">June</mrk></target>
+                        <context-group name="tos"><context context-type="x-tos-content-type">text/plain</context></context-group>
+                        <note annotates="source" from="id_request">11666846</note>
+                        <note>translation_context|¶|3836137419-date:month_names:5</note>
+                        <note annotates="source" from="id_content">3836137419-date:month_names:5</note>
+</trans-unit>
+                    <group id="sg3">
+                    </group>
+                </group>
+                <group id="sg4">
+                    <trans-unit id="tu2" xml:space="preserve">
+<source xml:lang="en-US">July</source>
+                        <seg-source><mrk mid="0" mtype="seg">July</mrk></seg-source>
+                        <target xml:lang="it-IT"><mrk mid="0" mtype="seg">July</mrk></target>
+                        <context-group name="tos"><context context-type="x-tos-content-type">text/plain</context></context-group>
+                        <note annotates="source" from="id_request">11666848</note>
+                        <note>translation_context|¶|3836137423-date:month_names:6</note>
+                        <note annotates="source" from="id_content">3836137423-date:month_names:6</note>
+                        <note annotates="source" from="screenshot">https://files.staging.translated.com/context/48e5f79eb3de027903394de1fd7898cb98532fdb70d158120c66eb616aad76b0/11666848/screenshot.url</note>
+</trans-unit>
+                    <group id="sg5">
+                    </group>
+                </group>
+                <group id="sg6">
+                    <trans-unit id="tu3" xml:space="preserve">
+<source xml:lang="en-US">August</source>
+                        <seg-source><mrk mid="0" mtype="seg">August</mrk></seg-source>
+                        <target xml:lang="it-IT"><mrk mid="0" mtype="seg">August</mrk></target>
+                        <context-group name="tos"><context context-type="x-tos-content-type">text/plain</context></context-group>
+                        <note annotates="source" from="id_request">11666850</note>
+                        <note>translation_context|¶|3836137427-date:month_names:7</note>
+                        <note annotates="source" from="id_content">3836137427-date:month_names:7</note>
+                        <note annotates="source" from="screenshot">https://files.staging.translated.com/context/48e5f79eb3de027903394de1fd7898cb98532fdb70d158120c66eb616aad76b0/11666850/screenshot.url</note>
+</trans-unit>
+                    <group id="sg7">
+                    </group>
+                </group>
+                <group id="sg8">
+                    <trans-unit id="tu4" xml:space="preserve">
+<source xml:lang="en-US">September</source>
+                        <seg-source><mrk mid="0" mtype="seg">September</mrk></seg-source>
+                        <target xml:lang="it-IT"><mrk mid="0" mtype="seg">September</mrk></target>
+                        <context-group name="tos"><context context-type="x-tos-content-type">text/plain</context></context-group>
+                        <note annotates="source" from="id_request">11666852</note>
+                        <note>translation_context|¶|3836137431-date:month_names:8</note>
+                        <note annotates="source" from="id_content">3836137431-date:month_names:8</note>
+                        <note annotates="source" from="notes">Comments: &amp;lt;p&amp;gt;Commrnt on September&amp;lt;/p&amp;gt;</note>
+</trans-unit>
+                    <group id="sg9">
+                    </group>
+                </group>
+                <group id="sg10">
+                    <trans-unit id="tu5" xml:space="preserve">
+<source xml:lang="en-US">October</source>
+                        <seg-source><mrk mid="0" mtype="seg">October</mrk></seg-source>
+                        <target xml:lang="it-IT"><mrk mid="0" mtype="seg">October</mrk></target>
+                        <context-group name="tos"><context context-type="x-tos-content-type">text/plain</context></context-group>
+                        <note annotates="source" from="id_request">11666854</note>
+                        <note>translation_context|¶|3836137435-date:month_names:9</note>
+                        <note annotates="source" from="id_content">3836137435-date:month_names:9</note>
+                        <note annotates="source" from="notes">Comments: &amp;lt;p&amp;gt;Comment on october&amp;lt;/p&amp;gt;</note>
+</trans-unit>
+                    <group id="sg11">
+                    </group>
+                </group>
+                <group id="sg12">
+                    <group id="sg12_ssf1" resname="sub-filter:content">
+                        <group id="sg12_sf1_sg1" resname="content_1">
+                            <trans-unit id="sg12_sf1_tu1" resname="one" xml:space="preserve">
+<source xml:lang="en-US">about 1 hour</source>
+                                <seg-source><mrk mid="0" mtype="seg">about 1 hour</mrk></seg-source>
+                                <target xml:lang="it-IT"><mrk mid="0" mtype="seg">about 1 hour</mrk></target>
+                                <context-group name="tos"><context context-type="x-tos-content-type">application/json</context></context-group>
+                                <note annotates="source" from="id_request">11666856</note>
+                                <note>translation_context|¶|3836137459-datetime:distance_in_words:about_x_hours</note>
+                                <note annotates="source" from="id_content">3836137459-datetime:distance_in_words:about_x_hours</note>
+</trans-unit>
+                            <trans-unit id="sg12_sf1_tu2" resname="other" xml:space="preserve">
+<source xml:lang="en-US">about %{count} hours</source>
+                                <seg-source><mrk mid="0" mtype="seg">about %{count} hours</mrk></seg-source>
+                                <target xml:lang="it-IT"><mrk mid="0" mtype="seg">about %{count} hours</mrk></target>
+                                <context-group name="tos"><context context-type="x-tos-content-type">application/json</context></context-group>
+                                <note annotates="source" from="id_request">11666856</note>
+                                <note>translation_context|¶|3836137459-datetime:distance_in_words:about_x_hours</note>
+                                <note annotates="source" from="id_content">3836137459-datetime:distance_in_words:about_x_hours</note>
+</trans-unit>
+                        </group>
+                    </group>
+                    <group id="sg13">
+                    </group>
+                </group>
+            </group>
+        </body>
+    </file>
+</xliff>

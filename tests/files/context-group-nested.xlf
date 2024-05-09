@@ -14,20 +14,28 @@
                         <group id="3">
                             <group id="4">
                                 <group id="5">
-                                      <group id="0">
-                                        <group id="1">
-                                            <group id="2">
-                                                <group id="3">
-                                                    <group id="4">
-                                                        <group id="5">
+                                      <group id="00">
+                                        <group id="01">
+                                            <group id="02">
+                                                <group id="03">
+                                                    <group id="04">
+                                                        <group id="05">
                                                             <context-group purpose="information">
                                                                 <context context-type="x-key">PSMS-ID-ec2d50b6-d0ce-4672-b8df-9ea82616d85c::1</context>
                                                                 <context context-type="x-key-note">Translation Context: Admin Portal Title text</context>
                                                             </context-group>
                                                             <group id="32">
+                                                                <context-group purpose="information">
+                                                                    <context context-type="x-key">PSMS-ID-ec2d50b6-d0ce-4672-b8df-9ea82616d85c::2</context>
+                                                                    <context context-type="x-key-note">Translation Context: Admin Portal Title text</context>
+                                                                </context-group>
                                                                 <trans-unit id="tu1" xml:space="preserve" translate="yes">
                                                                     <source xml:lang="en-US">First segment</source>
                                                                     <target  xml:lang="it-IT" state="new">Primo segmento</target>
+                                                                    <context-group purpose="information">
+                                                                    <context context-type="x-key">PSMS-ID-ec2d50b6-d0ce-4672-b8df-9ea82616d85c::3</context>
+                                                                        <context context-type="x-key-note">Translation Context: Admin Portal Title text</context>
+                                                                    </context-group>
                                                                 </trans-unit>
                                                                 <trans-unit id="tu2" xml:space="preserve" translate="yes">
                                                                     <source xml:lang="en-US">Second segment</source>
@@ -58,7 +66,7 @@
                     </trans-unit>
                 </group>
                 <context-group purpose="information">
-                    <context context-type="x-key">PSMS-ID-ec2d50b6-d0ce-4672-b8df-9ea82616d85c::1</context>
+                    <context context-type="x-key">PSMS-ID-ec2d50b6-d0ce-4672-b8df-9ea82616d85c::4</context>
                     <context context-type="x-key-note">Translation Context: Admin Portal Title text</context>
                 </context-group>
 		    </group>

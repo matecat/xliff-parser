@@ -2,375 +2,351 @@
 
 namespace Matecat\XliffParser\Tests;
 
+use Matecat\XliffParser\Exception\NotSupportedVersionException;
+use Matecat\XliffParser\Exception\NotValidFileException;
 use Matecat\XliffParser\Exception\SegmentIdTooLongException;
 use Matecat\XliffParser\XliffParser;
+use Matecat\XmlParser\Exception\InvalidXmlException;
+use Matecat\XmlParser\Exception\XmlParsingException;
 
-class XliffParserV1Test extends BaseTest
-{
+class XliffParserV1Test extends BaseTest {
     /**
      * @test
      */
-    public function can_raise_Exception_if_there_are_segments_id_too_long()
-    {
+    public function can_raise_Exception_if_there_are_segments_id_too_long() {
         try {
-           $parse =  (new XliffParser())->xliffToArray($this->getTestFile('long-segment-id.xliff'));
-        } catch (SegmentIdTooLongException $e) {
-            $this->assertEquals($e->getMessage(), 'Segment-id too long. Max 100 characters allowed');
+            $parse = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'long-segment-id.xliff' ) );
+        } catch ( SegmentIdTooLongException $e ) {
+            $this->assertEquals( $e->getMessage(), 'Segment-id too long. Max 100 characters allowed' );
         }
     }
 
     /**
      * @test
      */
-    public function can_parse_a_xliff_with_917985()
-    {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('file-917985.xliff'));
+    public function can_parse_a_xliff_with_917985() {
+        $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'file-917985.xliff' ) );
 
-        $this->assertEquals('<g id="1">&#917985;</g><g id="2"> </g><g id="3">MOD PO 31 M D/U Scheda tecnica da compilare</g>', $parsed['files'][3]['trans-units'][2]['source']['raw-content']);
+        $this->assertEquals( '<g id="1">&#917985;</g><g id="2"> </g><g id="3">MOD PO 31 M D/U Scheda tecnica da compilare</g>', $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 2 ][ 'source' ][ 'raw-content' ] );
     }
 
     /**
      * @test
      */
-    public function can_parse_a_xliff_with_917760()
-    {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('file-917760.xliff'));
+    public function can_parse_a_xliff_with_917760() {
+        $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'file-917760.xliff' ) );
 
-        $this->assertEquals('&#917760;', $parsed['files'][3]['trans-units'][1]['source']['raw-content']);
+        $this->assertEquals( '&#917760;', $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'source' ][ 'raw-content' ] );
     }
 
     /**
      * @test
      */
-    public function can_parse_a_xliff_from_jsont()
-    {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('from_jsont.xliff'));
+    public function can_parse_a_xliff_from_jsont() {
+        $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'from_jsont.xliff' ) );
 
-        $this->assertCount(7, $parsed['files']);
+        $this->assertCount( 7, $parsed[ 'files' ] );
     }
 
     /**
      * @test
      */
-    public function can_preserve_correctly_trailing_spaces_in_source()
-    {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('spazi.sdlxliff'));
+    public function can_preserve_correctly_trailing_spaces_in_source() {
+        $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'spazi.sdlxliff' ) );
 
-        $segSource = $parsed['files'][1]['trans-units'][1]['seg-source'];
+        $segSource = $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'seg-source' ];
 
-        $this->assertEquals('“Sto attraversando la piazza silenziosa. ', $segSource[0]['raw-content']);
-        $this->assertEquals('Il lago giace calmo e sereno.  ', $segSource[1]['raw-content']);
-        $this->assertEquals('Le bianche case pallidamente risplendono sulla collina. ', $segSource[2]['raw-content']);
-        $this->assertEquals('Gatti piccoli e grossi attraversano il mio cammino.” ', $segSource[3]['raw-content']);
-        $this->assertEquals('Marianne Werefkin  ', $segSource[4]['raw-content']);
+        $this->assertEquals( '“Sto attraversando la piazza silenziosa. ', $segSource[ 0 ][ 'raw-content' ] );
+        $this->assertEquals( 'Il lago giace calmo e sereno.  ', $segSource[ 1 ][ 'raw-content' ] );
+        $this->assertEquals( 'Le bianche case pallidamente risplendono sulla collina. ', $segSource[ 2 ][ 'raw-content' ] );
+        $this->assertEquals( 'Gatti piccoli e grossi attraversano il mio cammino.” ', $segSource[ 3 ][ 'raw-content' ] );
+        $this->assertEquals( 'Marianne Werefkin  ', $segSource[ 4 ][ 'raw-content' ] );
     }
 
     /**
      * @test
      */
-    public function parses_xliff_with_multiple_files()
-    {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('calibre.docx.xliff'));
+    public function parses_xliff_with_multiple_files() {
+        $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'calibre.docx.xliff' ) );
 
-        $this->assertNotEmpty($parsed['files']);
-        $this->assertCount(5, $parsed['files']);
+        $this->assertNotEmpty( $parsed[ 'files' ] );
+        $this->assertCount( 5, $parsed[ 'files' ] );
     }
 
     /**
      * @test
      */
-    public function parses_with_no_errors()
-    {
+    public function parses_with_no_errors() {
         // read a file with notes inside
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('file-with-notes-converted-nobase64.xliff'));
+        $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'file-with-notes-converted-nobase64.xliff' ) );
 
-        $this->assertEquals('Input identified as ASCII ans converted UTF-8. May not be a problem if the content is English only', $parsed['parser-warnings'][0]);
-        $this->assertNotEmpty($parsed['files']);
-        $this->assertCount(3, $parsed['files']);
+        $this->assertEquals( 'Input identified as ASCII ans converted UTF-8. May not be a problem if the content is English only', $parsed[ 'parser-warnings' ][ 0 ] );
+        $this->assertNotEmpty( $parsed[ 'files' ] );
+        $this->assertCount( 3, $parsed[ 'files' ] );
     }
 
     /**
      * @test
      */
-    public function can_parse_xliff_v1_metadata()
-    {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('file-with-notes-converted-nobase64.xliff'));
+    public function can_parse_xliff_v1_metadata() {
+        $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'file-with-notes-converted-nobase64.xliff' ) );
         $attr   = $parsed[ 'files' ][ 3 ][ 'attr' ];
 
-        $this->assertCount(5, $attr);
-        $this->assertEquals($attr[ 'source-language' ], 'hy-am');
-        $this->assertEquals($attr[ 'target-language' ], 'fr-fr');
-        $this->assertEquals($attr[ 'original' ], '');
-        $this->assertEquals($attr[ 'data-type' ], 'x-plaintext');
-        $this->assertEquals($attr[ 'custom' ]['x-data'], 'ciao');
-        $this->assertEquals($attr[ 'custom' ]['x-matecat'], 'matecat');
+        $this->assertCount( 5, $attr );
+        $this->assertEquals( $attr[ 'source-language' ], 'hy-am' );
+        $this->assertEquals( $attr[ 'target-language' ], 'fr-fr' );
+        $this->assertEquals( $attr[ 'original' ], '' );
+        $this->assertEquals( $attr[ 'data-type' ], 'x-plaintext' );
+        $this->assertEquals( $attr[ 'custom' ][ 'x-data' ], 'ciao' );
+        $this->assertEquals( $attr[ 'custom' ][ 'x-matecat' ], 'matecat' );
     }
 
     /**
      * @test
      */
-    public function can_parse_xliff_v1_reference()
-    {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('file-with-notes-converted-nobase64.xliff'));
-        $reference   = $parsed[ 'files' ][ 2 ][ 'reference' ];
+    public function can_parse_xliff_v1_reference() {
+        $parsed    = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'file-with-notes-converted-nobase64.xliff' ) );
+        $reference = $parsed[ 'files' ][ 2 ][ 'reference' ];
 
-        $this->assertCount(2, $reference[0]);
-        $this->assertEquals($reference[0][ 'form-type' ], 'base64');
-        $this->assertEquals($reference[0][ 'base64' ], 'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjwhLS09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PS0tPg0KPCEtLVBMRUFTRSwgRE8gTk9UIFJFTkFNRSwgTU9WRSwgTU9ESUZZIE9SIEFMVEVSIElOIEFOWSBXQVkgVEhJUyBGSUxFLS0+DQo8IS0tPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0tLT4NCjxtYW5pZmVzdCB2ZXJzaW9uPSIyIiBsaWJWZXJzaW9uPSIiIHByb2plY3RJZD0iTkM1QzkzQURFIiBwYWNrYWdlSWQ9IjY4ODc2NjIyLTQzZWItNDdiYy1hY2VmLWFmNjNlNWQwOTE5OSIgc291cmNlPSJoeS1hbSIgdGFyZ2V0PSJmci1mciIgb3JpZ2luYWxTdWJEaXI9Im9yaWdpbmFsIiBza2VsZXRvblN1YkRpcj0ic2tlbGV0b24iIHNvdXJjZVN1YkRpcj0id29yayIgdGFyZ2V0U3ViRGlyPSJ3b3JrIiBtZXJnZVN1YkRpcj0iZG9uZSIgdG1TdWJEaXI9IiIgZGF0ZT0iMjAxNS0xMC0wNiAxNjo1ODowMCswMDAwIiB1c2VBcHByb3ZlZE9ubHk9IjAiIHVwZGF0ZUFwcHJvdmVkRmxhZz0iMCI+DQo8Y3JlYXRvclBhcmFtZXRlcnM+PC9jcmVhdG9yUGFyYW1ldGVycz4NCjxkb2MgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgZG9jSWQ9IjEiIGV4dHJhY3Rpb25UeXBlPSJ4bGlmZiIgcmVsYXRpdmVJbnB1dFBhdGg9IkViYXktbGlrZS1zbWFsbC1maWxlLWVkaXRlZC54bGYiIGZpbHRlcklkPSJva2ZfeGxpZmYiIGlucHV0RW5jb2Rpbmc9InV0Zi04IiByZWxhdGl2ZVRhcmdldFBhdGg9IkViYXktbGlrZS1zbWFsbC1maWxlLWVkaXRlZC5vdXQueGxmIiB0YXJnZXRFbmNvZGluZz0iVVRGLTgiIHNlbGVjdGVkPSIxIj5JM1l4Q25WelpVTjFjM1J2YlZCaGNuTmxjaTVpUFhSeWRXVUtabUZqZEc5eWVVTnNZWE56UFdOdmJTNWpkR011ZDNOMGVDNXpkR0Y0TGxkemRIaEpibkIxZEVaaFkzUnZjbmtLWm1Gc2JHSmhZMnRVYjBsRUxtSTlabUZzYzJVS1pYTmpZWEJsUjFRdVlqMW1ZV3h6WlFwaFpHUlVZWEpuWlhSTVlXNW5kV0ZuWlM1aVBYUnlkV1VLYjNabGNuSnBaR1ZVWVhKblpYUk1ZVzVuZFdGblpTNWlQV1poYkhObENtOTFkSEIxZEZObFoyMWxiblJoZEdsdmJsUjVjR1V1YVQwekNtbG5ibTl5WlVsdWNIVjBVMlZuYldWdWRHRjBhVzl1TG1JOVptRnNjMlVLWVdSa1FXeDBWSEpoYm5NdVlqMW1ZV3h6WlFwaFpHUkJiSFJVY21GdWMwZE5iMlJsTG1JOWRISjFaUXBsWkdsMFFXeDBWSEpoYm5NdVlqMW1ZV3h6WlFwcGJtTnNkV1JsUlhoMFpXNXphVzl1Y3k1aVBYUnlkV1VLYVc1amJIVmtaVWwwY3k1aVBYUnlkV1VLWW1Gc1lXNWpaVU52WkdWekxtSTlkSEoxWlFwaGJHeHZkMFZ0Y0hSNVZHRnlaMlYwY3k1aVBXWmhiSE5sQ25SaGNtZGxkRk4wWVhSbFRXOWtaUzVwUFRBS2RHRnlaMlYwVTNSaGRHVldZV3gxWlQxdVpXVmtjeTEwY21GdWMyeGhkR2x2YmdwaGJIZGhlWE5WYzJWVFpXZFRiM1Z5WTJVdVlqMW1ZV3h6WlFweGRXOTBaVTF2WkdWRVpXWnBibVZrTG1JOWRISjFaUXB4ZFc5MFpVMXZaR1V1YVQwd0NuVnpaVk5rYkZoc2FXWm1WM0pwZEdWeUxtSTlabUZzYzJVPTwvZG9jPg0KPC9tYW5pZmVzdD4=');
+        $this->assertCount( 2, $reference[ 0 ] );
+        $this->assertEquals( $reference[ 0 ][ 'form-type' ], 'base64' );
+        $this->assertEquals( $reference[ 0 ][ 'base64' ], 'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjwhLS09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PS0tPg0KPCEtLVBMRUFTRSwgRE8gTk9UIFJFTkFNRSwgTU9WRSwgTU9ESUZZIE9SIEFMVEVSIElOIEFOWSBXQVkgVEhJUyBGSUxFLS0+DQo8IS0tPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0tLT4NCjxtYW5pZmVzdCB2ZXJzaW9uPSIyIiBsaWJWZXJzaW9uPSIiIHByb2plY3RJZD0iTkM1QzkzQURFIiBwYWNrYWdlSWQ9IjY4ODc2NjIyLTQzZWItNDdiYy1hY2VmLWFmNjNlNWQwOTE5OSIgc291cmNlPSJoeS1hbSIgdGFyZ2V0PSJmci1mciIgb3JpZ2luYWxTdWJEaXI9Im9yaWdpbmFsIiBza2VsZXRvblN1YkRpcj0ic2tlbGV0b24iIHNvdXJjZVN1YkRpcj0id29yayIgdGFyZ2V0U3ViRGlyPSJ3b3JrIiBtZXJnZVN1YkRpcj0iZG9uZSIgdG1TdWJEaXI9IiIgZGF0ZT0iMjAxNS0xMC0wNiAxNjo1ODowMCswMDAwIiB1c2VBcHByb3ZlZE9ubHk9IjAiIHVwZGF0ZUFwcHJvdmVkRmxhZz0iMCI+DQo8Y3JlYXRvclBhcmFtZXRlcnM+PC9jcmVhdG9yUGFyYW1ldGVycz4NCjxkb2MgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgZG9jSWQ9IjEiIGV4dHJhY3Rpb25UeXBlPSJ4bGlmZiIgcmVsYXRpdmVJbnB1dFBhdGg9IkViYXktbGlrZS1zbWFsbC1maWxlLWVkaXRlZC54bGYiIGZpbHRlcklkPSJva2ZfeGxpZmYiIGlucHV0RW5jb2Rpbmc9InV0Zi04IiByZWxhdGl2ZVRhcmdldFBhdGg9IkViYXktbGlrZS1zbWFsbC1maWxlLWVkaXRlZC5vdXQueGxmIiB0YXJnZXRFbmNvZGluZz0iVVRGLTgiIHNlbGVjdGVkPSIxIj5JM1l4Q25WelpVTjFjM1J2YlZCaGNuTmxjaTVpUFhSeWRXVUtabUZqZEc5eWVVTnNZWE56UFdOdmJTNWpkR011ZDNOMGVDNXpkR0Y0TGxkemRIaEpibkIxZEVaaFkzUnZjbmtLWm1Gc2JHSmhZMnRVYjBsRUxtSTlabUZzYzJVS1pYTmpZWEJsUjFRdVlqMW1ZV3h6WlFwaFpHUlVZWEpuWlhSTVlXNW5kV0ZuWlM1aVBYUnlkV1VLYjNabGNuSnBaR1ZVWVhKblpYUk1ZVzVuZFdGblpTNWlQV1poYkhObENtOTFkSEIxZEZObFoyMWxiblJoZEdsdmJsUjVjR1V1YVQwekNtbG5ibTl5WlVsdWNIVjBVMlZuYldWdWRHRjBhVzl1TG1JOVptRnNjMlVLWVdSa1FXeDBWSEpoYm5NdVlqMW1ZV3h6WlFwaFpHUkJiSFJVY21GdWMwZE5iMlJsTG1JOWRISjFaUXBsWkdsMFFXeDBWSEpoYm5NdVlqMW1ZV3h6WlFwcGJtTnNkV1JsUlhoMFpXNXphVzl1Y3k1aVBYUnlkV1VLYVc1amJIVmtaVWwwY3k1aVBYUnlkV1VLWW1Gc1lXNWpaVU52WkdWekxtSTlkSEoxWlFwaGJHeHZkMFZ0Y0hSNVZHRnlaMlYwY3k1aVBXWmhiSE5sQ25SaGNtZGxkRk4wWVhSbFRXOWtaUzVwUFRBS2RHRnlaMlYwVTNSaGRHVldZV3gxWlQxdVpXVmtjeTEwY21GdWMyeGhkR2x2YmdwaGJIZGhlWE5WYzJWVFpXZFRiM1Z5WTJVdVlqMW1ZV3h6WlFweGRXOTBaVTF2WkdWRVpXWnBibVZrTG1JOWRISjFaUXB4ZFc5MFpVMXZaR1V1YVQwd0NuVnpaVk5rYkZoc2FXWm1WM0pwZEdWeUxtSTlabUZzYzJVPTwvZG9jPg0KPC9tYW5pZmVzdD4=' );
     }
 
     /**
      * @test
      */
-    public function can_parse_sdlxliff_v1_tu_metadata()
-    {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('file-with-notes-nobase64.po.sdlxliff'));
+    public function can_parse_sdlxliff_v1_tu_metadata() {
+        $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'file-with-notes-nobase64.po.sdlxliff' ) );
 
-        $this->assertEquals($parsed['files'][1]['trans-units'][4]['attr']['id'], 5);
-        $this->assertTrue($parsed['files'][1]['trans-units'][4]['attr']['approved']);
+        $this->assertEquals( $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 4 ][ 'attr' ][ 'id' ], 5 );
+        $this->assertTrue( $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 4 ][ 'attr' ][ 'approved' ] );
     }
 
     /**
      * @test
      */
-    public function can_parse_sdlxliff_v1_tu_notes()
-    {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('file-with-notes-nobase64.po.sdlxliff'));
+    public function can_parse_sdlxliff_v1_tu_notes() {
+        $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'file-with-notes-nobase64.po.sdlxliff' ) );
 
         $this->assertEquals(
-            'This is a comment',
-            $parsed['files'][1]['trans-units'][4]['notes'][0]['raw-content']
+                'This is a comment',
+                $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 4 ][ 'notes' ][ 0 ][ 'raw-content' ]
         );
 
         $this->assertEquals(
-            'This is another comment',
-            $parsed['files'][1]['trans-units'][6]['notes'][0]['raw-content']
+                'This is another comment',
+                $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 6 ][ 'notes' ][ 0 ][ 'raw-content' ]
         );
     }
 
     /**
      * @test
      */
-    public function can_parse_converted_xliff_v1_tu_notes()
-    {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('file-with-notes-converted.xliff'));
+    public function can_parse_converted_xliff_v1_tu_notes() {
+        $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'file-with-notes-converted.xliff' ) );
 
         $this->assertEquals(
-            "This is a comment\n" .
+                "This is a comment\n" .
                 "---\n" .
                 "This is a comment number two\n" .
                 "---\n" .
                 "This is a comment number three",
-            $parsed['files'][3]['trans-units'][1]['notes'][0]['raw-content']
+                $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'notes' ][ 0 ][ 'raw-content' ]
         );
 
         $this->assertEquals(
-            'This is another comment',
-            $parsed['files'][3]['trans-units'][3]['notes'][0]['raw-content']
+                'This is another comment',
+                $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 3 ][ 'notes' ][ 0 ][ 'raw-content' ]
         );
     }
 
     /**
      * @test
      */
-    public function can_parse_file_with_malicious_note()
-    {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('file-with-notes-and-malicious-code.xliff'));
+    public function can_parse_file_with_malicious_note() {
+        $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'file-with-notes-and-malicious-code.xliff' ) );
 
         $this->assertEquals(
-            "&lt;script&gt;alert('This is malicious code');&lt;/script&gt;",
-            $parsed['files'][3]['trans-units'][1]['notes'][0]['raw-content']
+                "&lt;script&gt;alert('This is malicious code');&lt;/script&gt;",
+                $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'notes' ][ 0 ][ 'raw-content' ]
         );
     }
 
     /**
      * @test
      */
-    public function can_parse_xliff_v1_tu_with_extenal_tags_in_seg_source_and_target()
-    {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('file-with-notes-converted-and-seg-source-with-ex-tags.xliff'));
+    public function can_parse_xliff_v1_tu_with_extenal_tags_in_seg_source_and_target() {
+        $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'file-with-notes-converted-and-seg-source-with-ex-tags.xliff' ) );
 
-        $segSource = $parsed[ 'files' ][ 3 ]['trans-units'][ 1 ][ 'seg-source' ][ 0 ];
-        $segTarget = $parsed[ 'files' ][ 3 ]['trans-units'][ 1 ][ 'seg-target' ][ 0 ];
+        $segSource = $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'seg-source' ][ 0 ];
+        $segTarget = $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'seg-target' ][ 0 ];
         $expected1 = [
-                'mid' => 0,
+                'mid'           => 0,
                 'ext-prec-tags' => '<g id="1">',
-                'raw-content' => 'An English string with g tags',
+                'raw-content'   => 'An English string with g tags',
                 'ext-succ-tags' => '</g>',
         ];
         $expected2 = [
-            'mid' => 0,
-            'ext-prec-tags' => '<g id="1">',
-            'raw-content' => 'An English string with g tags',
-            'ext-succ-tags' => '</g>',
-            'attr' => [
-                'xml:lang' => 'fr-fr'
-            ]
+                'mid'           => 0,
+                'ext-prec-tags' => '<g id="1">',
+                'raw-content'   => 'An English string with g tags',
+                'ext-succ-tags' => '</g>',
+                'attr'          => [
+                        'xml:lang' => 'fr-fr'
+                ]
         ];
 
-        $this->assertEquals($expected1, $segSource);
-        $this->assertEquals($expected2, $segTarget);
+        $this->assertEquals( $expected1, $segSource );
+        $this->assertEquals( $expected2, $segTarget );
     }
 
     /**
      * @test
      */
-    public function can_parse_empty_self_closed_target_tag_with_alt_trans()
-    {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('file-with-self-closed-tag-and-alt-trans.xliff'));
+    public function can_parse_empty_self_closed_target_tag_with_alt_trans() {
+        $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'file-with-self-closed-tag-and-alt-trans.xliff' ) );
 
-        $this->assertEmpty($parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'attr' ]);
-        $this->assertEmpty($parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ]);
+        $this->assertEmpty( $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'attr' ] );
+        $this->assertEmpty( $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ] );
     }
 
     /**
      * @test
      */
-    public function can_parse_xliff_v1_tu_context_group()
-    {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('file-with-self-closed-tag-and-alt-trans.xliff'));
+    public function can_parse_xliff_v1_tu_context_group() {
+        $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'file-with-self-closed-tag-and-alt-trans.xliff' ) );
 
-        $contextGroup = $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ]['context-group'][0];
+        $contextGroup = $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'context-group' ][ 0 ];
 
-        $this->assertEquals($contextGroup['attr'], [
+        $this->assertEquals( $contextGroup[ 'attr' ], [
                 'purpose' => "location"
-        ]);
-        $this->assertCount(2, $contextGroup['contexts']);
+        ] );
+        $this->assertCount( 2, $contextGroup[ 'contexts' ] );
     }
 
     /**
      * @test
      */
-    public function can_parse_xliff_v1_tu_alt_trans()
-    {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('file-with-self-closed-tag-and-alt-trans.xliff'));
+    public function can_parse_xliff_v1_tu_alt_trans() {
+        $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'file-with-self-closed-tag-and-alt-trans.xliff' ) );
 
-        $altTrans = $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ]['alt-trans'][0];
+        $altTrans = $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'alt-trans' ][ 0 ];
 
-        $this->assertEquals($altTrans['attr'], [
+        $this->assertEquals( $altTrans[ 'attr' ], [
                 'match-quality' => "100.00",
-                'origin' => "Sparta CAT"
-        ]);
-        $this->assertEquals($altTrans['source'], 'We’ve decreased the amount of money from sales immediately available to you each month');
-        $this->assertEquals($altTrans['target'], 'Hemos disminuido el importe mensual procedente de las ventas del que puede disponer inmediatamente');
+                'origin'        => "Sparta CAT"
+        ] );
+        $this->assertEquals( $altTrans[ 'source' ], 'We’ve decreased the amount of money from sales immediately available to you each month' );
+        $this->assertEquals( $altTrans[ 'target' ], 'Hemos disminuido el importe mensual procedente de las ventas del que puede disponer inmediatamente' );
     }
 
     /**
      * @test
      */
-    public function can_parse_xliff_v1_tu_seg_source_and_seg_target()
-    {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('file-with-notes-converted-nobase64.xliff'));
+    public function can_parse_xliff_v1_tu_seg_source_and_seg_target() {
+        $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'file-with-notes-converted-nobase64.xliff' ) );
 
-        $segSource = $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ]['seg-source'];
-        $segTarget = $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ]['seg-target'];
+        $segSource = $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'seg-source' ];
+        $segTarget = $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'seg-target' ];
 
-        $this->assertEquals(0, $segSource[0]['mid']);
-        $this->assertEquals('An English string', $segSource[0]['raw-content']);
-        $this->assertEquals(0, $segTarget[0]['mid']);
-        $this->assertEquals('An English string', $segTarget[0]['raw-content']);
+        $this->assertEquals( 0, $segSource[ 0 ][ 'mid' ] );
+        $this->assertEquals( 'An English string', $segSource[ 0 ][ 'raw-content' ] );
+        $this->assertEquals( 0, $segTarget[ 0 ][ 'mid' ] );
+        $this->assertEquals( 'An English string', $segTarget[ 0 ][ 'raw-content' ] );
     }
 
     /**
      * @test
      */
-    public function can_parse_xliff_v1_tu_with_emoji_in_source()
-    {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('file-with-emoji.xliff'));
+    public function can_parse_xliff_v1_tu_with_emoji_in_source() {
+        $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'file-with-emoji.xliff' ) );
 
-        $this->assertNotEmpty($parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'source' ][ 'raw-content' ]);
-        $this->assertEquals('<g id="1">&#128076;&#127995;</g>', $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'source' ][ 'raw-content' ]);
+        $this->assertNotEmpty( $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'source' ][ 'raw-content' ] );
+        $this->assertEquals( '<g id="1">&#128076;&#127995;</g>', $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'source' ][ 'raw-content' ] );
     }
 
     /**
      * @test
      */
-    public function can_parse_xliff_v1_tu_with_empty_not_self_closed_target_tag_with_alt_trans()
-    {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('file-with-empty-self-closed-target-tag-with-alt-trans.xliff'));
+    public function can_parse_xliff_v1_tu_with_empty_not_self_closed_target_tag_with_alt_trans() {
+        $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'file-with-empty-self-closed-target-tag-with-alt-trans.xliff' ) );
 
-        $this->assertEmpty($parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ]);
+        $this->assertEmpty( $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ] );
     }
 
     /**
      * @test
      */
-    public function can_parse_xliff_v1_tu_with_not_empty_target_tag_with_not_ordered_alt_trans()
-    {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('file-with-empty-target-tag-withnot-ordered-alt-trans.xliff'));
+    public function can_parse_xliff_v1_tu_with_not_empty_target_tag_with_not_ordered_alt_trans() {
+        $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'file-with-empty-target-tag-withnot-ordered-alt-trans.xliff' ) );
 
-        $this->assertNotEmpty($parsed);
-        $this->assertEquals("PPC000460", $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ]);
+        $this->assertNotEmpty( $parsed );
+        $this->assertEquals( "PPC000460", $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ] );
     }
 
     /**
      * @test
      */
-    public function can_parse_xliff_v1_tu_with_not_empty_target_tag_without_alt_trans()
-    {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('file-with-not-empty-target-tag-without-alt-trans.xliff'));
+    public function can_parse_xliff_v1_tu_with_not_empty_target_tag_without_alt_trans() {
+        $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'file-with-not-empty-target-tag-without-alt-trans.xliff' ) );
 
-        $this->assertNotEmpty($parsed);
-        $this->assertEquals("PPC000460", $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ]);
+        $this->assertNotEmpty( $parsed );
+        $this->assertEquals( "PPC000460", $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ] );
     }
 
     /**
      * @test
      */
-    public function can_parse_xliff_v1_tu_with_not_empty_target_tag_with_mrk_with_alt_trans()
-    {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('file-with-not-empty-target-tag-with-mrk-with-alt-trans.xliff'));
+    public function can_parse_xliff_v1_tu_with_not_empty_target_tag_with_mrk_with_alt_trans() {
+        $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'file-with-not-empty-target-tag-with-mrk-with-alt-trans.xliff' ) );
 
-        $this->assertNotEmpty($parsed);
-        $this->assertEquals("<mrk id=\"1\">PPC000460</mrk>", $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ]);
+        $this->assertNotEmpty( $parsed );
+        $this->assertEquals( "<mrk id=\"1\">PPC000460</mrk>", $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ] );
     }
 
     /**
      * @test
      */
-    public function can_parse_xliff_v1_tu_with_not_empty_target_tag_with_some_mrk_with_alt_trans()
-    {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('file-with-not-empty-target-tag-with-some-mrk-with-alt-trans.xliff'));
+    public function can_parse_xliff_v1_tu_with_not_empty_target_tag_with_some_mrk_with_alt_trans() {
+        $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'file-with-not-empty-target-tag-with-some-mrk-with-alt-trans.xliff' ) );
 
-        $this->assertNotEmpty($parsed);
-        $this->assertEquals("<mrk id=\"1\">Test1</mrk><mrk id=\"2\">Test2</mrk><mrk id=\"3\">Test3</mrk>", $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ]);
+        $this->assertNotEmpty( $parsed );
+        $this->assertEquals( "<mrk id=\"1\">Test1</mrk><mrk id=\"2\">Test2</mrk><mrk id=\"3\">Test3</mrk>", $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ] );
     }
 
     /**
      * @test
      */
-    public function can_parse_xliff_v1_tu_with_not_empty_target_tag_with_some_mrk_and_html_with_alt_trans()
-    {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('file-with-not-empty-target-tag-with-some-mrk-and-html-with-alt-trans.xliff'));
+    public function can_parse_xliff_v1_tu_with_not_empty_target_tag_with_some_mrk_and_html_with_alt_trans() {
+        $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'file-with-not-empty-target-tag-with-some-mrk-and-html-with-alt-trans.xliff' ) );
 
-        $this->assertNotEmpty($parsed);
+        $this->assertNotEmpty( $parsed );
         $this->assertEquals(
-            "<mrk id=\"1\">Test1</mrk><mrk id=\"2\">Test2<ex id=\"1\">Another Test Inside</ex></mrk><mrk id=\"3\">Test3&lt;a href=\"https://example.org\"&gt;ClickMe!&lt;/a&gt;</mrk>",
-            $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ]
+                "<mrk id=\"1\">Test1</mrk><mrk id=\"2\">Test2<ex id=\"1\">Another Test Inside</ex></mrk><mrk id=\"3\">Test3&lt;a href=\"https://example.org\"&gt;ClickMe!&lt;/a&gt;</mrk>",
+                $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ]
         );
     }
 
     /**
      * @test
      */
-    public function can_parse_xliff_v1_with_nested_group_tags()
-    {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('file-with-nested-group.xliff'));
+    public function can_parse_xliff_v1_with_nested_group_tags() {
+        $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'file-with-nested-group.xliff' ) );
 
-        $this->assertCount(5, $parsed[ 'files' ][ 3 ][ 'trans-units' ]);
-        $this->assertEquals('Bla Bla', $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'source' ][ 'raw-content' ]);
+        $this->assertCount( 5, $parsed[ 'files' ][ 3 ][ 'trans-units' ] );
+        $this->assertEquals( 'Bla Bla', $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'source' ][ 'raw-content' ] );
     }
 
-    public function can_parse_xliff_v1_tu_with_complex_structure()
-    {
+    public function can_parse_xliff_v1_tu_with_complex_structure() {
         //
         // FIRST PART OF TEST
         //
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('file-with-complex-structure.xliff'));
+        $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'file-with-complex-structure.xliff' ) );
 
-        $this->assertNotEmpty($parsed);
+        $this->assertNotEmpty( $parsed );
         $this->assertEquals(
-            '
+                '
         <ph id="59" x="&lt;endcmp/&gt;">{59}</ph>
         <ph id="60" x="&lt;/span&gt;">{60}</ph>
         <ph id="61" x="&lt;startcmp/&gt;">{61}</ph>
@@ -392,7 +368,7 @@ class XliffParserV1Test extends BaseTest
         <ph id="73" x="&lt;/span&gt;">{73}</ph>
         <ph id="74" x="&lt;startcmp/&gt;">{74}</ph>
     ',
-            $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ]
+                $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ]
         );
 
         //
@@ -493,172 +469,179 @@ class XliffParserV1Test extends BaseTest
     </alt-trans>
     </trans-unit>";
 
-        preg_match('|<target>(.*?)</target>|siu', $x, $tmp);
+        preg_match( '|<target>(.*?)</target>|siu', $x, $tmp );
 
-        $this->assertNotEquals($tmp[ 1 ], $parsed[ 'files' ][ 0 ][ 'trans-units' ][ 0 ][ 'target' ][ 'raw-content' ]);
+        $this->assertNotEquals( $tmp[ 1 ], $parsed[ 'files' ][ 0 ][ 'trans-units' ][ 0 ][ 'target' ][ 'raw-content' ] );
     }
 
     /**
      * @test
      */
-    public function can_parse_xliff_v1_with_translate_no()
-    {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('Working_with_the_Review_tool.xlf'));
+    public function can_parse_xliff_v1_with_translate_no() {
+        $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'Working_with_the_Review_tool.xlf' ) );
 
-        $this->assertCount(56, $parsed['files'][1]['trans-units']);
+        $this->assertCount( 56, $parsed[ 'files' ][ 1 ][ 'trans-units' ] );
     }
 
     /**
      * @test
      */
-    public function can_parse_xliff_v12_with_emoji()
-    {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('xliff12-with-emoji.xliff'));
+    public function can_parse_xliff_v12_with_emoji() {
+        $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'xliff12-with-emoji.xliff' ) );
 
-        $this->assertEquals('&#129305; Join this (video)call at: {{joinUrl}}', $parsed['files'][1]['trans-units'][1]['source']['raw-content']); // there is an emoji here
-        $this->assertEquals('', $parsed['files'][1]['trans-units'][1]['target']['raw-content']);
+        $this->assertEquals( '&#129305; Join this (video)call at: {{joinUrl}}', $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'source' ][ 'raw-content' ] ); // there is an emoji here
+        $this->assertEquals( '', $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ] );
     }
 
     /**
      * @test
      */
-    public function can_parse_xliff_v12_with_emoji_encoded()
-    {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('xliff12-with-emoji-encoded.xliff'));
+    public function can_parse_xliff_v12_with_emoji_encoded() {
+        $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'xliff12-with-emoji-encoded.xliff' ) );
 
-        $this->assertEquals('&#129305; Join this (video)call at: {{joinUrl}}', $parsed['files'][1]['trans-units'][1]['source']['raw-content']); // there is an emoji here
-        $this->assertEquals('', $parsed['files'][1]['trans-units'][1]['target']['raw-content']);
+        $this->assertEquals( '&#129305; Join this (video)call at: {{joinUrl}}', $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'source' ][ 'raw-content' ] ); // there is an emoji here
+        $this->assertEquals( '', $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ] );
     }
 
     /**
      * @test
      */
-    public function can_parse_a_very_large_xliff_v12()
-    {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('ENIMAC_XT CARTESIAN 3_REV.1.0_ITA.docx (7).sdlxliff'));
+    public function can_parse_a_very_large_xliff_v12() {
+        $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'ENIMAC_XT CARTESIAN 3_REV.1.0_ITA.docx (7).sdlxliff' ) );
 
-        $this->assertNotNull($parsed['files'][1]['reference'][0]['base64']);
-        $this->assertCount(1503, $parsed['files'][1]['trans-units']);
+        $this->assertNotNull( $parsed[ 'files' ][ 1 ][ 'reference' ][ 0 ][ 'base64' ] );
+        $this->assertCount( 1503, $parsed[ 'files' ][ 1 ][ 'trans-units' ] );
     }
 
     /**
      * @test
      */
-    public function can_parse_a_po_converted_in_sdlxliff()
-    {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('inglese-con-newlines-e-doctype.po.sdlxliff'));
+    public function can_parse_a_po_converted_in_sdlxliff() {
+        $parsed     = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'inglese-con-newlines-e-doctype.po.sdlxliff' ) );
         $transUnits = $parsed[ 'files' ][ 3 ][ 'trans-units' ];
 
-        $this->assertCount(3, $transUnits);
+        $this->assertCount( 3, $transUnits );
     }
 
     /**
      * @test
      */
-    public function can_preserve_trailing_spaces_from_sdlxliff()
-    {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('trailing_space.sdlxliff'));
-        $transUnit = $parsed[ 'files' ][ 1 ][ 'trans-units' ][23];
+    public function can_preserve_trailing_spaces_from_sdlxliff() {
+        $parsed    = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'trailing_space.sdlxliff' ) );
+        $transUnit = $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 23 ];
 
-        $this->assertEquals('Si presenta con una nuance rubino intensa e compatta dai luminosi riflessi viola. ', $transUnit['seg-source'][0]['raw-content']);
-        $this->assertEquals('Il naso evidenzia raffinati sentori floreali di rosa canina e violetta, frutti rossi croccanti tipo ribes e fragole di bosco, dopo i quali emergono cenni gentili di grafite e liquirizia. ', $transUnit['seg-source'][1]['raw-content']);
-        $this->assertEquals('La beva si profila subito piena e di grande corpo, con uno spessore tannico che determina un insieme saporito e voluttuoso. ', $transUnit['seg-source'][2]['raw-content']);
-        $this->assertEquals('Di lunghissima persistenza, reca un’impronta di vivida freschezza, supportata da un costante allungo minerale. ', $transUnit['seg-source'][3]['raw-content']);
-        $this->assertEquals('Il segreto dell’originalità che contrassegna i vini della Fattoria La Valentina è l\'unicità dei terroir: il microclima e i vitigni ormai in simbiosi con il terreno restituiscono vini dal carattere marcato e unico. ', $transUnit['seg-source'][4]['raw-content']);
-        $this->assertEquals('Anche Il carattere delle sonate di Domenico Scarlatti è molto personale, a volte "sperimentale" sul piano tecnico: nonostante il suo stile brillante si esplichi in una forma musicale semplice, esprime una varietà e una ricchezza di invenzione sorprendenti. ', $transUnit['seg-source'][5]['raw-content']);
-        $this->assertEquals('Quasi tutte le sue sonate, infatti, sono strutturate in un solo movimento, che tecnicamente viene chiamato "Monotematico e bipartito", asservito ad un tempo di danza.', $transUnit['seg-source'][6]['raw-content']);
+        $this->assertEquals( 'Si presenta con una nuance rubino intensa e compatta dai luminosi riflessi viola. ', $transUnit[ 'seg-source' ][ 0 ][ 'raw-content' ] );
+        $this->assertEquals( 'Il naso evidenzia raffinati sentori floreali di rosa canina e violetta, frutti rossi croccanti tipo ribes e fragole di bosco, dopo i quali emergono cenni gentili di grafite e liquirizia. ', $transUnit[ 'seg-source' ][ 1 ][ 'raw-content' ] );
+        $this->assertEquals( 'La beva si profila subito piena e di grande corpo, con uno spessore tannico che determina un insieme saporito e voluttuoso. ', $transUnit[ 'seg-source' ][ 2 ][ 'raw-content' ] );
+        $this->assertEquals( 'Di lunghissima persistenza, reca un’impronta di vivida freschezza, supportata da un costante allungo minerale. ', $transUnit[ 'seg-source' ][ 3 ][ 'raw-content' ] );
+        $this->assertEquals( 'Il segreto dell’originalità che contrassegna i vini della Fattoria La Valentina è l\'unicità dei terroir: il microclima e i vitigni ormai in simbiosi con il terreno restituiscono vini dal carattere marcato e unico. ', $transUnit[ 'seg-source' ][ 4 ][ 'raw-content' ] );
+        $this->assertEquals( 'Anche Il carattere delle sonate di Domenico Scarlatti è molto personale, a volte "sperimentale" sul piano tecnico: nonostante il suo stile brillante si esplichi in una forma musicale semplice, esprime una varietà e una ricchezza di invenzione sorprendenti. ', $transUnit[ 'seg-source' ][ 5 ][ 'raw-content' ] );
+        $this->assertEquals( 'Quasi tutte le sue sonate, infatti, sono strutturate in un solo movimento, che tecnicamente viene chiamato "Monotematico e bipartito", asservito ad un tempo di danza.', $transUnit[ 'seg-source' ][ 6 ][ 'raw-content' ] );
     }
 
     /**
      * @test
      */
-    public function can_preserve_trailing_spaces_from_sdlxliff_with_duplicated_content()
-    {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('trailing_space_duplicated.sdlxliff'));
-        $transUnit = $parsed[ 'files' ][ 1 ][ 'trans-units' ][23];
+    public function can_preserve_trailing_spaces_from_sdlxliff_with_duplicated_content() {
+        $parsed    = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'trailing_space_duplicated.sdlxliff' ) );
+        $transUnit = $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 23 ];
 
-        $this->assertEquals('Ciao. ', $transUnit['seg-source'][0]['raw-content']);
-        $this->assertEquals('Ciao. ', $transUnit['seg-source'][1]['raw-content']);
-        $this->assertEquals('Ciao. ', $transUnit['seg-source'][2]['raw-content']);
-        $this->assertEquals('Ciao.', $transUnit['seg-source'][3]['raw-content']);
+        $this->assertEquals( 'Ciao. ', $transUnit[ 'seg-source' ][ 0 ][ 'raw-content' ] );
+        $this->assertEquals( 'Ciao. ', $transUnit[ 'seg-source' ][ 1 ][ 'raw-content' ] );
+        $this->assertEquals( 'Ciao. ', $transUnit[ 'seg-source' ][ 2 ][ 'raw-content' ] );
+        $this->assertEquals( 'Ciao.', $transUnit[ 'seg-source' ][ 3 ][ 'raw-content' ] );
     }
 
     /**
      * @test
      */
-    public function raise_exception_on_duplicate_ids()
-    {
+    public function raise_exception_on_duplicate_ids() {
         try {
-            (new XliffParser())->xliffToArray($this->getTestFile('v1-duplicate-ids.xliff'));
-        } catch (\Exception $exception){
-            $this->assertEquals('Invalid trans-unit id, duplicate found.', $exception->getMessage());
+            ( new XliffParser() )->xliffToArray( $this->getTestFile( 'v1-duplicate-ids.xliff' ) );
+        } catch ( \Exception $exception ) {
+            $this->assertEquals( 'Invalid trans-unit id, duplicate found.', $exception->getMessage() );
         }
     }
 
     /**
      * @test
      */
-    public function can_extract_custom_file_attributes()
-    {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('newformat.jsont.xlf'));
+    public function can_extract_custom_file_attributes() {
+        $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'newformat.jsont.xlf' ) );
 
-        $this->assertEquals($parsed['files'][3]['attr']['custom']['mtc:id-order'], 'xxx');
-        $this->assertEquals($parsed['files'][3]['attr']['custom']['mtc:id-order-group'], 'yyy');
-        $this->assertEquals($parsed['files'][3]['attr']['custom']['mtc:instructions'], 'istruzione123');
+        $this->assertEquals( $parsed[ 'files' ][ 3 ][ 'attr' ][ 'custom' ][ 'mtc:id-order' ], 'xxx' );
+        $this->assertEquals( $parsed[ 'files' ][ 3 ][ 'attr' ][ 'custom' ][ 'mtc:id-order-group' ], 'yyy' );
+        $this->assertEquals( $parsed[ 'files' ][ 3 ][ 'attr' ][ 'custom' ][ 'mtc:instructions' ], 'istruzione123' );
 
-        $this->assertEquals($parsed['files'][3]['trans-units'][1]['notes'][0]['from'], 'id_request');
-        $this->assertEquals($parsed['files'][3]['trans-units'][1]['notes'][1]['from'], 'id_content');
-        $this->assertEquals($parsed['files'][3]['trans-units'][1]['notes'][2]['from'], 'notes');
-        $this->assertEquals($parsed['files'][3]['trans-units'][1]['notes'][0]['raw-content'], '111');
-        $this->assertEquals($parsed['files'][3]['trans-units'][1]['notes'][1]['raw-content'], 'page1.txt');
-        $this->assertEquals($parsed['files'][3]['trans-units'][1]['notes'][2]['raw-content'], 'questa è una nota1');
+        $this->assertEquals( $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'notes' ][ 0 ][ 'from' ], 'id_request' );
+        $this->assertEquals( $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'notes' ][ 1 ][ 'from' ], 'id_content' );
+        $this->assertEquals( $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'notes' ][ 2 ][ 'from' ], 'notes' );
+        $this->assertEquals( $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'notes' ][ 0 ][ 'raw-content' ], '111' );
+        $this->assertEquals( $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'notes' ][ 1 ][ 'raw-content' ], 'page1.txt' );
+        $this->assertEquals( $parsed[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'notes' ][ 2 ][ 'raw-content' ], 'questa è una nota1' );
     }
 
     /**
      * @test
      */
-    public function can_parse_segment_state_attribute()
-    {
+    public function can_parse_segment_state_attribute() {
         $states = [
-            'new',
-            'needs-translation',
-            'needs-adaptation',
-            'needs-l10n',
-            'needs-review-translation',
-            'needs-review-adaptation',
-            'needs-review-l10n',
-            'translated',
-            'signed-off',
-            'final',
+                'new',
+                'needs-translation',
+                'needs-adaptation',
+                'needs-l10n',
+                'needs-review-translation',
+                'needs-review-adaptation',
+                'needs-review-l10n',
+                'translated',
+                'signed-off',
+                'final',
         ];
 
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('xliff12-with-segment-state.xliff'));
+        $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'xliff12-with-segment-state.xliff' ) );
 
-        for($i = 1; $i <= count($parsed['files'][1]['trans-units']); $i++){
-            $this->assertEquals($parsed['files'][1]['trans-units'][$i]['seg-target'][0]['attr']['state'], $states[$i-1]);
+        for ( $i = 1; $i <= count( $parsed[ 'files' ][ 1 ][ 'trans-units' ] ); $i++ ) {
+            $this->assertEquals( $parsed[ 'files' ][ 1 ][ 'trans-units' ][ $i ][ 'seg-target' ][ 0 ][ 'attr' ][ 'state' ], $states[ $i - 1 ] );
         }
     }
 
     /**
      * @test
      */
-    public function can_parse_context_group()
-    {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('context-group.xlf'));
+    public function can_parse_context_group() {
+        $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'context-group.xlf' ) );
 
-        $this->assertEquals($parsed['files'][1]['trans-units'][1]['context-group'][0]['contexts'][0]['raw-content'], "PSMS-ID-ec2d50b6-d0ce-4672-b8df-9ea82616d85c::1");
-        $this->assertEquals($parsed['files'][1]['trans-units'][1]['context-group'][0]['contexts'][1]['raw-content'], "Translation Context: Admin Portal Title text");
-        $this->assertEquals($parsed['files'][1]['trans-units'][2]['context-group'][0]['contexts'][0]['raw-content'], "PSMS-ID-ec2d50b6-d0ce-4672-b8df-9ea82616d85c::1");
-        $this->assertEquals($parsed['files'][1]['trans-units'][2]['context-group'][0]['contexts'][1]['raw-content'], "Translation Context: Admin Portal Title text");
+        $this->assertEquals( $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'context-group' ][ 0 ][ 'contexts' ][ 0 ][ 'raw-content' ], "PSMS-ID-ec2d50b6-d0ce-4672-b8df-9ea82616d85c::1" );
+        $this->assertEquals( $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'context-group' ][ 0 ][ 'contexts' ][ 1 ][ 'raw-content' ], "Translation Context: Admin Portal Title text" );
+        $this->assertEquals( $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 2 ][ 'context-group' ][ 0 ][ 'contexts' ][ 0 ][ 'raw-content' ], "PSMS-ID-ec2d50b6-d0ce-4672-b8df-9ea82616d85c::1" );
+        $this->assertEquals( $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 2 ][ 'context-group' ][ 0 ][ 'contexts' ][ 1 ][ 'raw-content' ], "Translation Context: Admin Portal Title text" );
     }
 
     /**
      * @test
+     * @return void
+     * @throws InvalidXmlException
+     * @throws NotSupportedVersionException
+     * @throws NotValidFileException
+     * @throws XmlParsingException
      */
-    public function can_skip_too_deep_nested_group()
-    {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('context-group-nested.xlf'));
+    public function can_skip_too_deep_nested_group() {
+        $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'context-group-nested.xlf' ) );
 
-        $this->assertCount(2, $parsed['files'][1]['trans-units']);
+        $this->assertCount( 2, $parsed[ 'files' ][ 1 ][ 'trans-units' ] );
     }
+
+    /**
+     * @test
+     * @return void
+     * @throws NotSupportedVersionException
+     * @throws NotValidFileException
+     * @throws InvalidXmlException
+     * @throws XmlParsingException
+     */
+    public function can_parse_context_group_2() {
+        $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'context-group-trans-unit.jsont2.xlf' ) );
+        $this->assertCount( 7, $parsed[ 'files' ][ 3 ][ 'trans-units' ] );
+    }
+
 }
