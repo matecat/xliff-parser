@@ -13,7 +13,7 @@ use Psr\Log\LoggerInterface;
 
 abstract class AbstractXliffParser {
 
-    const MAX_GROUP_RECURSION_LEVEL = 5;
+    const MAX_GROUP_RECURSION_LEVEL = 10;
 
     /**
      * @var LoggerInterface
@@ -79,13 +79,14 @@ abstract class AbstractXliffParser {
                 }
             }
 
+            // avoid infinite recursion
+            $recursionLevel++;
+
             foreach ( $childNode->childNodes as $nestedChildNode ) {
 
                 // nested groups
                 if ( $nestedChildNode->nodeName === 'group' ) {
 
-                    // avoid infinite recursion
-                    $recursionLevel++;
                     if($recursionLevel < self::MAX_GROUP_RECURSION_LEVEL){
                         $this->extractTuFromNode( $nestedChildNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j, $contextGroups, $recursionLevel );
                     }
