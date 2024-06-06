@@ -16,7 +16,7 @@ class XliffReplacerValidationTest extends BaseTest {
             $validate = $this->validateXliff20( $outputFile );
             $this->assertEmpty( $validate );
         } catch ( Exception $exception ) {
-            $this->markTestSkipped( 'The xliff validation service is out of order.' );
+            $this->markTestSkipped( 'The xliff validation service is out of order. ' . $exception->getMessage() );
         }
     }
 
@@ -30,7 +30,7 @@ class XliffReplacerValidationTest extends BaseTest {
             $validate = $this->validateXliff20( $outputFile );
             $this->assertEmpty( $validate );
         } catch ( Exception $exception ) {
-            $this->markTestSkipped( 'The xliff validation service is out of order.' );
+            $this->markTestSkipped( 'The xliff validation service is out of order. ' . $exception->getMessage() );
         }
     }
 
@@ -44,7 +44,7 @@ class XliffReplacerValidationTest extends BaseTest {
             $validate = $this->validateXliff20( $outputFile );
             $this->assertNotEmpty( $validate );
         } catch ( Exception $exception ) {
-            $this->markTestSkipped( 'The xliff validation service is out of order.' );
+            $this->markTestSkipped( 'The xliff validation service is out of order. ' . $exception->getMessage() );
         }
     }
 
@@ -58,7 +58,7 @@ class XliffReplacerValidationTest extends BaseTest {
             $validate = $this->validateXliff20( $outputFile );
             $this->assertEmpty( $validate );
         } catch ( Exception $exception ) {
-            $this->markTestSkipped( 'The xliff validation service is out of order.' );
+            $this->markTestSkipped( 'The xliff validation service is out of order. ' . $exception->getMessage() );
         }
     }
 }

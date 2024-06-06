@@ -8,6 +8,7 @@ use Matecat\XliffParser\Exception\SegmentIdTooLongException;
 use Matecat\XliffParser\XliffParser;
 use Matecat\XmlParser\Exception\InvalidXmlException;
 use Matecat\XmlParser\Exception\XmlParsingException;
+use OverflowException;
 
 class XliffParserV1Test extends BaseTest {
     /**
@@ -609,7 +610,7 @@ class XliffParserV1Test extends BaseTest {
      * @test
      */
     public function can_parse_context_group() {
-        $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'context-group.xlf' ) );
+        $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'nested-tag-group/context-group.xlf' ) );
 
         $this->assertEquals( $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'context-group' ][ 0 ][ 'contexts' ][ 0 ][ 'raw-content' ], "PSMS-ID-ec2d50b6-d0ce-4672-b8df-9ea82616d85c::1" );
         $this->assertEquals( $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'context-group' ][ 0 ][ 'contexts' ][ 1 ][ 'raw-content' ], "Translation Context: Admin Portal Title text" );
@@ -625,10 +626,26 @@ class XliffParserV1Test extends BaseTest {
      * @throws NotValidFileException
      * @throws XmlParsingException
      */
-    public function can_skip_too_deep_nested_group() {
-        $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'context-group-nested.xlf' ) );
+    public function can_read_deep_nested_group() {
+        $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'nested-tag-group/context-group-nested.xlf' ) );
 
-        $this->assertCount( 2, $parsed[ 'files' ][ 1 ][ 'trans-units' ] );
+        $this->assertCount( 4, $parsed[ 'files' ][ 1 ][ 'trans-units' ] );
+    }
+
+    /**
+     * @test
+     * @return void
+     * @throws InvalidXmlException
+     * @throws NotSupportedVersionException
+     * @throws NotValidFileException
+     * @throws XmlParsingException
+     */
+    public function can_throw_exception_on_too_deep_nested_group() {
+
+        $this->expectException( OverflowException::class );
+        $this->expectExceptionMessage( "Maximum tag group nesting level of '50' reached, aborting!" );
+        ( new XliffParser() )->xliffToArray( $this->getTestFile( 'nested-tag-group/65-levels-nesting.json.xliff' ) );
+
     }
 
     /**
@@ -640,7 +657,7 @@ class XliffParserV1Test extends BaseTest {
      * @throws XmlParsingException
      */
     public function can_parse_context_group_2() {
-        $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'context-group-trans-unit.jsont2.xlf' ) );
+        $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'nested-tag-group/context-group-trans-unit.jsont2.xlf' ) );
         $this->assertCount( 7, $parsed[ 'files' ][ 3 ][ 'trans-units' ] );
     }
 

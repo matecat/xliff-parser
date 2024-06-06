@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+    <file datatype="x-application/json" original="Software Faster.json" source-language="en-US" target-language="it-IT">
+        <body>
+            <group id="sg1">
+                <group id="sg2">
+                </group>
+                <group id="sg3">
+                    <group id="sg4">
+                    </group>
+                    <group id="sg5">
+                    </group>
+                    <group id="sg6">
+                    </group>
+                    <group id="sg32">
+                        <group id="sg33">
+                            <group id="sg77">
+                                <group id="sg79">
+                                    <group id="sg86">
+                                        <group id="sg87">
+                                            <group id="sg196">
+                                                <group id="sg197">
+                                                </group>
+                                                <group id="sg198">
+                                                    <group id="sg199">
+                                                    </group>
+                                                    <group id="sg204">
+                                                        <group id="sg205">
+                                                        </group>
+                                                    </group>
+                                                    <group id="sg206">
+                                                        <group id="sg207">
+                                                        </group>
+                                                    </group>
+                                                    <group id="sg208">
+                                                    </group>
+                                                    <group id="sg209">
+                                                    </group>
+                                                    <group id="sg225">
+                                                    </group>
+                                                    <group id="sg226">
+                                                    </group>
+                                                    <group id="sg227">
+                                                        <group id="sg228">
+                                                        </group>
+                                                    </group>
+                                                    <group id="sg229">
+                                                    </group>
+                                                    <group id="sg230">
+                                                    </group>
+                                                    <group id="sg231">
+                                                    </group>
+                                                    <group id="sg232">
+                                                        <group id="sg233">
+                                                            <group id="sg234">
+                                                                <group id="sg235">
+                                                                    <group>
+                                                                        <group>
+                                                                            <group>
+                                                                                <group>
+                                                                                    <group>
+                                                                                        <group>
+                                                                                            <group>
+                                                                                                <group>
+                                                                                                    <group>
+                                                                                                        <group>
+                                                                                                            <group>
+                                                                                                                <group>
+                                                                                                                    <group>
+                                                                                                                        <group>
+                                                                                                                            <group>
+                                                                                                                                <group>
+                                                                                                                                    <group>
+                                                                                                                                        <group>
+                                                                                                                                            <group>
+                                                                                                                                                <group>
+                                                                                                                                                    <group>
+                                                                                                                                                        <group>
+                                                                                                                                                            <group>
+                                                                                                                                                                <group>
+                                                                                                                                                                    <group id="sg232">
+                                                                                                                                                                        <group id="sg233">
+                                                                                                                                                                            <group id="sg234">
+                                                                                                                                                                                <group id="sg235">
+                                                                                                                                                                                    <group>
+                                                                                                                                                                                        <group>
+                                                                                                                                                                                            <group>
+                                                                                                                                                                                                <group>
+                                                                                                                                                                                                    <group>
+                                                                                                                                                                                                        <group>
+                                                                                                                                                                                                            <group>
+                                                                                                                                                                                                                <group>
+                                                                                                                                                                                                                    <group>
+                                                                                                                                                                                                                        <group>
+                                                                                                                                                                                                                            <group>
+                                                                                                                                                                                                                                <group>
+                                                                                                                                                                                                                                    <group>
+                                                                                                                                                                                                                                        <group>
+                                                                                                                                                                                                                                            <group>
+                                                                                                                                                                                                                                                <group>
+                                                                                                                                                                                                                                                    <group>
+                                                                                                                                                                                                                                                        <group>
+                                                                                                                                                                                                                                                            <group>
+                                                                                                                                                                                                                                                                <group>
+                                                                                                                                                                                                                                                                    <group>
+                                                                                                                                                                                                                                                                        <group>
+                                                                                                                                                                                                                                                                            <group>
+                                                                                                                                                                                                                                                                                <group>
+                                                                                                                                                                                                                                                                                    <trans-unit id="tu26">
+                                                                                                                                                                                                                                                                                        <source xml:lang="en-US">This logo</source>
+                                                                                                                                                                                                                                                                                        <seg-source>
+                                                                                                                                                                                                                                                                                            <mrk mid="0" mtype="seg">This logo</mrk>
+                                                                                                                                                                                                                                                                                        </seg-source>
+                                                                                                                                                                                                                                                                                        <target xml:lang="it-IT">
+                                                                                                                                                                                                                                                                                            <mrk mid="0" mtype="seg">This logo</mrk>
+                                                                                                                                                                                                                                                                                        </target>
+                                                                                                                                                                                                                                                                                    </trans-unit>
+                                                                                                                                                                                                                                                                                </group>
+                                                                                                                                                                                                                                                                            </group>
+                                                                                                                                                                                                                                                                        </group>
+                                                                                                                                                                                                                                                                    </group>
+                                                                                                                                                                                                                                                                </group>
+                                                                                                                                                                                                                                                            </group>
+                                                                                                                                                                                                                                                        </group>
+                                                                                                                                                                                                                                                    </group>
+                                                                                                                                                                                                                                                </group>
+                                                                                                                                                                                                                                            </group>
+                                                                                                                                                                                                                                        </group>
+                                                                                                                                                                                                                                    </group>
+                                                                                                                                                                                                                                </group>
+                                                                                                                                                                                                                            </group>
+                                                                                                                                                                                                                        </group>
+                                                                                                                                                                                                                    </group>
+                                                                                                                                                                                                                </group>
+                                                                                                                                                                                                            </group>
+                                                                                                                                                                                                        </group>
+                                                                                                                                                                                                    </group>
+                                                                                                                                                                                                </group>
+                                                                                                                                                                                            </group>
+                                                                                                                                                                                        </group>
+                                                                                                                                                                                    </group>
+                                                                                                                                                                                </group>
+                                                                                                                                                                            </group>
+                                                                                                                                                                        </group>
+                                                                                                                                                                    </group>
+                                                                                                                                                                </group>
+                                                                                                                                                            </group>
+                                                                                                                                                        </group>
+                                                                                                                                                    </group>
+                                                                                                                                                </group>
+                                                                                                                                            </group>
+                                                                                                                                        </group>
+                                                                                                                                    </group>
+                                                                                                                                </group>
+                                                                                                                            </group>
+                                                                                                                        </group>
+                                                                                                                    </group>
+                                                                                                                </group>
+                                                                                                            </group>
+                                                                                                        </group>
+                                                                                                    </group>
+                                                                                                </group>
+                                                                                            </group>
+                                                                                        </group>
+                                                                                    </group>
+                                                                                </group>
+                                                                            </group>
+                                                                        </group>
+                                                                    </group>
+                                                                </group>
+                                                            </group>
+                                                        </group>
+                                                    </group>
+                                                </group>
+                                            </group>
+                                        </group>
+                                    </group>
+                                </group>
+                            </group>
+                        </group>
+                    </group>
+                </group>
+            </group>
+        </body>
+    </file>
+</xliff>

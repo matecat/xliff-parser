@@ -8,11 +8,12 @@ use DOMNode;
 use Matecat\EmojiParser\Emoji;
 use Matecat\XliffParser\Constants\Placeholder;
 use Matecat\XliffParser\Utils\Strings;
+use OverflowException;
 use Psr\Log\LoggerInterface;
 
 abstract class AbstractXliffParser {
 
-    const MAX_GROUP_RECURSION_LEVEL = 10;
+    const MAX_GROUP_RECURSION_LEVEL = 50;
 
     /**
      * @var LoggerInterface
@@ -67,6 +68,7 @@ abstract class AbstractXliffParser {
      * @param              $j
      * @param array        $contextGroups
      * @param int          $recursionLevel
+     *
      */
     protected function extractTuFromNode( DOMNode $childNode, &$transUnitIdArrayForUniquenessCheck, DOMDocument $dom, &$output, &$i, &$j, $contextGroups = [], $recursionLevel = 0 ) {
 
@@ -93,6 +95,8 @@ abstract class AbstractXliffParser {
 
                     if ( $recursionLevel < self::MAX_GROUP_RECURSION_LEVEL ) {
                         $this->extractTuFromNode( $nestedChildNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j, $contextGroups, $recursionLevel );
+                    } else {
+                        throw new OverflowException( "Maximum tag group nesting level of '" . self::MAX_GROUP_RECURSION_LEVEL . "' reached, aborting!" );
                     }
 
                 } elseif ( $nestedChildNode->nodeName === $this->getTuTagName() ) {
