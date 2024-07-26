@@ -11,6 +11,15 @@
                     <group id="sg5">
                     </group>
                     <group id="sg6">
+                        <trans-unit id="tu26x">
+                            <source xml:lang="en-US">This logo 1</source>
+                            <seg-source>
+                                <mrk mid="0" mtype="seg">This logo 1</mrk>
+                            </seg-source>
+                            <target xml:lang="it-IT">
+                                <mrk mid="0" mtype="seg">This logo 1</mrk>
+                            </target>
+                        </trans-unit>
                     </group>
                     <group id="sg32">
                         <group id="sg33">
