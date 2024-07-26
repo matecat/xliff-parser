@@ -28,6 +28,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer {
             'st',
             'note',
             'context',
+            'context-group'
     ];
 
     public function replaceTranslation() {
@@ -649,7 +650,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer {
             $translation = $segment;
         } else {
             if ( $this->callback instanceof XliffReplacerCallbackInterface ) {
-                $error = (isset($seg['error'])) ? $seg['error'] : null;
+                $error = (!empty($seg['error'])) ? $seg['error'] : null;
                 if ( $this->callback->thereAreErrors( $seg[ 'sid' ], $segment, $translation, $dataRefMap, $error ) ) {
                     $translation = '|||UNTRANSLATED_CONTENT_START|||' . $segment . '|||UNTRANSLATED_CONTENT_END|||';
                 }
