@@ -476,7 +476,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer {
 
                 // only for Xliff 2.*
                 // if segment has no <target> add it BEFORE </segment>
-                if ( $this->xliffVersion === 2 && !$this->targetWasWritten ) {
+                if ( !$this->targetWasWritten ) {
 
                     $seg = $this->getCurrentSegment();
 
