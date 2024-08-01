@@ -188,11 +188,11 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer {
                     $tag .= "$k=\"$this->targetLang\" ";
                 } else {
                     $pos = 0;
-                    if ( $this->currentTransUnitId and isset($this->transUnits[ $this->currentTransUnitId ])) {
+                    if ( $this->currentTransUnitId and isset( $this->transUnits[ $this->currentTransUnitId ] ) ) {
                         $pos = current( $this->transUnits[ $this->currentTransUnitId ] );
                     }
 
-                    if ( $name === $this->tuTagName and isset($this->segments[ $pos ]) and isset($this->segments[ $pos ][ 'sid' ]) ) {
+                    if ( $name === $this->tuTagName and isset( $this->segments[ $pos ] ) and isset( $this->segments[ $pos ][ 'sid' ] ) ) {
 
                         $sid = $this->segments[ $pos ][ 'sid' ];
 
@@ -209,20 +209,21 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer {
                         }
 
                     } elseif ( 'segment' === $name && $this->xliffVersion === 2 ) { // add state to segment in Xliff v2
-                        list( $stateProp, $lastMrkState ) = $this->setTransUnitState( $this->segments[ $pos ], $stateProp, $lastMrkState );
-                    } elseif ( 'target' === $name && $this->xliffVersion === 1 ) { // add state to target in Xliff v1
-                        list( $stateProp, $lastMrkState ) = $this->setTransUnitState( $this->segments[ $pos ], $stateProp, $lastMrkState );
+                        [ $stateProp, $lastMrkState ] = $this->setTransUnitState( $this->segments[ $pos ], $stateProp, $lastMrkState );
                     }
 
-                    //normal tag flux, put attributes in it
-                    $tag .= "$k=\"$v\" ";
-
-                    // replace state for xliff v2
-                    if ( $stateProp ) {
-                        $pattern = '/state=\"(.*)\"/i';
-                        $tag     = preg_replace( $pattern, $stateProp, $tag );
+                    //normal tag flux, put attributes in it but skip for translation state and set the right value for the attribute
+                    if ( $k != 'state' ) {
+                        $tag .= "$k=\"$v\" ";
                     }
+
                 }
+
+            }
+
+            // replace state for xliff v2
+            if ( $stateProp ) {
+                $tag .= $stateProp;
             }
 
             // add oasis xliff 20 namespace
@@ -290,12 +291,10 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer {
         // update segmentPositionInTu
 
         if ( $this->xliffVersion === 1 && $this->inTU && $name === 'source' ) {
-            $asdasdsa = $attr;
             $this->segmentPositionInTu++;
         }
 
         if ( $this->xliffVersion === 2 && $this->inTU && $name === 'segment' ) {
-            $asdasdsa = $attr;
             $this->segmentPositionInTu++;
         }
     }
@@ -383,7 +382,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer {
                         // append $translation
                         $translation = $this->prepareTranslation( $seg, $translation );
 
-                        list( $stateProp, $lastMrkState ) = $this->setTransUnitState( $seg, $stateProp, $lastMrkState );
+                        [ $stateProp, ] = $this->setTransUnitState( $seg, $stateProp, null );
                     } else {
                         foreach ( $listOfSegmentsIds as $pos => $id ) {
 
@@ -436,17 +435,13 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer {
 
                             $lastMrkId = $this->segments[ $id ][ "mrk_id" ];
 
-                            list( $stateProp, $lastMrkState ) = $this->setTransUnitState( $seg, $stateProp, $lastMrkState );
+                            [ $stateProp, $lastMrkState ] = $this->setTransUnitState( $seg, $stateProp, $lastMrkState );
                         }
                     }
 
                     //append translation
-                    $targetLang = '';
-                    if ( $this->xliffVersion === 1 ) {
-                        $targetLang = ' xml:lang="' . $this->targetLang . '"';
-                    }
+                    $tag = $this->createTargetTag( $translation, $stateProp );
 
-                    $tag = $this->buildTranslateTag( $targetLang, $stateProp, $translation, $this->counts[ 'raw_word_count' ], $this->counts[ 'eq_word_count' ] );
                 }
 
                 // signal we are leaving a target
@@ -485,13 +480,16 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer {
 
                     $seg = $this->getCurrentSegment();
 
-                    // copy attr from <source>
-                    $tag = '<target';
-                    foreach ( $this->sourceAttributes as $k => $v ) {
-                        $tag .= " $k=\"$v\"";
+                    if ( isset( $seg[ 'translation' ] ) ) {
+
+                        $translation = $this->prepareTranslation( $seg );
+                        [ $stateProp, ] = $this->setTransUnitState( $seg, '', null );
+
+                        $tag = $this->createTargetTag( $translation, $stateProp );
+
                     }
 
-                    $tag .= '>' . $seg[ 'translation' ] . '</target></segment>';
+                    $tag .= '</segment>';
                 }
 
                 $this->postProcAndFlush( $this->outputFP, $tag );
@@ -504,22 +502,27 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer {
                 // only for Xliff 1.*
                 // handling </trans-unit> closure
                 if ( !$this->targetWasWritten ) {
-                    $seg          = $this->getCurrentSegment();
-                    $lastMrkState = null;
-                    $stateProp    = '';
-                    $tag          = '';
 
-                    // if there is translation available insert <target> BEFORE </trans-unit>
+                    $seg = $this->getCurrentSegment();
+
                     if ( isset( $seg[ 'translation' ] ) ) {
-                        list( $stateProp, $lastMrkState ) = $this->setTransUnitState( $seg, $stateProp, $lastMrkState );
-                        $tag .= $this->createTargetTag( $seg[ 'translation' ], $stateProp );
+                        $translation = $this->prepareTranslation( $seg );
+                        [ $stateProp, ] = $this->setTransUnitState( $seg, '', null );
+
+                        $tag = $this->createTargetTag( $translation, $stateProp );
+
                     }
 
                     $tag .= '</trans-unit>';
+
                     $this->postProcAndFlush( $this->outputFP, $tag );
+
                 } else {
                     $this->postProcAndFlush( $this->outputFP, '</trans-unit>' );
+                    $this->targetWasWritten = false;
                 }
+
+
             } elseif ( $this->bufferIsActive ) { // this is a tag ( <g | <mrk ) inside a seg or seg-source tag
                 $this->CDATABuffer .= "</$name>";
                 // Do NOT Flush
@@ -611,14 +614,14 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer {
     private function updateSegmentCounts( array $seg = [] ) {
 
         $raw_word_count = $seg[ 'raw_word_count' ];
-        $eq_word_count = ( floor( $seg[ 'eq_word_count' ] * 100 ) / 100 );
+        $eq_word_count  = ( floor( $seg[ 'eq_word_count' ] * 100 ) / 100 );
 
 
         $listOfSegmentsIds = $this->transUnits[ $this->currentTransUnitId ];
 
         $this->counts[ 'segments_count_array' ][ $seg[ 'sid' ] ] = [
-            'raw_word_count' => $raw_word_count,
-            'eq_word_count' => $eq_word_count,
+                'raw_word_count' => $raw_word_count,
+                'eq_word_count'  => $eq_word_count,
         ];
 
         $this->counts[ 'raw_word_count' ] += $raw_word_count;
@@ -627,8 +630,8 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer {
 
     private function resetCounts() {
         $this->counts[ 'segments_count_array' ] = [];
-        $this->counts[ 'raw_word_count' ] = 0;
-        $this->counts[ 'eq_word_count' ]  = 0;
+        $this->counts[ 'raw_word_count' ]       = 0;
+        $this->counts[ 'eq_word_count' ]        = 0;
     }
 
     /**
@@ -644,13 +647,13 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer {
 
         $segment     = Strings::removeDangerousChars( $seg [ 'segment' ] );
         $translation = Strings::removeDangerousChars( $seg [ 'translation' ] );
-        $dataRefMap  = ( isset( $seg[ 'data_ref_map' ] ) && $seg[ 'data_ref_map' ] !== null ) ? Strings::jsonToArray( $seg[ 'data_ref_map' ] ) : [];
+        $dataRefMap  = ( isset( $seg[ 'data_ref_map' ] ) ) ? Strings::jsonToArray( $seg[ 'data_ref_map' ] ) : [];
 
-        if ( is_null( $seg [ 'translation' ] ) || $seg [ 'translation' ] == '' ) {
+        if ( $seg [ 'translation' ] == '' ) {
             $translation = $segment;
         } else {
             if ( $this->callback instanceof XliffReplacerCallbackInterface ) {
-                $error = (!empty($seg['error'])) ? $seg['error'] : null;
+                $error = ( !empty( $seg[ 'error' ] ) ) ? $seg[ 'error' ] : null;
                 if ( $this->callback->thereAreErrors( $seg[ 'sid' ], $segment, $translation, $dataRefMap, $error ) ) {
                     $translation = '|||UNTRANSLATED_CONTENT_START|||' . $segment . '|||UNTRANSLATED_CONTENT_END|||';
                 }
@@ -675,32 +678,6 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer {
         return $transUnitTranslation;
     }
 
-    /**
-     * @param $targetLang
-     * @param $stateProp
-     * @param $translation
-     * @param $rawWordCount
-     * @param $eqWordCount
-     *
-     * @return string
-     */
-    private function buildTranslateTag( $targetLang, $stateProp, $translation, $rawWordCount, $eqWordCount ) {
-        switch ( $this->xliffVersion ) {
-            case 1:
-            default:
-                $tag = "<target $targetLang $stateProp>$translation</target>";
-
-                // if it's a Trados file don't append count group
-                if ( get_class( $this ) !== SdlXliffSAXTranslationReplacer::class ) {
-                    $tag .= $this->getWordCountGroup( $rawWordCount, $eqWordCount );
-                }
-
-                return $tag;
-
-            case 2:
-                return "<target>$translation</target>";
-        }
-    }
 
     /**
      * @param $raw_word_count
@@ -728,7 +705,7 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer {
     }
 
     /**
-     * This function create a <target>
+     * This function creates a <target>
      *
      * @param $translation
      * @param $stateProp
@@ -736,9 +713,28 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer {
      * @return string
      */
     private function createTargetTag( $translation, $stateProp ) {
-        $targetLang = 'xml:lang="' . $this->targetLang . '"';
 
-        return $this->buildTranslateTag( $targetLang, $stateProp, $translation, $this->counts[ 'raw_word_count' ], $this->counts[ 'eq_word_count' ] );
+        $targetLang = '';
+        if ( $this->xliffVersion === 1 ) {
+            $targetLang = ' xml:lang="' . $this->targetLang . '"';
+        }
+
+        switch ( $this->xliffVersion ) {
+            case 1:
+            default:
+                $tag = "<target $targetLang $stateProp>$translation</target>";
+
+                // if it's a Trados file don't append count group
+                if ( get_class( $this ) !== SdlXliffSAXTranslationReplacer::class ) {
+                    $tag .= $this->getWordCountGroup( $this->counts[ 'raw_word_count' ], $this->counts[ 'eq_word_count' ] );
+                }
+
+                return $tag;
+
+            case 2:
+                return "<target>$translation</target>";
+        }
+
     }
 
     /**
@@ -754,7 +750,6 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer {
         $id = $this->currentSegmentArray;
 
 
-
         $return = '';
 
         if ( $withMetadataTag === true ) {
@@ -762,14 +757,14 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer {
         }
 
         $index = 0;
-        foreach ($segments_count_array as $segments_count_item){
+        foreach ( $segments_count_array as $segments_count_item ) {
 
-            $id = 'word_count_tu['. $this->currentTransUnitId . '][' . $index.']';
+            $id = 'word_count_tu[' . $this->currentTransUnitId . '][' . $index . ']';
             $index++;
 
             $return .= "    <mda:metaGroup id=\"" . $id . "\" category=\"row_xml_attribute\">
-                                <mda:meta type=\"x-matecat-raw\">". $segments_count_item['raw_word_count']."</mda:meta>
-                                <mda:meta type=\"x-matecat-weighted\">". $segments_count_item['eq_word_count']."</mda:meta>
+                                <mda:meta type=\"x-matecat-raw\">" . $segments_count_item[ 'raw_word_count' ] . "</mda:meta>
+                                <mda:meta type=\"x-matecat-weighted\">" . $segments_count_item[ 'eq_word_count' ] . "</mda:meta>
                             </mda:metaGroup>";
         }
 
@@ -792,15 +787,15 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer {
         switch ( $seg[ 'status' ] ) {
 
             case TranslationStatus::STATUS_FIXED:
+            case TranslationStatus::STATUS_APPROVED2:
+                if ( $lastMrkState == null || $lastMrkState == TranslationStatus::STATUS_APPROVED2 ) {
+                    $state_prop   = "state=\"final\"";
+                    $lastMrkState = TranslationStatus::STATUS_APPROVED2;
+                }
+                break;
             case TranslationStatus::STATUS_APPROVED:
                 if ( $lastMrkState == null || $lastMrkState == TranslationStatus::STATUS_APPROVED ) {
-
-                    if( isset($seg[ 'r2' ]) and $seg[ 'r2' ] == 1 ){
-                        $state_prop   = "state=\"final\"";
-                    } else {
-                        $state_prop   = ( $this->xliffVersion === 2 ) ? "state=\"reviewed\"" : "state=\"signed-off\"";
-                    }
-
+                    $state_prop   = ( $this->xliffVersion === 2 ) ? "state=\"reviewed\"" : "state=\"signed-off\"";
                     $lastMrkState = TranslationStatus::STATUS_APPROVED;
                 }
                 break;
