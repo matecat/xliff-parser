@@ -485,11 +485,13 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer {
                         $translation = $this->prepareTranslation( $seg );
                         [ $stateProp, ] = $this->setTransUnitState( $seg, '', null );
 
+                        // replace the tag
                         $tag = $this->createTargetTag( $translation, $stateProp );
+
+                        $tag .= '</segment>';
 
                     }
 
-                    $tag .= '</segment>';
                 }
 
                 $this->postProcAndFlush( $this->outputFP, $tag );
@@ -509,11 +511,11 @@ class XliffSAXTranslationReplacer extends AbstractXliffReplacer {
                         $translation = $this->prepareTranslation( $seg );
                         [ $stateProp, ] = $this->setTransUnitState( $seg, '', null );
 
+                        // replace the tag
                         $tag = $this->createTargetTag( $translation, $stateProp );
+                        $tag .= '</trans-unit>';
 
                     }
-
-                    $tag .= '</trans-unit>';
 
                     $this->postProcAndFlush( $this->outputFP, $tag );
 
