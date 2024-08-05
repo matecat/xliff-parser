@@ -640,23 +640,7 @@ class XliffReplacerTest extends BaseTest {
      * @test
      */
     public function can_replace_a_xliff_12_with__translate_no() {
-        $data = $this->getData( [
-                [
-                        'sid'            => 1,
-                        'segment'        => 'Tools:Review',
-                        'internal_id'    => '1',
-                        'mrk_id'         => '',
-                        'prev_tags'      => '',
-                        'succ_tags'      => '',
-                        'mrk_prev_tags'  => '',
-                        'mrk_succ_tags'  => '',
-                        'translation'    => 'Tools:Recensione',
-                        'status'         => TranslationStatus::STATUS_APPROVED,
-                        'r2'             => 1,
-                        'eq_word_count'  => 1,
-                        'raw_word_count' => 1,
-                ]
-        ] );
+        $data = $this->getData( [ ] );
 
         $inputFile  = __DIR__ . '/../tests/files/Working_with_the_Review_tool_single_tu.xlf';
         $outputFile = __DIR__ . '/../tests/files/output/Working_with_the_Review_tool_single_tu.xlf';
@@ -667,6 +651,123 @@ class XliffReplacerTest extends BaseTest {
 
         $this->assertEquals( $expected, $output[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ] );
     }
+
+    /**
+     * In this case the replacer must do not replace original target
+     *
+     * @test
+     */
+    public function can_replace_a_xliff_12_with_mrk_and_g() {
+        $data = $this->getData( [
+                [
+                        'sid'            => 1,
+                        'segment'        => '<g id="1"><mrk mid="0" mtype="seg">An English string with g tags</mrk></g>',
+                        'internal_id'    => '251971551065',
+                        'mrk_id'         => '',
+                        'prev_tags'      => '',
+                        'succ_tags'      => '',
+                        'mrk_prev_tags'  => '',
+                        'mrk_succ_tags'  => '',
+                        'translation'    => '<g id="1"><mrk mid="0" mtype="seg">Paperone</mrk></g>',
+                        'status'         => TranslationStatus::STATUS_APPROVED,
+                        'r2'             => 1,
+                        'eq_word_count'  => 3,
+                        'raw_word_count' => 6,
+                ],
+                [
+                        'sid'            => 2,
+                        'segment'        => '<mrk mid="0" mtype="seg">This unit has a comment too</mrk>',
+                        'internal_id'    => '251971551066',
+                        'mrk_id'         => '',
+                        'prev_tags'      => '',
+                        'succ_tags'      => '',
+                        'mrk_prev_tags'  => '',
+                        'mrk_succ_tags'  => '',
+                        'translation'    => '<mrk mid="0" mtype="seg">Paperino</mrk>',
+                        'status'         => TranslationStatus::STATUS_TRANSLATED,
+                        'r2'             => 1,
+                        'eq_word_count'  => 3,
+                        'raw_word_count' => 6,
+                ],
+                [
+                        'sid'            => 3,
+                        'segment'        => '<mrk mid="0" mtype="seg">Source</mrk>',
+                        'internal_id'    => '251971551068',
+                        'mrk_id'         => '0',
+                        'prev_tags'      => '',
+                        'succ_tags'      => '',
+                        'mrk_prev_tags'  => '',
+                        'mrk_succ_tags'  => '',
+                        'translation'    => 'Sorgente',
+                        'status'         => TranslationStatus::STATUS_TRANSLATED,
+                        'eq_word_count'  => 1,
+                        'raw_word_count' => 1,
+                ],
+                [
+                        'sid'            => 4,
+                        'segment'        => '<mrk mid="1" mtype="seg">of</mrk>',
+                        'internal_id'    => '251971551068',
+                        'mrk_id'         => '1',
+                        'prev_tags'      => '',
+                        'succ_tags'      => '',
+                        'mrk_prev_tags'  => '',
+                        'mrk_succ_tags'  => '',
+                        'translation'    => 'di',
+                        'status'         => TranslationStatus::STATUS_APPROVED2,
+                        'eq_word_count'  => 1,
+                        'raw_word_count' => 1,
+                ],
+                [
+                        'sid'            => 5,
+                        'segment'        => '<mrk mid="2" mtype="seg">truth</mrk>',
+                        'internal_id'    => '251971551068',
+                        'mrk_id'         => '2',
+                        'prev_tags'      => '',
+                        'succ_tags'      => '',
+                        'mrk_prev_tags'  => '',
+                        'mrk_succ_tags'  => '',
+                        'translation'    => 'verità',
+                        'status'         => TranslationStatus::STATUS_APPROVED,
+                        'eq_word_count'  => 1,
+                        'raw_word_count' => 1,
+                ],
+                [
+                        'sid'            => 6,
+                        'segment'        => '<mrk mid="0" mtype="seg">An English string</mrk>',
+                        'internal_id'    => '251971551067',
+                        'mrk_id'         => '',
+                        'prev_tags'      => '',
+                        'succ_tags'      => '',
+                        'mrk_prev_tags'  => '',
+                        'mrk_succ_tags'  => '',
+                        'translation'    => '<g id="1"><g id="2"><mrk mid="0" mtype="seg"><ex id="1">Paperoga</ex></mrk></g></g>',
+                        'status'         => TranslationStatus::STATUS_TRANSLATED,
+                        'r2'             => 1,
+                        'eq_word_count'  => 2,
+                        'raw_word_count' => 3,
+                ],
+        ] );
+
+        $inputFile  = __DIR__ . '/../tests/files/file-with-notes-and-no-target-seg-source-with-external-g-tag.xliff';
+        $outputFile = __DIR__ . '/../tests/files/output/file-with-notes-and-no-target-seg-source-with-external-g-tag.xliff';
+
+        ( new XliffParser() )->replaceTranslation( $inputFile, $data[ 'data' ], $data[ 'transUnits' ], 'it-it', $outputFile, false );
+        $output   = ( new XliffParser() )->xliffToArray( file_get_contents( $outputFile ) );
+
+        $expected = '<g id="1"><mrk mid="0" mtype="seg">Paperone</mrk></g>';
+        $this->assertEquals( $expected, $output[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ] );
+
+        $expected = '<mrk mid="0" mtype="seg">Paperino</mrk>';
+        $this->assertEquals( $expected, $output[ 'files' ][ 3 ][ 'trans-units' ][ 2 ][ 'target' ][ 'raw-content' ] );
+
+        $expected = '<mrk mid="0" mtype="seg">Sorgente</mrk><mrk mid="1" mtype="seg">di</mrk><mrk mid="2" mtype="seg">verità</mrk>';
+        $this->assertEquals( $expected, $output[ 'files' ][ 3 ][ 'trans-units' ][ 3 ][ 'target' ][ 'raw-content' ] );
+
+        $expected = '<g id="1"><g id="2"><mrk mid="0" mtype="seg"><ex id="1">Paperoga</ex></mrk></g></g>';
+        $this->assertEquals( $expected, $output[ 'files' ][ 3 ][ 'trans-units' ][ 4 ][ 'target' ][ 'raw-content' ] );
+
+    }
+
 }
 
 class RealXliffReplacerCallback implements XliffReplacerCallbackInterface {

@@ -4,8 +4,8 @@ namespace Matecat\XliffParser\XliffReplacer;
 
 use Matecat\XliffParser\Utils\Strings;
 
-class SdlXliffSAXTranslationReplacer extends XliffSAXTranslationReplacer {
-    protected $markerPos = "";
+class oldSdlOldXliffSAXTranslationReplacer extends oldXliffSAXTranslationReplacer {
+    protected $segmentInUnitPosition = "";
 
     /**
      * @inheritDoc
@@ -20,12 +20,12 @@ class SdlXliffSAXTranslationReplacer extends XliffSAXTranslationReplacer {
             $this->currentTransUnitId = substr( $attr[ 'id' ], 0, 100 );
 
             // current 'translate' attribute of the current trans-unit
-            $this->currentTransUnitTranslate = isset( $attr[ 'translate' ] ) ? $attr[ 'translate' ] : 'yes';
+            $this->currentTransUnitIsTranslatable = isset( $attr[ 'translate' ] ) ? $attr[ 'translate' ] : 'yes';
         }
 
         // check if we are entering into a <target>
         if ( 'target' == $name ) {
-            if ( $this->currentTransUnitTranslate === 'no' ) {
+            if ( $this->currentTransUnitIsTranslatable === 'no' ) {
                 $this->inTarget = false;
             } else {
                 $this->inTarget = true;
@@ -34,7 +34,7 @@ class SdlXliffSAXTranslationReplacer extends XliffSAXTranslationReplacer {
 
         // reset Marker positions
         if ( 'sdl:seg-defs' == $name ) {
-            $this->markerPos = 0;
+            $this->segmentInUnitPosition = 0;
         }
 
         // check if we are inside a <target>, obviously this happen only if there are targets inside the trans-unit
@@ -65,10 +65,10 @@ class SdlXliffSAXTranslationReplacer extends XliffSAXTranslationReplacer {
                     if ( isset( $this->segments[ 'matecat|' . $this->currentTransUnitId ] ) && $_sdlStatus_confWritten === false ) {
 
                         // append definition attribute
-                        $tag .= $this->prepareTargetStatuses( $this->lastTransUnit[ $this->markerPos ] );
+                        $tag .= $this->prepareTargetStatuses( $this->lastTransUnit[ $this->segmentInUnitPosition ] );
 
                         //prepare for an eventual next cycle
-                        $this->markerPos++;
+                        $this->segmentInUnitPosition++;
                         $_sdlStatus_confWritten = true;
                     }
 
