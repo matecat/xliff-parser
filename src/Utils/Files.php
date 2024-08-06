@@ -71,11 +71,11 @@ class Files {
     }
 
     /**
-     * @param string $path
+     * @param string|null $path
      *
      * @return bool
      */
-    public static function isXliff( string $path ): bool {
+    public static function isXliff( ?string $path ): bool {
         $extension = self::getExtension( $path );
 
         if ( !$extension ) {

@@ -224,7 +224,7 @@ class Xliff12 extends AbstractXliffReplacer {
         // init translation and state
         $translation  = '';
         $lastMrkState = null;
-        $stateProp    = null;
+        $stateProp    = '';
 
         // we must reset the lastMrkId found because this is a new segment.
         $lastMrkId = -1;

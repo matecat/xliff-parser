@@ -24,7 +24,7 @@ class XliffProprietaryDetect {
      */
     public static function getInfoFromXliffContent( string $xliffContent ): array {
         self::reset();
-        $tmp = self::getFirst1024CharsFromXliff( $xliffContent, null );
+        $tmp = self::getFirst1024CharsFromXliff( $xliffContent );
 
         return self::getInfoFromTmp( $tmp );
     }
@@ -43,11 +43,11 @@ class XliffProprietaryDetect {
     }
 
     /**
-     * @param array|null $tmp
+     * @param array $tmp
      *
      * @return array
      */
-    private static function getInfoFromTmp( ?array $tmp = [] ): array {
+    private static function getInfoFromTmp( array $tmp ): array {
         try {
             self::checkVersion( $tmp );
         } catch ( Exception $ignore ) {
@@ -93,47 +93,49 @@ class XliffProprietaryDetect {
         ];
     }
 
+    private static function getFirst1024CharsFromString( ?string $stringData ): string {
+        if ( !empty( $stringData ) ) {
+            return substr( $stringData, 0, 1024 );
+        }
+
+        return '';
+    }
+
+    private static function getFirst1024CharsFromFile( string $fullPathToFile ): string {
+        $stringData = '';
+        if ( !empty( $fullPathToFile ) && is_file( $fullPathToFile ) ) {
+            $file_pointer = fopen( "$fullPathToFile", 'r' );
+            // Checking Requirements (By specs, I know that xliff version is in the first 1KB)
+            $stringData = fread( $file_pointer, 1024 );
+            fclose( $file_pointer );
+        }
+
+        return $stringData;
+
+    }
+
     /**
      * @param string|null $stringData
      * @param string|null $fullPathToFile
      *
-     * @return ?array
+     * @return string[]
      */
     private static function getFirst1024CharsFromXliff( ?string $stringData = null, string $fullPathToFile = null ): ?array {
-        if ( !empty( $stringData ) && empty( $fullPathToFile ) ) {
-            $pathInfo   = [];
-            $stringData = substr( $stringData, 0, 1024 );
-        } elseif ( empty( $stringData ) && !empty( $fullPathToFile ) ) {
-            $pathInfo = Files::pathInfo( $fullPathToFile );
-
-            if ( is_file( $fullPathToFile ) ) {
-                $file_pointer = fopen( "$fullPathToFile", 'r' );
-                // Checking Requirements (By specs, I know that xliff version is in the first 1KB)
-                $stringData = fread( $file_pointer, 1024 );
-                fclose( $file_pointer );
-            }
-        } elseif ( !empty( $stringData ) && !empty( $fullPathToFile ) ) {
-            $pathInfo = Files::pathInfo( $fullPathToFile );
+        $stringData = static::getFirst1024CharsFromString( $stringData );
+        if ( empty( $stringData ) ) {
+            $stringData = static::getFirst1024CharsFromFile( $fullPathToFile );
         }
 
-        if ( !empty( $pathInfo ) && !Files::isXliff( $fullPathToFile ) ) {
-            return null;
-        }
-
-        if ( !empty( $stringData ) ) {
-            return [ $stringData ];
-        }
-
-        return null;
+        return !empty( $stringData ) ? [ $stringData ] : [];
     }
 
     /**
-     * @param $tmp
+     * @param array $tmp
      *
      * @throws NotSupportedVersionException
      * @throws NotValidFileException
      */
-    protected static function checkVersion( $tmp ) {
+    protected static function checkVersion( array $tmp ) {
         if ( isset( $tmp[ 0 ] ) ) {
             self::$fileType[ 'version' ] = XliffVersionDetector::detect( $tmp[ 0 ] );
         }
