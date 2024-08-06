@@ -129,26 +129,38 @@ abstract class AbstractXliffReplacer {
             //get length of chunk
             $this->len = strlen( $this->currentBuffer );
 
-            //parse chunk of text
-            if ( !xml_parse( $xmlParser, $this->currentBuffer, feof( $this->originalFP ) ) ) {
-                //if unable, raise an exception
-                throw new RuntimeException( sprintf(
-                        "XML error: %s at line %d",
-                        xml_error_string( xml_get_error_code( $xmlParser ) ),
-                        xml_get_current_line_number( $xmlParser )
-                ) );
-            }
             /*
             * Get the accumulated this->offset in the document:
              * as long as SAX pointer advances, we keep track of total bytes it has seen so far;
              * this way, we can translate its global pointer in an address local to the current buffer of text to retrieve the last char of tag
             */
             $this->offset += $this->len;
+
+            //parse chunk of text
+            $this->runParser( $xmlParser );
+            
         }
 
         // close Sax parser
         $this->closeSaxParser( $xmlParser );
 
+    }
+
+    /**
+     * @param $xmlParser
+     *
+     * @return void
+     */
+    protected function runParser( $xmlParser ) {
+        //parse chunk of text
+        if ( !xml_parse( $xmlParser, $this->currentBuffer, feof( $this->originalFP ) ) ) {
+            //if unable, raise an exception
+            throw new RuntimeException( sprintf(
+                    "XML error: %s at line %d",
+                    xml_error_string( xml_get_error_code( $xmlParser ) ),
+                    xml_get_current_line_number( $xmlParser )
+            ) );
+        }
     }
 
     /**
