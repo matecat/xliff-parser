@@ -173,7 +173,7 @@ class XliffProprietaryDetect {
      *
      * @return bool|int
      */
-    public static function fileMustBeConverted( string $fullPath, ?bool $enforceOnXliff = false, ?string $filterAddress = null ) {
+    public static function fileMustBeConverted( string $fullPath, bool $enforceOnXliff = false, ?string $filterAddress = null ) {
         $convert = true;
 
         $fileType       = self::getInfo( $fullPath );
