@@ -4,6 +4,7 @@ namespace Matecat\XliffParser\XliffParser;
 
 use DOMDocument;
 use DOMElement;
+use Exception;
 use Matecat\XliffParser\Constants\Placeholder;
 use Matecat\XliffParser\Exception\DuplicateTransUnitIdInXliff;
 use Matecat\XliffParser\Exception\NotFoundIdInTransUnit;
@@ -13,9 +14,9 @@ use Matecat\XliffParser\Utils\Strings;
 class XliffParserV2 extends AbstractXliffParser {
     /**
      * @inheritDoc
-     * @throws \Exception
+     * @throws Exception
      */
-    public function parse( DOMDocument $dom, $output = [] ) {
+    public function parse( DOMDocument $dom, ?array $output = [] ): array {
         $i = 1;
         /** @var DOMElement $file */
         foreach ( $dom->getElementsByTagName( 'file' ) as $file ) {
@@ -52,7 +53,7 @@ class XliffParserV2 extends AbstractXliffParser {
      *
      * @return array
      */
-    private function extractMetadata( DOMDocument $dom ) {
+    private function extractMetadata( DOMDocument $dom ): array {
         $metadata = [];
 
         $xliffNode = $dom->getElementsByTagName( 'xliff' )->item( 0 );
@@ -80,9 +81,9 @@ class XliffParserV2 extends AbstractXliffParser {
      * @param DOMElement $file
      *
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
-    private function extractNotes( DOMElement $file ) {
+    private function extractNotes( DOMElement $file ): array {
         $notes = [];
 
         // loop <notes> to get nested <note> tag
@@ -103,17 +104,17 @@ class XliffParserV2 extends AbstractXliffParser {
     /**
      * Extract and populate 'trans-units' array
      *
-     * @param $transUnit
-     * @param $transUnitIdArrayForUniquenessCheck
-     * @param $dom
-     * @param $output
-     * @param $i
-     * @param $j
-     * @param $contextGroups
+     * @param DOMElement  $transUnit
+     * @param array       $transUnitIdArrayForUniquenessCheck
+     * @param DOMDocument $dom
+     * @param array       $output
+     * @param int         $i
+     * @param int         $j
+     * @param array|null  $contextGroups
      *
-     * @throws \Exception
+     * @throws Exception
      */
-    protected function extractTransUnit( DOMElement $transUnit, &$transUnitIdArrayForUniquenessCheck, $dom, &$output, &$i, &$j, $contextGroups = [] ) {
+    protected function extractTransUnit( DOMElement $transUnit, array &$transUnitIdArrayForUniquenessCheck, DomDocument $dom, array &$output, int &$i, int &$j, ?array $contextGroups = [] ) {
         // metadata
         $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'attr' ] = $this->extractTransUnitMetadata( $transUnit, $transUnitIdArrayForUniquenessCheck );
 
@@ -180,11 +181,11 @@ class XliffParserV2 extends AbstractXliffParser {
                             $segSource = $this->extractContentWithMarksAndExtTags( $dom, $childNode );
                         } else {
                             $segSource[] = [
-                                    'attr'             => $this->extractTagAttributes( $segment),
-                                    'mid'              => count( $segSource ) > 0 ? count( $segSource ) : 0,
-                                    'ext-prec-tags'    => '',
-                                    'raw-content'      => $extractedSource[ 'raw-content' ],
-                                    'ext-succ-tags'    => '',
+                                    'attr'          => $this->extractTagAttributes( $segment ),
+                                    'mid'           => count( $segSource ) > 0 ? count( $segSource ) : 0,
+                                    'ext-prec-tags' => '',
+                                    'raw-content'   => $extractedSource[ 'raw-content' ],
+                                    'ext-succ-tags' => '',
                             ];
                         }
                     }
@@ -202,11 +203,11 @@ class XliffParserV2 extends AbstractXliffParser {
                             $segTarget = $this->extractContentWithMarksAndExtTags( $dom, $childNode );
                         } else {
                             $segTarget[] = [
-                                    'attr'             => $this->extractTagAttributes( $segment),
-                                    'mid'              => count( $segTarget ) > 0 ? count( $segTarget ) : 0,
-                                    'ext-prec-tags'    => '',
-                                    'raw-content'      => $extractedTarget[ 'raw-content' ],
-                                    'ext-succ-tags'    => '',
+                                    'attr'          => $this->extractTagAttributes( $segment ),
+                                    'mid'           => count( $segTarget ) > 0 ? count( $segTarget ) : 0,
+                                    'ext-prec-tags' => '',
+                                    'raw-content'   => $extractedTarget[ 'raw-content' ],
+                                    'ext-succ-tags' => '',
                             ];
                         }
                     }
@@ -225,12 +226,12 @@ class XliffParserV2 extends AbstractXliffParser {
     }
 
     /**
-     * @param DOMElement  $transUnit
-     * @param             $transUnitIdArrayForUniquenessCheck
+     * @param DOMElement $transUnit
+     * @param array|null $transUnitIdArrayForUniquenessCheck
      *
      * @return array
      */
-    private function extractTransUnitMetadata( DOMElement $transUnit, &$transUnitIdArrayForUniquenessCheck ) {
+    private function extractTransUnitMetadata( DOMElement $transUnit, ?array &$transUnitIdArrayForUniquenessCheck = [] ): array {
         $metadata = [];
 
         // id
@@ -274,9 +275,9 @@ class XliffParserV2 extends AbstractXliffParser {
      * @param DOMElement $transUnit
      *
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
-    private function extractTransUnitOriginalData( DOMElement $transUnit ) {
+    private function extractTransUnitOriginalData( DOMElement $transUnit ): array {
         $originalData = [];
 
         // loop <originalData> to get nested content
@@ -325,7 +326,7 @@ class XliffParserV2 extends AbstractXliffParser {
      *
      * @return array
      */
-    private function extractTransUnitAdditionalTagData( DOMElement $transUnit ) {
+    private function extractTransUnitAdditionalTagData( DOMElement $transUnit ): array {
         $additionalTagData = [];
 
         // loop <originalData> to get nested content
@@ -393,9 +394,9 @@ class XliffParserV2 extends AbstractXliffParser {
      * @param DOMElement $transUnit
      *
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
-    private function extractTransUnitNotes( DOMElement $transUnit ) {
+    private function extractTransUnitNotes( DOMElement $transUnit ): array {
         $notes = [];
 
         // loop <notes> to get nested <note> tag

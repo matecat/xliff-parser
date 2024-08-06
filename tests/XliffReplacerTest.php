@@ -202,10 +202,11 @@ class XliffReplacerTest extends BaseTest {
         $xliffParser = new XliffParser();
         $xliffParser->replaceTranslation( $inputFile, $data[ 'data' ], $data[ 'transUnits' ], 'sk-SK', $outputFile );
 
-        $output = file_get_contents( $outputFile );
+        // validate XML
+        $xliffParser->xliffToArray( file_get_contents( $outputFile ) );
 
         // check if there is only one <mda:metadata>
-        $this->assertEquals( 1, substr_count( $output, '<mda:metadata>' ) );
+        $this->assertEquals( 1, substr_count( file_get_contents( $outputFile ), '<mda:metadata>' ) );
     }
 
     /**
@@ -640,7 +641,7 @@ class XliffReplacerTest extends BaseTest {
      * @test
      */
     public function can_replace_a_xliff_12_with__translate_no() {
-        $data = $this->getData( [ ] );
+        $data = $this->getData( [] );
 
         $inputFile  = __DIR__ . '/../tests/files/Working_with_the_Review_tool_single_tu.xlf';
         $outputFile = __DIR__ . '/../tests/files/output/Working_with_the_Review_tool_single_tu.xlf';
@@ -752,7 +753,7 @@ class XliffReplacerTest extends BaseTest {
         $outputFile = __DIR__ . '/../tests/files/output/file-with-notes-and-no-target-seg-source-with-external-g-tag.xliff';
 
         ( new XliffParser() )->replaceTranslation( $inputFile, $data[ 'data' ], $data[ 'transUnits' ], 'it-it', $outputFile, false );
-        $output   = ( new XliffParser() )->xliffToArray( file_get_contents( $outputFile ) );
+        $output = ( new XliffParser() )->xliffToArray( file_get_contents( $outputFile ) );
 
         $expected = '<g id="1"><mrk mid="0" mtype="seg">Paperone</mrk></g>';
         $this->assertEquals( $expected, $output[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ] );
@@ -774,7 +775,7 @@ class RealXliffReplacerCallback implements XliffReplacerCallbackInterface {
     /**
      * @inheritDoc
      */
-    public function thereAreErrors( $segmentId, $segment, $translation, array $dataRefMap = [], $error = null ) {
+    public function thereAreErrors( int $segmentId, string $segment, string $translation, ?array $dataRefMap = [], $error = null ): bool {
         return false;
     }
 }
@@ -783,7 +784,7 @@ class DummyXliffReplacerCallback implements XliffReplacerCallbackInterface {
     /**
      * @inheritDoc
      */
-    public function thereAreErrors( $segmentId, $segment, $translation, array $dataRefMap = [], $error = null ) {
+    public function thereAreErrors( int $segmentId, string $segment, string $translation, ?array $dataRefMap = [], $error = null ): bool {
         return false;
     }
 }
@@ -792,7 +793,7 @@ class DummyXliffReplacerCallbackWhichReturnTrue implements XliffReplacerCallback
     /**
      * @inheritDoc
      */
-    public function thereAreErrors( $segmentId, $segment, $translation, array $dataRefMap = [], $error = null ) {
+    public function thereAreErrors( int $segmentId, string $segment, string $translation, ?array $dataRefMap = [], $error = null ): bool {
         return true;
     }
 }

@@ -7,41 +7,43 @@ use RuntimeException;
 
 abstract class AbstractXliffReplacer {
     protected $originalFP;
+    protected $outputFP;                  // output stream pointer
 
-    protected $tuTagName;                 // <trans-unit> (forXliff v 1.*) or <unit> (forXliff v 2.*)
-    protected $inTU                = false;  // flag to check whether we are in a <trans-unit>
-    protected $inTarget            = false;  // flag to check whether we are in a <target>, to ignore everything
-    protected $isEmpty             = false;  // flag to check whether we are in an empty tag (<tag/>)
-    protected $targetWasWritten    = false;  // flag to check is <target> was written in the current unit
-    protected $segmentPositionInTu = -1;  // the current position of segment in the current <unit> (forXliff v 2.*)
+    protected string $tuTagName;                 // <trans-unit> (forXliff v 1.*) or <unit> (forXliff v 2.*)
+    protected bool   $inTU             = false;  // flag to check whether we are in a <trans-unit>
+    protected bool   $inTarget         = false;  // flag to check whether we are in a <target>, to ignore everything
+    protected bool   $isEmpty          = false;  // flag to check whether we are in an empty tag (<tag/>)
+    protected bool   $targetWasWritten = false;  // flag to check is <target> was written in the current unit
+    protected string $CDATABuffer      = "";       // buffer for special tag
+    protected bool   $bufferIsActive   = false;    // buffer for special tag
 
-    protected $CDATABuffer    = "";       // buffer for special tag
-    protected $bufferIsActive = false;    // buffer for special tag
+    protected int $offset = 0;         // offset for SAX pointer
 
-    protected     $offset                = 0;         // offset for SAX pointer
-    protected     $outputFP;                  // output stream pointer
-    protected     $currentBuffer;             // the current piece of text it's been parsed
-    protected     $len;                       // length of the currentBuffer
-    protected     $segments;                  // array of translations
-    protected     $lastTransUnit         = [];
-    protected int $segmentInUnitPosition = 0;
-    protected     $currentTransUnitId;        // id of current <trans-unit>
-    protected     $currentTransUnitIsTranslatable; // 'translate' attribute of current <trans-unit>
-    protected     $unitContainsMda       = false;   // check if <unit> already contains a <mda:metadata> (forXliff v 2.*)
-    protected     $hasWrittenCounts      = false;  // check if <unit> already wrote segment counts (forXliff v 2.*)
+    protected string  $currentBuffer;             // the current piece of text it's been parsed
+    protected int     $len;                       // length of the currentBuffer
+    protected array   $segments;                  // array of translations
+    protected array   $lastTransUnit                  = [];
+    protected int     $segmentInUnitPosition          = 0;
+    protected ?string $currentTransUnitId             = null;        // id of current <trans-unit>
+    protected ?string $currentTransUnitIsTranslatable = null; // 'translate' attribute of current <trans-unit>
+    protected bool    $unitContainsMda                = false;   // check if <unit> already contains a <mda:metadata> (forXliff v 2.*)
+    protected bool    $hasWrittenCounts               = false;  // check if <unit> already wrote segment counts (forXliff v 2.*)
+    protected string  $targetLang;
+    protected bool    $sourceInTarget                 = false;
 
-    protected $targetLang;
+    protected array $nodesToBuffer;
 
-    protected $sourceInTarget;
-
-    protected $transUnits;
+    protected array $transUnits;
 
     /** @var int */
-    protected $xliffVersion;
+    protected int $xliffVersion;
 
-    protected $callback;
+    /**
+     * @var XliffReplacerCallbackInterface|null
+     */
+    protected ?XliffReplacerCallbackInterface $callback;
 
-    protected $logger;
+    protected ?LoggerInterface $logger;
 
     protected static $INTERNAL_TAG_PLACEHOLDER;
 
@@ -64,21 +66,21 @@ abstract class AbstractXliffReplacer {
      * @param XliffReplacerCallbackInterface|null $callback
      */
     public function __construct(
-            $originalXliffPath,
-            $xliffVersion,
-            $segments,
-            $transUnits,
-            $trgLang,
-            $outputFilePath,
-            $setSourceInTarget,
-            LoggerInterface $logger = null,
+            string                         $originalXliffPath,
+            int                            $xliffVersion,
+            array                          $segments,
+            array                          $transUnits,
+            string                         $trgLang,
+            string                         $outputFilePath,
+            bool                           $setSourceInTarget,
+            LoggerInterface                $logger = null,
             XliffReplacerCallbackInterface $callback = null
     ) {
         self::$INTERNAL_TAG_PLACEHOLDER = $this->getInternalTagPlaceholder();
         $this->createOutputFileIfDoesNotExist( $outputFilePath );
         $this->setFileDescriptors( $originalXliffPath, $outputFilePath );
-        $this->xliffVersion = $xliffVersion;
-        $this->setTuTagName();
+        $this->xliffVersion   = $xliffVersion;
+        $this->tuTagName      = ( $this->xliffVersion === 2 ) ? 'unit' : 'trans-unit';
         $this->segments       = $segments;
         $this->targetLang     = $trgLang;
         $this->sourceInTarget = $setSourceInTarget;
@@ -103,19 +105,14 @@ abstract class AbstractXliffReplacer {
             //avoid cutting entities in half:
             //the last fread could have truncated an entity (say, '&lt;' in '&l'), thus invalidating the escaping
             //***** and if there is an & that it is not an entity, this is an infinite loop !!!!!
-
-            $escape_AMP = false;
-
             // 9 is the max length of an entity. So, suppose that the & is at the end of buffer,
             // add 9 Bytes and substitute the entities, if the & is present, and it is not at the end
             //it can't be an entity, exit the loop
-
             while ( true ) {
                 $_ampPos = strpos( $temporary_check_buffer, '&' );
 
                 //check for real entity or escape it to safely exit from the loop!!!
                 if ( $_ampPos === false || strlen( substr( $temporary_check_buffer, $_ampPos ) ) > 9 ) {
-                    $escape_AMP = true;
                     break;
                 }
 
@@ -128,9 +125,7 @@ abstract class AbstractXliffReplacer {
             unset( $temporary_check_buffer );
 
             $this->currentBuffer = preg_replace( "/&(.*?);/", self::$INTERNAL_TAG_PLACEHOLDER . '$1' . self::$INTERNAL_TAG_PLACEHOLDER, $this->currentBuffer );
-            if ( $escape_AMP ) {
-                $this->currentBuffer = str_replace( "&", self::$INTERNAL_TAG_PLACEHOLDER . 'amp' . self::$INTERNAL_TAG_PLACEHOLDER, $this->currentBuffer );
-            }
+            $this->currentBuffer = str_replace( "&", self::$INTERNAL_TAG_PLACEHOLDER . 'amp' . self::$INTERNAL_TAG_PLACEHOLDER, $this->currentBuffer );
 
             //get length of chunk
             $this->len = strlen( $this->currentBuffer );
@@ -144,7 +139,11 @@ abstract class AbstractXliffReplacer {
                         xml_get_current_line_number( $xmlParser )
                 ) );
             }
-            //get accumulated this->offset in document: as long as SAX pointer advances, we keep track of total bytes it has seen so far; this way, we can translate its global pointer in an address local to the current buffer of text to retrieve last char of tag
+            /*
+            * Get the accumulated this->offset in the document:
+             * as long as SAX pointer advances, we keep track of total bytes it has seen so far;
+             * this way, we can translate its global pointer in an address local to the current buffer of text to retrieve the last char of tag
+            */
             $this->offset += $this->len;
         }
 
@@ -153,7 +152,12 @@ abstract class AbstractXliffReplacer {
 
     }
 
-    protected function getLastCharacter( $parser ) {
+    /**
+     * @param resource $parser
+     *
+     * @return string
+     */
+    protected function getLastCharacter( $parser ): string {
 
         //this logic helps detecting empty tags
         //get current position of SAX pointer in all the stream of data is has read so far:
@@ -180,7 +184,7 @@ abstract class AbstractXliffReplacer {
     /**
      * @return string
      */
-    private function getInternalTagPlaceholder() {
+    private function getInternalTagPlaceholder(): string {
         return "§" .
                 substr(
                         str_replace(
@@ -193,7 +197,7 @@ abstract class AbstractXliffReplacer {
                 );
     }
 
-    private function createOutputFileIfDoesNotExist( $outputFilePath ) {
+    private function createOutputFileIfDoesNotExist( string $outputFilePath ) {
         // create output file
         if ( !file_exists( $outputFilePath ) ) {
             touch( $outputFilePath );
@@ -201,10 +205,10 @@ abstract class AbstractXliffReplacer {
     }
 
     /**
-     * @param $originalXliffPath
-     * @param $outputFilePath
+     * @param string $originalXliffPath
+     * @param string $outputFilePath
      */
-    private function setFileDescriptors( $originalXliffPath, $outputFilePath ) {
+    private function setFileDescriptors( string $originalXliffPath, string $outputFilePath ) {
         $this->outputFP = fopen( $outputFilePath, 'w+' );
 
         $streamArgs = null;
@@ -212,14 +216,6 @@ abstract class AbstractXliffReplacer {
         if ( !( $this->originalFP = fopen( $originalXliffPath, "r", false, stream_context_create( $streamArgs ) ) ) ) {
             throw new RuntimeException( "could not open XML input" );
         }
-    }
-
-    /**
-     * set tuTagName
-     * <trans-unit> (xliff v1.*) || <unit> (xliff v2.*)
-     */
-    private function setTuTagName() {
-        $this->tuTagName = ( $this->xliffVersion === 2 ) ? 'unit' : 'trans-unit';
     }
 
     /**
@@ -255,29 +251,29 @@ abstract class AbstractXliffReplacer {
     }
 
     /**
-     * @param $parser
-     * @param $name
-     * @param $attr
+     * @param resource $parser
+     * @param string   $name
+     * @param array    $attr
      *
      * @return mixed
      */
-    abstract protected function tagOpen( $parser, $name, $attr );
+    abstract protected function tagOpen( $parser, string $name, array $attr );
 
     /**
-     * @param $parser
-     * @param $name
+     * @param resource $parser
+     * @param string   $name
      *
      * @return mixed
      */
-    abstract protected function tagClose( $parser, $name );
+    abstract protected function tagClose( $parser, string $name );
 
     /**
-     * @param $parser
-     * @param $data
+     * @param resource $parser
+     * @param string   $data
      *
      * @return mixed
      */
-    protected function characterData( $parser, $data ): void {
+    protected function characterData( $parser, string $data ): void {
         // don't write <target> data
         if ( !$this->inTarget && !$this->bufferIsActive ) {
             $this->postProcAndFlush( $this->outputFP, $data );
@@ -291,9 +287,9 @@ abstract class AbstractXliffReplacer {
      *
      * @param resource $fp
      * @param string   $data
-     * @param bool     $treatAsCDATA
+     * @param ?bool    $treatAsCDATA
      */
-    protected function postProcAndFlush( $fp, $data, $treatAsCDATA = false ) {
+    protected function postProcAndFlush( $fp, string $data, ?bool $treatAsCDATA = false ) {
         //postprocess string
         $data = preg_replace( "/" . self::$INTERNAL_TAG_PLACEHOLDER . '(.*?)' . self::$INTERNAL_TAG_PLACEHOLDER . "/", '&$1;', $data );
         $data = str_replace( '&nbsp;', ' ', $data );
@@ -308,6 +304,12 @@ abstract class AbstractXliffReplacer {
         fwrite( $fp, $data );
     }
 
+    /**
+     * @param string $name
+     * @param array  $attr
+     *
+     * @return void
+     */
     protected function handleOpenUnit( string $name, array $attr ) {
 
         // check if we are entering into a <trans-unit> (xliff v1.*) or <unit> (xliff v2.*)
@@ -324,6 +326,55 @@ abstract class AbstractXliffReplacer {
 
             $this->setLastTransUnitSegments();
 
+        }
+    }
+
+    /**
+     * @param string $name
+     * @param array  $attr
+     * @param string $tag
+     *
+     * @return string
+     */
+    protected function handleOpenXliffTag( string $name, array $attr, string $tag ): string {
+
+        // Add MateCat specific namespace.
+        // Add trgLang
+        if ( $name === 'xliff' ) {
+            if ( !array_key_exists( 'xmlns:mtc', $attr ) ) {
+                $tag .= ' xmlns:mtc="https://www.matecat.com" ';
+            }
+            $tag = preg_replace( '/trgLang="(.*?)"/', 'trgLang="' . $this->targetLang . '"', $tag );
+        }
+
+        return $tag;
+
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return void
+     */
+    protected function checkSetInTarget( string $name ) {
+        // check if we are entering into a <target>
+        if ( 'target' === $name ) {
+            if ( $this->currentTransUnitIsTranslatable === 'no' ) {
+                $this->inTarget = false;
+            } else {
+                $this->inTarget = true;
+            }
+        }
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return void
+     */
+    protected function setInBuffer( string $name ) {
+        if ( in_array( $name, $this->nodesToBuffer ) ) {
+            $this->bufferIsActive = true;
         }
     }
 
@@ -350,7 +401,13 @@ abstract class AbstractXliffReplacer {
         $this->counts[ 'eq_word_count' ]        = 0;
     }
 
-    protected function checkForSelfClosedTagAndFlush( $parser, $tag ) {
+    /**
+     * @param resource $parser
+     * @param string   $tag
+     *
+     * @return void
+     */
+    protected function checkForSelfClosedTagAndFlush( $parser, string $tag ) {
 
         $lastChar = $this->getLastCharacter( $parser );
 

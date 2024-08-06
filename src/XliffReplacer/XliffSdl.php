@@ -16,18 +16,12 @@ class XliffSdl extends Xliff12 {
     /**
      * @inheritDoc
      */
-    protected function tagOpen( $parser, $name, $attr ) {
+    protected function tagOpen( $parser, string $name, array $attr ) {
 
         $this->handleOpenUnit( $name, $attr );
 
         // check if we are entering into a <target>
-        if ( 'target' == $name ) {
-            if ( $this->currentTransUnitIsTranslatable === 'no' ) {
-                $this->inTarget = false;
-            } else {
-                $this->inTarget = true;
-            }
-        }
+        $this->checkSetInTarget( $name );
 
         // reset Marker positions
         if ( 'sdl:seg-defs' == $name ) {
@@ -35,9 +29,7 @@ class XliffSdl extends Xliff12 {
         }
 
         // open buffer
-        if ( in_array( $name, $this->nodesToBuffer ) ) {
-            $this->bufferIsActive = true;
-        }
+        $this->setInBuffer( $name );
 
         // check if we are inside a <target>, obviously this happen only if there are targets inside the trans-unit
         // <target> must be stripped to be replaced, so this check avoids <target> reconstruction
@@ -90,6 +82,7 @@ class XliffSdl extends Xliff12 {
                 'DRAFT'      => 'Draft',
                 'TRANSLATED' => 'Translated',
                 'APPROVED'   => 'ApprovedTranslation',
+                'APPROVED2'  => 'ApprovedSignOff',
                 'REJECTED'   => 'RejectedTranslation',
         ];
 
@@ -98,10 +91,7 @@ class XliffSdl extends Xliff12 {
 
     protected function rebuildMarks( array $seg, string $translation ): string {
 
-        $trailingSpaces = '';
-        for ( $s = 0; $s < Strings::getTheNumberOfTrailingSpaces( $translation ); $s++ ) {
-            $trailingSpaces .= ' ';
-        }
+        $trailingSpaces = str_repeat( ' ', Strings::getTheNumberOfTrailingSpaces( $translation ) );
 
         if ( $seg[ 'mrk_id' ] !== null && $seg[ 'mrk_id' ] != '' ) {
             if ( $this->targetLang === 'ja-JP' ) {

@@ -8,8 +8,8 @@ use Matecat\XliffParser\Exception\NotValidJSONException;
 use SimpleXMLElement;
 
 class Strings {
-    private static $find_xliff_tags_reg = null;
-    private static $htmlEntityRegex     = '/&amp;[#a-zA-Z0-9]{1,20};/u';
+    private static ?string $find_xliff_tags_reg = null;
+    private static string  $htmlEntityRegex     = '/&amp;[#a-zA-Z0-9]{1,20};/u';
 
     /**
      * @param string $testString
@@ -17,18 +17,18 @@ class Strings {
      * @return string
      * @throws Exception
      */
-    public static function cleanCDATA( $testString ) {
+    public static function cleanCDATA( string $testString ): string {
         $cleanXMLContent = new SimpleXMLElement( '<rootNoteNode>' . $testString . '</rootNoteNode>', LIBXML_NOCDATA );
 
         return $cleanXMLContent->__toString();
     }
 
     /**
-     * @param $string
+     * @param string $string
      *
      * @return bool
      */
-    public static function isJSON( $string ) {
+    public static function isJSON( string $string ): bool {
         if ( is_numeric( $string ) ) {
             return false;
         }
@@ -61,21 +61,19 @@ class Strings {
      *
      * @return array
      */
-    public static function jsonToArray( $string ) {
+    public static function jsonToArray( string $string ): array {
         $decodedJSON = json_decode( $string, true );
 
         return ( is_array( $decodedJSON ) ) ? $decodedJSON : [];
     }
 
     /**
-     * @param bool $raise
-     *
      * @return void
      * @throws NotValidJSONException
      */
     private static function raiseLastJsonException() {
 
-        list( $msg, $error ) = self::getLastJsonError();
+        [ $msg, $error ] = self::getLastJsonError();
 
         if ( $error != JSON_ERROR_NONE ) {
             throw new NotValidJSONException( $msg, $error );
@@ -86,7 +84,7 @@ class Strings {
     /**
      * @return array
      */
-    private static function getLastJsonError() {
+    private static function getLastJsonError(): array {
 
         if ( function_exists( "json_last_error" ) ) {
 
@@ -142,7 +140,7 @@ class Strings {
      *
      * @return string
      */
-    public static function fixNonWellFormedXml( $content, $escapeStrings = true ) {
+    public static function fixNonWellFormedXml( string $content, ?bool $escapeStrings = true ): string {
         if ( self::$find_xliff_tags_reg === null ) {
             // Convert the list of tags in a regexp list, for example "g|x|bx|ex"
             $xliffTags           = XliffTags::$tags;
@@ -201,7 +199,7 @@ class Strings {
      *
      * @return string
      */
-    public static function removeDangerousChars( $string ) {
+    public static function removeDangerousChars( $string ): string {
         // clean invalid xml entities ( characters with ascii < 32 and different from 0A, 0D and 09
         $regexpEntity = '/&#x(0[0-8BCEF]|1[\dA-F]|7F);/u';
 
@@ -214,32 +212,14 @@ class Strings {
         return !empty( $string ) || strlen( $string ) > 0 ? $string : "";
     }
 
-    /**
-     * @param string $needle
-     * @param string $haystack
-     *
-     * @return bool
-     */
-    public static function contains( $needle, $haystack ) {
-        return mb_strpos( $haystack, $needle ) !== false;
-    }
 
     /**
      * @param string $string
+     * @param ?bool  $onlyEscapedEntities
      *
      * @return string
      */
-    public static function htmlentities( $string ) {
-        return htmlentities( $string, ENT_NOQUOTES );
-    }
-
-    /**
-     * @param string $string
-     * @param bool   $onlyEscapedEntities
-     *
-     * @return string
-     */
-    public static function htmlspecialchars_decode( $string, $onlyEscapedEntities = false ) {
+    public static function htmlspecialchars_decode( string $string, ?bool $onlyEscapedEntities = false ): string {
         if ( false === $onlyEscapedEntities ) {
             return htmlspecialchars_decode( $string, ENT_NOQUOTES );
         }
@@ -262,17 +242,8 @@ class Strings {
      *
      * @return bool
      */
-    public static function isADoubleEscapedEntity( $str ) {
+    public static function isADoubleEscapedEntity( string $str ): bool {
         return preg_match( self::$htmlEntityRegex, $str ) != 0;
-    }
-
-    /**
-     * @param string $str
-     *
-     * @return bool
-     */
-    public static function isAnEscapedHTML( $str ) {
-        return preg_match( '#/[a-z]*&gt;#i', $str ) != 0;
     }
 
     /**
@@ -295,60 +266,12 @@ class Strings {
     }
 
     /**
-     * Escape ONLY HTML tags
-     *
-     * For example:
-     *
-     * <a href="#">link</a> < text
-     *
-     * is converted to:
-     *
-     * &lt;a href="#"&gt;link&lt;/a&gt; < text
-     *
-     * @param string $string
-     *
-     * @return string
-     */
-    public static function escapeOnlyHTMLTags( $string ) {
-        return preg_replace( '/<(.*?)>/iu', '&lt;$1&gt;', $string );
-    }
-
-    /**
-     * Get the last character of a string
-     *
-     * @param $string
-     *
-     * @return string
-     */
-    public static function lastChar( $string ) {
-        return mb_substr( $string, -1 );
-    }
-
-    /**
      * @param string $segment
      *
      * @return int
      */
-    public static function getTheNumberOfTrailingSpaces( $segment ) {
+    public static function getTheNumberOfTrailingSpaces( $segment ): int {
         return mb_strlen( $segment ) - mb_strlen( rtrim( $segment, ' ' ) );
     }
 
-    /**
-     * @TODO We need to improve this
-     *
-     * @param string $string
-     *
-     * @return bool
-     */
-    public static function isHtmlString( $string ) {
-        $string = stripslashes( $string );
-
-        if ( $string === '<>' ) {
-            return false;
-        }
-
-        preg_match( "#</?[a-zA-Z1-6-]+((\s+[a-zA-Z1-6-]+(\s*=\s*(?:\".*?\"|'.*?'|[^'\">\s]+))?)+\s*|\s*)/?>#", $string, $matches );
-
-        return count( $matches ) !== 0;
-    }
 }

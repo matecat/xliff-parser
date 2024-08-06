@@ -13,12 +13,12 @@ class Files {
      *    'filename'  => PATHINFO_FILENAME
      * ]
      *
-     * @param string $path
-     * @param int    $options
+     * @param string   $path
+     * @param int|null $options
      *
      * @return array|mixed
      */
-    public static function pathInfo( $path, $options = 15 ) {
+    public static function pathInfo( string $path, ?int $options = 15 ) {
         $rawPath = explode( DIRECTORY_SEPARATOR, $path );
 
         $basename = array_pop( $rawPath );
@@ -58,13 +58,13 @@ class Files {
     /**
      * @param $path
      *
-     * @return false|string
+     * @return ?string
      */
-    public static function getExtension( $path ) {
+    public static function getExtension( $path ): ?string {
         $pathInfo = self::pathInfo( $path );
 
         if ( empty( $pathInfo ) ) {
-            return false;
+            return null;
         }
 
         return strtolower( $pathInfo[ 'extension' ] );
@@ -75,7 +75,7 @@ class Files {
      *
      * @return bool
      */
-    public static function isXliff( $path ) {
+    public static function isXliff( string $path ): bool {
         $extension = self::getExtension( $path );
 
         if ( !$extension ) {
@@ -94,11 +94,11 @@ class Files {
     }
 
     /**
-     * @param $path
+     * @param string $path
      *
      * @return bool|string
      */
-    public static function getMemoryFileType( $path ) {
+    public static function getMemoryFileType( string $path ) {
         $pathInfo = self::pathInfo( $path );
 
         if ( empty( $pathInfo ) ) {
@@ -120,7 +120,7 @@ class Files {
      *
      * @return bool
      */
-    public static function isTMXFile( $path ) {
+    public static function isTMXFile( $path ): bool {
         return self::getMemoryFileType( $path ) === 'tmx';
     }
 
@@ -129,7 +129,7 @@ class Files {
      *
      * @return bool
      */
-    public static function isGlossaryFile( $path ) {
+    public static function isGlossaryFile( $path ): bool {
         return self::getMemoryFileType( $path ) === 'glossary';
     }
 }

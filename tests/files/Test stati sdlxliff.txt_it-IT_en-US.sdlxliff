@@ -1,0 +1,549 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns:sdl="http://sdl.com/FileTypes/SdlXliff/1.0" xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2" sdl:version="1.0">
+    <doc-info xmlns="http://sdl.com/FileTypes/SdlXliff/1.0">
+        <rep-defs>
+            <rep-def id="VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE=">
+                <entry tu="c10f7ce7-4ad0-46a1-b069-cbdfe4cfda3f" seg="1"/>
+                <entry tu="767f09d5-b212-49c7-a797-6dce9f8d492a" seg="2"/>
+                <entry tu="295cd705-13d6-4730-87fe-d722907f4000" seg="3"/>
+                <entry tu="71ea9e0a-7059-4011-843b-ddc7cdd46c73" seg="4"/>
+                <entry tu="7dc9762a-c865-4dab-bafe-b2083d49dedf" seg="5"/>
+                <entry tu="9d425f15-409a-4b0b-8e4b-9a22d45974a6" seg="6"/>
+                <entry tu="1a2c5df7-a4b3-4559-886c-e1133241b958" seg="7"/>
+                <entry tu="502066dc-cf97-4beb-b8b3-39379d859e7e" seg="8"/>
+                <entry tu="8af08038-40cf-4e42-aeb5-b86555d3d680" seg="9"/>
+                <entry tu="54262381-4c97-4f1a-a6c1-12b9d2597aaa" seg="10"/>
+                <entry tu="29f78c1e-1ba6-43cf-811f-057cf17675ef" seg="11"/>
+                <entry tu="72d17ee2-7176-40d8-bad1-06e7adedeef1" seg="12"/>
+                <entry tu="919ce74a-5e20-432a-bf68-a1d4f262e34d" seg="13"/>
+                <entry tu="3921444e-53e3-44af-9a82-f00648093e15" seg="14"/>
+                <entry tu="f6c20999-8e98-4e41-be97-2210722a5975" seg="15"/>
+            </rep-def>
+        </rep-defs>
+    </doc-info>
+    <file original="C:\Users\translated\Desktop\Test stati sdlxliff.txt" datatype="x-sdlfilterframework2" source-language="it-IT" target-language="en-US">
+        <header>
+            <file-info xmlns="http://sdl.com/FileTypes/SdlXliff/1.0">
+                <value key="SDL:FileId">82a8a966-6123-4dfa-b219-291a57cbc455</value>
+                <value key="SDL:CreationDate">08/06/2024 12:24:16</value>
+                <value key="SDL:OriginalFilePath">C:\Users\translated\Desktop\Test stati sdlxliff.txt</value>
+                <value key="SDL:OriginalEncoding">us-ascii</value>
+                <value key="SDL:FileTypeDllVersion">1.10.1.0</value>
+                <value key="SDL:AutoClonedFlagSupported">True</value>
+                <value key="HasUtf8Bom">False</value>
+                <value key="LineBreakType">
+                </value>
+                <value key="ParagraphTextDirections"></value>
+                <sniff-info>
+                    <detected-encoding detection-level="Likely" encoding="us-ascii"/>
+                    <detected-source-lang detection-level="Guess" lang="it-IT"/>
+                    <props>
+                        <value key="HasUtf8Bom">False</value>
+                        <value key="LineBreakType">
+                        </value>
+                    </props>
+                </sniff-info>
+            </file-info>
+            <sdl:filetype-info>
+                <sdl:filetype-id>Plain Text v 1.0.0.0</sdl:filetype-id>
+            </sdl:filetype-info>
+            <tag-defs xmlns="http://sdl.com/FileTypes/SdlXliff/1.0">
+                <tag id="0">
+                    <st name="^">^</st>
+                </tag>
+                <tag id="1">
+                    <st name="$">$</st>
+                </tag>
+                <tag id="2">
+                    <st name="^">^</st>
+                </tag>
+                <tag id="3">
+                    <st name="$">$</st>
+                </tag>
+                <tag id="4">
+                    <st name="^">^</st>
+                </tag>
+                <tag id="5">
+                    <st name="$">$</st>
+                </tag>
+                <tag id="6">
+                    <st name="^">^</st>
+                </tag>
+                <tag id="7">
+                    <st name="$">$</st>
+                </tag>
+                <tag id="8">
+                    <st name="^">^</st>
+                </tag>
+                <tag id="9">
+                    <st name="$">$</st>
+                </tag>
+                <tag id="10">
+                    <st name="^">^</st>
+                </tag>
+                <tag id="11">
+                    <st name="$">$</st>
+                </tag>
+                <tag id="12">
+                    <st name="^">^</st>
+                </tag>
+                <tag id="13">
+                    <st name="$">$</st>
+                </tag>
+                <tag id="14">
+                    <st name="^">^</st>
+                </tag>
+                <tag id="15">
+                    <st name="$">$</st>
+                </tag>
+                <tag id="16">
+                    <st name="^">^</st>
+                </tag>
+                <tag id="17">
+                    <st name="$">$</st>
+                </tag>
+                <tag id="18">
+                    <st name="^">^</st>
+                </tag>
+                <tag id="19">
+                    <st name="$">$</st>
+                </tag>
+                <tag id="20">
+                    <st name="^">^</st>
+                </tag>
+                <tag id="21">
+                    <st name="$">$</st>
+                </tag>
+                <tag id="22">
+                    <st name="^">^</st>
+                </tag>
+                <tag id="23">
+                    <st name="$">$</st>
+                </tag>
+                <tag id="24">
+                    <st name="^">^</st>
+                </tag>
+                <tag id="25">
+                    <st name="$">$</st>
+                </tag>
+                <tag id="26">
+                    <st name="^">^</st>
+                </tag>
+                <tag id="27">
+                    <st name="$">$</st>
+                </tag>
+                <tag id="28">
+                    <st name="^">^</st>
+                </tag>
+                <tag id="29">
+                    <st name="$">$</st>
+                </tag>
+            </tag-defs>
+        </header>
+        <body>
+            <trans-unit translate="no" id="69be7286-1d8d-40bb-a731-aaa8c5cc8518">
+                <source>
+                    <x id="0"/>
+                </source>
+            </trans-unit>
+            <trans-unit id="c10f7ce7-4ad0-46a1-b069-cbdfe4cfda3f">
+                <source>Segmento 1</source>
+                <seg-source>
+                    <mrk mtype="seg" mid="1">Segmento 1</mrk>
+                </seg-source>
+                <target>
+                    <mrk mtype="seg" mid="1">Segment 1</mrk>
+                </target>
+                <sdl:seg-defs>
+                    <sdl:seg id="1" origin="interactive">
+                        <sdl:rep id="VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE="/>
+                        <sdl:value key="SegmentIdentityHash">VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE=</sdl:value>
+                        <sdl:value key="created_by">WORKSTATION1\translated</sdl:value>
+                        <sdl:value key="created_on">08/06/2024 10:24:22</sdl:value>
+                        <sdl:value key="last_modified_by">WORKSTATION1\translated</sdl:value>
+                        <sdl:value key="modified_on">08/06/2024 10:26:11</sdl:value>
+                    </sdl:seg>
+                </sdl:seg-defs>
+            </trans-unit>
+            <trans-unit translate="no" id="562e66ff-b802-492b-a326-8c82ee218e30">
+                <source>
+                    <x id="1"/>
+                    <x id="2"/>
+                </source>
+            </trans-unit>
+            <trans-unit id="767f09d5-b212-49c7-a797-6dce9f8d492a">
+                <source>Segmento 2</source>
+                <seg-source>
+                    <mrk mtype="seg" mid="2">Segmento 2</mrk>
+                </seg-source>
+                <target>
+                    <mrk mtype="seg" mid="2">Segment 2</mrk>
+                </target>
+                <sdl:seg-defs>
+                    <sdl:seg id="2" conf="Draft" origin="interactive">
+                        <sdl:rep id="VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE="/>
+                        <sdl:value key="SegmentIdentityHash">VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE=</sdl:value>
+                        <sdl:value key="created_by">WORKSTATION1\translated</sdl:value>
+                        <sdl:value key="created_on">08/06/2024 10:24:26</sdl:value>
+                        <sdl:value key="last_modified_by">WORKSTATION1\translated</sdl:value>
+                        <sdl:value key="modified_on">08/06/2024 10:26:13</sdl:value>
+                    </sdl:seg>
+                </sdl:seg-defs>
+            </trans-unit>
+            <trans-unit translate="no" id="fd14771a-9b39-4f97-abd4-4cda1ce43607">
+                <source>
+                    <x id="3"/>
+                    <x id="4"/>
+                </source>
+            </trans-unit>
+            <trans-unit id="295cd705-13d6-4730-87fe-d722907f4000">
+                <source>Segmento 3</source>
+                <seg-source>
+                    <mrk mtype="seg" mid="3">Segmento 3</mrk>
+                </seg-source>
+                <target>
+                    <mrk mtype="seg" mid="3">Segment 3</mrk>
+                </target>
+                <sdl:seg-defs>
+                    <sdl:seg id="3" conf="Translated" origin="auto-propagated" origin-system="Propagated from segment 2" percent="100">
+                        <sdl:rep id="VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE="/>
+                        <sdl:value key="SegmentIdentityHash">VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE=</sdl:value>
+                        <sdl:value key="last_modified_by">WORKSTATION1\translated</sdl:value>
+                        <sdl:value key="modified_on">08/06/2024 10:26:17</sdl:value>
+                    </sdl:seg>
+                </sdl:seg-defs>
+            </trans-unit>
+            <trans-unit translate="no" id="3b839be2-f7d6-41a9-a4f1-821662c8c9f9">
+                <source>
+                    <x id="5"/>
+                    <x id="6"/>
+                </source>
+            </trans-unit>
+            <trans-unit id="71ea9e0a-7059-4011-843b-ddc7cdd46c73">
+                <source>Segmento 4</source>
+                <seg-source>
+                    <mrk mtype="seg" mid="4">Segmento 4</mrk>
+                </seg-source>
+                <target>
+                    <mrk mtype="seg" mid="4">Segment 4</mrk>
+                </target>
+                <sdl:seg-defs>
+                    <sdl:seg id="4" conf="RejectedTranslation" origin="interactive" percent="100">
+                        <sdl:rep id="VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE="/>
+                        <sdl:prev-origin origin="auto-propagated" origin-system="Propagated from segment 2" percent="100">
+                            <sdl:rep id="VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE="/>
+                            <sdl:prev-origin/>
+                            <sdl:value key="SegmentIdentityHash">VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE=</sdl:value>
+                        </sdl:prev-origin>
+                        <sdl:value key="SegmentIdentityHash">VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE=</sdl:value>
+                        <sdl:value key="last_modified_by">WORKSTATION1\translated</sdl:value>
+                        <sdl:value key="modified_on">08/06/2024 10:26:20</sdl:value>
+                    </sdl:seg>
+                </sdl:seg-defs>
+            </trans-unit>
+            <trans-unit translate="no" id="5c2a2dfd-661f-4d16-a847-a97eb9cfa6c8">
+                <source>
+                    <x id="7"/>
+                    <x id="8"/>
+                </source>
+            </trans-unit>
+            <trans-unit id="7dc9762a-c865-4dab-bafe-b2083d49dedf">
+                <source>Segmento 5</source>
+                <seg-source>
+                    <mrk mtype="seg" mid="5">Segmento 5</mrk>
+                </seg-source>
+                <target>
+                    <mrk mtype="seg" mid="5">Segment 5</mrk>
+                </target>
+                <sdl:seg-defs>
+                    <sdl:seg id="5" conf="ApprovedTranslation" origin="auto-propagated" origin-system="Propagated from segment 2" percent="100">
+                        <sdl:rep id="VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE="/>
+                        <sdl:value key="SegmentIdentityHash">VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE=</sdl:value>
+                        <sdl:value key="last_modified_by">WORKSTATION1\translated</sdl:value>
+                        <sdl:value key="modified_on">08/06/2024 10:26:23</sdl:value>
+                    </sdl:seg>
+                </sdl:seg-defs>
+            </trans-unit>
+            <trans-unit translate="no" id="593737dc-7462-433e-a0ce-d4a15651eb33">
+                <source>
+                    <x id="9"/>
+                    <x id="10"/>
+                </source>
+            </trans-unit>
+            <trans-unit id="9d425f15-409a-4b0b-8e4b-9a22d45974a6">
+                <source>Segmento 6</source>
+                <seg-source>
+                    <mrk mtype="seg" mid="6">Segmento 6</mrk>
+                </seg-source>
+                <target>
+                    <mrk mtype="seg" mid="6">Segment 6</mrk>
+                </target>
+                <sdl:seg-defs>
+                    <sdl:seg id="6" conf="RejectedSignOff" origin="auto-propagated" origin-system="Propagated from segment 2" percent="100">
+                        <sdl:rep id="VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE="/>
+                        <sdl:value key="SegmentIdentityHash">VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE=</sdl:value>
+                        <sdl:value key="last_modified_by">WORKSTATION1\translated</sdl:value>
+                        <sdl:value key="modified_on">08/06/2024 10:26:26</sdl:value>
+                    </sdl:seg>
+                </sdl:seg-defs>
+            </trans-unit>
+            <trans-unit translate="no" id="edec6845-7ffd-40ff-8c49-b8d83493b112">
+                <source>
+                    <x id="11"/>
+                    <x id="12"/>
+                </source>
+            </trans-unit>
+            <trans-unit id="1a2c5df7-a4b3-4559-886c-e1133241b958">
+                <source>Segmento 7</source>
+                <seg-source>
+                    <mrk mtype="seg" mid="7">Segmento 7</mrk>
+                </seg-source>
+                <target>
+                    <mrk mtype="seg" mid="7">Segment 7</mrk>
+                </target>
+                <sdl:seg-defs>
+                    <sdl:seg id="7" conf="ApprovedSignOff" origin="interactive" percent="100">
+                        <sdl:rep id="VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE="/>
+                        <sdl:prev-origin origin="auto-propagated" origin-system="Propagated from segment 2" percent="100">
+                            <sdl:rep id="VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE="/>
+                            <sdl:prev-origin/>
+                            <sdl:value key="SegmentIdentityHash">VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE=</sdl:value>
+                        </sdl:prev-origin>
+                        <sdl:value key="SegmentIdentityHash">VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE=</sdl:value>
+                        <sdl:value key="last_modified_by">WORKSTATION1\translated</sdl:value>
+                        <sdl:value key="modified_on">08/06/2024 10:26:29</sdl:value>
+                    </sdl:seg>
+                </sdl:seg-defs>
+            </trans-unit>
+            <trans-unit translate="no" id="b224f6c8-ea85-4555-b137-1c3ac9381c1d">
+                <source>
+                    <x id="13"/>
+                    <x id="14"/>
+                </source>
+            </trans-unit>
+            <trans-unit id="502066dc-cf97-4beb-b8b3-39379d859e7e">
+                <source>Segmento 8</source>
+                <seg-source>
+                    <mrk mtype="seg" mid="8">Segmento 8</mrk>
+                </seg-source>
+                <target>
+                    <mrk mtype="seg" mid="8"/>
+                </target>
+                <sdl:seg-defs>
+                    <sdl:seg id="8" origin="interactive" percent="100">
+                        <sdl:rep id="VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE="/>
+                        <sdl:prev-origin origin="auto-propagated" origin-system="Propagated from segment 2" percent="100">
+                            <sdl:rep id="VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE="/>
+                            <sdl:prev-origin/>
+                            <sdl:value key="SegmentIdentityHash">VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE=</sdl:value>
+                        </sdl:prev-origin>
+                        <sdl:value key="SegmentIdentityHash">VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE=</sdl:value>
+                        <sdl:value key="last_modified_by">WORKSTATION1\translated</sdl:value>
+                        <sdl:value key="modified_on">08/06/2024 10:26:32</sdl:value>
+                    </sdl:seg>
+                </sdl:seg-defs>
+            </trans-unit>
+            <trans-unit translate="no" id="68f74de0-3fe3-4e0c-ade8-7f9ea42b369c">
+                <source>
+                    <x id="15"/>
+                    <x id="16"/>
+                </source>
+            </trans-unit>
+            <trans-unit id="8af08038-40cf-4e42-aeb5-b86555d3d680">
+                <source>Segmento 9</source>
+                <seg-source>
+                    <mrk mtype="seg" mid="9">Segmento 9</mrk>
+                </seg-source>
+                <target>
+                    <mrk mtype="seg" mid="9"/>
+                </target>
+                <sdl:seg-defs>
+                    <sdl:seg id="9" conf="Draft" origin="interactive" percent="100">
+                        <sdl:rep id="VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE="/>
+                        <sdl:prev-origin origin="auto-propagated" origin-system="Propagated from segment 2" percent="100">
+                            <sdl:rep id="VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE="/>
+                            <sdl:prev-origin/>
+                            <sdl:value key="SegmentIdentityHash">VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE=</sdl:value>
+                        </sdl:prev-origin>
+                        <sdl:value key="SegmentIdentityHash">VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE=</sdl:value>
+                        <sdl:value key="last_modified_by">WORKSTATION1\translated</sdl:value>
+                        <sdl:value key="modified_on">08/06/2024 10:25:48</sdl:value>
+                    </sdl:seg>
+                </sdl:seg-defs>
+            </trans-unit>
+            <trans-unit translate="no" id="371be692-70c8-40a2-84a7-79869f5b5db1">
+                <source>
+                    <x id="17"/>
+                    <x id="18"/>
+                </source>
+            </trans-unit>
+            <trans-unit id="54262381-4c97-4f1a-a6c1-12b9d2597aaa">
+                <source>Segmento 10</source>
+                <seg-source>
+                    <mrk mtype="seg" mid="10">Segmento 10</mrk>
+                </seg-source>
+                <target>
+                    <mrk mtype="seg" mid="10"/>
+                </target>
+                <sdl:seg-defs>
+                    <sdl:seg id="10" conf="Translated" origin="interactive" percent="100">
+                        <sdl:rep id="VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE="/>
+                        <sdl:prev-origin origin="auto-propagated" origin-system="Propagated from segment 2" percent="100">
+                            <sdl:rep id="VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE="/>
+                            <sdl:prev-origin/>
+                            <sdl:value key="SegmentIdentityHash">VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE=</sdl:value>
+                        </sdl:prev-origin>
+                        <sdl:value key="SegmentIdentityHash">VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE=</sdl:value>
+                        <sdl:value key="last_modified_by">WORKSTATION1\translated</sdl:value>
+                        <sdl:value key="modified_on">08/06/2024 10:26:35</sdl:value>
+                    </sdl:seg>
+                </sdl:seg-defs>
+            </trans-unit>
+            <trans-unit translate="no" id="63dbb8d8-3c08-4c24-9e61-1e78d358cc36">
+                <source>
+                    <x id="19"/>
+                    <x id="20"/>
+                </source>
+            </trans-unit>
+            <trans-unit id="29f78c1e-1ba6-43cf-811f-057cf17675ef">
+                <source>Segmento 11</source>
+                <seg-source>
+                    <mrk mtype="seg" mid="11">Segmento 11</mrk>
+                </seg-source>
+                <target>
+                    <mrk mtype="seg" mid="11"/>
+                </target>
+                <sdl:seg-defs>
+                    <sdl:seg id="11" conf="RejectedTranslation" origin="interactive" percent="100">
+                        <sdl:rep id="VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE="/>
+                        <sdl:prev-origin origin="auto-propagated" origin-system="Propagated from segment 2" percent="100">
+                            <sdl:rep id="VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE="/>
+                            <sdl:prev-origin/>
+                            <sdl:value key="SegmentIdentityHash">VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE=</sdl:value>
+                        </sdl:prev-origin>
+                        <sdl:value key="SegmentIdentityHash">VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE=</sdl:value>
+                        <sdl:value key="last_modified_by">WORKSTATION1\translated</sdl:value>
+                        <sdl:value key="modified_on">08/06/2024 10:26:37</sdl:value>
+                    </sdl:seg>
+                </sdl:seg-defs>
+            </trans-unit>
+            <trans-unit translate="no" id="39ad25d5-46d6-4191-8d70-e99a86a6fb99">
+                <source>
+                    <x id="21"/>
+                    <x id="22"/>
+                </source>
+            </trans-unit>
+            <trans-unit id="72d17ee2-7176-40d8-bad1-06e7adedeef1">
+                <source>Segmento 12</source>
+                <seg-source>
+                    <mrk mtype="seg" mid="12">Segmento 12</mrk>
+                </seg-source>
+                <target>
+                    <mrk mtype="seg" mid="12"/>
+                </target>
+                <sdl:seg-defs>
+                    <sdl:seg id="12" conf="ApprovedTranslation" origin="interactive" percent="100">
+                        <sdl:rep id="VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE="/>
+                        <sdl:prev-origin origin="auto-propagated" origin-system="Propagated from segment 2" percent="100">
+                            <sdl:rep id="VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE="/>
+                            <sdl:prev-origin/>
+                            <sdl:value key="SegmentIdentityHash">VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE=</sdl:value>
+                        </sdl:prev-origin>
+                        <sdl:value key="SegmentIdentityHash">VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE=</sdl:value>
+                        <sdl:value key="last_modified_by">WORKSTATION1\translated</sdl:value>
+                        <sdl:value key="modified_on">08/06/2024 10:26:40</sdl:value>
+                    </sdl:seg>
+                </sdl:seg-defs>
+            </trans-unit>
+            <trans-unit translate="no" id="8d01477f-3a61-4205-9634-f6d093e298c1">
+                <source>
+                    <x id="23"/>
+                    <x id="24"/>
+                </source>
+            </trans-unit>
+            <trans-unit id="919ce74a-5e20-432a-bf68-a1d4f262e34d">
+                <source>Segmento 13</source>
+                <seg-source>
+                    <mrk mtype="seg" mid="13">Segmento 13</mrk>
+                </seg-source>
+                <target>
+                    <mrk mtype="seg" mid="13"/>
+                </target>
+                <sdl:seg-defs>
+                    <sdl:seg id="13" conf="RejectedSignOff" origin="interactive" percent="100">
+                        <sdl:rep id="VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE="/>
+                        <sdl:prev-origin origin="auto-propagated" origin-system="Propagated from segment 2" percent="100">
+                            <sdl:rep id="VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE="/>
+                            <sdl:prev-origin/>
+                            <sdl:value key="SegmentIdentityHash">VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE=</sdl:value>
+                        </sdl:prev-origin>
+                        <sdl:value key="SegmentIdentityHash">VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE=</sdl:value>
+                        <sdl:value key="last_modified_by">WORKSTATION1\translated</sdl:value>
+                        <sdl:value key="modified_on">08/06/2024 10:26:42</sdl:value>
+                    </sdl:seg>
+                </sdl:seg-defs>
+            </trans-unit>
+            <trans-unit translate="no" id="239fe39c-17c6-4fab-81bf-6dc6faa3e032">
+                <source>
+                    <x id="25"/>
+                    <x id="26"/>
+                </source>
+            </trans-unit>
+            <trans-unit id="3921444e-53e3-44af-9a82-f00648093e15">
+                <source>Segmento 14</source>
+                <seg-source>
+                    <mrk mtype="seg" mid="14">Segmento 14</mrk>
+                </seg-source>
+                <target>
+                    <mrk mtype="seg" mid="14"/>
+                </target>
+                <sdl:seg-defs>
+                    <sdl:seg id="14" conf="ApprovedSignOff" origin="interactive" percent="100">
+                        <sdl:rep id="VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE="/>
+                        <sdl:prev-origin origin="auto-propagated" origin-system="Propagated from segment 2" percent="100">
+                            <sdl:rep id="VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE="/>
+                            <sdl:prev-origin/>
+                            <sdl:value key="SegmentIdentityHash">VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE=</sdl:value>
+                        </sdl:prev-origin>
+                        <sdl:value key="SegmentIdentityHash">VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE=</sdl:value>
+                        <sdl:value key="last_modified_by">WORKSTATION1\translated</sdl:value>
+                        <sdl:value key="modified_on">08/06/2024 10:26:45</sdl:value>
+                    </sdl:seg>
+                </sdl:seg-defs>
+            </trans-unit>
+            <trans-unit translate="no" id="86d96941-019a-40d8-8d7f-08eac29f33f1">
+                <source>
+                    <x id="27"/>
+                    <x id="28"/>
+                </source>
+            </trans-unit>
+            <trans-unit id="f6c20999-8e98-4e41-be97-2210722a5975">
+                <source>Segmento 15</source>
+                <seg-source>
+                    <mrk mtype="seg" mid="15">Segmento 15</mrk>
+                </seg-source>
+                <target>
+                    <mrk mtype="seg" mid="15"/>
+                </target>
+                <sdl:seg-defs>
+                    <sdl:seg id="15" origin="interactive" percent="100">
+                        <sdl:rep id="VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE="/>
+                        <sdl:prev-origin origin="auto-propagated" origin-system="Propagated from segment 2" percent="100">
+                            <sdl:rep id="VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE="/>
+                            <sdl:prev-origin/>
+                            <sdl:value key="SegmentIdentityHash">VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE=</sdl:value>
+                        </sdl:prev-origin>
+                        <sdl:value key="SegmentIdentityHash">VO0NTRQWHN45XHTfO+UuxleIL8dJqoJxftUiCg9BWRE=</sdl:value>
+                        <sdl:value key="last_modified_by">WORKSTATION1\translated</sdl:value>
+                        <sdl:value key="modified_on">08/06/2024 10:26:48</sdl:value>
+                    </sdl:seg>
+                </sdl:seg-defs>
+            </trans-unit>
+            <trans-unit translate="no" id="05973bcb-b67e-41ac-89b3-eca35f175b1a">
+                <source>
+                    <x id="29"/>
+                </source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

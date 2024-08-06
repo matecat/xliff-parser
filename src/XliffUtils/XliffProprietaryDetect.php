@@ -15,14 +15,14 @@ class XliffProprietaryDetect {
     /**
      * @var array
      */
-    protected static $fileType = [];
+    protected static array $fileType = [];
 
     /**
      * @param string $xliffContent
      *
      * @return array
      */
-    public static function getInfoFromXliffContent( $xliffContent ) {
+    public static function getInfoFromXliffContent( string $xliffContent ): array {
         self::reset();
         $tmp = self::getFirst1024CharsFromXliff( $xliffContent, null );
 
@@ -30,11 +30,11 @@ class XliffProprietaryDetect {
     }
 
     /**
-     * @param $fullPathToFile
+     * @param string $fullPathToFile
      *
      * @return array
      */
-    public static function getInfo( $fullPathToFile ) {
+    public static function getInfo( string $fullPathToFile ): array {
         self::reset();
         $tmp                      = self::getFirst1024CharsFromXliff( null, $fullPathToFile );
         self::$fileType[ 'info' ] = Files::pathInfo( $fullPathToFile );
@@ -43,11 +43,11 @@ class XliffProprietaryDetect {
     }
 
     /**
-     * @param $tmp
+     * @param array|null $tmp
      *
      * @return array
      */
-    private static function getInfoFromTmp( $tmp ) {
+    private static function getInfoFromTmp( ?array $tmp = [] ): array {
         try {
             self::checkVersion( $tmp );
         } catch ( Exception $ignore ) {
@@ -67,11 +67,11 @@ class XliffProprietaryDetect {
     }
 
     /**
-     * @param $tmp
+     * @param array|null $tmp
      *
      * @return array
      */
-    private static function runPipeline( $tmp ) {
+    private static function runPipeline( ?array $tmp = [] ): array {
         $pipeline = new CheckXliffProprietaryPipeline( $tmp );
         $pipeline->addCheck( new CheckSDL() );
         $pipeline->addCheck( new CheckGlobalSight() );
@@ -94,12 +94,12 @@ class XliffProprietaryDetect {
     }
 
     /**
-     * @param string $stringData
-     * @param string $fullPathToFile
+     * @param string|null $stringData
+     * @param string|null $fullPathToFile
      *
-     * @return array|false
+     * @return ?array
      */
-    private static function getFirst1024CharsFromXliff( $stringData = null, $fullPathToFile = null ) {
+    private static function getFirst1024CharsFromXliff( ?string $stringData = null, string $fullPathToFile = null ): ?array {
         if ( !empty( $stringData ) && empty( $fullPathToFile ) ) {
             $pathInfo   = [];
             $stringData = substr( $stringData, 0, 1024 );
@@ -117,14 +117,14 @@ class XliffProprietaryDetect {
         }
 
         if ( !empty( $pathInfo ) && !Files::isXliff( $fullPathToFile ) ) {
-            return false;
+            return null;
         }
 
         if ( !empty( $stringData ) ) {
             return [ $stringData ];
         }
 
-        return false;
+        return null;
     }
 
     /**
@@ -146,7 +146,7 @@ class XliffProprietaryDetect {
      * @throws NotSupportedVersionException
      * @throws NotValidFileException
      */
-    public static function getInfoByStringData( $stringData ) {
+    public static function getInfoByStringData( string $stringData ): array {
         self::reset();
 
         $tmp                      = self::getFirst1024CharsFromXliff( $stringData );
@@ -165,13 +165,13 @@ class XliffProprietaryDetect {
     }
 
     /**
-     * @param string  $fullPath
-     * @param boolean $enforceOnXliff
-     * @param string  $filterAddress
+     * @param string      $fullPath
+     * @param boolean     $enforceOnXliff
+     * @param string|null $filterAddress
      *
      * @return bool|int
      */
-    public static function fileMustBeConverted( $fullPath, $enforceOnXliff = false, $filterAddress = null ) {
+    public static function fileMustBeConverted( string $fullPath, ?bool $enforceOnXliff = false, ?string $filterAddress = null ) {
         $convert = true;
 
         $fileType       = self::getInfo( $fullPath );

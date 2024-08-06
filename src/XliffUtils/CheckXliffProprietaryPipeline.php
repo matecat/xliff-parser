@@ -6,21 +6,21 @@ use Matecat\XliffParser\XliffUtils\CheckPipeline\CheckInterface;
 
 class CheckXliffProprietaryPipeline {
     /**
-     * @var string
+     * @var array|null
      */
-    private $tmp;
+    private ?array $tmp;
 
     /**
-     * @var array
+     * @var array|null
      */
-    private $steps;
+    private ?array $steps;
 
     /**
      * CheckXliffProprietaryPipeline constructor.
      *
-     * @param $tmp
+     * @param array|null $tmp
      */
-    public function __construct( $tmp ) {
+    public function __construct( ?array $tmp = [] ) {
         $this->tmp   = $tmp;
         $this->steps = [];
     }
@@ -35,7 +35,7 @@ class CheckXliffProprietaryPipeline {
     /**
      * @return array
      */
-    public function run() {
+    public function run(): array {
         $fileType = [];
 
         /** @var CheckInterface $step */
@@ -62,7 +62,7 @@ class CheckXliffProprietaryPipeline {
      *
      * @return bool
      */
-    private function isValid( $fileType ) {
+    private function isValid( $fileType ): bool {
         $mandatoryKeys = [
                 'proprietary',
                 'proprietary_name',

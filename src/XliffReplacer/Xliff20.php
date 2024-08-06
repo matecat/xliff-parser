@@ -21,7 +21,7 @@ class Xliff20 extends AbstractXliffReplacer {
     /**
      * @var array
      */
-    private array $nodesToBuffer = [
+    protected array $nodesToBuffer = [
             'source',
             'mda:metadata',
             'memsource:additionalTagData',
@@ -32,7 +32,7 @@ class Xliff20 extends AbstractXliffReplacer {
     /**
      * @inheritDoc
      */
-    protected function tagOpen( $parser, $name, $attr ) {
+    protected function tagOpen( $parser, string $name, array $attr ) {
 
         $this->handleOpenUnit( $name, $attr );
 
@@ -40,20 +40,10 @@ class Xliff20 extends AbstractXliffReplacer {
             $this->unitContainsMda = true;
         }
 
-        // check if we are entering into a <target>
-        if ( 'target' === $name ) {
-
-            if ( $this->currentTransUnitIsTranslatable === 'no' ) {
-                $this->inTarget = false;
-            } else {
-                $this->inTarget = true;
-            }
-        }
+        $this->checkSetInTarget( $name );
 
         // open buffer
-        if ( in_array( $name, $this->nodesToBuffer ) ) {
-            $this->bufferIsActive = true;
-        }
+        $this->setInBuffer( $name );
 
         // check if we are inside a <target>, obviously this happen only if there are targets inside the trans-unit
         // <target> must be stripped to be replaced, so this check avoids <target> reconstruction
@@ -96,27 +86,16 @@ class Xliff20 extends AbstractXliffReplacer {
             $tag .= "<$name ";
 
             foreach ( $attr as $k => $v ) {
-
-                //if tag name is file, we must replace the target-language attribute
-                if ( $name === 'file' && $k === 'target-language' && !empty( $this->targetLang ) ) {
-                    //replace Target language with job language provided from constructor
-                    $tag .= "$k=\"$this->targetLang\" ";
-                } else {
-
-                    //normal tag flux, put attributes in it but skip for translation state and set the right value for the attribute
-                    if ( $k != 'state' ) {
-                        $tag .= "$k=\"$v\" ";
-                    }
-
+                //normal tag flux, put attributes in it but skip for translation state and set the right value for the attribute
+                if ( $k != 'state' ) {
+                    $tag .= "$k=\"$v\" ";
                 }
-
             }
 
             $seg = $this->getCurrentSegment();
 
             if ( $name === $this->tuTagName and !empty( $seg ) and isset( $seg[ 'sid' ] ) ) {
 
-                // add `help-id` to xliff v.1*
                 // add `mtc:segment-id` to xliff v.2*
                 if ( strpos( $tag, 'mtc:segment-id' ) === false ) {
                     $tag .= "mtc:segment-id=\"{$seg[ 'sid' ]}\" ";
@@ -130,21 +109,7 @@ class Xliff20 extends AbstractXliffReplacer {
                 $tag .= $stateProp;
             }
 
-
-            // add oasis xliff 20 namespace
-            if ( $name === 'xliff' && !array_key_exists( 'xmlns:mda', $attr ) ) {
-                $tag .= 'xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0"';
-            }
-
-            // add MateCat specific namespace, we want maybe add non-XLIFF attributes
-            if ( $name === 'xliff' && !array_key_exists( 'xmlns:mtc', $attr ) ) {
-                $tag .= ' xmlns:mtc="https://www.matecat.com" ';
-            }
-
-            // trgLang
-            if ( $name === 'xliff' ) {
-                $tag = preg_replace( '/trgLang="(.*?)"/', 'trgLang="' . $this->targetLang . '"', $tag );
-            }
+            $tag = $this->handleOpenXliffTag( $name, $attr, $tag );
 
             $this->checkForSelfClosedTagAndFlush( $parser, $tag );
 
@@ -153,9 +118,26 @@ class Xliff20 extends AbstractXliffReplacer {
     }
 
     /**
+     * @param string $name
+     * @param array  $attr
+     * @param string $tag
+     *
+     * @return string
+     */
+    protected function handleOpenXliffTag( string $name, array $attr, string $tag ): string {
+        $tag = parent::handleOpenXliffTag( $name, $attr, $tag );
+        // add oasis xliff 20 namespace
+        if ( $name === 'xliff' && !array_key_exists( 'xmlns:mda', $attr ) ) {
+            $tag .= 'xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0"';
+        }
+
+        return $tag;
+    }
+
+    /**
      * @inheritDoc
      */
-    protected function tagClose( $parser, $name ) {
+    protected function tagClose( $parser, string $name ) {
         $tag = '';
 
         /**
@@ -200,6 +182,7 @@ class Xliff20 extends AbstractXliffReplacer {
                 $this->targetWasWritten = true;
                 $this->inTarget         = false;
                 $this->postProcAndFlush( $this->outputFP, $tag, true );
+
             } elseif ( in_array( $name, $this->nodesToBuffer ) ) { // we are closing a critical CDATA section
 
                 $this->bufferIsActive = false;
@@ -269,7 +252,6 @@ class Xliff20 extends AbstractXliffReplacer {
         if ( $this->tuTagName === $name ) {
             $this->currentTransUnitIsTranslatable = null;
             $this->inTU                           = false;
-            $this->segmentPositionInTu            = -1;
             $this->unitContainsMda                = false;
             $this->hasWrittenCounts               = false;
 

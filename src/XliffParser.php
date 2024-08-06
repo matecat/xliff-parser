@@ -21,16 +21,16 @@ use Psr\Log\LoggerInterface;
 
 class XliffParser {
     /**
-     * @var LoggerInterface
+     * @var ?LoggerInterface
      */
-    private $logger;
+    private ?LoggerInterface $logger;
 
     /**
      * XliffParser constructor.
      *
-     * @param LoggerInterface $logger
+     * @param ?LoggerInterface $logger
      */
-    public function __construct( LoggerInterface $logger = null ) {
+    public function __construct( ?LoggerInterface $logger = null ) {
         $this->logger = $logger;
     }
 
@@ -45,7 +45,7 @@ class XliffParser {
      * @param bool                                $setSourceInTarget
      * @param XliffReplacerCallbackInterface|null $callback
      */
-    public function replaceTranslation( $originalXliffPath, &$data, &$transUnits, $targetLang, $outputFile, $setSourceInTarget = false, XliffReplacerCallbackInterface $callback = null ) {
+    public function replaceTranslation( string $originalXliffPath, array $data, array $transUnits, string $targetLang, string $outputFile, bool $setSourceInTarget = false, ?XliffReplacerCallbackInterface $callback = null ) {
         try {
             $parser = XliffReplacerFactory::getInstance( $originalXliffPath, $data, $transUnits, $targetLang, $outputFile, $setSourceInTarget, $this->logger, $callback );
             $parser->replaceTranslation();
@@ -55,7 +55,7 @@ class XliffParser {
     }
 
     /**
-     * Parse a xliff file to array
+     * Parse an xliff file to array
      *
      * @param string $xliffContent
      *
@@ -67,7 +67,7 @@ class XliffParser {
      * @throws InvalidXmlException
      * @throws XmlParsingException
      */
-    public function xliffToArray( $xliffContent, $collapseEmptyTags = false ) {
+    public function xliffToArray( string $xliffContent, ?bool $collapseEmptyTags = false ): array {
         $xliff        = [];
         $xliffContent = self::forceUft8Encoding( $xliffContent, $xliff );
         $xliffVersion = XliffVersionDetector::detect( $xliffContent );
@@ -85,7 +85,7 @@ class XliffParser {
             $xliffContent = self::insertPlaceholderInEmptyTags( $xliffContent );
         }
 
-        $xliffProprietary = isset( $info[ 'proprietary_short_name' ] ) ? $info[ 'proprietary_short_name' ] : null;
+        $xliffProprietary = $info[ 'proprietary_short_name' ] ?? null;
         $parser           = XliffParserFactory::getInstance( $xliffVersion, $xliffProprietary, $this->logger );
 
         $dom = XmlDomLoader::load(
@@ -109,7 +109,7 @@ class XliffParser {
      *
      * @return string
      */
-    private static function forceUft8Encoding( $xliffContent, &$xliff ) {
+    private static function forceUft8Encoding( $xliffContent, &$xliff ): string {
         $enc = mb_detect_encoding( $xliffContent );
 
         if ( $enc !== 'UTF-8' ) {
@@ -159,7 +159,7 @@ class XliffParser {
      *
      * @return array
      */
-    private static function extractBase64( $base64 ) {
+    private static function extractBase64( $base64 ): array {
         return [
                 'form-type' => 'base64',
                 'base64'    => trim( str_replace( 'form="base64">', '', $base64 ) ),
@@ -182,7 +182,7 @@ class XliffParser {
      *
      * @return string
      */
-    private static function escapeDataInOriginalMap( $xliffContent ) {
+    private static function escapeDataInOriginalMap( string $xliffContent ): string {
         $xliffContent = preg_replace_callback( '|<data(.*?)>(.*?)</data>|iU', [ XliffParser::class, 'replaceSpace' ], $xliffContent );
         $xliffContent = preg_replace_callback( '|<data(.*?)>(.*?)</data>|iU', [ XliffParser::class, 'replaceXliffTags' ], $xliffContent );
 
@@ -203,7 +203,7 @@ class XliffParser {
      *
      * @return string
      */
-    private static function insertPlaceholderInEmptyTags( $xliffContent ) {
+    private static function insertPlaceholderInEmptyTags( $xliffContent ): string {
         preg_match_all( '|<([a-zA-Z0-9._-]+)[^>]*></\1>|m', $xliffContent, $emptyTagMatches );
 
         if ( !empty( $emptyTagMatches[ 0 ] ) ) {
@@ -225,7 +225,7 @@ class XliffParser {
      *
      * @return string
      */
-    private static function replaceSpace( $matches ) {
+    private static function replaceSpace( array $matches ): string {
         $content = str_replace( ' ', Placeholder::WHITE_SPACE_PLACEHOLDER, $matches[ 2 ] );
         $content = str_replace( '\n', Placeholder::NEW_LINE_PLACEHOLDER, $content );
         $content = str_replace( '\t', Placeholder::TAB_PLACEHOLDER, $content );
@@ -234,11 +234,11 @@ class XliffParser {
     }
 
     /**
-     * @param $matches
+     * @param array $matches
      *
      * @return string
      */
-    private static function replaceXliffTags( $matches ) {
+    private static function replaceXliffTags( array $matches ): string {
         $xliffTags = XliffTags::$tags;
         $content   = $matches[ 2 ];
 

@@ -4,11 +4,11 @@ namespace Matecat\XliffParser\XliffUtils\CheckPipeline;
 
 class CheckXliffVersion2 implements CheckInterface {
     /**
-     * @param string $tmp
+     * @param array|null $tmp
      *
-     * @return array|void|null
+     * @return array|null
      */
-    public function check( $tmp ) {
+    public function check( ?array $tmp = [] ): ?array {
         $fileType = [];
 
         if ( isset( $tmp[ 0 ] ) ) {
@@ -29,5 +29,7 @@ class CheckXliffVersion2 implements CheckInterface {
                 }
             }
         }
+
+        return null;
     }
 }

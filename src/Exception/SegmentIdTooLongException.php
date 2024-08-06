@@ -2,5 +2,7 @@
 
 namespace Matecat\XliffParser\Exception;
 
-class SegmentIdTooLongException extends \DomainException {
+use DomainException;
+
+class SegmentIdTooLongException extends DomainException {
 }

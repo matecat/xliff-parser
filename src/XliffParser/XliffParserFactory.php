@@ -12,7 +12,7 @@ class XliffParserFactory {
      *
      * @return AbstractXliffParser
      */
-    public static function getInstance( $xliffVersion, $xliffProprietary = null, LoggerInterface $logger = null ) {
+    public static function getInstance( int $xliffVersion, ?string $xliffProprietary = null, LoggerInterface $logger = null ): AbstractXliffParser {
         $parserClass = 'Matecat\\XliffParser\\XliffParser\\XliffParserV' . $xliffVersion;
 
         /** @var AbstractXliffParser $parser */

@@ -16,7 +16,7 @@ class XliffParserV1 extends AbstractXliffParser {
      * @inheritDoc
      * @throws Exception
      */
-    public function parse( DOMDocument $dom, $output = [] ) {
+    public function parse( DOMDocument $dom, ?array $output = [] ): array {
         $i = 1;
         /** @var DOMElement $file */
         foreach ( $dom->getElementsByTagName( 'file' ) as $file ) {
@@ -58,7 +58,7 @@ class XliffParserV1 extends AbstractXliffParser {
      *
      * @return array
      */
-    private function extractMetadata( DOMElement $file ) {
+    private function extractMetadata( DOMElement $file ): array {
         $metadata   = [];
         $customAttr = [];
 
@@ -113,7 +113,7 @@ class XliffParserV1 extends AbstractXliffParser {
      *
      * @return array
      */
-    private function extractReference( DOMElement $file ) {
+    private function extractReference( DOMElement $file ): array {
         $reference = [];
 
         $order = 0;
@@ -134,17 +134,17 @@ class XliffParserV1 extends AbstractXliffParser {
     /**
      * Extract and populate 'trans-units' array
      *
-     * @param $transUnit
-     * @param $transUnitIdArrayForUniquenessCheck
-     * @param $dom
-     * @param $output
-     * @param $i
-     * @param $j
-     * @param $contextGroups
+     * @param DOMElement  $transUnit
+     * @param array       $transUnitIdArrayForUniquenessCheck
+     * @param DOMDocument $dom
+     * @param array       $output
+     * @param int         $i
+     * @param int         $j
+     * @param array|null  $contextGroups
      *
      * @throws Exception
      */
-    protected function extractTransUnit( DOMElement $transUnit, &$transUnitIdArrayForUniquenessCheck, $dom, &$output, &$i, &$j, $contextGroups = [] ) {
+    protected function extractTransUnit( DOMElement $transUnit, array &$transUnitIdArrayForUniquenessCheck, DomDocument $dom, array &$output, int &$i, int &$j, ?array $contextGroups = [] ) {
         // metadata
         $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'attr' ] = $this->extractTransUnitMetadata( $transUnit, $transUnitIdArrayForUniquenessCheck );
 
@@ -172,9 +172,9 @@ class XliffParserV1 extends AbstractXliffParser {
                 // seg-target
                 $targetRawContent = @$output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'target' ][ 'raw-content' ];
                 $segSource        = @$output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'seg-source' ];
-                if ( isset( $targetRawContent ) && !empty( $targetRawContent ) && isset( $segSource ) && count( $segSource ) > 0 ) {
-                    $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'seg-target' ] = $this->extractContentWithMarksAndExtTags( $dom, $childNode );
-                    $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'seg-target' ][ 0 ]['attr'] = $this->extractTagAttributes($childNode);
+                if ( !empty( $targetRawContent ) && isset( $segSource ) && count( $segSource ) > 0 ) {
+                    $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'seg-target' ]                = $this->extractContentWithMarksAndExtTags( $dom, $childNode );
+                    $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'seg-target' ][ 0 ][ 'attr' ] = $this->extractTagAttributes( $childNode );
                 }
             }
 
@@ -185,8 +185,8 @@ class XliffParserV1 extends AbstractXliffParser {
         }
 
         // context-group
-        if(!empty($contextGroups)){
-            foreach ($contextGroups as $contextGroup){
+        if ( !empty( $contextGroups ) ) {
+            foreach ( $contextGroups as $contextGroup ) {
                 $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'context-group' ][] = $this->extractTransUnitContextGroup( $dom, $contextGroup );
             }
         }
@@ -210,7 +210,7 @@ class XliffParserV1 extends AbstractXliffParser {
      * @return array
      * @throws Exception
      */
-    private function extractTransUnitMetadata( DOMElement $transUnit, array &$transUnitIdArrayForUniquenessCheck ) {
+    private function extractTransUnitMetadata( DOMElement $transUnit, array &$transUnitIdArrayForUniquenessCheck ): array {
         $metadata = [];
 
         // id MUST NOT be null
@@ -253,12 +253,13 @@ class XliffParserV1 extends AbstractXliffParser {
     }
 
     /**
-     * @param DOMElement $transUnit
+     * @param DOMDocument $dom
+     * @param DOMElement  $transUnit
      *
      * @return array
      * @throws Exception
      */
-    private function extractTransUnitNotes( DOMDocument $dom, DOMElement $transUnit ) {
+    private function extractTransUnitNotes( DOMDocument $dom, DOMElement $transUnit ): array {
         $notes = [];
         foreach ( $transUnit->getElementsByTagName( 'note' ) as $note ) {
 
@@ -281,11 +282,12 @@ class XliffParserV1 extends AbstractXliffParser {
     }
 
     /**
-     * @param DOMElement $contextGroup
+     * @param DOMDocument $dom
+     * @param DOMElement  $contextGroup
      *
      * @return array
      */
-    private function extractTransUnitContextGroup( DOMDocument $dom, DOMElement $contextGroup ) {
+    private function extractTransUnitContextGroup( DOMDocument $dom, DOMElement $contextGroup ): array {
         $cg           = [];
         $cg[ 'attr' ] = $this->extractTagAttributes( $contextGroup );
 

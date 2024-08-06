@@ -2,5 +2,7 @@
 
 namespace Matecat\XliffParser\Exception;
 
-class NotValidFileException extends \Exception {
+use Exception;
+
+class NotValidFileException extends Exception {
 }

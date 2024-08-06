@@ -4,9 +4,9 @@ namespace Matecat\XliffParser\XliffUtils\CheckPipeline;
 
 interface CheckInterface {
     /**
-     * @param string $tmp
+     * @param array|null $tmp
      *
      * @return array|null
      */
-    public function check( $tmp );
+    public function check( ?array $tmp = [] ): ?array;
 }

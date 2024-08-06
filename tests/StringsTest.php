@@ -19,15 +19,15 @@ class StringsTest extends BaseTest {
         $h = '<trans-unit id="pendo-image-e3aaf7b7|alt">';
         $i = '<meta http-equiv="X-UA-Compatible" content="ie=edge"/>';
 
-        $this->assertTrue( Strings::isHtmlString( $a ) );
-        $this->assertFalse( Strings::isHtmlString( $b ) );
-        $this->assertFalse( Strings::isHtmlString( $c ) );
-        $this->assertTrue( Strings::isHtmlString( $d ) );
-        $this->assertTrue( Strings::isHtmlString( $e ) );
-        $this->assertTrue( Strings::isHtmlString( $f ) );
-        $this->assertTrue( Strings::isHtmlString( $g ) );
-        $this->assertTrue( Strings::isHtmlString( $h ) );
-        $this->assertTrue( Strings::isHtmlString( $i ) );
+        $this->assertTrue( StringUtilsTestHelper::isHtmlString( $a ) );
+        $this->assertFalse( StringUtilsTestHelper::isHtmlString( $b ) );
+        $this->assertFalse( StringUtilsTestHelper::isHtmlString( $c ) );
+        $this->assertTrue( StringUtilsTestHelper::isHtmlString( $d ) );
+        $this->assertTrue( StringUtilsTestHelper::isHtmlString( $e ) );
+        $this->assertTrue( StringUtilsTestHelper::isHtmlString( $f ) );
+        $this->assertTrue( StringUtilsTestHelper::isHtmlString( $g ) );
+        $this->assertTrue( StringUtilsTestHelper::isHtmlString( $h ) );
+        $this->assertTrue( StringUtilsTestHelper::isHtmlString( $i ) );
     }
 
     /**
@@ -36,11 +36,11 @@ class StringsTest extends BaseTest {
     public function can_get_the_last_character() {
         $phrase = 'Si presenta con una nuance rubino intensa e compatta dai luminosi riflessi viola.';
 
-        $this->assertEquals( '.', Strings::lastChar( $phrase ) );
+        $this->assertEquals( '.', StringUtilsTestHelper::lastChar( $phrase ) );
 
         $phrase = 'Si presenta con una nuance rubino intensa e compatta dai luminosi riflessi viola. ';
 
-        $this->assertEquals( ' ', Strings::lastChar( $phrase ) );
+        $this->assertEquals( ' ', StringUtilsTestHelper::lastChar( $phrase ) );
     }
 
     /**
@@ -51,12 +51,12 @@ class StringsTest extends BaseTest {
         $full   = 'Il naso evidenzia raffinati sentori floreali di rosa canina e violetta, frutti rossi croccanti tipo ribes e fragole di bosco, dopo i quali emergono cenni gentili di grafite e liquirizia. Si presenta con una nuance rubino intensa e compatta dai luminosi riflessi viola. ';
         $phrase = 'Si presenta con una nuance rubino intensa e compatta dai luminosi riflessi viola. ';
 
-        $this->assertTrue( Strings::contains( $phrase, $full ) );
+        $this->assertTrue( StringUtilsTestHelper::contains( $phrase, $full ) );
 
         $full   = 'Il naso evidenzia raffinati sentori floreali di rosa canina e violetta, frutti rossi croccanti tipo ribes e fragole di bosco, dopo i quali emergono cenni gentili di grafite e liquirizia. Si presenta con una nuance rubino intensa e compatta dai luminosi riflessi viola.';
         $phrase = 'Si presenta con una nuance rubino intensa e compatta dai luminosi riflessi viola. ';
 
-        $this->assertFalse( Strings::contains( $phrase, $full ) );
+        $this->assertFalse( StringUtilsTestHelper::contains( $phrase, $full ) );
     }
 
     /**
@@ -98,7 +98,7 @@ class StringsTest extends BaseTest {
         ];
 
         foreach ( $strings as $string ) {
-            $this->assertTrue( Strings::isAnEscapedHTML( $string ) );
+            $this->assertTrue( StringUtilsTestHelper::isAnEscapedHTML( $string ) );
         }
 
         $strings = [
@@ -107,7 +107,7 @@ class StringsTest extends BaseTest {
         ];
 
         foreach ( $strings as $string ) {
-            $this->assertFalse( Strings::isAnEscapedHTML( $string ) );
+            $this->assertFalse( StringUtilsTestHelper::isAnEscapedHTML( $string ) );
         }
     }
 
@@ -117,11 +117,11 @@ class StringsTest extends BaseTest {
     public function can_detect_escaped_html_additional_test() {
         $string = '<5 &lt;pc id="1"/&gt;';
 
-        $this->assertTrue( Strings::isAnEscapedHTML( $string ) );
+        $this->assertTrue( StringUtilsTestHelper::isAnEscapedHTML( $string ) );
 
         $string = '&lt;5 <pc id="1"/>';
 
-        $this->assertFalse( Strings::isAnEscapedHTML( $string ) );
+        $this->assertFalse( StringUtilsTestHelper::isAnEscapedHTML( $string ) );
     }
 
     /**

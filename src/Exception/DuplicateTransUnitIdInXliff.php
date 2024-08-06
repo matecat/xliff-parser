@@ -2,5 +2,7 @@
 
 namespace Matecat\XliffParser\Exception;
 
-class DuplicateTransUnitIdInXliff extends \DomainException {
+use DomainException;
+
+class DuplicateTransUnitIdInXliff extends DomainException {
 }

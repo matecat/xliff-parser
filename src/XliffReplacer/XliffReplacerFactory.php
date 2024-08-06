@@ -25,9 +25,9 @@ class XliffReplacerFactory {
             string                         $targetLang,
             string                         $outputFilePath,
             bool                           $setSourceInTarget,
-            LoggerInterface                $logger = null,
-            XliffReplacerCallbackInterface $callback = null
-    ) {
+            ?LoggerInterface                $logger = null,
+            ?XliffReplacerCallbackInterface $callback = null
+    ): AbstractXliffReplacer {
         $info = XliffProprietaryDetect::getInfo( $originalXliffPath );
 
         if ( $info[ 'version' ] == 1 && $info[ 'proprietary_short_name' ] !== 'trados' ) {

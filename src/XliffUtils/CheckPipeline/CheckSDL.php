@@ -3,7 +3,12 @@
 namespace Matecat\XliffParser\XliffUtils\CheckPipeline;
 
 class CheckSDL implements CheckInterface {
-    public function check( $tmp ) {
+    /**
+     * @param array|null $tmp
+     *
+     * @return array|null
+     */
+    public function check( ?array $tmp = [] ): ?array {
         $fileType = [];
 
         if ( isset( $tmp[ 0 ] ) ) {
@@ -17,5 +22,7 @@ class CheckSDL implements CheckInterface {
                 return $fileType;
             }
         }
+
+        return null;
     }
 }

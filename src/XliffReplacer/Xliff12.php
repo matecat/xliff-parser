@@ -27,24 +27,14 @@ class Xliff12 extends AbstractXliffReplacer {
     /**
      * @inheritDoc
      */
-    protected function tagOpen( $parser, $name, $attr ) {
+    protected function tagOpen( $parser, string $name, array $attr ) {
 
         $this->handleOpenUnit( $name, $attr );
 
-        // check if we are entering into a <target>
-        if ( 'target' === $name ) {
-
-            if ( $this->currentTransUnitIsTranslatable === 'no' ) {
-                $this->inTarget = false;
-            } else {
-                $this->inTarget = true;
-            }
-        }
+        $this->checkSetInTarget( $name );
 
         // open buffer
-        if ( in_array( $name, $this->nodesToBuffer ) ) {
-            $this->bufferIsActive = true;
-        }
+        $this->setInBuffer( $name );
 
         // check if we are inside a <target>, obviously this happen only if there are targets inside the trans-unit
         // <target> must be stripped to be replaced, so this check avoids <target> reconstruction
@@ -71,6 +61,7 @@ class Xliff12 extends AbstractXliffReplacer {
 
             if ( $name === $this->tuTagName && !empty( $seg ) and isset( $seg[ 'sid' ] ) ) {
 
+                // add `help-id` to xliff v.1*
                 if ( strpos( $tag, 'help-id' ) === false ) {
                     if ( !empty( $seg[ 'sid' ] ) ) {
                         $tag .= "help-id=\"{$seg[ 'sid' ]}\" ";
@@ -79,14 +70,7 @@ class Xliff12 extends AbstractXliffReplacer {
 
             }
 
-            // Add MateCat specific namespace.
-            // Add trgLang
-            if ( $name === 'xliff' ) {
-                if ( !array_key_exists( 'xmlns:mtc', $attr ) ) {
-                    $tag .= ' xmlns:mtc="https://www.matecat.com" ';
-                }
-                $tag = preg_replace( '/trgLang="(.*?)"/', 'trgLang="' . $this->targetLang . '"', $tag );
-            }
+            $tag = $this->handleOpenXliffTag( $name, $attr, $tag );
 
             $this->checkForSelfClosedTagAndFlush( $parser, $tag );
 
@@ -98,7 +82,7 @@ class Xliff12 extends AbstractXliffReplacer {
     /**
      * @inheritDoc
      */
-    protected function tagClose( $parser, $name ) {
+    protected function tagClose( $parser, string $name ) {
         $tag = '';
 
         /**
@@ -211,10 +195,6 @@ class Xliff12 extends AbstractXliffReplacer {
     protected function rebuildMarks( array $seg, string $translation ): string {
 
         if ( $seg[ 'mrk_id' ] !== null && $seg[ 'mrk_id' ] != '' ) {
-            if ( $this->targetLang === 'ja-JP' ) {
-                $seg[ 'mrk_succ_tags' ] = ltrim( $seg[ 'mrk_succ_tags' ] );
-            }
-
             $translation = "<mrk mid=\"" . $seg[ 'mrk_id' ] . "\" mtype=\"seg\">" . $seg[ 'mrk_prev_tags' ] . $translation . $seg[ 'mrk_succ_tags' ] . "</mrk>";
         }
 

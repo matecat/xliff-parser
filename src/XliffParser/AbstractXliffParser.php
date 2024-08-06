@@ -5,6 +5,7 @@ namespace Matecat\XliffParser\XliffParser;
 use DOMDocument;
 use DOMElement;
 use DOMNode;
+use Exception;
 use Matecat\EmojiParser\Emoji;
 use Matecat\XliffParser\Constants\Placeholder;
 use Matecat\XliffParser\Utils\Strings;
@@ -16,14 +17,14 @@ abstract class AbstractXliffParser {
     const MAX_GROUP_RECURSION_LEVEL = 50;
 
     /**
-     * @var LoggerInterface
+     * @var LoggerInterface|null
      */
-    protected $logger;
+    protected ?LoggerInterface $logger;
 
     /**
      * @var string|null
      */
-    protected $xliffProprietary;
+    protected ?string $xliffProprietary;
 
     /**
      * @var int
@@ -37,7 +38,7 @@ abstract class AbstractXliffParser {
      * @param string|null          $xliffProprietary
      * @param LoggerInterface|null $logger
      */
-    public function __construct( $xliffVersion, $xliffProprietary = null, LoggerInterface $logger = null ) {
+    public function __construct( int $xliffVersion, ?string $xliffProprietary = null, LoggerInterface $logger = null ) {
         $this->xliffVersion     = $xliffVersion;
         $this->logger           = $logger;
         $this->xliffProprietary = $xliffProprietary;
@@ -46,31 +47,31 @@ abstract class AbstractXliffParser {
     /**
      * @return string
      */
-    protected function getTuTagName() {
+    protected function getTuTagName(): string {
         return ( $this->xliffVersion === 1 ) ? 'trans-unit' : 'unit';
     }
 
     /**
      * @param DOMDocument $dom
+     * @param array|null  $output
      *
      * @return array
      */
-    abstract public function parse( DOMDocument $dom, $output = [] );
+    abstract public function parse( DOMDocument $dom, ?array $output = [] ): array;
 
     /**
      * Extract trans-unit content from the current node
      *
-     * @param DOMElement   $childNode
-     * @param              $transUnitIdArrayForUniquenessCheck
-     * @param DOMDocument  $dom
-     * @param              $output
-     * @param              $i
-     * @param              $j
-     * @param array        $contextGroups
-     * @param int          $recursionLevel
-     *
+     * @param DOMElement  $childNode
+     * @param array       $transUnitIdArrayForUniquenessCheck
+     * @param DOMDocument $dom
+     * @param array       $output
+     * @param int         $i
+     * @param int         $j
+     * @param array|null  $contextGroups
+     * @param int|null    $recursionLevel
      */
-    protected function extractTuFromNode( DOMNode $childNode, &$transUnitIdArrayForUniquenessCheck, DOMDocument $dom, &$output, &$i, &$j, $contextGroups = [], $recursionLevel = 0 ) {
+    protected function extractTuFromNode( DOMNode $childNode, array &$transUnitIdArrayForUniquenessCheck, DOMDocument $dom, array &$output, int &$i, int &$j, ?array $contextGroups = [], ?int $recursionLevel = 0 ) {
 
         if ( $childNode->nodeType != XML_ELEMENT_NODE ) {
             return;
@@ -111,17 +112,17 @@ abstract class AbstractXliffParser {
     /**
      * Extract and populate 'trans-units' array
      *
-     * @param $transUnit
-     * @param $transUnitIdArrayForUniquenessCheck
-     * @param $dom
-     * @param $output
-     * @param $i
-     * @param $j
-     * @param $contextGroups
+     * @param DOMElement  $transUnit
+     * @param array       $transUnitIdArrayForUniquenessCheck
+     * @param DOMDocument $dom
+     * @param array       $output
+     * @param int         $i
+     * @param int         $j
+     * @param array|null  $contextGroups
      *
      * @return mixed
      */
-    abstract protected function extractTransUnit( DOMElement $transUnit, &$transUnitIdArrayForUniquenessCheck, $dom, &$output, &$i, &$j, $contextGroups = [] );
+    abstract protected function extractTransUnit( DOMElement $transUnit, array &$transUnitIdArrayForUniquenessCheck, DomDocument $dom, array &$output, int &$i, int &$j, ?array $contextGroups = [] );
 
     /**
      * @param DOMDocument $dom
@@ -129,7 +130,7 @@ abstract class AbstractXliffParser {
      *
      * @return array
      */
-    protected function extractContent( DOMDocument $dom, DOMNode $node ) {
+    protected function extractContent( DOMDocument $dom, DOMNode $node ): array {
         return [
                 'raw-content' => $this->extractTagContent( $dom, $node ),
                 'attr'        => $this->extractTagAttributes( $node )
@@ -149,7 +150,7 @@ abstract class AbstractXliffParser {
      *
      * @return array
      */
-    protected function extractTagAttributes( DOMNode $element ) {
+    protected function extractTagAttributes( DOMNode $element ): array {
         $tagAttributes = [];
 
         if ( $element->hasAttributes() ) {
@@ -169,7 +170,7 @@ abstract class AbstractXliffParser {
      *
      * @return string
      */
-    protected function extractTagContent( DOMDocument $dom, DOMNode $element ) {
+    protected function extractTagContent( DOMDocument $dom, DOMNode $element ): string {
         $childNodes       = $element->hasChildNodes();
         $extractedContent = '';
 
@@ -190,7 +191,7 @@ abstract class AbstractXliffParser {
      *
      * @return array
      */
-    protected function extractContentWithMarksAndExtTags( DOMDocument $dom, DOMElement $childNode ) {
+    protected function extractContentWithMarksAndExtTags( DOMDocument $dom, DOMElement $childNode ): array {
         $source = [];
 
         // example:
@@ -244,7 +245,7 @@ abstract class AbstractXliffParser {
      *
      * @return array
      */
-    protected function getDataRefMap( $originalData ) {
+    protected function getDataRefMap( array $originalData ): array {
         // dataRef map
         $dataRefMap = [];
         foreach ( $originalData as $datum ) {
@@ -261,7 +262,7 @@ abstract class AbstractXliffParser {
      *
      * @return bool
      */
-    protected function stringContainsMarks( $raw ) {
+    protected function stringContainsMarks( $raw ): bool {
         $markers = preg_split( '#<mrk\s#si', $raw, -1 );
 
         return isset( $markers[ 1 ] );
@@ -272,9 +273,9 @@ abstract class AbstractXliffParser {
      * @param bool $escapeStrings
      *
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
-    protected function JSONOrRawContentArray( $noteValue, $escapeStrings = true ) {
+    protected function JSONOrRawContentArray( $noteValue, ?bool $escapeStrings = true ): array {
         //
         // convert double escaped entites
         //

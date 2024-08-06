@@ -2,5 +2,7 @@
 
 namespace Matecat\XliffParser\Exception;
 
-class InvalidXmlException extends \Exception {
+use Exception;
+
+class InvalidXmlException extends Exception {
 }
