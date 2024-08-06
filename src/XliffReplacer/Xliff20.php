@@ -96,7 +96,7 @@ class Xliff20 extends AbstractXliffReplacer {
 
             $seg = $this->getCurrentSegment();
 
-            if ( $name === $this->tuTagName and !empty( $seg ) and isset( $seg[ 'sid' ] ) ) {
+            if ( $name === $this->tuTagName && !empty( $seg ) && isset( $seg[ 'sid' ] ) ) {
 
                 // add `mtc:segment-id` to xliff v.2*
                 if ( strpos( $tag, 'mtc:segment-id' ) === false ) {

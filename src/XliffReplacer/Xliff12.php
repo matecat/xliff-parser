@@ -59,7 +59,7 @@ class Xliff12 extends AbstractXliffReplacer {
 
             $seg = $this->getCurrentSegment();
 
-            if ( $name === $this->tuTagName && !empty( $seg ) and isset( $seg[ 'sid' ] ) ) {
+            if ( $name === $this->tuTagName && !empty( $seg ) && isset( $seg[ 'sid' ] ) ) {
 
                 // add `help-id` to xliff v.1*
                 if ( strpos( $tag, 'help-id' ) === false ) {

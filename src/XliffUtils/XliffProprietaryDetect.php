@@ -93,6 +93,11 @@ class XliffProprietaryDetect {
         ];
     }
 
+    /**
+     * @param string|null $stringData
+     *
+     * @return string
+     */
     private static function getFirst1024CharsFromString( ?string $stringData ): string {
         if ( !empty( $stringData ) ) {
             return substr( $stringData, 0, 1024 );
@@ -101,7 +106,12 @@ class XliffProprietaryDetect {
         return '';
     }
 
-    private static function getFirst1024CharsFromFile( string $fullPathToFile ): string {
+    /**
+     * @param string|null $fullPathToFile
+     *
+     * @return string
+     */
+    private static function getFirst1024CharsFromFile( ?string $fullPathToFile ): string {
         $stringData = '';
         if ( !empty( $fullPathToFile ) && is_file( $fullPathToFile ) ) {
             $file_pointer = fopen( "$fullPathToFile", 'r' );
@@ -194,12 +204,7 @@ class XliffProprietaryDetect {
                 } else {
                     //if conversion enforce is active
                     //we force all xliff files but not files produced by SDL Studio because we can handle them
-                    if (
-                            $fileType[ 'proprietary_short_name' ] == 'matecat_converter'
-                            || $fileType[ 'proprietary_short_name' ] == 'trados'
-                            || $fileType[ 'proprietary_short_name' ] == 'xliff_v2'
-                            || $memoryFileType
-                    ) {
+                    if ( in_array( $fileType[ 'proprietary_short_name' ], [ 'matecat_converter', 'trados', 'xliff_v2' ] ) || $memoryFileType ) {
                         $convert = false;
                         //ok don't convert a standard sdlxliff
                     }

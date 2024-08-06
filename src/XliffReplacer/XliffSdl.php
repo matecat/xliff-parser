@@ -38,11 +38,6 @@ class XliffSdl extends Xliff12 {
             // costruct tag
             $tag = "<$name ";
 
-            // needed to avoid multiple conf writing inside the same tag
-            // because the "conf" attribute could be not present in the tag,
-            // so the check on it's name is not enough
-            $_sdlStatus_confWritten = false;
-
             foreach ( $attr as $k => $v ) {
 
                 // if tag name is file, we must replace the target-language attribute
@@ -61,7 +56,7 @@ class XliffSdl extends Xliff12 {
 
             $seg = $this->getCurrentSegment();
 
-            if ( 'sdl:seg' == $name && !empty( $seg ) and isset( $seg[ 'sid' ] ) ) {
+            if ( 'sdl:seg' == $name && !empty( $seg ) && isset( $seg[ 'sid' ] ) ) {
                 $tag .= $this->prepareTargetStatuses( $seg );
             }
 
