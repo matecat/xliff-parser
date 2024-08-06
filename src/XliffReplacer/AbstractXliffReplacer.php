@@ -179,16 +179,7 @@ abstract class AbstractXliffReplacer {
         //is outside current buffer (in the latter case, it's in next buffer to be read by the while loop);
         //this check is necessary because we may have truncated a tag in half with current read,
         //and the other half may be encountered in the next buffer it will be passed
-        if ( isset( $this->currentBuffer[ $idx - $this->offset ] ) ) {
-            //if this tag entire lenght fitted in the buffer, the last char must be the last
-            //symbol before the '>'; if it's an empty tag, it is assumed that it's a '/'
-            $lastChar = $this->currentBuffer[ $idx - $this->offset ];
-        } else {
-            //if it's out, simple use the last character of the chunk
-            $lastChar = $this->currentBuffer[ $this->len - 1 ];
-        }
-
-        return $lastChar;
+        return $this->currentBuffer[ $idx - $this->offset ] ?? $this->currentBuffer[ $this->len - 1 ];
 
     }
 
