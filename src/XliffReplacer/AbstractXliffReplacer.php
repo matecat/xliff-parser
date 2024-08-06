@@ -286,9 +286,9 @@ abstract class AbstractXliffReplacer {
      *
      * @param resource $fp
      * @param string   $data
-     * @param ?bool    $treatAsCDATA
+     * @param bool     $treatAsCDATA
      */
-    protected function postProcAndFlush( $fp, string $data, ?bool $treatAsCDATA = false ) {
+    protected function postProcAndFlush( $fp, string $data, bool $treatAsCDATA = false ) {
         //postprocess string
         $data = preg_replace( "/" . self::$INTERNAL_TAG_PLACEHOLDER . '(.*?)' . self::$INTERNAL_TAG_PLACEHOLDER . "/", '&$1;', $data );
         $data = str_replace( '&nbsp;', ' ', $data );
