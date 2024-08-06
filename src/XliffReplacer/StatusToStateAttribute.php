@@ -13,74 +13,66 @@ use Matecat\XliffParser\Constants\TranslationStatus;
 
 class StatusToStateAttribute {
 
-
     /**
-     * @param string  $status
-     * @param int     $xliffVersion
-     * @param ?string $state_prop
-     * @param ?string $lastMrkState
+     * @param int         $xliffVersion
+     * @param string|null $status
+     * @param string|null $lastMrkState
      *
      * @return array
      */
-    public static function getState( string $status, int $xliffVersion, ?string $state_prop = '', ?string $lastMrkState = '' ): array {
+    public static function getState(
+            int     $xliffVersion,
+            ?string $status = null,
+            ?string $lastMrkState = null
+    ): array {
 
-        switch ( $status ) {
+        $status       = empty( $status ) ? TranslationStatus::STATUS_TRANSLATED : $status;
 
-            case TranslationStatus::STATUS_FIXED:
-            case TranslationStatus::STATUS_APPROVED2:
-                if ( $lastMrkState == null || $lastMrkState == TranslationStatus::STATUS_APPROVED2 ) {
-                    $state_prop   = "state=\"final\"";
-                    $lastMrkState = TranslationStatus::STATUS_APPROVED2;
-                }
-                break;
-            case TranslationStatus::STATUS_APPROVED:
-                if ( $lastMrkState == null || $lastMrkState == TranslationStatus::STATUS_APPROVED ) {
-                    $state_prop   = ( $xliffVersion === 2 ) ? "state=\"reviewed\"" : "state=\"signed-off\"";
-                    $lastMrkState = TranslationStatus::STATUS_APPROVED;
-                }
-                break;
+        $stateLevelsMap = [
+                TranslationStatus::STATUS_APPROVED2  => 100,
+                TranslationStatus::STATUS_APPROVED   => 90,
+                TranslationStatus::STATUS_TRANSLATED => 80,
+                TranslationStatus::STATUS_REJECTED   => 70,
+                TranslationStatus::STATUS_DRAFT      => 60,
+                TranslationStatus::STATUS_NEW        => 50
+        ];
 
-            case TranslationStatus::STATUS_TRANSLATED:
-                if ( $lastMrkState == null || $lastMrkState == TranslationStatus::STATUS_TRANSLATED || $lastMrkState == TranslationStatus::STATUS_APPROVED ) {
-                    $state_prop   = "state=\"translated\"";
-                    $lastMrkState = TranslationStatus::STATUS_TRANSLATED;
-                }
-                break;
+        $orderedValues = array_flip( $stateLevelsMap );
 
-            case TranslationStatus::STATUS_REJECTED:  // if there is a mark REJECTED and there is not a DRAFT, all the trans-unit is REJECTED. In V2 there is no way to mark
-            case TranslationStatus::STATUS_REBUTTED:
-                if ( ( $lastMrkState == null ) || ( $lastMrkState != TranslationStatus::STATUS_NEW || $lastMrkState != TranslationStatus::STATUS_DRAFT ) ) {
-                    $state_prop   = ( $xliffVersion === 2 ) ? "state=\"initial\"" : "state=\"needs-review-translation\"";
-                    $lastMrkState = TranslationStatus::STATUS_REJECTED;
-                }
-                break;
+        // Define state mappings for different statuses
+        $stateMap = [
+                TranslationStatus::STATUS_APPROVED2  => [ "state=\"final\"", TranslationStatus::STATUS_APPROVED2 ],
+                TranslationStatus::STATUS_APPROVED   => [
+                        ( $xliffVersion === 2 ) ? "state=\"reviewed\"" : "state=\"signed-off\"",
+                        TranslationStatus::STATUS_APPROVED
+                ],
+                TranslationStatus::STATUS_TRANSLATED => [ "state=\"translated\"", TranslationStatus::STATUS_TRANSLATED ],
+                TranslationStatus::STATUS_REJECTED   => [
+                        ( $xliffVersion === 2 ) ? "state=\"initial\"" : "state=\"needs-review-translation\"",
+                        TranslationStatus::STATUS_REJECTED
+                ],
+                TranslationStatus::STATUS_NEW        => [
+                        ( $xliffVersion === 2 ) ? "state=\"initial\"" : "state=\"new\"",
+                        TranslationStatus::STATUS_NEW
+                ],
+                TranslationStatus::STATUS_DRAFT      => [
+                        ( $xliffVersion === 2 ) ? "state=\"initial\"" : "state=\"new\"",
+                        TranslationStatus::STATUS_DRAFT
+                ],
+        ];
 
-            case TranslationStatus::STATUS_NEW:
-                if ( ( $lastMrkState == null ) || $lastMrkState != TranslationStatus::STATUS_NEW ) {
-                    $state_prop   = ( $xliffVersion === 2 ) ? "state=\"initial\"" : "state=\"new\"";
-                    $lastMrkState = TranslationStatus::STATUS_NEW;
-                }
-                break;
+        // If status is null set the default as Translated.
+        // This is the case when a segment is not shown in the cattool,
+        // and the row in segment_translations does not exists.
+        // ---> $seg[ 'status' ] is NULL
+        // If lastMrkState is empty
+        $minStatus = min(
+                $stateLevelsMap[ $status ],
+                ( $stateLevelsMap[ $lastMrkState ] ?? $stateLevelsMap[ TranslationStatus::STATUS_NEW ] )
+        );
 
-            case TranslationStatus::STATUS_DRAFT:
-                if ( ( $lastMrkState == null ) || $lastMrkState != TranslationStatus::STATUS_DRAFT ) {
-                    $state_prop   = ( $xliffVersion === 2 ) ? "state=\"initial\"" : "state=\"new\"";
-                    $lastMrkState = TranslationStatus::STATUS_DRAFT;
-                }
-                break;
-
-            default:
-                // this is the case when a segment is not showed in cattool, so the row in
-                // segment_translations does not exists and
-                // ---> $seg[ 'status' ] is NULL
-                if ( $lastMrkState == null ) { //this is the first MRK ID
-                    $state_prop   = "state=\"translated\"";
-                    $lastMrkState = TranslationStatus::STATUS_TRANSLATED;
-                } else {
-                    /* Do nothing and preserve the last state */
-                }
-                break;
-        }
+        // If the last mark state is set, get the minimum value, otherwise get the current state
+        [ $state_prop, $lastMrkState ] = empty( $lastMrkState ) ? $stateMap[ $status ] : $stateMap[ $orderedValues[ $minStatus ] ];
 
         return [ $state_prop, $lastMrkState ];
 

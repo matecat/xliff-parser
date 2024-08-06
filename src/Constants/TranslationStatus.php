@@ -13,7 +13,5 @@ class TranslationStatus {
     const STATUS_APPROVED   = 'APPROVED';
     const STATUS_APPROVED2  = 'APPROVED2';
     const STATUS_REJECTED   = 'REJECTED';
-    const STATUS_FIXED      = 'FIXED';
-    const STATUS_REBUTTED   = 'REBUTTED';
 
 }

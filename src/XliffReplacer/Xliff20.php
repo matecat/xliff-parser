@@ -17,7 +17,10 @@ class Xliff20 extends AbstractXliffReplacer {
      * @var int
      */
     private int $mdaGroupCounter = 0;
-
+    /**
+     * @var bool
+     */
+    protected bool $unitContainsMda = false;   // check if <unit> already contains a <mda:metadata> (forXliff v 2.*)
     /**
      * @var array
      */
@@ -105,7 +108,7 @@ class Xliff20 extends AbstractXliffReplacer {
 
             // replace state for xliff v2
             if ( 'segment' === $name ) { // add state to segment in Xliff v2
-                [ $stateProp, ] = StatusToStateAttribute::getState( $seg[ 'status' ], $this->xliffVersion );
+                [ $stateProp, ] = StatusToStateAttribute::getState( $this->xliffVersion, $seg[ 'status' ] );
                 $tag .= $stateProp;
             }
 
@@ -154,7 +157,7 @@ class Xliff20 extends AbstractXliffReplacer {
 
             if ( 'target' == $name ) {
 
-                if ( isset( $this->transUnits[ $this->currentTransUnitId ] ) && $this->currentTransUnitIsTranslatable !== 'no' ) {
+                if ( isset( $this->transUnits[ $this->currentTransUnitId ] ) ) {
 
                     $seg = $this->getCurrentSegment();
 

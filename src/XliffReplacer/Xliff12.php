@@ -273,7 +273,7 @@ class Xliff12 extends AbstractXliffReplacer {
 
             $lastMrkId = $seg[ "mrk_id" ];
 
-            [ $stateProp, $lastMrkState ] = StatusToStateAttribute::getState( $seg[ 'status' ], $this->xliffVersion, $stateProp, $lastMrkState );
+            [ $stateProp, $lastMrkState ] = StatusToStateAttribute::getState( $this->xliffVersion, $seg[ 'status' ], $lastMrkState );
 
         }
 
