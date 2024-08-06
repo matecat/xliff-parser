@@ -138,7 +138,7 @@ abstract class AbstractXliffReplacer {
 
             //parse chunk of text
             $this->runParser( $xmlParser );
-            
+
         }
 
         // close Sax parser

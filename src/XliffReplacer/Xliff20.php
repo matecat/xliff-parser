@@ -72,8 +72,7 @@ class Xliff20 extends AbstractXliffReplacer {
             //
             // http://docs.oasis-open.org/xliff/xliff-core/v2.0/os/xliff-core-v2.0-os.html#unit
             //
-            if (
-                    ( $name === 'notes' || $name === 'originalData' || $name === 'segment' || $name === 'ignorable' ) &&
+            if ( in_array( $name, [ 'notes', 'originalData', 'segment', 'ignorable' ] ) &&
                     $this->unitContainsMda === false &&
                     !empty( $this->transUnits[ $this->currentTransUnitId ] ) &&
                     !$this->hasWrittenCounts
