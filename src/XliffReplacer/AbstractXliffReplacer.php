@@ -235,8 +235,14 @@ abstract class AbstractXliffReplacer {
     public function __destruct() {
         //this stream can be closed outside the class
         //to permit multiple concurrent downloads, so suppress warnings
-        @fclose( $this->originalFP );
-        fclose( $this->outputFP );
+        if ( is_resource( $this->originalFP ) ) {
+            fclose( $this->originalFP );
+        }
+
+        if ( is_resource( $this->outputFP ) ) {
+            fclose( $this->outputFP );
+        }
+
     }
 
     /**
