@@ -113,4 +113,22 @@ class Files {
         }
     }
 
+    /**
+     * @param $path
+     *
+     * @return bool
+     */
+    public static function isTMXFile( $path ): bool {
+        return self::getMemoryFileType( $path ) === 'tmx';
+    }
+
+    /**
+     * @param $path
+     *
+     * @return bool
+     */
+    public static function isGlossaryFile( $path ): bool {
+        return self::getMemoryFileType( $path ) === 'glossary'; // return false
+    }
+
 }
