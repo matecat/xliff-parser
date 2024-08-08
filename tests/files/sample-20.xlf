@@ -15,7 +15,7 @@
                 }
             </note>
         </notes>
-        <unit id="u1" translate="test">
+        <unit id="u1" translate="yes">
             <my:elem xmlns:my="myNamespaceURI" id="x1">data</my:elem>
             <notes>
                 <note id="n1">note for unit</note>

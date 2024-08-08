@@ -20,9 +20,23 @@ class Xliff12 extends AbstractXliffReplacer {
             'source',
             'seg-source',
             'note',
-            'context',
             'context-group'
     ];
+
+    /**
+     * @var string
+     */
+    protected string $tuTagName = 'trans-unit';
+
+    /**
+     * @var string
+     */
+    protected string $alternativeMatchesTag = 'alt-trans';
+
+    /**
+     * @var string
+     */
+    protected string $namespace             = "mtc";       // Custom namespace
 
     /**
      * @inheritDoc
@@ -31,6 +45,7 @@ class Xliff12 extends AbstractXliffReplacer {
 
         $this->handleOpenUnit( $name, $attr );
 
+        $this->trySetAltTrans( $name );;
         $this->checkSetInTarget( $name );
 
         // open buffer
@@ -97,7 +112,7 @@ class Xliff12 extends AbstractXliffReplacer {
                 $tag = "</$name>";
             }
 
-            if ( 'target' == $name ) {
+            if ( 'target' == $name && !$this->inAltTrans ) {
 
                 if ( isset( $this->transUnits[ $this->currentTransUnitId ] ) ) {
 
@@ -152,6 +167,9 @@ class Xliff12 extends AbstractXliffReplacer {
             //ok, nothing to be done; reset flag for next coming tag
             $this->isEmpty = false;
         }
+
+        // try to signal that we are leaving a target
+        $this->tryUnsetAltTrans( $name );
 
         // check if we are leaving a <trans-unit> (xliff v1.*) or <unit> (xliff v2.*)
         if ( $this->tuTagName === $name ) {

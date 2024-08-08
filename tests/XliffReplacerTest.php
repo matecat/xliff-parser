@@ -2,6 +2,7 @@
 
 namespace Matecat\XliffParser\Tests;
 
+use Exception;
 use Matecat\XliffParser\Constants\TranslationStatus;
 use Matecat\XliffParser\XliffParser;
 use Matecat\XliffParser\XliffReplacer\XliffReplacerCallbackInterface;
@@ -138,8 +139,8 @@ class XliffReplacerTest extends BaseTest {
         // check for metaGroup attributes
         preg_match_all( '/<mda:metaGroup id="(.*)" category="(.*)">/', $output, $metaGroup );
 
-        $this->assertEquals( 'word_count_tu[0][0]', $metaGroup[ 1 ][ 0 ] );
-        $this->assertEquals( 'word_count_tu[1][0]', $metaGroup[ 1 ][ 1 ] );
+        $this->assertEquals( 'word_count_tu.0.0', $metaGroup[ 1 ][ 0 ] );
+        $this->assertEquals( 'word_count_tu.1.0', $metaGroup[ 1 ][ 1 ] );
     }
 
     /**
@@ -177,6 +178,22 @@ class XliffReplacerTest extends BaseTest {
 
     /**
      * @test
+     * @depends can_replace_a_xliff_20_with_mda_without_notes_or_original_data
+     */
+    public function validate_xliff_20_without_notes_or_original_data() {
+
+        $outputFile = realpath( __DIR__ . '/../tests/files/output/xliff20-without-notes-or-original-data.xliff' );
+
+        try {
+            $validate = $this->validateXliff20( $outputFile );
+            $this->assertEmpty( $validate );
+        } catch ( Exception $exception ) {
+            $this->markTestSkipped( 'The xliff validation service is out of order. ' . $exception->getMessage() );
+        }
+    }
+
+    /**
+     * @test
      */
     public function can_replace_a_xliff_20_with_mda_without_duplicate_it() {
         $data = $this->getData( [
@@ -207,6 +224,21 @@ class XliffReplacerTest extends BaseTest {
 
         // check if there is only one <mda:metadata>
         $this->assertEquals( 1, substr_count( file_get_contents( $outputFile ), '<mda:metadata>' ) );
+    }
+
+    /**
+     * @test
+     * @depends can_replace_a_xliff_20_with_mda_without_duplicate_it
+     */
+    public function validate_xliff_20_with_mda_prefilled() {
+        $outputFile = realpath( __DIR__ . '/../tests/files/output/xliff-20-with-mda.xlf' );
+
+        try {
+            $validate = $this->validateXliff20( $outputFile );
+            $this->assertEmpty( $validate );
+        } catch ( Exception $exception ) {
+            $this->markTestSkipped( 'The xliff validation service is out of order. ' . $exception->getMessage() );
+        }
     }
 
     /**
@@ -545,6 +577,21 @@ class XliffReplacerTest extends BaseTest {
 
     /**
      * @test
+     * @depends can_replace_a_xliff_20_without_target
+     */
+    public function invalid_target_language() {
+        $outputFile = realpath( __DIR__ . '/../tests/files/output/1111_prova.md.xlf' );
+
+        try {
+            $validate = $this->validateXliff20( $outputFile );
+            $this->assertNotEmpty( $validate );
+        } catch ( Exception $exception ) {
+            $this->markTestSkipped( 'The xliff validation service is out of order. ' . $exception->getMessage() );
+        }
+    }
+
+    /**
+     * @test
      */
     public function can_replace_a_xliff_20_with_no_errors() {
         $data       = $this->getData( [
@@ -582,11 +629,26 @@ class XliffReplacerTest extends BaseTest {
         $inputFile  = __DIR__ . '/../tests/files/sample-20.xlf';
         $outputFile = __DIR__ . '/../tests/files/output/sample-20.xlf';
 
-        ( new XliffParser() )->replaceTranslation( $inputFile, $data[ 'data' ], $data[ 'transUnits' ], 'fr-fr', $outputFile, false, new DummyXliffReplacerCallback() );
+        ( new XliffParser() )->replaceTranslation( $inputFile, $data[ 'data' ], $data[ 'transUnits' ], 'fr-fr', $outputFile, false, new DummyXliffReplacerCallbackWhichReturnFalse() );
         $output   = ( new XliffParser() )->xliffToArray( file_get_contents( $outputFile ) );
         $expected = '<pc id="1">Buongiorno al <mrk id="m2" type="term">Mondo</mrk> !</pc>';
 
         $this->assertEquals( $expected, $output[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ][ 0 ] );
+    }
+
+    /**
+     * @test
+     * @depends can_replace_a_xliff_20_with_no_errors
+     */
+    public function validate_sample_xliff_20() {
+        $outputFile = realpath( __DIR__ . '/../tests/files/output/sample-20.xlf' );
+
+        try {
+            $validate = $this->validateXliff20( $outputFile );
+            $this->assertEmpty( $validate );
+        } catch ( Exception $exception ) {
+            $this->markTestSkipped( 'The xliff validation service is out of order. ' . $exception->getMessage() );
+        }
     }
 
     /**
@@ -633,6 +695,88 @@ class XliffReplacerTest extends BaseTest {
         $expected = '|||UNTRANSLATED_CONTENT_START|||<pc id="1">Hello <mrk id="m2" type="term">World</mrk> !</pc>|||UNTRANSLATED_CONTENT_END|||';
 
         $this->assertEquals( $expected, $output[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ][ 0 ] );
+    }
+
+    /**
+     * @test
+     */
+    public function xliff20_should_not_overwrite_translation_candidates_with_consistency_errors() {
+        $data       = $this->getData( [
+                [
+                        'sid'            => 1,
+                        'segment'        => '<pc id="1">Hello <mrk id="m2" type="term">World</mrk> !</pc>',
+                        'internal_id'    => 'u1',
+                        'mrk_id'         => '',
+                        'prev_tags'      => '',
+                        'succ_tags'      => '',
+                        'mrk_prev_tags'  => '',
+                        'mrk_succ_tags'  => '',
+                        'translation'    => '<pc id="1">Buongiorno al <mrk id="m2" type="term">Mondo</mrk> !</pc>',
+                        'status'         => TranslationStatus::STATUS_TRANSLATED,
+                        'r2'             => null,
+                        'eq_word_count'  => 100,
+                        'raw_word_count' => 200,
+                ],
+                [
+                        'sid'            => 2,
+                        'segment'        => '<pc id="1">Hello <mrk id="m2" type="term">World2</mrk> !</pc>',
+                        'internal_id'    => 'u2',
+                        'mrk_id'         => '',
+                        'prev_tags'      => '',
+                        'succ_tags'      => '',
+                        'mrk_prev_tags'  => '',
+                        'mrk_succ_tags'  => '',
+                        'translation'    => '<pc id="2">Buongiorno al <mrk id="m2" type="term">Mondo2</mrk> !</pc>',
+                        'status'         => TranslationStatus::STATUS_TRANSLATED,
+                        'r2'             => null,
+                        'eq_word_count'  => 200,
+                        'raw_word_count' => 300,
+                ],
+        ] );
+        $inputFile  = __DIR__ . '/../tests/files/valid_sample-20-translation-candidates.xlf';
+        $outputFile = __DIR__ . '/../tests/files/output/valid_sample-20-translation-candidates.xlf';
+
+        ( new XliffParser() )->replaceTranslation( $inputFile, $data[ 'data' ], $data[ 'transUnits' ], 'fr-fr', $outputFile, false, new DummyXliffReplacerCallbackWhichReturnTrue() );
+        $output   = ( new XliffParser() )->xliffToArray( file_get_contents( $outputFile ) );
+        $expected = '|||UNTRANSLATED_CONTENT_START|||<pc id="1">Hello <mrk id="m2" type="term">World</mrk> !</pc>|||UNTRANSLATED_CONTENT_END|||';
+
+        $this->assertEquals( $expected, $output[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ][ 0 ] );
+
+        $content = file_get_contents( $outputFile );
+        $this->assertTrue( (bool)preg_match( '#<target>Il est mon ami.</target>#', $content ) );
+        $this->assertTrue( (bool)preg_match( '/Il est mon meilleur ami/', $content ) );
+
+    }
+
+
+    /**
+     * @test
+     */
+    public function can_replace_a_xliff_12_with_consistency_errors() {
+        $data       = $this->getData( [
+                [
+                        'sid'            => 1,
+                        'segment'        => '<pc id="1">Hello <mrk id="m2" type="term">World</mrk> !</pc>',
+                        'internal_id'    => '0000000121',
+                        'mrk_id'         => '',
+                        'prev_tags'      => '',
+                        'succ_tags'      => '',
+                        'mrk_prev_tags'  => '',
+                        'mrk_succ_tags'  => '',
+                        'translation'    => 'Hola mundo!',
+                        'status'         => TranslationStatus::STATUS_TRANSLATED,
+                        'eq_word_count'  => 1,
+                        'raw_word_count' => 2,
+                ],
+        ] );
+        $inputFile  = __DIR__ . '/../tests/files/file-with-self-closed-tag-and-alt-trans.xliff';
+        $outputFile = __DIR__ . '/../tests/files/output/_file-with-self-closed-tag-and-alt-trans.xliff';
+
+        ( new XliffParser() )->replaceTranslation( $inputFile, $data[ 'data' ], $data[ 'transUnits' ], 'fr-fr', $outputFile, false, new DummyXliffReplacerCallbackWhichReturnTrue() );
+        $output   = ( new XliffParser() )->xliffToArray( file_get_contents( $outputFile ) );
+        $expected = '|||UNTRANSLATED_CONTENT_START|||<pc id="1">Hello <mrk id="m2" type="term">World</mrk> !</pc>|||UNTRANSLATED_CONTENT_END|||';
+
+        $this->assertEquals( $expected, $output[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ] );
     }
 
     /**
@@ -771,16 +915,7 @@ class XliffReplacerTest extends BaseTest {
 
 }
 
-class RealXliffReplacerCallback implements XliffReplacerCallbackInterface {
-    /**
-     * @inheritDoc
-     */
-    public function thereAreErrors( int $segmentId, string $segment, string $translation, ?array $dataRefMap = [], $error = null ): bool {
-        return false;
-    }
-}
-
-class DummyXliffReplacerCallback implements XliffReplacerCallbackInterface {
+class DummyXliffReplacerCallbackWhichReturnFalse implements XliffReplacerCallbackInterface {
     /**
      * @inheritDoc
      */

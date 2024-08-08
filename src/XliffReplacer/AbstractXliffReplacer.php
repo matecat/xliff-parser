@@ -10,12 +10,15 @@ abstract class AbstractXliffReplacer {
     protected $outputFP;                  // output stream pointer
 
     protected string $tuTagName;                 // <trans-unit> (forXliff v 1.*) or <unit> (forXliff v 2.*)
-    protected bool   $inTU             = false;  // flag to check whether we are in a <trans-unit>
-    protected bool   $inTarget         = false;  // flag to check whether we are in a <target>, to ignore everything
-    protected bool   $isEmpty          = false;  // flag to check whether we are in an empty tag (<tag/>)
-    protected bool   $targetWasWritten = false;  // flag to check is <target> was written in the current unit
-    protected string $CDATABuffer      = "";       // buffer for special tag
-    protected bool   $bufferIsActive   = false;    // buffer for special tag
+    protected bool   $inTU                  = false;  // flag to check whether we are in a <trans-unit>
+    protected bool   $inTarget              = false;  // flag to check whether we are in a <target>, to ignore everything
+    protected bool   $inAltTrans            = false;  // flag to check whether we are in an <alt-trans> (xliff 1.2) or <mtc:matches> (xliff 2.0)
+    protected string $alternativeMatchesTag = ""; // polymorphic tag name for xliff 1.2 and 2.0
+    protected bool   $isEmpty               = false;  // flag to check whether we are in an empty tag (<tag/>)
+    protected bool   $targetWasWritten      = false;  // flag to check is <target> was written in the current unit
+    protected string $CDATABuffer           = "";       // buffer for special tag
+    protected string $namespace             = "";       // Custom namespace
+    protected bool   $bufferIsActive        = false;    // flag for buffeting
 
     protected int $offset = 0;         // offset for SAX pointer
 
@@ -44,7 +47,7 @@ abstract class AbstractXliffReplacer {
 
     protected ?LoggerInterface $logger;
 
-    protected static $INTERNAL_TAG_PLACEHOLDER;
+    protected static string $INTERNAL_TAG_PLACEHOLDER;
 
     protected $counts = [
             'raw_word_count' => 0,
@@ -79,7 +82,6 @@ abstract class AbstractXliffReplacer {
         $this->createOutputFileIfDoesNotExist( $outputFilePath );
         $this->setFileDescriptors( $originalXliffPath, $outputFilePath );
         $this->xliffVersion   = $xliffVersion;
-        $this->tuTagName      = ( $this->xliffVersion === 2 ) ? 'unit' : 'trans-unit';
         $this->segments       = $segments;
         $this->targetLang     = $trgLang;
         $this->sourceInTarget = $setSourceInTarget;
@@ -349,8 +351,8 @@ abstract class AbstractXliffReplacer {
         // Add MateCat specific namespace.
         // Add trgLang
         if ( $name === 'xliff' ) {
-            if ( !array_key_exists( 'xmlns:mtc', $attr ) ) {
-                $tag .= ' xmlns:mtc="https://www.matecat.com" ';
+            if ( !array_key_exists( 'xmlns:' . $this->namespace, $attr ) ) {
+                $tag .= ' xmlns:' . $this->namespace . '="https://www.matecat.com" ';
             }
             $tag = preg_replace( '/trgLang="(.*?)"/', 'trgLang="' . $this->targetLang . '"', $tag );
         }
@@ -365,13 +367,25 @@ abstract class AbstractXliffReplacer {
      * @return void
      */
     protected function checkSetInTarget( string $name ) {
+
         // check if we are entering into a <target>
-        if ( 'target' === $name ) {
+        if ( 'target' == $name && !$this->inAltTrans ) {
             if ( $this->currentTransUnitIsTranslatable === 'no' ) {
                 $this->inTarget = false;
             } else {
                 $this->inTarget = true;
             }
+        }
+
+    }
+
+    protected function trySetAltTrans( string $name ) {
+        $this->inAltTrans = $this->inAltTrans || $this->alternativeMatchesTag == $name;
+    }
+
+    protected function tryUnsetAltTrans( string $name ) {
+        if ( $this->alternativeMatchesTag == $name ) {
+            $this->inAltTrans = false;
         }
     }
 

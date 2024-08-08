@@ -21,6 +21,22 @@ class Xliff20 extends AbstractXliffReplacer {
      * @var bool
      */
     protected bool $unitContainsMda = false;   // check if <unit> already contains a <mda:metadata> (forXliff v 2.*)
+
+    /**
+     * @var string
+     */
+    protected string $alternativeMatchesTag = 'mtc:matches';
+
+    /**
+     * @var string
+     */
+    protected string $tuTagName = 'unit';
+
+    /**
+     * @var string
+     */
+    protected string $namespace = "matecat";       // Custom namespace
+
     /**
      * @var array
      */
@@ -43,6 +59,7 @@ class Xliff20 extends AbstractXliffReplacer {
             $this->unitContainsMda = true;
         }
 
+        $this->trySetAltTrans( $name );;
         $this->checkSetInTarget( $name );
 
         // open buffer
@@ -98,9 +115,9 @@ class Xliff20 extends AbstractXliffReplacer {
 
             if ( $name === $this->tuTagName && !empty( $seg ) && isset( $seg[ 'sid' ] ) ) {
 
-                // add `mtc:segment-id` to xliff v.2*
-                if ( strpos( $tag, 'mtc:segment-id' ) === false ) {
-                    $tag .= "mtc:segment-id=\"{$seg[ 'sid' ]}\" ";
+                // add `matecat:segment-id` to xliff v.2*
+                if ( strpos( $tag, 'matecat:segment-id' ) === false ) {
+                    $tag .= "matecat:segment-id=\"{$seg[ 'sid' ]}\" ";
                 }
 
             }
@@ -154,7 +171,7 @@ class Xliff20 extends AbstractXliffReplacer {
                 $tag = "</$name>";
             }
 
-            if ( 'target' == $name ) {
+            if ( 'target' == $name && !$this->inAltTrans ) {
 
                 if ( isset( $this->transUnits[ $this->currentTransUnitId ] ) ) {
 
@@ -250,6 +267,9 @@ class Xliff20 extends AbstractXliffReplacer {
             $this->isEmpty = false;
         }
 
+        // try to signal that we are leaving a target
+        $this->tryUnsetAltTrans( $name );
+
         // check if we are leaving a <trans-unit> (xliff v1.*) or <unit> (xliff v2.*)
         if ( $this->tuTagName === $name ) {
             $this->currentTransUnitIsTranslatable = null;
@@ -292,7 +312,7 @@ class Xliff20 extends AbstractXliffReplacer {
         $index = 0;
         foreach ( $segments_count_array as $segments_count_item ) {
 
-            $id = 'word_count_tu[' . $this->currentTransUnitId . '][' . $index . ']';
+            $id = 'word_count_tu.' . $this->currentTransUnitId . '.' . $index;
             $index++;
 
             $tag .= "    <mda:metaGroup id=\"" . $id . "\" category=\"row_xml_attribute\">

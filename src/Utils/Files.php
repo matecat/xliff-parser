@@ -108,28 +108,9 @@ class Files {
         switch ( strtolower( $pathInfo[ 'extension' ] ) ) {
             case 'tmx':
                 return 'tmx';
-            case 'g':
-                return 'glossary';
             default:
                 return false;
         }
     }
 
-    /**
-     * @param $path
-     *
-     * @return bool
-     */
-    public static function isTMXFile( $path ): bool {
-        return self::getMemoryFileType( $path ) === 'tmx';
-    }
-
-    /**
-     * @param $path
-     *
-     * @return bool
-     */
-    public static function isGlossaryFile( $path ): bool {
-        return self::getMemoryFileType( $path ) === 'glossary';
-    }
 }

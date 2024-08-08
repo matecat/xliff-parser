@@ -2,9 +2,9 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:its="http://www.w3.org/2005/11/its"
     xmlns:itsxlf="http://www.w3.org/ns/its-xliff/" xmlns:mtc="https://www.matecat.com"
     xmlns:okp="okapi-framework:xliff-extensions" its:version="2.0" version="1.2">
-    <file datatype="x-jsont2" filter="net.translated.matecat.filters.MateJsont2Filter"
+    <file datatype="x-jsont2" filter="net.translated.mtc.filters.MateJsont2Filter"
         original="sample.jsont2" source-language="en-US" target-language="it-IT"
-        tool-id="matecat-converter 1.3.14-SNAPSHOT">
+        tool-id="mtc-converter 1.3.14-SNAPSHOT">
         <header>
             <reference>
                 <internal-file form="base64">WwogICAgewogICAgICAgICJoYXNoIjogIjNlN2NiNzYwNTE3Y2VjYTJkNjA3NTg1N2JjY2RkMWE4YjNjYmY0MzlmMmRiMjVjMmU5OWNiNGUwMTMxNWYwMzQiLAogICAgICAgICJpZF9vcmRlciI6ICJt
@@ -27,9 +27,9 @@
         </header>
         <body />
     </file>
-    <file datatype="x-rkm" filter="net.translated.matecat.filters.MateJsont2Filter"
+    <file datatype="x-rkm" filter="net.translated.mtc.filters.MateJsont2Filter"
         original="manifest.rkm" source-language="en-US" target-language="it-IT"
-        tool-id="matecat-converter 1.3.14-SNAPSHOT">
+        tool-id="mtc-converter 1.3.14-SNAPSHOT">
         <header>
             <reference>
                 <internal-file form="base64">PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPCEtLT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09LS0+Cjwh

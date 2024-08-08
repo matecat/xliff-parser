@@ -160,7 +160,7 @@ class XliffParserV2Test extends BaseTest
 
         $this->assertCount(2, $units);
         $this->assertEquals( 'u1', $units[ 1 ][ 'attr' ][ 'id' ] );
-        $this->assertEquals( 'test', $units[ 1 ][ 'attr' ][ 'translate' ] );
+        $this->assertEquals( 'yes', $units[ 1 ][ 'attr' ][ 'translate' ] );
         $this->assertEquals( 'u2', $units[ 2 ][ 'attr' ][ 'id' ] );
     }
 
@@ -344,7 +344,7 @@ class XliffParserV2Test extends BaseTest
                     1 => [
                         'attr' => [
                             'id' => 'u1',
-                            'translate' => 'test',
+                            'translate' => 'yes',
                         ],
                         'notes' => [
                             0 => ['raw-content' => 'note for unit',],
