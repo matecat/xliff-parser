@@ -310,4 +310,12 @@ class Xliff12 extends AbstractXliffReplacer {
 
     }
 
+    protected function getCurrentSegment(): array {
+        if ( $this->currentTransUnitIsTranslatable !== 'no' && isset( $this->transUnits[ $this->currentTransUnitId ] ) ) {
+            return $this->segments[ $this->transUnits[ $this->currentTransUnitId ][ 0 ] ]; // TODO try to understand why here is needed to override the method and set 0 index hardcoded
+        }
+
+        return [];
+    }
+
 }
