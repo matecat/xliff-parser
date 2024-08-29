@@ -913,6 +913,171 @@ class XliffReplacerTest extends BaseTest {
 
     }
 
+    /**
+     * @test
+     */
+    public function should_replace_empty_12_units() {
+
+        $data = $this->getData( [
+                [
+
+                        'data_ref_map'   => null,
+                        'eq_word_count'  => null,
+                        'error'          => null,
+                        'internal_id'    => "P3953B09A-tu1",
+                        'mrk_id'         => null,
+                        'mrk_prev_tags'  => null,
+                        'mrk_succ_tags'  => null,
+                        'prev_tags'      => null,
+                        'r2'             => null,
+                        'raw_word_count' => "0.00",
+                        'segment'        => "",
+                        'sid'            => "0",
+                        'source_page'    => null,
+                        'status'         => null,
+                        'succ_tags'      => null,
+                        'translation'    => null,
+
+                ],
+                [
+
+                        'data_ref_map'   => null,
+                        'eq_word_count'  => null,
+                        'error'          => null,
+                        'internal_id'    => "P3953B09A-tu2",
+                        'mrk_id'         => null,
+                        'mrk_prev_tags'  => null,
+                        'mrk_succ_tags'  => null,
+                        'prev_tags'      => null,
+                        'r2'             => null,
+                        'raw_word_count' => "0.00",
+                        'segment'        => "",
+                        'sid'            => "1",
+                        'source_page'    => null,
+                        'status'         => null,
+                        'succ_tags'      => null,
+                        'translation'    => null,
+
+                ],
+                [
+                        'data_ref_map'   => null,
+                        'eq_word_count'  => "0.30",
+                        'error'          => null,
+                        'internal_id'    => "P6D3F672D-sub1",
+                        'mrk_id'         => "0",
+                        'mrk_prev_tags'  => null,
+                        'mrk_succ_tags'  => null,
+                        'prev_tags'      => "",
+                        'r2'             => null,
+                        'raw_word_count' => "1.00",
+                        'segment'        => "ARISTON",
+                        'sid'            => "2",
+                        'source_page'    => null,
+                        'status'         => "NEW",
+                        'succ_tags'      => "",
+                        'translation'    => "ARISTON",
+                ]
+        ] );
+
+        $inputFile  = __DIR__ . '/../tests/files/test-empty-unit-1.2.xliff';
+        $outputFile = __DIR__ . '/../tests/files/output/test-empty-unit-1.2.xliff';
+
+        ( new XliffParser() )->replaceTranslation( $inputFile, $data[ 'data' ], $data[ 'transUnits' ], 'it-it', $outputFile, false );
+        $output = ( new XliffParser() )->xliffToArray( file_get_contents( $outputFile ) );
+
+        $expected = '';
+        $this->assertEquals( $expected, $output[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ] );
+        $this->assertEquals( $expected, $output[ 'files' ][ 1 ][ 'trans-units' ][ 2 ][ 'target' ][ 'raw-content' ] );
+
+        $expected = '<mrk mid="0" mtype="seg">ARISTON</mrk>';
+        $this->assertEquals( $expected, $output[ 'files' ][ 1 ][ 'trans-units' ][ 3 ][ 'target' ][ 'raw-content' ] );
+
+
+    }
+
+
+    /**
+     * @test
+     */
+    public function should_replace_empty_20_units() {
+
+        $data = $this->getData( [
+                [
+
+                        'data_ref_map'   => null,
+                        'eq_word_count'  => null,
+                        'error'          => null,
+                        'internal_id'    => "P3953B09A-tu1",
+                        'mrk_id'         => null,
+                        'mrk_prev_tags'  => null,
+                        'mrk_succ_tags'  => null,
+                        'prev_tags'      => null,
+                        'r2'             => null,
+                        'raw_word_count' => "0.00",
+                        'segment'        => "",
+                        'sid'            => "0",
+                        'source_page'    => null,
+                        'status'         => null,
+                        'succ_tags'      => null,
+                        'translation'    => null,
+
+                ],
+                [
+
+                        'data_ref_map'   => null,
+                        'eq_word_count'  => null,
+                        'error'          => null,
+                        'internal_id'    => "P3953B09A-tu2",
+                        'mrk_id'         => null,
+                        'mrk_prev_tags'  => null,
+                        'mrk_succ_tags'  => null,
+                        'prev_tags'      => null,
+                        'r2'             => null,
+                        'raw_word_count' => "0.00",
+                        'segment'        => "",
+                        'sid'            => "1",
+                        'source_page'    => null,
+                        'status'         => null,
+                        'succ_tags'      => null,
+                        'translation'    => null,
+
+                ],
+                [
+                        'data_ref_map'   => null,
+                        'eq_word_count'  => "0.30",
+                        'error'          => null,
+                        'internal_id'    => "P6D3F672D-sub1",
+                        'mrk_id'         => "0",
+                        'mrk_prev_tags'  => null,
+                        'mrk_succ_tags'  => null,
+                        'prev_tags'      => "",
+                        'r2'             => null,
+                        'raw_word_count' => "1.00",
+                        'segment'        => "ARISTON",
+                        'sid'            => "2",
+                        'source_page'    => null,
+                        'status'         => "NEW",
+                        'succ_tags'      => "",
+                        'translation'    => "ARISTON",
+                ]
+        ] );
+
+        $inputFile  = __DIR__ . '/../tests/files/test-empty-unit-2.0.xliff';
+        $outputFile = __DIR__ . '/../tests/files/output/test-empty-unit-2.0.xliff';
+
+        ( new XliffParser() )->replaceTranslation( $inputFile, $data[ 'data' ], $data[ 'transUnits' ], 'it-it', $outputFile, false );
+        $output = ( new XliffParser() )->xliffToArray( file_get_contents( $outputFile ) );
+
+        $expected = '';
+        $this->assertEquals( $expected, $output[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ][ 0 ] );
+        $this->assertEquals( $expected, $output[ 'files' ][ 1 ][ 'trans-units' ][ 2 ][ 'target' ][ 'raw-content' ][ 0 ] );
+
+        $expected = 'ARISTON';
+        $this->assertEquals( $expected, $output[ 'files' ][ 1 ][ 'trans-units' ][ 3 ][ 'target' ][ 'raw-content' ][ 0 ] );
+
+
+    }
+
 }
 
 class DummyXliffReplacerCallbackWhichReturnFalse implements XliffReplacerCallbackInterface {

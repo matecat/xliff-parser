@@ -36,7 +36,7 @@ class Xliff12 extends AbstractXliffReplacer {
     /**
      * @var string
      */
-    protected string $namespace             = "mtc";       // Custom namespace
+    protected string $namespace = "mtc";       // Custom namespace
 
     /**
      * @inheritDoc
@@ -162,6 +162,16 @@ class Xliff12 extends AbstractXliffReplacer {
                 // flush to pointer
                 $this->postProcAndFlush( $this->outputFP, $tag );
             }
+
+        } elseif ( in_array( $name, $this->nodesToBuffer ) ) {
+
+            $this->isEmpty        = false;
+            $this->bufferIsActive = false;
+            $tag                  = $this->CDATABuffer;
+            $this->CDATABuffer    = "";
+
+            //flush to the pointer
+            $this->postProcAndFlush( $this->outputFP, $tag );
 
         } else {
             //ok, nothing to be done; reset flag for next coming tag
