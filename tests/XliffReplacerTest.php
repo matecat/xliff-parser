@@ -996,7 +996,7 @@ class XliffReplacerTest extends BaseTest {
     /**
      * @test
      */
-    public function should_replace_20_units_wyj_notes_after_segment() {
+    public function should_replace_20_units_with_notes_after_segment() {
 
         $data = $this->getData( [
                 [
