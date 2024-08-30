@@ -498,7 +498,7 @@ abstract class AbstractXliffReplacer {
         if (
             $this->currentTransUnitIsTranslatable !== 'no' &&
             isset( $this->transUnits[ $this->currentTransUnitId ] ) &&
-            isset($this->segments[ $this->segmentInUnitPosition ])
+            isset( $this->segments[ $this->segmentInUnitPosition ] )
         ) {
             return $this->segments[ $this->segmentInUnitPosition ];
         }
