@@ -991,15 +991,12 @@ class XliffReplacerTest extends BaseTest {
 
         $expected = '<mrk mid="0" mtype="seg">ARISTON</mrk>';
         $this->assertEquals( $expected, $output[ 'files' ][ 1 ][ 'trans-units' ][ 3 ][ 'target' ][ 'raw-content' ] );
-
-
     }
-
 
     /**
      * @test
      */
-    public function should_replace_empty_20_units() {
+    public function should_replace_20_units_with_notes_after_segment() {
 
         $data = $this->getData( [
                 [
@@ -1007,59 +1004,104 @@ class XliffReplacerTest extends BaseTest {
                         'data_ref_map'   => null,
                         'eq_word_count'  => null,
                         'error'          => null,
-                        'internal_id'    => "P3953B09A-tu1",
+                        'internal_id'    => "c5c30ef1-1fe7-434a-afb3-4c5035025b40",
                         'mrk_id'         => null,
                         'mrk_prev_tags'  => null,
                         'mrk_succ_tags'  => null,
                         'prev_tags'      => null,
                         'r2'             => null,
-                        'raw_word_count' => "0.00",
+                        'raw_word_count' => "3.00",
                         'segment'        => "",
                         'sid'            => "0",
                         'source_page'    => null,
-                        'status'         => null,
-                        'succ_tags'      => null,
-                        'translation'    => null,
-
-                ],
-                [
-
-                        'data_ref_map'   => null,
-                        'eq_word_count'  => null,
-                        'error'          => null,
-                        'internal_id'    => "P3953B09A-tu2",
-                        'mrk_id'         => null,
-                        'mrk_prev_tags'  => null,
-                        'mrk_succ_tags'  => null,
-                        'prev_tags'      => null,
-                        'r2'             => null,
-                        'raw_word_count' => "0.00",
-                        'segment'        => "",
-                        'sid'            => "1",
-                        'source_page'    => null,
-                        'status'         => null,
-                        'succ_tags'      => null,
-                        'translation'    => null,
-
-                ],
-                [
-                        'data_ref_map'   => null,
-                        'eq_word_count'  => "0.30",
-                        'error'          => null,
-                        'internal_id'    => "P6D3F672D-sub1",
-                        'mrk_id'         => "0",
-                        'mrk_prev_tags'  => null,
-                        'mrk_succ_tags'  => null,
-                        'prev_tags'      => "",
-                        'r2'             => null,
-                        'raw_word_count' => "1.00",
-                        'segment'        => "ARISTON",
-                        'sid'            => "2",
-                        'source_page'    => null,
                         'status'         => "NEW",
-                        'succ_tags'      => "",
-                        'translation'    => "ARISTON",
-                ]
+                        'succ_tags'      => null,
+                        'translation'    => "Bevi Coca Cola!",
+
+                ],
+        ] );
+
+        $inputFile  = __DIR__ . '/../tests/files/notes-after-segment.xliff';
+        $outputFile = __DIR__ . '/../tests/files/output/notes-after-segment.xliff';
+
+        ( new XliffParser() )->replaceTranslation( $inputFile, $data[ 'data' ], $data[ 'transUnits' ], 'it-it', $outputFile, false );
+        $output = ( new XliffParser() )->xliffToArray( file_get_contents( $outputFile ) );
+
+        $expected = 'Bevi Coca Cola!';
+        $expectedNote1 = '3.00';
+        $expectedNote2 = '0';
+        $expectedNote3 = '###___EMPTY_TAG_PLACEHOLDER___###';
+
+        $this->assertEquals( $expected, $output[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ][ 0 ] );
+        $this->assertEquals( $expectedNote1, $output[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'notes' ][ 0 ][ 'raw-content' ] );
+        $this->assertEquals( $expectedNote2, $output[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'notes' ][ 1 ][ 'raw-content' ] );
+        $this->assertEquals( $expectedNote3, $output[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'notes' ][ 2 ][ 'raw-content' ] );
+    }
+
+    /**
+     * @test
+     */
+    public function should_replace_empty_20_units() {
+
+        $data = $this->getData( [
+            [
+
+                'data_ref_map'   => null,
+                'eq_word_count'  => null,
+                'error'          => null,
+                'internal_id'    => "P3953B09A-tu1",
+                'mrk_id'         => null,
+                'mrk_prev_tags'  => null,
+                'mrk_succ_tags'  => null,
+                'prev_tags'      => null,
+                'r2'             => null,
+                'raw_word_count' => "0.00",
+                'segment'        => "",
+                'sid'            => "0",
+                'source_page'    => null,
+                'status'         => null,
+                'succ_tags'      => null,
+                'translation'    => null,
+
+            ],
+            [
+
+                'data_ref_map'   => null,
+                'eq_word_count'  => null,
+                'error'          => null,
+                'internal_id'    => "P3953B09A-tu2",
+                'mrk_id'         => null,
+                'mrk_prev_tags'  => null,
+                'mrk_succ_tags'  => null,
+                'prev_tags'      => null,
+                'r2'             => null,
+                'raw_word_count' => "0.00",
+                'segment'        => "",
+                'sid'            => "1",
+                'source_page'    => null,
+                'status'         => null,
+                'succ_tags'      => null,
+                'translation'    => null,
+
+            ],
+            [
+                'data_ref_map'   => null,
+                'eq_word_count'  => "0.30",
+                'error'          => null,
+                'internal_id'    => "P6D3F672D-sub1",
+                'mrk_id'         => "0",
+                'mrk_prev_tags'  => null,
+                'mrk_succ_tags'  => null,
+                'prev_tags'      => "",
+                'r2'             => null,
+                'raw_word_count' => "1.00",
+                'segment'        => "ARISTON",
+                'sid'            => "2",
+                'source_page'    => null,
+                'status'         => "NEW",
+                'succ_tags'      => "",
+                'translation'    => "ARISTON",
+            ]
         ] );
 
         $inputFile  = __DIR__ . '/../tests/files/test-empty-unit-2.0.xliff';
@@ -1074,10 +1116,7 @@ class XliffReplacerTest extends BaseTest {
 
         $expected = 'ARISTON';
         $this->assertEquals( $expected, $output[ 'files' ][ 1 ][ 'trans-units' ][ 3 ][ 'target' ][ 'raw-content' ][ 0 ] );
-
-
     }
-
 }
 
 class DummyXliffReplacerCallbackWhichReturnFalse implements XliffReplacerCallbackInterface {
