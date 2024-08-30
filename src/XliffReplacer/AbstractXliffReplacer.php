@@ -489,18 +489,20 @@ abstract class AbstractXliffReplacer {
                 $this->lastTransUnit[] = $this->segments[ $id ];
             }
         }
-
     }
 
     /**
      * @return array
      */
     protected function getCurrentSegment(): array {
-        if ( $this->currentTransUnitIsTranslatable !== 'no' && isset( $this->transUnits[ $this->currentTransUnitId ] ) ) {
+        if (
+            $this->currentTransUnitIsTranslatable !== 'no' &&
+            isset( $this->transUnits[ $this->currentTransUnitId ] ) &&
+            isset($this->segments[ $this->segmentInUnitPosition ])
+        ) {
             return $this->segments[ $this->segmentInUnitPosition ];
         }
 
         return [];
     }
-
 }
