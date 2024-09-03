@@ -26,7 +26,7 @@ class StatusToStateAttribute {
             ?string $lastMrkState = null
     ): array {
 
-        $status       = empty( $status ) ? TranslationStatus::STATUS_TRANSLATED : $status;
+        $status = empty( $status ) ? TranslationStatus::STATUS_APPROVED2 : $status;
 
         $stateLevelsMap = [
                 TranslationStatus::STATUS_APPROVED2  => 100,
@@ -61,7 +61,8 @@ class StatusToStateAttribute {
                 ],
         ];
 
-        // If status is null set the default as Translated.
+        // If status is null we set the default status value as Approved2 because in this way
+        // it will not affect the result of the min() function.
         // This is the case when a segment is not shown in the cattool,
         // and the row in segment_translations does not exists.
         // ---> $seg[ 'status' ] is NULL

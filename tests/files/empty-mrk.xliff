@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xliff
+  xmlns="urn:oasis:names:tc:xliff:document:1.2"
+  xmlns:okp="okapi-framework:xliff-extensions"
+  xmlns:yahoo="http://localizr.yahooapis.com/v1/localizrBase.xsd" version="1.2">
+  <file datatype="x-textunit_dto" original="unknown" source-language="en" target-language="fr-FR">
+    <body>
+      <trans-unit id="2973331" resname="creators.PAGE_TITLE" xml:space="preserve">
+        <source xml:lang="en">Yahoo Creators</source>
+        <seg-source>
+          <mrk mid="0" mtype="seg">Yahoo Creators</mrk>
+        </seg-source>
+        <target state="new" xml:lang="fr-FR">
+          <mrk mid="0" mtype="seg">Créateurs Yahoo</mrk>
+        </target>
+        <note>Y4C page title</note>
+      </trans-unit>
+      <trans-unit id="2973421" resname="weather.WEATHER_TEXT" xml:space="preserve">
+        <source xml:lang="en"> and
+          <ph id="1">{condition}</ph>
+        </source>
+        <seg-source>
+          <mrk mid="0" mtype="seg"> </mrk>
+          <mrk mid="1" mtype="seg">and
+            <ph id="1">{condition}</ph>
+          </mrk>
+        </seg-source>
+        <target state="new" xml:lang="fr-FR">
+          <mrk mid="0" mtype="seg"></mrk>
+          <mrk mid="1" mtype="seg">et
+            <ph id="1">{condition}</ph>
+          </mrk>
+        </target>
+        <note>Welcome message, eg ' and sunny</note>
+      </trans-unit>
+      <trans-unit id="2973422" resname="yodel.MORNING_DIGEST" xml:space="preserve">
+        <source xml:lang="en">This morning's news digest</source>
+        <seg-source>
+          <mrk mid="0" mtype="seg">This morning's news digest</mrk>
+        </seg-source>
+        <target xml:lang="fr-FR" state="new" state-qualifier="leveraged-mt">
+          <mrk mid="0" mtype="seg">Le résumé des actualités de ce matin</mrk>
+        </target>
+        <note>text to encourage users to read yahoos morning digest</note>
+        <note annotates="source">This morning's news digest</note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

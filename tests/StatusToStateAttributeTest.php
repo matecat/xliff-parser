@@ -95,20 +95,20 @@ class StatusToStateAttributeTest extends BaseTest {
     public function testNullStatus() {
 
         [ $stateProp, $lastMrkState ] = StatusToStateAttribute::getState( 1, null, '' );
-        $this->assertEquals( "state=\"translated\"", $stateProp );
-        $this->assertEquals( TranslationStatus::STATUS_TRANSLATED, $lastMrkState );
+        $this->assertEquals( "state=\"final\"", $stateProp );
+        $this->assertEquals( TranslationStatus::STATUS_APPROVED2, $lastMrkState );
 
         [ $stateProp, $lastMrkState ] = StatusToStateAttribute::getState( 1, null, TranslationStatus::STATUS_APPROVED2 );
-        $this->assertEquals( "state=\"translated\"", $stateProp );
-        $this->assertEquals( TranslationStatus::STATUS_TRANSLATED, $lastMrkState );
+        $this->assertEquals( "state=\"final\"", $stateProp );
+        $this->assertEquals( TranslationStatus::STATUS_APPROVED2, $lastMrkState );
 
         [ $stateProp, $lastMrkState ] = StatusToStateAttribute::getState( 1, null, TranslationStatus::STATUS_DRAFT );
         $this->assertEquals( "state=\"new\"", $stateProp );
         $this->assertEquals( TranslationStatus::STATUS_DRAFT, $lastMrkState );
 
         [ $stateProp, $lastMrkState ] = StatusToStateAttribute::getState( 1, null, null );
-        $this->assertEquals( "state=\"translated\"", $stateProp );
-        $this->assertEquals( TranslationStatus::STATUS_TRANSLATED, $lastMrkState );
+        $this->assertEquals( "state=\"final\"", $stateProp );
+        $this->assertEquals( TranslationStatus::STATUS_APPROVED2, $lastMrkState );
 
     }
 

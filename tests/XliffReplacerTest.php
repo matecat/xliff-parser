@@ -1117,13 +1117,105 @@ class XliffReplacerTest extends BaseTest {
         $expected = 'ARISTON';
         $this->assertEquals( $expected, $output[ 'files' ][ 1 ][ 'trans-units' ][ 3 ][ 'target' ][ 'raw-content' ][ 0 ] );
     }
+
+    /**
+     * @test
+     */
+    public function should_replace_12_units_with_empty_segments_with_the_correct_state() {
+
+        $data = $this->getData( [
+            [
+                'sid' => '1',
+                'segment' => 'Yahoo Creators',
+                'internal_id' => '2973331',
+                'mrk_id' => '0',
+                'prev_tags' => '',
+                'succ_tags' => '',
+                'mrk_prev_tags' => NULL,
+                'mrk_succ_tags' => NULL,
+                'translation' => 'Creadores de Yahoo',
+                'status' => 'APPROVED',
+                'error' => '',
+                'eq_word_count' => '1.34',
+                'raw_word_count' => '2.00',
+                'source_page' => NULL,
+                'r2' => NULL,
+                'data_ref_map' => NULL,
+            ],
+            [
+                'sid' => '2',
+                'segment' => ' ',
+                'internal_id' => '2973421',
+                'mrk_id' => '0',
+                'prev_tags' => '',
+                'succ_tags' => '',
+                'mrk_prev_tags' => '',
+                'mrk_succ_tags' => '',
+                'translation' => NULL,
+                'status' => NULL,
+                'error' => NULL,
+                'eq_word_count' => NULL,
+                'raw_word_count' => '0.00',
+                'source_page' => NULL,
+                'r2' => NULL,
+                'data_ref_map' => NULL,
+            ],
+            [
+                'sid' => '3',
+                'segment' => 'and <x id="1"/>',
+                'internal_id' => '2973421',
+                'mrk_id' => '1',
+                'prev_tags' => '',
+                'succ_tags' => '',
+                'mrk_prev_tags' => NULL,
+                'mrk_succ_tags' => NULL,
+                'translation' => 'et <x id="1"/>',
+                'status' => 'APPROVED',
+                'error' => '',
+                'eq_word_count' => '0.00',
+                'raw_word_count' => '1.00',
+                'source_page' => NULL,
+                'r2' => NULL,
+                'data_ref_map' => NULL,
+            ],
+            [
+                'sid' => '4',
+                'segment' => 'This morning\'s news digest',
+                'internal_id' => '2973422',
+                'mrk_id' => '0',
+                'prev_tags' => '',
+                'succ_tags' => '',
+                'mrk_prev_tags' => NULL,
+                'mrk_succ_tags' => NULL,
+                'translation' => 'Resumen de noticias de esta mañana',
+                'status' => 'APPROVED',
+                'error' => '',
+                'eq_word_count' => '2.68',
+                'raw_word_count' => '4.00',
+                'source_page' => NULL,
+                'r2' => NULL,
+                'data_ref_map' => NULL,
+            ],
+        ] );
+
+        $inputFile  = __DIR__ . '/../tests/files/empty-mrk.xliff';
+        $outputFile = __DIR__ . '/../tests/files/output/empty-mrk.xliff';
+
+        ( new XliffParser() )->replaceTranslation( $inputFile, $data[ 'data' ], $data[ 'transUnits' ], 'it-it', $outputFile, false );
+        $output = ( new XliffParser() )->xliffToArray( file_get_contents( $outputFile ) );
+
+        $status = 'signed-off';
+        $this->assertEquals( $status, $output[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'target' ][ 'attr' ][ 'state' ] );
+        $this->assertEquals( $status, $output[ 'files' ][ 1 ][ 'trans-units' ][ 2 ][ 'target' ][ 'attr' ][ 'state' ] );
+        $this->assertEquals( $status, $output[ 'files' ][ 1 ][ 'trans-units' ][ 3 ][ 'target' ][ 'attr' ][ 'state' ] );
+    }
 }
 
 class DummyXliffReplacerCallbackWhichReturnFalse implements XliffReplacerCallbackInterface {
     /**
      * @inheritDoc
      */
-    public function thereAreErrors( int $segmentId, string $segment, string $translation, ?array $dataRefMap = [], $error = null ): bool {
+    public function thereAreErrors( int $segmentId, string $segment, string $translation, ?array $dataRefMap = [], ?string $error = null ): bool {
         return false;
     }
 }
@@ -1132,7 +1224,7 @@ class DummyXliffReplacerCallbackWhichReturnTrue implements XliffReplacerCallback
     /**
      * @inheritDoc
      */
-    public function thereAreErrors( int $segmentId, string $segment, string $translation, ?array $dataRefMap = [], $error = null ): bool {
+    public function thereAreErrors( int $segmentId, string $segment, string $translation, ?array $dataRefMap = [], ?string $error = null ): bool {
         return true;
     }
 }
