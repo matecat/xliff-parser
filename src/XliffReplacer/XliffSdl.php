@@ -14,6 +14,18 @@ use Matecat\XliffParser\Utils\Strings;
 class XliffSdl extends Xliff12 {
 
     /**
+     * @var array
+     */
+    protected array $nodesToBuffer = [
+        'source',
+        'seg-source',
+        'note',
+        'context-group',
+        'tag-defs',
+        'cxt-defs'
+    ];
+
+    /**
      * @inheritDoc
      */
     protected function tagOpen( $parser, string $name, array $attr ) {
