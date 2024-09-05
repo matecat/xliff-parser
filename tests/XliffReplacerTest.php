@@ -1209,6 +1209,41 @@ class XliffReplacerTest extends BaseTest {
         $this->assertEquals( $status, $output[ 'files' ][ 1 ][ 'trans-units' ][ 2 ][ 'target' ][ 'attr' ][ 'state' ] );
         $this->assertEquals( $status, $output[ 'files' ][ 1 ][ 'trans-units' ][ 3 ][ 'target' ][ 'attr' ][ 'state' ] );
     }
+
+    /**
+     * @test
+     */
+    public function should_replace_12_units_with_entities() {
+
+        $data = $this->getData( [
+            [
+                'sid' => '1',
+                'segment' => 'Hello&apos;&apos; ',
+                'internal_id' => '2973331',
+                'mrk_id' => '0',
+                'prev_tags' => '',
+                'succ_tags' => '',
+                'mrk_prev_tags' => NULL,
+                'mrk_succ_tags' => NULL,
+                'translation' => 'Ciao&apos;&apos; ',
+                'status' => 'APPROVED',
+                'error' => '',
+                'eq_word_count' => '1.34',
+                'raw_word_count' => '2.00',
+                'source_page' => NULL,
+                'r2' => NULL,
+                'data_ref_map' => NULL,
+            ],
+        ] );
+
+        $inputFile  = __DIR__ . '/../tests/files/with-entities.xliff';
+        $outputFile = __DIR__ . '/../tests/files/output/with-entities.xliff';
+
+        ( new XliffParser() )->replaceTranslation( $inputFile, $data[ 'data' ], $data[ 'transUnits' ], 'it-it', $outputFile, false );
+        $output = ( new XliffParser() )->xliffToArray( file_get_contents( $outputFile ) );
+
+        $this->assertEquals( "<mrk mid=\"0\" mtype=\"seg\">Ciao''</mrk> ", $output[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ] );
+    }
 }
 
 class DummyXliffReplacerCallbackWhichReturnFalse implements XliffReplacerCallbackInterface {

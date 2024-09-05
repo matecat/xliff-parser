@@ -14,6 +14,18 @@ use Matecat\XliffParser\Utils\Strings;
 class XliffSdl extends Xliff12 {
 
     /**
+     * @var array
+     */
+    protected array $nodesToBuffer = [
+        'source',
+        'seg-source',
+        'note',
+        'context-group',
+        'tag-defs',
+        'cxt-defs'
+    ];
+
+    /**
      * @inheritDoc
      */
     protected function tagOpen( $parser, string $name, array $attr ) {
@@ -100,4 +112,17 @@ class XliffSdl extends Xliff12 {
 
     }
 
+    /**
+     * This function creates a <target>
+     *
+     * @param string $translation
+     * @param string $stateProp
+     *
+     * @return string
+     */
+    protected function createTargetTag( string $translation, string $stateProp ): string {
+        $targetLang = ' xml:lang="' . $this->targetLang . '"';
+
+        return "<target $targetLang $stateProp>$translation</target>";
+    }
 }
