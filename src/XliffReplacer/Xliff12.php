@@ -238,7 +238,7 @@ class Xliff12 extends AbstractXliffReplacer {
      *
      * @return string
      */
-    private function createTargetTag( string $translation, string $stateProp ): string {
+    protected function createTargetTag( string $translation, string $stateProp ): string {
         $targetLang = ' xml:lang="' . $this->targetLang . '"';
         $tag        = "<target $targetLang $stateProp>$translation</target>";
         $tag        .= "\n<count-group name=\"$this->currentTransUnitId\"><count count-type=\"x-matecat-raw\">" . $this->counts[ 'raw_word_count' ] . "</count><count count-type=\"x-matecat-weighted\">" . $this->counts[ 'eq_word_count' ] . '</count></count-group>';

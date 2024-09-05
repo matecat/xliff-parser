@@ -112,4 +112,17 @@ class XliffSdl extends Xliff12 {
 
     }
 
+    /**
+     * This function creates a <target>
+     *
+     * @param string $translation
+     * @param string $stateProp
+     *
+     * @return string
+     */
+    protected function createTargetTag( string $translation, string $stateProp ): string {
+        $targetLang = ' xml:lang="' . $this->targetLang . '"';
+
+        return "<target $targetLang $stateProp>$translation</target>";
+    }
 }
