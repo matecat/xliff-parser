@@ -146,8 +146,8 @@ class XliffParser {
         $xliff[ 'files' ][ $index ][ 'reference' ][] = self::extractBase64( $b[ 0 ] );
         $index++;
 
-        // If there are more than 2 <internal-file> nodes,
-        // loop and extract any other extra <internal-file> node
+        // Sometimes, sdlxliff files can contain more than 2 <internal-file> nodes.
+        // In this case loop and extract any other extra <internal-file> node
         for($i=2; $i < $tagMatches; $i++){
             if ( isset( $a[ $i ] ) ) {
                 $c                                           = Strings::preg_split( '|</internal-file[\s>]|i', $a[ $i ] );
