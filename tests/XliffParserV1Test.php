@@ -661,4 +661,19 @@ class XliffParserV1Test extends BaseTest {
         $this->assertCount( 7, $parsed[ 'files' ][ 3 ][ 'trans-units' ] );
     }
 
+    /**
+     * @test
+     * @return void
+     * @throws NotSupportedVersionException
+     * @throws NotValidFileException
+     * @throws InvalidXmlException
+     * @throws XmlParsingException
+     */
+    public function can_parse_large_sdlxliff_with_severatl_interal_file_nodes() {
+
+        $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'StudioViewsFile.Split_0001-2.xml' ) );
+
+        $this->assertCount( 135, $parsed[ 'files' ]);
+        $this->assertCount( 26, $parsed[ 'files' ][ 1 ][ 'trans-units' ]);
+    }
 }
