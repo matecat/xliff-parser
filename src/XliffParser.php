@@ -93,7 +93,7 @@ class XliffParser {
                 new Config(
                         null,
                         false,
-                        LIBXML_NONET
+                        LIBXML_NONET | LIBXML_PARSEHUGE
                 )
         );
 
@@ -132,11 +132,12 @@ class XliffParser {
      * @return mixed|string
      */
     private static function removeInternalFileTagFromContent( $xliffContent, &$xliff ) {
-        $index = 1;
-        $a     = Strings::preg_split( '|<internal-file[\s>]|i', $xliffContent );
+        $index       = 1;
+        $a           = Strings::preg_split( '|<internal-file[\s>]|i', $xliffContent );
+        $tagMatches  = count( $a );
 
         // no match, return original string
-        if ( count( $a ) === 1 ) {
+        if ( $tagMatches === 1 ) {
             return $a[ 0 ];
         }
 
@@ -145,10 +146,14 @@ class XliffParser {
         $xliff[ 'files' ][ $index ][ 'reference' ][] = self::extractBase64( $b[ 0 ] );
         $index++;
 
-        if ( isset( $a[ 2 ] ) ) {
-            $c                                           = Strings::preg_split( '|</internal-file[\s>]|i', $a[ 2 ] );
-            $strippedContent                             .= $c[ 1 ];
-            $xliff[ 'files' ][ $index ][ 'reference' ][] = self::extractBase64( $c[ 0 ] );
+        // Sometimes, sdlxliff files can contain more than 2 <internal-file> nodes.
+        // In this case loop and extract any other extra <internal-file> node
+        for($i=2; $i < $tagMatches; $i++){
+            if ( isset( $a[ $i ] ) ) {
+                $c                                           = Strings::preg_split( '|</internal-file[\s>]|i', $a[ $i ] );
+                $strippedContent                             .= $c[ 1 ];
+                $xliff[ 'files' ][ $index ][ 'reference' ][] = self::extractBase64( $c[ 0 ] );
+            }
         }
 
         return $strippedContent;
