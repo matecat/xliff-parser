@@ -1244,6 +1244,47 @@ class XliffReplacerTest extends BaseTest {
 
         $this->assertEquals( "<mrk mid=\"0\" mtype=\"seg\">Ciao''</mrk> ", $output[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ] );
     }
+
+    /**
+     * @test
+     */
+    public function other_tests_replacing_12_units_with_entities() {
+
+        $data = $this->getData( [
+            [
+                'sid' => '1',
+                'segment' => 'Hello&apos;&apos; ',
+                'internal_id' => '3142672',
+                'mrk_id' => '0',
+                'prev_tags' => '',
+                'succ_tags' => '',
+                'mrk_prev_tags' => NULL,
+                'mrk_succ_tags' => NULL,
+                'translation' => 'با دقت به کد زیر نگاه کنید. با کلیک روی «اجرا»، این برنامه کدام طراحی را انجام می‌دهد؟',
+                'status' => 'APPROVED',
+                'error' => '',
+                'eq_word_count' => '1.34',
+                'raw_word_count' => '2.00',
+                'source_page' => NULL,
+                'r2' => NULL,
+                'data_ref_map' => NULL,
+            ],
+        ] );
+
+        $inputFile  = __DIR__ . '/../tests/files/entities.xliff';
+        $outputFile = __DIR__ . '/../tests/files/output/entities.xliff';
+
+        ( new XliffParser() )->replaceTranslation( $inputFile, $data[ 'data' ], $data[ 'transUnits' ], 'it-it', $outputFile, false );
+//        $output = ( new XliffParser() )->xliffToArray( file_get_contents( $outputFile ) );
+//        $a = 33333;
+//        $a = 33333;
+//        $a = 33333;
+//        $a = 33333;
+
+//        $output = ( new XliffParser() )->xliffToArray( file_get_contents( $outputFile ) );
+//
+//        $this->assertEquals( "<mrk mid=\"0\" mtype=\"seg\">Ciao''</mrk> ", $output[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ] );
+    }
 }
 
 class DummyXliffReplacerCallbackWhichReturnFalse implements XliffReplacerCallbackInterface {
