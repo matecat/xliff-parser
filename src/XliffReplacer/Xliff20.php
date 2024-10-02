@@ -69,6 +69,11 @@ class Xliff20 extends AbstractXliffReplacer {
         // <target> must be stripped to be replaced, so this check avoids <target> reconstruction
         if ( !$this->inTarget ) {
 
+            // We need bufferIsActive for not target nodes with currentTransUnitIsTranslatable = 'NO'
+            if($name === 'target' and $this->currentTransUnitIsTranslatable === 'no'){
+                $this->bufferIsActive = true;
+            }
+
             $tag = '';
 
             //
@@ -167,7 +172,9 @@ class Xliff20 extends AbstractXliffReplacer {
          */
         if ( !$this->isEmpty ) {
 
-            if ( !$this->inTarget ) {
+            // write closing tag if is not a target
+            // EXCLUDE the target nodes with currentTransUnitIsTranslatable = 'NO'
+            if ( !$this->inTarget and $this->currentTransUnitIsTranslatable !== 'no' ) {
                 $tag = "</$name>";
             }
 
@@ -195,6 +202,12 @@ class Xliff20 extends AbstractXliffReplacer {
                     //append translation
                     $tag = "<target>$translation</target>";
 
+                } elseif( !empty($this->CDATABuffer) and $this->currentTransUnitIsTranslatable === 'no' ) {
+
+                    // These are target nodes with currentTransUnitIsTranslatable = 'NO'
+                    $this->bufferIsActive = false;
+                    $tag                  = $this->CDATABuffer . "</$name>";
+                    $this->CDATABuffer    = "";
                 }
 
                 // signal we are leaving a target
