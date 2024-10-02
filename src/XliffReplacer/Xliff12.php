@@ -127,7 +127,7 @@ class Xliff12 extends AbstractXliffReplacer {
                     // actually there may be more than one segment to that ID if there are two mrk of the same source segment
                     $tag = $this->rebuildTarget();
 
-                } else {
+                } elseif( !empty($this->CDATABuffer) and $this->currentTransUnitIsTranslatable === 'no' ) {
 
                     // These are target nodes with currentTransUnitIsTranslatable = 'NO'
                     $this->bufferIsActive = false;
