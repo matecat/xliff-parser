@@ -143,12 +143,6 @@ abstract class AbstractXliffReplacer {
 
         }
 
-        $a = 3333;
-        $a = 3333;
-        $a = 3333;
-        $a = 3333;
-        $a = 3333;
-
         // close Sax parser
         $this->closeSaxParser( $xmlParser );
 
@@ -404,10 +398,6 @@ abstract class AbstractXliffReplacer {
         if ( in_array( $name, $this->nodesToBuffer ) ) {
             $this->bufferIsActive = true;
         }
-
-
-
-
     }
 
     /**

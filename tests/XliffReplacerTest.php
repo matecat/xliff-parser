@@ -1275,15 +1275,17 @@ class XliffReplacerTest extends BaseTest {
         $outputFile = __DIR__ . '/../tests/files/output/entities.xliff';
 
         ( new XliffParser() )->replaceTranslation( $inputFile, $data[ 'data' ], $data[ 'transUnits' ], 'it-it', $outputFile, false );
-//        $output = ( new XliffParser() )->xliffToArray( file_get_contents( $outputFile ) );
-//        $a = 33333;
-//        $a = 33333;
-//        $a = 33333;
-//        $a = 33333;
+        $output = ( new XliffParser() )->xliffToArray( file_get_contents( $outputFile ) );
 
-//        $output = ( new XliffParser() )->xliffToArray( file_get_contents( $outputFile ) );
-//
-//        $this->assertEquals( "<mrk mid=\"0\" mtype=\"seg\">Ciao''</mrk> ", $output[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ] );
+        $expected = '&lt;table&gt;
+&lt;tr&gt;&lt;td&gt;A&lt;/td&gt;&lt;td&gt;&lt;img src="https://images.code.org/cfc3f8206438a60afe3be9afe7fc0a22-image-1489118742610.10.15.png" width="100px" style="mix-blend-mode: multiply;"/&gt;&lt;/td&gt;&lt;td&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/td&gt;&lt;td&gt;B&lt;/td&gt;&lt;td&gt;&lt;img src="https://images.code.org/975b027684d2f5411b960bf82987663e-image-1489119999013.11.13.png" width="100px" style="mix-blend-mode: multiply;"/&gt;&lt;/td&gt;&lt;td&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/td&gt;&lt;td&gt;C&lt;/td&gt;&lt;td&gt;&lt;img src="https://images.code.org/635ac54ed7cb2e2d24eb341b3ec4eecb-image-1489120024059.12.00.png" width="80px" style="mix-blend-mode: multiply; clip: rect(0px,0px,0px,40px);"/&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;br/&gt;&lt;br/&gt;
+
+';
+
+        $this->assertEquals( $expected, $output[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ] );
     }
 }
 
