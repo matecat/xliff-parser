@@ -55,11 +55,6 @@ class Xliff12 extends AbstractXliffReplacer {
         // <target> must be stripped to be replaced, so this check avoids <target> reconstruction
         if ( !$this->inTarget ) {
 
-            // We need bufferIsActive for not target nodes with currentTransUnitIsTranslatable = 'NO'
-            if($name === 'target' and $this->currentTransUnitIsTranslatable === 'no'){
-                $this->bufferIsActive = true;
-            }
-
             $tag = '';
 
             // construct tag

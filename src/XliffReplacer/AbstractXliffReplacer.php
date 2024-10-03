@@ -398,6 +398,13 @@ abstract class AbstractXliffReplacer {
         if ( in_array( $name, $this->nodesToBuffer ) ) {
             $this->bufferIsActive = true;
         }
+
+        // We need bufferIsActive for <target> nodes with currentTransUnitIsTranslatable = 'NO'
+        // because in the other case, the target can be chunked into pieces by xml_set_character_data_handler()
+        // and this can potentially lead to a wrong string rebuild by postProcAndFlush function if the internal placeholders are split
+        if($name === 'target' and $this->currentTransUnitIsTranslatable === 'no'){
+            $this->bufferIsActive = true;
+        }
     }
 
     /**
