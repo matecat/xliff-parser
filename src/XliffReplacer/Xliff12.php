@@ -108,7 +108,9 @@ class Xliff12 extends AbstractXliffReplacer {
          */
         if ( !$this->isEmpty ) {
 
-            if ( !$this->inTarget ) {
+            // write closing tag if is not a target
+            // EXCLUDE the target nodes with currentTransUnitIsTranslatable = 'NO'
+            if ( !$this->inTarget and $this->currentTransUnitIsTranslatable !== 'no' ) {
                 $tag = "</$name>";
             }
 
@@ -120,6 +122,12 @@ class Xliff12 extends AbstractXliffReplacer {
                     // actually there may be more than one segment to that ID if there are two mrk of the same source segment
                     $tag = $this->rebuildTarget();
 
+                } elseif( !empty($this->CDATABuffer) and $this->currentTransUnitIsTranslatable === 'no' ) {
+
+                    // These are target nodes with currentTransUnitIsTranslatable = 'NO'
+                    $this->bufferIsActive = false;
+                    $tag                  = $this->CDATABuffer . "</$name>";
+                    $this->CDATABuffer    = "";
                 }
 
                 $this->targetWasWritten = true;

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file id="179174" original="/course_content/2022/coursee-2022.json" source-language="en-US" target-language="fa" datatype="plaintext" project-id="26074" tool-id="crowdin">
+    <header>
+      <tool tool-id="crowdin" tool-name="Crowdin" tool-version="1.1"/>
+    </header>
+    <body>
+      <trans-unit id="3142670" resname="&quot;https://studio.code.org/s/coursee-2022/lessons/7/levels/7&quot;.sublevels.courseD_artist_nestedLoops9_predict12022.contained levels.0.dsls.markdown" translate="no" approved="yes">
+        <source>&lt;table&gt;
+&lt;tr&gt;&lt;td&gt;A&lt;/td&gt;&lt;td&gt;&lt;img src=&quot;https://images.code.org/cfc3f8206438a60afe3be9afe7fc0a22-image-1489118742610.10.15.png&quot; width=&quot;100px&quot; style=&quot;mix-blend-mode: multiply;&quot;/&gt;&lt;/td&gt;&lt;td&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/td&gt;&lt;td&gt;B&lt;/td&gt;&lt;td&gt;&lt;img src=&quot;https://images.code.org/975b027684d2f5411b960bf82987663e-image-1489119999013.11.13.png&quot; width=&quot;100px&quot; style=&quot;mix-blend-mode: multiply;&quot;/&gt;&lt;/td&gt;&lt;td&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/td&gt;&lt;td&gt;C&lt;/td&gt;&lt;td&gt;&lt;img src=&quot;https://images.code.org/635ac54ed7cb2e2d24eb341b3ec4eecb-image-1489120024059.12.00.png&quot; width=&quot;80px&quot; style=&quot;mix-blend-mode: multiply; clip: rect(0px,0px,0px,40px);&quot;/&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;br/&gt;&lt;br/&gt;
+
+</source>
+        <target state="final">&lt;table&gt;
+&lt;tr&gt;&lt;td&gt;A&lt;/td&gt;&lt;td&gt;&lt;img src=&quot;https://images.code.org/cfc3f8206438a60afe3be9afe7fc0a22-image-1489118742610.10.15.png&quot; width=&quot;100px&quot; style=&quot;mix-blend-mode: multiply;&quot;/&gt;&lt;/td&gt;&lt;td&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/td&gt;&lt;td&gt;B&lt;/td&gt;&lt;td&gt;&lt;img src=&quot;https://images.code.org/975b027684d2f5411b960bf82987663e-image-1489119999013.11.13.png&quot; width=&quot;100px&quot; style=&quot;mix-blend-mode: multiply;&quot;/&gt;&lt;/td&gt;&lt;td&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/td&gt;&lt;td&gt;C&lt;/td&gt;&lt;td&gt;&lt;img src=&quot;https://images.code.org/635ac54ed7cb2e2d24eb341b3ec4eecb-image-1489120024059.12.00.png&quot; width=&quot;80px&quot; style=&quot;mix-blend-mode: multiply; clip: rect(0px,0px,0px,40px);&quot;/&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;br/&gt;&lt;br/&gt;
+
+</target>
+        <context-group purpose="information">
+          <context context-type="source">https://studio.code.org/s/coursee-2022/lessons/7/levels/7 -&gt; sublevels -&gt; courseD_artist_nestedLoops9_predict12022 -&gt; contained levels -&gt; 0 -&gt; dsls -&gt; markdown</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3142672" resname="&quot;https://studio.code.org/s/coursee-2022/lessons/7/levels/7&quot;.sublevels.courseD_artist_nestedLoops9_predict12022.contained levels.0.dsls.questions.0.text" approved="yes">
+        <source>Take a good look at the code below. Which drawing will this program make when you click &quot;Run&quot;?</source>
+        <target state="final">با دقت به کد زیر نگاه کنید. با کلیک روی «اجرا»، این برنامه کدام طراحی را انجام می‌دهد؟</target>
+        <context-group purpose="information">
+          <context context-type="source">https://studio.code.org/s/coursee-2022/lessons/7/levels/7 -&gt; sublevels -&gt; courseD_artist_nestedLoops9_predict12022 -&gt; contained levels -&gt; 0 -&gt; dsls -&gt; questions -&gt; 0 -&gt; text</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

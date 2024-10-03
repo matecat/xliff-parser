@@ -1244,6 +1244,49 @@ class XliffReplacerTest extends BaseTest {
 
         $this->assertEquals( "<mrk mid=\"0\" mtype=\"seg\">Ciao''</mrk> ", $output[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ] );
     }
+
+    /**
+     * @test
+     */
+    public function other_tests_replacing_12_units_with_entities() {
+
+        $data = $this->getData( [
+            [
+                'sid' => '1',
+                'segment' => 'Hello&apos;&apos; ',
+                'internal_id' => '3142672',
+                'mrk_id' => '0',
+                'prev_tags' => '',
+                'succ_tags' => '',
+                'mrk_prev_tags' => NULL,
+                'mrk_succ_tags' => NULL,
+                'translation' => 'با دقت به کد زیر نگاه کنید. با کلیک روی «اجرا»، این برنامه کدام طراحی را انجام می‌دهد؟',
+                'status' => 'APPROVED',
+                'error' => '',
+                'eq_word_count' => '1.34',
+                'raw_word_count' => '2.00',
+                'source_page' => NULL,
+                'r2' => NULL,
+                'data_ref_map' => NULL,
+            ],
+        ] );
+
+        $inputFile  = __DIR__ . '/../tests/files/entities.xliff';
+        $outputFile = __DIR__ . '/../tests/files/output/entities.xliff';
+
+        ( new XliffParser() )->replaceTranslation( $inputFile, $data[ 'data' ], $data[ 'transUnits' ], 'it-it', $outputFile, false );
+        $output = ( new XliffParser() )->xliffToArray( file_get_contents( $outputFile ) );
+
+        $expected = '&lt;table&gt;
+&lt;tr&gt;&lt;td&gt;A&lt;/td&gt;&lt;td&gt;&lt;img src="https://images.code.org/cfc3f8206438a60afe3be9afe7fc0a22-image-1489118742610.10.15.png" width="100px" style="mix-blend-mode: multiply;"/&gt;&lt;/td&gt;&lt;td&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/td&gt;&lt;td&gt;B&lt;/td&gt;&lt;td&gt;&lt;img src="https://images.code.org/975b027684d2f5411b960bf82987663e-image-1489119999013.11.13.png" width="100px" style="mix-blend-mode: multiply;"/&gt;&lt;/td&gt;&lt;td&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/td&gt;&lt;td&gt;C&lt;/td&gt;&lt;td&gt;&lt;img src="https://images.code.org/635ac54ed7cb2e2d24eb341b3ec4eecb-image-1489120024059.12.00.png" width="80px" style="mix-blend-mode: multiply; clip: rect(0px,0px,0px,40px);"/&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;br/&gt;&lt;br/&gt;
+
+';
+
+        $this->assertEquals( $expected, $output[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ] );
+    }
 }
 
 class DummyXliffReplacerCallbackWhichReturnFalse implements XliffReplacerCallbackInterface {
