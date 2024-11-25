@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:okp="okapi-framework:xliff-extensions" xmlns:yahoo="http://localizr.yahooapis.com/v1/localizrBase.xsd" version="1.2">
+<file datatype="x-textunit_dto" original="unknown" source-language="en" target-language="fr-FR">
+<header>
+<count-group name="total">
+    <count count-type="total" unit="trans-unit">2</count>
+    <count count-type="total" unit="word">40</count>
+    <count count-type="total" unit="x-fuzzy-100">null</count>
+    <count count-type="total" unit="x-fuzzy-95">null</count>
+    <count count-type="total" unit="x-fuzzy-85">null</count>
+    <count count-type="total" unit="x-fuzzy-75">null</count>
+    <count count-type="total" unit="x-fuzzy-new">40</count>
+</count-group>
+</header>
+<body>
+  <trans-unit id="2975931" resname="AYrjpi" xml:space="preserve">
+    <source xml:lang="en">No more digging. If it’s top of mind, you’ll find it at the top of your inbox.</source>
+    <seg-source><mrk mid="0" mtype="seg">No more digging.</mrk> <mrk mid="1" mtype="seg">If it’s top of mind, you’ll find it at the top of your inbox.</mrk></seg-source>
+    <target state="translated" state-qualifier="x-validation" xml:lang="fr-FR"><mrk mid="0" mtype="seg">No more digging.</mrk> <mrk mid="1" mtype="seg">If it’s top of mind, you’ll find it at the top of your inbox.</mrk> </target>
+    <note annotates="target">Reported in https://ouryahoo.atlassian.net/browse/MDF-3156, missing a space before/after a period.</note><note>Description for onboarding ai features modal priority step</note><note annotates="source">No more digging. If it’s top of mind, you’ll find it at the top of your inbox.</note>
+
+
+    <context-group purpose="location">
+<context context-type="url"/>
+</context-group>
+  </trans-unit>
+  <trans-unit id="2976344" resname="bNtCPN" xml:space="preserve">
+    <source xml:lang="en">Your messages are all here with a new look and feel. See how your mailbox uses AI to save you time.</source>
+    <seg-source><mrk mid="0" mtype="seg">Your messages are all here with a new look and feel.</mrk> <mrk mid="1" mtype="seg">See how your mailbox uses AI to save you time.</mrk></seg-source>
+    <target state="translated" state-qualifier="x-validation" xml:lang="fr-FR"><mrk mid="0" mtype="seg">Your messages are all here with a new look and feel.</mrk> <mrk mid="1" mtype="seg">See how your mailbox uses AI to save you time.</mrk> </target>
+    <note annotates="target">Reported in https://ouryahoo.atlassian.net/browse/MDF-3156, missing a space before/after a period.</note><note>Onboarding AI features card body</note><note annotates="source">Your messages are all here with a new look and feel. See how your mailbox uses AI to save you time.</note>
+
+
+    <context-group purpose="location">
+<context context-type="url"/>
+</context-group>
+  </trans-unit>
+</body>
+</file>
+</xliff>

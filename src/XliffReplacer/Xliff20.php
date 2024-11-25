@@ -233,7 +233,7 @@ class Xliff20 extends AbstractXliffReplacer {
                 $this->CDATABuffer = "";
 
                 //flush to the pointer
-                $this->postProcAndFlush( $this->outputFP, $tag );
+                $this->postProcAndFlush( $this->outputFP, $tag, false, $name === 'source' );
 
             } elseif ( 'segment' === $name ) {
 
@@ -278,7 +278,7 @@ class Xliff20 extends AbstractXliffReplacer {
             $this->CDATABuffer    = "";
 
             //flush to the pointer
-            $this->postProcAndFlush( $this->outputFP, $tag );
+            $this->postProcAndFlush( $this->outputFP, $tag, false, $name === 'source' );
 
         } else {
             //ok, nothing to be done; reset flag for next coming tag
