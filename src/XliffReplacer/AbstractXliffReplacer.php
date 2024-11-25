@@ -54,6 +54,8 @@ abstract class AbstractXliffReplacer {
             'eq_word_count'  => 0,
     ];
 
+    protected $mrkTagsMap = [];
+
     /**
      * AbstractXliffReplacer constructor.
      *
@@ -303,6 +305,30 @@ abstract class AbstractXliffReplacer {
         //postprocess string
         $data = preg_replace( "/" . self::$INTERNAL_TAG_PLACEHOLDER . '(.*?)' . self::$INTERNAL_TAG_PLACEHOLDER . "/", '&$1;', $data );
         $data = str_replace( '&nbsp;', ' ', $data );
+
+        // check if there are spaces between <mrk> tags
+        preg_match_all('/<mrk \b[^>]*>(.*?)<\/mrk>(\s+)/', $data, $spacesBetweenMrkCheck);
+
+        if(!empty($spacesBetweenMrkCheck[0])){
+
+            // $spacesBetweenMrkCheck[0] // holds the complete tags
+            // $spacesBetweenMrkCheck[1] // holds the text
+            // $spacesBetweenMrkCheck[2] // holds the spaces
+
+            foreach ($spacesBetweenMrkCheck[0] as $index => $mrk){
+                preg_match('/mid="(\d+)"/', $mrk, $markMatch);
+
+                if(isset($markMatch[1])){
+
+                    if(!isset($this->mrkTagsMap[$this->currentTransUnitId])){
+                        $this->mrkTagsMap[$this->currentTransUnitId] = [];
+                    }
+
+                    $this->mrkTagsMap[$this->currentTransUnitId][$markMatch[1]] = $spacesBetweenMrkCheck[2][$index];
+                }
+            }
+        }
+
         if ( !$treatAsCDATA ) {
             //unix2dos
             $data = str_replace( "\r\n", "\r", $data );

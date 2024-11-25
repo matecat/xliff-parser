@@ -228,10 +228,23 @@ class Xliff12 extends AbstractXliffReplacer {
         return $transUnitTranslation;
     }
 
+    /**
+     * @param array $seg
+     * @param string $translation
+     * @return string
+     */
     protected function rebuildMarks( array $seg, string $translation ): string {
 
         if ( $seg[ 'mrk_id' ] !== null && $seg[ 'mrk_id' ] != '' ) {
             $translation = "<mrk mid=\"" . $seg[ 'mrk_id' ] . "\" mtype=\"seg\">" . $seg[ 'mrk_prev_tags' ] . $translation . $seg[ 'mrk_succ_tags' ] . "</mrk>";
+
+            // check if there is a trailing space in the map of this trans unit
+            if(
+                isset($this->mrkTagsMap[$this->currentTransUnitId]) and
+                isset($this->mrkTagsMap[$this->currentTransUnitId][$seg[ 'mrk_id' ]])
+            ){
+                $translation .= $this->mrkTagsMap[$this->currentTransUnitId][$seg[ 'mrk_id' ]];
+            }
         }
 
         return $translation;
