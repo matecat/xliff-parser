@@ -142,7 +142,7 @@ class Xliff12 extends AbstractXliffReplacer {
                 $this->CDATABuffer    = "";
 
                 //flush to the pointer
-                $this->postProcAndFlush( $this->outputFP, $tag );
+                $this->postProcAndFlush( $this->outputFP, $tag, false, $name === 'seg-source' );
 
             } elseif ( $name === $this->tuTagName ) {
 
@@ -179,7 +179,7 @@ class Xliff12 extends AbstractXliffReplacer {
             $this->CDATABuffer    = "";
 
             //flush to the pointer
-            $this->postProcAndFlush( $this->outputFP, $tag );
+            $this->postProcAndFlush( $this->outputFP, $tag, false, $name === 'seg-source'  );
 
         } else {
             //ok, nothing to be done; reset flag for next coming tag

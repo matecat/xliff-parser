@@ -298,33 +298,42 @@ abstract class AbstractXliffReplacer {
      * postprocess escaped data and write to disk
      *
      * @param resource $fp
-     * @param string   $data
-     * @param bool     $treatAsCDATA
+     * @param string $data
+     * @param bool $treatAsCDATA
+     * @param bool $parseMarks
      */
-    protected function postProcAndFlush( $fp, string $data, bool $treatAsCDATA = false ) {
+    protected function postProcAndFlush($fp, string $data, bool $treatAsCDATA = false, $parseMarks = false ) {
         //postprocess string
         $data = preg_replace( "/" . self::$INTERNAL_TAG_PLACEHOLDER . '(.*?)' . self::$INTERNAL_TAG_PLACEHOLDER . "/", '&$1;', $data );
         $data = str_replace( '&nbsp;', ' ', $data );
 
-        // check if there are spaces between <mrk> tags
-        preg_match_all('/<mrk \b[^>]*>(.*?)<\/mrk>(\s+)/', $data, $spacesBetweenMrkCheck);
+        // extract <mrk> map only for <seg-source> tag
+        if($parseMarks){
+            // check if there are spaces between <mrk> tags
+            preg_match_all('/<mrk \b[^>]*>(.*?)<\/mrk>(\s+)/', $data, $spacesBetweenMrkCheck);
 
-        if(!empty($spacesBetweenMrkCheck[0])){
+            if(!empty($spacesBetweenMrkCheck[0])){
 
-            // $spacesBetweenMrkCheck[0] // holds the complete tags
-            // $spacesBetweenMrkCheck[1] // holds the text
-            // $spacesBetweenMrkCheck[2] // holds the spaces
+                // $spacesBetweenMrkCheck[0] // holds the complete tags
+                // $spacesBetweenMrkCheck[1] // holds the text
+                // $spacesBetweenMrkCheck[2] // holds the spaces
 
-            foreach ($spacesBetweenMrkCheck[0] as $index => $mrk){
-                preg_match('/mid="(\d+)"/', $mrk, $markMatch);
+                foreach ($spacesBetweenMrkCheck[0] as $index => $mrk){
 
-                if(isset($markMatch[1])){
-
-                    if(!isset($this->mrkTagsMap[$this->currentTransUnitId])){
-                        $this->mrkTagsMap[$this->currentTransUnitId] = [];
+                    if($this instanceof Xliff20){
+                        preg_match('/id="(\d+)"/', $mrk, $markMatch);
+                    } else {
+                        preg_match('/mid="(\d+)"/', $mrk, $markMatch);
                     }
 
-                    $this->mrkTagsMap[$this->currentTransUnitId][$markMatch[1]] = $spacesBetweenMrkCheck[2][$index];
+                    if(isset($markMatch[1])){
+
+                        if(!isset($this->mrkTagsMap[$this->currentTransUnitId])){
+                            $this->mrkTagsMap[$this->currentTransUnitId] = [];
+                        }
+
+                        $this->mrkTagsMap[$this->currentTransUnitId][$markMatch[1]] = $spacesBetweenMrkCheck[2][$index];
+                    }
                 }
             }
         }
