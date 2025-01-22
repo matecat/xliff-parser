@@ -248,6 +248,11 @@ class XliffParserV2 extends AbstractXliffParser {
         $transUnitIdArrayForUniquenessCheck[] = $id;
         $metadata[ 'id' ]                     = $id;
 
+        // name
+        if ( null !== $transUnit->attributes->getNamedItem( 'name' ) ) {
+            $metadata[ 'name' ] = $transUnit->attributes->getNamedItem( 'name' )->nodeValue;
+        }
+        
         // translate
         if ( null !== $transUnit->attributes->getNamedItem( 'translate' ) ) {
             $metadata[ 'translate' ] = $transUnit->attributes->getNamedItem( 'translate' )->nodeValue;
