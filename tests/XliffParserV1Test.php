@@ -673,7 +673,27 @@ class XliffParserV1Test extends BaseTest {
 
         $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'StudioViewsFile.Split_0001-2.xml' ) );
 
-        $this->assertCount( 135, $parsed[ 'files' ]);
-        $this->assertCount( 26, $parsed[ 'files' ][ 1 ][ 'trans-units' ]);
+        $this->assertCount( 135, $parsed[ 'files' ] );
+        $this->assertCount( 26, $parsed[ 'files' ][ 1 ][ 'trans-units' ] );
+    }
+
+    /**
+     * @test
+     * @throws InvalidXmlException
+     * @throws NotSupportedVersionException
+     * @throws NotValidFileException
+     * @throws XmlParsingException
+     */
+    public function can_parse_external_file_attribute() {
+
+        $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'external-file.xml' ) );
+        $attr   = $parsed[ 'files' ][ 1 ][ 'attr' ];
+
+        $this->assertEquals( "https://funny-clarke.46-105-154-110.plesk.page/", $attr[ 'external-file' ] );
+
+        $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'Working_with_the_Review_tool.xlf' ) );
+        $attr   = $parsed[ 'files' ][ 1 ][ 'attr' ];
+
+        $this->assertEquals( "Working with the Review tool.htm.skl", $attr[ 'external-file' ] );
     }
 }

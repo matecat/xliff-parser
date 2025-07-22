@@ -33,6 +33,14 @@ class XliffParserV1 extends AbstractXliffParser {
             $transUnitIdArrayForUniquenessCheck = [];
             $j                                  = 1;
             foreach ( $file->childNodes as $body ) {
+
+                // external-file
+                if ( $body->nodeName === 'header' ) {
+                    foreach ( $body->childNodes as $header ) {
+                        $this->extractExternalFile( $header, $i, $output );
+                    }
+                }
+
                 if ( $body->nodeName === 'body' ) {
                     foreach ( $body->childNodes as $childNode ) {
                         $this->extractTuFromNode( $childNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j );
@@ -51,6 +59,37 @@ class XliffParserV1 extends AbstractXliffParser {
         }
 
         return $output;
+    }
+
+    /**
+     * @param DOMNode    $header
+     * @param            $i
+     * @param            $output
+     */
+    private function extractExternalFile( DOMNode $header, $i, &$output ) {
+
+        if ( $header->nodeName === "skl" ) {
+            foreach ( $header->childNodes as $referenceNode ) {
+                if ( $referenceNode->nodeName === "reference" ) {
+                    foreach ( $referenceNode->childNodes as $childNode ) {
+                        if ( $childNode->nodeName === "external-file" ) {
+                            $href                                                 = $childNode->getAttribute( "href" );
+                            $output[ 'files' ][ $i ][ 'attr' ][ 'external-file' ] = $href;
+                        }
+                    }
+                } elseif ( $referenceNode->nodeName === "external-file" ) {
+                    $href                                                 = $referenceNode->getAttribute( "href" );
+                    $output[ 'files' ][ $i ][ 'attr' ][ 'external-file' ] = $href;
+                }
+            }
+        } elseif ( $header->nodeName === "reference" ) {
+            foreach ( $header->childNodes as $referenceNode ) {
+                if ( $referenceNode->nodeName === "external-file" ) {
+                    $href                                                 = $referenceNode->getAttribute( "href" );
+                    $output[ 'files' ][ $i ][ 'attr' ][ 'external-file' ] = $href;
+                }
+            }
+        }
     }
 
     /**
