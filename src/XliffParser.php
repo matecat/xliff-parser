@@ -112,9 +112,9 @@ class XliffParser {
     private static function forceUft8Encoding( $xliffContent, &$xliff ): string {
         $enc = mb_detect_encoding( $xliffContent );
 
-        if ( $enc !== 'UTF-8' ) {
+        if ( $enc != 'UTF-8' && $enc != "ASCII" ) {
             $xliff[ 'parser-warnings' ][] = "Input identified as $enc ans converted UTF-8. May not be a problem if the content is English only";
-            $s                            = iconv( $enc, 'UTF-8', $xliffContent );
+            $s                            = mb_convert_encoding( $xliffContent, 'UTF-8', $enc );
             $xliffContent                 = $s !== false ? $s : "";
         }
 
