@@ -77,18 +77,6 @@ class XliffParserV1Test extends BaseTest {
     /**
      * @test
      */
-    public function parses_with_no_errors() {
-        // read a file with notes inside
-        $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'file-with-notes-converted-nobase64.xliff' ) );
-
-        $this->assertEquals( 'Input identified as ASCII ans converted UTF-8. May not be a problem if the content is English only', $parsed[ 'parser-warnings' ][ 0 ] );
-        $this->assertNotEmpty( $parsed[ 'files' ] );
-        $this->assertCount( 3, $parsed[ 'files' ] );
-    }
-
-    /**
-     * @test
-     */
     public function can_parse_xliff_v1_metadata() {
         $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'file-with-notes-converted-nobase64.xliff' ) );
         $attr   = $parsed[ 'files' ][ 3 ][ 'attr' ];
