@@ -54,6 +54,8 @@ abstract class AbstractXliffReplacer {
             'eq_word_count'  => 0,
     ];
 
+    protected $mrkTagsMap = [];
+
     /**
      * AbstractXliffReplacer constructor.
      *
@@ -296,13 +298,46 @@ abstract class AbstractXliffReplacer {
      * postprocess escaped data and write to disk
      *
      * @param resource $fp
-     * @param string   $data
-     * @param bool     $treatAsCDATA
+     * @param string $data
+     * @param bool $treatAsCDATA
+     * @param bool $parseMarks
      */
-    protected function postProcAndFlush( $fp, string $data, bool $treatAsCDATA = false ) {
+    protected function postProcAndFlush($fp, string $data, bool $treatAsCDATA = false, $parseMarks = false ) {
         //postprocess string
         $data = preg_replace( "/" . self::$INTERNAL_TAG_PLACEHOLDER . '(.*?)' . self::$INTERNAL_TAG_PLACEHOLDER . "/", '&$1;', $data );
         $data = str_replace( '&nbsp;', ' ', $data );
+
+        // extract <mrk> map only for <seg-source> tag
+        if($parseMarks){
+            // check if there are spaces between <mrk> tags
+            preg_match_all('/<mrk \b[^>]*>(.*?)<\/mrk>(\s+)/', $data, $spacesBetweenMrkCheck);
+
+            if(!empty($spacesBetweenMrkCheck[0])){
+
+                // $spacesBetweenMrkCheck[0] // holds the complete tags
+                // $spacesBetweenMrkCheck[1] // holds the text
+                // $spacesBetweenMrkCheck[2] // holds the spaces
+
+                foreach ($spacesBetweenMrkCheck[0] as $index => $mrk){
+
+                    if($this instanceof Xliff20){
+                        preg_match('/id="(\d+)"/', $mrk, $markMatch);
+                    } else {
+                        preg_match('/mid="(\d+)"/', $mrk, $markMatch);
+                    }
+
+                    if(isset($markMatch[1])){
+
+                        if(!isset($this->mrkTagsMap[$this->currentTransUnitId])){
+                            $this->mrkTagsMap[$this->currentTransUnitId] = [];
+                        }
+
+                        $this->mrkTagsMap[$this->currentTransUnitId][$markMatch[1]] = $spacesBetweenMrkCheck[2][$index];
+                    }
+                }
+            }
+        }
+
         if ( !$treatAsCDATA ) {
             //unix2dos
             $data = str_replace( "\r\n", "\r", $data );

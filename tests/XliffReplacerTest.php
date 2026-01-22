@@ -1213,19 +1213,80 @@ class XliffReplacerTest extends BaseTest {
     /**
      * @test
      */
+    public function should_replace_12_with_mrk_space() {
+
+    }
+
+    /**
+     * @test
+     */
     public function should_replace_12_units_with_entities() {
 
         $data = $this->getData( [
             [
                 'sid' => '1',
-                'segment' => 'Hello&apos;&apos; ',
-                'internal_id' => '2973331',
+                'segment' => 'No more digging. If it’s top of mind, you’ll find it at the top of your inbox.',
+                'internal_id' => '2975931',
                 'mrk_id' => '0',
                 'prev_tags' => '',
                 'succ_tags' => '',
                 'mrk_prev_tags' => NULL,
                 'mrk_succ_tags' => NULL,
-                'translation' => 'Ciao&apos;&apos; ',
+                'translation' => 'This is the translation',
+                'status' => 'APPROVED',
+                'error' => '',
+                'eq_word_count' => '1.34',
+                'raw_word_count' => '2.00',
+                'source_page' => NULL,
+                'r2' => NULL,
+                'data_ref_map' => NULL,
+            ],
+            [
+                'sid' => '1',
+                'segment' => 'No more digging. If it’s top of mind, you’ll find it at the top of your inbox.',
+                'internal_id' => '2975931',
+                'mrk_id' => '1',
+                'prev_tags' => '',
+                'succ_tags' => '',
+                'mrk_prev_tags' => NULL,
+                'mrk_succ_tags' => NULL,
+                'translation' => 'This is the second part of the translation',
+                'status' => 'APPROVED',
+                'error' => '',
+                'eq_word_count' => '1.34',
+                'raw_word_count' => '2.00',
+                'source_page' => NULL,
+                'r2' => NULL,
+                'data_ref_map' => NULL,
+            ],
+            [
+                'sid' => '2',
+                'segment' => 'Your messages are all here with a new look and feel. See how your mailbox uses AI to save you time.',
+                'internal_id' => '2976344',
+                'mrk_id' => '0',
+                'prev_tags' => '',
+                'succ_tags' => '',
+                'mrk_prev_tags' => NULL,
+                'mrk_succ_tags' => NULL,
+                'translation' => 'This is the translation',
+                'status' => 'APPROVED',
+                'error' => '',
+                'eq_word_count' => '1.34',
+                'raw_word_count' => '2.00',
+                'source_page' => NULL,
+                'r2' => NULL,
+                'data_ref_map' => NULL,
+            ],
+            [
+                'sid' => '2',
+                'segment' => 'Your messages are all here with a new look and feel. See how your mailbox uses AI to save you time.',
+                'internal_id' => '2976344',
+                'mrk_id' => '1',
+                'prev_tags' => '',
+                'succ_tags' => '',
+                'mrk_prev_tags' => NULL,
+                'mrk_succ_tags' => NULL,
+                'translation' => 'This is the second part of the translation',
                 'status' => 'APPROVED',
                 'error' => '',
                 'eq_word_count' => '1.34',
@@ -1236,13 +1297,13 @@ class XliffReplacerTest extends BaseTest {
             ],
         ] );
 
-        $inputFile  = __DIR__ . '/../tests/files/with-entities.xliff';
-        $outputFile = __DIR__ . '/../tests/files/output/with-entities.xliff';
+        $inputFile  = __DIR__ . '/../tests/files/mrk-with-space.xliff';
+        $outputFile = __DIR__ . '/../tests/files/output/mrk-with-space.xliff';
 
         ( new XliffParser() )->replaceTranslation( $inputFile, $data[ 'data' ], $data[ 'transUnits' ], 'it-it', $outputFile, false );
         $output = ( new XliffParser() )->xliffToArray( file_get_contents( $outputFile ) );
 
-        $this->assertEquals( "<mrk mid=\"0\" mtype=\"seg\">Ciao''</mrk> ", $output[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ] );
+        $this->assertEquals( "<mrk mid=\"0\" mtype=\"seg\">This is the translation</mrk> <mrk mid=\"1\" mtype=\"seg\">This is the second part of the translation</mrk>", $output[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ] );
     }
 
     /**
