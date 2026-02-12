@@ -2,7 +2,10 @@
 
 [![license](https://img.shields.io/github/license/matecat/xliff-parser.svg)]()
 [![Packagist](https://img.shields.io/packagist/v/matecat/xliff-parser.svg)]()
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/matecat/xliff-parser/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/matecat/xliff-parser/?branch=master)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=matecat_xliff-parser&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=matecat_xliff-parser)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=matecat_xliff-parser&metric=coverage)](https://sonarcloud.io/summary/new_code?id=matecat_xliff-parser)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=matecat_xliff-parser&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=matecat_xliff-parser)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=matecat_xliff-parser&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=matecat_xliff-parser)
 
 This library is a simple, agnostic Xliff parser specifically written for [Matecat](https://www.matecat.com).
 
@@ -49,4 +52,4 @@ If you found an issue or had an idea please refer [to this section](https://gith
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the GNU Lesser General Public License v3.0 or later. - see the [LICENSE.md](LICENSE.md) file for details

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Matecat\XliffParser\XliffParser;
 
 use DOMDocument;
@@ -11,35 +13,40 @@ use Matecat\XliffParser\Exception\NotFoundIdInTransUnit;
 use Matecat\XliffParser\Exception\SegmentIdTooLongException;
 use Matecat\XliffParser\Utils\Strings;
 
-class XliffParserV2 extends AbstractXliffParser {
+class XliffParserV2 extends AbstractXliffParser
+{
     /**
      * @inheritDoc
+     *
+     * @param DOMDocument $dom The XLIFF document
+     * @param array<string, mixed>|null $output Initial output array
+     *
+     * @return array<string, mixed>
      * @throws Exception
      */
-    public function parse( DOMDocument $dom, ?array $output = [] ): array {
+    public function parse(DOMDocument $dom, ?array $output = []): array
+    {
         $i = 1;
         /** @var DOMElement $file */
-        foreach ( $dom->getElementsByTagName( 'file' ) as $file ) {
-
+        foreach ($dom->getElementsByTagName('file') as $file) {
             // metadata
-            $output[ 'files' ][ $i ][ 'attr' ] = $this->extractMetadata( $dom );
+            $output['files'][$i]['attr'] = $this->extractMetadata($dom);
 
             // notes
-            $output[ 'files' ][ $i ][ 'notes' ] = $this->extractNotes( $file );
+            $output['files'][$i]['notes'] = $this->extractNotes($file);
 
             // trans-units
             $transUnitIdArrayForUniquenessCheck = [];
-            $j                                  = 1;
-            /** @var DOMElement $transUnit */
-            foreach ( $file->childNodes as $childNode ) {
-                $this->extractTuFromNode( $childNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j );
+            $j = 1;
+            foreach ($file->childNodes as $childNode) {
+                $this->extractTuFromNode($childNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j);
             }
 
             // trans-unit re-count check
-            $totalTransUnitsId  = count( $transUnitIdArrayForUniquenessCheck );
-            $transUnitsUniqueId = count( array_unique( $transUnitIdArrayForUniquenessCheck ) );
-            if ( $totalTransUnitsId != $transUnitsUniqueId ) {
-                throw new DuplicateTransUnitIdInXliff( "Invalid trans-unit id, duplicate found.", 400 );
+            $totalTransUnitsId = count($transUnitIdArrayForUniquenessCheck);
+            $transUnitsUniqueId = count(array_unique($transUnitIdArrayForUniquenessCheck));
+            if ($totalTransUnitsId != $transUnitsUniqueId) {
+                throw new DuplicateTransUnitIdInXliff("Invalid trans-unit id, duplicate found.", 400);
             }
 
             $i++;
@@ -49,27 +56,34 @@ class XliffParserV2 extends AbstractXliffParser {
     }
 
     /**
-     * @param DOMDocument $dom
+     * Extract file metadata from DOMDocument.
      *
-     * @return array
+     * @return array<string, string>
      */
-    private function extractMetadata( DOMDocument $dom ): array {
+    private function extractMetadata(DOMDocument $dom): array
+    {
         $metadata = [];
 
-        $xliffNode = $dom->getElementsByTagName( 'xliff' )->item( 0 );
-        $fileNode  = $dom->getElementsByTagName( 'file' )->item( 0 );
+        $xliffNode = $dom->getElementsByTagName('xliff')->item(0);
+        $fileNode = $dom->getElementsByTagName('file')->item(0);
 
         // original
-        $metadata[ 'original' ] = ( null !== $fileNode->attributes->getNamedItem( 'original' ) ) ? $fileNode->attributes->getNamedItem( 'original' )->nodeValue : 'no-name';
+        $metadata['original'] = (null !== $fileNode->attributes->getNamedItem(
+                'original'
+            )) ? $fileNode->attributes->getNamedItem('original')->nodeValue : 'no-name';
 
         // source-language
-        $metadata[ 'source-language' ] = ( null !== $xliffNode->attributes->getNamedItem( 'srcLang' ) ) ? $xliffNode->attributes->getNamedItem( 'srcLang' )->nodeValue : 'en-US';
+        $metadata['source-language'] = (null !== $xliffNode->attributes->getNamedItem(
+                'srcLang'
+            )) ? $xliffNode->attributes->getNamedItem('srcLang')->nodeValue : 'en-US';
 
         // datatype
         // @TODO to be implemented
 
         // target-language
-        $metadata[ 'target-language' ] = ( null !== $xliffNode->attributes->getNamedItem( 'trgLang' ) ) ? $xliffNode->attributes->getNamedItem( 'trgLang' )->nodeValue : 'en-US';
+        $metadata['target-language'] = (null !== $xliffNode->attributes->getNamedItem(
+                'trgLang'
+            )) ? $xliffNode->attributes->getNamedItem('trgLang')->nodeValue : 'en-US';
 
         // custom MateCat x-attribute
         // @TODO to be implemented
@@ -78,21 +92,22 @@ class XliffParserV2 extends AbstractXliffParser {
     }
 
     /**
-     * @param DOMElement $file
+     * Extract notes from file element.
      *
-     * @return array
+     * @return array<int, array<string, mixed>>
      * @throws Exception
      */
-    private function extractNotes( DOMElement $file ): array {
+    private function extractNotes(DOMElement $file): array
+    {
         $notes = [];
 
         // loop <notes> to get nested <note> tag
-        foreach ( $file->childNodes as $childNode ) {
-            if ( $childNode->nodeName === 'notes' ) {
-                foreach ( $childNode->childNodes as $note ) {
-                    $noteValue = trim( $note->nodeValue );
-                    if ( '' !== $noteValue ) {
-                        $notes[] = $this->JSONOrRawContentArray( $noteValue );
+        foreach ($file->childNodes as $childNode) {
+            if ($childNode->nodeName === 'notes') {
+                foreach ($childNode->childNodes as $note) {
+                    $noteValue = trim($note->nodeValue);
+                    if ('' !== $noteValue) {
+                        $notes[] = $this->JSONOrRawContentArray($noteValue);
                     }
                 }
             }
@@ -102,112 +117,121 @@ class XliffParserV2 extends AbstractXliffParser {
     }
 
     /**
-     * Extract and populate 'trans-units' array
+     * Extract and populate 'trans-units' array.
      *
-     * @param DOMElement  $transUnit
-     * @param array       $transUnitIdArrayForUniquenessCheck
-     * @param DOMDocument $dom
-     * @param array       $output
-     * @param int         $i
-     * @param int         $j
-     * @param array|null  $contextGroups
+     * @param DOMElement $transUnit The trans-unit element
+     * @param array<int, string> $transUnitIdArrayForUniquenessCheck Array to track trans-unit IDs
+     * @param DOMDocument $dom The DOM document
+     * @param array<string, mixed> $output Output array being built
+     * @param int $i File index
+     * @param int $j Trans-unit index
+     * @param array<int, DOMElement>|null $contextGroups Context groups from parent elements
      *
      * @throws Exception
      */
-    protected function extractTransUnit( DOMElement $transUnit, array &$transUnitIdArrayForUniquenessCheck, DomDocument $dom, array &$output, int &$i, int &$j, ?array $contextGroups = [] ) {
+    protected function extractTransUnit(
+        DOMElement $transUnit,
+        array &$transUnitIdArrayForUniquenessCheck,
+        DOMDocument $dom,
+        array &$output,
+        int &$i,
+        int &$j,
+        ?array $contextGroups = []
+    ): void {
         // metadata
-        $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'attr' ] = $this->extractTransUnitMetadata( $transUnit, $transUnitIdArrayForUniquenessCheck );
+        $output['files'][$i]['trans-units'][$j]['attr'] = $this->extractTransUnitMetadata(
+            $transUnit,
+            $transUnitIdArrayForUniquenessCheck
+        );
 
         // notes
         // merge <notes> with key and key-note contained in metadata <mda:metaGroup>
-        $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'notes' ] = $this->extractTransUnitNotes( $transUnit );
+        $output['files'][$i]['trans-units'][$j]['notes'] = $this->extractTransUnitNotes($transUnit);
 
         // uuid
-        foreach ( $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'notes' ] as $note ) {
-            if ( isset( $note[ 'raw-content' ] ) && Strings::isAValidUuid( $note[ 'raw-content' ] ) ) {
-                $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'attr' ][ 'uuid' ] = $note[ 'raw-content' ];
+        foreach ($output['files'][$i]['trans-units'][$j]['notes'] as $note) {
+            if (isset($note['raw-content']) && Strings::isAValidUuidV4($note['raw-content'])) {
+                $output['files'][$i]['trans-units'][$j]['attr']['uuid'] = $note['raw-content'];
             }
         }
 
         // original-data (exclusive for V2)
         // http://docs.oasis-open.org/xliff/xliff-core/v2.0/xliff-core-v2.0.html#originaldata
-        $originalData = $this->extractTransUnitOriginalData( $transUnit );
-        if ( !empty( $originalData ) ) {
-            $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'original-data' ] = $originalData;
+        $originalData = $this->extractTransUnitOriginalData($transUnit);
+        if (!empty($originalData)) {
+            $output['files'][$i]['trans-units'][$j]['original-data'] = $originalData;
         }
 
         // additionalTagData (exclusive for V2)
-        $additionalTagData = $this->extractTransUnitAdditionalTagData( $transUnit );
-        if ( !empty( $additionalTagData ) ) {
-            $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'additional-tag-data' ] = $additionalTagData;
+        $additionalTagData = $this->extractTransUnitAdditionalTagData($transUnit);
+        if (!empty($additionalTagData)) {
+            $output['files'][$i]['trans-units'][$j]['additional-tag-data'] = $additionalTagData;
         }
 
         // content
 
         $source = [
-                'attr'        => [],
-                'raw-content' => [],
+            'attr' => [],
+            'raw-content' => [],
         ];
 
         $target = [
-                'attr'        => [],
-                'raw-content' => [],
+            'attr' => [],
+            'raw-content' => [],
         ];
 
         $segSource = [];
         $segTarget = [];
 
-        /** @var DOMElement $segment */
         $c = 0;
-        foreach ( $transUnit->childNodes as $segment ) {
-            if ( $segment->nodeName === 'segment' ) {
-
+        foreach ($transUnit->childNodes as $segment) {
+            if ($segment->nodeName === 'segment' && $segment instanceof DOMElement) {
                 // check segment id consistency
-                $attr = $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'attr' ];
-                $this->checkSegmentIdConsistency( $segment, $attr );
+                $attr = $output['files'][$i]['trans-units'][$j]['attr'];
+                $this->checkSegmentIdConsistency($segment, $attr);
 
                 // loop <segment> to get nested <source> and <target> tag
-                foreach ( $segment->childNodes as $childNode ) {
-                    if ( $childNode->nodeName === 'source' ) {
-                        $extractedSource               = $this->extractContent( $dom, $childNode );
-                        $source[ 'raw-content' ][ $c ] = $extractedSource[ 'raw-content' ];
+                foreach ($segment->childNodes as $childNode) {
+                    if ($childNode->nodeName === 'source' && $childNode instanceof DOMElement) {
+                        $extractedSource = $this->extractContent($dom, $childNode);
+                        $source['raw-content'][$c] = $extractedSource['raw-content'];
 
-                        if ( !empty( $extractedSource[ 'attr' ] ) ) {
-                            $source[ 'attr' ][ $c ] = $extractedSource[ 'attr' ];
+                        if (!empty($extractedSource['attr'])) {
+                            $source['attr'][$c] = $extractedSource['attr'];
                         }
 
                         // append value to 'seg-source'
-                        if ( $this->stringContainsMarks( $extractedSource[ 'raw-content' ] ) ) {
-                            $segSource = $this->extractContentWithMarksAndExtTags( $dom, $childNode );
+                        if ($this->stringContainsMarks($extractedSource['raw-content'])) {
+                            $segSource = $this->extractContentWithMarksAndExtTags($dom, $childNode);
                         } else {
                             $segSource[] = [
-                                    'attr'          => $this->extractTagAttributes( $segment ),
-                                    'mid'           => count( $segSource ) > 0 ? count( $segSource ) : 0,
-                                    'ext-prec-tags' => '',
-                                    'raw-content'   => $extractedSource[ 'raw-content' ],
-                                    'ext-succ-tags' => '',
+                                'attr' => $this->extractTagAttributes($segment),
+                                'mid' => count($segSource) > 0 ? count($segSource) : 0,
+                                'ext-prec-tags' => '',
+                                'raw-content' => $extractedSource['raw-content'],
+                                'ext-succ-tags' => '',
                             ];
                         }
                     }
 
-                    if ( $childNode->nodeName === 'target' ) {
-                        $extractedTarget               = $this->extractContent( $dom, $childNode );
-                        $target[ 'raw-content' ][ $c ] = $extractedTarget[ 'raw-content' ];
+                    if ($childNode->nodeName === 'target' && $childNode instanceof DOMElement) {
+                        $extractedTarget = $this->extractContent($dom, $childNode);
+                        $target['raw-content'][$c] = $extractedTarget['raw-content'];
 
-                        if ( !empty( $extractedTarget[ 'attr' ] ) ) {
-                            $target[ 'attr' ][ $c ] = $extractedTarget[ 'attr' ];
+                        if (!empty($extractedTarget['attr'])) {
+                            $target['attr'][$c] = $extractedTarget['attr'];
                         }
 
                         // append value to 'seg-target'
-                        if ( $this->stringContainsMarks( $extractedTarget[ 'raw-content' ] ) ) {
-                            $segTarget = $this->extractContentWithMarksAndExtTags( $dom, $childNode );
+                        if ($this->stringContainsMarks($extractedTarget['raw-content'])) {
+                            $segTarget = $this->extractContentWithMarksAndExtTags($dom, $childNode);
                         } else {
                             $segTarget[] = [
-                                    'attr'          => $this->extractTagAttributes( $segment ),
-                                    'mid'           => count( $segTarget ) > 0 ? count( $segTarget ) : 0,
-                                    'ext-prec-tags' => '',
-                                    'raw-content'   => $extractedTarget[ 'raw-content' ],
-                                    'ext-succ-tags' => '',
+                                'attr' => $this->extractTagAttributes($segment),
+                                'mid' => count($segTarget) > 0 ? count($segTarget) : 0,
+                                'ext-prec-tags' => '',
+                                'raw-content' => $extractedTarget['raw-content'],
+                                'ext-succ-tags' => '',
                             ];
                         }
                     }
@@ -217,100 +241,115 @@ class XliffParserV2 extends AbstractXliffParser {
             }
         }
 
-        $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'source' ]     = $source;
-        $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'target' ]     = $target;
-        $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'seg-source' ] = $segSource;
-        $output[ 'files' ][ $i ][ 'trans-units' ][ $j ][ 'seg-target' ] = $segTarget;
+        $output['files'][$i]['trans-units'][$j]['source'] = $source;
+        $output['files'][$i]['trans-units'][$j]['target'] = $target;
+        $output['files'][$i]['trans-units'][$j]['seg-source'] = $segSource;
+        $output['files'][$i]['trans-units'][$j]['seg-target'] = $segTarget;
 
         $j++;
     }
 
     /**
-     * @param DOMElement $transUnit
-     * @param array|null $transUnitIdArrayForUniquenessCheck
+     * Extract trans-unit metadata from DOMElement.
      *
-     * @return array
+     * @param DOMElement $transUnit The trans-unit element
+     * @param array<int, string> $transUnitIdArrayForUniquenessCheck Array to track trans-unit IDs
+     *
+     * @param-out array<int, string> $transUnitIdArrayForUniquenessCheck
+     *
+     * @return array<string, mixed>
      */
-    private function extractTransUnitMetadata( DOMElement $transUnit, ?array &$transUnitIdArrayForUniquenessCheck = [] ): array {
+    private function extractTransUnitMetadata(DOMElement $transUnit, array &$transUnitIdArrayForUniquenessCheck): array
+    {
         $metadata = [];
 
         // id
-        if ( null === $transUnit->attributes->getNamedItem( 'id' ) ) {
-            throw new NotFoundIdInTransUnit( 'Invalid trans-unit id found. EMPTY value', 400 );
+        if (null === $transUnit->attributes->getNamedItem('id')) {
+            throw new NotFoundIdInTransUnit('Invalid trans-unit id found. EMPTY value', 400);
         }
 
-        $id = $transUnit->attributes->getNamedItem( 'id' )->nodeValue;
+        $id = $transUnit->attributes->getNamedItem('id')->nodeValue ?? '';
 
-        if ( strlen( $id ) > 100 ) {
-            throw new SegmentIdTooLongException( 'Segment-id too long. Max 100 characters allowed', 400 );
+        if (strlen($id) > 100) {
+            throw new SegmentIdTooLongException('Segment-id too long. Max 100 characters allowed', 400);
         }
 
         $transUnitIdArrayForUniquenessCheck[] = $id;
-        $metadata[ 'id' ]                     = $id;
+        $metadata['id'] = $id;
 
         // translate
-        if ( null !== $transUnit->attributes->getNamedItem( 'translate' ) ) {
-            $metadata[ 'translate' ] = $transUnit->attributes->getNamedItem( 'translate' )->nodeValue;
+        if (null !== $transUnit->attributes->getNamedItem('translate')) {
+            $metadata['translate'] = $transUnit->attributes->getNamedItem('translate')->nodeValue;
         }
 
         // tGroupBegin
-        if ( null !== $transUnit->attributes->getNamedItem( 'tGroupBegin' ) ) {
-            $metadata[ 'tGroupBegin' ] = $transUnit->attributes->getNamedItem( 'tGroupBegin' )->nodeValue;
+        if (null !== $transUnit->attributes->getNamedItem('tGroupBegin')) {
+            $metadata['tGroupBegin'] = $transUnit->attributes->getNamedItem('tGroupBegin')->nodeValue;
         }
 
         // tGroupEnd
-        if ( null !== $transUnit->attributes->getNamedItem( 'tGroupEnd' ) ) {
-            $metadata[ 'tGroupEnd' ] = $transUnit->attributes->getNamedItem( 'tGroupEnd' )->nodeValue;
+        if (null !== $transUnit->attributes->getNamedItem('tGroupEnd')) {
+            $metadata['tGroupEnd'] = $transUnit->attributes->getNamedItem('tGroupEnd')->nodeValue;
         }
 
         // sizeRestriction
-        if ( null !== $transUnit->attributes->getNamedItem( 'sizeRestriction' ) && '' !== $transUnit->attributes->getNamedItem( 'sizeRestriction' )->nodeValue ) {
-            $metadata[ 'sizeRestriction' ] = (int)$transUnit->attributes->getNamedItem( 'sizeRestriction' )->nodeValue;
+        if (null !== $transUnit->attributes->getNamedItem(
+                'sizeRestriction'
+            ) && '' !== $transUnit->attributes->getNamedItem('sizeRestriction')->nodeValue) {
+            $metadata['sizeRestriction'] = (int)$transUnit->attributes->getNamedItem('sizeRestriction')->nodeValue;
         }
 
         return $metadata;
     }
 
     /**
-     * @param DOMElement $transUnit
+     * Extract original data from trans-unit.
      *
-     * @return array
+     * @return array<int, array<string, mixed>>
      * @throws Exception
      */
-    private function extractTransUnitOriginalData( DOMElement $transUnit ): array {
+    private function extractTransUnitOriginalData(DOMElement $transUnit): array
+    {
         $originalData = [];
 
         // loop <originalData> to get nested content
-        foreach ( $transUnit->childNodes as $childNode ) {
-            if ( $childNode->nodeName === 'originalData' ) {
-                foreach ( $childNode->childNodes as $data ) {
-                    if ( null !== $data->attributes && null !== $data->attributes->getNamedItem( 'id' ) ) {
-                        $dataId = $data->attributes->getNamedItem( 'id' )->nodeValue;
+        foreach ($transUnit->childNodes as $childNode) {
+            if ($childNode->nodeName === 'originalData') {
+                foreach ($childNode->childNodes as $data) {
+                    if (null !== $data->attributes && null !== $data->attributes->getNamedItem('id')) {
+                        $dataId = $data->attributes->getNamedItem('id')->nodeValue;
 
-                        $dataValue = str_replace( Placeholder::WHITE_SPACE_PLACEHOLDER, ' ', $data->nodeValue );
-                        $dataValue = str_replace( Placeholder::NEW_LINE_PLACEHOLDER, '\n', $dataValue );
-                        $dataValue = str_replace( Placeholder::TAB_PLACEHOLDER, '\t', $dataValue );
+                        $dataValue = str_replace(Placeholder::WHITE_SPACE_PLACEHOLDER, ' ', $data->nodeValue);
+                        $dataValue = str_replace(Placeholder::NEW_LINE_PLACEHOLDER, '\n', $dataValue);
+                        $dataValue = str_replace(Placeholder::TAB_PLACEHOLDER, '\t', $dataValue);
 
-                        if ( '' !== $dataValue ) {
-
-                            $jsonOrRawContentArray = $this->JSONOrRawContentArray( $dataValue, false );
+                        if ('' !== $dataValue) {
+                            $jsonOrRawContentArray = $this->JSONOrRawContentArray($dataValue, false);
 
                             // restore xliff tags
-                            if ( isset( $jsonOrRawContentArray[ 'json' ] ) ) {
-                                $jsonOrRawContentArray[ 'json' ] = str_replace( [ Placeholder::LT_PLACEHOLDER, Placeholder::GT_PLACEHOLDER ], [ '&lt;', '&gt;' ], $jsonOrRawContentArray[ 'json' ] );
+                            if (isset($jsonOrRawContentArray['json'])) {
+                                $jsonOrRawContentArray['json'] = str_replace(
+                                    [Placeholder::LT_PLACEHOLDER, Placeholder::GT_PLACEHOLDER],
+                                    ['&lt;', '&gt;'],
+                                    $jsonOrRawContentArray['json']
+                                );
                             }
 
-                            if ( isset( $jsonOrRawContentArray[ 'raw-content' ] ) ) {
-                                $jsonOrRawContentArray[ 'raw-content' ] = str_replace( [ Placeholder::LT_PLACEHOLDER, Placeholder::GT_PLACEHOLDER ], [ '&lt;', '&gt;' ], $jsonOrRawContentArray[ 'raw-content' ] );
+                            if (isset($jsonOrRawContentArray['raw-content'])) {
+                                $jsonOrRawContentArray['raw-content'] = str_replace(
+                                    [Placeholder::LT_PLACEHOLDER, Placeholder::GT_PLACEHOLDER],
+                                    ['&lt;', '&gt;'],
+                                    $jsonOrRawContentArray['raw-content']
+                                );
                             }
 
                             $originalData[] = array_merge(
-                                    $jsonOrRawContentArray,
-                                    [
-                                            'attr' => [
-                                                    'id' => $dataId
-                                            ]
+                                $jsonOrRawContentArray,
+                                [
+                                    'attr' => [
+                                        'id' => $dataId
                                     ]
+                                ]
                             );
                         }
                     }
@@ -322,45 +361,44 @@ class XliffParserV2 extends AbstractXliffParser {
     }
 
     /**
-     * @param DOMElement $transUnit
+     * Extract additional tag data from trans-unit.
      *
-     * @return array
+     * @return array<int, array<string, mixed>>
      */
-    private function extractTransUnitAdditionalTagData( DOMElement $transUnit ): array {
+    private function extractTransUnitAdditionalTagData(DOMElement $transUnit): array
+    {
         $additionalTagData = [];
 
         // loop <originalData> to get nested content
-        foreach ( $transUnit->childNodes as $childNode ) {
-            if ( $childNode->nodeName === 'memsource:additionalTagData' ) {
-                foreach ( $childNode->childNodes as $data ) {
+        foreach ($transUnit->childNodes as $childNode) {
+            if ($childNode->nodeName === 'memsource:additionalTagData') {
+                foreach ($childNode->childNodes as $data) {
                     $dataArray = [];
 
                     // id
-                    if ( $data->nodeName === 'memsource:tag' ) {
-                        if ( null !== $data->attributes && null !== $data->attributes->getNamedItem( 'id' ) ) {
-                            $dataId                      = $data->attributes->getNamedItem( 'id' )->nodeValue;
-                            $dataArray[ 'attr' ][ 'id' ] = $dataId;
+                    if ($data->nodeName === 'memsource:tag') {
+                        if (null !== $data->attributes && null !== $data->attributes->getNamedItem('id')) {
+                            $dataId = $data->attributes->getNamedItem('id')->nodeValue;
+                            $dataArray['attr']['id'] = $dataId;
                         }
                     }
 
                     // in PHP 7.4 $data->childNodes is an empty DomNodeList, it is iterable with size 0
                     // PHP 5.6 check: in php 5.6 $data->childNodes can be null
-                    if ( $data->childNodes != null ) {
-
+                    if ($data->childNodes != null) {
                         // content
-                        foreach ( $data->childNodes as $datum ) {
-                            if ( $datum->nodeName === 'memsource:tagId' ) {
-                                $dataArray[ 'raw-content' ][ 'tagId' ] = $datum->nodeValue;
+                        foreach ($data->childNodes as $datum) {
+                            if ($datum->nodeName === 'memsource:tagId') {
+                                $dataArray['raw-content']['tagId'] = $datum->nodeValue;
                             }
 
-                            if ( $datum->nodeName === 'memsource:type' ) {
-                                $dataArray[ 'raw-content' ][ 'type' ] = $datum->nodeValue;
+                            if ($datum->nodeName === 'memsource:type') {
+                                $dataArray['raw-content']['type'] = $datum->nodeValue;
                             }
                         }
-
                     }
 
-                    if ( !empty( $dataArray ) ) {
+                    if (!empty($dataArray)) {
                         $additionalTagData[] = $dataArray;
                     }
                 }
@@ -371,61 +409,63 @@ class XliffParserV2 extends AbstractXliffParser {
     }
 
     /**
-     * Check if segment id is present within tGroupBegin and tGroupEnd attributes
+     * Check if segment id is present within tGroupBegin and tGroupEnd attributes.
      *
-     * @param DOMElement $segment
-     * @param array      $attr
+     * @param DOMElement $segment The segment element
+     * @param array<string, mixed> $attr Trans-unit attributes
      */
-    private function checkSegmentIdConsistency( DOMElement $segment, array $attr ) {
-        if ( isset( $attr[ 'tGroupBegin' ] ) && isset( $attr[ 'tGroupEnd' ] ) && $segment->attributes->getNamedItem( 'id' ) ) {
-            $id  = $segment->attributes->getNamedItem( 'id' )->nodeValue;
-            $min = (int)$attr[ 'tGroupBegin' ];
-            $max = (int)$attr[ 'tGroupEnd' ];
+    private function checkSegmentIdConsistency(DOMElement $segment, array $attr): void
+    {
+        if (isset($attr['tGroupBegin']) && isset($attr['tGroupEnd']) && $segment->attributes->getNamedItem('id')) {
+            $id = $segment->attributes->getNamedItem('id')->nodeValue;
+            $min = (int)$attr['tGroupBegin'];
+            $max = (int)$attr['tGroupEnd'];
 
-            if ( false === ( ( $min <= $id ) && ( $id <= $max ) ) ) {
-                if ( $this->logger ) {
-                    $this->logger->warning( 'Segment #' . $id . ' is not included within tGroupBegin and tGroupEnd' );
+            if (false === (($min <= $id) && ($id <= $max))) {
+                if ($this->logger) {
+                    $this->logger->warning('Segment #' . $id . ' is not included within tGroupBegin and tGroupEnd');
                 }
             }
         }
     }
 
     /**
-     * @param DOMElement $transUnit
+     * Extract notes from trans-unit.
      *
-     * @return array
+     * @return array<int, array<string, mixed>>
      * @throws Exception
      */
-    private function extractTransUnitNotes( DOMElement $transUnit ): array {
+    private function extractTransUnitNotes(DOMElement $transUnit): array
+    {
         $notes = [];
 
         // loop <notes> to get nested <note> tag
-        foreach ( $transUnit->childNodes as $childNode ) {
-            if ( $childNode->nodeName == 'notes' ) {
-                foreach ( $childNode->childNodes as $note ) {
-                    $noteValue = trim( $note->nodeValue );
-                    if ( '' !== $noteValue ) {
-                        $notes[] = $this->JSONOrRawContentArray( $noteValue );
+        foreach ($transUnit->childNodes as $childNode) {
+            if ($childNode->nodeName == 'notes') {
+                foreach ($childNode->childNodes as $note) {
+                    $noteValue = trim($note->nodeValue);
+                    if ('' !== $noteValue) {
+                        $notes[] = $this->JSONOrRawContentArray($noteValue);
                     }
                 }
             }
 
-            if ( $childNode->nodeName === 'mda:metadata' ) {
-                foreach ( $childNode->childNodes as $metadata ) {
-                    if ( $metadata->nodeName === 'mda:metaGroup' ) {
-                        foreach ( $metadata->childNodes as $meta ) {
-                            if ( null !== $meta->attributes && null !== $meta->attributes->getNamedItem( 'type' ) ) {
-                                $type      = $meta->attributes->getNamedItem( 'type' )->nodeValue;
-                                $metaValue = trim( $meta->nodeValue );
+            if ($childNode->nodeName === 'mda:metadata') {
+                foreach ($childNode->childNodes as $metadata) {
+                    if ($metadata->nodeName === 'mda:metaGroup') {
+                        foreach ($metadata->childNodes as $meta) {
+                            if (null !== $meta->attributes && null !== $meta->attributes->getNamedItem('type')) {
+                                $type = $meta->attributes->getNamedItem('type')->nodeValue;
+                                $metaValue = trim($meta->nodeValue);
 
-                                if ( '' !== $metaValue ) {
+                                if ('' !== $metaValue) {
                                     $notes[] = array_merge(
-                                            $this->JSONOrRawContentArray( $metaValue ),
-                                            [
-                                                    'attr' => [
-                                                            'type' => $type
-                                                    ]
+                                        $this->JSONOrRawContentArray($metaValue),
+                                        [
+                                            'attr' => [
+                                                'type' => $type
                                             ]
+                                        ]
                                     );
                                 }
                             }

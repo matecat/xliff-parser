@@ -1,21 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Matecat\XliffParser\Tests;
 
 use Matecat\XliffParser\Constants\TranslationStatus;
+use Matecat\XliffParser\Exception\NotSupportedVersionException;
+use Matecat\XliffParser\Exception\NotValidFileException;
 use Matecat\XliffParser\XliffParser;
+use Matecat\XmlParser\Exception\InvalidXmlException;
+use Matecat\XmlParser\Exception\XmlParsingException;
+use PHPUnit\Framework\Attributes\Test;
 
-/**
- * This is a test specific for some features of Uber files
- *
- * Class UberFilesTest
- * @package Matecat\XliffParser\Tests
- */
-class UberFilesTest extends BaseTest
+class UberFilesTest extends Base
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function can_replace_translation_with_a_placeholder()
     {
         $data = [
@@ -36,13 +35,14 @@ class UberFilesTest extends BaseTest
         ];
 
         $transUnits = $this->getTransUnitsForReplacementTest($data);
-        $inputFile = __DIR__.'/../tests/files/uber/%s.xliff.xliff';
-        $outputFile = __DIR__.'/../tests/files/uber/output/%s.xliff.xliff';
+        $inputFile = $this->getTestFilePath('uber/%s.xliff.xliff');
+        $outputPath = 'uber/output/%s.xliff.xliff';
+        $outputFile = $this->getTestFilePath($outputPath);
         $targetLang = 'it-it';
 
         // set $setSourceInTarget to true
         (new XliffParser())->replaceTranslation($inputFile, $data, $transUnits, $targetLang, $outputFile, false);
-        $output = (new XliffParser())->xliffToArray(file_get_contents($outputFile));
+        $output = (new XliffParser())->xliffToArray($this->getTestFile($outputPath));
 
         $expected = 'Ciao %s .';
 
@@ -50,8 +50,12 @@ class UberFilesTest extends BaseTest
     }
 
     /**
-     * @test
+     * @throws NotValidFileException
+     * @throws NotSupportedVersionException
+     * @throws InvalidXmlException
+     * @throws XmlParsingException
      */
+    #[Test]
     public function can_replace_translation_with_a_real_matecat_example()
     {
         $transUnits = [
@@ -215,19 +219,18 @@ class UberFilesTest extends BaseTest
                         ],
         ];
 
-        $inputFile = __DIR__.'/../tests/files/uber/55384cd-uber-sites-en_us-ar-H.xlf';
-        $outputFile = __DIR__.'/../tests/files/uber/output/55384cd-uber-sites-en_us-ar-H.xlf';
+        $inputFile = $this->getTestFilePath('uber/55384cd-uber-sites-en_us-ar-H.xlf');
+        $outputPath = 'uber/output/55384cd-uber-sites-en_us-ar-H.xlf';
+        $outputFile = $this->getTestFilePath($outputPath);
         $targetLang = 'it-it';
 
         (new XliffParser())->replaceTranslation($inputFile, $data, $transUnits, $targetLang, $outputFile);
-        $output = (new XliffParser())->xliffToArray(file_get_contents($outputFile));
+        $output = (new XliffParser())->xliffToArray($this->getTestFile($outputPath));
 
         $this->assertEquals('Uber Eats Online Ordering Sales Channel Addendum Accordo sul trattamento dei dati', $output['files'][1]['trans-units'][1]['target']['raw-content'][0]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_replace_target_with_source()
     {
         $data = [
@@ -248,20 +251,19 @@ class UberFilesTest extends BaseTest
         ];
 
         $transUnits = $this->getTransUnitsForReplacementTest($data);
-        $inputFile = __DIR__.'/../tests/files/uber/7cf155ce-rtapi-en_us-bn_bd-H.xlf';
-        $outputFile = __DIR__.'/../tests/files/uber/output/7cf155ce-rtapi-en_us-bn_bd-H.xlf';
+        $inputFile = $this->getTestFilePath('uber/7cf155ce-rtapi-en_us-bn_bd-H.xlf');
+        $outputPath = 'uber/output/7cf155ce-rtapi-en_us-bn_bd-H.xlf';
+        $outputFile = $this->getTestFilePath($outputPath);
         $targetLang = 'it-it';
 
         // set $setSourceInTarget to true
         (new XliffParser())->replaceTranslation($inputFile, $data, $transUnits, $targetLang, $outputFile, true);
-        $output = (new XliffParser())->xliffToArray(file_get_contents($outputFile));
+        $output = (new XliffParser())->xliffToArray($this->getTestFile($outputPath));
 
         $this->assertEquals('Did you collect <ph id="source1" dataRef="source1"/> from <ph id="source2" dataRef="source2"/>?', $output['files'][1]['trans-units'][1]['target']['raw-content'][0]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_replace_translation_with_ph()
     {
         $data = [
@@ -282,19 +284,18 @@ class UberFilesTest extends BaseTest
         ];
 
         $transUnits = $this->getTransUnitsForReplacementTest($data);
-        $inputFile = __DIR__.'/../tests/files/uber/7cf155ce-rtapi-en_us-bn_bd-H.xlf';
-        $outputFile = __DIR__.'/../tests/files/uber/output/7cf155ce-rtapi-en_us-bn_bd-H.xlf';
+        $inputFile = $this->getTestFilePath('uber/7cf155ce-rtapi-en_us-bn_bd-H.xlf');
+        $outputPath = 'uber/output/7cf155ce-rtapi-en_us-bn_bd-H.xlf';
+        $outputFile = $this->getTestFilePath($outputPath);
         $targetLang = 'it-it';
 
         (new XliffParser())->replaceTranslation($inputFile, $data, $transUnits, $targetLang, $outputFile);
-        $output = (new XliffParser())->xliffToArray(file_get_contents($outputFile));
+        $output = (new XliffParser())->xliffToArray($this->getTestFile($outputPath));
 
         $this->assertEquals('Hai raccolto <ph id="source1" dataRef="source1"/> da <ph id="source2" dataRef="source2"/>?', $output['files'][1]['trans-units'][1]['target']['raw-content'][0]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_replace_translation_in_a_large_file_with_ph()
     {
         $data = [
@@ -455,12 +456,13 @@ class UberFilesTest extends BaseTest
         ];
 
         $transUnits = $this->getTransUnitsForReplacementTest($data);
-        $inputFile = __DIR__.'/../tests/files/uber/39f87a30-bliss_saved_reply_content-en_us-ar-PM.xlf';
-        $outputFile = __DIR__.'/../tests/files/uber/output/39f87a30-bliss_saved_reply_content-en_us-ar-PM.xlf';
+        $inputFile = $this->getTestFilePath('uber/39f87a30-bliss_saved_reply_content-en_us-ar-PM.xlf');
+        $outputPath = 'uber/output/39f87a30-bliss_saved_reply_content-en_us-ar-PM.xlf';
+        $outputFile = $this->getTestFilePath($outputPath);
         $targetLang = 'it-it';
 
         (new XliffParser())->replaceTranslation($inputFile, $data, $transUnits, $targetLang, $outputFile);
-        $output = (new XliffParser())->xliffToArray(file_get_contents($outputFile));
+        $output = (new XliffParser())->xliffToArray($this->getTestFile($outputPath));
 
         $this->assertEquals('ciao', $output['files'][1]['trans-units'][1]['target']['raw-content'][0]);
         $this->assertEquals('ciao 1', $output['files'][1]['trans-units'][1]['target']['raw-content'][1]);
@@ -475,9 +477,7 @@ class UberFilesTest extends BaseTest
         $this->assertEquals('ciao 10', $output['files'][1]['trans-units'][1]['target']['raw-content'][10]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_read_files_with_empty_target()
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('uber/56d591a5-louvre-v2-en_us-fr_fr-PM.xlf'));
@@ -487,9 +487,7 @@ class UberFilesTest extends BaseTest
         $this->assertEmpty($units[1]['target']['raw-content'][1]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_extract_tGroupBegin_and_tGroupEnd()
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('uber/SpotCheck-en_us-es_419-H.xlf'));
@@ -501,9 +499,7 @@ class UberFilesTest extends BaseTest
         $this->assertEquals(3, $attr['tGroupEnd']);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_extract_additionalTagData()
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('uber/55384cd-uber-sites-en_us-ar-H.xlf'));
@@ -520,9 +516,7 @@ class UberFilesTest extends BaseTest
         $this->assertEquals($additionalTagData[ 1 ][ 'raw-content' ][ 'type' ], 'code');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function parses_and_set_the_translations()
     {
         $data = [
@@ -571,21 +565,20 @@ class UberFilesTest extends BaseTest
         ];
 
         $transUnits = $this->getTransUnitsForReplacementTest($data);
-        $inputFile = __DIR__.'/../tests/files/uber/55384cd-uber-sites-en_us-ar-H_STRIPPED.xlf';
-        $outputFile = __DIR__.'/../tests/files/uber/output/55384cd-uber-sites-en_us-ar-H_STRIPPED.xlf';
+        $inputFile = $this->getTestFilePath('uber/55384cd-uber-sites-en_us-ar-H_STRIPPED.xlf');
+        $outputPath = 'uber/output/55384cd-uber-sites-en_us-ar-H_STRIPPED.xlf';
+        $outputFile = $this->getTestFilePath($outputPath);
         $targetLang = 'it-it';
 
         (new XliffParser())->replaceTranslation($inputFile, $data, $transUnits, $targetLang, $outputFile);
-        $output = (new XliffParser())->xliffToArray(file_get_contents($outputFile));
+        $output = (new XliffParser())->xliffToArray($this->getTestFile($outputPath));
 
         $this->assertEquals('Ciao', $output['files'][1]['trans-units'][1]['target']['raw-content'][0]);
         $this->assertEquals('Ricevuto!', $output['files'][1]['trans-units'][2]['target']['raw-content'][0]);
         $this->assertEquals('Riprodurre video', $output['files'][1]['trans-units'][3]['target']['raw-content'][0]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function parses_and_set_the_translations_with_tu_id_0()
     {
         $data = [
@@ -606,19 +599,18 @@ class UberFilesTest extends BaseTest
         ];
 
         $transUnits = $this->getTransUnitsForReplacementTest($data);
-        $inputFile = __DIR__.'/../tests/files/uber/test_Localization_Manual Template for Global - Wrong courier process-en_us-mr_in-H_STRIPPED.xlf';
-        $outputFile = __DIR__.'/../tests/files/uber/output/test_Localization_Manual Template for Global - Wrong courier process-en_us-mr_in-H_STRIPPED.xlf';
+        $inputFile = $this->getTestFilePath('uber/test_Localization_Manual Template for Global - Wrong courier process-en_us-mr_in-H_STRIPPED.xlf');
+        $outputPath = 'uber/output/test_Localization_Manual Template for Global - Wrong courier process-en_us-mr_in-H_STRIPPED.xlf';
+        $outputFile = $this->getTestFilePath($outputPath);
         $targetLang = 'it-it';
 
         (new XliffParser())->replaceTranslation($inputFile, $data, $transUnits, $targetLang, $outputFile);
-        $output = (new XliffParser())->xliffToArray(file_get_contents($outputFile));
+        $output = (new XliffParser())->xliffToArray($this->getTestFile($outputPath));
 
         $this->assertEquals('Italiano', $output['files'][1]['trans-units'][1]['target']['raw-content'][0]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function parses_and_set_the_translations_with_tu_with_bunch_of_segments()
     {
         $data = [
@@ -682,12 +674,13 @@ class UberFilesTest extends BaseTest
 
         $transUnits = $this->getTransUnitsForReplacementTest($data);
 
-        $inputFile = __DIR__.'/../tests/files/uber/test_Localization_Manual Template for Global - Wrong courier process-en_us-mr_in-H_STRIPPED_MULTI.xlf';
-        $outputFile = __DIR__.'/../tests/files/uber/output/test_Localization_Manual Template for Global - Wrong courier process-en_us-mr_in-H_STRIPPED_MULTI.xlf';
+        $inputFile = $this->getTestFilePath('uber/test_Localization_Manual Template for Global - Wrong courier process-en_us-mr_in-H_STRIPPED_MULTI.xlf');
+        $outputPath = 'uber/output/test_Localization_Manual Template for Global - Wrong courier process-en_us-mr_in-H_STRIPPED_MULTI.xlf';
+        $outputFile = $this->getTestFilePath($outputPath);
         $targetLang = 'it-it';
 
         (new XliffParser())->replaceTranslation($inputFile, $data, $transUnits, $targetLang, $outputFile);
-        $output = (new XliffParser())->xliffToArray(file_get_contents($outputFile));
+        $output = (new XliffParser())->xliffToArray($this->getTestFile($outputPath));
 
         $this->assertEquals('Italiano 2', $output['files'][1]['trans-units'][1]['target']['raw-content'][0]);
         $this->assertEquals('Italiano 3', $output['files'][1]['trans-units'][1]['target']['raw-content'][1]);
@@ -696,9 +689,13 @@ class UberFilesTest extends BaseTest
     }
 
     /**
-     * @test
+     * @throws NotValidFileException
+     * @throws NotSupportedVersionException
+     * @throws InvalidXmlException
+     * @throws XmlParsingException
      */
-    public function parses_and_set_the_translations_with_tu_with_bunch_of_segments_2()
+    #[Test]
+    public function parses_and_set_the_translations_with_tu_with_bunch_of_segments_2(): void
     {
         $data = [
             [
@@ -761,12 +758,13 @@ class UberFilesTest extends BaseTest
 
         $transUnits = $this->getTransUnitsForReplacementTest($data);
 
-        $inputFile = __DIR__.'/../tests/files/uber/2020-09-25T07_54_17.292_8bdea7c8-fef3-11ea-83a6-e9686d2c65d2.xliff (3).xliff';
-        $outputFile = __DIR__.'/../tests/files/uber/output/2020-09-25T07_54_17.292_8bdea7c8-fef3-11ea-83a6-e9686d2c65d2.xliff (3).xliff';
+        $inputFile = $this->getTestFilePath('uber/2020-09-25T07_54_17.292_8bdea7c8-fef3-11ea-83a6-e9686d2c65d2.xliff (3).xliff');
+        $outputPath = 'uber/output/2020-09-25T07_54_17.292_8bdea7c8-fef3-11ea-83a6-e9686d2c65d2.xliff (3).xliff';
+        $outputFile = $this->getTestFilePath($outputPath);
         $targetLang = 'it-it';
 
         (new XliffParser())->replaceTranslation($inputFile, $data, $transUnits, $targetLang, $outputFile);
-        $output = (new XliffParser())->xliffToArray(file_get_contents($outputFile));
+        $output = (new XliffParser())->xliffToArray($this->getTestFile($outputPath));
 
         $this->assertEquals('Digita il PIN di <ph id="source1" dataRef="source1"/>', $output['files'][1]['trans-units'][1]['target']['raw-content'][0]);
         $this->assertEquals('Sei sicuro di voler fare logout?', $output['files'][1]['trans-units'][2]['target']['raw-content'][0]);
@@ -774,9 +772,7 @@ class UberFilesTest extends BaseTest
         $this->assertEquals('questo gruppo linguistico completerà automaticamente tutti i passaggi della review', $output['files'][1]['trans-units'][3]['target']['raw-content'][0]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_extract_trans_unit_uuid()
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('uber/2020-10-13T21:16:55.732_a81546b0-0d88-11eb-83e4-a433ca39afdb.xliff.xliff'));

@@ -1,17 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Matecat\XliffParser\Tests;
 
 use Matecat\XliffParser\Exception\NotValidFileException;
 use Matecat\XliffParser\XliffUtils\XliffVersionDetector;
+use PHPUnit\Framework\Attributes\Test;
 
-class VersionDetectorTest extends BaseTest
+class VersionDetectorTest extends Base
 {
-    /**
-     * @test
-     * @throws NotValidFileException
-     * @throws \Matecat\XliffParser\Exception\NotSupportedVersionException
-     */
+    #[Test]
     public function can_throw_exception()
     {
         try {
@@ -21,11 +20,7 @@ class VersionDetectorTest extends BaseTest
         }
     }
 
-    /**
-     * @test
-     * @throws NotValidFileException
-     * @throws \Matecat\XliffParser\Exception\NotSupportedVersionException
-     */
+    #[Test]
     public function can_detect_v1()
     {
         $version = XliffVersionDetector::detect($this->getTestFile('file-with-notes-converted-nobase64.xliff'));
@@ -33,11 +28,7 @@ class VersionDetectorTest extends BaseTest
         $this->assertEquals($version, '1');
     }
 
-    /**
-     * @test
-     * @throws NotValidFileException
-     * @throws \Matecat\XliffParser\Exception\NotSupportedVersionException
-     */
+    #[Test]
     public function can_detect_v2()
     {
         $detector = new XliffVersionDetector();

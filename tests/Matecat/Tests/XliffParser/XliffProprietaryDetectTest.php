@@ -1,17 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Matecat\XliffParser\Tests;
 
-use Matecat\XliffParser\XliffUtils\XliffProprietaryDetect;
 
-class XliffProprietaryDetectTest extends BaseTest
+use Matecat\XliffParser\XliffUtils\XliffProprietaryDetect;
+use PHPUnit\Framework\Attributes\Test;
+
+class XliffProprietaryDetectTest extends Base
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function return_empty_info_array_from_not_xliff_file()
     {
-        $info = XliffProprietaryDetect::getInfo(__DIR__ .'/files/sample.txt');
+        $info = XliffProprietaryDetect::getInfo($this->getTestFilePath('sample.txt'));
 
         $this->assertFalse($info['proprietary']);
         $this->assertNull($info['proprietary_name']);
@@ -19,12 +21,10 @@ class XliffProprietaryDetectTest extends BaseTest
         $this->assertNull($info['converter_version']);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_get_info_from_content()
     {
-        $info = XliffProprietaryDetect::getInfoByStringData(file_get_contents(__DIR__ .'/files/file-with-notes-converted-nobase64.xliff'));
+        $info = XliffProprietaryDetect::getInfoByStringData($this->getTestFile('file-with-notes-converted-nobase64.xliff'));
 
         $this->assertEmpty($info['info']);
         $this->assertFalse($info['proprietary']);
@@ -34,12 +34,10 @@ class XliffProprietaryDetectTest extends BaseTest
         $this->assertEquals($info['converter_version'], '1.0');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_get_info_from_file()
     {
-        $info = XliffProprietaryDetect::getInfo(__DIR__ .'/files/file-with-notes-converted-nobase64.xliff');
+        $info = XliffProprietaryDetect::getInfo($this->getTestFilePath('file-with-notes-converted-nobase64.xliff'));
 
         $this->assertNotEmpty($info['info']);
         $this->assertFalse($info['proprietary']);
@@ -49,12 +47,10 @@ class XliffProprietaryDetectTest extends BaseTest
         $this->assertEquals($info['converter_version'], '1.0');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_get_info_from_file_v2()
     {
-        $info = XliffProprietaryDetect::getInfo(__DIR__ .'/files/sample-20.xlf');
+        $info = XliffProprietaryDetect::getInfo($this->getTestFilePath('sample-20.xlf'));
 
         $this->assertEquals($info['version'], 2);
         $this->assertEquals($info['proprietary_name'], 'Xliff v2.0 File');
@@ -62,13 +58,11 @@ class XliffProprietaryDetectTest extends BaseTest
         $this->assertEquals($info['converter_version'], '2.0');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function file_must_be_converted()
     {
-        $this->assertFalse(XliffProprietaryDetect::fileMustBeConverted(__DIR__ .'/files/sample-20.xlf', true, '0.0.0.0'));
-        $this->assertFalse(XliffProprietaryDetect::fileMustBeConverted(__DIR__ .'/files/file-with-notes-converted-nobase64.xliff', true, '0.0.0.0'));
-        $this->assertFalse(XliffProprietaryDetect::fileMustBeConverted(__DIR__ .'/files/uber/56d591a5-louvre-v2-en_us-fr_fr-PM.xlf', true, '0.0.0.0'));
+        $this->assertFalse(XliffProprietaryDetect::fileMustBeConverted($this->getTestFilePath('sample-20.xlf'), true, '0.0.0.0'));
+        $this->assertFalse(XliffProprietaryDetect::fileMustBeConverted($this->getTestFilePath('file-with-notes-converted-nobase64.xliff'), true, '0.0.0.0'));
+        $this->assertFalse(XliffProprietaryDetect::fileMustBeConverted($this->getTestFilePath('uber/56d591a5-louvre-v2-en_us-fr_fr-PM.xlf'), true, '0.0.0.0'));
     }
 }

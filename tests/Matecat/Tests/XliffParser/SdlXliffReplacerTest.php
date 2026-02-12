@@ -1,15 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Matecat\XliffParser\Tests;
 
 use Matecat\XliffParser\Constants\TranslationStatus;
 use Matecat\XliffParser\XliffParser;
+use PHPUnit\Framework\Attributes\Test;
 
-class SdlXliffReplacerTest extends BaseTest
+class SdlXliffReplacerTest extends Base
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function can_replace_a_sdlxliff_with_correct_trailing_spaces()
     {
         $data = $this->getData([
@@ -85,8 +86,8 @@ class SdlXliffReplacerTest extends BaseTest
                 ],
         ]);
 
-        $inputFile = __DIR__.'/../tests/files/sdlxliff/piazza.sdlxliff';
-        $outputFile = __DIR__.'/../tests/files/output/piazza.sdlxliff';
+        $inputFile = $this->getTestFilePath('sdlxliff/piazza.sdlxliff');
+        $outputFile = $this->getTestFilePath('output/piazza.sdlxliff');
 
         $xliffParser = new XliffParser();
         $xliffParser->replaceTranslation($inputFile, $data['data'], $data['transUnits'], 'sk-SK', $outputFile);

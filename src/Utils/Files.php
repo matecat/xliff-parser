@@ -1,11 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Matecat\XliffParser\Utils;
 
-class Files {
+/**
+ * File path utility class with UTF-8 aware path parsing.
+ *
+ * PHP's native pathinfo() is not UTF-8 aware, so this class provides
+ * UTF-8 compatible alternatives for file path operations.
+ */
+final readonly class Files
+{
     /**
-     * PHP Pathinfo is not UTF-8 aware, so we rewrite it.
-     * It returns array with complete info about a path
+     * UTF-8 aware pathinfo implementation.
+     *
+     * Returns array with complete info about a path:
      * [
      *    'dirname'   => PATHINFO_DIRNAME,
      *    'basename'  => PATHINFO_BASENAME,
@@ -13,122 +23,133 @@ class Files {
      *    'filename'  => PATHINFO_FILENAME
      * ]
      *
-     * @param string   $path
-     * @param int|null $options
+     * @param string $path The file path to parse
+     * @param int $options Bitwise OR of PATHINFO_* constants (default: all components)
      *
-     * @return array|mixed
+     * @return array<string, string>|string Array of path components or single component string
      */
-    public static function pathInfo( string $path, ?int $options = 15 ) {
-        $rawPath = explode( DIRECTORY_SEPARATOR, $path );
+    public static function pathInfo(
+        string $path,
+        int $options = PATHINFO_DIRNAME | PATHINFO_BASENAME | PATHINFO_EXTENSION | PATHINFO_FILENAME
+    ): array|string {
+        $rawPath = explode(DIRECTORY_SEPARATOR, $path);
 
-        $basename = array_pop( $rawPath );
-        $dirname  = implode( DIRECTORY_SEPARATOR, $rawPath );
+        $basename = array_pop($rawPath);
+        $dirname = implode(DIRECTORY_SEPARATOR, $rawPath);
 
-        $explodedFileName = explode( ".", $basename );
-        $extension        = strtolower( array_pop( $explodedFileName ) );
-        $filename         = implode( ".", $explodedFileName );
+        $explodedFileName = explode('.', $basename);
+
+        $extension = count($explodedFileName) > 1 ? strtolower(array_pop($explodedFileName)) : '';
+        $filename = implode('.', $explodedFileName);
 
         $returnArray = [];
 
-        $flagMap = [
-                'dirname'   => PATHINFO_DIRNAME,
-                'basename'  => PATHINFO_BASENAME,
-                'extension' => PATHINFO_EXTENSION,
-                'filename'  => PATHINFO_FILENAME
+        $components = [
+            'dirname' => ['flag' => PATHINFO_DIRNAME, 'value' => $dirname],
+            'basename' => ['flag' => PATHINFO_BASENAME, 'value' => $basename],
+            'extension' => ['flag' => PATHINFO_EXTENSION, 'value' => $extension],
+            'filename' => ['flag' => PATHINFO_FILENAME, 'value' => $filename],
         ];
 
-        // foreach flag, add in $return_array the corresponding field,
-        // obtained by variable name correspondence
-        foreach ( $flagMap as $field => $i ) {
-            //binary AND
-            if ( ( $options & $i ) > 0 ) {
-                //variable substitution: $field can be one between 'dirname', 'basename', 'extension', 'filename'
-                // $$field gets the value of the variable named $field
-                $returnArray[ $field ] = $$field;
+        // Add requested components to return array based on options bitfield
+        foreach ($components as $field => $component) {
+            // Binary AND - check if this flag is requested
+            if (($options & $component['flag']) > 0) {
+                $returnArray[$field] = $component['value'];
             }
         }
 
-        if ( count( $returnArray ) == 1 ) {
-            $returnArray = array_pop( $returnArray );
-        }
-
-        return $returnArray;
+        // If only one component requested, return string instead of array
+        return count($returnArray) === 1 ? array_pop($returnArray) : $returnArray;
     }
 
     /**
-     * @param $path
+     * Get file extension in lowercase.
      *
-     * @return ?string
+     * @param string $path The file path
+     *
+     * @return string The file extension in lowercase (empty string if no extension)
      */
-    public static function getExtension( $path ): ?string {
-        $pathInfo = self::pathInfo( $path );
+    public static function getExtension(string $path): string
+    {
+        $extension = self::pathInfo($path, PATHINFO_EXTENSION);
 
-        if ( empty( $pathInfo ) ) {
-            return null;
-        }
-
-        return strtolower( $pathInfo[ 'extension' ] );
+        return is_string($extension) ? strtolower($extension) : '';
     }
 
     /**
-     * @param string|null $path
+     * Check if file is an XLIFF-compatible format.
      *
-     * @return bool
+     * Supported extensions: xliff, sdlxliff, tmx, xlf
+     *
+     * @param string|null $path The file path to check
+     *
+     * @return bool True if file is XLIFF-compatible format
      */
-    public static function isXliff( ?string $path ): bool {
-        $extension = self::getExtension( $path );
-
-        if ( !$extension ) {
+    public static function isXliff(?string $path): bool
+    {
+        if ($path === null) {
             return false;
         }
 
-        switch ( $extension ) {
-            case 'xliff':
-            case 'sdlxliff':
-            case 'tmx':
-            case 'xlf':
-                return true;
-            default:
-                return false;
-        }
-    }
+        $extension = self::getExtension($path);
 
-    /**
-     * @param string $path
-     *
-     * @return bool|string
-     */
-    public static function getMemoryFileType( string $path ) {
-        $pathInfo = self::pathInfo( $path );
-
-        if ( empty( $pathInfo ) ) {
+        if (empty($extension)) {
             return false;
         }
 
-        switch ( strtolower( $pathInfo[ 'extension' ] ) ) {
-            case 'tmx':
-                return 'tmx';
-            default:
-                return false;
+        return match ($extension) {
+            'xliff', 'sdlxliff', 'tmx', 'xlf' => true,
+            default => false,
+        };
+    }
+
+    /**
+     * Get memory file type based on extension.
+     *
+     * @param string $path The file path
+     *
+     * @return string|false 'tmx' for TMX files, false otherwise
+     */
+    public static function getMemoryFileType(string $path): string|false
+    {
+        $extension = self::pathInfo($path, PATHINFO_EXTENSION);
+
+        if (!is_string($extension)) {
+            return false;
         }
+
+        return match (strtolower($extension)) {
+            'tmx' => 'tmx',
+            default => false,
+        };
     }
 
     /**
-     * @param $path
+     * Check if file is a TMX (Translation Memory eXchange) file.
      *
-     * @return bool
+     * @param string $path The file path
+     *
+     * @return bool True if file has .tmx extension
      */
-    public static function isTMXFile( $path ): bool {
-        return self::getMemoryFileType( $path ) === 'tmx';
+    public static function isTMXFile(string $path): bool
+    {
+        return self::getMemoryFileType($path) === 'tmx';
     }
 
     /**
-     * @param $path
+     * Check if file is a glossary file.
      *
-     * @return bool
+     * Note: This is a stub method that always returns false.
+     * Glossary file detection is not currently implemented.
+     *
+     * @param string $path The file path
+     *
+     * @return bool Always returns false (not implemented)
      */
-    public static function isGlossaryFile( $path ): bool {
-        return self::getMemoryFileType( $path ) === 'glossary'; // return false
+    public static function isGlossaryFile(string $path): bool
+    {
+        return self::getMemoryFileType($path) === 'glossary'; // Always false - not implemented
     }
 
 }

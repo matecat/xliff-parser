@@ -1,30 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * @author hashashiyyin domenico@translated.net / ostico@gmail.com
- * Date: 05/01/23
- * Time: 15:50
- *
- */
+
+declare(strict_types=1);
 
 namespace Matecat\XliffParser\Tests;
 
-
-use Matecat\XliffParser\Exception\InvalidXmlException;
-use Matecat\XliffParser\Exception\NotSupportedVersionException;
-use Matecat\XliffParser\Exception\NotValidFileException;
-use Matecat\XliffParser\Exception\XmlParsingException;
 use Matecat\XliffParser\XliffParser;
+use PHPUnit\Framework\Attributes\Test;
 
-class XliffParseCharLimitTest extends BaseTest {
+class XliffParseCharLimitTest extends Base {
 
-    /**
-     * @test
-     * @throws InvalidXmlException
-     * @throws NotValidFileException
-     * @throws XmlParsingException
-     * @throws NotSupportedVersionException
-     */
+    #[Test]
     public function should_get_xliff_v1_char_limit() {
 
         $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'char-limit.jsont2.xlf' ) );
@@ -47,14 +32,7 @@ class XliffParseCharLimitTest extends BaseTest {
 
     }
 
-    /**
-     * @test
-     * @return void
-     * @throws InvalidXmlException
-     * @throws NotSupportedVersionException
-     * @throws NotValidFileException
-     * @throws XmlParsingException
-     */
+    #[Test]
     public function should_get_xliff_v2_char_limit() {
         $parsed = ( new XliffParser() )->xliffToArray( $this->getTestFile( 'char-limit.xliff' ) );
         $attr   = $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'attr' ];

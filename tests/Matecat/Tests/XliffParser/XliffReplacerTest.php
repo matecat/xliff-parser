@@ -1,17 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Matecat\XliffParser\Tests;
 
 use Exception;
 use Matecat\XliffParser\Constants\TranslationStatus;
 use Matecat\XliffParser\XliffParser;
 use Matecat\XliffParser\XliffReplacer\XliffReplacerCallbackInterface;
+use PHPUnit\Framework\Attributes\Test;
 
-class XliffReplacerTest extends BaseTest {
+class XliffReplacerTest extends Base {
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_replace_a_xliff_12_with_context_group() {
 
         $data = $this->getData( [
@@ -35,17 +36,18 @@ class XliffReplacerTest extends BaseTest {
                 ],
         ] );
 
-        $inputFile  = __DIR__ . '/../tests/files/13578661#IFgFi8oGn6.xlf';
-        $outputFile = __DIR__ . '/../tests/files/output/13578661#IFgFi8oGn6.xlf';
+        $inputFile  = $this->getTestFilePath('13578661#IFgFi8oGn6.xlf');
+        $outputPath = 'output/13578661#IFgFi8oGn6.xlf';
+        $outputFile = $this->getTestFilePath($outputPath);
 
         $xliffParser = new XliffParser();
         $xliffParser->replaceTranslation( $inputFile, $data[ 'data' ], $data[ 'transUnits' ], 'ar-JO', $outputFile );
 
-        $output = $xliffParser->xliffToArray( file_get_contents( $outputFile ) );
+        $output = $xliffParser->xliffToArray( $this->getTestFile($outputPath) );
         $this->assertEquals( $output[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'seg-source' ][ 0 ][ 'raw-content' ], 'Confirm' );
         $this->assertEquals( $output[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'seg-target' ][ 0 ][ 'raw-content' ], "يتأكد" );
 
-        $outputRawContent = file_get_contents( $outputFile );
+        $outputRawContent = $this->getTestFile($outputPath);
         $this->assertTrue( mb_strpos( $outputRawContent, "يتأكد" ) > 0 );
         $this->assertTrue( mb_strpos( $outputRawContent, '</xliff>' ) > 0 );
         $this->assertTrue( mb_strpos( $outputRawContent, '</file>' ) > 0 );
@@ -53,9 +55,7 @@ class XliffReplacerTest extends BaseTest {
 
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_replace_a_xliff_20_without_trgLang_attribute() {
         $data = $this->getData( [
                 [
@@ -74,20 +74,19 @@ class XliffReplacerTest extends BaseTest {
                 ],
         ] );
 
-        $inputFile  = __DIR__ . '/../tests/files/no-trgLang.xliff';
-        $outputFile = __DIR__ . '/../tests/files/output/no-trgLang.xliff';
+        $inputFile  = $this->getTestFilePath('no-trgLang.xliff');
+        $outputPath = 'output/no-trgLang.xliff';
+        $outputFile = $this->getTestFilePath($outputPath);
 
         $xliffParser = new XliffParser();
         $xliffParser->replaceTranslation( $inputFile, $data[ 'data' ], $data[ 'transUnits' ], 'es-ES', $outputFile );
 
-        $output = $xliffParser->xliffToArray( file_get_contents( $outputFile ) );
+        $output = $xliffParser->xliffToArray( $this->getTestFile($outputPath) );
 
         $this->assertEquals( 'es-ES', $output[ 'files' ][ 1 ][ 'attr' ][ 'target-language' ] );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_replace_a_xliff_20_with_the_correct_counts() {
         $data = $this->getData( [
                 [
@@ -120,13 +119,14 @@ class XliffReplacerTest extends BaseTest {
                 ],
         ] );
 
-        $inputFile  = __DIR__ . '/../tests/files/uber/uber-counts.xliff';
-        $outputFile = __DIR__ . '/../tests/files/uber/output/uber-counts.xliff';
+        $inputFile  = $this->getTestFilePath('uber/uber-counts.xliff');
+        $outputPath = 'uber/output/uber-counts.xliff';
+        $outputFile = $this->getTestFilePath($outputPath);
 
         $xliffParser = new XliffParser();
         $xliffParser->replaceTranslation( $inputFile, $data[ 'data' ], $data[ 'transUnits' ], 'sk-SK', $outputFile );
 
-        $output = file_get_contents( $outputFile );
+        $output = $this->getTestFile($outputPath);
 
         preg_match_all( '/<mda:meta type="x-matecat-raw">(.*)<\/mda:meta>/', $output, $raw );
         preg_match_all( '/<mda:meta type="x-matecat-weighted">(.*)<\/mda:meta>/', $output, $weighted );
@@ -143,9 +143,7 @@ class XliffReplacerTest extends BaseTest {
         $this->assertEquals( 'word_count_tu.1.0', $metaGroup[ 1 ][ 1 ] );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_replace_a_xliff_20_with_mda_without_notes_or_original_data() {
         $data = $this->getData( [
                 [
@@ -164,25 +162,24 @@ class XliffReplacerTest extends BaseTest {
                 ],
         ] );
 
-        $inputFile  = __DIR__ . '/../tests/files/xliff20-without-notes-or-original-data.xliff';
-        $outputFile = __DIR__ . '/../tests/files/output/xliff20-without-notes-or-original-data.xliff';
+        $inputFile  = $this->getTestFilePath('xliff20-without-notes-or-original-data.xliff');
+        $outputPath = 'output/xliff20-without-notes-or-original-data.xliff';
+        $outputFile = $this->getTestFilePath($outputPath);
 
         $xliffParser = new XliffParser();
         $xliffParser->replaceTranslation( $inputFile, $data[ 'data' ], $data[ 'transUnits' ], 'sk-SK', $outputFile );
 
-        $output = file_get_contents( $outputFile );
+        $output = $this->getTestFile($outputPath);
 
         // check if there is only one <mda:metadata>
         $this->assertEquals( 1, substr_count( $output, '<mda:metadata>' ) );
     }
 
-    /**
-     * @test
-     * @depends can_replace_a_xliff_20_with_mda_without_notes_or_original_data
-     */
+    #[Test]
     public function validate_xliff_20_without_notes_or_original_data() {
 
-        $outputFile = realpath( __DIR__ . '/../tests/files/output/xliff20-without-notes-or-original-data.xliff' );
+        $outputPath = 'output/xliff20-without-notes-or-original-data.xliff';
+        $outputFile = $this->getTestFilePath($outputPath);
 
         try {
             $validate = $this->validateXliff20( $outputFile );
@@ -192,9 +189,7 @@ class XliffReplacerTest extends BaseTest {
         }
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_replace_a_xliff_20_with_mda_without_duplicate_it() {
         $data = $this->getData( [
                 [
@@ -213,25 +208,24 @@ class XliffReplacerTest extends BaseTest {
                 ],
         ] );
 
-        $inputFile  = __DIR__ . '/../tests/files/xliff-20-with-mda.xlf';
-        $outputFile = __DIR__ . '/../tests/files/output/xliff-20-with-mda.xlf';
+        $inputFile  = $this->getTestFilePath('xliff-20-with-mda.xlf');
+        $outputPath = 'output/xliff-20-with-mda.xlf';
+        $outputFile = $this->getTestFilePath($outputPath);
 
         $xliffParser = new XliffParser();
         $xliffParser->replaceTranslation( $inputFile, $data[ 'data' ], $data[ 'transUnits' ], 'sk-SK', $outputFile );
 
         // validate XML
-        $xliffParser->xliffToArray( file_get_contents( $outputFile ) );
+        $xliffParser->xliffToArray( $this->getTestFile($outputPath) );
 
         // check if there is only one <mda:metadata>
-        $this->assertEquals( 1, substr_count( file_get_contents( $outputFile ), '<mda:metadata>' ) );
+        $this->assertEquals( 1, substr_count( $this->getTestFile($outputPath), '<mda:metadata>' ) );
     }
 
-    /**
-     * @test
-     * @depends can_replace_a_xliff_20_with_mda_without_duplicate_it
-     */
+    #[Test]
     public function validate_xliff_20_with_mda_prefilled() {
-        $outputFile = realpath( __DIR__ . '/../tests/files/output/xliff-20-with-mda.xlf' );
+        $outputPath = 'output/xliff-20-with-mda.xlf';
+        $outputFile = $this->getTestFilePath($outputPath);
 
         try {
             $validate = $this->validateXliff20( $outputFile );
@@ -241,9 +235,7 @@ class XliffReplacerTest extends BaseTest {
         }
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_replace_a_xliff_12_without_target() {
         $data = $this->getData( [
                 [
@@ -318,12 +310,13 @@ class XliffReplacerTest extends BaseTest {
                 ],
         ] );
 
-        $inputFile  = __DIR__ . '/../tests/files/file-with-nested-group-and-missing-target.xliff';
-        $outputFile = __DIR__ . '/../tests/files/output/file-with-nested-group-and-missing-target.xliff';
+        $inputFile  = $this->getTestFilePath('file-with-nested-group-and-missing-target.xliff');
+        $outputPath = 'output/file-with-nested-group-and-missing-target.xliff';
+        $outputFile = $this->getTestFilePath($outputPath);
 
         $xliffParser = new XliffParser();
         $xliffParser->replaceTranslation( $inputFile, $data[ 'data' ], $data[ 'transUnits' ], 'sk-SK', $outputFile );
-        $output = $xliffParser->xliffToArray( file_get_contents( $outputFile ) );
+        $output = $xliffParser->xliffToArray( $this->getTestFile($outputPath) );
 
         $expected = 'Bla bla bla';
 
@@ -332,9 +325,7 @@ class XliffReplacerTest extends BaseTest {
         $this->assertEquals( $output[ 'files' ][ 3 ][ 'trans-units' ][ 3 ][ 'target' ][ 'raw-content' ], $expected );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_replace_an_intermediate_xliff_12_without_target() {
         $data = $this->getData( [
                 [
@@ -353,12 +344,13 @@ class XliffReplacerTest extends BaseTest {
                 ],
         ] );
 
-        $inputFile  = __DIR__ . '/../tests/files/intermediate_xliff.xliff';
-        $outputFile = __DIR__ . '/../tests/files/output/intermediate_xliff.xliff';
+        $inputFile  = $this->getTestFilePath('intermediate_xliff.xliff');
+        $outputPath = 'output/intermediate_xliff.xliff';
+        $outputFile = $this->getTestFilePath($outputPath);
 
         $xliffParser = new XliffParser();
         $xliffParser->replaceTranslation( $inputFile, $data[ 'data' ], $data[ 'transUnits' ], 'sk-SK', $outputFile );
-        $output = $xliffParser->xliffToArray( file_get_contents( $outputFile ) );
+        $output = $xliffParser->xliffToArray( $this->getTestFile($outputPath) );
 
         $file      = $output[ 'files' ][ 3 ];
         $transUnit = $file[ 'trans-units' ][ 1 ];
@@ -380,9 +372,7 @@ class XliffReplacerTest extends BaseTest {
         $this->assertEquals( $target[ 'attr' ][ 'state' ], 'translated' );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_replace_a_xliff_10_without_target_lang() {
         $data = $this->getData( [
                 [
@@ -401,19 +391,18 @@ class XliffReplacerTest extends BaseTest {
                 ]
         ] );
 
-        $inputFile  = __DIR__ . '/../tests/files/no-target.xliff';
-        $outputFile = __DIR__ . '/../tests/files/output/no-target.xliff';
+        $inputFile  = $this->getTestFilePath('no-target.xliff');
+        $outputPath = 'output/no-target.xliff';
+        $outputFile = $this->getTestFilePath($outputPath);
 
         $xliffParser = new XliffParser();
         $xliffParser->replaceTranslation( $inputFile, $data[ 'data' ], $data[ 'transUnits' ], 'it-it', $outputFile );
-        $output = $xliffParser->xliffToArray( file_get_contents( $outputFile ) );
+        $output = $xliffParser->xliffToArray( $this->getTestFile($outputPath) );
 
         $this->assertEquals( $output[ 'files' ][ 1 ][ 'attr' ][ 'target-language' ], 'it-it' );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function should_replace_a_translation_with_0_as_string() {
         $data = $this->getData( [
                 [
@@ -432,21 +421,20 @@ class XliffReplacerTest extends BaseTest {
                 ]
         ] );
 
-        $inputFile  = __DIR__ . '/../tests/files/no-target.xliff';
-        $outputFile = __DIR__ . '/../tests/files/output/no-target.xliff';
+        $inputFile  = $this->getTestFilePath('no-target.xliff');
+        $outputPath = 'output/no-target.xliff';
+        $outputFile = $this->getTestFilePath($outputPath);
 
         $xliffParser = new XliffParser();
         $xliffParser->replaceTranslation( $inputFile, $data[ 'data' ], $data[ 'transUnits' ], 'it-it', $outputFile );
-        $output = $xliffParser->xliffToArray( file_get_contents( $outputFile ) );
+        $output = $xliffParser->xliffToArray( $this->getTestFile($outputPath) );
 
         $this->assertEquals( $output[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ], '0' );
 
 
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_replace_a_xliff_10() {
         $data = $this->getData( [
                 [
@@ -465,20 +453,19 @@ class XliffReplacerTest extends BaseTest {
                 ]
         ] );
 
-        $inputFile  = __DIR__ . '/../tests/files/file-with-emoji.xliff';
-        $outputFile = __DIR__ . '/../tests/files/output/file-with-emoji.xliff';
+        $inputFile  = $this->getTestFilePath('file-with-emoji.xliff');
+        $outputPath = 'output/file-with-emoji.xliff';
+        $outputFile = $this->getTestFilePath($outputPath);
 
         $xliffParser = new XliffParser();
         $xliffParser->replaceTranslation( $inputFile, $data[ 'data' ], $data[ 'transUnits' ], 'fr-fr', $outputFile );
-        $output   = $xliffParser->xliffToArray( file_get_contents( $outputFile ) );
+        $output   = $xliffParser->xliffToArray( $this->getTestFile($outputPath) );
         $expected = '<g id="1">&#128076;&#127995;</g>';
 
         $this->assertEquals( $expected, $output[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ] );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_replace_a_xliff_20_without_target() {
         $data = $this->getData( [
                 [
@@ -525,11 +512,12 @@ class XliffReplacerTest extends BaseTest {
                 ],
         ] );
 
-        $inputFile  = __DIR__ . '/../tests/files/1111_prova.md.xlf';
-        $outputFile = __DIR__ . '/../tests/files/output/1111_prova.md.xlf';
+        $inputFile  = $this->getTestFilePath('1111_prova.md.xlf');
+        $outputPath = 'output/1111_prova.md.xlf';
+        $outputFile = $this->getTestFilePath($outputPath);
 
         ( new XliffParser() )->replaceTranslation( $inputFile, $data[ 'data' ], $data[ 'transUnits' ], 'en-en', $outputFile, false );
-        $output    = ( new XliffParser() )->xliffToArray( file_get_contents( $outputFile ) );
+        $output    = ( new XliffParser() )->xliffToArray( $this->getTestFile($outputPath) );
         $expected  = 'Document title';
         $expected2 = 'Document title2';
         $expected3 = 'Free text containing <pc id="1" canCopy="no" canDelete="no" dataRefEnd="d1" dataRefStart="d1">cursive</pc>.';
@@ -568,19 +556,17 @@ class XliffReplacerTest extends BaseTest {
         $this->assertEquals( $unit2[ 'seg-target' ][ 0 ][ 'raw-content' ], 'Free text containing <pc id="1" canCopy="no" canDelete="no" dataRefEnd="d1" dataRefStart="d1">cursive</pc>.' );
 
         // check counters
-        preg_match_all( '/<mda:meta type="x-matecat-raw">(.*?)<\/mda:meta>/s', file_get_contents( $outputFile ), $rawWords );
-        preg_match_all( '/<mda:meta type="x-matecat-weighted">(.*?)<\/mda:meta>/s', file_get_contents( $outputFile ), $weightedWords );
+        preg_match_all( '/<mda:meta type="x-matecat-raw">(.*?)<\/mda:meta>/s', $this->getTestFile($outputPath), $rawWords );
+        preg_match_all( '/<mda:meta type="x-matecat-weighted">(.*?)<\/mda:meta>/s', $this->getTestFile($outputPath), $weightedWords );
 
         $this->assertEquals( $rawWords[ 1 ][ 1 ], 5 );
         $this->assertEquals( $weightedWords[ 1 ][ 1 ], 4 );
     }
 
-    /**
-     * @test
-     * @depends can_replace_a_xliff_20_without_target
-     */
+    #[Test]
     public function invalid_target_language() {
-        $outputFile = realpath( __DIR__ . '/../tests/files/output/1111_prova.md.xlf' );
+        $outputPath = 'output/1111_prova.md.xlf';
+        $outputFile = $this->getTestFilePath($outputPath);
 
         try {
             $validate = $this->validateXliff20( $outputFile );
@@ -590,9 +576,7 @@ class XliffReplacerTest extends BaseTest {
         }
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_replace_a_xliff_20_with_no_errors() {
         $data       = $this->getData( [
                 [
@@ -626,22 +610,21 @@ class XliffReplacerTest extends BaseTest {
                         'raw_word_count' => 300,
                 ],
         ] );
-        $inputFile  = __DIR__ . '/../tests/files/sample-20.xlf';
-        $outputFile = __DIR__ . '/../tests/files/output/sample-20.xlf';
+        $inputFile  = $this->getTestFilePath('sample-20.xlf');
+        $outputPath = 'output/sample-20.xlf';
+        $outputFile = $this->getTestFilePath($outputPath);
 
         ( new XliffParser() )->replaceTranslation( $inputFile, $data[ 'data' ], $data[ 'transUnits' ], 'fr-fr', $outputFile, false, new DummyXliffReplacerCallbackWhichReturnFalse() );
-        $output   = ( new XliffParser() )->xliffToArray( file_get_contents( $outputFile ) );
+        $output   = ( new XliffParser() )->xliffToArray( $this->getTestFile($outputPath) );
         $expected = '<pc id="1">Buongiorno al <mrk id="m2" type="term">Mondo</mrk> !</pc>';
 
         $this->assertEquals( $expected, $output[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ][ 0 ] );
     }
 
-    /**
-     * @test
-     * @depends can_replace_a_xliff_20_with_no_errors
-     */
+    #[Test]
     public function validate_sample_xliff_20() {
-        $outputFile = realpath( __DIR__ . '/../tests/files/output/sample-20.xlf' );
+        $outputPath = 'output/sample-20.xlf';
+        $outputFile = $this->getTestFilePath($outputPath);
 
         try {
             $validate = $this->validateXliff20( $outputFile );
@@ -651,9 +634,7 @@ class XliffReplacerTest extends BaseTest {
         }
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_replace_a_xliff_20_with_consistency_errors() {
         $data       = $this->getData( [
                 [
@@ -687,19 +668,18 @@ class XliffReplacerTest extends BaseTest {
                         'raw_word_count' => 300,
                 ],
         ] );
-        $inputFile  = __DIR__ . '/../tests/files/sample-20.xlf';
-        $outputFile = __DIR__ . '/../tests/files/output/sample-20.xlf';
+        $inputFile  = $this->getTestFilePath('sample-20.xlf');
+        $outputPath = 'output/sample-20.xlf';
+        $outputFile = $this->getTestFilePath($outputPath);
 
         ( new XliffParser() )->replaceTranslation( $inputFile, $data[ 'data' ], $data[ 'transUnits' ], 'fr-fr', $outputFile, false, new DummyXliffReplacerCallbackWhichReturnTrue() );
-        $output   = ( new XliffParser() )->xliffToArray( file_get_contents( $outputFile ) );
+        $output   = ( new XliffParser() )->xliffToArray( $this->getTestFile($outputPath) );
         $expected = '|||UNTRANSLATED_CONTENT_START|||<pc id="1">Hello <mrk id="m2" type="term">World</mrk> !</pc>|||UNTRANSLATED_CONTENT_END|||';
 
         $this->assertEquals( $expected, $output[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ][ 0 ] );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function xliff20_should_not_overwrite_translation_candidates_with_consistency_errors() {
         $data       = $this->getData( [
                 [
@@ -733,25 +713,24 @@ class XliffReplacerTest extends BaseTest {
                         'raw_word_count' => 300,
                 ],
         ] );
-        $inputFile  = __DIR__ . '/../tests/files/valid_sample-20-translation-candidates.xlf';
-        $outputFile = __DIR__ . '/../tests/files/output/valid_sample-20-translation-candidates.xlf';
+        $inputFile  = $this->getTestFilePath('valid_sample-20-translation-candidates.xlf');
+        $outputPath = 'output/valid_sample-20-translation-candidates.xlf';
+        $outputFile = $this->getTestFilePath($outputPath);
 
         ( new XliffParser() )->replaceTranslation( $inputFile, $data[ 'data' ], $data[ 'transUnits' ], 'fr-fr', $outputFile, false, new DummyXliffReplacerCallbackWhichReturnTrue() );
-        $output   = ( new XliffParser() )->xliffToArray( file_get_contents( $outputFile ) );
+        $output   = ( new XliffParser() )->xliffToArray( $this->getTestFile($outputPath) );
         $expected = '|||UNTRANSLATED_CONTENT_START|||<pc id="1">Hello <mrk id="m2" type="term">World</mrk> !</pc>|||UNTRANSLATED_CONTENT_END|||';
 
         $this->assertEquals( $expected, $output[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ][ 0 ] );
 
-        $content = file_get_contents( $outputFile );
+        $content = $this->getTestFile($outputPath);
         $this->assertTrue( (bool)preg_match( '#<target>Il est mon ami.</target>#', $content ) );
         $this->assertTrue( (bool)preg_match( '/Il est mon meilleur ami/', $content ) );
 
     }
 
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_replace_a_xliff_12_with_consistency_errors() {
         $data       = $this->getData( [
                 [
@@ -769,39 +748,33 @@ class XliffReplacerTest extends BaseTest {
                         'raw_word_count' => 2,
                 ],
         ] );
-        $inputFile  = __DIR__ . '/../tests/files/file-with-self-closed-tag-and-alt-trans.xliff';
-        $outputFile = __DIR__ . '/../tests/files/output/_file-with-self-closed-tag-and-alt-trans.xliff';
+        $inputFile  = $this->getTestFilePath('file-with-self-closed-tag-and-alt-trans.xliff');
+        $outputPath = 'output/_file-with-self-closed-tag-and-alt-trans.xliff';
+        $outputFile = $this->getTestFilePath($outputPath);
 
         ( new XliffParser() )->replaceTranslation( $inputFile, $data[ 'data' ], $data[ 'transUnits' ], 'fr-fr', $outputFile, false, new DummyXliffReplacerCallbackWhichReturnTrue() );
-        $output   = ( new XliffParser() )->xliffToArray( file_get_contents( $outputFile ) );
+        $output   = ( new XliffParser() )->xliffToArray( $this->getTestFile($outputPath) );
         $expected = '|||UNTRANSLATED_CONTENT_START|||<pc id="1">Hello <mrk id="m2" type="term">World</mrk> !</pc>|||UNTRANSLATED_CONTENT_END|||';
 
         $this->assertEquals( $expected, $output[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ] );
     }
 
-    /**
-     * In this case the replacer must do not replace original target
-     *
-     * @test
-     */
+    #[Test]
     public function can_replace_a_xliff_12_with__translate_no() {
         $data = $this->getData( [] );
 
-        $inputFile  = __DIR__ . '/../tests/files/Working_with_the_Review_tool_single_tu.xlf';
-        $outputFile = __DIR__ . '/../tests/files/output/Working_with_the_Review_tool_single_tu.xlf';
+        $inputFile  = $this->getTestFilePath('Working_with_the_Review_tool_single_tu.xlf');
+        $outputPath = 'output/Working_with_the_Review_tool_single_tu.xlf';
+        $outputFile = $this->getTestFilePath($outputPath);
 
         ( new XliffParser() )->replaceTranslation( $inputFile, $data[ 'data' ], $data[ 'transUnits' ], 'it-it', $outputFile, false );
-        $output   = ( new XliffParser() )->xliffToArray( file_get_contents( $outputFile ) );
+        $output   = ( new XliffParser() )->xliffToArray( $this->getTestFile($outputPath) );
         $expected = '<mrk mtype="seg" mid="1" MadCap:segmentStatus="Untranslated" MadCap:matchPercent="0"/>';
 
         $this->assertEquals( $expected, $output[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ] );
     }
 
-    /**
-     * In this case the replacer must do not replace original target
-     *
-     * @test
-     */
+    #[Test]
     public function can_replace_a_xliff_12_with_mrk_and_g() {
         $data = $this->getData( [
                 [
@@ -893,11 +866,12 @@ class XliffReplacerTest extends BaseTest {
                 ],
         ] );
 
-        $inputFile  = __DIR__ . '/../tests/files/file-with-notes-and-no-target-seg-source-with-external-g-tag.xliff';
-        $outputFile = __DIR__ . '/../tests/files/output/file-with-notes-and-no-target-seg-source-with-external-g-tag.xliff';
+        $inputFile  = $this->getTestFilePath('file-with-notes-and-no-target-seg-source-with-external-g-tag.xliff');
+        $outputPath = 'output/file-with-notes-and-no-target-seg-source-with-external-g-tag.xliff';
+        $outputFile = $this->getTestFilePath($outputPath);
 
         ( new XliffParser() )->replaceTranslation( $inputFile, $data[ 'data' ], $data[ 'transUnits' ], 'it-it', $outputFile, false );
-        $output = ( new XliffParser() )->xliffToArray( file_get_contents( $outputFile ) );
+        $output = ( new XliffParser() )->xliffToArray( $this->getTestFile($outputPath) );
 
         $expected = '<g id="1"><mrk mid="0" mtype="seg">Paperone</mrk></g>';
         $this->assertEquals( $expected, $output[ 'files' ][ 3 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ] );
@@ -913,9 +887,7 @@ class XliffReplacerTest extends BaseTest {
 
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function should_replace_empty_12_units() {
 
         $data = $this->getData( [
@@ -979,11 +951,12 @@ class XliffReplacerTest extends BaseTest {
                 ]
         ] );
 
-        $inputFile  = __DIR__ . '/../tests/files/test-empty-unit-1.2.xliff';
-        $outputFile = __DIR__ . '/../tests/files/output/test-empty-unit-1.2.xliff';
+        $inputFile  = $this->getTestFilePath('test-empty-unit-1.2.xliff');
+        $outputPath = 'output/test-empty-unit-1.2.xliff';
+        $outputFile = $this->getTestFilePath($outputPath);
 
         ( new XliffParser() )->replaceTranslation( $inputFile, $data[ 'data' ], $data[ 'transUnits' ], 'it-it', $outputFile, false );
-        $output = ( new XliffParser() )->xliffToArray( file_get_contents( $outputFile ) );
+        $output = ( new XliffParser() )->xliffToArray( $this->getTestFile($outputPath) );
 
         $expected = '';
         $this->assertEquals( $expected, $output[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ] );
@@ -993,9 +966,7 @@ class XliffReplacerTest extends BaseTest {
         $this->assertEquals( $expected, $output[ 'files' ][ 1 ][ 'trans-units' ][ 3 ][ 'target' ][ 'raw-content' ] );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function should_replace_20_units_with_notes_after_segment() {
 
         $data = $this->getData( [
@@ -1021,11 +992,12 @@ class XliffReplacerTest extends BaseTest {
                 ],
         ] );
 
-        $inputFile  = __DIR__ . '/../tests/files/notes-after-segment.xliff';
-        $outputFile = __DIR__ . '/../tests/files/output/notes-after-segment.xliff';
+        $inputFile  = $this->getTestFilePath('notes-after-segment.xliff');
+        $outputPath = 'output/notes-after-segment.xliff';
+        $outputFile = $this->getTestFilePath($outputPath);
 
         ( new XliffParser() )->replaceTranslation( $inputFile, $data[ 'data' ], $data[ 'transUnits' ], 'it-it', $outputFile, false );
-        $output = ( new XliffParser() )->xliffToArray( file_get_contents( $outputFile ) );
+        $output = ( new XliffParser() )->xliffToArray( $this->getTestFile($outputPath) );
 
         $expected = 'Bevi Coca Cola!';
         $expectedNote1 = '3.00';
@@ -1038,9 +1010,7 @@ class XliffReplacerTest extends BaseTest {
         $this->assertEquals( $expectedNote3, $output[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'notes' ][ 2 ][ 'raw-content' ] );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function should_replace_empty_20_units() {
 
         $data = $this->getData( [
@@ -1104,11 +1074,12 @@ class XliffReplacerTest extends BaseTest {
             ]
         ] );
 
-        $inputFile  = __DIR__ . '/../tests/files/test-empty-unit-2.0.xliff';
-        $outputFile = __DIR__ . '/../tests/files/output/test-empty-unit-2.0.xliff';
+        $inputFile  = $this->getTestFilePath('test-empty-unit-2.0.xliff');
+        $outputPath = 'output/test-empty-unit-2.0.xliff';
+        $outputFile = $this->getTestFilePath($outputPath);
 
         ( new XliffParser() )->replaceTranslation( $inputFile, $data[ 'data' ], $data[ 'transUnits' ], 'it-it', $outputFile, false );
-        $output = ( new XliffParser() )->xliffToArray( file_get_contents( $outputFile ) );
+        $output = ( new XliffParser() )->xliffToArray( $this->getTestFile($outputPath) );
 
         $expected = '';
         $this->assertEquals( $expected, $output[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ][ 0 ] );
@@ -1118,9 +1089,7 @@ class XliffReplacerTest extends BaseTest {
         $this->assertEquals( $expected, $output[ 'files' ][ 1 ][ 'trans-units' ][ 3 ][ 'target' ][ 'raw-content' ][ 0 ] );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function should_replace_12_units_with_empty_segments_with_the_correct_state() {
 
         $data = $this->getData( [
@@ -1198,11 +1167,12 @@ class XliffReplacerTest extends BaseTest {
             ],
         ] );
 
-        $inputFile  = __DIR__ . '/../tests/files/empty-mrk.xliff';
-        $outputFile = __DIR__ . '/../tests/files/output/empty-mrk.xliff';
+        $inputFile  = $this->getTestFilePath('empty-mrk.xliff');
+        $outputPath = 'output/empty-mrk.xliff';
+        $outputFile = $this->getTestFilePath($outputPath);
 
         ( new XliffParser() )->replaceTranslation( $inputFile, $data[ 'data' ], $data[ 'transUnits' ], 'it-it', $outputFile, false );
-        $output = ( new XliffParser() )->xliffToArray( file_get_contents( $outputFile ) );
+        $output = ( new XliffParser() )->xliffToArray( $this->getTestFile($outputPath) );
 
         $status = 'signed-off';
         $this->assertEquals( $status, $output[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'target' ][ 'attr' ][ 'state' ] );
@@ -1210,9 +1180,7 @@ class XliffReplacerTest extends BaseTest {
         $this->assertEquals( $status, $output[ 'files' ][ 1 ][ 'trans-units' ][ 3 ][ 'target' ][ 'attr' ][ 'state' ] );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function should_replace_12_units_with_entities() {
 
         $data = $this->getData( [
@@ -1236,18 +1204,17 @@ class XliffReplacerTest extends BaseTest {
             ],
         ] );
 
-        $inputFile  = __DIR__ . '/../tests/files/with-entities.xliff';
-        $outputFile = __DIR__ . '/../tests/files/output/with-entities.xliff';
+        $inputFile  = $this->getTestFilePath('with-entities.xliff');
+        $outputPath = 'output/with-entities.xliff';
+        $outputFile = $this->getTestFilePath($outputPath);
 
         ( new XliffParser() )->replaceTranslation( $inputFile, $data[ 'data' ], $data[ 'transUnits' ], 'it-it', $outputFile, false );
-        $output = ( new XliffParser() )->xliffToArray( file_get_contents( $outputFile ) );
+        $output = ( new XliffParser() )->xliffToArray( $this->getTestFile($outputPath) );
 
         $this->assertEquals( "<mrk mid=\"0\" mtype=\"seg\">Ciao''</mrk> ", $output[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'target' ][ 'raw-content' ] );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function other_tests_replacing_12_units_with_entities() {
 
         $data = $this->getData( [
@@ -1271,11 +1238,12 @@ class XliffReplacerTest extends BaseTest {
             ],
         ] );
 
-        $inputFile  = __DIR__ . '/../tests/files/entities.xliff';
-        $outputFile = __DIR__ . '/../tests/files/output/entities.xliff';
+        $inputFile  = $this->getTestFilePath('entities.xliff');
+        $outputPath = 'output/entities.xliff';
+        $outputFile = $this->getTestFilePath($outputPath);
 
         ( new XliffParser() )->replaceTranslation( $inputFile, $data[ 'data' ], $data[ 'transUnits' ], 'it-it', $outputFile, false );
-        $output = ( new XliffParser() )->xliffToArray( file_get_contents( $outputFile ) );
+        $output = ( new XliffParser() )->xliffToArray( $this->getTestFile($outputPath) );
 
         $expected = '&lt;table&gt;
 &lt;tr&gt;&lt;td&gt;A&lt;/td&gt;&lt;td&gt;&lt;img src="https://images.code.org/cfc3f8206438a60afe3be9afe7fc0a22-image-1489118742610.10.15.png" width="100px" style="mix-blend-mode: multiply;"/&gt;&lt;/td&gt;&lt;td&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/td&gt;&lt;td&gt;B&lt;/td&gt;&lt;td&gt;&lt;img src="https://images.code.org/975b027684d2f5411b960bf82987663e-image-1489119999013.11.13.png" width="100px" style="mix-blend-mode: multiply;"/&gt;&lt;/td&gt;&lt;td&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/td&gt;&lt;td&gt;C&lt;/td&gt;&lt;td&gt;&lt;img src="https://images.code.org/635ac54ed7cb2e2d24eb341b3ec4eecb-image-1489120024059.12.00.png" width="80px" style="mix-blend-mode: multiply; clip: rect(0px,0px,0px,40px);"/&gt;&lt;/td&gt;&lt;/tr&gt;

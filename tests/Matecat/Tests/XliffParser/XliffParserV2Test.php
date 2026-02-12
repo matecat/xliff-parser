@@ -1,14 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Matecat\XliffParser\Tests;
 
 use Matecat\XliffParser\XliffParser;
+use PHPUnit\Framework\Attributes\Test;
 
-class XliffParserV2Test extends BaseTest
+class XliffParserV2Test extends Base
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function can_parse_a_xliff_file_with_empty_size_restriction_metadata()
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('size-restriction.xliff'));
@@ -17,9 +18,7 @@ class XliffParserV2Test extends BaseTest
         $this->assertEquals( 60, $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 14 ] [ 'attr' ]['sizeRestriction'] );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_parse_a_xliff_file_with_empty_pc_tags()
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('pc-slash.xlf'));
@@ -31,9 +30,7 @@ class XliffParserV2Test extends BaseTest
         $this->assertEquals($expected2, $transUnits[ 'source' ] [ 'raw-content' ] [ 1 ]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_parse_a_xliff_file_collapsing_empty_tags()
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('pc-slash.xlf'), true);
@@ -43,9 +40,7 @@ class XliffParserV2Test extends BaseTest
         $this->assertEquals($expected, $transUnits[ 'source' ] [ 'raw-content' ] [ 1 ]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_parse_empty_xliff_v2()
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('empty.xliff'));
@@ -53,9 +48,7 @@ class XliffParserV2Test extends BaseTest
         $this->assertFalse(isset( $parsed[ 'files' ][ 1 ][ 'trans-units' ]));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_parse_xliff_v2_with_encoded_g_tags_in_originalData()
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('xliff_20_with_g_tags_in_dataref.xlf'));
@@ -67,9 +60,7 @@ class XliffParserV2Test extends BaseTest
         $this->assertEquals( 'd1', $originalData['attr']['id'] );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_parse_xliff_v2_with_new_line_values_in_originalData()
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('blank-dataRef.xliff'));
@@ -79,9 +70,7 @@ class XliffParserV2Test extends BaseTest
         $this->assertEquals( '  ', $units[4]['original-data'][0]['raw-content'] );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_parse_xliff_v2_with_pc_tags()
     {
         // <pc> tags do not be escaped here
@@ -91,9 +80,7 @@ class XliffParserV2Test extends BaseTest
         $this->assertEquals('Testo libero contenente <pc id="1" canCopy="no" canDelete="no" dataRefEnd="d1" dataRefStart="d1">corsivo</pc>.', $units[2][ 'source' ]['raw-content'][0]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_parse_xliff_v2_with_double_encoded_map()
     {
         // &amp;#39;
@@ -117,9 +104,7 @@ class XliffParserV2Test extends BaseTest
         $this->assertEquals("&apos;", $units[5][ 'original-data' ][0]['raw-content']);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_parse_xliff_v2_metadata()
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('uber-v2.xliff'));
@@ -132,9 +117,7 @@ class XliffParserV2Test extends BaseTest
         $this->assertEmpty($parsed[ 'files' ][ 1 ][ 'notes' ]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_parse_xliff_v2_notes()
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('sample-20.xlf'));
@@ -150,9 +133,7 @@ class XliffParserV2Test extends BaseTest
                 }', $notes[ 2 ][ 'json' ] );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_parse_xliff_v2_trans_units_metadata()
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('sample-20.xlf'));
@@ -164,9 +145,7 @@ class XliffParserV2Test extends BaseTest
         $this->assertEquals( 'u2', $units[ 2 ][ 'attr' ][ 'id' ] );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_parse_xliff_v2_trans_units_originalData()
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('uber-v2.xliff'));
@@ -176,9 +155,7 @@ class XliffParserV2Test extends BaseTest
         $this->assertEquals( 'source1', $units[ 5 ][ 'original-data' ][ 0 ][ 'attr' ][ 'id' ] );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_parse_xliff_v2_trans_units_notes()
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('uber-v2.xliff'));
@@ -201,9 +178,7 @@ class XliffParserV2Test extends BaseTest
         ], $note[ 3 ] );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_parse_xliff_v2_trans_units_source_and_target()
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('sample-20.xlf'));
@@ -213,49 +188,43 @@ class XliffParserV2Test extends BaseTest
         $this->assertCount(2, $units);
 
         // avoid assertStringContainsString because in PHPUnit 5 doesn't exist
-        $this->assertContains( '<pc id="1">Hello <mrk id="m1" type="term">World</mrk>!</pc>', $units[ 1 ][ 'source' ][ 'raw-content' ][ 0 ] );
-        $this->assertContains( '<pc id="1">Hello <mrk id="m1" type="term">World</mrk>!</pc>', $units[ 1 ][ 'source' ][ 'raw-content' ][ 0 ] );
-        $this->assertContains( '<pc id="2">Hello <mrk id="m2" type="term">World2</mrk>!</pc>', $units[ 2 ][ 'source' ][ 'raw-content' ][ 0 ] );
-        $this->assertContains( '<pc id="1">Bonjour le <mrk id="m1" type="term">Monde</mrk> !</pc>', $units[ 1 ][ 'target' ][ 'raw-content' ][ 0 ] );
-        $this->assertContains( '<pc id="2">Bonjour le <mrk id="m2" type="term">Monde2</mrk> !</pc>', $units[ 2 ][ 'target' ][ 'raw-content' ][ 0 ] );
+        $this->assertStringContainsString( '<pc id="1">Hello <mrk id="m1" type="term">World</mrk>!</pc>', $units[ 1 ][ 'source' ][ 'raw-content' ][ 0 ] );
+        $this->assertStringContainsString( '<pc id="1">Hello <mrk id="m1" type="term">World</mrk>!</pc>', $units[ 1 ][ 'source' ][ 'raw-content' ][ 0 ] );
+        $this->assertStringContainsString( '<pc id="2">Hello <mrk id="m2" type="term">World2</mrk>!</pc>', $units[ 2 ][ 'source' ][ 'raw-content' ][ 0 ] );
+        $this->assertStringContainsString( '<pc id="1">Bonjour le <mrk id="m1" type="term">Monde</mrk> !</pc>', $units[ 1 ][ 'target' ][ 'raw-content' ][ 0 ] );
+        $this->assertStringContainsString( '<pc id="2">Bonjour le <mrk id="m2" type="term">Monde2</mrk> !</pc>', $units[ 2 ][ 'target' ][ 'raw-content' ][ 0 ] );
         $this->assertEquals( [], $units[ 1 ][ 'source' ][ 'attr' ] );
         $this->assertEquals( [], $units[ 2 ][ 'source' ][ 'attr' ] );
         $this->assertEquals( [], $units[ 1 ][ 'target' ][ 'attr' ] );
         $this->assertEquals( [], $units[ 2 ][ 'target' ][ 'attr' ] );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_parse_xliff_v2_trans_units_nested_in_groups()
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('sample-20-with-group.xlf'));
 
         $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
         $this->assertCount(3, $units);
-        $this->assertContains('Sentence from a group', $units[ 1 ][ 'source' ][ 'raw-content' ][0]);
-        $this->assertContains('Phrase from a group', $units[ 1 ][ 'target' ][ 'raw-content' ][0]);
+        $this->assertStringContainsString('Sentence from a group', $units[ 1 ][ 'source' ][ 'raw-content' ][0]);
+        $this->assertStringContainsString('Phrase from a group', $units[ 1 ][ 'target' ][ 'raw-content' ][0]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_parse_xliff_v2_with_ti_in_nested_groups()
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('sample-20-with-nested-group.xlf'));
         $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
 
-        $this->assertContains('Sentence 1. ', $units[ 1 ][ 'source' ][ 'raw-content' ][0]);
-        $this->assertContains('Phrase 1. ', $units[ 1 ][ 'target' ][ 'raw-content' ][0]);
-        $this->assertContains('Sentence 2. ', $units[ 2 ][ 'source' ][ 'raw-content' ][0]);
-        $this->assertContains('Phrase 2. ', $units[ 2 ][ 'target' ][ 'raw-content' ][0]);
-        $this->assertContains('Sentence 3. ', $units[ 2 ][ 'source' ][ 'raw-content' ][1]);
-        $this->assertContains('Phrase 3. ', $units[ 2 ][ 'target' ][ 'raw-content' ][1]);
+        $this->assertStringContainsString('Sentence 1. ', $units[ 1 ][ 'source' ][ 'raw-content' ][0]);
+        $this->assertStringContainsString('Phrase 1. ', $units[ 1 ][ 'target' ][ 'raw-content' ][0]);
+        $this->assertStringContainsString('Sentence 2. ', $units[ 2 ][ 'source' ][ 'raw-content' ][0]);
+        $this->assertStringContainsString('Phrase 2. ', $units[ 2 ][ 'target' ][ 'raw-content' ][0]);
+        $this->assertStringContainsString('Sentence 3. ', $units[ 2 ][ 'source' ][ 'raw-content' ][1]);
+        $this->assertStringContainsString('Phrase 3. ', $units[ 2 ][ 'target' ][ 'raw-content' ][1]);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_parse_xliff_v2_trans_units_segmented_source_and_target()
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('sample-20-segmented.xlf'));
@@ -278,9 +247,7 @@ class XliffParserV2Test extends BaseTest
         ], $source['attr'][ 3 ] );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_parse_xliff_v2_trans_units_segmented_seg_source_and_seg_target()
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('sample-20-segmented.xlf'));
@@ -298,9 +265,7 @@ class XliffParserV2Test extends BaseTest
         $this->assertEquals( 'Phrase 4.', $segTarget[3]['raw-content'] );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_parse_xliff_v2_with_ec_and_sc()
     {
         // <pc> tags do not be escaped here
@@ -314,9 +279,7 @@ class XliffParserV2Test extends BaseTest
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_parse_xliff_v2()
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('sample-20.xlf'));
@@ -434,9 +397,7 @@ class XliffParserV2Test extends BaseTest
         $this->assertArraySimilar($parsed[ 'files' ][ 1 ], $exp);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function raise_exception_on_duplicate_ids()
     {
         try {
@@ -446,9 +407,7 @@ class XliffParserV2Test extends BaseTest
         }
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_parse_segment_state_attribute()
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('with-segment-state.xliff'));
