@@ -116,7 +116,7 @@ readonly class XliffParser
     {
         $enc = mb_detect_encoding($xliffContent);
 
-        if ($enc !== 'UTF-8') {
+        if ( $enc != 'UTF-8' && $enc != "ASCII" ) {
             $xliff['parser-warnings'][] = "Input identified as $enc ans converted UTF-8. May not be a problem if the content is English only";
             $s = mb_convert_encoding($xliffContent, 'UTF-8', mb_list_encodings());
             $xliffContent = $s !== false ? $s : "";
