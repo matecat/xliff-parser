@@ -100,8 +100,10 @@ abstract class AbstractXliffParser
                             "Maximum tag group nesting level of '" . self::MAX_GROUP_RECURSION_LEVEL . "' reached, aborting!"
                         );
                     }
-                } elseif ($nestedChildNode->nodeName === $this->getTuTagName(
-                    ) && $nestedChildNode instanceof DOMElement) {
+                } elseif (
+                    $nestedChildNode->nodeName === $this->getTuTagName() &&
+                    $nestedChildNode instanceof DOMElement
+                ) {
                     $this->extractTransUnit(
                         $nestedChildNode,
                         $transUnitIdArrayForUniquenessCheck,
@@ -217,7 +219,7 @@ abstract class AbstractXliffParser
         // <g id="1"><mrk mid="0" mtype="seg">An English string with g tags</mrk></g>
         $raw = $this->extractTagContent($dom, $childNode);
 
-        $markers = preg_split('#<mrk\s#si', $raw, -1);
+        $markers = preg_split('#<mrk\s#i', $raw, -1);
 
         $mi = 0;
         while (isset($markers[$mi + 1])) {
@@ -229,7 +231,7 @@ abstract class AbstractXliffParser
             // so we add them to
             $trailingSpaces = '';
             if ($this->xliffProprietary === 'trados') {
-                preg_match_all('/<\/mrk>[\s]+/iu', $markers[$mi + 1], $trailingSpacesMatches);
+                preg_match_all('/<\/mrk>\s+/iu', $markers[$mi + 1], $trailingSpacesMatches);
 
                 if (count($trailingSpacesMatches[0]) > 0) {
                     foreach ($trailingSpacesMatches[0] as $match) {
@@ -246,7 +248,7 @@ abstract class AbstractXliffParser
                 '$1',
                 $originalMark
             ); // at this point we have: ---> 'Test </mrk> </g>>'
-            $mark_content = preg_split('#</mrk>#si', $mark_string);
+            $mark_content = preg_split('#</mrk>#i', $mark_string);
 
             $sourceArray = [
                 'mid' => (isset($mid[1])) ? $mid[1] : $mi,
@@ -264,31 +266,11 @@ abstract class AbstractXliffParser
     }
 
     /**
-     * Get a map of data references by ID.
-     *
-     * @param array<int, array{attr?: array{id?: string}, raw-content?: string}> $originalData
-     *
-     * @return array<string, string>
-     */
-    protected function getDataRefMap(array $originalData): array
-    {
-        // dataRef map
-        $dataRefMap = [];
-        foreach ($originalData as $datum) {
-            if (isset($datum['attr']['id'], $datum['raw-content'])) {
-                $dataRefMap[$datum['attr']['id']] = $datum['raw-content'];
-            }
-        }
-
-        return $dataRefMap;
-    }
-
-    /**
      * Check if a string contains mrk tags.
      */
     protected function stringContainsMarks(string $raw): bool
     {
-        $markers = preg_split('#<mrk\s#si', $raw, -1);
+        $markers = preg_split('#<mrk\s#i', $raw, -1);
 
         return isset($markers[1]);
     }

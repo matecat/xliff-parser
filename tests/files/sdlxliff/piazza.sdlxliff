@@ -301,7 +301,7 @@
                         <sdl:seg id="1">
                             <sdl:value key="SegmentIdentityHash">dYpIABK5p8ujbecMJGKGhe67j5s=</sdl:value>
                         </sdl:seg>
-                        <sdl:seg id="2">
+                        <sdl:seg id="2" locked="true">
                             <sdl:value key="SegmentIdentityHash">kZxyM+TZheoF+/V6VW3/mrulQ5o=</sdl:value>
                         </sdl:seg>
                         <sdl:seg id="3">

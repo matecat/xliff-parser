@@ -255,9 +255,13 @@ class XliffParserV1 extends AbstractXliffParser
             }
 
             // locked
-            if ($childNode->nodeName === 'sdl:seg') {
-                $output['files'][$i]['trans-units'][$j]['locked'] = $this->extractLocked($childNode);
+            if ($childNode->nodeName === 'sdl:seg-defs') {
+                $this->extractLocked(
+                    $childNode,
+                    $output['files'][$i]['trans-units'][$j]['seg-source']
+                );
             }
+
         }
 
         // context-group
@@ -404,10 +408,30 @@ class XliffParserV1 extends AbstractXliffParser
     }
 
     /**
-     * Check if segment is locked.
+     * Set the locked status on marks based on sdl:seg-defs.
+     *
+     * @param DOMElement $sdl_seg_defs The sdl:seg-defs element
+     * @param array<int, array<string, mixed>> $marks Array of marks indexed numerically with 'mid' property
      */
-    private function extractLocked(DOMElement $locked): bool
+    private function extractLocked(DOMElement $sdl_seg_defs, array &$marks): void
     {
-        return $locked->hasAttribute('locked') && $locked->getAttribute('locked') !== '';
+        // Build a map of sdl:seg id => locked status
+        $lockedMap = [];
+        /** @var DOMElement $sdl_seg */
+        foreach ($sdl_seg_defs->childNodes as $sdl_seg) {
+            if ($sdl_seg->nodeName === 'sdl:seg') {
+                $lockedMap[$sdl_seg->getAttribute('id')] =
+                    $sdl_seg->hasAttribute('locked') &&
+                    $sdl_seg->getAttribute('locked') === 'true';
+            }
+        }
+
+        // Match the mrk by 'mid' value and set locked status
+        foreach ($marks as $index => $mark) {
+            $mid = $mark['mid'] ?? null;
+            if ($mid !== null && isset($lockedMap[$mid])) {
+                $marks[$index]['locked'] = $lockedMap[$mid];
+            }
+        }
     }
 }
