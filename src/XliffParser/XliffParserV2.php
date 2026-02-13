@@ -206,7 +206,7 @@ class XliffParserV2 extends AbstractXliffParser
                         } else {
                             $segSource[] = [
                                 'attr' => $this->extractTagAttributes($segment),
-                                'mid' => count($segSource) > 0 ? count($segSource) : 0,
+                                'mid' => max(count($segSource), 0),
                                 'ext-prec-tags' => '',
                                 'raw-content' => $extractedSource['raw-content'],
                                 'ext-succ-tags' => '',
@@ -228,7 +228,7 @@ class XliffParserV2 extends AbstractXliffParser
                         } else {
                             $segTarget[] = [
                                 'attr' => $this->extractTagAttributes($segment),
-                                'mid' => count($segTarget) > 0 ? count($segTarget) : 0,
+                                'mid' => max(count($segTarget), 0),
                                 'ext-prec-tags' => '',
                                 'raw-content' => $extractedTarget['raw-content'],
                                 'ext-succ-tags' => '',
@@ -422,9 +422,7 @@ class XliffParserV2 extends AbstractXliffParser
             $max = (int)$attr['tGroupEnd'];
 
             if (false === (($min <= $id) && ($id <= $max))) {
-                if ($this->logger) {
-                    $this->logger->warning('Segment #' . $id . ' is not included within tGroupBegin and tGroupEnd');
-                }
+                $this->logger?->warning('Segment #' . $id . ' is not included within tGroupBegin and tGroupEnd');
             }
         }
     }

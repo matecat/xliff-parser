@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0" srcLang="en-US" trgLang="nl-NL" version="2.0" xmlns="urn:oasis:names:tc:xliff:document:2.0">
+    <file id="f1" original="2324|Cyber Security">
+        <group id="g1" name="announcement">
+            <group id="g2" name="11657|announcementContent">
+                <group id="u1-g" name="html">
+                    <unit id="u1-1" name="h2">
+                        <mda:metadata>
+                            <mda:metaGroup id="h2_attributes">
+                                <mda:meta type="class">e-h3 c-alert__head t-no</mda:meta>
+                            </mda:metaGroup>
+                        </mda:metadata>
+                        <originalData>
+                            <data id="d1">&lt;strong&gt;</data>
+                            <data id="d2">&lt;/strong&gt;</data>
+                        </originalData>
+                        <segment>
+                            <source>Join our webinar: “<pc dataRefEnd="d2" dataRefStart="d1" id="1" subType="xlf:b" type="fmt">Machine Learning in Cyber Security: What It Is and What It Isn't</pc>”</source>
+                        </segment>
+                    </unit>
+                </group>
+            </group>
+        </group>
+    </file>
+</xliff>

@@ -102,7 +102,7 @@ class Xliff20 extends AbstractXliffReplacer
 
             // replace state for xliff v2
             if ('segment' === $name) { // add state to segment in Xliff v2
-                [$stateProp,] = StatusToStateAttribute::getState($this->xliffVersion, $seg['status']);
+                [$stateProp,] = StatusToStateAttribute::getState($this->xliffVersion, $seg['status'] ?? null);
                 $tag .= $stateProp;
             }
 
@@ -142,7 +142,7 @@ class Xliff20 extends AbstractXliffReplacer
         if (!$this->isEmpty) {
             // write closing tag if is not a target
             // EXCLUDE the target nodes with currentTransUnitIsTranslatable = 'NO'
-            if (!$this->inTarget and $this->currentTransUnitIsTranslatable !== 'no') {
+            if (!$this->inTarget && $this->currentTransUnitIsTranslatable !== 'no') {
                 $tag = "</$name>";
             }
 
@@ -151,9 +151,13 @@ class Xliff20 extends AbstractXliffReplacer
                     $seg = $this->getCurrentSegment();
 
                     // update counts
+                    // @codeCoverageIgnoreStart
+                    // This is defensive code - hasWrittenCounts is always set to true
+                    // before reaching this point in valid XLIFF 2.0 documents
                     if (!$this->hasWrittenCounts && !empty($seg)) {
                         $this->updateSegmentCounts($seg);
                     }
+                    // @codeCoverageIgnoreEnd
 
                     // delete translations so the prepareSegment
                     // will put source content in target tag
@@ -167,7 +171,7 @@ class Xliff20 extends AbstractXliffReplacer
 
                     //append translation
                     $tag = "<target>$translation</target>";
-                } elseif (!empty($this->CDATABuffer) and $this->currentTransUnitIsTranslatable === 'no') {
+                } elseif (!empty($this->CDATABuffer) && $this->currentTransUnitIsTranslatable === 'no') {
                     // These are target nodes with currentTransUnitIsTranslatable = 'NO'
                     $this->bufferIsActive = false;
                     $tag = $this->CDATABuffer . "</$name>";
@@ -308,11 +312,15 @@ class Xliff20 extends AbstractXliffReplacer
      */
     protected function prepareTranslation(array $seg): string
     {
-        $segment = Strings::removeDangerousChars($seg ['segment']);
-        $translation = Strings::removeDangerousChars($seg ['translation']);
+        if (empty($seg)) {
+            return "";
+        }
+
+        $segment = Strings::removeDangerousChars($seg ['segment'] ?? '');
+        $translation = Strings::removeDangerousChars($seg ['translation'] ?? '');
         $dataRefMap = (isset($seg['data_ref_map'])) ? Strings::jsonToArray($seg['data_ref_map']) : [];
 
-        if ($seg ['translation'] == '') {
+        if (($seg['translation'] ?? null) === '') {
             $translation = $segment;
         } else {
             if ($this->callback instanceof XliffReplacerCallbackInterface) {

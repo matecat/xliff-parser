@@ -33,9 +33,13 @@ class XliffParserV1 extends AbstractXliffParser
             $output['files'][$i]['attr'] = $this->extractMetadata($file);
 
             // reference
+            // @codeCoverageIgnoreStart
+            // Note: internal-file tags are extracted and removed before DOM parsing
+            // in XliffParser::removeInternalFileTagFromContent(), so this code is unreachable
             if (!empty($this->extractReference($file))) {
                 $output['files'][$i]['reference'] = $this->extractReference($file);
             }
+            // @codeCoverageIgnoreEnd
 
             // trans-units
             $transUnitIdArrayForUniquenessCheck = [];
@@ -177,11 +181,15 @@ class XliffParserV1 extends AbstractXliffParser
         foreach ($file->getElementsByTagName('reference') as $ref) {
             /** @var DOMNode $childNode */
             foreach ($ref->childNodes as $childNode) {
+                // @codeCoverageIgnoreStart
+                // Note: internal-file tags are extracted and removed before DOM parsing
+                // in XliffParser::removeInternalFileTagFromContent(), so this code is unreachable
                 if ($childNode->nodeName === 'internal-file') {
                     $reference[$order]['form-type'] = $childNode->attributes->getNamedItem('form')->nodeValue;
                     $reference[$order]['base64'] = trim($childNode->nodeValue);
                     $order++;
                 }
+                // @codeCoverageIgnoreEnd
             }
         }
 

@@ -32,7 +32,7 @@ readonly class XliffParser
      * Replace the translation in a xliff file
      *
      * @param array<int|string, array<string, mixed>> $data
-     * @param array<string, array<int, int>> $transUnits
+     * @param array<int|string, array<int, int>> $transUnits
      */
     public function replaceTranslation(
         string $originalXliffPath,
@@ -55,9 +55,11 @@ readonly class XliffParser
                 $callback
             );
             $parser->replaceTranslation();
+            // @codeCoverageIgnoreStart
         } catch (Exception) {
             // do nothing
         }
+        // @codeCoverageIgnoreEnd
     }
 
     /**
@@ -136,7 +138,9 @@ readonly class XliffParser
         $a = Strings::preg_split('|<internal-file[\s>]|i', $xliffContent);
 
         if ($a === false) {
+            // @codeCoverageIgnoreStart
             return $xliffContent;
+            // @codeCoverageIgnoreEnd
         }
 
         $tagMatches = count($a);
@@ -148,8 +152,10 @@ readonly class XliffParser
 
         $b = Strings::preg_split('|</internal-file>|i', $a[1]);
 
-        if ($b === false) {
+         if ($b === false) {
+            // @codeCoverageIgnoreStart
             return $xliffContent;
+            // @codeCoverageIgnoreEnd
         }
 
         $strippedContent = $a[0] . $b[1];
@@ -163,7 +169,9 @@ readonly class XliffParser
                 $c = Strings::preg_split('|</internal-file[\s>]|i', $a[$i]);
 
                 if ($c === false) {
+                    // @codeCoverageIgnoreStart
                     continue;
+                    // @codeCoverageIgnoreEnd
                 }
 
                 $strippedContent .= $c[1];

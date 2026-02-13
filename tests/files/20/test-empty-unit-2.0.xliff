@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0"
+       version="2.0"
+       srcLang="en"
+       trgLang="fr"
+>
+    <file id="xx1" original="word/footer1.xml">
+        <unit id="P3953B09A-tu1" xml:space="preserve">
+                <segment>
+                    <source xml:lang="hu-HU"/>
+                    <target xml:lang="ar-SA"/>
+                </segment>
+            </unit>
+        <unit id="P3953B09A-tu2" xml:space="preserve">
+                <segment>
+                    <source xml:lang="hu-HU"></source>
+                    <target xml:lang="ar-SA"></target>
+                </segment>
+            </unit>
+        <unit id="P6D3F672D-sub1" xml:space="preserve">
+                <segment>
+                    <source xml:lang="hu-HU">ARISTON</source>
+                    <target xml:lang="ar-SA">ARISTON</target>
+                </segment>
+            </unit>
+    </file>
+</xliff>

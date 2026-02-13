@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Matecat\XliffParser\Tests;
 
+use Exception;
 use Matecat\XliffParser\Utils\Strings;
 use PHPUnit\Framework\Attributes\Test;
 
 class StringsTest extends Base {
     #[Test]
-    public function can_check_html_tag() {
+    public function can_check_html_tag(): void {
         $a = "<div>ciao</div>";
         $b = "< >";
         $c = "<day,month,year>";
@@ -32,7 +33,7 @@ class StringsTest extends Base {
     }
 
     #[Test]
-    public function can_get_the_last_character() {
+    public function can_get_the_last_character(): void {
         $phrase = 'Si presenta con una nuance rubino intensa e compatta dai luminosi riflessi viola.';
 
         $this->assertEquals( '.', StringUtilsTestHelper::lastChar( $phrase ) );
@@ -43,20 +44,19 @@ class StringsTest extends Base {
     }
 
     #[Test]
-    public function contains_function_can_discriminate_trailing_spaces() {
+    public function contains_function_can_discriminate_trailing_spaces(): void {
         $full   = 'Il naso evidenzia raffinati sentori floreali di rosa canina e violetta, frutti rossi croccanti tipo ribes e fragole di bosco, dopo i quali emergono cenni gentili di grafite e liquirizia. Si presenta con una nuance rubino intensa e compatta dai luminosi riflessi viola. ';
         $phrase = 'Si presenta con una nuance rubino intensa e compatta dai luminosi riflessi viola. ';
 
         $this->assertTrue( StringUtilsTestHelper::contains( $phrase, $full ) );
 
         $full   = 'Il naso evidenzia raffinati sentori floreali di rosa canina e violetta, frutti rossi croccanti tipo ribes e fragole di bosco, dopo i quali emergono cenni gentili di grafite e liquirizia. Si presenta con una nuance rubino intensa e compatta dai luminosi riflessi viola.';
-        $phrase = 'Si presenta con una nuance rubino intensa e compatta dai luminosi riflessi viola. ';
 
         $this->assertFalse( StringUtilsTestHelper::contains( $phrase, $full ) );
     }
 
     #[Test]
-    public function can_detected_escaped_html_entities() {
+    public function can_detected_escaped_html_entities(): void {
         $this->assertFalse( Strings::isADoubleEscapedEntity( "&lt;p class=&quot;cmln__paragraph&quot;&gt;" ) );
         $this->assertFalse( Strings::isADoubleEscapedEntity( "&lt;/p&gt;" ) );
         $this->assertTrue( Strings::isADoubleEscapedEntity( "&amp;#39;" ) );
@@ -65,7 +65,7 @@ class StringsTest extends Base {
     }
 
     #[Test]
-    public function can_decode_only_escaped_entities() {
+    public function can_decode_only_escaped_entities(): void {
         $string   = "&lt;/p&gt; &amp;#39; &apos;";
         $expected = "&lt;/p&gt; &#39; &apos;";
 
@@ -78,7 +78,7 @@ class StringsTest extends Base {
     }
 
     #[Test]
-    public function can_detect_escaped_html() {
+    public function can_detect_escaped_html(): void {
         $strings = [
                 '&lt;ph id="1" /&gt;',
                 '&lt;div class="test"&gt;This is an html string &lt; /div&gt;',
@@ -99,7 +99,7 @@ class StringsTest extends Base {
     }
 
     #[Test]
-    public function can_detect_escaped_html_additional_test() {
+    public function can_detect_escaped_html_additional_test(): void {
         $string = '<5 &lt;pc id="1"/&gt;';
 
         $this->assertTrue( StringUtilsTestHelper::isAnEscapedHTML( $string ) );
@@ -134,7 +134,7 @@ class StringsTest extends Base {
     }
 
     #[Test]
-    public function can_encode_json() {
+    public function can_encode_json(): void {
         $json   = '{"source3":"&#39;","source4":"&lt;a class=&quot;cmln__link&quot; href=&quot;https:\\/\\/restaurant-dashboard.uber.com\\/&quot; target=&quot;_blank&quot;&gt;","source5":"&lt;\\/a&gt;","source1":"&lt;p class=&quot;cmln__paragraph&quot;&gt;","source6":"&lt;\\/p&gt;","source2":"&#39;"}';
         $noJson = "csacsacsa";
 
@@ -143,7 +143,7 @@ class StringsTest extends Base {
     }
 
     #[Test]
-    public function can_fix_not_well_formed_xml() {
+    public function can_fix_not_well_formed_xml(): void {
         $original = '<g id="1">Hello</g>, 4 > 3 -> <g id="1">Hello</g>, 4 &gt; 3';
         $expected = '<g id="1">Hello</g>, 4 &gt; 3 -&gt; <g id="1">Hello</g>, 4 &gt; 3';
 
@@ -183,7 +183,7 @@ class StringsTest extends Base {
     }
 
     #[Test]
-    public function can_validate_an_uuid() {
+    public function can_validate_an_uuid(): void {
         $not_valid_uuid = 'xxx';
         $uuid           = '4213862b-596b-4b03-b175-baf4a0ed6fd8';
 
@@ -192,7 +192,7 @@ class StringsTest extends Base {
     }
 
     #[Test]
-    public function get_the_number_of_trailing_spaces() {
+    public function get_the_number_of_trailing_spaces(): void {
         $string  = "La casa in campagna è bella  ";
         $string2 = "Dante Alighieri   ";
         $string3 = "Questa stringa non contiente spazi alla fine della frase.";
@@ -208,16 +208,22 @@ class StringsTest extends Base {
         $this->assertEquals( 2, Strings::getTheNumberOfTrailingSpaces( $string6 ) );
     }
 
+    /**
+     * @throws Exception
+     */
     #[Test]
-    public function can_clean_cdata() {
+    public function can_clean_cdata(): void {
         $testString = '<![CDATA[This is some content]]>';
         $expected   = 'This is some content';
 
         $this->assertEquals( $expected, Strings::cleanCDATA( $testString ) );
     }
 
+    /**
+     * @throws Exception
+     */
     #[Test]
-    public function can_clean_cdata_with_special_chars() {
+    public function can_clean_cdata_with_special_chars(): void {
         $testString = '<![CDATA[Text with <tags> and & special chars]]>';
         $expected   = 'Text with <tags> and & special chars';
 
@@ -225,13 +231,13 @@ class StringsTest extends Base {
     }
 
     #[Test]
-    public function cleanCDATA_throws_exception_on_invalid_xml() {
-        $this->expectException( \Exception::class );
+    public function cleanCDATA_throws_exception_on_invalid_xml(): void {
+        $this->expectException( Exception::class );
         Strings::cleanCDATA( '<invalid><xml' );
     }
 
     #[Test]
-    public function can_remove_dangerous_chars() {
+    public function can_remove_dangerous_chars(): void {
         // Test with control characters (ASCII < 32, excluding 0A, 0D, 09)
         $string = "Hello\x00\x01\x02World";
         $result = Strings::removeDangerousChars( $string );
@@ -249,7 +255,7 @@ class StringsTest extends Base {
     }
 
     #[Test]
-    public function can_remove_dangerous_xml_entities() {
+    public function can_remove_dangerous_xml_entities(): void {
         // Test with invalid XML entities
         $string = "Hello&#x00;&#x01;&#x08;World";
         $result = Strings::removeDangerousChars( $string );
@@ -267,27 +273,27 @@ class StringsTest extends Base {
     }
 
     #[Test]
-    public function removeDangerousChars_handles_null_input() {
+    public function removeDangerousChars_handles_null_input(): void {
         $result = Strings::removeDangerousChars( null );
         $this->assertEquals( "", $result );
     }
 
     #[Test]
-    public function removeDangerousChars_handles_empty_string() {
+    public function removeDangerousChars_handles_empty_string(): void {
         $result = Strings::removeDangerousChars( "" );
         $this->assertEquals( "", $result );
     }
 
     #[Test]
-    public function can_decode_all_html_entities() {
+    public function can_decode_all_html_entities(): void {
         $string   = "&lt;p&gt;Hello &amp; goodbye&lt;/p&gt;";
         $expected = "<p>Hello & goodbye</p>";
 
-        $this->assertEquals( $expected, Strings::htmlspecialchars_decode( $string, false ) );
+        $this->assertEquals( $expected, Strings::htmlspecialchars_decode( $string) );
     }
 
     #[Test]
-    public function can_decode_all_html_entities_default_parameter() {
+    public function can_decode_all_html_entities_default_parameter(): void {
         $string   = "&lt;p&gt;Hello &amp; goodbye&lt;/p&gt;";
         $expected = "<p>Hello & goodbye</p>";
 
@@ -296,7 +302,7 @@ class StringsTest extends Base {
     }
 
     #[Test]
-    public function htmlspecialchars_decode_handles_mixed_entities() {
+    public function htmlspecialchars_decode_handles_mixed_entities(): void {
         $string   = "&lt;p&gt; &amp;#39; &amp;amp; &quot;";
         $expected = "&lt;p&gt; &#39; &amp; &quot;";
 
@@ -304,7 +310,7 @@ class StringsTest extends Base {
     }
 
     #[Test]
-    public function can_use_preg_split() {
+    public function can_use_preg_split(): void {
         $pattern = '/\s+/';
         $subject = "Hello   world  this   is   a   test";
         $result  = Strings::preg_split( $pattern, $subject );
@@ -314,7 +320,7 @@ class StringsTest extends Base {
     }
 
     #[Test]
-    public function preg_split_removes_empty_strings() {
+    public function preg_split_removes_empty_strings(): void {
         $pattern = '/,/';
         $subject = "one,,two,,,three";
         $result  = Strings::preg_split( $pattern, $subject );
@@ -324,7 +330,7 @@ class StringsTest extends Base {
     }
 
     #[Test]
-    public function preg_split_handles_no_matches() {
+    public function preg_split_handles_no_matches(): void {
         $pattern = '/,/';
         $subject = "no-commas-here";
         $result  = Strings::preg_split( $pattern, $subject );
@@ -334,65 +340,64 @@ class StringsTest extends Base {
     }
 
     #[Test]
-    public function isJSON_handles_empty_string() {
+    public function isJSON_handles_empty_string(): void {
         $this->assertFalse( Strings::isJSON( '' ) );
     }
 
     #[Test]
-    public function isJSON_handles_whitespace_only() {
+    public function isJSON_handles_whitespace_only(): void {
         $this->assertFalse( Strings::isJSON( '   ' ) );
     }
 
     #[Test]
-    public function isJSON_handles_numeric_string() {
+    public function isJSON_handles_numeric_string(): void {
         $this->assertFalse( Strings::isJSON( '123' ) );
         $this->assertFalse( Strings::isJSON( '123.45' ) );
     }
 
     #[Test]
-    public function isJSON_handles_invalid_json_with_exception() {
+    public function isJSON_handles_invalid_json_with_exception(): void {
         // Invalid XML that causes exception in cleanCDATA
         $this->assertFalse( Strings::isJSON( '<invalid><xml' ) );
     }
 
     #[Test]
-    public function isJSON_handles_valid_nested_json() {
+    public function isJSON_handles_valid_nested_json(): void {
         $json = '{"key": {"nested": {"deep": "value"}}}';
         $this->assertTrue( Strings::isJSON( $json ) );
     }
 
     #[Test]
-    public function isJSON_handles_array_with_objects() {
+    public function isJSON_handles_array_with_objects(): void {
         $json = '[{"key": "value"}, {"key2": "value2"}]';
         $this->assertTrue( Strings::isJSON( $json ) );
     }
 
     #[Test]
-    public function isJSON_handles_malformed_json() {
+    public function isJSON_handles_malformed_json(): void {
         $this->assertFalse( Strings::isJSON( '{"key": value}' ) ); // missing quotes
         $this->assertFalse( Strings::isJSON( '{key: "value"}' ) ); // missing quotes on key
         $this->assertFalse( Strings::isJSON( '{"key": "value",}' ) ); // trailing comma
     }
 
     #[Test]
-    public function jsonToArray_returns_empty_array_for_invalid_json() {
+    public function jsonToArray_returns_empty_array_for_invalid_json(): void {
         $this->assertEmpty( Strings::jsonToArray( 'invalid json' ) );
         $this->assertEmpty( Strings::jsonToArray( '{invalid}' ) );
     }
 
     #[Test]
-    public function jsonToArray_handles_nested_arrays() {
+    public function jsonToArray_handles_nested_arrays(): void {
         $json = '{"key": ["value1", "value2"], "key2": {"nested": "value"}}';
         $result = Strings::jsonToArray( $json );
 
-        $this->assertTrue( is_array( $result ) );
         $this->assertArrayHasKey( 'key', $result );
-        $this->assertTrue( is_array( $result['key'] ) );
+        $this->assertIsArray( $result['key'] );
         $this->assertEquals( 'value1', $result['key'][0] );
     }
 
     #[Test]
-    public function fixNonWellFormedXml_handles_no_escaping() {
+    public function fixNonWellFormedXml_handles_no_escaping(): void {
         $original = '<g id="1">Hello</g> World';
         $expected = '<g id="1">Hello</g> World';
 
@@ -401,7 +406,7 @@ class StringsTest extends Base {
     }
 
     #[Test]
-    public function fixNonWellFormedXml_handles_complex_xliff_tags() {
+    public function fixNonWellFormedXml_handles_complex_xliff_tags(): void {
         $original = '<mrk mtype="seg">Text</mrk> & <bpt id="1">Start</bpt> content <ept id="1">End</ept>';
         $expected = '<mrk mtype="seg">Text</mrk> &amp; <bpt id="1">Start</bpt> content <ept id="1">End</ept>';
 
@@ -410,7 +415,7 @@ class StringsTest extends Base {
     }
 
     #[Test]
-    public function fixNonWellFormedXml_handles_self_closing_tags() {
+    public function fixNonWellFormedXml_handles_self_closing_tags(): void {
         $original = '<ph id="1"/> text <x id="2"/> more';
         $expected = '<ph id="1"/> text <x id="2"/> more';
 
@@ -419,7 +424,7 @@ class StringsTest extends Base {
     }
 
     #[Test]
-    public function fixNonWellFormedXml_handles_quotes_in_attributes() {
+    public function fixNonWellFormedXml_handles_quotes_in_attributes(): void {
         $original = '<g id="1" attr="value with &quot;quotes&quot;">Text</g>';
         $expected = '<g id="1" attr="value with &quot;quotes&quot;">Text</g>';
 
@@ -428,7 +433,7 @@ class StringsTest extends Base {
     }
 
     #[Test]
-    public function isAValidUuidV4_handles_edge_cases() {
+    public function isAValidUuidV4_handles_edge_cases(): void {
         // Valid UUIDs
         $this->assertTrue( Strings::isAValidUuidV4( '550e8400-e29b-41d4-a716-446655440000' ) );
         $this->assertTrue( Strings::isAValidUuidV4( 'f47ac10b-58cc-4372-a567-0e02b2c3d479' ) );
@@ -446,7 +451,7 @@ class StringsTest extends Base {
     }
 
     #[Test]
-    public function isADoubleEscapedEntity_handles_various_entities() {
+    public function isADoubleEscapedEntity_handles_various_entities(): void {
         // Double escaped entities
         $this->assertTrue( Strings::isADoubleEscapedEntity( '&amp;#39;' ) );
         $this->assertTrue( Strings::isADoubleEscapedEntity( '&amp;amp;' ) );
@@ -470,7 +475,7 @@ class StringsTest extends Base {
     }
 
     #[Test]
-    public function getTheNumberOfTrailingSpaces_handles_edge_cases() {
+    public function getTheNumberOfTrailingSpaces_handles_edge_cases(): void {
         // Empty string
         $this->assertEquals( 0, Strings::getTheNumberOfTrailingSpaces( '' ) );
 

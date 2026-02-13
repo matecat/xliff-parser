@@ -15,7 +15,7 @@ final class XliffReplacerFactory
      *
      * @param string $originalXliffPath Path to original XLIFF file
      * @param array<int|string, array<string, mixed>> $data Translation data
-     * @param array<string, array<int, int>> $transUnits Trans-unit mapping
+     * @param array<int|string, array<int, int>> $transUnits Trans-unit mapping
      * @param string $targetLang Target language code
      * @param string $outputFilePath Path for an output file
      * @param bool $setSourceInTarget Whether to copy a source to a target

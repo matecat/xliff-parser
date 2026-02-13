@@ -1,0 +1,127 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0" xmlns:slr="urn:oasis:names:tc:xliff:sizerestriction:2.0" xmlns:memsource="http://www.memsource.com/xliff2.0/1.0" version="2.0" memsource:wfLevel="5" srcLang="en-us" trgLang="ar">
+<file id="e5cchfMCny7LViWn_dc5:0-10" memsource:taskId="e5cchfMCny7LViWn_dc5" canResegment="no" original="6078875f-louvre-v2.xml">
+<slr:profiles generalProfile="xliff:codepoints"/>
+<unit id="0" memsource:tGroupBegin="0" memsource:tGroupEnd="0">
+<mda:metadata><mda:metaGroup><mda:meta type="key">315f223e-958c-46a0-b03d-92d590455416</mda:meta>
+<mda:meta type="key-note">
+      Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/louvre-v2/keys" target="_blank"&gt;louvre-v2&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/louvre-v2/key/v1-f323ff0234678658dd63d719d4bc7e58/overview" target="_blank"&gt;v1-f323ff0234678658dd63d719d4bc7e58&lt;/a&gt; Description: &lt;font color="blue"&gt;Content Type: Safety
+Preview Link: https://chameleon-preview.uberinternal.com/preview-v2/page/4235472f-72c8-46f8-ad89-0168c96bc3ee?country=QA
+Additional Info:
+TEXT_LINE&lt;/font&gt;
+      
+    </mda:meta>
+</mda:metaGroup></mda:metadata>
+<segment id="0" state="translated">
+<source>Lifebuoy or Jif disinfecting supplies in your next ride</source>
+<target>تعقيم Lifebuoy أو Jif تعقيم المستلزمات في مشوارك التالي</target>
+</segment>
+</unit>
+<unit id="1" memsource:tGroupBegin="1" memsource:tGroupEnd="5">
+<mda:metadata><mda:metaGroup><mda:meta type="key">66954fe0-759a-4ecb-9b5e-119307b5ff2f</mda:meta>
+<mda:meta type="key-note">
+      Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/louvre-v2/keys" target="_blank"&gt;louvre-v2&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/louvre-v2/key/v1-ab5a1d6ee8099dfcbce7d318e481f5d1/overview" target="_blank"&gt;v1-ab5a1d6ee8099dfcbce7d318e481f5d1&lt;/a&gt; Description: &lt;font color="blue"&gt;Content Type: Safety
+Preview Link: https://chameleon-preview.uberinternal.com/preview-v2/page/4235472f-72c8-46f8-ad89-0168c96bc3ee?country=QA
+Additional Info:
+MARKDOWN&lt;/font&gt;
+      
+    </mda:meta>
+</mda:metaGroup></mda:metadata>
+<memsource:additionalTagData>
+<memsource:tag id="source3"><memsource:tagId>3</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+<memsource:tag id="source8"><memsource:tagId>8</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+<memsource:tag id="source4"><memsource:tagId>4</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+<memsource:tag id="source9"><memsource:tagId>9</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+<memsource:tag id="source5"><memsource:tagId>5</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+<memsource:tag id="source1"><memsource:tagId>1</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+<memsource:tag id="source6"><memsource:tagId>6</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+<memsource:tag id="source2"><memsource:tagId>2</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+<memsource:tag id="source7"><memsource:tagId>7</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+</memsource:additionalTagData>
+<originalData>
+<data id="source3">&amp;amp;#39;</data>
+<data id="source8">&amp;lt;/em&amp;gt;</data>
+<data id="source4">&amp;amp;#39;</data>
+<data id="source9">&amp;lt;/p&amp;gt;</data>
+<data id="source5">&amp;lt;/p&amp;gt;</data>
+<data id="source1">&amp;lt;p class=&amp;quot;cmln__paragraph&amp;quot;&amp;gt;</data>
+<data id="source6">&amp;lt;p class=&amp;quot;cmln__paragraph&amp;quot;&amp;gt;</data>
+<data id="source2">&amp;amp;amp;</data>
+<data id="source7">&amp;lt;em&amp;gt;</data>
+</originalData>
+<segment id="1" state="translated">
+<source><ph id="source1" dataRef="source1"/>As part of our new Door-to-Door Safety Standard, we’re partnering with Unilever to help ensure high standards of hygiene.</source>
+<target><ph id="source1" dataRef="source1"/>كجزء من معيارنا الجديد للحفاظ على السلامة من الباب إلى الباب ، فإننا نتعاقد مع شركة «يونيليفر» للمساعدة على ضمان مستويات عالية من النظافة.</target>
+</segment>
+<segment id="2" state="translated">
+<source>This includes providing disinfectant supplies like Lifebuoy Hand Sanitizer gels <ph id="source2" dataRef="source2"/> Jif disinfecting wipes to drivers* so you can feel safer on your next ride.</source>
+<target>ويتضمن ذلك توفير المستلزمات المُعقِّمة مثل جيل «Lifebuoy Hand San معقّم» <ph id="source2" dataRef="source2"/> يعقِّم Jif المناديل المبللة للشركاء السائقين * لتستمتع بمزيد من الأمان في مشوارك التالي.</target>
+</segment>
+<segment id="3" state="translated">
+<source>Additionally, we<ph id="source3" dataRef="source3"/>re also offering 10x surgical masks for drivers<ph id="source4" dataRef="source4"/> personal use.<ph id="source5" dataRef="source5"/></source>
+<target>بالإضافة إلى ذلك ، فإننا<ph id="source3" dataRef="source3"/>كما توفر الشركة 10 أقنعة جراحية للشركاء السائقين<ph id="source4" dataRef="source4"/> للاستخدام الشخصي.<ph id="source5" dataRef="source5"/></target>
+</segment>
+<segment id="4" state="translated">
+<source><ph id="source6" dataRef="source6"/><ph id="source7" dataRef="source7"/>*While supplies last and subject to availability.</source>
+<target><ph id="source6" dataRef="source6"/><ph id="source7" dataRef="source7"/>* حتى نفاد الكمية وتخضع لمدى توفرها.</target>
+</segment>
+<segment id="5" state="translated">
+<source>Uber is not responsible for the products or services offered by other companies, and makes no claims about the effectiveness, medical or health benefits related to the use of such products or services.<ph id="source8" dataRef="source8"/><ph id="source9" dataRef="source9"/></source>
+<target>كذلك لا تتحمل أوبر أي مسؤولية عن المنتجات أو الخدمات التي تقدِّمها الشركات الأخرى، ولا تدعي أن هذه المنتجات أو الخدمات تمتاز بفعالية عالية أو يمكن أن تحقِّق للمستخدم فوائد طبية أو صحية عند استخدامها.</target>
+</segment>
+</unit>
+<unit id="2" memsource:tGroupBegin="6" memsource:tGroupEnd="10">
+<mda:metadata><mda:metaGroup><mda:meta type="key">7d6d3f6c-84e9-4bf0-bc4f-b38d51248ece</mda:meta>
+<mda:meta type="key-note">
+      Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/louvre-v2/keys" target="_blank"&gt;louvre-v2&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/louvre-v2/key/v1-673fbedd3d2432fab368022e6066326e/overview" target="_blank"&gt;v1-673fbedd3d2432fab368022e6066326e&lt;/a&gt; Description: &lt;font color="blue"&gt;Content Type: Safety
+Preview Link: https://chameleon-preview.uberinternal.com/preview-v2/page/4235472f-72c8-46f8-ad89-0168c96bc3ee?country=AE
+Additional Info:
+MARKDOWN&lt;/font&gt;
+      
+    </mda:meta>
+</mda:metaGroup></mda:metadata>
+<memsource:additionalTagData>
+<memsource:tag id="source3"><memsource:tagId>3</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+<memsource:tag id="source8"><memsource:tagId>8</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+<memsource:tag id="source4"><memsource:tagId>4</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+<memsource:tag id="source9"><memsource:tagId>9</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+<memsource:tag id="source5"><memsource:tagId>5</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+<memsource:tag id="source1"><memsource:tagId>1</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+<memsource:tag id="source6"><memsource:tagId>6</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+<memsource:tag id="source2"><memsource:tagId>2</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+<memsource:tag id="source7"><memsource:tagId>7</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+</memsource:additionalTagData>
+<originalData>
+<data id="source3">&amp;amp;#39;</data>
+<data id="source8">&amp;lt;/em&amp;gt;</data>
+<data id="source4">&amp;amp;#39;</data>
+<data id="source9">&amp;lt;/p&amp;gt;</data>
+<data id="source5">&amp;lt;/p&amp;gt;</data>
+<data id="source1">&amp;lt;p class=&amp;quot;cmln__paragraph&amp;quot;&amp;gt;</data>
+<data id="source6">&amp;lt;p class=&amp;quot;cmln__paragraph&amp;quot;&amp;gt;</data>
+<data id="source2">&amp;amp;amp;</data>
+<data id="source7">&amp;lt;em&amp;gt;</data>
+</originalData>
+<segment id="6" state="translated">
+<source><ph id="source1" dataRef="source1"/>As part of our new Door-to-Door Safety Standard, we’re partnering with Unilever to help ensure high standards of hygiene.</source>
+<target><ph id="source1" dataRef="source1"/>كجزء من معيارنا الجديد للحفاظ على السلامة من الباب إلى الباب ، فإننا نتعاقد مع شركة «يونيليفر» للمساعدة على ضمان مستويات عالية من النظافة.</target>
+</segment>
+<segment id="7" state="translated">
+<source>This includes providing disinfectant supplies like Lifebuoy Hand Sanitizer gels <ph id="source2" dataRef="source2"/> Jif disinfecting wipes to drivers* so you can feel safer on your next ride.</source>
+<target>ويتضمن ذلك توفير المستلزمات المُعقِّمة مثل جيل «Lifebuoy Hand San معقّم» <ph id="source2" dataRef="source2"/> يعقِّم Jif المناديل المبللة للشركاء السائقين * لتستمتع بمزيد من الأمان في مشوارك التالي.</target>
+</segment>
+<segment id="8" state="translated">
+<source>We<ph id="source3" dataRef="source3"/>re also offering 2x cloth masks for drivers<ph id="source4" dataRef="source4"/> personal use and a safety card if they wish to hang it in the car for rider instructions.<ph id="source5" dataRef="source5"/></source>
+<target>نحن<ph id="source3" dataRef="source3"/>كما توفر الشركة أيضاً 2 قطعة من القماش للشركاء السائقين<ph id="source4" dataRef="source4"/> الشخصية الشخصية وبطاقة سلامة إذا كان يرغبان في تعليقها في السيارة للحصول على تعليمات الركاب.<ph id="source5" dataRef="source5"/></target>
+</segment>
+<segment id="9" state="translated">
+<source><ph id="source6" dataRef="source6"/><ph id="source7" dataRef="source7"/>*While supplies last and subject to availability.</source>
+<target><ph id="source6" dataRef="source6"/><ph id="source7" dataRef="source7"/>* حتى نفاد الكمية وتخضع لمدى توفرها.</target>
+</segment>
+<segment id="10" state="translated">
+<source>Uber is not responsible for the products or services offered by other companies, and makes no claims about the effectiveness, medical or health benefits related to the use of such products or services.<ph id="source8" dataRef="source8"/><ph id="source9" dataRef="source9"/></source>
+<target>كذلك لا تتحمل أوبر أي مسؤولية عن المنتجات أو الخدمات التي تقدِّمها الشركات الأخرى، ولا تدعي أن هذه المنتجات أو الخدمات تمتاز بفعالية عالية أو يمكن أن تحقِّق للمستخدم فوائد طبية أو صحية عند استخدامها.</target>
+</segment>
+</unit>
+</file>
+</xliff>

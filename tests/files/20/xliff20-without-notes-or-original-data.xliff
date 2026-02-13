@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff srcLang="en-US" trgLang="nl-NL" version="2.0" xmlns="urn:oasis:names:tc:xliff:document:2.0">
+    <file id="f1" original="2338|Our Solutions">
+        <group id="g1" name="nodeprops">
+            <group id="g2" name="16391|nodeName">
+                <unit id="u1" name="16391|Umbraco.Textbox">
+                    <segment>
+                        <source>Our Solutions</source>
+                    </segment>
+                </unit>
+            </group>
+        </group>
+    </file>
+</xliff>

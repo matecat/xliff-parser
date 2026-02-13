@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="ka" trgLang="ru">
+	<file id="6b2e9606-b261-46f5-a0ef-689f29fe2b5b" original="563dca7f-fa9a-4206-87be-382f11e65e25" source-language="ka" target-language="ru">
+		<unit id="c5c30ef1-1fe7-434a-afb3-4c5035025b40">
+			<segment>
+				<source>Coca-Cola 0,33</source>
+				<target>Coca-Cola, 0,33</target>
+			</segment>
+			<notes>
+                <note id="b23b41fc-a965-4f9a-ae21-a6cd0fc19b2e" appliesTo="source"></note>
+            </notes>
+		</unit>
+	</file>
+</xliff>

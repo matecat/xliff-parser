@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en-US" trgLang="it-IT" xmlns:its="http://www.w3.org/2005/11/its" its:version="2.0">
+ <file id="f1" original="/home/afalappa/Documenti/filters-sample-docs/markdown/prova.md">
+  <unit id="tu1">
+   <segment>
+    <source xml:space="preserve">Titolo del documento</source>
+   </segment>
+   <segment>
+    <source xml:space="preserve">Titolo del documento2</source>
+   </segment>
+  </unit>
+  <unit id="tu2">
+   <originalData>
+    <data id="d1">_</data>
+   </originalData>
+   <segment>
+    <source xml:space="preserve">Testo libero contenente <pc id="1" canCopy="no" canDelete="no" dataRefEnd="d1" dataRefStart="d1">corsivo</pc>.</source>
+   </segment>
+  </unit>
+ </file>
+</xliff>

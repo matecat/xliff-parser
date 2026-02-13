@@ -1,0 +1,432 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xliff
+        xmlns="urn:oasis:names:tc:xliff:document:2.0"
+        xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0"
+        xmlns:slr="urn:oasis:names:tc:xliff:sizerestriction:2.0"
+        xmlns:memsource="http://www.memsource.com/xliff2.0/1.0" version="2.0" memsource:wfLevel="4" srcLang="en-us" trgLang="pt-br">
+    <file id="dAEOXKOCnyDsou1L0_dc5:0-20" memsource:taskId="dAEOXKOCnyDsou1L0_dc5" canResegment="no" original="0ad96fee-web-mondays.xml">
+        <slr:profiles generalProfile="xliff:codepoints"/>
+        <unit id="0" memsource:tGroupBegin="0" memsource:tGroupEnd="0">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key">0b67855e-c43e-4010-8d36-04d021a1117f</mda:meta>
+                    <mda:meta type="key-note">
+                        Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/web-mondays/keys" target="_blank"&gt;web-mondays&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/web-mondays/key/app.statements.email.list/overview" target="_blank"&gt;app.statements.email.list&lt;/a&gt; Description: &lt;font color="blue"&gt;Indicates how many users receive financial statements monthly.&lt;/font&gt;
+
+                    </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <memsource:additionalTagData>
+                <memsource:tag id="source1">
+                    <memsource:tagId>1</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+            </memsource:additionalTagData>
+            <originalData>
+                <data id="source1">${length}</data>
+            </originalData>
+            <segment id="0" state="translated">
+                <source>Monthly statements received by
+                    <ph id="source1" dataRef="source1"/> users.
+                </source>
+                <target>Relatórios mensais recebidos por
+                    <ph id="source1" dataRef="source1"/> usuários.
+                </target>
+            </segment>
+        </unit>
+        <unit id="1" memsource:tGroupBegin="1" memsource:tGroupEnd="1">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key">168e7f0c-1351-438f-ab7d-a17532926336</mda:meta>
+                    <mda:meta type="key-note">
+                        Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/web-mondays/keys" target="_blank"&gt;web-mondays&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/web-mondays/key/app.employees.uploadmodal.button.replacefile/overview" target="_blank"&gt;app.employees.uploadmodal.button.replacefile&lt;/a&gt; Description: &lt;font color="blue"&gt;Replace file&lt;/font&gt;
+
+                    </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <segment id="1" state="translated">
+                <source>Replace file</source>
+                <target>Substituir arquivo</target>
+            </segment>
+        </unit>
+        <unit id="2" memsource:tGroupBegin="2" memsource:tGroupEnd="2">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key">279a134c-67ae-44ac-b00d-0b8021dd05dc</mda:meta>
+                    <mda:meta type="key-note">
+                        Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/web-mondays/keys" target="_blank"&gt;web-mondays&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/web-mondays/key/app.employees.uploadmodal.messages.incompletecontacts/overview" target="_blank"&gt;app.employees.uploadmodal.messages.incompletecontacts&lt;/a&gt; Description: &lt;font color="blue"&gt;Message specifying the number of incomplete contacts found.&lt;/font&gt;
+
+                    </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <memsource:additionalTagData>
+                <memsource:tag id="source1">
+                    <memsource:tagId>1</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+            </memsource:additionalTagData>
+            <originalData>
+                <data id="source1">${number}</data>
+            </originalData>
+            <segment id="2" state="translated">
+                <source>
+                    <ph id="source1" dataRef="source1"/> incomplete contacts
+                </source>
+                <target>
+                    <ph id="source1" dataRef="source1"/> contatos incompletos
+                </target>
+            </segment>
+        </unit>
+        <unit id="3" memsource:tGroupBegin="3" memsource:tGroupEnd="3">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key">2a70b4bc-2493-4df2-ad27-1764a6614e8a</mda:meta>
+                    <mda:meta type="key-note">
+                        Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/web-mondays/keys" target="_blank"&gt;web-mondays&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/web-mondays/key/app.payment.statements.transaction.csv/overview" target="_blank"&gt;app.payment.statements.transaction.csv&lt;/a&gt; Description: &lt;font color="blue"&gt;Text of a downloadable csv file link that contains transactions&lt;/font&gt;
+
+                    </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <segment id="3" state="translated">
+                <source>Transaction CSV</source>
+                <target>CSV de transação</target>
+            </segment>
+        </unit>
+        <unit id="4" memsource:tGroupBegin="4" memsource:tGroupEnd="5">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key">5fd3826a-d559-44c5-8384-781fc1f46b98</mda:meta>
+                    <mda:meta type="key-note">
+                        Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/web-mondays/keys" target="_blank"&gt;web-mondays&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/web-mondays/key/app.settings.opt-in.subtitle.new/overview" target="_blank"&gt;app.settings.opt-in.subtitle.new&lt;/a&gt; Description: &lt;font color="blue"&gt;Inviting team members setting description&lt;/font&gt;
+
+                    </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <memsource:additionalTagData>
+                <memsource:tag id="source1">
+                    <memsource:tagId>1</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+            </memsource:additionalTagData>
+            <originalData>
+                <data id="source1">&amp;amp;apos;</data>
+            </originalData>
+            <segment id="4" state="translated">
+                <source>When you share a link to invite people to join you team, they
+                    <ph id="source1" dataRef="source1"/>ll be asked for an email address.
+                </source>
+                <target>As pessoas que usarem o link do convite para participar da sua equipe vão precisar informar um endereço de e-mail.</target>
+            </segment>
+            <segment id="5" state="translated">
+                <source>Here, You can configure how to handle requests from trusted domains and other domains.</source>
+                <target>Aqui, você pode configurar como lidar com solicitações de domínios confiáveis e outros domínios.</target>
+            </segment>
+        </unit>
+        <unit id="5" memsource:tGroupBegin="6" memsource:tGroupEnd="7">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key">6c2da045-a7ec-41d6-8268-52d85d13439a</mda:meta>
+                    <mda:meta type="key-note">
+                        Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/web-mondays/keys" target="_blank"&gt;web-mondays&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/web-mondays/key/app.employees.linking.activate.reminder/overview" target="_blank"&gt;app.employees.linking.activate.reminder&lt;/a&gt; Description: &lt;font color="blue"&gt;it is use to provide insights for pending employee unactivated invites.&lt;/font&gt;
+
+                    </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <memsource:additionalTagData>
+                <memsource:tag id="source3">
+                    <memsource:tagId>3</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source1">
+                    <memsource:tagId>1</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+                <memsource:tag id="source2">
+                    <memsource:tagId>2</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+            </memsource:additionalTagData>
+            <originalData>
+                <data id="source3">&amp;lt;/b&amp;gt;</data>
+                <data id="source1">&amp;lt;b&amp;gt;</data>
+                <data id="source2">${percentage}</data>
+            </originalData>
+            <segment id="6" state="translated">
+                <source>
+                    <ph id="source1" dataRef="source1"/>
+                    <ph id="source2" dataRef="source2"/>% of employees
+                    <ph id="source3" dataRef="source3"/> have not activated their accounts.
+                </source>
+                <target>
+                    <ph id="source1" dataRef="source1"/>
+                    <ph id="source2" dataRef="source2"/>% de colaboradores
+                    <ph id="source3" dataRef="source3"/> não ativaram suas contas.
+                </target>
+            </segment>
+            <segment id="7" state="translated">
+                <source>Send them a reminder.</source>
+                <target>Envie um lembrete.</target>
+            </segment>
+        </unit>
+        <unit id="6" memsource:tGroupBegin="8" memsource:tGroupEnd="9">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key">76386674-5167-45c9-acd7-831d30135c5d</mda:meta>
+                    <mda:meta type="key-note">
+                        Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/web-mondays/keys" target="_blank"&gt;web-mondays&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/web-mondays/key/app.employees.uploadmodal.messages.errorincompletecontacts/overview" target="_blank"&gt;app.employees.uploadmodal.messages.errorincompletecontacts&lt;/a&gt; Description: &lt;font color="blue"&gt;Displays the number of incomplete contacts. Asks the user to replace the file if user wants to continue.&lt;/font&gt;
+
+                    </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <memsource:additionalTagData>
+                <memsource:tag id="source1">
+                    <memsource:tagId>1</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+            </memsource:additionalTagData>
+            <originalData>
+                <data id="source1">${number}</data>
+            </originalData>
+            <segment id="8" state="translated">
+                <source>There are
+                    <ph id="source1" dataRef="source1"/> incomplete contacts.
+                </source>
+                <target>Há
+                    <ph id="source1" dataRef="source1"/> contatos incompletos.
+                </target>
+            </segment>
+            <segment id="9" state="translated">
+                <source>To continue, review and replace the file.</source>
+                <target>Para continuar, examine e substitua o arquivo.</target>
+            </segment>
+        </unit>
+        <unit id="7" memsource:tGroupBegin="10" memsource:tGroupEnd="10">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key">7ed06e84-a6ee-4aa7-8194-b0c1363fc5a0</mda:meta>
+                    <mda:meta type="key-note">
+                        Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/web-mondays/keys" target="_blank"&gt;web-mondays&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/web-mondays/key/app.employees.uploadmodal.messages.successfulupload/overview" target="_blank"&gt;app.employees.uploadmodal.messages.successfulupload&lt;/a&gt; Description: &lt;font color="blue"&gt;Success message showing the number of contacts found after the file is successfully uploaded.&lt;/font&gt;
+
+                    </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <memsource:additionalTagData>
+                <memsource:tag id="source1">
+                    <memsource:tagId>1</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+            </memsource:additionalTagData>
+            <originalData>
+                <data id="source1">${number}</data>
+            </originalData>
+            <segment id="10" state="translated">
+                <source>Successful upload!
+                    <ph id="source1" dataRef="source1"/> contacts found.
+                </source>
+                <target>Envio concluído
+                    <ph id="source1" dataRef="source1"/> contatos encontrados.
+                </target>
+            </segment>
+        </unit>
+        <unit id="8" memsource:tGroupBegin="11" memsource:tGroupEnd="11">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key">83bf1606-b371-4f58-8689-c0bda99ec057</mda:meta>
+                    <mda:meta type="key-note">
+                        Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/web-mondays/keys" target="_blank"&gt;web-mondays&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/web-mondays/key/app.settings.domains.trusted.manual-approve.on/overview" target="_blank"&gt;app.settings.domains.trusted.manual-approve.on&lt;/a&gt; Description: &lt;font color="blue"&gt;Opt-in settings: manually approve trusted domain requests option label
+                        &lt;/font&gt;
+
+                    </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <segment id="11" state="translated">
+                <source>Manually review requests from trusted domains</source>
+                <target>Analise manualmente as solicitações de domínios confiáveis</target>
+            </segment>
+        </unit>
+        <unit id="9" memsource:tGroupBegin="12" memsource:tGroupEnd="12">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key">85a5f5b2-442c-4b41-8dc3-32f8da0a0119</mda:meta>
+                    <mda:meta type="key-note">
+                        Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/web-mondays/keys" target="_blank"&gt;web-mondays&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/web-mondays/key/app.employees.uploadmodal.csv.providemissingdetails.reupload/overview" target="_blank"&gt;app.employees.uploadmodal.csv.providemissingdetails.reupload&lt;/a&gt; Description: &lt;font color="blue"&gt;Asks the user to provide missing information by reuploading the file
+                        1. To add these people to the account, provide the missing information and upload your file again.
+                        2. To remove these people to the account, provide the missing information and upload your file again.
+                        3. To replace these people to the account, provide the missing information and upload your file again.&lt;/font&gt;
+
+                    </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <memsource:additionalTagData>
+                <memsource:tag id="source1">
+                    <memsource:tagId>1</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+            </memsource:additionalTagData>
+            <originalData>
+                <data id="source1">${action}</data>
+            </originalData>
+            <segment id="12" state="translated">
+                <source>To
+                    <ph id="source1" dataRef="source1"/> these people to the account, provide the missing information and upload your file again.
+                </source>
+                <target>Para
+                    <ph id="source1" dataRef="source1"/> essas pessoas para a conta, forneça as informações que faltam e envie seu arquivo de novo.
+                </target>
+            </segment>
+        </unit>
+        <unit id="10" memsource:tGroupBegin="13" memsource:tGroupEnd="13">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key">8d25755a-f776-4e21-8e8c-e5b89398b391</mda:meta>
+                    <mda:meta type="key-note">
+                        Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/web-mondays/keys" target="_blank"&gt;web-mondays&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/web-mondays/key/app.employees.uploadmodal.csv.providemissingdetails/overview" target="_blank"&gt;app.employees.uploadmodal.csv.providemissingdetails&lt;/a&gt; Description: &lt;font color="blue"&gt;Ask the user to provide missing details
+                        1. To add these people to the account, provide the missing information below.
+                        2. To delete these people to the account, provide the missing information below.
+                        3. To replace these people to the account, provide the missing information below.&lt;/font&gt;
+
+                    </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <memsource:additionalTagData>
+                <memsource:tag id="source1">
+                    <memsource:tagId>1</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+            </memsource:additionalTagData>
+            <originalData>
+                <data id="source1">${action}</data>
+            </originalData>
+            <segment id="13" state="translated">
+                <source>To
+                    <ph id="source1" dataRef="source1"/> these people to the account, provide the missing information below.
+                </source>
+                <target>Para
+                    <ph id="source1" dataRef="source1"/> essas pessoas à conta, forneça as informações que faltam abaixo.
+                </target>
+            </segment>
+        </unit>
+        <unit id="11" memsource:tGroupBegin="14" memsource:tGroupEnd="14">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key">9146ad91-5ad6-4b07-9391-eaad07f2f3fe</mda:meta>
+                    <mda:meta type="key-note">
+                        Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/web-mondays/keys" target="_blank"&gt;web-mondays&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/web-mondays/key/app.employees.uploadmodal.messages.actioninfo/overview" target="_blank"&gt;app.employees.uploadmodal.messages.actioninfo&lt;/a&gt; Description: &lt;font color="blue"&gt;Message describes what the selected actions will do. It can be one of these
+                        - Continue to add these people.
+                        - Continue to remove these people.
+                        - Continue to replace these people.&lt;/font&gt;
+
+                    </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <memsource:additionalTagData>
+                <memsource:tag id="source1">
+                    <memsource:tagId>1</memsource:tagId>
+                    <memsource:type>code</memsource:type>
+                </memsource:tag>
+            </memsource:additionalTagData>
+            <originalData>
+                <data id="source1">${action}</data>
+            </originalData>
+            <segment id="14" state="translated">
+                <source>Continue to
+                    <ph id="source1" dataRef="source1"/> these people.
+                </source>
+                <target>Continue para
+                    <ph id="source1" dataRef="source1"/> essas pessoas.
+                </target>
+            </segment>
+        </unit>
+        <unit id="12" memsource:tGroupBegin="15" memsource:tGroupEnd="15">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key">a15c59fe-134a-4523-9922-3b9f79517954</mda:meta>
+                    <mda:meta type="key-note">
+                        Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/web-mondays/keys" target="_blank"&gt;web-mondays&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/web-mondays/key/app.settings.domains.trusted.subtitle/overview" target="_blank"&gt;app.settings.domains.trusted.subtitle&lt;/a&gt; Description: &lt;font color="blue"&gt;Subtitle caption showing how to handle trusted domain form.&lt;/font&gt;
+
+                    </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <segment id="15" state="translated">
+                <source>How do you want to handle requests from trusted domains.</source>
+                <target>Como você quer lidar com solicitações de domínios confiáveis.</target>
+            </segment>
+        </unit>
+        <unit id="13" memsource:tGroupBegin="16" memsource:tGroupEnd="16">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key">a701954f-e39e-4758-b5bd-209dbe7106fd</mda:meta>
+                    <mda:meta type="key-note">
+                        Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/web-mondays/keys" target="_blank"&gt;web-mondays&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/web-mondays/key/app.employees.uploadmodal.button.downloadtemplate/overview" target="_blank"&gt;app.employees.uploadmodal.button.downloadtemplate&lt;/a&gt; Description: &lt;font color="blue"&gt;Download template&lt;/font&gt;
+
+                    </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <segment id="16" state="translated">
+                <source>Download template</source>
+                <target>Baixe o modelo aqui</target>
+            </segment>
+        </unit>
+        <unit id="14" memsource:tGroupBegin="17" memsource:tGroupEnd="17">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key">a7feb1fd-862b-45a3-a4bb-d1f807ffa97d</mda:meta>
+                    <mda:meta type="key-note">
+                        Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/web-mondays/keys" target="_blank"&gt;web-mondays&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/web-mondays/key/app.settings.opt-in.title.new/overview" target="_blank"&gt;app.settings.opt-in.title.new&lt;/a&gt; Description: &lt;font color="blue"&gt;Opt-In Invite Settings Title&lt;/font&gt;
+
+                    </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <segment id="17" state="translated">
+                <source>Opt-In Invite Settings</source>
+                <target>Configurações de adesão ao convite</target>
+            </segment>
+        </unit>
+        <unit id="15" memsource:tGroupBegin="18" memsource:tGroupEnd="18">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key">aed2f7c6-c705-4642-85fb-fac846b35c93</mda:meta>
+                    <mda:meta type="key-note">
+                        Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/web-mondays/keys" target="_blank"&gt;web-mondays&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/web-mondays/key/app.settings.opt-in.toast.error/overview" target="_blank"&gt;app.settings.opt-in.toast.error&lt;/a&gt; Description: &lt;font color="blue"&gt;Error message inside Toast showing opt in failure&lt;/font&gt;
+
+                    </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <segment id="18" state="translated">
+                <source>Error occured while updating opt-in settings</source>
+                <target>Ocorreu um erro ao atualizar as configurações de adesão</target>
+            </segment>
+        </unit>
+        <unit id="16" memsource:tGroupBegin="19" memsource:tGroupEnd="19">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key">d13a2e5b-458d-4de9-b912-eeece3e4f55b</mda:meta>
+                    <mda:meta type="key-note">
+                        Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/web-mondays/keys" target="_blank"&gt;web-mondays&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/web-mondays/key/app.settings.domains.others.subtitle/overview" target="_blank"&gt;app.settings.domains.others.subtitle&lt;/a&gt; Description: &lt;font color="blue"&gt;Subtitle for how to handle other domains&lt;/font&gt;
+
+                    </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <segment id="19" state="translated">
+                <source>How do you want to handle requests from other domains.</source>
+                <target>Como você quer lidar com as solicitações de outros domínios de e-mail?</target>
+            </segment>
+        </unit>
+        <unit id="17" memsource:tGroupBegin="20" memsource:tGroupEnd="20">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key">ed456799-e637-4014-8b10-dd9914bc8a03</mda:meta>
+                    <mda:meta type="key-note">
+                        Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/web-mondays/keys" target="_blank"&gt;web-mondays&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/web-mondays/key/app.settings.domains.trusted.auto-approve.on/overview" target="_blank"&gt;app.settings.domains.trusted.auto-approve.on&lt;/a&gt; Description: &lt;font color="blue"&gt;Opt-in settings: auto-approve trusted domain requests option label
+                        &lt;/font&gt;
+
+                    </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <segment id="20" state="translated">
+                <source>Automatically approve requests from trusted domains</source>
+                <target>Aprovar automaticamente solicitações de domínios confiáveis</target>
+            </segment>
+        </unit>
+    </file>
+</xliff>

@@ -89,7 +89,7 @@ class Xliff12 extends AbstractXliffReplacer
         if (!$this->isEmpty) {
             // write closing tag if is not a target
             // EXCLUDE the target nodes with currentTransUnitIsTranslatable = 'NO'
-            if (!$this->inTarget and $this->currentTransUnitIsTranslatable !== 'no') {
+            if (!$this->inTarget && $this->currentTransUnitIsTranslatable !== 'no') {
                 $tag = "</$name>";
             }
 
@@ -98,7 +98,7 @@ class Xliff12 extends AbstractXliffReplacer
                     // get translation of current segment, by indirect indexing: id -> positional index -> segment
                     // actually there may be more than one segment to that ID if there are two mrk of the same source segment
                     $tag = $this->rebuildTarget();
-                } elseif (!empty($this->CDATABuffer) and $this->currentTransUnitIsTranslatable === 'no') {
+                } elseif (!empty($this->CDATABuffer) && $this->currentTransUnitIsTranslatable === 'no') {
                     // These are target nodes with currentTransUnitIsTranslatable = 'NO'
                     $this->bufferIsActive = false;
                     $tag = $this->CDATABuffer . "</$name>";
@@ -178,7 +178,7 @@ class Xliff12 extends AbstractXliffReplacer
         $segment = Strings::removeDangerousChars($seg ['segment']);
         $translation = Strings::removeDangerousChars($seg ['translation']);
 
-        if ($seg ['translation'] == '') {
+        if (($seg['translation'] ?? null) === '') {
             $translation = $segment;
         } else {
             if ($this->callback instanceof XliffReplacerCallbackInterface) {
@@ -232,57 +232,58 @@ class Xliff12 extends AbstractXliffReplacer
 
     protected function rebuildTarget(): string
     {
-        // init translation and state
+        // Initialize variables for building the target translation
         $translation = '';
         $lastMrkState = null;
         $stateProp = '';
 
-        // we must reset the lastMrkId found because this is a new segment.
+        // Reset marker ID counter for this new segment
         $lastMrkId = -1;
 
+        // Iterate through each segment in the translation unit
         foreach ($this->lastTransUnit as $seg) {
             /*
-             * This routine works to respect the positional orders of markers.
-             * In every cycle we check if the mrk of the segment is below or equal the last one.
-             * When this is true, means that the mrk id belongs to the next segment with the same internal_id
-             * so we MUST stop to apply markers and translations
-             * and stop to add eq_word_count
+             * In the Xliff file there is possible to have multiple segments with the same internal_id.
              *
-             * Begin:
-             * pre-assign zero to the new mrk if this is the first one ( in this segment )
-             * If it is null leave it NULL
+             * Marker position validation logic:
+             * Ensures markers maintain proper sequential order within segments.
+             * If the current marker ID is less than or equal to the last one processed,
+             *    it indicates we've moved to a different segment with the same internal_id.
+             * So, we stop processing this translation unit.
              */
+
+            // Convert negative marker IDs to 0 for the first marker in a segment
             if ((int)$seg["mrk_id"] < 0 && $seg["mrk_id"] !== null) {
                 $seg["mrk_id"] = 0;
             }
 
             /*
-             * WARNING:
-             * For those seg-source that doesn't have a mrk ( having a mrk id === null )
-             * ( null <= -1 ) === true
-             * so, cast to int
+             * Check if we've reached the end of the current segment's markers.
+             * Note: null marker IDs (cast to int) will be <= -1, triggering the break.
              */
             if ((int)$seg["mrk_id"] <= $lastMrkId) {
                 break;
             }
 
-            // update counts
+            // Update word count statistics for non-empty segments
             if (!empty($seg)) {
                 $this->updateSegmentCounts($seg);
             }
 
-            // delete translations so the prepareSegment
-            // will put source content in target tag
+            // If source-in-target mode is enabled, clear translation and reset counts
+            // This causes prepareSegment to use source content in the target tag
             if ($this->sourceInTarget) {
                 $seg['translation'] = '';
                 $this->resetCounts();
             }
 
-            // append $translation
+            // Build the translation string by appending this segment's translation
             $translation = $this->prepareTranslation($seg, $translation);
 
+            // Track the last processed marker ID
             $lastMrkId = $seg["mrk_id"];
 
+            // Determine and track the translation state attribute based on segment status
             [$stateProp, $lastMrkState] = StatusToStateAttribute::getState(
                 $this->xliffVersion,
                 $seg['status'],
@@ -290,7 +291,7 @@ class Xliff12 extends AbstractXliffReplacer
             );
         }
 
-        //append translation
+        // Wrap the complete translation in a target XML tag with language and state attributes
         return $this->createTargetTag($translation, $stateProp);
     }
 

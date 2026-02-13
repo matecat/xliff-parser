@@ -4,24 +4,44 @@ declare(strict_types=1);
 
 namespace Matecat\XliffParser\Tests;
 
+use Exception;
+use Matecat\XliffParser\Exception\NotFoundIdInTransUnit;
+use Matecat\XliffParser\Exception\NotSupportedVersionException;
+use Matecat\XliffParser\Exception\NotValidFileException;
+use Matecat\XliffParser\Exception\SegmentIdTooLongException;
 use Matecat\XliffParser\XliffParser;
+use Matecat\XmlParser\Exception\InvalidXmlException;
+use Matecat\XmlParser\Exception\XmlParsingException;
 use PHPUnit\Framework\Attributes\Test;
+use Psr\Log\LoggerInterface;
 
 class XliffParserV2Test extends Base
 {
+    /**
+     * @throws NotValidFileException
+     * @throws NotSupportedVersionException
+     * @throws InvalidXmlException
+     * @throws XmlParsingException
+     */
     #[Test]
-    public function can_parse_a_xliff_file_with_empty_size_restriction_metadata()
+    public function can_parse_a_xliff_file_with_empty_size_restriction_metadata(): void
     {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('size-restriction.xliff'));
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('20/size-restriction.xliff'));
 
         $this->assertFalse(isset($parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ] [ 'attr' ] ['sizeRestriction']));
         $this->assertEquals( 60, $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 14 ] [ 'attr' ]['sizeRestriction'] );
     }
 
+    /**
+     * @throws NotValidFileException
+     * @throws NotSupportedVersionException
+     * @throws InvalidXmlException
+     * @throws XmlParsingException
+     */
     #[Test]
-    public function can_parse_a_xliff_file_with_empty_pc_tags()
+    public function can_parse_a_xliff_file_with_empty_pc_tags(): void
     {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('pc-slash.xlf'));
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('20/pc-slash.xlf'));
         $transUnits = $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ];
         $expected1 = '<pc id="source4" dataRefStart="source4"><pc id="source5" dataRefStart="source5">She will learn if the user has received at least <pc id="source6" dataRefStart="source6">one notification</pc> for a Dangerous Driving report for tickets other than ticket 1.</pc></pc><pc id="source7" dataRefStart="source7"><pc id="source8" dataRefStart="source8"></pc></pc><pc id="source9" dataRefStart="source9"><pc id="source10" dataRefStart="source10">When she checked, Hilary found that this customer has 2 prior reports!</pc></pc>';
         $expected2 = '<pc id="source14" dataRefStart="source14"><pc id="source15" dataRefStart="source15"><pc id="source16" dataRefStart="source16"><pc id="source17" dataRefStart="source17"></pc></pc></pc><pc id="source18" dataRefStart="source18"><pc id="source19" dataRefStart="source19"><pc id="source20" dataRefStart="source20">Adjudicate based on the information contained in the Bliss contact supplied in the DACT JIRA; do not access duplicate Bliss contacts.</pc></pc></pc><pc id="source21" dataRefStart="source21"><pc id="source22" dataRefStart="source22"><pc id="source23" dataRefStart="source23"><pc id="source24" dataRefStart="source24">Review All JIRA and Bliss tickets</pc> in the Description section for each incident.</pc></pc></pc><pc id="source25" dataRefStart="source25"><pc id="source26" dataRefStart="source26"><pc id="source27" dataRefStart="source27">Consider all allegations and counter-allegations made against a user meeting any of the above definitions</pc><pc id="source28" dataRefStart="source28"><pc id="source29" dataRefStart="source29"> in the Count decision.</pc></pc></pc></pc></pc>';
@@ -30,28 +50,46 @@ class XliffParserV2Test extends Base
         $this->assertEquals($expected2, $transUnits[ 'source' ] [ 'raw-content' ] [ 1 ]);
     }
 
+    /**
+     * @throws NotValidFileException
+     * @throws NotSupportedVersionException
+     * @throws InvalidXmlException
+     * @throws XmlParsingException
+     */
     #[Test]
-    public function can_parse_a_xliff_file_collapsing_empty_tags()
+    public function can_parse_a_xliff_file_collapsing_empty_tags(): void
     {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('pc-slash.xlf'), true);
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('20/pc-slash.xlf'), true);
         $transUnits = $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ];
         $expected = '<pc id="source14" dataRefStart="source14"><pc id="source15" dataRefStart="source15"><pc id="source16" dataRefStart="source16"><pc id="source17" dataRefStart="source17"/></pc></pc><pc id="source18" dataRefStart="source18"><pc id="source19" dataRefStart="source19"><pc id="source20" dataRefStart="source20">Adjudicate based on the information contained in the Bliss contact supplied in the DACT JIRA; do not access duplicate Bliss contacts.</pc></pc></pc><pc id="source21" dataRefStart="source21"><pc id="source22" dataRefStart="source22"><pc id="source23" dataRefStart="source23"><pc id="source24" dataRefStart="source24">Review All JIRA and Bliss tickets</pc> in the Description section for each incident.</pc></pc></pc><pc id="source25" dataRefStart="source25"><pc id="source26" dataRefStart="source26"><pc id="source27" dataRefStart="source27">Consider all allegations and counter-allegations made against a user meeting any of the above definitions</pc><pc id="source28" dataRefStart="source28"><pc id="source29" dataRefStart="source29"> in the Count decision.</pc></pc></pc></pc></pc>';
 
         $this->assertEquals($expected, $transUnits[ 'source' ] [ 'raw-content' ] [ 1 ]);
     }
 
+    /**
+     * @throws NotValidFileException
+     * @throws NotSupportedVersionException
+     * @throws InvalidXmlException
+     * @throws XmlParsingException
+     */
     #[Test]
-    public function can_parse_empty_xliff_v2()
+    public function can_parse_empty_xliff_v2(): void
     {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('empty.xliff'));
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('20/empty.xliff'));
 
         $this->assertFalse(isset( $parsed[ 'files' ][ 1 ][ 'trans-units' ]));
     }
 
+    /**
+     * @throws NotValidFileException
+     * @throws NotSupportedVersionException
+     * @throws InvalidXmlException
+     * @throws XmlParsingException
+     */
     #[Test]
-    public function can_parse_xliff_v2_with_encoded_g_tags_in_originalData()
+    public function can_parse_xliff_v2_with_encoded_g_tags_in_originalData(): void
     {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('xliff_20_with_g_tags_in_dataref.xlf'));
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('20/xliff_20_with_g_tags_in_dataref.xlf'));
         $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
 
         $originalData = $units[1]['original-data'][0];
@@ -60,31 +98,49 @@ class XliffParserV2Test extends Base
         $this->assertEquals( 'd1', $originalData['attr']['id'] );
     }
 
+    /**
+     * @throws NotValidFileException
+     * @throws NotSupportedVersionException
+     * @throws InvalidXmlException
+     * @throws XmlParsingException
+     */
     #[Test]
-    public function can_parse_xliff_v2_with_new_line_values_in_originalData()
+    public function can_parse_xliff_v2_with_new_line_values_in_originalData(): void
     {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('blank-dataRef.xliff'));
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('20/blank-dataRef.xliff'));
         $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
 
         $this->assertArrayHasKey('original-data', $units[4]);
         $this->assertEquals( '  ', $units[4]['original-data'][0]['raw-content'] );
     }
 
+    /**
+     * @throws NotValidFileException
+     * @throws NotSupportedVersionException
+     * @throws InvalidXmlException
+     * @throws XmlParsingException
+     */
     #[Test]
-    public function can_parse_xliff_v2_with_pc_tags()
+    public function can_parse_xliff_v2_with_pc_tags(): void
     {
         // <pc> tags do not be escaped here
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('1111_prova.md.xlf'));
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('20/1111_prova.md.xlf'));
         $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
 
         $this->assertEquals('Testo libero contenente <pc id="1" canCopy="no" canDelete="no" dataRefEnd="d1" dataRefStart="d1">corsivo</pc>.', $units[2][ 'source' ]['raw-content'][0]);
     }
 
+    /**
+     * @throws NotValidFileException
+     * @throws NotSupportedVersionException
+     * @throws InvalidXmlException
+     * @throws XmlParsingException
+     */
     #[Test]
-    public function can_parse_xliff_v2_with_double_encoded_map()
+    public function can_parse_xliff_v2_with_double_encoded_map(): void
     {
         // &amp;#39;
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('uber/39.xliff.xliff'));
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('20/uber/39.xliff.xliff'));
         $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
 
         $this->assertEquals("&lt;p class=&quot;cmln__paragraph&quot;&gt;", $units[4][ 'original-data' ][1]['raw-content']);
@@ -92,22 +148,28 @@ class XliffParserV2Test extends Base
         $this->assertEquals("&lt;/p&gt;", $units[4][ 'original-data' ][0]['raw-content']);
 
         // &amp;amp;
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('uber/&.xliff.xliff'));
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('20/uber/&.xliff.xliff'));
         $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
 
         $this->assertEquals("&amp;", $units[2][ 'original-data' ][7]['raw-content']);
 
         // &amp;apos;
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('uber/apos.xliff.xliff'));
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('20/uber/apos.xliff.xliff'));
         $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
 
         $this->assertEquals("&apos;", $units[5][ 'original-data' ][0]['raw-content']);
     }
 
+    /**
+     * @throws NotValidFileException
+     * @throws NotSupportedVersionException
+     * @throws InvalidXmlException
+     * @throws XmlParsingException
+     */
     #[Test]
-    public function can_parse_xliff_v2_metadata()
+    public function can_parse_xliff_v2_metadata(): void
     {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('uber-v2.xliff'));
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('20/uber-v2.xliff'));
         $attr   = $parsed[ 'files' ][ 1 ][ 'attr' ];
 
         $this->assertCount(3, $attr);
@@ -117,10 +179,16 @@ class XliffParserV2Test extends Base
         $this->assertEmpty($parsed[ 'files' ][ 1 ][ 'notes' ]);
     }
 
+    /**
+     * @throws NotValidFileException
+     * @throws NotSupportedVersionException
+     * @throws InvalidXmlException
+     * @throws XmlParsingException
+     */
     #[Test]
-    public function can_parse_xliff_v2_notes()
+    public function can_parse_xliff_v2_notes(): void
     {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('sample-20.xlf'));
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('20/sample-20.xlf'));
         $notes  = $parsed[ 'files' ][ 1 ][ 'notes' ];
 
         $this->assertCount(3, $notes);
@@ -133,10 +201,16 @@ class XliffParserV2Test extends Base
                 }', $notes[ 2 ][ 'json' ] );
     }
 
+    /**
+     * @throws NotValidFileException
+     * @throws NotSupportedVersionException
+     * @throws InvalidXmlException
+     * @throws XmlParsingException
+     */
     #[Test]
-    public function can_parse_xliff_v2_trans_units_metadata()
+    public function can_parse_xliff_v2_trans_units_metadata(): void
     {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('sample-20.xlf'));
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('20/sample-20.xlf'));
         $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
 
         $this->assertCount(2, $units);
@@ -145,20 +219,32 @@ class XliffParserV2Test extends Base
         $this->assertEquals( 'u2', $units[ 2 ][ 'attr' ][ 'id' ] );
     }
 
+    /**
+     * @throws NotValidFileException
+     * @throws NotSupportedVersionException
+     * @throws InvalidXmlException
+     * @throws XmlParsingException
+     */
     #[Test]
-    public function can_parse_xliff_v2_trans_units_originalData()
+    public function can_parse_xliff_v2_trans_units_originalData(): void
     {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('uber-v2.xliff'));
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('20/uber-v2.xliff'));
         $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
 
         $this->assertEquals( '${redemptionLimit}', $units[ 5 ][ 'original-data' ][ 0 ][ 'raw-content' ] );
         $this->assertEquals( 'source1', $units[ 5 ][ 'original-data' ][ 0 ][ 'attr' ][ 'id' ] );
     }
 
+    /**
+     * @throws NotValidFileException
+     * @throws NotSupportedVersionException
+     * @throws InvalidXmlException
+     * @throws XmlParsingException
+     */
     #[Test]
-    public function can_parse_xliff_v2_trans_units_notes()
+    public function can_parse_xliff_v2_trans_units_notes(): void
     {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('uber-v2.xliff'));
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('20/uber-v2.xliff'));
         $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
         $note   = $units[ 1 ][ 'notes' ];
 
@@ -178,10 +264,16 @@ class XliffParserV2Test extends Base
         ], $note[ 3 ] );
     }
 
+    /**
+     * @throws NotValidFileException
+     * @throws NotSupportedVersionException
+     * @throws InvalidXmlException
+     * @throws XmlParsingException
+     */
     #[Test]
-    public function can_parse_xliff_v2_trans_units_source_and_target()
+    public function can_parse_xliff_v2_trans_units_source_and_target(): void
     {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('sample-20.xlf'));
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('20/sample-20.xlf'));
 
         $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
 
@@ -199,10 +291,16 @@ class XliffParserV2Test extends Base
         $this->assertEquals( [], $units[ 2 ][ 'target' ][ 'attr' ] );
     }
 
+    /**
+     * @throws NotValidFileException
+     * @throws NotSupportedVersionException
+     * @throws InvalidXmlException
+     * @throws XmlParsingException
+     */
     #[Test]
-    public function can_parse_xliff_v2_trans_units_nested_in_groups()
+    public function can_parse_xliff_v2_trans_units_nested_in_groups(): void
     {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('sample-20-with-group.xlf'));
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('20/sample-20-with-group.xlf'));
 
         $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
         $this->assertCount(3, $units);
@@ -210,10 +308,16 @@ class XliffParserV2Test extends Base
         $this->assertStringContainsString('Phrase from a group', $units[ 1 ][ 'target' ][ 'raw-content' ][0]);
     }
 
+    /**
+     * @throws NotValidFileException
+     * @throws NotSupportedVersionException
+     * @throws InvalidXmlException
+     * @throws XmlParsingException
+     */
     #[Test]
-    public function can_parse_xliff_v2_with_ti_in_nested_groups()
+    public function can_parse_xliff_v2_with_ti_in_nested_groups(): void
     {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('sample-20-with-nested-group.xlf'));
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('20/sample-20-with-nested-group.xlf'));
         $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
 
         $this->assertStringContainsString('Sentence 1. ', $units[ 1 ][ 'source' ][ 'raw-content' ][0]);
@@ -224,10 +328,16 @@ class XliffParserV2Test extends Base
         $this->assertStringContainsString('Phrase 3. ', $units[ 2 ][ 'target' ][ 'raw-content' ][1]);
     }
 
+    /**
+     * @throws NotValidFileException
+     * @throws NotSupportedVersionException
+     * @throws InvalidXmlException
+     * @throws XmlParsingException
+     */
     #[Test]
-    public function can_parse_xliff_v2_trans_units_segmented_source_and_target()
+    public function can_parse_xliff_v2_trans_units_segmented_source_and_target(): void
     {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('sample-20-segmented.xlf'));
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('20/sample-20-segmented.xlf'));
 
         $source  = $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ]['source'];
         $target  = $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ]['target'];
@@ -247,10 +357,16 @@ class XliffParserV2Test extends Base
         ], $source['attr'][ 3 ] );
     }
 
+    /**
+     * @throws NotValidFileException
+     * @throws NotSupportedVersionException
+     * @throws InvalidXmlException
+     * @throws XmlParsingException
+     */
     #[Test]
-    public function can_parse_xliff_v2_trans_units_segmented_seg_source_and_seg_target()
+    public function can_parse_xliff_v2_trans_units_segmented_seg_source_and_seg_target(): void
     {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('sample-20-segmented.xlf'));
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('20/sample-20-segmented.xlf'));
 
         $segSource  = $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ]['seg-source'];
         $segTarget  = $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ]['seg-target'];
@@ -265,11 +381,17 @@ class XliffParserV2Test extends Base
         $this->assertEquals( 'Phrase 4.', $segTarget[3]['raw-content'] );
     }
 
+    /**
+     * @throws NotValidFileException
+     * @throws NotSupportedVersionException
+     * @throws InvalidXmlException
+     * @throws XmlParsingException
+     */
     #[Test]
-    public function can_parse_xliff_v2_with_ec_and_sc()
+    public function can_parse_xliff_v2_with_ec_and_sc(): void
     {
         // <pc> tags do not be escaped here
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('pcec.xlf'));
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('20/pcec.xlf'));
         $units  = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
 
         $this->assertArrayHasKey('source', $units[4]);
@@ -279,10 +401,16 @@ class XliffParserV2Test extends Base
         );
     }
 
+    /**
+     * @throws NotValidFileException
+     * @throws NotSupportedVersionException
+     * @throws InvalidXmlException
+     * @throws XmlParsingException
+     */
     #[Test]
-    public function can_parse_xliff_v2()
+    public function can_parse_xliff_v2(): void
     {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('sample-20.xlf'));
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('20/sample-20.xlf'));
 
         $exp = [
             'attr' =>
@@ -397,20 +525,28 @@ class XliffParserV2Test extends Base
         $this->assertArraySimilar($parsed[ 'files' ][ 1 ], $exp);
     }
 
+    /**
+     */
     #[Test]
-    public function raise_exception_on_duplicate_ids()
+    public function raise_exception_on_duplicate_ids(): void
     {
         try {
-            (new XliffParser())->xliffToArray($this->getTestFile('v2-duplicate-ids.xliff'));
-        } catch (\Exception $exception){
+            (new XliffParser())->xliffToArray($this->getTestFile('20/v2-duplicate-ids.xliff'));
+        } catch (Exception $exception){
             $this->assertEquals('Invalid trans-unit id, duplicate found.', $exception->getMessage());
         }
     }
 
+    /**
+     * @throws NotValidFileException
+     * @throws NotSupportedVersionException
+     * @throws InvalidXmlException
+     * @throws XmlParsingException
+     */
     #[Test]
-    public function can_parse_segment_state_attribute()
+    public function can_parse_segment_state_attribute(): void
     {
-        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('with-segment-state.xliff'));
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('20/with-segment-state.xliff'));
 
         $this->assertEquals('0', $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'seg-source' ][ 0 ][ 'attr' ][ 'id' ]);
         $this->assertEquals('initial', $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'seg-source' ][ 0 ][ 'attr' ][ 'state' ]);
@@ -420,5 +556,99 @@ class XliffParserV2Test extends Base
         $this->assertEquals('initial', $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'seg-target' ][ 0 ][ 'attr' ][ 'state' ]);
         $this->assertEquals('4', $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'seg-target' ][ 1 ][ 'attr' ][ 'id' ]);
         $this->assertEquals('finale', $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'seg-target' ][ 1 ][ 'attr' ][ 'state' ]);
+    }
+
+    /**
+     * Test parsing target with attributes (covers line 222)
+     *
+     * @throws NotValidFileException
+     * @throws NotSupportedVersionException
+     * @throws InvalidXmlException
+     * @throws XmlParsingException
+     */
+    #[Test]
+    public function can_parse_target_with_attributes(): void
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('20/xliff20-target-with-attributes.xlf'));
+
+        $this->assertArrayHasKey('attr', $parsed['files'][1]['trans-units'][1]['target']);
+        $this->assertEquals('translated', $parsed['files'][1]['trans-units'][1]['target']['attr'][0]['state']);
+    }
+
+    /**
+     * Test that missing unit id throws exception (covers line 268)
+     *
+     * @throws NotValidFileException
+     * @throws NotSupportedVersionException
+     * @throws InvalidXmlException
+     * @throws XmlParsingException
+     */
+    #[Test]
+    public function throws_exception_for_missing_unit_id(): void
+    {
+        $this->expectException(NotFoundIdInTransUnit::class);
+        $this->expectExceptionMessage('Invalid trans-unit id found. EMPTY value');
+
+        (new XliffParser())->xliffToArray($this->getTestFile('20/xliff20-missing-unit-id.xlf'));
+    }
+
+    /**
+     * Test that unit id too long throws exception (covers line 274)
+     *
+     * @throws NotValidFileException
+     * @throws NotSupportedVersionException
+     * @throws InvalidXmlException
+     * @throws XmlParsingException
+     */
+    #[Test]
+    public function throws_exception_for_unit_id_too_long(): void
+    {
+        $this->expectException(SegmentIdTooLongException::class);
+        $this->expectExceptionMessage('Segment-id too long. Max 100 characters allowed');
+
+        (new XliffParser())->xliffToArray($this->getTestFile('20/xliff20-unit-id-too-long.xlf'));
+    }
+
+    /**
+     * Test parsing originalData with JSON and placeholders (covers lines 331-335)
+     *
+     * @throws NotValidFileException
+     * @throws NotSupportedVersionException
+     * @throws InvalidXmlException
+     * @throws XmlParsingException
+     */
+    #[Test]
+    public function can_parse_original_data_with_json_and_placeholders(): void
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('20/xliff20-original-data-with-json.xlf'));
+
+        $this->assertArrayHasKey('original-data', $parsed['files'][1]['trans-units'][1]);
+        $originalData = $parsed['files'][1]['trans-units'][1]['original-data'];
+        $this->assertNotEmpty($originalData);
+        // The JSON should have placeholders converted back to &lt; and &gt;
+        $this->assertArrayHasKey('json', $originalData[0]);
+        $this->assertStringContainsString('&lt;', $originalData[0]['json']);
+        $this->assertStringContainsString('&gt;', $originalData[0]['json']);
+    }
+
+    /**
+     * Test segment outside tGroup range logs warning (covers lines 425-426)
+     *
+     * @throws NotValidFileException
+     * @throws NotSupportedVersionException
+     * @throws InvalidXmlException
+     * @throws XmlParsingException
+     */
+    #[Test]
+    public function logs_warning_for_segment_outside_tgroup_range(): void
+    {
+        // Create a mock logger to capture the warning
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger->expects($this->once())
+            ->method('warning')
+            ->with($this->stringContains('is not included within tGroupBegin and tGroupEnd'));
+
+        $parser = new XliffParser($logger);
+        $parser->xliffToArray($this->getTestFile('20/xliff20-segment-outside-tgroup.xlf'));
     }
 }

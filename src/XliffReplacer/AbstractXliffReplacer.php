@@ -49,7 +49,7 @@ abstract class AbstractXliffReplacer
     /** @var array<int, string> */
     protected array $nodesToBuffer = [];
 
-    /** @var array<string, array<int, int>> */
+    /** @var array<int|string, array<int, int>> */
     protected array $transUnits;
 
     protected int $xliffVersion;
@@ -72,7 +72,7 @@ abstract class AbstractXliffReplacer
      * @param string $originalXliffPath Path to original XLIFF file
      * @param int $xliffVersion XLIFF version (1 or 2)
      * @param array<int|string, array<string, mixed>> $segments Array of translation segments
-     * @param array<string, array<int, int>> $transUnits Trans-unit mapping
+     * @param array<int|string, array<int, int>> $transUnits Trans-unit mapping
      * @param string $trgLang Target language code
      * @param string $outputFilePath Path for output file
      * @param bool $setSourceInTarget Whether to copy source to target
@@ -124,25 +124,26 @@ abstract class AbstractXliffReplacer
                 $this->currentBuffer
             );
 
-            //avoid cutting entities in half:
-            //the last fread could have truncated an entity (say, '&lt;' in '&l'), thus invalidating the escaping
-            //***** and if there is an & that it is not an entity, this is an infinite loop !!!!!
-            // 9 is the max length of an entity. So, suppose that the & is at the end of buffer,
-            // add 9 Bytes and substitute the entities, if the & is present, and it is not at the end
-            //it can't be an entity, exit the loop
+            // Prevent splitting HTML/XML entities across buffer boundaries during file reading.
+            // An entity like `&lt;`, could be cut midway (e.g., '&l'), breaking the entity escaping.
+            // Max entity length is 9 chars (e.g., '&thetasym;'), so we check up to 9 bytes ahead.
             while (true) {
+                // Find the position of the last '&' character in the temporary buffer
                 $_ampPos = strpos($temporary_check_buffer, '&');
 
-                //check for real entity or escape it to safely exit from the loop!!!
+                // If no '&' exists, or if there's enough data after '&' (>9 chars),
+                // it's either not an entity or complete - safe to exit
                 if ($_ampPos === false || strlen(substr($temporary_check_buffer, $_ampPos)) > 9) {
                     break;
                 }
 
-                //if an entity is still present, fetch some more and repeat the escaping
+                // Read 9 more bytes to ensure we have the complete entity
                 $extraBuffer = fread($this->originalFP, 9);
                 if ($extraBuffer !== false) {
                     $this->currentBuffer .= $extraBuffer;
                 }
+
+                // Replace entities (&...;) with placeholder-wrapped content for safe processing
                 $temporary_check_buffer = preg_replace(
                     "/&(.*?);/",
                     self::$INTERNAL_TAG_PLACEHOLDER . '$1' . self::$INTERNAL_TAG_PLACEHOLDER,
@@ -241,7 +242,7 @@ abstract class AbstractXliffReplacer
     {
         // create output file
         if (!file_exists($outputFilePath)) {
-            touch($outputFilePath);
+            @touch($outputFilePath);
         }
     }
 
@@ -250,14 +251,14 @@ abstract class AbstractXliffReplacer
      */
     private function setFileDescriptors(string $originalXliffPath, string $outputFilePath): void
     {
-        $outputFP = fopen($outputFilePath, 'w+');
+        $outputFP = @fopen($outputFilePath, 'w+');
         if ($outputFP === false) {
             throw new RuntimeException("could not open output file: $outputFilePath");
         }
         $this->outputFP = $outputFP;
 
         $streamArgs = null;
-        $originalFP = fopen($originalXliffPath, "r", false, stream_context_create($streamArgs));
+        $originalFP = @fopen($originalXliffPath, "r", false, stream_context_create($streamArgs));
         if ($originalFP === false) {
             throw new RuntimeException("could not open XML input: $originalXliffPath");
         }

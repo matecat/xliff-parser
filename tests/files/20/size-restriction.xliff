@@ -1,0 +1,827 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0" xmlns:slr="urn:oasis:names:tc:xliff:sizerestriction:2.0" xmlns:memsource="http://www.memsource.com/xliff2.0/1.0" version="2.0" memsource:wfLevel="5" srcLang="en-us" trgLang="zh-hk">
+    <file id="g5OSA9PCnyDAdJko_dc5:0-86" memsource:taskId="g5OSA9PCnyDAdJko_dc5" canResegment="no" original="[L10N-12386] Gift card &amp; Voucher microsite and email copy.xlsx">
+        <slr:profiles generalProfile="xliff:codepoints"/>
+        <unit id="0" memsource:tGroupBegin="0" memsource:tGroupEnd="0" slr:sizeRestriction="">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Page URL</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="0" state="translated">
+                <source>business.uber.com/gift-cards</source>
+                <target>business.uber.com/gift-cards</target>
+            </segment>
+        </unit>
+        <unit id="1" memsource:tGroupBegin="1" memsource:tGroupEnd="1" slr:sizeRestriction="">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Page title</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="1" state="translated">
+                <source>Purchase Uber Gift Cards and Vouchers┃Uber for Business</source>
+                <target>購買 Uber 禮品卡和代用券┃Uber for Business</target>
+            </segment>
+        </unit>
+        <unit id="2" memsource:tGroupBegin="2" memsource:tGroupEnd="2" slr:sizeRestriction="">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Meta title</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="2" state="translated">
+                <source>Purchase Uber Gift Cards and Vouchers</source>
+                <target>購買 Uber 禮品卡和代用券</target>
+            </segment>
+        </unit>
+        <unit id="3" memsource:tGroupBegin="3" memsource:tGroupEnd="3" slr:sizeRestriction="">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Meta desc</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="3" state="translated">
+                <source>Buy easy to use Uber gift cards or vouchers for virtual events, employees, customers and clients.</source>
+                <target>為虛擬活動、員工、顧客和客戶購買簡單易用的 Uber 禮品卡或代用券。</target>
+            </segment>
+        </unit>
+        <unit id="4" memsource:tGroupBegin="4" memsource:tGroupEnd="4" slr:sizeRestriction="40">
+            <mda:metadata><mda:metaGroup><mda:meta type="key">HERO</mda:meta>
+                <mda:meta type="key-note">Hero title</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="4" state="translated">
+                <source>Give the gift of Uber</source>
+                <target>贈送 Uber 禮品卡</target>
+            </segment>
+        </unit>
+        <unit id="5" memsource:tGroupBegin="5" memsource:tGroupEnd="5" slr:sizeRestriction="160">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Hero body</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="5" state="translated">
+                <source>Whether you need Eats or Rides, at home or for HQ, We’ve got you covered with gift cards that are simple to give and easy to enjoy.</source>
+                <target>無論你是在家中還是在總部，我們都可為你提供外賣或乘車服務，讓你輕鬆送出禮品卡，輕鬆享用。</target>
+            </segment>
+        </unit>
+        <unit id="6" memsource:tGroupBegin="6" memsource:tGroupEnd="6" slr:sizeRestriction="30">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Hero CTA</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="6" state="translated">
+                <source>Order now</source>
+                <target>立即訂餐</target>
+            </segment>
+        </unit>
+        <unit id="7" memsource:tGroupBegin="7" memsource:tGroupEnd="7" slr:sizeRestriction="60">
+            <mda:metadata><mda:metaGroup><mda:meta type="key">FORM</mda:meta>
+                <mda:meta type="key-note">CTA Header</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="7" state="translated">
+                <source>Order Uber gift cards or vouchers</source>
+                <target>訂購 Uber 禮品卡或代用券</target>
+            </segment>
+        </unit>
+        <unit id="8" memsource:tGroupBegin="8" memsource:tGroupEnd="8" slr:sizeRestriction="300">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">CTA Body</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="8" state="translated">
+                <source>Easy ordering for easy gifting — gift cards and vouchers with assured simplicity.
+
+                    Just fill out the form and one of our experts will be in touch to discuss your needs and recommend the package to make your life easier.</source>
+                <target>輕鬆訂購禮品卡和送遞禮品卡，簡單方便。只需填妥表格，我們的專員便會與你聯絡，討論你的需求，並為你推薦套票，讓你的生活更輕鬆。</target>
+            </segment>
+        </unit>
+        <unit id="9" memsource:tGroupBegin="9" memsource:tGroupEnd="9" slr:sizeRestriction="60">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Form title</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="9" state="translated">
+                <source>Your vouchers or cards are just a few clicks away...</source>
+                <target>點按幾下即可領取優惠券或付款卡…</target>
+            </segment>
+        </unit>
+        <unit id="10" memsource:tGroupBegin="10" memsource:tGroupEnd="10" slr:sizeRestriction="20">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Quantity title</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="10" state="translated">
+                <source>Start your order</source>
+                <target>在此開始訂餐</target>
+            </segment>
+        </unit>
+        <unit id="11" memsource:tGroupBegin="11" memsource:tGroupEnd="11" slr:sizeRestriction="50">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Quantity body</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="11" state="translated">
+                <source>How many gift cards would you like to order?</source>
+                <target>你想訂購多少張禮品卡？</target>
+            </segment>
+        </unit>
+        <unit id="12" memsource:tGroupBegin="12" memsource:tGroupEnd="12" slr:sizeRestriction="10">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Quantity button</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="12" state="translated">
+                <source>Submit</source>
+                <target>提交</target>
+            </segment>
+        </unit>
+        <unit id="13" memsource:tGroupBegin="13" memsource:tGroupEnd="13" slr:sizeRestriction="60">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Details Header</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="13" state="translated">
+                <source>Set a value</source>
+                <target>設定值</target>
+            </segment>
+        </unit>
+        <unit id="14" memsource:tGroupBegin="14" memsource:tGroupEnd="14" slr:sizeRestriction="150">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Details body</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="14" state="translated">
+                <source>Choose the value of each of your gift cards, or add a custom value.</source>
+                <target>選擇每張禮品卡的價值，或新增自訂價值。</target>
+            </segment>
+        </unit>
+        <unit id="15" memsource:tGroupBegin="15" memsource:tGroupEnd="15" slr:sizeRestriction="50">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Details information</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="15" state="translated">
+                <source>Specify a custom value from £5.</source>
+                <target>指定自訂價值 £5 起。</target>
+            </segment>
+        </unit>
+        <unit id="16" memsource:tGroupBegin="16" memsource:tGroupEnd="16" slr:sizeRestriction="10">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Details button</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="16" state="translated">
+                <source>Ok</source>
+                <target>確定</target>
+            </segment>
+        </unit>
+        <unit id="17" memsource:tGroupBegin="17" memsource:tGroupEnd="17" slr:sizeRestriction="10">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Value Header</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="17" state="translated">
+                <source>Next</source>
+                <target>下一頁</target>
+            </segment>
+        </unit>
+        <unit id="18" memsource:tGroupBegin="18" memsource:tGroupEnd="18" slr:sizeRestriction="50">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Value body</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="18" state="translated">
+                <source>Add your details</source>
+                <target>新增詳細資料</target>
+            </segment>
+        </unit>
+        <unit id="19" memsource:tGroupBegin="19" memsource:tGroupEnd="19" slr:sizeRestriction="">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">First Name</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="19" state="translated">
+                <source>First name</source>
+                <target>名字</target>
+            </segment>
+        </unit>
+        <unit id="20" memsource:tGroupBegin="20" memsource:tGroupEnd="20" slr:sizeRestriction="">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Last Name</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="20" state="translated">
+                <source>Last name</source>
+                <target>姓氏</target>
+            </segment>
+        </unit>
+        <unit id="21" memsource:tGroupBegin="21" memsource:tGroupEnd="21" slr:sizeRestriction="">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Company Name</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="21" state="translated">
+                <source>Company name</source>
+                <target>公司名稱</target>
+            </segment>
+        </unit>
+        <unit id="22" memsource:tGroupBegin="22" memsource:tGroupEnd="22" slr:sizeRestriction="">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Job Title</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="22" state="translated">
+                <source>Job title</source>
+                <target>職稱</target>
+            </segment>
+        </unit>
+        <unit id="23" memsource:tGroupBegin="23" memsource:tGroupEnd="23" slr:sizeRestriction="">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Number of employees</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="23" state="translated">
+                <source>Number of employees</source>
+                <target>員工人數</target>
+            </segment>
+        </unit>
+        <unit id="24" memsource:tGroupBegin="24" memsource:tGroupEnd="24" slr:sizeRestriction="">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Phone Number</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="24" state="translated">
+                <source>Phone number</source>
+                <target>電話號碼</target>
+            </segment>
+        </unit>
+        <unit id="25" memsource:tGroupBegin="25" memsource:tGroupEnd="25" slr:sizeRestriction="">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Email Address</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="25" state="translated">
+                <source>Email address</source>
+                <target>電郵地址</target>
+            </segment>
+        </unit>
+        <unit id="26" memsource:tGroupBegin="26" memsource:tGroupEnd="26" slr:sizeRestriction="">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">What would you like to use your gift cards or vouchers for?</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="26" state="translated">
+                <source>What would you like to use your gift cards or vouchers for?</source>
+                <target>你想使用禮品卡或代用券做什麼？</target>
+            </segment>
+        </unit>
+        <unit id="27" memsource:tGroupBegin="27" memsource:tGroupEnd="27" slr:sizeRestriction="">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">CTA</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="27" state="translated">
+                <source>Submit</source>
+                <target>提交</target>
+            </segment>
+        </unit>
+        <unit id="28" memsource:tGroupBegin="28" memsource:tGroupEnd="28" slr:sizeRestriction="">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Privacy Policy</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="28" state="translated">
+                <source>By clicking “Submit” I agree that Uber or its representatives may contact me by email, phone, or SMS at the email address or number I provide, that my information will be used in accordance with Uber’s Privacy Policy.</source>
+                <target>按一下「提交」，即表示我同意 Uber 或其代表可透過我提供的電郵地址或電話號碼，以電郵、電話或短訊形式聯絡我，並可根據 Uber 私隱政策使用我的資料。</target>
+            </segment>
+        </unit>
+        <unit id="29" memsource:tGroupBegin="29" memsource:tGroupEnd="29" slr:sizeRestriction="50">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Info header</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="29" state="translated">
+                <source>Gifting doesn’t get any easier</source>
+                <target>送禮如此簡單</target>
+            </segment>
+        </unit>
+        <unit id="30" memsource:tGroupBegin="30" memsource:tGroupEnd="30" slr:sizeRestriction="200">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Info body</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="30" state="translated">
+                <source>Who wants hassle? You don’t and neither do we! That’s why the redemption process is as straightforward as these simple steps...</source>
+                <target>誰想麻煩？你沒有，我們也沒有！因此，兌換過程與以下幾個簡單步驟一樣簡單…</target>
+            </segment>
+        </unit>
+        <unit id="31" memsource:tGroupBegin="31" memsource:tGroupEnd="31" slr:sizeRestriction="150">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Info callout 1</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="31" state="translated">
+                <source>Receive - Recipient gets the code via text or email.</source>
+                <target>接收 - 收件人透過短訊或電郵取得驗證碼。</target>
+            </segment>
+        </unit>
+        <unit id="32" memsource:tGroupBegin="32" memsource:tGroupEnd="32" slr:sizeRestriction="150">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Info callout 2</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="32" state="translated">
+                <source>Apply - They can then add the code to their account for immediate or future use.</source>
+                <target>套用 - 然後將優惠碼新增至帳戶，以供即時或日後使用。</target>
+            </segment>
+        </unit>
+        <unit id="33" memsource:tGroupBegin="33" memsource:tGroupEnd="33" slr:sizeRestriction="150">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Info callout 3</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="33" state="translated">
+                <source>Order - They’re then ready to place their Eats or Rides order and enjoy their treat!</source>
+                <target>訂餐 - 然後他們就可以準備 Uber Eats 或乘車服務，並享用美食了！</target>
+            </segment>
+        </unit>
+        <unit id="34" memsource:tGroupBegin="34" memsource:tGroupEnd="34" slr:sizeRestriction="20">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">CTA</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="34" state="translated">
+                <source>Watch summary</source>
+                <target>觀看摘要</target>
+            </segment>
+        </unit>
+        <unit id="35" memsource:tGroupBegin="35" memsource:tGroupEnd="35" slr:sizeRestriction="60">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">TEAM Text and image title 1</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="35" state="translated">
+                <source>Trouble-free team treats</source>
+                <target>輕鬆解決團隊問題</target>
+            </segment>
+        </unit>
+        <unit id="36" memsource:tGroupBegin="36" memsource:tGroupEnd="36" slr:sizeRestriction="200">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">TEAM Text and image body 1</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="36" state="translated">
+                <source>Give your team a tasty treat over a plain old packed lunch. Pay upfront to a value of your choice, and set an expiry time so they can’t squirrel it away!
+
+                    Buy gift cards for your team</source>
+                <target>為你的團隊提供外帶午餐，而不是簡單的午餐。預先支付你選擇的價值，並設定到期日，以免他們錯過！為團隊購買禮品卡</target>
+            </segment>
+        </unit>
+        <unit id="37" memsource:tGroupBegin="37" memsource:tGroupEnd="37" slr:sizeRestriction="60">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">CUSTOMER Text and image title 2</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="37" state="translated">
+                <source>Treats to capture customers</source>
+                <target>吸引顧客的小食</target>
+            </segment>
+        </unit>
+        <unit id="38" memsource:tGroupBegin="38" memsource:tGroupEnd="38" slr:sizeRestriction="200">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">CUSTOMER Text and image body 2</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="38" state="translated">
+                <source>Treats your customers can’t resist! Want captive customers and a competitive advantage? Pump up
+                    your loyalty schemes and offers by adding an Uber gift card or voucher.
+
+                    Gift cards for your customers</source>
+                <target>顧客無法抗拒的美食！想擁有專屬顧客和競爭優勢嗎？新增 Uber 禮品卡或代用券，以提升你的會員計劃和優惠。為顧客而設的禮品卡</target>
+            </segment>
+        </unit>
+        <unit id="39" memsource:tGroupBegin="39" memsource:tGroupEnd="39" slr:sizeRestriction="60">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">EVENT ATTENDEE Text and image title 3</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="39" state="translated">
+                <source>Entice and ensure virtual event attendance</source>
+                <target>吸引並確保虛擬活動出席率</target>
+            </segment>
+        </unit>
+        <unit id="40" memsource:tGroupBegin="40" memsource:tGroupEnd="40" slr:sizeRestriction="200">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">EVENT ATTENDEE Text and image body 3</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="40" state="translated">
+                <source>Drive attendance to your virtual events and improve lead generation with Uber gift cards or vouchers. Be in control by setting restrictions on when they can be claimed.
+
+                    Gift cards for virtual events</source>
+                <target>使用 Uber 禮品卡或代用券，提高虛擬活動的出席率並拓展潛在客戶群。設定領取時間限制，讓一切盡在掌握。虛擬活動禮品卡</target>
+            </segment>
+        </unit>
+        <unit id="41" memsource:tGroupBegin="41" memsource:tGroupEnd="41" slr:sizeRestriction="60">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Gift Cards header</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="41" state="translated">
+                <source>The gift that keeps on giving</source>
+                <target>不斷給予的禮物</target>
+            </segment>
+        </unit>
+        <unit id="42" memsource:tGroupBegin="42" memsource:tGroupEnd="42" slr:sizeRestriction="40">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Benefit title 1</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="42" state="translated">
+                <source>Efficient expensing</source>
+                <target>有效率的報銷</target>
+            </segment>
+        </unit>
+        <unit id="43" memsource:tGroupBegin="43" memsource:tGroupEnd="43" slr:sizeRestriction="200">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Benefit body 1</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="43" state="translated">
+                <source>There’s no fun in the faff of expensing. Pay upfront or at the point of use, and track claim status. Don’t pay any hidden fees and have full visibility on spend.</source>
+                <target>報銷工作並不輕鬆。預先付款或在使用地點付款，並追踪索償狀態。無需支付任何隱性費用，並可全面掌握開支情況。</target>
+            </segment>
+        </unit>
+        <unit id="44" memsource:tGroupBegin="44" memsource:tGroupEnd="44" slr:sizeRestriction="40">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Benefit title 2</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="44" state="translated">
+                <source>Fuss-free flexibility</source>
+                <target>靈活方便</target>
+            </segment>
+        </unit>
+        <unit id="45" memsource:tGroupBegin="45" memsource:tGroupEnd="45" slr:sizeRestriction="200">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Benefit body 2</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="45" state="translated">
+                <source>Recipients can enter the code or add it to an account for future use. Choose from a range of currencies, including AUD, BRL, CAD, INR, MXN, ZAF, GBP and US.</source>
+                <target>收件人可輸入驗證碼，或將其新增至帳戶以供日後使用。有多種貨幣可供選擇，包括 AUD、BRL、CAD、INR、MXN、ZAF、GBP 和美國。</target>
+            </segment>
+        </unit>
+        <unit id="46" memsource:tGroupBegin="46" memsource:tGroupEnd="46" slr:sizeRestriction="40">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Benefit title 3</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="46" state="translated">
+                <source>Straightforward security</source>
+                <target>簡單易用的安全保障</target>
+            </segment>
+        </unit>
+        <unit id="47" memsource:tGroupBegin="47" memsource:tGroupEnd="47" slr:sizeRestriction="200">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Benefit body 3</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="47" state="translated">
+                <source>All our vouchers and cards are digital. They won’t get lost and they’re naturally contact-free. We can deliver the codes to your recipients in bulk, or help you manage email distribution.</source>
+                <target>我們所有的代用券和付款卡都是數碼的。他們不會迷路，而且自然不會接觸任何人。我們可以將驗證碼大量傳送給收件人，或協助你管理電郵派發。</target>
+            </segment>
+        </unit>
+        <unit id="48" memsource:tGroupBegin="48" memsource:tGroupEnd="48" slr:sizeRestriction="">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Thankyou page URL</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="48" state="translated">
+                <source>business.uber.com/gift-cards-thank-you</source>
+                <target>business.uber.com/gift-cards-thank-you</target>
+            </segment>
+        </unit>
+        <unit id="49" memsource:tGroupBegin="49" memsource:tGroupEnd="49" slr:sizeRestriction="15">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Thank you title</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="49" state="translated">
+                <source>Thank you!</source>
+                <target>多謝！</target>
+            </segment>
+        </unit>
+        <unit id="50" memsource:tGroupBegin="50" memsource:tGroupEnd="50" slr:sizeRestriction="150">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Thank you body</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="50" state="translated">
+                <source>An expert will be in touch soon to discuss a package that’s glistening with Uber goodness!
+
+                    Can’t wait? Choose a convenient timeslot below.</source>
+                <target>我們的專家很快會聯絡你，討論在 Uber 眼中閃耀的計劃！等不及了？在下方選擇方便的時段。</target>
+            </segment>
+        </unit>
+        <unit id="51" memsource:tGroupBegin="51" memsource:tGroupEnd="51" slr:sizeRestriction="15">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Thank you button</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="51" state="translated">
+                <source>Book a meeting</source>
+                <target>預約會議</target>
+            </segment>
+        </unit>
+        <unit id="52" memsource:tGroupBegin="52" memsource:tGroupEnd="52" slr:sizeRestriction="15">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Team that Eats promo title</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="52" state="translated">
+                <source>Togetherness</source>
+                <target>團結一致</target>
+            </segment>
+        </unit>
+        <unit id="53" memsource:tGroupBegin="53" memsource:tGroupEnd="53" slr:sizeRestriction="150">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Team that Eats promo body</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="53" state="translated">
+                <source>We’ve rustled up key insights and wellbeing strategies from Uber execs, to help your team ease into the new world of work.</source>
+                <target>我們收集了 Uber 高管提供的重要分析資料和健康策略，協助你的團隊輕鬆適應新工作環境。</target>
+            </segment>
+        </unit>
+        <unit id="54" memsource:tGroupBegin="54" memsource:tGroupEnd="54" slr:sizeRestriction="15">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Team that Eats button</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="54" state="translated">
+                <source>Check it out</source>
+                <target>立即查看</target>
+            </segment>
+        </unit>
+        <unit id="55" memsource:tGroupBegin="55" memsource:tGroupEnd="55" slr:sizeRestriction="70">
+            <mda:metadata><mda:metaGroup><mda:meta type="key">EM1 - launch</mda:meta>
+                <mda:meta type="key-note">Subject</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <memsource:additionalTagData>
+                <memsource:tag id="source1"><memsource:tagId>1</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+            </memsource:additionalTagData>
+            <originalData>
+                <data id="source1">[first name]</data>
+            </originalData>
+            <segment id="55" state="translated">
+                <source>Our gift to you, <ph id="source1" dataRef="source1"/>: easy expensing and trouble-free treats</source>
+                <target>我們給你的禮物， <ph id="source1" dataRef="source1"/>：輕鬆報銷，輕鬆享用美食</target>
+            </segment>
+        </unit>
+        <unit id="56" memsource:tGroupBegin="56" memsource:tGroupEnd="56" slr:sizeRestriction="130">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Preview</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="56" state="translated">
+                <source>No more expense claims — the gift of simplicity with Uber for Business.</source>
+                <target>Uber for Business 讓你從此不再報銷報銷。</target>
+            </segment>
+        </unit>
+        <unit id="57" memsource:tGroupBegin="57" memsource:tGroupEnd="57" slr:sizeRestriction="40">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Hero</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="57" state="translated">
+                <source>Give the gift of Uber for Business</source>
+                <target>贈送 Uber for Business 禮品卡</target>
+            </segment>
+        </unit>
+        <unit id="58" memsource:tGroupBegin="58" memsource:tGroupEnd="58" slr:sizeRestriction="200">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Hero body</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="58" state="translated">
+                <source>Whether for Eats or Rides, at home or HQ, our corporate gift cards and vouchers make life easier for you and your recipients.</source>
+                <target>無論是在家中還是在總部，我們的企業禮品卡和代用券都可為你和你的收件人帶來更輕鬆的體驗。</target>
+            </segment>
+        </unit>
+        <unit id="59" memsource:tGroupBegin="59" memsource:tGroupEnd="59" slr:sizeRestriction="30">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">CTA button 1</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="59" state="translated">
+                <source>Order now</source>
+                <target>立即訂餐</target>
+            </segment>
+        </unit>
+        <unit id="60" memsource:tGroupBegin="60" memsource:tGroupEnd="60" slr:sizeRestriction="40">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">CTA strip 1 title</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="60" state="translated">
+                <source>Global gifting and remote rewards</source>
+                <target>全球送禮和遙距禮遇</target>
+            </segment>
+        </unit>
+        <unit id="61" memsource:tGroupBegin="61" memsource:tGroupEnd="61" slr:sizeRestriction="200">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">CTA strip 1 body</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="61" state="translated">
+                <source>No matter how remote your workforce, clients or customers, we can meet your needs. Choose from a range of currencies, and let us help manage distribution.</source>
+                <target>無論你的員工、客戶或顧客有多遠，我們都可以滿足你的需要。從一系列貨幣中選擇，讓我們協助管理分銷。</target>
+            </segment>
+        </unit>
+        <unit id="62" memsource:tGroupBegin="62" memsource:tGroupEnd="62" slr:sizeRestriction="40">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">CTA strip 2 title</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="62" state="translated">
+                <source>Safe and secure digital downloads</source>
+                <target>安全可靠的數碼下載</target>
+            </segment>
+        </unit>
+        <unit id="63" memsource:tGroupBegin="63" memsource:tGroupEnd="63" slr:sizeRestriction="200">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">CTA strip 2 body</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="63" state="translated">
+                <source>Our vouchers and gift cards are digital. They won’t get lost and are naturally contact-free. We can text or email the codes to your recipients, while you easily track claims and generate insights.</source>
+                <target>我們的代用券和禮品卡均為電子版。他們不會迷路，自然不會有任何接觸。我們會以短訊或電郵將驗證碼傳送給你的收件人，讓你輕鬆追踪申請進度並獲取分析資料。</target>
+            </segment>
+        </unit>
+        <unit id="64" memsource:tGroupBegin="64" memsource:tGroupEnd="64" slr:sizeRestriction="40">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">CTA strip 3 title</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="64" state="translated">
+                <source>Rapid rewards and instant incentives</source>
+                <target>快速獎勵和即時激勵</target>
+            </segment>
+        </unit>
+        <unit id="65" memsource:tGroupBegin="65" memsource:tGroupEnd="65" slr:sizeRestriction="200">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">CTA strip 3 body</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="65" state="translated">
+                <source>Take a tasty team treat over a plain old packed lunch, or support staff with a free ride. For fuss-free flexibility, recipients simply enter the code or save it to an account for future use.</source>
+                <target>享用美味的團隊茶點，而不是普通的外帶午餐，或者為員工提供免費行程。收件人只需輸入代碼或將其儲存到帳戶以供日後使用，就可以輕鬆靈活地使用。</target>
+            </segment>
+        </unit>
+        <unit id="66" memsource:tGroupBegin="66" memsource:tGroupEnd="66" slr:sizeRestriction="">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">CTA button</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="66" state="translated">
+                <source>Order now</source>
+                <target>立即訂餐</target>
+            </segment>
+        </unit>
+        <unit id="67" memsource:tGroupBegin="67" memsource:tGroupEnd="67" slr:sizeRestriction="30">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Secondary CTA title</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="67" state="translated">
+                <source>The team that Eats together</source>
+                <target>一起用餐的團隊</target>
+            </segment>
+        </unit>
+        <unit id="68" memsource:tGroupBegin="68" memsource:tGroupEnd="68" slr:sizeRestriction="200">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Secondary CTA body</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="68" state="translated">
+                <source>Employee expectations are evolving. We’ve curated insights and actionable advice from Uber execs to take the woes out of the new world of work.</source>
+                <target>員工的期望在不斷變化。我們收集了 Uber 管理人員的分析資料和實用建議，助你解決新工作環境中的煩惱。</target>
+            </segment>
+        </unit>
+        <unit id="69" memsource:tGroupBegin="69" memsource:tGroupEnd="69" slr:sizeRestriction="20">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Secondary CTA button</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="69" state="translated">
+                <source>Find out more</source>
+                <target>了解詳情</target>
+            </segment>
+        </unit>
+        <unit id="70" memsource:tGroupBegin="70" memsource:tGroupEnd="70" slr:sizeRestriction="70">
+            <mda:metadata><mda:metaGroup><mda:meta type="key">EM2 - Reminder</mda:meta>
+                <mda:meta type="key-note">Subject</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <memsource:additionalTagData>
+                <memsource:tag id="source1"><memsource:tagId>1</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+            </memsource:additionalTagData>
+            <originalData>
+                <data id="source1">[first name]</data>
+            </originalData>
+            <segment id="70" state="translated">
+                <source>Don’t let rewards run away with you, <ph id="source1" dataRef="source1"/>!</source>
+                <target>不要錯過獎賞， <ph id="source1" dataRef="source1"/>！</target>
+            </segment>
+        </unit>
+        <unit id="71" memsource:tGroupBegin="71" memsource:tGroupEnd="71" slr:sizeRestriction="130">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Preview</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="71" state="translated">
+                <source>Get corporate gift cards or vouchers to treat team members, event attendees, customers and yourself.</source>
+                <target>獲取公司禮品卡或代用券，以招待團隊成員、活動參加者、顧客和你自己。</target>
+            </segment>
+        </unit>
+        <unit id="72" memsource:tGroupBegin="72" memsource:tGroupEnd="72" slr:sizeRestriction="40">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Hero</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="72" state="translated">
+                <source>Get the gift that keeps on giving</source>
+                <target>不斷獲取禮品</target>
+            </segment>
+        </unit>
+        <unit id="73" memsource:tGroupBegin="73" memsource:tGroupEnd="73" slr:sizeRestriction="200">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Hero body</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="73" state="translated">
+                <source>The gift of effortless expensing has your name on it. Let’s wrap this up and complete your order! Treat yourself to the gift of simplicity with Uber for Business.</source>
+                <target>輕鬆報銷的好處就是你的名字。結束行程，完成訂單！使用 Uber for Business 享受簡單的禮遇，好好獎勵自己。</target>
+            </segment>
+        </unit>
+        <unit id="74" memsource:tGroupBegin="74" memsource:tGroupEnd="74" slr:sizeRestriction="30">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">CTA button 1</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="74" state="translated">
+                <source>Order now</source>
+                <target>立即訂餐</target>
+            </segment>
+        </unit>
+        <unit id="75" memsource:tGroupBegin="75" memsource:tGroupEnd="75" slr:sizeRestriction="40">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">CTA strip 1 title</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="75" state="translated">
+                <source>Tell us the amount</source>
+                <target>告訴我們金額</target>
+            </segment>
+        </unit>
+        <unit id="76" memsource:tGroupBegin="76" memsource:tGroupEnd="76" slr:sizeRestriction="200">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">CTA strip 1 body</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="76" state="translated">
+                <source>Set the amount you need, whether treating your team to lunch or supporting them with a free ride to work. Don’t worry about getting carried away — we won’t charge for unclaimed cards.</source>
+                <target>設定所需金額，為團隊提供午餐或免費接載服務。別擔心，我們不會為無人認領的付款卡收費。</target>
+            </segment>
+        </unit>
+        <unit id="77" memsource:tGroupBegin="77" memsource:tGroupEnd="77" slr:sizeRestriction="40">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">CTA strip 2 title</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="77" state="translated">
+                <source>Pay when you prefer</source>
+                <target>隨時付款</target>
+            </segment>
+        </unit>
+        <unit id="78" memsource:tGroupBegin="78" memsource:tGroupEnd="78" slr:sizeRestriction="200">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">CTA strip 2 body</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="78" state="translated">
+                <source>Pay upfront or at the point of use. Even easier? Once ordered, you can centrally track all claims. We promise no hidden fees, so what you see is what you pay.</source>
+                <target>預先付款或在使用地點付款。更輕鬆？訂購後，你可以集中追踪所有索償。我們承諾不收取任何隱藏費用，因此所見即所得。</target>
+            </segment>
+        </unit>
+        <unit id="79" memsource:tGroupBegin="79" memsource:tGroupEnd="79" slr:sizeRestriction="40">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">CTA strip 3 title</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="79" state="translated">
+                <source>Distribute digitally</source>
+                <target>以數碼方式分發</target>
+            </segment>
+        </unit>
+        <unit id="80" memsource:tGroupBegin="80" memsource:tGroupEnd="80" slr:sizeRestriction="200">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">CTA strip 3 body</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="80" state="translated">
+                <source>We can text or email codes to your recipients, so they’re safe, secure and contact-free. Keep control by easily setting restrictions, so they’re only used when they’re meant to be.</source>
+                <target>我們可以向你的收件人傳送驗證碼短訊或電郵，確保他們不會受到任何接觸。輕鬆設定限制，確保只在指定情況下使用，以保持控制。</target>
+            </segment>
+        </unit>
+        <unit id="81" memsource:tGroupBegin="81" memsource:tGroupEnd="81" slr:sizeRestriction="">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">CTA button</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="81" state="translated">
+                <source>Order now</source>
+                <target>立即訂餐</target>
+            </segment>
+        </unit>
+        <unit id="82" memsource:tGroupBegin="82" memsource:tGroupEnd="82" slr:sizeRestriction="30">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Secondary CTA title</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="82" state="translated">
+                <source>The team that Eats together</source>
+                <target>一起用餐的團隊</target>
+            </segment>
+        </unit>
+        <unit id="83" memsource:tGroupBegin="83" memsource:tGroupEnd="83" slr:sizeRestriction="200">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Secondary CTA body</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="83" state="translated">
+                <source>Employee expectations are evolving. We’ve curated insights and actionable advice from Uber execs to take the woes out of the new world of work.</source>
+                <target>員工的期望在不斷變化。我們收集了 Uber 管理人員的分析資料和實用建議，助你解決新工作環境中的煩惱。</target>
+            </segment>
+        </unit>
+        <unit id="84" memsource:tGroupBegin="84" memsource:tGroupEnd="84" slr:sizeRestriction="20">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Secondary CTA button</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="84" state="translated">
+                <source>Find out more</source>
+                <target>了解詳情</target>
+            </segment>
+        </unit>
+        <unit id="85" memsource:tGroupBegin="85" memsource:tGroupEnd="85" slr:sizeRestriction="">
+            <mda:metadata><mda:metaGroup><mda:meta type="key">EMTY</mda:meta>
+                <mda:meta type="key-note">Subject</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <segment id="85" state="translated">
+                <source>Thank you!</source>
+                <target>多謝！</target>
+            </segment>
+        </unit>
+        <unit id="86" memsource:tGroupBegin="86" memsource:tGroupEnd="86" slr:sizeRestriction="400">
+            <mda:metadata><mda:metaGroup><mda:meta type="key"></mda:meta>
+                <mda:meta type="key-note">Body</mda:meta>
+            </mda:metaGroup></mda:metadata>
+            <memsource:additionalTagData>
+                <memsource:tag id="source1"><memsource:tagId>1</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+            </memsource:additionalTagData>
+            <originalData>
+                <data id="source1">[Name]</data>
+            </originalData>
+            <segment id="86" state="translated">
+                <source>Hi <ph id="source1" dataRef="source1"/>,
+
+                    Thanks for getting in touch — you won’t regret it!
+
+                    What next? Our experts will review your details and be in touch with the best package for you.
+
+                    Can’t wait? Book a meeting at a time that’s convenient for you. Want more inspiration for taking the woes out of the new world of work? Check out curated tips and insights in the team that Eats together.
+
+                    Best wishes,
+                    Maria Khafizova</source>
+                <target>你好 <ph id="source1" dataRef="source1"/>，感謝你聯絡我們，你不會後悔的！下一步是什麼？我們的專員會審查你的資料，並為你安排最合適的計劃。等不及了？在方便的時間預約會議。想從新工作環境中解脫出來，獲得更多靈感？查看 Uber Eats 團隊的精選秘訣和分析資料。祝你好運，瑪麗亞·哈菲佐娃</target>
+            </segment>
+        </unit>
+    </file>
+</xliff>

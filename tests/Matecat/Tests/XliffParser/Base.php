@@ -28,6 +28,18 @@ abstract class Base extends TestCase
         return __DIR__ . '/../../../files/' . $file;
     }
 
+    protected function markTestSkippedInCoverage(): void
+    {
+        $isCoverage = (bool)count(array_filter($_SERVER['argv'], fn($arg) => str_contains($arg, 'coverage') && !str_contains($arg, 'no-coverage')));
+
+        if ($isCoverage) {
+            $this->markTestSkipped(
+                'This test is very expensive when coverage is enabled.',
+            );
+        }
+
+    }
+
     /**
      * @throws InvalidXmlException
      * @throws XmlParsingException
@@ -99,7 +111,7 @@ abstract class Base extends TestCase
     /**
      * @param array<int, array<string, mixed>> $data
      *
-     * @return array{data: array<int|string, mixed>, transUnits: array<int|string, array<int, int>>}
+     * @return array{data: array<int|string, mixed>, transUnits: array<string, array<int, int>>}
      */
     protected function getData(array $data): array
     {
@@ -123,7 +135,7 @@ abstract class Base extends TestCase
 
     /**
      * @param array<string, mixed> $data
-     * @param array<int, string>   $headers
+     * @param array<int, string> $headers
      */
     protected function httpPost(string $url, array $data, array $headers): stdClass
     {

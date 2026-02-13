@@ -1,0 +1,38 @@
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0"
+    version="2.0"
+    srcLang="en"
+    trgLang="fr"
+    >
+    <file id="f1" original="389108a4-rtapi.xml">
+        <notes>
+            <note id="n1">note for file.</note>
+            <note id="n2">note2 for file.</note>
+        </notes>
+        <group>
+            <group>
+                <group>
+                    <unit id="u0">
+                        <segment id="1">
+                            <source>Sentence 1. </source>
+                            <target>Phrase 1. </target>
+                        </segment>
+                    </unit>
+                </group>
+            </group>
+        </group>
+        <unit id="u1">
+            <segment id="2">
+                <source>Sentence 2. </source>
+                <target>Phrase 2. </target>
+            </segment>
+            <segment id="3">
+                <source>Sentence 3. </source>
+                <target>Phrase 3. </target>
+            </segment>
+            <segment id="4">
+                <source xml:space="space" xml:lang="fr"><pc id="1">pc</pc> Sentence 4.</source>
+                <target>Phrase 4.</target>
+            </segment>
+        </unit>
+    </file>
+</xliff>

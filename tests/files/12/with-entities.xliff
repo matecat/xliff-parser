@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns:sdl="http://sdl.com/FileTypes/SdlXliff/1.0" xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2" sdl:version="1.0">
+  <file datatype="x-textunit_dto" original="unknown" source-language="en" target-language="fr-FR">
+  <header>
+  			<file-info
+  				xmlns="http://sdl.com/FileTypes/SdlXliff/1.0">
+  				<value key="SDL:FileId">2bc03c8e-0d02-49e7-8788-f3e94f511c00</value>
+  				<value key="SDL:CreationDate">06/04/2024 15:25:58</value>
+  				<value key="SDL:OriginalFilePath">C:\Users\StefanieVeldhuis\AppData\Local\Temp\SDL_Wizard_Project_cb33f86e-d120-4cb5-af9f-9ca3532362fd\en-GB\M4_output.json</value>
+  				<value key="SDL:OriginalEncoding">utf-8</value>
+  				<value key="EscapeUnicode">False</value>
+  				<value key="SetPrettyPrinting">True</value>
+  				<value key="Utf8Bom">DontAddIfNotPresent</value>
+  				<value key="SDL_SUBCONTENT_STREAM">true</value>
+  				<value key="ParagraphTextDirections"></value>
+  				<sniff-info>
+  					<detected-encoding detection-level="Likely" encoding="utf-8"/>
+  					<detected-source-lang detection-level="Guess" lang="en-GB"/>
+  				</sniff-info>
+  			</file-info>
+  			<sdl:filetype-info>
+  				<sdl:filetype-id>JSON v 1.0.0.0</sdl:filetype-id>
+  			</sdl:filetype-info>
+  			<cxt-defs
+  				xmlns="http://sdl.com/FileTypes/SdlXliff/1.0">
+  				<cxt-def id="1" type="StructureParagraphUnit">
+  					<props>
+  						<value key="StructureParagraphPath">[239].Text</value>
+  					</props>
+  				</cxt-def>
+  			</cxt-defs>
+  			<tag-defs
+  				xmlns="http://sdl.com/FileTypes/SdlXliff/1.0">
+  				<tag id="4407">
+  					<st>#SDL_SUBCONTENT_BOUNDARY#</st>
+  				</tag>
+  				<tag id="4409">
+  					<st>#SDL_SUBCONTENT_BOUNDARY#</st>
+  				</tag>
+  				<tag id="4410">
+  					<st>#SDL-SUBCONTENT-MARKER#</st>
+  				</tag>
+  				<tag id="4411">
+  					<st>&apos;&apos;I cannot compensate you, as it is Colgate-Palmolive policy not to compensate Customers for margin loss. Our Customers are free to sell Colgate-Palmolive products at any price they choose. Our Customers are responsible for their own profitability.&apos;&apos; </st>
+  				</tag>
+  			</tag-defs>
+  		</header>
+    <body>
+      <trans-unit id="2973331" resname="creators.PAGE_TITLE" xml:space="preserve">
+        <source xml:lang="en">Hello&apos;&apos; </source>
+        <seg-source>
+          <mrk mid="0" mtype="seg">Hello&apos;&apos; </mrk>
+        </seg-source>
+        <target state="new" xml:lang="it-IT">
+          <mrk mid="0" mtype="seg">Ciao&apos;&apos; </mrk>
+        </target>
+        <note>Silly note</note>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

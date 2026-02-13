@@ -26,7 +26,7 @@ final readonly class Files
      * @param string $path The file path to parse
      * @param int $options Bitwise OR of PATHINFO_* constants (default: all components)
      *
-     * @return array<string, string>|string Array of path components or single component string
+     * @return array<string, string>|string Array of path components when multiple options requested | Single component when only one option requested
      */
     public static function pathInfo(
         string $path,
@@ -51,7 +51,7 @@ final readonly class Files
             'filename' => ['flag' => PATHINFO_FILENAME, 'value' => $filename],
         ];
 
-        // Add requested components to return array based on options bitfield
+        // Add requested components to return an array based on the options bitfield
         foreach ($components as $field => $component) {
             // Binary AND - check if this flag is requested
             if (($options & $component['flag']) > 0) {
@@ -59,7 +59,7 @@ final readonly class Files
             }
         }
 
-        // If only one component requested, return string instead of array
+        // If only one part requested, return string instead of an array
         return count($returnArray) === 1 ? array_pop($returnArray) : $returnArray;
     }
 
@@ -84,7 +84,7 @@ final readonly class Files
      *
      * @param string|null $path The file path to check
      *
-     * @return bool True if file is XLIFF-compatible format
+     * @return bool True if the file is XLIFF-compatible format
      */
     public static function isXliff(?string $path): bool
     {
@@ -92,20 +92,11 @@ final readonly class Files
             return false;
         }
 
-        $extension = self::getExtension($path);
-
-        if (empty($extension)) {
-            return false;
-        }
-
-        return match ($extension) {
-            'xliff', 'sdlxliff', 'tmx', 'xlf' => true,
-            default => false,
-        };
+        return in_array(self::getExtension($path), ['xliff', 'sdlxliff', 'tmx', 'xlf'], true);
     }
 
     /**
-     * Get memory file type based on extension.
+     * Get a memory file type based on an extension.
      *
      * @param string $path The file path
      *
@@ -113,13 +104,7 @@ final readonly class Files
      */
     public static function getMemoryFileType(string $path): string|false
     {
-        $extension = self::pathInfo($path, PATHINFO_EXTENSION);
-
-        if (!is_string($extension)) {
-            return false;
-        }
-
-        return match (strtolower($extension)) {
+        return match (self::getExtension($path)) {
             'tmx' => 'tmx',
             default => false,
         };

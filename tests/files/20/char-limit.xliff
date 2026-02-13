@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xliff
+        xmlns="urn:oasis:names:tc:xliff:document:2.0"
+        xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0"
+        xmlns:slr="urn:oasis:names:tc:xliff:sizerestriction:2.0"
+        xmlns:memsource="http://www.memsource.com/xliff2.0/1.0" version="2.0" memsource:wfLevel="1" srcLang="en-us" trgLang="zh-tw">
+    <file id="1bm7k0ia6bazrO106_dc6:0-0" memsource:taskId="1bm7k0ia6bazrO106_dc6" canResegment="no" original="char_limitation_image.xml">
+        <slr:profiles generalProfile="xliff:codepoints"/>
+        <unit id="0" memsource:tGroupBegin="0" memsource:tGroupEnd="0" slr:sizeRestriction="55">
+            <mda:metadata>
+                <mda:metaGroup>
+                    <mda:meta type="key-note">
+                              Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/driverplan/keys" target="_blank"&gt;driverplan&lt;/a&gt; Key Name: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/driverplan/key/systematic_insights.landing.details.average_metric_label.predictive_peak_hour/overview" target="_blank"&gt;systematic_insights.landing.details.average_metric_label.predictive_peak_hour&lt;/a&gt; Description: &lt;font color="blue"&gt;average label for predictive peak hour&lt;/font&gt;
+                              &gt;&lt;img src="https://homepages.cae.wisc.edu/~ece533/images/arctichare.png" /&gt;
+                             
+                             </mda:meta>
+                </mda:metaGroup>
+            </mda:metadata>
+            <segment id="0" state="translated">
+                <source>Supporting the Character Limitation.</source>
+                <target>fjdakjfkdasfjldaskfdksfj dskfjdljfas;fjdkas jklj kljafslkj ljfakjd</target>
+            </segment>
+        </unit>
+    </file>
+</xliff>
