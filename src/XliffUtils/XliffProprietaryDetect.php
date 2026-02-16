@@ -20,7 +20,7 @@ class XliffProprietaryDetect
     protected static array $fileType = [];
 
     /**
-     * Get file info from XLIFF content string.
+     * Get file info from the XLIFF content string.
      *
      * @return array<string, mixed>
      */
@@ -33,7 +33,7 @@ class XliffProprietaryDetect
     }
 
     /**
-     * Get file info from file path.
+     * Get file info from a file path.
      *
      * @return array<string, mixed>
      */
@@ -105,7 +105,7 @@ class XliffProprietaryDetect
     }
 
     /**
-     * Get first 1024 chars from string data.
+     * Get the first 1024 chars from string data.
      */
     private static function getFirst1024CharsFromString(?string $stringData): string
     {
@@ -117,7 +117,7 @@ class XliffProprietaryDetect
     }
 
     /**
-     * Get first 1024 chars from file.
+     * Get the first 1024 chars from a file.
      */
     private static function getFirst1024CharsFromFile(?string $fullPathToFile): string
     {
@@ -138,7 +138,7 @@ class XliffProprietaryDetect
     }
 
     /**
-     * Get first 1024 chars from XLIFF (string or file).
+     * Get the first 1024 chars from XLIFF (string or file).
      *
      * @return array<int, string>
      */
@@ -197,54 +197,80 @@ class XliffProprietaryDetect
     }
 
     /**
-     * Check if file must be converted.
+     * Check if the file must be converted.
      *
-     * @return bool|int True if must convert, false if not, -1 on error
+     * @return bool|int True if it must be converted, false if not, -1 on error
      */
     public static function fileMustBeConverted(
         string $fullPath,
         bool $enforceOnXliff = false,
         ?string $filterAddress = null
     ): bool|int {
-        $convert = true;
-
         $fileType = self::getInfo($fullPath);
         $memoryFileType = Files::getMemoryFileType($fullPath);
 
-        if (Files::isXliff($fullPath) || $memoryFileType) {
-            if (!empty($filterAddress)) {
-                //conversion enforce
-                if (!$enforceOnXliff) {
-                    //if file is not proprietary AND Enforce is disabled
-                    //we take it as is
-                    if (!$fileType['proprietary'] || $memoryFileType) {
-                        $convert = false;
-                        //ok don't convert a standard sdlxliff
-                    }
-                } else {
-                    //if conversion enforce is active
-                    //we force all xliff files but not files produced by SDL Studio because we can handle them
-                    if (in_array($fileType['proprietary_short_name'], ['matecat_converter', 'trados', 'xliff_v2']
-                        ) || $memoryFileType) {
-                        $convert = false;
-                        //ok don't convert a standard sdlxliff
-                    }
-                }
-            } elseif ($fileType['proprietary']) {
-                /**
-                 * Application misconfiguration.
-                 * upload should not be happened, but if we are here, raise an error.
-                 * @see upload.class.php
-                 * */
-
-                $convert = -1;
-                //stop execution
-            } else {
-                $convert = false;
-                //ok don't convert a standard sdlxliff
-            }
+        if (!Files::isXliff($fullPath) && !$memoryFileType) {
+            return true;
         }
 
-        return $convert;
+        if (empty($filterAddress)) {
+            return self::handleNoFilterAddress($fileType);
+        }
+
+        return self::shouldConvertWithFilter($fileType, (bool)$memoryFileType, $enforceOnXliff);
+    }
+
+    /**
+     * Handle conversion decision when no filter address is provided.
+     *
+     * @param array<string, mixed> $fileType
+     *
+     * @return bool|int
+     */
+    private static function handleNoFilterAddress(array $fileType): bool|int
+    {
+        if ($fileType['proprietary']) {
+            /**
+             * Application misconfiguration.
+             * upload should not be happened, but if we are here, raise an error.
+             * @see upload.class.php
+             * */
+            return -1;
+        }
+
+        return false;
+    }
+
+    /**
+     * Determine if the XLIFF file needs conversion when the filter service is available.
+     *
+     * When a filter address is provided, this method decides whether the XLIFF file
+     * should be converted based on enforcement settings:
+     *
+     * - If enforcement is disabled: Skip conversion for non-proprietary files or memory files
+     * - If enforcement is enabled: Skip conversion only for files we can handle natively
+     *   (MateCat converter, Trados, XLIFF v2) or memory files
+     *
+     * @param array<string, mixed> $fileType File type information including proprietary status
+     * @param bool $memoryFileType Whether a file is a translation memory file
+     * @param bool $enforceOnXliff Whether to enforce conversion on XLIFF files
+     *
+     * @return bool True if a file needs conversion, false otherwise
+     */
+    private static function shouldConvertWithFilter(
+        array $fileType,
+        bool $memoryFileType,
+        bool $enforceOnXliff
+    ): bool {
+        if (!$enforceOnXliff) {
+            // Without enforcement: convert only proprietary files (unless it's a memory file)
+            return $fileType['proprietary'] && !$memoryFileType;
+        }
+
+        // With enforcement: skip conversion only for natively handled formats
+        $nativelyHandledFormats = ['matecat_converter', 'trados', 'xliff_v2'];
+        $isNativelyHandled = in_array($fileType['proprietary_short_name'], $nativelyHandledFormats);
+
+        return !($isNativelyHandled || $memoryFileType);
     }
 }

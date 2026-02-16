@@ -6,7 +6,8 @@ namespace Matecat\XliffParser\XliffUtils;
 
 use Matecat\XliffParser\XliffUtils\CheckPipeline\CheckInterface;
 
-final class CheckXliffProprietaryPipeline {
+final class CheckXliffProprietaryPipeline
+{
 
     /** @var array<int, string>|null */
     private ?array $tmp;
@@ -17,14 +18,16 @@ final class CheckXliffProprietaryPipeline {
     /**
      * @param array<int, string>|null $tmp First 1024 chars of XLIFF content
      */
-    public function __construct( ?array $tmp = [] ) {
+    public function __construct(?array $tmp = [])
+    {
         $this->tmp = $tmp;
     }
 
     /**
      * Add a check step to the pipeline.
      */
-    public function addCheck( CheckInterface $step ): void {
+    public function addCheck(CheckInterface $step): void
+    {
         $this->steps[] = $step;
     }
 
@@ -33,19 +36,20 @@ final class CheckXliffProprietaryPipeline {
      *
      * @return array{proprietary: bool, proprietary_name: string|null, proprietary_short_name: string|null, converter_version: string|null}
      */
-    public function run(): array {
-        foreach ( $this->steps as $step ) {
-            $result = $step->check( $this->tmp );
-            if ( $result !== null && $this->isValid( $result ) ) {
+    public function run(): array
+    {
+        foreach ($this->steps as $step) {
+            $result = $step->check($this->tmp);
+            if ($result !== null && $this->isValid($result)) {
                 return $result;
             }
         }
 
         return [
-            'proprietary'            => false,
-            'proprietary_name'       => null,
+            'proprietary' => false,
+            'proprietary_name' => null,
             'proprietary_short_name' => null,
-            'converter_version'      => null,
+            'converter_version' => null,
         ];
     }
 
@@ -54,7 +58,8 @@ final class CheckXliffProprietaryPipeline {
      *
      * @param array<string, mixed> $fileType
      */
-    private function isValid( array $fileType ): bool {
+    private function isValid(array $fileType): bool
+    {
         $mandatoryKeys = [
             'proprietary',
             'proprietary_name',
@@ -62,6 +67,6 @@ final class CheckXliffProprietaryPipeline {
             'converter_version',
         ];
 
-        return array_keys( $fileType ) === $mandatoryKeys;
+        return array_keys($fileType) === $mandatoryKeys;
     }
 }

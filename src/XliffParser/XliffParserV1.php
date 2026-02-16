@@ -144,21 +144,19 @@ class XliffParserV1 extends AbstractXliffParser
                 case 'target-language':
                     $metadata['target-language'] = $attribute->value;
                     break;
+                default:
+                    break;
             }
 
             // Custom MateCat x-Attribute
-            preg_match('|x-(.*?)|si', $attribute->localName, $temp);
-            if (isset($temp[1])) {
+            if (str_starts_with($attribute->localName, 'x-')) {
                 $customAttr[$attribute->localName] = $attribute->value;
             }
-            unset($temp);
 
             // Custom MateCat namespace Attribute mtc:
-            preg_match('|mtc:(.*?)|si', $attribute->nodeName, $temp);
-            if (isset($temp[1])) {
+            if (str_starts_with($attribute->nodeName, 'mtc:')) {
                 $customAttr[$attribute->nodeName] = $attribute->value;
             }
-            unset($temp);
 
             if (!empty($customAttr)) {
                 $metadata['custom'] = $customAttr;
@@ -269,10 +267,15 @@ class XliffParserV1 extends AbstractXliffParser
                     $output['files'][$i]['trans-units'][$j]['seg-source']
                 );
             }
-
         }
 
         // context-group
+        // Note: Context groups can exist at multiple levels in XLIFF v1 and need to be collected from both sources:
+        // 1. First loop: Process context groups inherited from parent elements (e.g., <group> tags)
+        //    These are passed via the $contextGroups parameter and apply to all child trans-units
+        // 2. Second loop: Process context groups directly inside the current <trans-unit> element
+        //    These are specific to this particular trans-unit
+        // Both are merged into the same output array to provide complete context information for the translation unit
         if (!empty($contextGroups)) {
             foreach ($contextGroups as $contextGroup) {
                 $output['files'][$i]['trans-units'][$j]['context-group'][] = $this->extractTransUnitContextGroup(
@@ -282,6 +285,8 @@ class XliffParserV1 extends AbstractXliffParser
             }
         }
 
+        // 2. Second loop: Process context groups directly inside the current <trans-unit> element
+        //    These are specific to this particular trans-unit
         foreach ($transUnit->getElementsByTagName('context-group') as $contextGroup) {
             $output['files'][$i]['trans-units'][$j]['context-group'][] = $this->extractTransUnitContextGroup(
                 $dom,

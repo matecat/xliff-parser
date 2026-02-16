@@ -293,7 +293,7 @@ abstract class AbstractXliffParser
         // &amp;apos ---> &apos;
         //
         if (Strings::isADoubleEscapedEntity($noteValue)) {
-            $noteValue = Strings::htmlspecialchars_decode($noteValue, true);
+            $noteValue = Strings::htmlSpecialCharsDecode($noteValue, true);
         } else {
             // for non escaped entities $escapeStrings is always true for security reasons
             $escapeStrings = true;

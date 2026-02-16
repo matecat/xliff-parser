@@ -57,12 +57,14 @@ class Xliff12 extends AbstractXliffReplacer
 
             $seg = $this->getCurrentSegment();
 
-            if ($name === $this->tuTagName && !empty($seg) && isset($seg['sid'])) {
+            if (
+                $name === $this->tuTagName &&
+                !empty($seg) &&
+                isset($seg['sid'])
+            ) {
                 // add `help-id` to xliff v.1*
                 if (!str_contains($tag, 'help-id')) {
-                    if (!empty($seg['sid'])) {
-                        $tag .= "help-id=\"{$seg[ 'sid' ]}\" ";
-                    }
+                    $tag .= "help-id=\"{$seg[ 'sid' ]}\" ";
                 }
             }
 
@@ -180,12 +182,10 @@ class Xliff12 extends AbstractXliffReplacer
 
         if (($seg['translation'] ?? null) === '') {
             $translation = $segment;
-        } else {
-            if ($this->callback instanceof XliffReplacerCallbackInterface) {
-                $error = (!empty($seg['error'])) ? $seg['error'] : null;
-                if ($this->callback->thereAreErrors($seg['sid'], $segment, $translation, [], $error)) {
-                    $translation = '|||UNTRANSLATED_CONTENT_START|||' . $segment . '|||UNTRANSLATED_CONTENT_END|||';
-                }
+        } elseif ($this->callback instanceof XliffReplacerCallbackInterface) {
+            $error = (!empty($seg['error'])) ? $seg['error'] : null;
+            if ($this->callback->thereAreErrors($seg['sid'], $segment, $translation, [], $error)) {
+                $translation = '|||UNTRANSLATED_CONTENT_START|||' . $segment . '|||UNTRANSLATED_CONTENT_END|||';
             }
         }
 
@@ -298,12 +298,18 @@ class Xliff12 extends AbstractXliffReplacer
     /**
      * @inheritDoc
      *
+     * In XLIFF 1.2, this method overrides the parent to retrieve the first segment
+     * of a trans-unit. The [0] index is required because $this->transUnits maps
+     * trans-unit IDs to arrays of segment indices (e.g., $transUnits['id'] = [0, 1, 2]),
+     * allowing trans-units with multiple segments (via <mrk> tags). For the help-id
+     * attribute injection in tagOpen(), we only need the first segment's metadata.
+     *
      * @return array<string, mixed>
      */
     protected function getCurrentSegment(): array
     {
         if ($this->currentTransUnitIsTranslatable !== 'no' && isset($this->transUnits[$this->currentTransUnitId])) {
-            return $this->segments[$this->transUnits[$this->currentTransUnitId][0]]; // TODO try to understand why here is needed to override the method and set 0 index hardcoded
+            return $this->segments[$this->transUnits[$this->currentTransUnitId][0]];
         }
 
         return [];

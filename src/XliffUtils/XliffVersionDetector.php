@@ -25,15 +25,15 @@ final class XliffVersionDetector
      * @throws NotSupportedVersionException If version is not supported
      * @throws NotValidFileException If content is not valid XLIFF
      */
-    public static function detect( string $xliffContent ): int
+    public static function detect(string $xliffContent): int
     {
-        preg_match( '|<xliff.*?\sversion\s?=\s?["\'](.*?)["\']|si', substr( $xliffContent, 0, 1000 ), $versionMatches );
+        preg_match('|<xliff.*?\sversion\s?=\s?["\'](.*?)["\']|si', substr($xliffContent, 0, 1000), $versionMatches);
 
-        if ( empty( $versionMatches ) ) {
-            throw new NotValidFileException( 'This is not a valid xliff file' );
+        if (empty($versionMatches)) {
+            throw new NotValidFileException('This is not a valid xliff file');
         }
 
-        return self::resolveVersion( $versionMatches[1] );
+        return self::resolveVersion($versionMatches[1]);
     }
 
     /**
@@ -41,16 +41,16 @@ final class XliffVersionDetector
      *
      * @throws NotSupportedVersionException If version is not supported
      */
-    private static function resolveVersion( string $version ): int
+    private static function resolveVersion(string $version): int
     {
-        if ( in_array( $version, self::VERSIONS_1, true ) ) {
+        if (in_array($version, self::VERSIONS_1, true)) {
             return 1;
         }
 
-        if ( in_array( $version, self::VERSIONS_2, true ) ) {
+        if (in_array($version, self::VERSIONS_2, true)) {
             return 2;
         }
 
-        throw new NotSupportedVersionException( 'Not supported version' );
+        throw new NotSupportedVersionException('Not supported version');
     }
 }

@@ -93,11 +93,14 @@ class Xliff20 extends AbstractXliffReplacer
 
             $seg = $this->getCurrentSegment();
 
-            if ($name === $this->tuTagName && !empty($seg) && isset($seg['sid'])) {
+            if (
+                $name === $this->tuTagName &&
+                !empty($seg) &&
+                isset($seg['sid']) &&
+                !str_contains($tag, 'matecat:segment-id')
+            ) {
                 // add `matecat:segment-id` to xliff v.2*
-                if (!str_contains($tag, 'matecat:segment-id')) {
-                    $tag .= "matecat:segment-id=\"{$seg[ 'sid' ]}\" ";
-                }
+                $tag .= "matecat:segment-id=\"{$seg[ 'sid' ]}\" ";
             }
 
             // replace state for xliff v2

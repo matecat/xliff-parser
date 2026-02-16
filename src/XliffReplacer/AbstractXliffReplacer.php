@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Matecat\XliffParser\XliffReplacer;
 
+use Matecat\XliffParser\Exception\FileOpenException;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
 use XMLParser;
@@ -58,7 +59,7 @@ abstract class AbstractXliffReplacer
 
     protected ?LoggerInterface $logger;
 
-    protected static string $INTERNAL_TAG_PLACEHOLDER;
+    protected static string $internalTagPlaceholder;
 
     /** @var array{raw_word_count: int|float, eq_word_count: int|float, segments_count_array?: array<string, array{raw_word_count: int|float, eq_word_count: float}>} */
     protected array $counts = [
@@ -90,7 +91,7 @@ abstract class AbstractXliffReplacer
         ?LoggerInterface $logger = null,
         ?XliffReplacerCallbackInterface $callback = null
     ) {
-        self::$INTERNAL_TAG_PLACEHOLDER = $this->getInternalTagPlaceholder();
+        self::$internalTagPlaceholder = $this->getInternalTagPlaceholder();
         $this->createOutputFileIfDoesNotExist($outputFilePath);
         $this->setFileDescriptors($originalXliffPath, $outputFilePath);
         $this->xliffVersion = $xliffVersion;
@@ -120,7 +121,7 @@ abstract class AbstractXliffReplacer
             // obfuscate entities because sax automatically does html_entity_decode
             $temporary_check_buffer = preg_replace(
                 "/&(.*?);/",
-                self::$INTERNAL_TAG_PLACEHOLDER . '$1' . self::$INTERNAL_TAG_PLACEHOLDER,
+                self::$internalTagPlaceholder . '$1' . self::$internalTagPlaceholder,
                 $this->currentBuffer
             );
 
@@ -146,7 +147,7 @@ abstract class AbstractXliffReplacer
                 // Replace entities (&...;) with placeholder-wrapped content for safe processing
                 $temporary_check_buffer = preg_replace(
                     "/&(.*?);/",
-                    self::$INTERNAL_TAG_PLACEHOLDER . '$1' . self::$INTERNAL_TAG_PLACEHOLDER,
+                    self::$internalTagPlaceholder . '$1' . self::$internalTagPlaceholder,
                     $this->currentBuffer
                 );
             }
@@ -156,12 +157,12 @@ abstract class AbstractXliffReplacer
 
             $this->currentBuffer = preg_replace(
                 "/&(.*?);/",
-                self::$INTERNAL_TAG_PLACEHOLDER . '$1' . self::$INTERNAL_TAG_PLACEHOLDER,
+                self::$internalTagPlaceholder . '$1' . self::$internalTagPlaceholder,
                 $this->currentBuffer
             );
             $this->currentBuffer = str_replace(
                 "&",
-                self::$INTERNAL_TAG_PLACEHOLDER . 'amp' . self::$INTERNAL_TAG_PLACEHOLDER,
+                self::$internalTagPlaceholder . 'amp' . self::$internalTagPlaceholder,
                 $this->currentBuffer
             );
 
@@ -253,14 +254,14 @@ abstract class AbstractXliffReplacer
     {
         $outputFP = @fopen($outputFilePath, 'w+');
         if ($outputFP === false) {
-            throw new RuntimeException("could not open output file: $outputFilePath");
+            throw new FileOpenException("could not open output file: $outputFilePath");
         }
         $this->outputFP = $outputFP;
 
         $streamArgs = null;
         $originalFP = @fopen($originalXliffPath, "r", false, stream_context_create($streamArgs));
         if ($originalFP === false) {
-            throw new RuntimeException("could not open XML input: $originalXliffPath");
+            throw new FileOpenException("could not open XML input: $originalXliffPath");
         }
         $this->originalFP = $originalFP;
     }
@@ -347,7 +348,7 @@ abstract class AbstractXliffReplacer
     {
         //postprocess string
         $data = preg_replace(
-            "/" . self::$INTERNAL_TAG_PLACEHOLDER . '(.*?)' . self::$INTERNAL_TAG_PLACEHOLDER . "/",
+            "/" . self::$internalTagPlaceholder . '(.*?)' . self::$internalTagPlaceholder . "/",
             '&$1;',
             $data
         );
@@ -455,7 +456,7 @@ abstract class AbstractXliffReplacer
         // We need bufferIsActive for <target> nodes with currentTransUnitIsTranslatable = 'NO'
         // because in the other case, the target can be chunked into pieces by xml_set_character_data_handler()
         // and this can potentially lead to a wrong string rebuild by postProcAndFlush function if the internal placeholders are split
-        if ($name === 'target' and $this->currentTransUnitIsTranslatable === 'no') {
+        if ($name === 'target' && $this->currentTransUnitIsTranslatable === 'no') {
             $this->bufferIsActive = true;
         }
     }

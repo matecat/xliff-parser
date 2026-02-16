@@ -69,12 +69,12 @@ class StringsTest extends Base {
         $string   = "&lt;/p&gt; &amp;#39; &apos;";
         $expected = "&lt;/p&gt; &#39; &apos;";
 
-        $this->assertEquals( Strings::htmlspecialchars_decode( $string, true ), $expected );
+        $this->assertEquals( Strings::htmlSpecialCharsDecode( $string, true ), $expected );
 
         $string   = "&amp;amp; &amp;apos;";
         $expected = "&amp; &apos;";
 
-        $this->assertEquals( Strings::htmlspecialchars_decode( $string, true ), $expected );
+        $this->assertEquals( Strings::htmlSpecialCharsDecode( $string, true ), $expected );
     }
 
     #[Test]
@@ -289,7 +289,7 @@ class StringsTest extends Base {
         $string   = "&lt;p&gt;Hello &amp; goodbye&lt;/p&gt;";
         $expected = "<p>Hello & goodbye</p>";
 
-        $this->assertEquals( $expected, Strings::htmlspecialchars_decode( $string) );
+        $this->assertEquals( $expected, Strings::htmlSpecialCharsDecode( $string) );
     }
 
     #[Test]
@@ -298,7 +298,7 @@ class StringsTest extends Base {
         $expected = "<p>Hello & goodbye</p>";
 
         // Test with default parameter (false)
-        $this->assertEquals( $expected, Strings::htmlspecialchars_decode( $string ) );
+        $this->assertEquals( $expected, Strings::htmlSpecialCharsDecode( $string ) );
     }
 
     #[Test]
@@ -306,14 +306,14 @@ class StringsTest extends Base {
         $string   = "&lt;p&gt; &amp;#39; &amp;amp; &quot;";
         $expected = "&lt;p&gt; &#39; &amp; &quot;";
 
-        $this->assertEquals( $expected, Strings::htmlspecialchars_decode( $string, true ) );
+        $this->assertEquals( $expected, Strings::htmlSpecialCharsDecode( $string, true ) );
     }
 
     #[Test]
     public function can_use_preg_split(): void {
         $pattern = '/\s+/';
         $subject = "Hello   world  this   is   a   test";
-        $result  = Strings::preg_split( $pattern, $subject );
+        $result  = Strings::pregSplit( $pattern, $subject );
 
         $expected = [ 'Hello', 'world', 'this', 'is', 'a', 'test' ];
         $this->assertEquals( $expected, $result );
@@ -323,7 +323,7 @@ class StringsTest extends Base {
     public function preg_split_removes_empty_strings(): void {
         $pattern = '/,/';
         $subject = "one,,two,,,three";
-        $result  = Strings::preg_split( $pattern, $subject );
+        $result  = Strings::pregSplit( $pattern, $subject );
 
         $expected = [ 'one', 'two', 'three' ];
         $this->assertEquals( $expected, $result );
@@ -333,7 +333,7 @@ class StringsTest extends Base {
     public function preg_split_handles_no_matches(): void {
         $pattern = '/,/';
         $subject = "no-commas-here";
-        $result  = Strings::preg_split( $pattern, $subject );
+        $result  = Strings::pregSplit( $pattern, $subject );
 
         $expected = [ 'no-commas-here' ];
         $this->assertEquals( $expected, $result );

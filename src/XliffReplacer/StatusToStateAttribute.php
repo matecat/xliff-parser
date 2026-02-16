@@ -8,6 +8,14 @@ use Matecat\XliffParser\Constants\TranslationStatus;
 
 final class StatusToStateAttribute
 {
+    // XLIFF state attribute constants
+    private const string STATE_INITIAL = 'state="initial"';
+    private const string STATE_FINAL = 'state="final"';
+    private const string STATE_TRANSLATED = 'state="translated"';
+    private const string STATE_REVIEWED = 'state="reviewed"';
+    private const string STATE_SIGNED_OFF = 'state="signed-off"';
+    private const string STATE_NEEDS_REVIEW_TRANSLATION = 'state="needs-review-translation"';
+    private const string STATE_NEW = 'state="new"';
 
     /**
      * Get state attribute and status for a segment.
@@ -38,22 +46,22 @@ final class StatusToStateAttribute
 
         // Define state mappings for different statuses
         $stateMap = [
-            TranslationStatus::STATUS_APPROVED2 => ["state=\"final\"", TranslationStatus::STATUS_APPROVED2],
+            TranslationStatus::STATUS_APPROVED2 => [self::STATE_FINAL, TranslationStatus::STATUS_APPROVED2],
             TranslationStatus::STATUS_APPROVED => [
-                ($xliffVersion === 2) ? "state=\"reviewed\"" : "state=\"signed-off\"",
+                ($xliffVersion === 2) ? self::STATE_REVIEWED : self::STATE_SIGNED_OFF,
                 TranslationStatus::STATUS_APPROVED
             ],
-            TranslationStatus::STATUS_TRANSLATED => ["state=\"translated\"", TranslationStatus::STATUS_TRANSLATED],
+            TranslationStatus::STATUS_TRANSLATED => [self::STATE_TRANSLATED, TranslationStatus::STATUS_TRANSLATED],
             TranslationStatus::STATUS_REJECTED => [
-                ($xliffVersion === 2) ? "state=\"initial\"" : "state=\"needs-review-translation\"",
+                ($xliffVersion === 2) ? self::STATE_INITIAL : self::STATE_NEEDS_REVIEW_TRANSLATION,
                 TranslationStatus::STATUS_REJECTED
             ],
             TranslationStatus::STATUS_NEW => [
-                ($xliffVersion === 2) ? "state=\"initial\"" : "state=\"new\"",
+                ($xliffVersion === 2) ? self::STATE_INITIAL : self::STATE_NEW,
                 TranslationStatus::STATUS_NEW
             ],
             TranslationStatus::STATUS_DRAFT => [
-                ($xliffVersion === 2) ? "state=\"initial\"" : "state=\"new\"",
+                ($xliffVersion === 2) ? self::STATE_INITIAL : self::STATE_NEW,
                 TranslationStatus::STATUS_DRAFT
             ],
         ];

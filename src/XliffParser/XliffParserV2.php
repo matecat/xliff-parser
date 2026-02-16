@@ -193,47 +193,11 @@ class XliffParserV2 extends AbstractXliffParser
                 // loop <segment> to get nested <source> and <target> tag
                 foreach ($segment->childNodes as $childNode) {
                     if ($childNode->nodeName === 'source' && $childNode instanceof DOMElement) {
-                        $extractedSource = $this->extractContent($dom, $childNode);
-                        $source['raw-content'][$c] = $extractedSource['raw-content'];
-
-                        if (!empty($extractedSource['attr'])) {
-                            $source['attr'][$c] = $extractedSource['attr'];
-                        }
-
-                        // append value to 'seg-source'
-                        if ($this->stringContainsMarks($extractedSource['raw-content'])) {
-                            $segSource = $this->extractContentWithMarksAndExtTags($dom, $childNode);
-                        } else {
-                            $segSource[] = [
-                                'attr' => $this->extractTagAttributes($segment),
-                                'mid' => max(count($segSource), 0),
-                                'ext-prec-tags' => '',
-                                'raw-content' => $extractedSource['raw-content'],
-                                'ext-succ-tags' => '',
-                            ];
-                        }
+                        $this->processSegmentContent($dom, $childNode, $segment, $source, $segSource, $c);
                     }
 
                     if ($childNode->nodeName === 'target' && $childNode instanceof DOMElement) {
-                        $extractedTarget = $this->extractContent($dom, $childNode);
-                        $target['raw-content'][$c] = $extractedTarget['raw-content'];
-
-                        if (!empty($extractedTarget['attr'])) {
-                            $target['attr'][$c] = $extractedTarget['attr'];
-                        }
-
-                        // append value to 'seg-target'
-                        if ($this->stringContainsMarks($extractedTarget['raw-content'])) {
-                            $segTarget = $this->extractContentWithMarksAndExtTags($dom, $childNode);
-                        } else {
-                            $segTarget[] = [
-                                'attr' => $this->extractTagAttributes($segment),
-                                'mid' => max(count($segTarget), 0),
-                                'ext-prec-tags' => '',
-                                'raw-content' => $extractedTarget['raw-content'],
-                                'ext-succ-tags' => '',
-                            ];
-                        }
+                        $this->processSegmentContent($dom, $childNode, $segment, $target, $segTarget, $c);
                     }
                 }
 
@@ -376,11 +340,13 @@ class XliffParserV2 extends AbstractXliffParser
                     $dataArray = [];
 
                     // id
-                    if ($data->nodeName === 'memsource:tag') {
-                        if (null !== $data->attributes && null !== $data->attributes->getNamedItem('id')) {
-                            $dataId = $data->attributes->getNamedItem('id')->nodeValue;
-                            $dataArray['attr']['id'] = $dataId;
-                        }
+                    if (
+                        $data->nodeName === 'memsource:tag' &&
+                        null !== $data->attributes &&
+                        null !== $data->attributes->getNamedItem('id')
+                    ) {
+                        $dataId = $data->attributes->getNamedItem('id')->nodeValue;
+                        $dataArray['attr']['id'] = $dataId;
                     }
 
                     // in PHP 7.4 $data->childNodes is an empty DomNodeList, it is iterable with size 0
@@ -474,5 +440,45 @@ class XliffParserV2 extends AbstractXliffParser
         }
 
         return $notes;
+    }
+
+    /**
+     * Process segment content for either source or target element.
+     * Extracts content and populates the respective arrays.
+     *
+     * @param DOMDocument $dom The DOM document
+     * @param DOMElement $childNode The source or target element
+     * @param DOMElement $segment The parent segment element
+     * @param array<string, mixed> $contentArray Reference to source or target array
+     * @param array<int, array<string, mixed>> $segArray Reference to seg-source or seg-target array
+     * @param int $index Current segment index
+     */
+    private function processSegmentContent(
+        DOMDocument $dom,
+        DOMElement $childNode,
+        DOMElement $segment,
+        array &$contentArray,
+        array &$segArray,
+        int $index
+    ): void {
+        $extractedContent = $this->extractContent($dom, $childNode);
+        $contentArray['raw-content'][$index] = $extractedContent['raw-content'];
+
+        if (!empty($extractedContent['attr'])) {
+            $contentArray['attr'][$index] = $extractedContent['attr'];
+        }
+
+        // append value to seg array (seg-source or seg-target)
+        if ($this->stringContainsMarks($extractedContent['raw-content'])) {
+            $segArray = $this->extractContentWithMarksAndExtTags($dom, $childNode);
+        } else {
+            $segArray[] = [
+                'attr' => $this->extractTagAttributes($segment),
+                'mid' => max(count($segArray), 0),
+                'ext-prec-tags' => '',
+                'raw-content' => $extractedContent['raw-content'],
+                'ext-succ-tags' => '',
+            ];
+        }
     }
 }

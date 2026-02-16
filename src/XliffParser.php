@@ -116,7 +116,7 @@ readonly class XliffParser
     {
         $enc = mb_detect_encoding($xliffContent);
 
-        if ( $enc != 'UTF-8' ) {
+        if ($enc != 'UTF-8') {
             $xliff['parser-warnings'][] = "Input identified as $enc ans converted UTF-8. May not be a problem if the content is English only";
             $s = mb_convert_encoding($xliffContent, 'UTF-8', mb_list_encodings());
             $xliffContent = $s !== false ? $s : "";
@@ -135,24 +135,23 @@ readonly class XliffParser
     private static function removeInternalFileTagFromContent(string $xliffContent, array &$xliff): string
     {
         $index = 1;
-        $a = Strings::preg_split('|<internal-file[\s>]|i', $xliffContent);
+        $a = Strings::pregSplit('|<internal-file[\s>]|i', $xliffContent);
 
-        if ($a === false) {
-            // @codeCoverageIgnoreStart
+        // Guard clause: if split fails or no matches found, return original content
+        // Case 1: $a === false - PCRE failure (invalid pattern, backtrack limit exceeded, or internal PCRE errors)
+        //         This is nearly impossible with our simple hardcoded pattern but exists as a defensive safeguard.
+        // Case 2: count($a) === 1 - No <internal-file> tag was found in the content (normal case for non-SDL files)
+        if ($a === false || count($a) === 1) {
             return $xliffContent;
-            // @codeCoverageIgnoreEnd
         }
 
         $tagMatches = count($a);
+        $b = Strings::pregSplit('|</internal-file>|i', $a[1]);
 
-        // no match, return original string
-        if ($tagMatches === 1) {
-            return $a[0];
-        }
-
-        $b = Strings::preg_split('|</internal-file>|i', $a[1]);
-
-         if ($b === false) {
+        // Handle preg_split failure (returns false on PCRE errors like invalid pattern or execution failures)
+        // Practically impossible with the simple hardcoded pattern '|</internal-file>|i' but guards against
+        // catastrophic PCRE failures to prevent crashes. Returns original content unchanged if this occurs.
+        if ($b === false) {
             // @codeCoverageIgnoreStart
             return $xliffContent;
             // @codeCoverageIgnoreEnd
@@ -166,16 +165,17 @@ readonly class XliffParser
         // In this case loop and extract any other extra <internal-file> node
         for ($i = 2; $i < $tagMatches; $i++) {
             if (isset($a[$i])) {
-                $c = Strings::preg_split('|</internal-file[\s>]|i', $a[$i]);
+                $c = Strings::pregSplit('|</internal-file[\s>]|i', $a[$i]);
 
-                if ($c === false) {
-                    // @codeCoverageIgnoreStart
-                    continue;
-                    // @codeCoverageIgnoreEnd
+                if ($c !== false) {
+                    $strippedContent .= $c[1];
+                    $xliff['files'][$index]['reference'][] = self::extractBase64($c[0]);
                 }
-
-                $strippedContent .= $c[1];
-                $xliff['files'][$index]['reference'][] = self::extractBase64($c[0]);
+                // @codeCoverageIgnoreStart
+                // If $c is false (PCRE failure on this iteration), skip processing this <internal-file> node
+                // and continue with remaining nodes. This defensive check is nearly impossible to trigger
+                // with the simple hardcoded pattern but ensures graceful degradation on catastrophic failures.
+                // @codeCoverageIgnoreEnd
             }
         }
 

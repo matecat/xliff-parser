@@ -10,10 +10,14 @@ use function htmlspecialchars_decode;
 
 class Strings
 {
-    private static ?string $find_xliff_tags_reg = null;
-    private static string $htmlEntityRegex = '/&amp;[#a-zA-Z0-9]{1,20};/u';
+    private static ?string $FIND_XLIFF_TAGS_REG = null;
+    private static string $HTML_ENTITY_REGEXP = '/&amp;[#a-zA-Z0-9]{1,20};/u';
 
     /**
+     * Cleans a CDATA-containing string by parsing it as XML and removing CDATA sections.
+     *
+     * @param string $testString The input string containing CDATA sections.
+     * @return string The cleaned string with the CDATA sections removed.
      * @throws Exception
      */
     public static function cleanCDATA(string $testString): string
@@ -29,6 +33,14 @@ class Strings
         }
     }
 
+    /**
+     * Determines whether a given string is a valid JSON object or array.
+     *
+     * This method excludes primitive types such as strings and numbers.
+     *
+     * @param string $string The input string to validate as JSON.
+     * @return bool Returns true if the input string is a valid JSON object or array, false otherwise.
+     */
     public static function isJSON(string $string): bool
     {
         if (is_numeric($string)) {
@@ -36,23 +48,16 @@ class Strings
         }
 
         try {
-            $string = self::cleanCDATA($string);
+            $string = trim(self::cleanCDATA($string));
         } catch (Exception) {
-            return false;
-        }
-
-        $string = trim($string);
-        if (empty($string)) {
             return false;
         }
 
         // String representation in JSON is "quoted", but we want to accept only an object or arrays.
         // exclude strings and numbers and other primitive types
-        if (in_array($string[0], ["{", "["], true)) {
-            return json_validate($string);
-        }
-
-        return false; // Not accepted: string or primitive types.
+        return !empty($string)
+            && in_array($string[0], ["{", "["], true)
+            && json_validate($string);
     }
 
     /**
@@ -81,7 +86,7 @@ class Strings
      */
     public static function fixNonWellFormedXml(string $content, ?bool $escapeStrings = true): string
     {
-        if (self::$find_xliff_tags_reg === null) {
+        if (self::$FIND_XLIFF_TAGS_REG === null) {
             // Convert the list of tags in a regexp list, for example "g|x|bx|ex"
             $xliffTags = XliffTags::$tags;
             $xliff_tags_reg_list = implode('|', $xliffTags);
@@ -101,11 +106,11 @@ class Strings
             // It says that there cannot be any space between the '<' and the tag name,
             // between '</' and the tag name, or inside '/>'. But you can add white
             // space after the tag name, though.
-            self::$find_xliff_tags_reg = "#</?($xliff_tags_reg_list)(\\s[^>]*)?/?>#si";
+            self::$FIND_XLIFF_TAGS_REG = "#</?($xliff_tags_reg_list)(\\s[^>]*)?/?>#si";
         }
 
         // Find all the XLIFF tags
-        preg_match_all(self::$find_xliff_tags_reg, $content, $matches);
+        preg_match_all(self::$FIND_XLIFF_TAGS_REG, $content, $matches);
         $tags = $matches[0];
 
         // Prepare placeholders
@@ -148,15 +153,15 @@ class Strings
         return !empty($string) || strlen($string) > 0 ? $string : "";
     }
 
-    public static function htmlspecialchars_decode(string $string, ?bool $onlyEscapedEntities = false): string
+    public static function htmlSpecialCharsDecode(string $string, ?bool $onlyEscapedEntities = false): string
     {
         if ($onlyEscapedEntities === false) {
             return htmlspecialchars_decode($string, ENT_NOQUOTES);
         }
 
         return (string)preg_replace_callback(
-            self::$htmlEntityRegex,
-            static fn(array $match): string => self::htmlspecialchars_decode($match[0]),
+            self::$HTML_ENTITY_REGEXP,
+            static fn(array $match): string => self::htmlSpecialCharsDecode($match[0]),
             $string
         );
     }
@@ -171,7 +176,7 @@ class Strings
      */
     public static function isADoubleEscapedEntity(string $str): bool
     {
-        return preg_match(self::$htmlEntityRegex, $str) !== 0;
+        return preg_match(self::$HTML_ENTITY_REGEXP, $str) !== 0;
     }
 
     public static function isAValidUuidV4(string $uuid): bool
@@ -182,7 +187,7 @@ class Strings
     /**
      * @return list<string>|false
      */
-    public static function preg_split(string $pattern, string $subject): array|false
+    public static function pregSplit(string $pattern, string $subject): array|false
     {
         return preg_split($pattern, $subject, -1, PREG_SPLIT_NO_EMPTY);
     }
