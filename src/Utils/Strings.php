@@ -10,8 +10,8 @@ use function htmlspecialchars_decode;
 
 class Strings
 {
-    private static ?string $FIND_XLIFF_TAGS_REG = null;
-    private static string $HTML_ENTITY_REGEXP = '/&amp;[#a-zA-Z0-9]{1,20};/u';
+    private static string $hmlEntityRegexp = '/&amp;[#a-zA-Z0-9]{1,20};/u';
+    private static ?string $findXliffTagsRegexp = null;
 
     /**
      * Cleans a CDATA-containing string by parsing it as XML and removing CDATA sections.
@@ -86,31 +86,30 @@ class Strings
      */
     public static function fixNonWellFormedXml(string $content, ?bool $escapeStrings = true): string
     {
-        if (self::$FIND_XLIFF_TAGS_REG === null) {
-            // Convert the list of tags in a regexp list, for example "g|x|bx|ex"
-            $xliffTags = XliffTags::$tags;
-            $xliff_tags_reg_list = implode('|', $xliffTags);
+        if (self::$findXliffTagsRegexp === null) {
+            // Convert the list of tags in a regexp list, for example, "g|x|bx|ex"
+            $xliff_tags_reg_list = implode('|', array_column(XliffTags::cases(), 'name'));
             // Regexp to find all the XLIFF tags:
             //   </?               -> matches the tag start, for both opening and
             //                        closure tags (see the optional slash)
             //   ($xliff_tags_reg) -> matches one of the XLIFF tags in the list above
             //   (\s[^>]*)?        -> matches attributes and so on; ensures there's a
-            //                        space after the tag, to not confuse for example a
+            //                        space after the tag, to not confuse, for example, a
             //                        "g" tag with a "gblabla"; [^>]* matches anything,
             //                        including additional spaces; the entire block is
             //                        optional, to allow tags with no spaces or attrs
-            //   /? >              -> matches tag end, with optional slash for
+            //   /? >              -> matches the tag end, with optional slash for
             //                        self-closing ones
             // If you are wondering about spaces inside tags, look at this:
             // http://www.w3.org/TR/REC-xml/#sec-starttags
             // It says that there cannot be any space between the '<' and the tag name,
             // between '</' and the tag name, or inside '/>'. But you can add white
             // space after the tag name, though.
-            self::$FIND_XLIFF_TAGS_REG = "#</?($xliff_tags_reg_list)(\\s[^>]*)?/?>#si";
+            self::$findXliffTagsRegexp = "#</?($xliff_tags_reg_list)(\\s[^>]*)?/?>#si";
         }
 
         // Find all the XLIFF tags
-        preg_match_all(self::$FIND_XLIFF_TAGS_REG, $content, $matches);
+        preg_match_all(self::$findXliffTagsRegexp, $content, $matches);
         $tags = $matches[0];
 
         // Prepare placeholders
@@ -160,7 +159,7 @@ class Strings
         }
 
         return (string)preg_replace_callback(
-            self::$HTML_ENTITY_REGEXP,
+            self::$hmlEntityRegexp,
             static fn(array $match): string => self::htmlSpecialCharsDecode($match[0]),
             $string
         );
@@ -176,7 +175,7 @@ class Strings
      */
     public static function isADoubleEscapedEntity(string $str): bool
     {
-        return preg_match(self::$HTML_ENTITY_REGEXP, $str) !== 0;
+        return preg_match(self::$hmlEntityRegexp, $str) !== 0;
     }
 
     public static function isAValidUuidV4(string $uuid): bool

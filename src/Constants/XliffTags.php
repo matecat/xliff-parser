@@ -2,11 +2,21 @@
 
 namespace Matecat\XliffParser\Constants;
 
-class XliffTags
+/**
+ * List of allowed Xliff tags
+ */
+enum XliffTags
 {
-    /**
-     * List of allowed Xliff tags
-     * @var string[]
-     */
-    public static array $tags = ['g', 'x', 'bx', 'ex', 'bpt', 'ept', 'ph', 'pc', 'ec', 'sc', 'it', 'mrk'];
+    case g;
+    case x;
+    case bx;
+    case ex;
+    case bpt;
+    case ept;
+    case ph;
+    case pc;
+    case ec;
+    case sc;
+    case it;
+    case mrk;
 }

@@ -8,11 +8,10 @@ namespace Matecat\XliffParser\Constants;
  */
 class TranslationStatus
 {
-    const string STATUS_NEW = 'NEW';
-    const string STATUS_DRAFT = 'DRAFT';
-    const string STATUS_TRANSLATED = 'TRANSLATED';
-    const string STATUS_APPROVED = 'APPROVED';
-    const string STATUS_APPROVED2 = 'APPROVED2';
-    const string STATUS_REJECTED = 'REJECTED';
-
+    public const string NEW = 'NEW';
+    public const string DRAFT = 'DRAFT';
+    public const string TRANSLATED = 'TRANSLATED';
+    public const string APPROVED = 'APPROVED';
+    public const string APPROVED2 = 'APPROVED2';
+    public const string REJECTED = 'REJECTED';
 }

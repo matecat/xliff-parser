@@ -31,38 +31,38 @@ final class StatusToStateAttribute
         ?string $status = null,
         ?string $lastMrkState = null
     ): array {
-        $status = empty($status) ? TranslationStatus::STATUS_APPROVED2 : $status;
+        $status = empty($status) ? TranslationStatus::APPROVED2 : $status;
 
         $stateLevelsMap = [
-            TranslationStatus::STATUS_APPROVED2 => 100,
-            TranslationStatus::STATUS_APPROVED => 90,
-            TranslationStatus::STATUS_TRANSLATED => 80,
-            TranslationStatus::STATUS_REJECTED => 70,
-            TranslationStatus::STATUS_DRAFT => 60,
-            TranslationStatus::STATUS_NEW => 50
+            TranslationStatus::APPROVED2 => 100,
+            TranslationStatus::APPROVED => 90,
+            TranslationStatus::TRANSLATED => 80,
+            TranslationStatus::REJECTED => 70,
+            TranslationStatus::DRAFT => 60,
+            TranslationStatus::NEW => 50
         ];
 
         $orderedValues = array_flip($stateLevelsMap);
 
         // Define state mappings for different statuses
         $stateMap = [
-            TranslationStatus::STATUS_APPROVED2 => [self::STATE_FINAL, TranslationStatus::STATUS_APPROVED2],
-            TranslationStatus::STATUS_APPROVED => [
+            TranslationStatus::APPROVED2 => [self::STATE_FINAL, TranslationStatus::APPROVED2],
+            TranslationStatus::APPROVED => [
                 ($xliffVersion === 2) ? self::STATE_REVIEWED : self::STATE_SIGNED_OFF,
-                TranslationStatus::STATUS_APPROVED
+                TranslationStatus::APPROVED
             ],
-            TranslationStatus::STATUS_TRANSLATED => [self::STATE_TRANSLATED, TranslationStatus::STATUS_TRANSLATED],
-            TranslationStatus::STATUS_REJECTED => [
+            TranslationStatus::TRANSLATED => [self::STATE_TRANSLATED, TranslationStatus::TRANSLATED],
+            TranslationStatus::REJECTED => [
                 ($xliffVersion === 2) ? self::STATE_INITIAL : self::STATE_NEEDS_REVIEW_TRANSLATION,
-                TranslationStatus::STATUS_REJECTED
+                TranslationStatus::REJECTED
             ],
-            TranslationStatus::STATUS_NEW => [
+            TranslationStatus::NEW => [
                 ($xliffVersion === 2) ? self::STATE_INITIAL : self::STATE_NEW,
-                TranslationStatus::STATUS_NEW
+                TranslationStatus::NEW
             ],
-            TranslationStatus::STATUS_DRAFT => [
+            TranslationStatus::DRAFT => [
                 ($xliffVersion === 2) ? self::STATE_INITIAL : self::STATE_NEW,
-                TranslationStatus::STATUS_DRAFT
+                TranslationStatus::DRAFT
             ],
         ];
 
@@ -74,7 +74,7 @@ final class StatusToStateAttribute
         // If lastMrkState is empty
         $minStatus = min(
             $stateLevelsMap[$status],
-            ($stateLevelsMap[$lastMrkState] ?? $stateLevelsMap[TranslationStatus::STATUS_NEW])
+            ($stateLevelsMap[$lastMrkState] ?? $stateLevelsMap[TranslationStatus::NEW])
         );
 
         // If the last mark state is set, get the minimum value, otherwise get the current state

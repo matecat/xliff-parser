@@ -264,10 +264,10 @@ readonly class XliffParser
      */
     private static function replaceXliffTags(array $matches): string
     {
-        $xliffTags = XliffTags::$tags;
         $content = $matches[2];
 
-        foreach ($xliffTags as $xliffTag) {
+        foreach (XliffTags::cases() as $xliffTagCase) {
+            $xliffTag = $xliffTagCase->name;
             $content = preg_replace(
                 '|&lt;(' . $xliffTag . '.*?)&gt;|si',
                 Placeholder::LT_PLACEHOLDER . "$1" . Placeholder::GT_PLACEHOLDER,

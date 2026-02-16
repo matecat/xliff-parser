@@ -14,56 +14,56 @@ class StatusToStateAttributeTest extends Base
     #[Test]
     public function testTranslatedStatus(): void
     {
-        [$stateProp, $lastMrkState] = StatusToStateAttribute::getState(1, TranslationStatus::STATUS_TRANSLATED);
+        [$stateProp, $lastMrkState] = StatusToStateAttribute::getState(1, TranslationStatus::TRANSLATED);
         $this->assertEquals("state=\"translated\"", $stateProp);
-        $this->assertEquals(TranslationStatus::STATUS_TRANSLATED, $lastMrkState);
+        $this->assertEquals(TranslationStatus::TRANSLATED, $lastMrkState);
 
-        [$stateProp, $lastMrkState] = StatusToStateAttribute::getState(2, TranslationStatus::STATUS_TRANSLATED);
+        [$stateProp, $lastMrkState] = StatusToStateAttribute::getState(2, TranslationStatus::TRANSLATED);
         $this->assertEquals("state=\"translated\"", $stateProp);
-        $this->assertEquals(TranslationStatus::STATUS_TRANSLATED, $lastMrkState);
+        $this->assertEquals(TranslationStatus::TRANSLATED, $lastMrkState);
 
 
         [$stateProp, $lastMrkState] = StatusToStateAttribute::getState(
             1,
-            TranslationStatus::STATUS_TRANSLATED,
-            TranslationStatus::STATUS_APPROVED
+            TranslationStatus::TRANSLATED,
+            TranslationStatus::APPROVED
         );
         $this->assertEquals("state=\"translated\"", $stateProp);
-        $this->assertEquals(TranslationStatus::STATUS_TRANSLATED, $lastMrkState);
+        $this->assertEquals(TranslationStatus::TRANSLATED, $lastMrkState);
 
 
         [$stateProp, $lastMrkState] = StatusToStateAttribute::getState(
             1,
-            TranslationStatus::STATUS_TRANSLATED,
-            TranslationStatus::STATUS_TRANSLATED
+            TranslationStatus::TRANSLATED,
+            TranslationStatus::TRANSLATED
         );
         $this->assertEquals("state=\"translated\"", $stateProp);
-        $this->assertEquals(TranslationStatus::STATUS_TRANSLATED, $lastMrkState);
+        $this->assertEquals(TranslationStatus::TRANSLATED, $lastMrkState);
 
 
         [$stateProp, $lastMrkState] = StatusToStateAttribute::getState(
             1,
-            TranslationStatus::STATUS_TRANSLATED,
-            TranslationStatus::STATUS_APPROVED2
+            TranslationStatus::TRANSLATED,
+            TranslationStatus::APPROVED2
         );
         $this->assertEquals("state=\"translated\"", $stateProp);
-        $this->assertEquals(TranslationStatus::STATUS_TRANSLATED, $lastMrkState);
+        $this->assertEquals(TranslationStatus::TRANSLATED, $lastMrkState);
 
         [$stateProp, $lastMrkState] = StatusToStateAttribute::getState(
             1,
-            TranslationStatus::STATUS_TRANSLATED,
-            TranslationStatus::STATUS_DRAFT
+            TranslationStatus::TRANSLATED,
+            TranslationStatus::DRAFT
         );
         $this->assertEquals("state=\"new\"", $stateProp);
-        $this->assertEquals(TranslationStatus::STATUS_DRAFT, $lastMrkState);
+        $this->assertEquals(TranslationStatus::DRAFT, $lastMrkState);
 
         [$stateProp, $lastMrkState] = StatusToStateAttribute::getState(
             2,
-            TranslationStatus::STATUS_TRANSLATED,
-            TranslationStatus::STATUS_DRAFT
+            TranslationStatus::TRANSLATED,
+            TranslationStatus::DRAFT
         );
         $this->assertEquals("state=\"initial\"", $stateProp);
-        $this->assertEquals(TranslationStatus::STATUS_DRAFT, $lastMrkState);
+        $this->assertEquals(TranslationStatus::DRAFT, $lastMrkState);
     }
 
     #[Test]
@@ -71,51 +71,51 @@ class StatusToStateAttributeTest extends Base
     {
         [$stateProp, $lastMrkState] = StatusToStateAttribute::getState(
             1,
-            TranslationStatus::STATUS_DRAFT,
-            TranslationStatus::STATUS_APPROVED2
+            TranslationStatus::DRAFT,
+            TranslationStatus::APPROVED2
         );
         $this->assertEquals("state=\"new\"", $stateProp);
-        $this->assertEquals(TranslationStatus::STATUS_DRAFT, $lastMrkState);
+        $this->assertEquals(TranslationStatus::DRAFT, $lastMrkState);
 
         [$stateProp, $lastMrkState] = StatusToStateAttribute::getState(
             1,
-            TranslationStatus::STATUS_DRAFT,
-            TranslationStatus::STATUS_NEW
+            TranslationStatus::DRAFT,
+            TranslationStatus::NEW
         );
         $this->assertEquals("state=\"new\"", $stateProp);
-        $this->assertEquals(TranslationStatus::STATUS_NEW, $lastMrkState);
+        $this->assertEquals(TranslationStatus::NEW, $lastMrkState);
     }
 
     #[Test]
     public function testRevisionStatus(): void
     {
-        [$stateProp, $lastMrkState] = StatusToStateAttribute::getState(1, TranslationStatus::STATUS_APPROVED2);
+        [$stateProp, $lastMrkState] = StatusToStateAttribute::getState(1, TranslationStatus::APPROVED2);
         $this->assertEquals("state=\"final\"", $stateProp);
-        $this->assertEquals(TranslationStatus::STATUS_APPROVED2, $lastMrkState);
+        $this->assertEquals(TranslationStatus::APPROVED2, $lastMrkState);
 
         [$stateProp, $lastMrkState] = StatusToStateAttribute::getState(
             1,
-            TranslationStatus::STATUS_APPROVED2,
-            TranslationStatus::STATUS_APPROVED2
+            TranslationStatus::APPROVED2,
+            TranslationStatus::APPROVED2
         );
         $this->assertEquals("state=\"final\"", $stateProp);
-        $this->assertEquals(TranslationStatus::STATUS_APPROVED2, $lastMrkState);
+        $this->assertEquals(TranslationStatus::APPROVED2, $lastMrkState);
 
         [$stateProp, $lastMrkState] = StatusToStateAttribute::getState(
             1,
-            TranslationStatus::STATUS_APPROVED,
-            TranslationStatus::STATUS_APPROVED2
+            TranslationStatus::APPROVED,
+            TranslationStatus::APPROVED2
         );
         $this->assertEquals("state=\"signed-off\"", $stateProp);
-        $this->assertEquals(TranslationStatus::STATUS_APPROVED, $lastMrkState);
+        $this->assertEquals(TranslationStatus::APPROVED, $lastMrkState);
 
         [$stateProp, $lastMrkState] = StatusToStateAttribute::getState(
             1,
-            TranslationStatus::STATUS_APPROVED2,
-            TranslationStatus::STATUS_DRAFT
+            TranslationStatus::APPROVED2,
+            TranslationStatus::DRAFT
         );
         $this->assertEquals("state=\"new\"", $stateProp);
-        $this->assertEquals(TranslationStatus::STATUS_DRAFT, $lastMrkState);
+        $this->assertEquals(TranslationStatus::DRAFT, $lastMrkState);
     }
 
     #[Test]
@@ -123,19 +123,19 @@ class StatusToStateAttributeTest extends Base
     {
         [$stateProp, $lastMrkState] = StatusToStateAttribute::getState(1, null, '');
         $this->assertEquals("state=\"final\"", $stateProp);
-        $this->assertEquals(TranslationStatus::STATUS_APPROVED2, $lastMrkState);
+        $this->assertEquals(TranslationStatus::APPROVED2, $lastMrkState);
 
-        [$stateProp, $lastMrkState] = StatusToStateAttribute::getState(1, null, TranslationStatus::STATUS_APPROVED2);
+        [$stateProp, $lastMrkState] = StatusToStateAttribute::getState(1, null, TranslationStatus::APPROVED2);
         $this->assertEquals("state=\"final\"", $stateProp);
-        $this->assertEquals(TranslationStatus::STATUS_APPROVED2, $lastMrkState);
+        $this->assertEquals(TranslationStatus::APPROVED2, $lastMrkState);
 
-        [$stateProp, $lastMrkState] = StatusToStateAttribute::getState(1, null, TranslationStatus::STATUS_DRAFT);
+        [$stateProp, $lastMrkState] = StatusToStateAttribute::getState(1, null, TranslationStatus::DRAFT);
         $this->assertEquals("state=\"new\"", $stateProp);
-        $this->assertEquals(TranslationStatus::STATUS_DRAFT, $lastMrkState);
+        $this->assertEquals(TranslationStatus::DRAFT, $lastMrkState);
 
         [$stateProp, $lastMrkState] = StatusToStateAttribute::getState(1);
         $this->assertEquals("state=\"final\"", $stateProp);
-        $this->assertEquals(TranslationStatus::STATUS_APPROVED2, $lastMrkState);
+        $this->assertEquals(TranslationStatus::APPROVED2, $lastMrkState);
     }
 
 }
