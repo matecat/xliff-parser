@@ -34,7 +34,7 @@ final class XliffReplacerFactory
         ?LoggerInterface $logger = null,
         ?XliffReplacerCallbackInterface $callback = null
     ): AbstractXliffReplacer {
-        $info = XliffProprietaryDetect::getInfo($originalXliffPath);
+        $info = (new XliffProprietaryDetect())->getInfo($originalXliffPath);
         $version = (int)($info['version'] ?? 0);
 
         if ($version === 1 && $info['proprietary_short_name'] !== 'trados') {

@@ -77,7 +77,7 @@ readonly class XliffParser
         $xliff = [];
         $xliffContent = self::forceUft8Encoding($xliffContent, $xliff);
         $xliffVersion = XliffVersionDetector::detect($xliffContent);
-        $info = XliffProprietaryDetect::getInfoFromXliffContent($xliffContent);
+        $info = (new XliffProprietaryDetect())->getInfoFromXliffContent($xliffContent);
 
         if ($xliffVersion === 1) {
             $xliffContent = self::removeInternalFileTagFromContent($xliffContent, $xliff);
