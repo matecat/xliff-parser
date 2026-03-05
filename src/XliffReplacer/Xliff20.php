@@ -323,7 +323,7 @@ class Xliff20 extends AbstractXliffReplacer
         $translation = Strings::removeDangerousChars($seg ['translation'] ?? '');
         $dataRefMap = (isset($seg['data_ref_map'])) ? Strings::jsonToArray($seg['data_ref_map']) : [];
 
-        if (($seg['translation'] ?? null) === '') {
+        if (!isset($seg['translation'])) {
             $translation = $segment;
         } else {
             if ($this->callback instanceof XliffReplacerCallbackInterface) {

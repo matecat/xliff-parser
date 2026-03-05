@@ -180,7 +180,7 @@ class Xliff12 extends AbstractXliffReplacer
         $segment = Strings::removeDangerousChars($seg ['segment']);
         $translation = Strings::removeDangerousChars($seg ['translation']);
 
-        if (($seg['translation'] ?? null) === '') {
+        if (!isset($seg['translation'])) {
             $translation = $segment;
         } elseif ($this->callback instanceof XliffReplacerCallbackInterface) {
             $error = (!empty($seg['error'])) ? $seg['error'] : null;
