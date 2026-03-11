@@ -273,7 +273,7 @@ class Xliff12 extends AbstractXliffReplacer
             // If source-in-target mode is enabled, clear translation and reset counts
             // This causes prepareSegment to use source content in the target tag
             if ($this->sourceInTarget) {
-                $seg['translation'] = '';
+                $seg['translation'] = null;
                 $this->resetCounts();
             }
 

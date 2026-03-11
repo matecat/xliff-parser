@@ -165,7 +165,7 @@ class Xliff20 extends AbstractXliffReplacer
                     // delete translations so the prepareSegment
                     // will put source content in target tag
                     if ($this->sourceInTarget) {
-                        $seg['translation'] = '';
+                        $seg['translation'] = null;
                         $this->resetCounts();
                     }
 
@@ -319,8 +319,8 @@ class Xliff20 extends AbstractXliffReplacer
             return "";
         }
 
-        $segment = Strings::removeDangerousChars($seg ['segment'] ?? '');
-        $translation = Strings::removeDangerousChars($seg ['translation'] ?? '');
+        $segment = Strings::removeDangerousChars($seg ['segment']);
+        $translation = Strings::removeDangerousChars($seg ['translation']);
         $dataRefMap = (isset($seg['data_ref_map'])) ? Strings::jsonToArray($seg['data_ref_map']) : [];
 
         if (!isset($seg['translation'])) {

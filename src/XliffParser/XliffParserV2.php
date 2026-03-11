@@ -225,9 +225,7 @@ class XliffParserV2 extends AbstractXliffParser
      */
     private function extractTransUnitMetadata(DOMElement $transUnit, array &$transUnitIdArrayForUniquenessCheck): array
     {
-        $metadata = [];
-
-        // id
+        // id validation
         if (null === $transUnit->attributes->getNamedItem('id')) {
             throw new NotFoundIdInTransUnit('Invalid trans-unit id found. EMPTY value', 400);
         }
@@ -239,28 +237,15 @@ class XliffParserV2 extends AbstractXliffParser
         }
 
         $transUnitIdArrayForUniquenessCheck[] = $id;
-        $metadata['id'] = $id;
 
-        // translate
-        if (null !== $transUnit->attributes->getNamedItem('translate')) {
-            $metadata['translate'] = $transUnit->attributes->getNamedItem('translate')->nodeValue;
-        }
+        // extract all attributes dynamically, using localName to strip namespace prefixes
+        $metadata = $this->extractTagAttributes($transUnit);
 
-        // tGroupBegin
-        if (null !== $transUnit->attributes->getNamedItem('tGroupBegin')) {
-            $metadata['tGroupBegin'] = $transUnit->attributes->getNamedItem('tGroupBegin')->nodeValue;
-        }
-
-        // tGroupEnd
-        if (null !== $transUnit->attributes->getNamedItem('tGroupEnd')) {
-            $metadata['tGroupEnd'] = $transUnit->attributes->getNamedItem('tGroupEnd')->nodeValue;
-        }
-
-        // sizeRestriction
-        if (null !== $transUnit->attributes->getNamedItem(
-                'sizeRestriction'
-            ) && '' !== $transUnit->attributes->getNamedItem('sizeRestriction')->nodeValue) {
-            $metadata['sizeRestriction'] = (int)$transUnit->attributes->getNamedItem('sizeRestriction')->nodeValue;
+        // cast sizeRestriction to int when present and non-empty
+        if (isset($metadata['sizeRestriction']) && '' !== $metadata['sizeRestriction']) {
+            $metadata['sizeRestriction'] = (int)$metadata['sizeRestriction'];
+        } elseif (isset($metadata['sizeRestriction'])) {
+            unset($metadata['sizeRestriction']);
         }
 
         return $metadata;

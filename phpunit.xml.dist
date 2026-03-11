@@ -29,7 +29,7 @@
         </testsuite>
     </testsuites>
     <coverage
-            pathCoverage="true"
+            pathCoverage="false"
             ignoreDeprecatedCodeUnits="true">
     </coverage>
 

@@ -179,7 +179,11 @@ abstract class AbstractXliffParser
 
         if ($element->hasAttributes()) {
             foreach ($element->attributes as $attr) {
-                $tagAttributes[$attr->nodeName] = $attr->nodeValue;
+                if ($attr->prefix === 'xml') {
+                    $tagAttributes[$attr->nodeName] = $attr->nodeValue;
+                } else {
+                    $tagAttributes[$attr->localName] = $attr->nodeValue;
+                }
             }
         }
 

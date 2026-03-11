@@ -632,6 +632,94 @@ class XliffParserV2Test extends Base
     }
 
     /**
+     * Test extraction of all unit attributes from the context-mapping XLIFF 2.0 file.
+     *
+     * This test verifies that every unit in test-context-mapping-2.0.xlf is parsed
+     * with the correct id, name, and matecat:x-restype attributes, and that source
+     * and target content are properly extracted.
+     *
+     * @throws NotValidFileException
+     * @throws NotSupportedVersionException
+     * @throws InvalidXmlException
+     * @throws XmlParsingException
+     */
+    #[Test]
+    public function can_extract_all_unit_attributes_from_context_mapping_xliff(): void
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('20/test-context-mapping-2.0.xlf'));
+
+        // file-level attributes
+        $attr = $parsed['files'][1]['attr'];
+        $this->assertEquals('sample-document.html', $attr['original']);
+        $this->assertEquals('en-US', $attr['source-language']);
+        $this->assertEquals('it-IT', $attr['target-language']);
+
+        // file-level notes
+        $this->assertCount(1, $parsed['files'][1]['notes']);
+        $this->assertStringContainsString(
+            'This file demonstrates the mapping between contextual markup',
+            $parsed['files'][1]['notes'][0]['raw-content']
+        );
+
+        // trans-units
+        $units = $parsed['files'][1]['trans-units'];
+        $this->assertCount(12, $units);
+
+        // Define expected data for all 12 units:
+        //   [id, name, x-restype, source, target]
+        $expected = [
+            1  => ['t1',  '/html/body/h1',              'x-path',                  'Title',                                               'Titolo'],
+            2  => ['t2',  '/html/body/div[1]/p[1]',     'x-path',                  'Informational text.',                                 'Testo informativo.'],
+            3  => ['t3',  '/html/body/div[2]/p[1]',     'x-path',                  'Paragraph in the first div.',                         'Paragrafo nel primo div.'],
+            4  => ['t4',  '/html/body/div[3]/p[1]',     'x-path',                  'Text in the second div, first paragraph.',             'Testo nel secondo div, primo paragrafo.'],
+            5  => ['t5',  'html.body.div_3.p_1',        'x-client_nodepath',       'Text in the second div, first paragraph.',             'Testo nel secondo div, primo paragrafo.'],
+            6  => ['t6',  'html.body.div_1.p_1',        'x-client_nodepath',       'Informational text.',                                 'Testo informativo.'],
+            7  => ['t7',  'node_id',                     'x-tag-id',               'Text identified by an ID.',                            'Testo identificato da un ID.'],
+            8  => ['t8',  'unique-class',                'x-css_class',            'This paragraph is identified by a unique CSS class.',   'Questo paragrafo è identificato da una classe CSS unica.'],
+            9  => ['t9',  'data-custom-id=xyz-123',      'x-attribute_name_value', 'Content identified by a custom attribute.',             'Contenuto identificato da un attributo personalizzato.'],
+            10 => ['t10', "//img[@id='logo']/@alt",      'x-path',                 'Company Logo',                                         'Logo Aziendale'],
+            11 => ['t11', "//img[@id='logo']/@title",    'x-path',                 'Go to Homepage',                                       'Vai alla Home Page'],
+            12 => ['t12', '//input/@placeholder',        'x-path',                 'Search the site...',                                   'Cerca nel sito...'],
+        ];
+
+        foreach ($expected as $idx => [$id, $name, $restype, $source, $target]) {
+            $unit = $units[$idx];
+
+            // attributes
+            $this->assertEquals($id, $unit['attr']['id'], "Unit $idx: wrong id");
+            $this->assertEquals($name, $unit['attr']['name'], "Unit $idx: wrong name");
+            $this->assertEquals($restype, $unit['attr']['x-restype'], "Unit $idx: wrong x-restype");
+
+            // source and target content
+            $this->assertEquals($source, $unit['source']['raw-content'][0], "Unit $idx: wrong source");
+            $this->assertEquals($target, $unit['target']['raw-content'][0], "Unit $idx: wrong target");
+
+            // notes should be present
+            $this->assertNotEmpty($unit['notes'], "Unit $idx: notes should not be empty");
+        }
+
+        // Verify specific restype groupings
+        // x-path units: t1, t2, t3, t4, t10, t11, t12
+        foreach ([1, 2, 3, 4, 10, 11, 12] as $idx) {
+            $this->assertEquals('x-path', $units[$idx]['attr']['x-restype']);
+        }
+
+        // x-client_nodepath units: t5, t6
+        foreach ([5, 6] as $idx) {
+            $this->assertEquals('x-client_nodepath', $units[$idx]['attr']['x-restype']);
+        }
+
+        // x-tag-id unit: t7
+        $this->assertEquals('x-tag-id', $units[7]['attr']['x-restype']);
+
+        // x-css_class unit: t8
+        $this->assertEquals('x-css_class', $units[8]['attr']['x-restype']);
+
+        // x-attribute_name_value unit: t9
+        $this->assertEquals('x-attribute_name_value', $units[9]['attr']['x-restype']);
+    }
+
+    /**
      * Test segment outside tGroup range logs warning (covers lines 425-426)
      *
      * @throws NotValidFileException
@@ -651,4 +739,7 @@ class XliffParserV2Test extends Base
         $parser = new XliffParser($logger);
         $parser->xliffToArray($this->getTestFile('20/xliff20-segment-outside-tgroup.xlf'));
     }
+
+
+
 }

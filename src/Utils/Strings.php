@@ -138,18 +138,32 @@ class Strings
         return $content;
     }
 
+    /**
+     * Removes dangerous or invalid characters from the input string.
+     *
+     * This method cleans invalid XML entities, specifically characters
+     * with ASCII values below 32 (except 0x0A, 0x0D, and 0x09), and removes
+     * binary characters present in some XLIFF files.
+     *
+     * @param string|null $string The input string to clean. If null, an empty string is returned.
+     * @return string The sanitized string with dangerous characters removed.
+     */
     public static function removeDangerousChars(?string $string): string
     {
+        if($string === null) {
+            return "";
+        }
+
         // clean invalid xml entities ( characters with ascii < 32 and different from 0A, 0D and 09
         $regexpEntity = '/&#x(0[0-8BCEF]|1[\dA-F]|7F);/u';
 
         // remove binary chars in some xliff files
         $regexpAscii = '/[\x{00}-\x{08}\x{0B}\x{0C}\x{0E}-\x{1F}\x{7F}]/u';
 
-        $string = preg_replace($regexpAscii, '', $string ?? '');
+        $string = preg_replace($regexpAscii, '', $string);
         $string = preg_replace($regexpEntity, '', $string ?? '');
 
-        return !empty($string) || strlen($string) > 0 ? $string : "";
+        return strlen($string) > 0 ? $string : "";
     }
 
     public static function htmlSpecialCharsDecode(string $string, ?bool $onlyEscapedEntities = false): string
