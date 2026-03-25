@@ -205,9 +205,18 @@ class Strings
         return preg_split($pattern, $subject, -1, PREG_SPLIT_NO_EMPTY);
     }
 
-    public static function getTheNumberOfTrailingSpaces(string $segment): int
-    {
-        return mb_strlen($segment) - mb_strlen(rtrim($segment, ' '));
+    /**
+     * @param string $segment
+     *
+     * @return int
+     */
+    public static function getTheNumberOfTrailingSpaces( ?string $segment = null ): int {
+
+        if ( empty( $segment ) ) {
+            return 0;
+        }
+
+        return mb_strlen( $segment ) - mb_strlen( rtrim( $segment, ' ' ) );
     }
 
 }

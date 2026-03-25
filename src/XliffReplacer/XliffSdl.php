@@ -98,8 +98,8 @@ class XliffSdl extends Xliff12
         $trailingSpaces = str_repeat(' ', Strings::getTheNumberOfTrailingSpaces($translation));
 
         if ($seg['mrk_id'] !== null && $seg['mrk_id'] != '') {
-            if ($this->targetLang === 'ja-JP') {
-                $seg['mrk_succ_tags'] = ltrim($seg['mrk_succ_tags']);
+            if ($this->targetLang === 'ja-JP' ) {
+                $seg[ 'mrk_succ_tags' ] = ltrim( $seg[ 'mrk_succ_tags' ] ?? '' );
             }
 
             $translation = "<mrk mid=\"" . $seg['mrk_id'] . "\" mtype=\"seg\">" . $seg['mrk_prev_tags'] . rtrim(
