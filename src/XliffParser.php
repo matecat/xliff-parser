@@ -19,103 +19,107 @@ use Matecat\XmlParser\Exception\XmlParsingException;
 use Matecat\XmlParser\XmlDomLoader;
 use Psr\Log\LoggerInterface;
 
-class XliffParser {
-    /**
-     * @var ?LoggerInterface
-     */
-    private ?LoggerInterface $logger;
-
+readonly class XliffParser
+{
     /**
      * XliffParser constructor.
-     *
-     * @param ?LoggerInterface $logger
      */
-    public function __construct( ?LoggerInterface $logger = null ) {
-        $this->logger = $logger;
+    public function __construct(private ?LoggerInterface $logger = null)
+    {
     }
 
     /**
      * Replace the translation in a xliff file
      *
-     * @param string                              $originalXliffPath
-     * @param array                               $data
-     * @param array                               $transUnits
-     * @param string                              $targetLang
-     * @param string                              $outputFile
-     * @param bool                                $setSourceInTarget
-     * @param XliffReplacerCallbackInterface|null $callback
+     * @param array<int|string, array<string, mixed>> $data
+     * @param array<int|string, array<int, int>> $transUnits
      */
-    public function replaceTranslation( string $originalXliffPath, array $data, array $transUnits, string $targetLang, string $outputFile, bool $setSourceInTarget = false, ?XliffReplacerCallbackInterface $callback = null ) {
+    public function replaceTranslation(
+        string $originalXliffPath,
+        array $data,
+        array $transUnits,
+        string $targetLang,
+        string $outputFile,
+        bool $setSourceInTarget = false,
+        ?XliffReplacerCallbackInterface $callback = null
+    ): void {
         try {
-            $parser = XliffReplacerFactory::getInstance( $originalXliffPath, $data, $transUnits, $targetLang, $outputFile, $setSourceInTarget, $this->logger, $callback );
+            $parser = XliffReplacerFactory::getInstance(
+                $originalXliffPath,
+                $data,
+                $transUnits,
+                $targetLang,
+                $outputFile,
+                $setSourceInTarget,
+                $this->logger,
+                $callback
+            );
             $parser->replaceTranslation();
-        } catch ( Exception $exception ) {
+            // @codeCoverageIgnoreStart
+        } catch (Exception) {
             // do nothing
         }
+        // @codeCoverageIgnoreEnd
     }
 
     /**
      * Parse an xliff file to array
      *
-     * @param string $xliffContent
+     * @return array<string, mixed>
      *
-     * @param bool   $collapseEmptyTags
-     *
-     * @return array
      * @throws NotSupportedVersionException
      * @throws NotValidFileException
      * @throws InvalidXmlException
      * @throws XmlParsingException
      */
-    public function xliffToArray( string $xliffContent, ?bool $collapseEmptyTags = false ): array {
-        $xliff        = [];
-        $xliffContent = self::forceUft8Encoding( $xliffContent, $xliff );
-        $xliffVersion = XliffVersionDetector::detect( $xliffContent );
-        $info         = XliffProprietaryDetect::getInfoFromXliffContent( $xliffContent );
+    public function xliffToArray(string $xliffContent, ?bool $collapseEmptyTags = false): array
+    {
+        $xliff = [];
+        $xliffContent = self::forceUft8Encoding($xliffContent, $xliff);
+        $xliffVersion = XliffVersionDetector::detect($xliffContent);
+        $info = (new XliffProprietaryDetect())->getInfoFromXliffContent($xliffContent);
 
-        if ( $xliffVersion === 1 ) {
-            $xliffContent = self::removeInternalFileTagFromContent( $xliffContent, $xliff );
+        if ($xliffVersion === 1) {
+            $xliffContent = self::removeInternalFileTagFromContent($xliffContent, $xliff);
         }
 
-        if ( $xliffVersion === 2 ) {
-            $xliffContent = self::escapeDataInOriginalMap( $xliffContent );
+        if ($xliffVersion === 2) {
+            $xliffContent = self::escapeDataInOriginalMap($xliffContent);
         }
 
-        if ( $collapseEmptyTags === false ) {
-            $xliffContent = self::insertPlaceholderInEmptyTags( $xliffContent );
+        if ($collapseEmptyTags === false) {
+            $xliffContent = self::insertPlaceholderInEmptyTags($xliffContent);
         }
 
-        $xliffProprietary = $info[ 'proprietary_short_name' ] ?? null;
-        $parser           = XliffParserFactory::getInstance( $xliffVersion, $xliffProprietary, $this->logger );
+        $xliffProprietary = $info['proprietary_short_name'] ?? null;
+        $parser = XliffParserFactory::getInstance($xliffVersion, $xliffProprietary, $this->logger);
 
         $dom = XmlDomLoader::load(
-                $xliffContent,
-                new Config(
-                        null,
-                        false,
-                        LIBXML_NONET | LIBXML_PARSEHUGE
-                )
+            $xliffContent,
+            new Config(
+                null,
+                false,
+                LIBXML_NONET | LIBXML_PARSEHUGE
+            )
         );
 
-        return $parser->parse( $dom, $xliff );
+        return $parser->parse($dom, $xliff);
     }
 
     /**
      * Pre-Processing.
      * Fixing non UTF-8 encoding (often I get Unicode UTF-16)
      *
-     * @param $xliffContent
-     * @param $xliff
-     *
-     * @return string
+     * @param array<string, mixed> $xliff
      */
-    private static function forceUft8Encoding( $xliffContent, &$xliff ): string {
-        $enc = mb_detect_encoding( $xliffContent );
+    private static function forceUft8Encoding(string $xliffContent, array &$xliff): string
+    {
+        $enc = mb_detect_encoding($xliffContent);
 
-        if ( $enc != 'UTF-8' && $enc != "ASCII" ) {
-            $xliff[ 'parser-warnings' ][] = "Input identified as $enc ans converted UTF-8. May not be a problem if the content is English only";
-            $s                            = mb_convert_encoding( $xliffContent, 'UTF-8', $enc );
-            $xliffContent                 = $s !== false ? $s : "";
+        if ($enc != 'UTF-8') {
+            $xliff['parser-warnings'][] = "Input identified as $enc ans converted UTF-8. May not be a problem if the content is English only";
+            $s = mb_convert_encoding($xliffContent, 'UTF-8', mb_list_encodings());
+            $xliffContent = $s !== false ? $s : "";
         }
 
         return $xliffContent;
@@ -126,33 +130,52 @@ class XliffParser {
      * This allows to parse xliff files with a very large <internal-file>
      * (only for Xliff 1.0)
      *
-     * @param $xliffContent
-     * @param $xliff
-     *
-     * @return mixed|string
+     * @param array<string, mixed> $xliff
      */
-    private static function removeInternalFileTagFromContent( $xliffContent, &$xliff ) {
-        $index       = 1;
-        $a           = Strings::preg_split( '|<internal-file[\s>]|i', $xliffContent );
-        $tagMatches  = count( $a );
+    private static function removeInternalFileTagFromContent(string $xliffContent, array &$xliff): string
+    {
+        $index = 1;
+        $a = Strings::pregSplit('|<internal-file[\s>]|i', $xliffContent);
 
-        // no match, return original string
-        if ( $tagMatches === 1 ) {
-            return $a[ 0 ];
+        // Guard clause: if split fails or no matches found, return original content
+        // Case 1: $a === false - PCRE failure (invalid pattern, backtrack limit exceeded, or internal PCRE errors)
+        //         This is nearly impossible with our simple hardcoded pattern but exists as a defensive safeguard.
+        // Case 2: count($a) === 1 - No <internal-file> tag was found in the content (normal case for non-SDL files)
+        if ($a === false || count($a) === 1) {
+            return $xliffContent;
         }
 
-        $b                                           = Strings::preg_split( '|</internal-file>|i', $a[ 1 ] );
-        $strippedContent                             = $a[ 0 ] . $b[ 1 ];
-        $xliff[ 'files' ][ $index ][ 'reference' ][] = self::extractBase64( $b[ 0 ] );
+        $tagMatches = count($a);
+        $b = Strings::pregSplit('|</internal-file>|i', $a[1]);
+
+        // Handle preg_split failure (returns false on PCRE errors like invalid pattern or execution failures)
+        // Practically impossible with the simple hardcoded pattern '|</internal-file>|i' but guards against
+        // catastrophic PCRE failures to prevent crashes. Returns original content unchanged if this occurs.
+        if ($b === false) {
+            // @codeCoverageIgnoreStart
+            return $xliffContent;
+            // @codeCoverageIgnoreEnd
+        }
+
+        $strippedContent = $a[0] . $b[1];
+        $xliff['files'][$index]['reference'][] = self::extractBase64($b[0]);
         $index++;
 
         // Sometimes, sdlxliff files can contain more than 2 <internal-file> nodes.
         // In this case loop and extract any other extra <internal-file> node
-        for($i=2; $i < $tagMatches; $i++){
-            if ( isset( $a[ $i ] ) ) {
-                $c                                           = Strings::preg_split( '|</internal-file[\s>]|i', $a[ $i ] );
-                $strippedContent                             .= $c[ 1 ];
-                $xliff[ 'files' ][ $index ][ 'reference' ][] = self::extractBase64( $c[ 0 ] );
+        for ($i = 2; $i < $tagMatches; $i++) {
+            if (isset($a[$i])) {
+                $c = Strings::pregSplit('|</internal-file[\s>]|i', $a[$i]);
+
+                if ($c !== false) {
+                    $strippedContent .= $c[1];
+                    $xliff['files'][$index]['reference'][] = self::extractBase64($c[0]);
+                }
+                // @codeCoverageIgnoreStart
+                // If $c is false (PCRE failure on this iteration), skip processing this <internal-file> node
+                // and continue with remaining nodes. This defensive check is nearly impossible to trigger
+                // with the simple hardcoded pattern but ensures graceful degradation on catastrophic failures.
+                // @codeCoverageIgnoreEnd
             }
         }
 
@@ -160,14 +183,13 @@ class XliffParser {
     }
 
     /**
-     * @param $base64
-     *
-     * @return array
+     * @return array{form-type: string, base64: string}
      */
-    private static function extractBase64( $base64 ): array {
+    private static function extractBase64(string $base64): array
+    {
         return [
-                'form-type' => 'base64',
-                'base64'    => trim( str_replace( 'form="base64">', '', $base64 ) ),
+            'form-type' => 'base64',
+            'base64' => trim(str_replace('form="base64">', '', $base64)),
         ];
     }
 
@@ -182,16 +204,19 @@ class XliffParser {
      * XliffParserV2::extractTransUnitOriginalData function will restore them
      *
      * (only for Xliff 2.0)
-     *
-     * @param $xliffContent
-     *
-     * @return string
      */
-    private static function escapeDataInOriginalMap( string $xliffContent ): string {
-        $xliffContent = preg_replace_callback( '|<data(.*?)>(.*?)</data>|iU', [ XliffParser::class, 'replaceSpace' ], $xliffContent );
-        $xliffContent = preg_replace_callback( '|<data(.*?)>(.*?)</data>|iU', [ XliffParser::class, 'replaceXliffTags' ], $xliffContent );
-
-        return $xliffContent;
+    private static function escapeDataInOriginalMap(string $xliffContent): string
+    {
+        $xliffContent = preg_replace_callback(
+            '|<data(.*?)>(.*?)</data>|iU',
+            self::replaceSpace(...),
+            $xliffContent
+        );
+        return preg_replace_callback(
+            '|<data(.*?)>(.*?)</data>|iU',
+            self::replaceXliffTags(...),
+            $xliffContent
+        );
     }
 
     /**
@@ -203,20 +228,17 @@ class XliffParser {
      * <pc id="12" dataRefStart="d1"></pc> ---> <pc id="12" dataRefStart="d1">###___EMPTY_TAG_PLACEHOLDER___###</pc>
      *
      * AbstractXliffParser::extractTagContent() will cut out ###___EMPTY_TAG_PLACEHOLDER___### to restore original empty tags
-     *
-     * @param $xliffContent
-     *
-     * @return string
      */
-    private static function insertPlaceholderInEmptyTags( $xliffContent ): string {
-        preg_match_all( '|<([a-zA-Z0-9._-]+)[^>]*></\1>|m', $xliffContent, $emptyTagMatches );
+    private static function insertPlaceholderInEmptyTags(string $xliffContent): string
+    {
+        preg_match_all('|<([a-zA-Z0-9._-]+)[^>]*></\1>|m', $xliffContent, $emptyTagMatches);
 
-        if ( !empty( $emptyTagMatches[ 0 ] ) ) {
-            foreach ( $emptyTagMatches[ 0 ] as $index => $emptyTagMatch ) {
-                $matchedTag   = $emptyTagMatches[ 1 ][ $index ];
-                $subst        = Placeholder::EMPTY_TAG_PLACEHOLDER . '</' . $matchedTag . '>';
-                $replacedTag  = str_replace( '</' . $matchedTag . '>', $subst, $emptyTagMatch );
-                $xliffContent = str_replace( $emptyTagMatch, $replacedTag, $xliffContent );
+        if (!empty($emptyTagMatches[0])) {
+            foreach ($emptyTagMatches[0] as $index => $emptyTagMatch) {
+                $matchedTag = $emptyTagMatches[1][$index];
+                $subst = Placeholder::EMPTY_TAG_PLACEHOLDER . '</' . $matchedTag . '>';
+                $replacedTag = str_replace('</' . $matchedTag . '>', $subst, $emptyTagMatch);
+                $xliffContent = str_replace($emptyTagMatch, $replacedTag, $xliffContent);
             }
         }
 
@@ -226,32 +248,38 @@ class XliffParser {
     /**
      * Replace <data> value
      *
-     * @param array $matches
-     *
-     * @return string
+     * @param array<int, string> $matches
      */
-    private static function replaceSpace( array $matches ): string {
-        $content = str_replace( ' ', Placeholder::WHITE_SPACE_PLACEHOLDER, $matches[ 2 ] );
-        $content = str_replace( '\n', Placeholder::NEW_LINE_PLACEHOLDER, $content );
-        $content = str_replace( '\t', Placeholder::TAB_PLACEHOLDER, $content );
+    private static function replaceSpace(array $matches): string
+    {
+        $content = str_replace(' ', Placeholder::WHITE_SPACE_PLACEHOLDER, $matches[2]);
+        $content = str_replace('\n', Placeholder::NEW_LINE_PLACEHOLDER, $content);
+        $content = str_replace('\t', Placeholder::TAB_PLACEHOLDER, $content);
 
-        return '<data' . $matches[ 1 ] . '>' . $content . '</data>';
+        return '<data' . $matches[1] . '>' . $content . '</data>';
     }
 
     /**
-     * @param array $matches
-     *
-     * @return string
+     * @param array<int, string> $matches
      */
-    private static function replaceXliffTags( array $matches ): string {
-        $xliffTags = XliffTags::$tags;
-        $content   = $matches[ 2 ];
+    private static function replaceXliffTags(array $matches): string
+    {
+        $content = $matches[2];
 
-        foreach ( $xliffTags as $xliffTag ) {
-            $content = preg_replace( '|&lt;(' . $xliffTag . '.*?)&gt;|si', Placeholder::LT_PLACEHOLDER . "$1" . Placeholder::GT_PLACEHOLDER, $content );
-            $content = preg_replace( '|&lt;(/' . $xliffTag . ')&gt;|si', Placeholder::LT_PLACEHOLDER . "$1" . Placeholder::GT_PLACEHOLDER, $content );
+        foreach (XliffTags::cases() as $xliffTagCase) {
+            $xliffTag = $xliffTagCase->name;
+            $content = preg_replace(
+                '|&lt;(' . $xliffTag . '.*?)&gt;|si',
+                Placeholder::LT_PLACEHOLDER . "$1" . Placeholder::GT_PLACEHOLDER,
+                $content
+            );
+            $content = preg_replace(
+                '|&lt;(/' . $xliffTag . ')&gt;|si',
+                Placeholder::LT_PLACEHOLDER . "$1" . Placeholder::GT_PLACEHOLDER,
+                $content
+            );
         }
 
-        return '<data' . $matches[ 1 ] . '>' . $content . '</data>';
+        return '<data' . $matches[1] . '>' . $content . '</data>';
     }
 }

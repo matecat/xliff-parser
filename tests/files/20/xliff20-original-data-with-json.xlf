@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en" trgLang="fr">
+    <file id="f1" original="test.xml">
+        <unit id="u1">
+            <originalData>
+                <data id="d1">{"key": "value###___LT_PLACEHOLDER___###tag###___GT_PLACEHOLDER___###"}</data>
+            </originalData>
+            <segment id="s1">
+                <source>Hello <ph id="1" dataRef="d1"/></source>
+                <target>Bonjour <ph id="1" dataRef="d1"/></target>
+            </segment>
+        </unit>
+    </file>
+</xliff>

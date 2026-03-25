@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Matecat\XliffParser\XliffUtils;
 
 use Exception;
@@ -11,220 +13,292 @@ use Matecat\XliffParser\XliffUtils\CheckPipeline\CheckMateCATConverter;
 use Matecat\XliffParser\XliffUtils\CheckPipeline\CheckSDL;
 use Matecat\XliffParser\XliffUtils\CheckPipeline\CheckXliffVersion2;
 
-class XliffProprietaryDetect {
-    /**
-     * @var array
-     */
-    protected static array $fileType = [];
+class XliffProprietaryDetect
+{
+
+    /** @var array<string, mixed> */
+    protected array $fileType = [];
 
     /**
-     * @param string $xliffContent
+     * Handle legacy static calls by delegating to an instance.
      *
-     * @return array
+     * @param string $name
+     * @param array<mixed> $arguments
+     *
+     * @return mixed
+     * @deprecated Use instance methods instead: (new XliffProprietaryDetect())->methodName(...)
+     *
      */
-    public static function getInfoFromXliffContent( string $xliffContent ): array {
-        self::reset();
-        $tmp = self::getFirst1024CharsFromXliff( $xliffContent );
+    public static function __callStatic(string $name, array $arguments): mixed
+    {
+        @trigger_error(
+            sprintf(
+                'Calling %s::%s() statically is deprecated, use (new %s())->%s() instead.',
+                self::class,
+                $name,
+                self::class,
+                $name
+            ),
+            E_USER_DEPRECATED
+        );
 
-        return self::getInfoFromTmp( $tmp );
+        $instance = new self();
+
+        return $instance->$name(...$arguments);
     }
 
     /**
-     * @param string $fullPathToFile
+     * Get file info from the XLIFF content string.
      *
-     * @return array
+     * @return array<string, mixed>
      */
-    public static function getInfo( string $fullPathToFile ): array {
-        self::reset();
-        $tmp                      = self::getFirst1024CharsFromXliff( null, $fullPathToFile );
-        self::$fileType[ 'info' ] = Files::pathInfo( $fullPathToFile );
+    public function getInfoFromXliffContent(string $xliffContent): array
+    {
+        $this->reset();
+        $tmp = $this->getFirst1024CharsFromXliff($xliffContent);
 
-        return self::getInfoFromTmp( $tmp );
+        return $this->getInfoFromTmp($tmp);
     }
 
     /**
-     * @param array $tmp
+     * Get file info from a file path.
      *
-     * @return array
+     * @return array<string, mixed>
      */
-    private static function getInfoFromTmp( array $tmp ): array {
+    public function getInfo(string $fullPathToFile): array
+    {
+        $this->reset();
+        $tmp = $this->getFirst1024CharsFromXliff(null, $fullPathToFile);
+        $this->fileType['info'] = Files::pathInfo($fullPathToFile);
+
+        return $this->getInfoFromTmp($tmp);
+    }
+
+    /**
+     * Process tmp content and return file type info.
+     *
+     * @param array<int, string> $tmp
+     *
+     * @return array<string, mixed>
+     */
+    private function getInfoFromTmp(array $tmp): array
+    {
         try {
-            self::checkVersion( $tmp );
-        } catch ( Exception $ignore ) {
-            // do nothing
-            // self::$fileType[ 'version' ] is left empty
+            $this->checkVersion($tmp);
+        } catch (Exception) {
+            // do nothing - $this->fileType['version'] is left empty
         }
 
         // run CheckXliffProprietaryPipeline
-        $pipeline = self::runPipeline( $tmp );
+        $pipeline = $this->runPipeline($tmp);
 
-        self::$fileType[ 'proprietary' ]            = $pipeline[ 'proprietary' ];
-        self::$fileType[ 'proprietary_name' ]       = $pipeline[ 'proprietary_name' ];
-        self::$fileType[ 'proprietary_short_name' ] = $pipeline[ 'proprietary_short_name' ];
-        self::$fileType[ 'converter_version' ]      = $pipeline[ 'converter_version' ];
+        $this->fileType['proprietary'] = $pipeline['proprietary'];
+        $this->fileType['proprietary_name'] = $pipeline['proprietary_name'];
+        $this->fileType['proprietary_short_name'] = $pipeline['proprietary_short_name'];
+        $this->fileType['converter_version'] = $pipeline['converter_version'];
 
-        return self::$fileType;
+        return $this->fileType;
     }
 
     /**
-     * @param array|null $tmp
+     * Run the proprietary detection pipeline.
      *
-     * @return array
+     * @param array<int, string>|null $tmp
+     *
+     * @return array{proprietary: bool, proprietary_name: string|null, proprietary_short_name: string|null, converter_version: string|null}
      */
-    private static function runPipeline( ?array $tmp = [] ): array {
-        $pipeline = new CheckXliffProprietaryPipeline( $tmp );
-        $pipeline->addCheck( new CheckSDL() );
-        $pipeline->addCheck( new CheckGlobalSight() );
-        $pipeline->addCheck( new CheckMateCATConverter() );
-        $pipeline->addCheck( new CheckXliffVersion2() );
+    private function runPipeline(?array $tmp = []): array
+    {
+        $pipeline = new CheckXliffProprietaryPipeline($tmp);
+        $pipeline->addCheck(new CheckSDL());
+        $pipeline->addCheck(new CheckGlobalSight());
+        $pipeline->addCheck(new CheckMateCATConverter());
+        $pipeline->addCheck(new CheckXliffVersion2());
 
         return $pipeline->run();
     }
 
     /**
-     * Reset $fileType
+     * Reset fileType to default values.
      */
-    private static function reset() {
-        self::$fileType = [
-                'info'                   => [],
-                'proprietary'            => false,
-                'proprietary_name'       => null,
-                'proprietary_short_name' => null
+    private function reset(): void
+    {
+        $this->fileType = [
+            'info' => [],
+            'version' => null,
+            'proprietary' => false,
+            'proprietary_name' => null,
+            'proprietary_short_name' => null,
         ];
     }
 
     /**
-     * @param string|null $stringData
-     *
-     * @return string
+     * Get the first 1024 chars from string data.
      */
-    private static function getFirst1024CharsFromString( ?string $stringData ): string {
-        if ( !empty( $stringData ) ) {
-            return substr( $stringData, 0, 1024 );
+    private function getFirst1024CharsFromString(?string $stringData): string
+    {
+        if (!empty($stringData)) {
+            return substr($stringData, 0, 1024);
         }
 
         return '';
     }
 
     /**
-     * @param string|null $fullPathToFile
-     *
-     * @return string
+     * Get the first 1024 chars from a file.
      */
-    private static function getFirst1024CharsFromFile( ?string $fullPathToFile ): string {
-        $stringData = '';
-        if ( !empty( $fullPathToFile ) && is_file( $fullPathToFile ) ) {
-            $file_pointer = fopen( "$fullPathToFile", 'r' );
-            // Checking Requirements (By specs, I know that xliff version is in the first 1KB)
-            $stringData = fread( $file_pointer, 1024 );
-            fclose( $file_pointer );
+    private function getFirst1024CharsFromFile(?string $fullPathToFile): string
+    {
+        if (empty($fullPathToFile) || !is_file($fullPathToFile)) {
+            return '';
         }
 
-        return $stringData;
+        $filePointer = @fopen($fullPathToFile, 'r');
+        if ($filePointer === false) {
+            return '';
+        }
 
+        // By specs, XLIFF version is in the first 1KB
+        $stringData = fread($filePointer, 1024);
+        fclose($filePointer);
+
+        return $stringData !== false ? $stringData : '';
     }
 
     /**
-     * @param string|null $stringData
-     * @param string|null $fullPathToFile
+     * Get the first 1024 chars from XLIFF (string or file).
      *
-     * @return string[]
+     * @return array<int, string>
      */
-    private static function getFirst1024CharsFromXliff( ?string $stringData = null, string $fullPathToFile = null ): ?array {
-        $stringData = static::getFirst1024CharsFromString( $stringData );
-        if ( empty( $stringData ) ) {
-            $stringData = static::getFirst1024CharsFromFile( $fullPathToFile );
+    private function getFirst1024CharsFromXliff(
+        ?string $stringData = null,
+        ?string $fullPathToFile = null
+    ): array {
+        $stringData = $this->getFirst1024CharsFromString($stringData);
+        if (empty($stringData)) {
+            $stringData = $this->getFirst1024CharsFromFile($fullPathToFile);
         }
 
-        return !empty( $stringData ) ? [ $stringData ] : [];
+        return !empty($stringData) ? [$stringData] : [];
     }
 
     /**
-     * @param array $tmp
+     * Check and set XLIFF version.
+     *
+     * @param array<int, string> $tmp
      *
      * @throws NotSupportedVersionException
      * @throws NotValidFileException
      */
-    protected static function checkVersion( array $tmp ) {
-        if ( isset( $tmp[ 0 ] ) ) {
-            self::$fileType[ 'version' ] = XliffVersionDetector::detect( $tmp[ 0 ] );
+    protected function checkVersion(array $tmp): void
+    {
+        if (isset($tmp[0])) {
+            $this->fileType['version'] = XliffVersionDetector::detect($tmp[0]);
         }
     }
 
     /**
-     * @param string $stringData
+     * Get file info by string data.
      *
-     * @return array
+     * @return array<string, mixed>
+     *
      * @throws NotSupportedVersionException
      * @throws NotValidFileException
      */
-    public static function getInfoByStringData( string $stringData ): array {
-        self::reset();
+    public function getInfoByStringData(string $stringData): array
+    {
+        $this->reset();
 
-        $tmp                      = self::getFirst1024CharsFromXliff( $stringData );
-        self::$fileType[ 'info' ] = [];
-        self::checkVersion( $tmp );
+        $tmp = $this->getFirst1024CharsFromXliff($stringData);
+        $this->fileType['info'] = [];
+        $this->checkVersion($tmp);
 
         // run CheckXliffProprietaryPipeline
-        $pipeline = self::runPipeline( $tmp );
+        $pipeline = $this->runPipeline($tmp);
 
-        self::$fileType[ 'proprietary' ]            = $pipeline[ 'proprietary' ];
-        self::$fileType[ 'proprietary_name' ]       = $pipeline[ 'proprietary_name' ];
-        self::$fileType[ 'proprietary_short_name' ] = $pipeline[ 'proprietary_short_name' ];
-        self::$fileType[ 'converter_version' ]      = $pipeline[ 'converter_version' ];
+        $this->fileType['proprietary'] = $pipeline['proprietary'];
+        $this->fileType['proprietary_name'] = $pipeline['proprietary_name'];
+        $this->fileType['proprietary_short_name'] = $pipeline['proprietary_short_name'];
+        $this->fileType['converter_version'] = $pipeline['converter_version'];
 
-        return self::$fileType;
+        return $this->fileType;
     }
 
     /**
-     * @param string      $fullPath
-     * @param boolean     $enforceOnXliff
-     * @param string|null $filterAddress
+     * Check if the file must be converted.
+     *
+     * @return bool|int True if it must be converted, false if not, -1 on error
+     */
+    public function fileMustBeConverted(
+        string $fullPath,
+        bool $enforceOnXliff = false,
+        ?string $filterAddress = null
+    ): bool|int {
+        $fileType = $this->getInfo($fullPath);
+        $memoryFileType = Files::getMemoryFileType($fullPath);
+
+        if (!Files::isXliff($fullPath) && !$memoryFileType) {
+            return true;
+        }
+
+        if (empty($filterAddress)) {
+            return $this->handleNoFilterAddress($fileType);
+        }
+
+        return $this->shouldConvertWithFilter($fileType, (bool)$memoryFileType, $enforceOnXliff);
+    }
+
+    /**
+     * Handle conversion decision when no filter address is provided.
+     *
+     * @param array<string, mixed> $fileType
      *
      * @return bool|int
      */
-    public static function fileMustBeConverted( string $fullPath, bool $enforceOnXliff = false, ?string $filterAddress = null ) {
-        $convert = true;
-
-        $fileType       = self::getInfo( $fullPath );
-        $memoryFileType = Files::getMemoryFileType( $fullPath );
-
-        if ( Files::isXliff( $fullPath ) || $memoryFileType ) {
-            if ( !empty( $filterAddress ) ) {
-
-                //conversion enforce
-                if ( !$enforceOnXliff ) {
-
-                    //if file is not proprietary AND Enforce is disabled
-                    //we take it as is
-                    if ( !$fileType[ 'proprietary' ] || $memoryFileType ) {
-                        $convert = false;
-                        //ok don't convert a standard sdlxliff
-                    }
-                } else {
-                    //if conversion enforce is active
-                    //we force all xliff files but not files produced by SDL Studio because we can handle them
-                    if ( in_array( $fileType[ 'proprietary_short_name' ], [ 'matecat_converter', 'trados', 'xliff_v2' ] ) || $memoryFileType ) {
-                        $convert = false;
-                        //ok don't convert a standard sdlxliff
-                    }
-                }
-            } elseif ( $fileType[ 'proprietary' ] ) {
-
-                /**
-                 * Application misconfiguration.
-                 * upload should not be happened, but if we are here, raise an error.
-                 * @see upload.class.php
-                 * */
-
-                $convert = -1;
-                //stop execution
-            } else {
-                $convert = false;
-                //ok don't convert a standard sdlxliff
-            }
+    private function handleNoFilterAddress(array $fileType): bool|int
+    {
+        if ($fileType['proprietary']) {
+            /**
+             * Application misconfiguration.
+             * upload should not be happened, but if we are here, raise an error.
+             * @see upload.class.php
+             * */
+            return -1;
         }
 
-        return $convert;
+        return false;
+    }
+
+    /**
+     * Determine if the XLIFF file needs conversion when the filter service is available.
+     *
+     * When a filter address is provided, this method decides whether the XLIFF file
+     * should be converted based on enforcement settings:
+     *
+     * - If enforcement is disabled: Skip conversion for non-proprietary files or memory files
+     * - If enforcement is enabled: Skip conversion only for files we can handle natively
+     *   (MateCat converter, Trados, XLIFF v2) or memory files
+     *
+     * @param array<string, mixed> $fileType File type information including proprietary status
+     * @param bool $memoryFileType Whether a file is a translation memory file
+     * @param bool $enforceOnXliff Whether to enforce conversion on XLIFF files
+     *
+     * @return bool True if a file needs conversion, false otherwise
+     */
+    private function shouldConvertWithFilter(
+        array $fileType,
+        bool $memoryFileType,
+        bool $enforceOnXliff
+    ): bool {
+        if (!$enforceOnXliff) {
+            // Without enforcement: convert only proprietary files (unless it's a memory file)
+            return $fileType['proprietary'] && !$memoryFileType;
+        }
+
+        // With enforcement: skip conversion only for natively handled formats
+        $nativelyHandledFormats = ['matecat_converter', 'trados', 'xliff_v2'];
+        $isNativelyHandled = in_array($fileType['proprietary_short_name'], $nativelyHandledFormats);
+
+        return !($isNativelyHandled || $memoryFileType);
     }
 }

@@ -1,35 +1,41 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Matecat\XliffParser\XliffUtils\CheckPipeline;
 
-class CheckXliffVersion2 implements CheckInterface {
+final class CheckXliffVersion2 implements CheckInterface
+{
+
     /**
-     * @param array|null $tmp
-     *
-     * @return array|null
+     * @inheritDoc
      */
-    public function check( ?array $tmp = [] ): ?array {
-        $fileType = [];
-
-        if ( isset( $tmp[ 0 ] ) ) {
-            preg_match( '|<xliff.*?\sversion\s?=\s?["\'](.*?)["\']|si', substr( $tmp[ 0 ], 0, 1000 ), $versionMatches );
-            preg_match( '|<xliff.*?\sxmlns\s?=\s?["\']urn:oasis:names:tc:xliff:document:(.*?)["\']|si', substr( $tmp[ 0 ], 0, 1000 ), $xmlnsMatches );
-
-            if ( !empty( $versionMatches ) && !empty( $xmlnsMatches ) ) {
-                $version = $versionMatches[ 1 ];
-                $xmlns   = $xmlnsMatches[ 1 ];
-
-                if ( $version === $xmlns && $version >= 2 ) {
-                    $fileType[ 'proprietary' ]            = false;
-                    $fileType[ 'proprietary_name' ]       = 'Xliff v' . $version . ' File';
-                    $fileType[ 'proprietary_short_name' ] = 'xliff_v2';
-                    $fileType[ 'converter_version' ]      = '2.0';
-
-                    return $fileType;
-                }
-            }
+    public function check(?array $tmp = []): ?array
+    {
+        if (!isset($tmp[0])) {
+            return null;
         }
 
-        return null;
+        $content = substr($tmp[0], 0, 1000);
+        preg_match('|<xliff.*?\sversion\s?=\s?["\'](.*?)["\']|si', $content, $versionMatches);
+        preg_match(
+            '|<xliff.*?\sxmlns\s?=\s?["\']urn:oasis:names:tc:xliff:document:(.*?)["\']|si',
+            $content,
+            $xmlnsMatches
+        );
+
+        if (empty($versionMatches) || empty($xmlnsMatches)) {
+            return null;
+        }
+
+        $version = $versionMatches[1];
+        $xmlns = $xmlnsMatches[1];
+
+        return ($version === $xmlns && (float)$version >= 2) ? [
+            'proprietary' => false,
+            'proprietary_name' => 'Xliff v' . $version . ' File',
+            'proprietary_short_name' => 'xliff_v2',
+            'converter_version' => '2.0',
+        ] : null;
     }
 }

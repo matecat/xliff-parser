@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0" version="2.0" srcLang="en" trgLang="fr">
+    <file id="f1" original="test.xml">
+        <unit id="0" translate="yes">
+            <segment id="0" state="initial">
+                <source>Hello World</source>
+                <target></target>
+            </segment>
+        </unit>
+        <unit id="1" translate="no">
+            <segment id="0" state="initial">
+                <source>Do not translate this</source>
+                <target>Do not translate this</target>
+            </segment>
+        </unit>
+        <unit id="2" translate="no">
+            <segment id="0" state="initial">
+                <source>Another translatable unit</source>
+                <target></target>
+            </segment>
+        </unit>
+    </file>
+</xliff>
+

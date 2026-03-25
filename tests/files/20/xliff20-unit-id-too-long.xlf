@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en" trgLang="fr">
+    <file id="f1" original="test.xml">
+        <unit id="this_is_a_very_long_unit_id_that_exceeds_one_hundred_characters_and_should_trigger_the_segment_id_too_long_exception_error">
+            <segment id="s1">
+                <source>Hello</source>
+                <target>Bonjour</target>
+            </segment>
+        </unit>
+    </file>
+</xliff>

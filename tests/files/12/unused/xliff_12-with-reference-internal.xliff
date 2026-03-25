@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff
+        xmlns="urn:oasis:names:tc:xliff:document:1.2"
+        xmlns:its="http://www.w3.org/2005/11/its"
+        its:version="2.0" version="1.2"
+>
+    <file datatype="x-jsont" filter="com.matecat.filters.basefilters.DefaultFilter" original="sample (3).jsont"
+          source-language="en-GB" target-language="it-IT" tool-id="matecat-converter 1.3.7-SNAPSHOT">
+        <header>
+            <reference>
+                <internal-file form="base64">
+                    WUFNTCBtYXJrdXAiLA0KICAgICAgIm5vdGVzIjogIldpemFyZCBzdGVwcyBVSSBtZXNzYWdlcyBpbiBhbiBZQU1MIHN0cnVjdHVyZSINCiAgICB9DQogIH0NCl0NCg==
+                </internal-file>
+            </reference>
+        </header>
+        <body/>
+    </file>
+    <file datatype="x-tos-request" original="req123" source-language="en-GB" target-language="it-IT">
+        <body>
+            <group id="sg1">
+                <trans-unit help-id="8542691" id="phrase-1" xml:space="preserve">
+					<source xml:lang="en-GB">Hello world!</source>
+                    <seg-source>
+						<mrk mid="0" mtype="seg">Hello world!</mrk>
+					</seg-source>
+                    <target xml:lang="it-IT" state="translated">
+						<mrk mid="0" mtype="seg">Ciao mondo!</mrk>
+					</target>
+                    <count-group name="phrase-1">
+						<count count-type="x-matecat-raw">2</count>
+                        <count count-type="x-matecat-weighted">0.4</count>
+					</count-group>
+                    <note annotates="source" from="instructions">Preserve the final exclamation mark</note>
+                    <note annotates="source" from="notes">Standard programmer greeting</note>
+                    <note annotates="source" from="screenshot">https://customer.com/i18n/screenshot-phrase-1.png</note>
+                    <note annotates="source" from="styleguide">https://customer.com/i18n/styleguide.pdf</note>
+                    <note annotates="source" from="references">https://customer.com/i18n/references.txt</note>
+				</trans-unit>
+                <group id="sg2"></group>
+            </group>
+        </body>
+    </file>
+</xliff>

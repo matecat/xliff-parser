@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Matecat\XliffParser\XliffParser;
 
 use DOMDocument;
@@ -12,76 +14,66 @@ use Matecat\XliffParser\Utils\Strings;
 use OverflowException;
 use Psr\Log\LoggerInterface;
 
-abstract class AbstractXliffParser {
+abstract class AbstractXliffParser
+{
 
-    const MAX_GROUP_RECURSION_LEVEL = 50;
+    protected const int MAX_GROUP_RECURSION_LEVEL = 50;
 
-    /**
-     * @var LoggerInterface|null
-     */
-    protected ?LoggerInterface $logger;
-
-    /**
-     * @var string|null
-     */
-    protected ?string $xliffProprietary;
-
-    /**
-     * @var int
-     */
-    protected $xliffVersion;
-
-    /**
-     * AbstractXliffParser constructor.
-     *
-     * @param int                  $xliffVersion
-     * @param string|null          $xliffProprietary
-     * @param LoggerInterface|null $logger
-     */
-    public function __construct( int $xliffVersion, ?string $xliffProprietary = null, LoggerInterface $logger = null ) {
-        $this->xliffVersion     = $xliffVersion;
-        $this->logger           = $logger;
-        $this->xliffProprietary = $xliffProprietary;
+    public function __construct(
+        protected readonly int $xliffVersion,
+        protected readonly ?string $xliffProprietary = null,
+        protected readonly ?LoggerInterface $logger = null
+    ) {
     }
 
     /**
      * @return string
      */
-    protected function getTuTagName(): string {
-        return ( $this->xliffVersion === 1 ) ? 'trans-unit' : 'unit';
+    protected function getTuTagName(): string
+    {
+        return ($this->xliffVersion === 1) ? 'trans-unit' : 'unit';
     }
 
     /**
-     * @param DOMDocument $dom
-     * @param array|null  $output
+     * Parse XLIFF document and extract translation data.
      *
-     * @return array
+     * @param DOMDocument $dom The XLIFF document
+     * @param array<string, mixed>|null $output Initial output array
+     *
+     * @return array<string, mixed> Parsed XLIFF data
      */
-    abstract public function parse( DOMDocument $dom, ?array $output = [] ): array;
+    abstract public function parse(DOMDocument $dom, ?array $output = []): array;
 
     /**
-     * Extract trans-unit content from the current node
+     * Extract trans-unit content from the current node.
      *
-     * @param DOMElement  $childNode
-     * @param array       $transUnitIdArrayForUniquenessCheck
-     * @param DOMDocument $dom
-     * @param array       $output
-     * @param int         $i
-     * @param int         $j
-     * @param array|null  $contextGroups
-     * @param int|null    $recursionLevel
+     * @param DOMNode $childNode The current DOM node
+     * @param array<int, string> $transUnitIdArrayForUniquenessCheck Array to track trans-unit IDs for uniqueness
+     * @param DOMDocument $dom The DOM document
+     * @param array<string, mixed> $output Output array being built
+     * @param int $i File index
+     * @param int $j Trans-unit index
+     * @param array<int, DOMElement>|null $contextGroups Context groups from parent elements
+     * @param int|null $recursionLevel Current recursion depth for nested groups
      */
-    protected function extractTuFromNode( DOMNode $childNode, array &$transUnitIdArrayForUniquenessCheck, DOMDocument $dom, array &$output, int &$i, int &$j, ?array $contextGroups = [], ?int $recursionLevel = 0 ) {
-
-        if ( $childNode->nodeType != XML_ELEMENT_NODE ) {
+    protected function extractTuFromNode(
+        DOMNode $childNode,
+        array &$transUnitIdArrayForUniquenessCheck,
+        DOMDocument $dom,
+        array &$output,
+        int &$i,
+        int &$j,
+        ?array $contextGroups = [],
+        ?int $recursionLevel = 0
+    ): void {
+        if ($childNode->nodeType !== XML_ELEMENT_NODE) {
             return;
         }
 
-        if ( $childNode->nodeName === 'group' ) {
-
+        if ($childNode->nodeName === 'group') {
             // add nested context-groups
-            foreach ( $childNode->childNodes as $nestedChildNode ) {
-                if ( $nestedChildNode->nodeName === 'context-group' ) {
+            foreach ($childNode->childNodes as $nestedChildNode) {
+                if ($nestedChildNode->nodeName === 'context-group' && $nestedChildNode instanceof DOMElement) {
                     $contextGroups[] = $nestedChildNode;
                 }
             }
@@ -89,73 +81,109 @@ abstract class AbstractXliffParser {
             // avoid infinite recursion
             $recursionLevel++;
 
-            foreach ( $childNode->childNodes as $nestedChildNode ) {
-
+            foreach ($childNode->childNodes as $nestedChildNode) {
                 // nested groups
-                if ( $nestedChildNode->nodeName === 'group' ) {
-
-                    if ( $recursionLevel < self::MAX_GROUP_RECURSION_LEVEL ) {
-                        $this->extractTuFromNode( $nestedChildNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j, $contextGroups, $recursionLevel );
+                if ($nestedChildNode->nodeName === 'group') {
+                    if ($recursionLevel < self::MAX_GROUP_RECURSION_LEVEL) {
+                        $this->extractTuFromNode(
+                            $nestedChildNode,
+                            $transUnitIdArrayForUniquenessCheck,
+                            $dom,
+                            $output,
+                            $i,
+                            $j,
+                            $contextGroups,
+                            $recursionLevel
+                        );
                     } else {
-                        throw new OverflowException( "Maximum tag group nesting level of '" . self::MAX_GROUP_RECURSION_LEVEL . "' reached, aborting!" );
+                        throw new OverflowException(
+                            "Maximum tag group nesting level of '" . self::MAX_GROUP_RECURSION_LEVEL . "' reached, aborting!"
+                        );
                     }
-
-                } elseif ( $nestedChildNode->nodeName === $this->getTuTagName() ) {
-                    $this->extractTransUnit( $nestedChildNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j, $contextGroups );
+                } elseif (
+                    $nestedChildNode->nodeName === $this->getTuTagName() &&
+                    $nestedChildNode instanceof DOMElement
+                ) {
+                    $this->extractTransUnit(
+                        $nestedChildNode,
+                        $transUnitIdArrayForUniquenessCheck,
+                        $dom,
+                        $output,
+                        $i,
+                        $j,
+                        $contextGroups
+                    );
                 }
             }
-        } elseif ( $childNode->nodeName === $this->getTuTagName() ) {
-            $this->extractTransUnit( $childNode, $transUnitIdArrayForUniquenessCheck, $dom, $output, $i, $j, $contextGroups );
+        } elseif ($childNode->nodeName === $this->getTuTagName() && $childNode instanceof DOMElement) {
+            $this->extractTransUnit(
+                $childNode,
+                $transUnitIdArrayForUniquenessCheck,
+                $dom,
+                $output,
+                $i,
+                $j,
+                $contextGroups
+            );
         }
     }
 
     /**
-     * Extract and populate 'trans-units' array
+     * Extract and populate 'trans-units' array.
      *
-     * @param DOMElement  $transUnit
-     * @param array       $transUnitIdArrayForUniquenessCheck
-     * @param DOMDocument $dom
-     * @param array       $output
-     * @param int         $i
-     * @param int         $j
-     * @param array|null  $contextGroups
-     *
-     * @return mixed
+     * @param DOMElement $transUnit The trans-unit element
+     * @param array<int, string> $transUnitIdArrayForUniquenessCheck Array to track trans-unit IDs
+     * @param DOMDocument $dom The DOM document
+     * @param array<string, mixed> $output Output array being built
+     * @param int $i File index
+     * @param int $j Trans-unit index
+     * @param array<int, DOMElement>|null $contextGroups Context groups from parent elements
      */
-    abstract protected function extractTransUnit( DOMElement $transUnit, array &$transUnitIdArrayForUniquenessCheck, DomDocument $dom, array &$output, int &$i, int &$j, ?array $contextGroups = [] );
+    abstract protected function extractTransUnit(
+        DOMElement $transUnit,
+        array &$transUnitIdArrayForUniquenessCheck,
+        DOMDocument $dom,
+        array &$output,
+        int &$i,
+        int &$j,
+        ?array $contextGroups = []
+    ): void;
 
     /**
-     * @param DOMDocument $dom
-     * @param DOMElement  $node
+     * Extract tag content and attributes from a DOM node.
      *
-     * @return array
+     * @return array{raw-content: string, attr: array<string, string>}
      */
-    protected function extractContent( DOMDocument $dom, DOMNode $node ): array {
+    protected function extractContent(DOMDocument $dom, DOMNode $node): array
+    {
         return [
-                'raw-content' => $this->extractTagContent( $dom, $node ),
-                'attr'        => $this->extractTagAttributes( $node )
+            'raw-content' => $this->extractTagContent($dom, $node),
+            'attr' => $this->extractTagAttributes($node)
         ];
     }
 
     /**
-     * Extract attributes if they are present
+     * Extract attributes from a DOM element if they are present.
      *
-     * Ex:
+     * Example:
      * <p align=center style="font-size: 12px;">some text</p>
      *
      * $attr->nodeName == 'align' :: $attr->nodeValue == 'center'
      * $attr->nodeName == 'style' :: $attr->nodeValue == 'font-size: 12px;'
      *
-     * @param DOMNode $element
-     *
-     * @return array
+     * @return array<string, string>
      */
-    protected function extractTagAttributes( DOMNode $element ): array {
+    protected function extractTagAttributes(DOMNode $element): array
+    {
         $tagAttributes = [];
 
-        if ( $element->hasAttributes() ) {
-            foreach ( $element->attributes as $attr ) {
-                $tagAttributes[ $attr->nodeName ] = $attr->nodeValue;
+        if ($element->hasAttributes()) {
+            foreach ($element->attributes as $attr) {
+                if ($attr->prefix === 'xml') {
+                    $tagAttributes[$attr->nodeName] = $attr->nodeValue;
+                } else {
+                    $tagAttributes[$attr->localName] = $attr->nodeValue;
+                }
             }
         }
 
@@ -163,73 +191,74 @@ abstract class AbstractXliffParser {
     }
 
     /**
-     * Extract tag content from DOMDocument node
-     *
-     * @param DOMDocument $dom
-     * @param DOMNode     $element
-     *
-     * @return string
+     * Extract tag content from DOMDocument node.
      */
-    protected function extractTagContent( DOMDocument $dom, DOMNode $element ): string {
-        $childNodes       = $element->hasChildNodes();
+    protected function extractTagContent(DOMDocument $dom, DOMNode $element): string
+    {
+        $childNodes = $element->hasChildNodes();
         $extractedContent = '';
 
-        if ( !empty( $childNodes ) ) {
-            foreach ( $element->childNodes as $node ) {
-                $extractedContent .= Emoji::toEntity( Strings::fixNonWellFormedXml( $dom->saveXML( $node ) ) );
+        if (!empty($childNodes)) {
+            foreach ($element->childNodes as $node) {
+                $savedXml = $dom->saveXML($node);
+                if ($savedXml !== false) {
+                    $extractedContent .= Emoji::toEntity(Strings::fixNonWellFormedXml($savedXml));
+                }
             }
         }
 
-        return str_replace( Placeholder::EMPTY_TAG_PLACEHOLDER, '', $extractedContent );
+        return str_replace(Placeholder::EMPTY_TAG_PLACEHOLDER, '', $extractedContent);
     }
 
     /**
-     * Used to extract <seg-source> and <seg-target>
+     * Used to extract <seg-source> and <seg-target>.
      *
-     * @param DOMDocument $dom
-     * @param DOMElement  $childNode
-     *
-     * @return array
+     * @return array<int, array{mid: string|int, ext-prec-tags: string, raw-content: string, ext-succ-tags: string}>
      */
-    protected function extractContentWithMarksAndExtTags( DOMDocument $dom, DOMElement $childNode ): array {
+    protected function extractContentWithMarksAndExtTags(DOMDocument $dom, DOMElement $childNode): array
+    {
         $source = [];
 
         // example:
         // <g id="1"><mrk mid="0" mtype="seg">An English string with g tags</mrk></g>
-        $raw = $this->extractTagContent( $dom, $childNode );
+        $raw = $this->extractTagContent($dom, $childNode);
 
-        $markers = preg_split( '#<mrk\s#si', $raw, -1 );
+        $markers = preg_split('#<mrk\s#i', $raw, -1);
 
         $mi = 0;
-        while ( isset( $markers[ $mi + 1 ] ) ) {
-            unset( $mid );
+        while (isset($markers[$mi + 1])) {
+            unset($mid);
 
-            preg_match( '|mid\s?=\s?["\'](.*?)["\']|si', $markers[ $mi + 1 ], $mid );
+            preg_match('|mid\s?=\s?["\'](.*?)["\']|si', $markers[$mi + 1], $mid);
 
             // if it's a Trados file the trailing spaces after </mrk> are meaningful
             // so we add them to
             $trailingSpaces = '';
-            if ( $this->xliffProprietary === 'trados' ) {
-                preg_match_all( '/<\/mrk>[\s]+/iu', $markers[ $mi + 1 ], $trailingSpacesMatches );
+            if ($this->xliffProprietary === 'trados') {
+                preg_match_all('/<\/mrk>\s+/iu', $markers[$mi + 1], $trailingSpacesMatches);
 
-                if ( isset( $trailingSpacesMatches[ 0 ] ) && count( $trailingSpacesMatches[ 0 ] ) > 0 ) {
-                    foreach ( $trailingSpacesMatches[ 0 ] as $match ) {
-                        $trailingSpaces = str_replace( '</mrk>', '', $match );
+                if (count($trailingSpacesMatches[0]) > 0) {
+                    foreach ($trailingSpacesMatches[0] as $match) {
+                        $trailingSpaces = str_replace('</mrk>', '', $match);
                     }
                 }
             }
 
             //re-build the mrk tag after the split
-            $originalMark = trim( '<mrk ' . $markers[ $mi + 1 ] );
+            $originalMark = trim('<mrk ' . $markers[$mi + 1]);
 
-            $mark_string  = preg_replace( '#^<mrk\s[^>]+>(.*)#', '$1', $originalMark ); // at this point we have: ---> 'Test </mrk> </g>>'
-            $mark_content = preg_split( '#</mrk>#si', $mark_string );
+            $mark_string = preg_replace(
+                '#^<mrk\s[^>]+>(.*)#',
+                '$1',
+                $originalMark
+            ); // at this point we have: ---> 'Test </mrk> </g>>'
+            $mark_content = preg_split('#</mrk>#i', $mark_string);
 
             $sourceArray = [
-                    'mid'           => ( isset( $mid[ 1 ] ) ) ? $mid[ 1 ] : $mi,
-                    'ext-prec-tags' => ( $mi == 0 ? $markers[ 0 ] : "" ),
-                    'raw-content'   => ( isset( $mark_content[ 0 ] ) ) ? $mark_content[ 0 ] . $trailingSpaces : '',
-                    'ext-succ-tags' => ( isset( $mark_content[ 1 ] ) ) ? $mark_content[ 1 ] : '',
+                'mid' => (isset($mid[1])) ? $mid[1] : $mi,
+                'ext-prec-tags' => ($mi == 0 ? $markers[0] : ""),
+                'raw-content' => (isset($mark_content[0])) ? $mark_content[0] . $trailingSpaces : '',
+                'ext-succ-tags' => (isset($mark_content[1])) ? $mark_content[1] : '',
             ];
 
             $source[] = $sourceArray;
@@ -241,41 +270,23 @@ abstract class AbstractXliffParser {
     }
 
     /**
-     * @param array $originalData
-     *
-     * @return array
+     * Check if a string contains mrk tags.
      */
-    protected function getDataRefMap( array $originalData ): array {
-        // dataRef map
-        $dataRefMap = [];
-        foreach ( $originalData as $datum ) {
-            if ( isset( $datum[ 'attr' ][ 'id' ] ) ) {
-                $dataRefMap[ $datum[ 'attr' ][ 'id' ] ] = $datum[ 'raw-content' ];
-            }
-        }
+    protected function stringContainsMarks(string $raw): bool
+    {
+        $markers = preg_split('#<mrk\s#i', $raw, -1);
 
-        return $dataRefMap;
+        return isset($markers[1]);
     }
 
     /**
-     * @param $raw
+     * Parse note value and return array with JSON or raw content.
      *
-     * @return bool
-     */
-    protected function stringContainsMarks( $raw ): bool {
-        $markers = preg_split( '#<mrk\s#si', $raw, -1 );
-
-        return isset( $markers[ 1 ] );
-    }
-
-    /**
-     * @param      $noteValue
-     * @param bool $escapeStrings
-     *
-     * @return array
+     * @return array{json?: string, raw-content?: string}
      * @throws Exception
      */
-    protected function JSONOrRawContentArray( $noteValue, ?bool $escapeStrings = true ): array {
+    protected function JSONOrRawContentArray(string $noteValue, ?bool $escapeStrings = true): array
+    {
         //
         // convert double escaped entites
         //
@@ -285,17 +296,17 @@ abstract class AbstractXliffParser {
         // &amp;amp; ---> &amp;
         // &amp;apos ---> &apos;
         //
-        if ( Strings::isADoubleEscapedEntity( $noteValue ) ) {
-            $noteValue = Strings::htmlspecialchars_decode( $noteValue, true );
+        if (Strings::isADoubleEscapedEntity($noteValue)) {
+            $noteValue = Strings::htmlSpecialCharsDecode($noteValue, true);
         } else {
             // for non escaped entities $escapeStrings is always true for security reasons
             $escapeStrings = true;
         }
 
-        if ( Strings::isJSON( $noteValue ) ) {
-            return [ 'json' => Strings::cleanCDATA( $noteValue ) ];
+        if (Strings::isJSON($noteValue)) {
+            return ['json' => Strings::cleanCDATA($noteValue)];
         }
 
-        return [ 'raw-content' => Strings::fixNonWellFormedXml( $noteValue, $escapeStrings ) ];
+        return ['raw-content' => Strings::fixNonWellFormedXml($noteValue, $escapeStrings)];
     }
 }

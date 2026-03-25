@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+    <file datatype="plaintext" original="test.txt" source-language="en" target-language="fr">
+        <header>
+            <skl>
+                <reference>
+                    <external-file href="http://example.com/skeleton.skl"/>
+                </reference>
+            </skl>
+        </header>
+        <body>
+            <trans-unit id="1">
+                <source>Hello</source>
+                <target>Bonjour</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

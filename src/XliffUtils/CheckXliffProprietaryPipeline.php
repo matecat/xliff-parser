@@ -1,75 +1,72 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Matecat\XliffParser\XliffUtils;
 
 use Matecat\XliffParser\XliffUtils\CheckPipeline\CheckInterface;
 
-class CheckXliffProprietaryPipeline {
-    /**
-     * @var array|null
-     */
+final class CheckXliffProprietaryPipeline
+{
+
+    /** @var array<int, string>|null */
     private ?array $tmp;
 
-    /**
-     * @var array|null
-     */
-    private ?array $steps;
+    /** @var array<int, CheckInterface> */
+    private array $steps = [];
 
     /**
-     * CheckXliffProprietaryPipeline constructor.
-     *
-     * @param array|null $tmp
+     * @param array<int, string>|null $tmp First 1024 chars of XLIFF content
      */
-    public function __construct( ?array $tmp = [] ) {
-        $this->tmp   = $tmp;
-        $this->steps = [];
+    public function __construct(?array $tmp = [])
+    {
+        $this->tmp = $tmp;
     }
 
     /**
-     * @param CheckInterface $step
+     * Add a check step to the pipeline.
      */
-    public function addCheck( CheckInterface $step ) {
+    public function addCheck(CheckInterface $step): void
+    {
         $this->steps[] = $step;
     }
 
     /**
-     * @return array
+     * Run all checks and return file type information.
+     *
+     * @return array{proprietary: bool, proprietary_name: string|null, proprietary_short_name: string|null, converter_version: string|null}
      */
-    public function run(): array {
-        $fileType = [];
-
-        /** @var CheckInterface $step */
-        foreach ( $this->steps as $step ) {
-            if ( null !== $step->check( $this->tmp ) ) {
-                $fileType = $step->check( $this->tmp );
+    public function run(): array
+    {
+        foreach ($this->steps as $step) {
+            $result = $step->check($this->tmp);
+            if ($result !== null && $this->isValid($result)) {
+                return $result;
             }
         }
 
-        if ( !empty( $fileType ) && $this->isValid( $fileType ) ) {
-            return $fileType;
-        }
-
         return [
-                'proprietary'            => false,
-                'proprietary_name'       => null,
-                'proprietary_short_name' => null,
-                'converter_version'      => null,
+            'proprietary' => false,
+            'proprietary_name' => null,
+            'proprietary_short_name' => null,
+            'converter_version' => null,
         ];
     }
 
     /**
-     * @param $fileType
+     * Validate that file type array has all required keys.
      *
-     * @return bool
+     * @param array<string, mixed> $fileType
      */
-    private function isValid( $fileType ): bool {
+    private function isValid(array $fileType): bool
+    {
         $mandatoryKeys = [
-                'proprietary',
-                'proprietary_name',
-                'proprietary_short_name',
-                'converter_version',
+            'proprietary',
+            'proprietary_name',
+            'proprietary_short_name',
+            'converter_version',
         ];
 
-        return array_keys( $fileType ) === $mandatoryKeys;
+        return array_keys($fileType) === $mandatoryKeys;
     }
 }

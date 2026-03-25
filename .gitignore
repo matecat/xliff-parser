@@ -1,7 +1,8 @@
 .idea
 .php_cs.cache
 .phpunit.result.cache
+.phpunit.cache
 composer.lock
 vendor
-tests/files/uber/output
-tests/files/output
+/tests/**/output/
+coverage-report
