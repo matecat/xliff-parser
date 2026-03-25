@@ -223,7 +223,8 @@ class Xliff12 extends AbstractXliffReplacer {
             }
         }
 
-        $transUnitTranslation .= $seg[ 'prev_tags' ] . $this->rebuildMarks( $seg, $translation ) . ltrim( $seg[ 'succ_tags' ] );
+        $succTags = $seg[ 'succ_tags' ] !== null ? ltrim( $seg[ 'succ_tags' ] ) : null;
+        $transUnitTranslation .= $seg[ 'prev_tags' ] . $this->rebuildMarks( $seg, $translation ) . $succTags;
 
         return $transUnitTranslation;
     }

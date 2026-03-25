@@ -270,7 +270,12 @@ class Strings {
      *
      * @return int
      */
-    public static function getTheNumberOfTrailingSpaces( $segment ): int {
+    public static function getTheNumberOfTrailingSpaces( ?string $segment = null ): int {
+
+        if ( empty( $segment ) ) {
+            return 0;
+        }
+
         return mb_strlen( $segment ) - mb_strlen( rtrim( $segment, ' ' ) );
     }
 
