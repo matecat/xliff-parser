@@ -746,7 +746,7 @@ class XliffParserV2Test extends Base
     {
         $parsed = (new XliffParser())->xliffToArray($this->getTestFile('20/dataref-json.xlf'));
 
-        $this->assertEquals($parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ]['original-data'][0]['raw-content'], "[1]");
-        $this->assertEquals($parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ]['original-data'][1]['raw-content'], "[2]");
+        $this->assertEquals("[1]", $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ]['original-data'][0]['raw-content']);
+        $this->assertEquals("[2]", $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ]['original-data'][1]['raw-content']);
     }
 }
