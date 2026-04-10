@@ -107,7 +107,7 @@ class XliffParserV2 extends AbstractXliffParser
                 foreach ($childNode->childNodes as $note) {
                     $noteValue = trim($note->nodeValue);
                     if ('' !== $noteValue) {
-                        $notes[] = $this->JSONOrRawContentArray($noteValue);
+                        $notes[] = $this->parseNoteStringIntoArray($noteValue);
                     }
                 }
             }
@@ -274,7 +274,7 @@ class XliffParserV2 extends AbstractXliffParser
 
                         if ('' !== $dataValue) {
                             // force to raw-content
-                            $rawContentArray = $this->JSONOrRawContentArray($dataValue, false, false);
+                            $rawContentArray = $this->parseNoteStringIntoArray($dataValue, false, false);
 
                             // restore xliff tags
                             if (isset($rawContentArray['raw-content'])) {
@@ -387,7 +387,7 @@ class XliffParserV2 extends AbstractXliffParser
                 foreach ($childNode->childNodes as $note) {
                     $noteValue = trim($note->nodeValue);
                     if ('' !== $noteValue) {
-                        $notes[] = $this->JSONOrRawContentArray($noteValue);
+                        $notes[] = $this->parseNoteStringIntoArray($noteValue);
                     }
                 }
             }
@@ -402,7 +402,7 @@ class XliffParserV2 extends AbstractXliffParser
 
                                 if ('' !== $metaValue) {
                                     $notes[] = array_merge(
-                                        $this->JSONOrRawContentArray($metaValue),
+                                        $this->parseNoteStringIntoArray($metaValue),
                                         [
                                             'attr' => [
                                                 'type' => $type

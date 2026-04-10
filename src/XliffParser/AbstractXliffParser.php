@@ -285,7 +285,7 @@ abstract class AbstractXliffParser
      * @return array{json?: string, raw-content?: string}
      * @throws Exception
      */
-    protected function JSONOrRawContentArray(string $noteValue, ?bool $escapeStrings = true, ?bool $jsonCheck = true): array
+    protected function parseNoteStringIntoArray(string $noteValue, ?bool $escapeStrings = true, ?bool $jsonCheck = true): array
     {
         //
         // convert double escaped entites
