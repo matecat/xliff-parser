@@ -626,9 +626,9 @@ class XliffParserV2Test extends Base
         $originalData = $parsed['files'][1]['trans-units'][1]['original-data'];
         $this->assertNotEmpty($originalData);
         // The JSON should have placeholders converted back to &lt; and &gt;
-        $this->assertArrayHasKey('json', $originalData[0]);
-        $this->assertStringContainsString('&lt;', $originalData[0]['json']);
-        $this->assertStringContainsString('&gt;', $originalData[0]['json']);
+        $this->assertArrayHasKey('raw-content', $originalData[0]);
+        $this->assertStringContainsString('&lt;', $originalData[0]['raw-content']);
+        $this->assertStringContainsString('&gt;', $originalData[0]['raw-content']);
     }
 
     /**
@@ -741,5 +741,12 @@ class XliffParserV2Test extends Base
     }
 
 
+    #[Test]
+    public function force_original_data_to_raw_content(): void
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('20/dataref-json.xlf'));
 
+        $this->assertEquals($parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ]['original-data'][0]['raw-content'], "[1]");
+        $this->assertEquals($parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ]['original-data'][1]['raw-content'], "[2]");
+    }
 }

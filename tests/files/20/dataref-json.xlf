@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0" xmlns:slr="urn:oasis:names:tc:xliff:sizerestriction:2.0" xmlns:memsource="http://www.memsource.com/xliff2.0/1.0" version="2.0" memsource:wfLevel="2" srcLang="en-us" trgLang="ar-sa">
+<file id="EBEoXXQFo703cZWQ0_dc10:0-4" memsource:taskId="EBEoXXQFo703cZWQ0_dc10" canResegment="no" original="094ef003-d78d-437a-ac92-b16e5a944ea6-bloc.xml">
+<slr:profiles generalProfile="xliff:codepoints"/>
+<unit id="0" memsource:tGroupBegin="0" memsource:tGroupEnd="0">
+<mda:metadata><mda:metaGroup><mda:meta type="key">49da70bc-edf6-434f-a36c-5e2a97fa90d0</mda:meta>
+<mda:meta type="key-note">
+      Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/bloc/keys" target="_blank"&gt;bloc&lt;/a&gt;, KeyName: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/bloc/key/bloc.1cc69bf326e88c71f9005549c1c70b7d/overview" target="_blank"&gt;bloc.1cc69bf326e88c71f9005549c1c70b7d&lt;/a&gt;&lt;br&gt; Description: &lt;font color="blue"&gt;Content Type: crm
+Preview Link: https://bloc-plus.uberinternal.com/edit/c5d8dbd8-2cb4-4b06-aeff-83ff18ed3112
+Target Audience: eater&lt;/font&gt;&lt;br&gt;DynamicValueExample: &lt;i&gt;&lt;/i&gt;&lt;br&gt;Component: &lt;font color="green"&gt;&lt;/font&gt;&lt;br&gt;Audience: []&lt;br&gt;ReferenceLinks: []&lt;br&gt;MobileUsages: []&lt;br&gt;AdditionalInfo: {}&lt;br&gt;
+      
+    </mda:meta>
+<mda:meta type="file-part">xml-para</mda:meta>
+</mda:metaGroup></mda:metadata>
+<memsource:additionalTagData>
+<memsource:tag id="source1"><memsource:tagId>1</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+<memsource:tag id="source2"><memsource:tagId>2</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+</memsource:additionalTagData>
+<originalData>
+<data id="source1">[1]</data>
+<data id="source2">[2]</data>
+</originalData>
+<segment id="0" state="translated">
+<source>Don’t miss up to %<ph id="source1" dataRef="source1"/>v off your next %<ph id="source2" dataRef="source2"/>v orders</source>
+<target>لا تفوِّت فرصة زيارة تصل إلى٪<ph id="source1" dataRef="source1"/> v خصم على٪ التالي<ph id="source2" dataRef="source2"/> v الطلبات</target>
+</segment>
+</unit>
+<unit id="1" memsource:tGroupBegin="1" memsource:tGroupEnd="1">
+<mda:metadata><mda:metaGroup><mda:meta type="key">85bf94bf-11aa-4284-8bf9-7992c5f64311</mda:meta>
+<mda:meta type="key-note">
+      Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/bloc/keys" target="_blank"&gt;bloc&lt;/a&gt;, KeyName: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/bloc/key/bloc.87d9da8ec3814cfd634f43e4fda7c668/overview" target="_blank"&gt;bloc.87d9da8ec3814cfd634f43e4fda7c668&lt;/a&gt;&lt;br&gt; Description: &lt;font color="blue"&gt;Content Type: crm
+Preview Link: https://bloc-plus.uberinternal.com/edit/c5d8dbd8-2cb4-4b06-aeff-83ff18ed3112
+Target Audience: eater&lt;/font&gt;&lt;br&gt;DynamicValueExample: &lt;i&gt;&lt;/i&gt;&lt;br&gt;Component: &lt;font color="green"&gt;&lt;/font&gt;&lt;br&gt;Audience: []&lt;br&gt;ReferenceLinks: []&lt;br&gt;MobileUsages: []&lt;br&gt;AdditionalInfo: {}&lt;br&gt;
+      
+    </mda:meta>
+<mda:meta type="file-part">xml-para</mda:meta>
+</mda:metaGroup></mda:metadata>
+<memsource:additionalTagData>
+<memsource:tag id="source3"><memsource:tagId>3</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+<memsource:tag id="source1"><memsource:tagId>1</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+<memsource:tag id="source2"><memsource:tagId>2</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+</memsource:additionalTagData>
+<originalData>
+<data id="source3">{{.Custom.membership_integration.push_subh}}</data>
+<data id="source1">{{.Custom.promo_val}}</data>
+<data id="source2">{{.Custom.max_red}}</data>
+</originalData>
+<segment id="1" state="translated">
+<source><ph id="source1" dataRef="source1"/> off your next <ph id="source2" dataRef="source2"/> orders is waiting for you. <ph id="source3" dataRef="source3"/></source>
+<target><ph id="source1" dataRef="source1"/> قبالة الخاص بك القادم<ph id="source2" dataRef="source2"/> الطلبات في انتظارك. <ph id="source3" dataRef="source3"/></target>
+</segment>
+</unit>
+<unit id="2" memsource:tGroupBegin="2" memsource:tGroupEnd="2">
+<mda:metadata><mda:metaGroup><mda:meta type="key">939e1764-0f9f-4b3f-9ba0-d9ff26f37288</mda:meta>
+<mda:meta type="key-note">
+      Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/bloc/keys" target="_blank"&gt;bloc&lt;/a&gt;, KeyName: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/bloc/key/bloc.799e0516b9cee7dd9cd2fdf8c1b6e993/overview" target="_blank"&gt;bloc.799e0516b9cee7dd9cd2fdf8c1b6e993&lt;/a&gt;&lt;br&gt; Description: &lt;font color="blue"&gt;Content Type: crm
+Preview Link: https://bloc-plus.uberinternal.com/edit/c5d8dbd8-2cb4-4b06-aeff-83ff18ed3112
+Target Audience: eater&lt;/font&gt;&lt;br&gt;DynamicValueExample: &lt;i&gt;&lt;/i&gt;&lt;br&gt;Component: &lt;font color="green"&gt;&lt;/font&gt;&lt;br&gt;Audience: []&lt;br&gt;ReferenceLinks: []&lt;br&gt;MobileUsages: []&lt;br&gt;AdditionalInfo: {}&lt;br&gt;
+      
+    </mda:meta>
+<mda:meta type="file-part">xml-para</mda:meta>
+</mda:metaGroup></mda:metadata>
+<memsource:additionalTagData>
+<memsource:tag id="source1"><memsource:tagId>1</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+<memsource:tag id="source2"><memsource:tagId>2</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+</memsource:additionalTagData>
+<originalData>
+<data id="source1">{{ .Custom.promo_val }}</data>
+<data id="source2">{{ .Custom.max_red }}</data>
+</originalData>
+<segment id="2" state="translated">
+<source>Don’t miss up to <ph id="source1" dataRef="source1"/> off your next <ph id="source2" dataRef="source2"/> orders</source>
+<target>لا تفوّت حتى<ph id="source1" dataRef="source1"/> قبالة الخاص بك القادم<ph id="source2" dataRef="source2"/> الطلبات</target>
+</segment>
+</unit>
+<unit id="3" memsource:tGroupBegin="3" memsource:tGroupEnd="4">
+<mda:metadata><mda:metaGroup><mda:meta type="key">b72f72c1-8e1e-4d13-bf98-fb5ffa18519b</mda:meta>
+<mda:meta type="key-note">
+      Repo: &lt;a href ="https://i18n.uberinternal.com/rosetta2/repo/bloc/keys" target="_blank"&gt;bloc&lt;/a&gt;, KeyName: &lt;a href="https://i18n.uberinternal.com/rosetta2/repo/bloc/key/bloc.9e66645702d6a4b8f21d1f911e35de7c/overview" target="_blank"&gt;bloc.9e66645702d6a4b8f21d1f911e35de7c&lt;/a&gt;&lt;br&gt; Description: &lt;font color="blue"&gt;Content Type: crm
+Preview Link: https://bloc-plus.uberinternal.com/edit/c5d8dbd8-2cb4-4b06-aeff-83ff18ed3112
+Target Audience: eater&lt;/font&gt;&lt;br&gt;DynamicValueExample: &lt;i&gt;&lt;/i&gt;&lt;br&gt;Component: &lt;font color="green"&gt;&lt;/font&gt;&lt;br&gt;Audience: []&lt;br&gt;ReferenceLinks: []&lt;br&gt;MobileUsages: []&lt;br&gt;AdditionalInfo: {}&lt;br&gt;
+      
+    </mda:meta>
+<mda:meta type="file-part">xml-para</mda:meta>
+</mda:metaGroup></mda:metadata>
+<memsource:additionalTagData>
+<memsource:tag id="source1"><memsource:tagId>1</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+<memsource:tag id="source2"><memsource:tagId>2</memsource:tagId><memsource:type>code</memsource:type></memsource:tag>
+</memsource:additionalTagData>
+<originalData>
+<data id="source1">{{.Custom.promo_val}}</data>
+<data id="source2">{{.Custom.max_red}}</data>
+</originalData>
+<segment id="3" state="translated">
+<source><ph id="source1" dataRef="source1"/> off your next <ph id="source2" dataRef="source2"/> orders is waiting for you.</source>
+<target><ph id="source1" dataRef="source1"/> قبالة الخاص بك القادم<ph id="source2" dataRef="source2"/> الطلبات في انتظارك.</target>
+</segment>
+<segment id="4" state="translated">
+<source>Ts&amp;Cs apply.</source>
+<target>تُطبَّق الأحكام والشروط.</target>
+</segment>
+</unit>
+</file>
+</xliff>
