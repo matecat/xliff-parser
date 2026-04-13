@@ -107,7 +107,7 @@ class XliffParserV2 extends AbstractXliffParser
                 foreach ($childNode->childNodes as $note) {
                     $noteValue = trim($note->nodeValue);
                     if ('' !== $noteValue) {
-                        $notes[] = $this->JSONOrRawContentArray($noteValue);
+                        $notes[] = $this->parseNoteStringIntoArray($noteValue);
                     }
                 }
             }
@@ -273,27 +273,20 @@ class XliffParserV2 extends AbstractXliffParser
                         $dataValue = str_replace(Placeholder::TAB_PLACEHOLDER, '\t', $dataValue);
 
                         if ('' !== $dataValue) {
-                            $jsonOrRawContentArray = $this->JSONOrRawContentArray($dataValue, false);
+                            // force to raw-content
+                            $rawContentArray = $this->parseNoteStringIntoArray($dataValue, false, false);
 
                             // restore xliff tags
-                            if (isset($jsonOrRawContentArray['json'])) {
-                                $jsonOrRawContentArray['json'] = str_replace(
+                            if (isset($rawContentArray['raw-content'])) {
+                                $rawContentArray['raw-content'] = str_replace(
                                     [Placeholder::LT_PLACEHOLDER, Placeholder::GT_PLACEHOLDER],
                                     ['&lt;', '&gt;'],
-                                    $jsonOrRawContentArray['json']
-                                );
-                            }
-
-                            if (isset($jsonOrRawContentArray['raw-content'])) {
-                                $jsonOrRawContentArray['raw-content'] = str_replace(
-                                    [Placeholder::LT_PLACEHOLDER, Placeholder::GT_PLACEHOLDER],
-                                    ['&lt;', '&gt;'],
-                                    $jsonOrRawContentArray['raw-content']
+                                    $rawContentArray['raw-content']
                                 );
                             }
 
                             $originalData[] = array_merge(
-                                $jsonOrRawContentArray,
+                                $rawContentArray,
                                 [
                                     'attr' => [
                                         'id' => $dataId
@@ -394,7 +387,7 @@ class XliffParserV2 extends AbstractXliffParser
                 foreach ($childNode->childNodes as $note) {
                     $noteValue = trim($note->nodeValue);
                     if ('' !== $noteValue) {
-                        $notes[] = $this->JSONOrRawContentArray($noteValue);
+                        $notes[] = $this->parseNoteStringIntoArray($noteValue);
                     }
                 }
             }
@@ -409,7 +402,7 @@ class XliffParserV2 extends AbstractXliffParser
 
                                 if ('' !== $metaValue) {
                                     $notes[] = array_merge(
-                                        $this->JSONOrRawContentArray($metaValue),
+                                        $this->parseNoteStringIntoArray($metaValue),
                                         [
                                             'attr' => [
                                                 'type' => $type

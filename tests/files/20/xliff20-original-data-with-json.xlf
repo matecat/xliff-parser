@@ -3,7 +3,7 @@
     <file id="f1" original="test.xml">
         <unit id="u1">
             <originalData>
-                <data id="d1">{"key": "value###___LT_PLACEHOLDER___###tag###___GT_PLACEHOLDER___###"}</data>
+                <data id="d1">{"key": "&lt;g&gt;"}</data>
             </originalData>
             <segment id="s1">
                 <source>Hello <ph id="1" dataRef="d1"/></source>
