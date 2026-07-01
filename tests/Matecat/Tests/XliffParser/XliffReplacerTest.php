@@ -2064,6 +2064,144 @@ class XliffReplacerTest extends Base
             @unlink($outputFile);
         }
     }
+
+    /**
+     * Trans-unit ids are only guaranteed unique within a single <file> element (OASIS XLIFF 1.2 §2.4),
+     * not across the whole document. Two <file> elements are allowed to reuse the same trans-unit id.
+     *
+     * Regression test: without file-scoped disambiguation, both trans-units would resolve to the same
+     * entry in $transUnits and one file's translation would be lost or duplicated into the other.
+     *
+     * @throws NotValidFileException
+     * @throws NotSupportedVersionException
+     * @throws InvalidXmlException
+     * @throws XmlParsingException
+     */
+    #[Test]
+    public function can_disambiguate_duplicate_trans_unit_id_across_different_file_tags(): void
+    {
+        $data = [
+            0 => [
+                'data_ref_map' => null,
+                'eq_word_count' => '1.00',
+                'error' => '',
+                'internal_id' => '0|tu1',
+                'mrk_id' => '0',
+                'mrk_prev_tags' => null,
+                'mrk_succ_tags' => null,
+                'prev_tags' => '',
+                'r2' => null,
+                'raw_word_count' => '1.00',
+                'segment' => 'First file source',
+                'sid' => '1',
+                'source_page' => null,
+                'status' => TranslationStatus::TRANSLATED,
+                'succ_tags' => '',
+                'translation' => 'Prima traduzione',
+            ],
+            1 => [
+                'data_ref_map' => null,
+                'eq_word_count' => '1.00',
+                'error' => '',
+                'internal_id' => '1|tu1',
+                'mrk_id' => '0',
+                'mrk_prev_tags' => null,
+                'mrk_succ_tags' => null,
+                'prev_tags' => '',
+                'r2' => null,
+                'raw_word_count' => '1.00',
+                'segment' => 'Second file source',
+                'sid' => '2',
+                'source_page' => null,
+                'status' => TranslationStatus::TRANSLATED,
+                'succ_tags' => '',
+                'translation' => 'Seconda traduzione',
+            ],
+        ];
+
+        // Composite keys: "<0-based ordinal position of the enclosing <file> element>|<trans-unit id>".
+        // This is the key format produced by MateCat's SegmentExtractor for newly-imported projects.
+        $transUnits = [
+            '0|tu1' => [0],
+            '1|tu1' => [1],
+        ];
+
+        $inputFile = $this->getTestFilePath('12/duplicate-trans-unit-id-across-files.xlf');
+        $outputPath = 'output/duplicate-trans-unit-id-across-files.xlf';
+        $outputFile = $this->getTestFilePath($outputPath);
+
+        $xliffParser = new XliffParser();
+        $xliffParser->replaceTranslation($inputFile, $data, $transUnits, 'it-IT', $outputFile);
+
+        $output = $xliffParser->xliffToArray($this->getTestFile($outputPath));
+
+        $this->assertEquals(
+            'Prima traduzione',
+            $output['files'][1]['trans-units'][1]['seg-target'][0]['raw-content']
+        );
+        $this->assertEquals(
+            'Seconda traduzione',
+            $output['files'][2]['trans-units'][1]['seg-target'][0]['raw-content']
+        );
+    }
+
+    /**
+     * Backward compatibility: segments imported before this fix have plain (non file-scoped)
+     * internal_id values, which cannot disambiguate a trans-unit id reused across <file> elements
+     * (that's exactly the limitation this fix removes for newly-imported data). The replacer must
+     * still fall back to the plain-id lookup and behave exactly as it did before this change,
+     * rather than erroring out or leaving the target empty, so every pre-existing project keeps
+     * downloading the same way it always has.
+     *
+     * @throws NotValidFileException
+     * @throws NotSupportedVersionException
+     * @throws InvalidXmlException
+     * @throws XmlParsingException
+     */
+    #[Test]
+    public function falls_back_to_plain_internal_id_for_pre_fix_data(): void
+    {
+        $data = $this->getData([
+            [
+                'data_ref_map' => null,
+                'eq_word_count' => '1.00',
+                'error' => '',
+                'internal_id' => 'tu1',
+                'mrk_id' => '0',
+                'mrk_prev_tags' => null,
+                'mrk_succ_tags' => null,
+                'prev_tags' => '',
+                'r2' => null,
+                'raw_word_count' => '1.00',
+                'segment' => 'First file source',
+                'sid' => '1',
+                'source_page' => null,
+                'status' => TranslationStatus::TRANSLATED,
+                'succ_tags' => '',
+                'translation' => 'Prima traduzione',
+            ],
+        ]);
+
+        $inputFile = $this->getTestFilePath('12/duplicate-trans-unit-id-across-files.xlf');
+        $outputPath = 'output/duplicate-trans-unit-id-across-files-plain.xlf';
+        $outputFile = $this->getTestFilePath($outputPath);
+
+        $xliffParser = new XliffParser();
+        $xliffParser->replaceTranslation($inputFile, $data['data'], $data['transUnits'], 'it-IT', $outputFile);
+
+        $output = $xliffParser->xliffToArray($this->getTestFile($outputPath));
+
+        // Pre-fix behavior, preserved: with only one plain-id entry, both occurrences of "tu1"
+        // resolve to it via the fallback (no disambiguation possible without file-scoped data).
+        $this->assertEquals(
+            'Prima traduzione',
+            $output['files'][1]['trans-units'][1]['seg-target'][0]['raw-content']
+        );
+        $this->assertEquals(
+            'Prima traduzione',
+            $output['files'][2]['trans-units'][1]['seg-target'][0]['raw-content']
+        );
+    }
 }
 
 class DummyXliffReplacerCallbackWhichReturnTrue implements XliffReplacerCallbackInterface

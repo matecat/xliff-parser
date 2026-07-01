@@ -41,6 +41,7 @@ abstract class AbstractXliffReplacer
     protected array $lastTransUnit = [];
 
     protected int $segmentInUnitPosition = 0;
+    protected int $currentFileIndex = -1;                 // 0-based ordinal of the current <file> element
     protected ?string $currentTransUnitId = null;        // id of current <trans-unit>
     protected ?string $currentTransUnitIsTranslatable = null; // 'translate' attribute of current <trans-unit>
     protected bool $hasWrittenCounts = false;  // check if <unit> already wrote segment counts (forXliff v 2.*)
@@ -372,13 +373,27 @@ abstract class AbstractXliffReplacer
      */
     protected function handleOpenUnit(string $name, array $attr): void
     {
+        // <trans-unit id> is only guaranteed unique within its own <file> element (OASIS XLIFF 1.2 §2.4),
+        // not across the whole document, so track the ordinal position of the enclosing <file> to
+        // disambiguate trans-units that reuse the same id in different <file> elements.
+        if ('file' === $name) {
+            $this->currentFileIndex++;
+
+            return;
+        }
+
         // check if we are entering into a <trans-unit> (xliff v1.*) or <unit> (xliff v2.*)
         if ($this->tuTagName === $name) {
             $this->inTU = true;
 
             // get id
             // trim to first 100 characters because this is the limit on Matecat's DB
-            $this->currentTransUnitId = substr($attr['id'], 0, 100);
+            $rawTransUnitId = substr($attr['id'], 0, 100);
+
+            // prefer the file-scoped key if the caller supplied one (post-fix internal_id format);
+            // fall back to the plain id for backward compatibility with data produced before this fix
+            $fileScopedTransUnitId = $this->currentFileIndex . '|' . $rawTransUnitId;
+            $this->currentTransUnitId = isset($this->transUnits[$fileScopedTransUnitId]) ? $fileScopedTransUnitId : $rawTransUnitId;
 
             // `translate` attribute can be only yes or no
             // current 'translate' attribute of the current trans-unit
