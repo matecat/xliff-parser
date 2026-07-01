@@ -2143,6 +2143,12 @@ class XliffReplacerTest extends Base
             'Seconda traduzione',
             $output['files'][2]['trans-units'][1]['seg-target'][0]['raw-content']
         );
+
+        // The internal "<fileIndex>|<id>" lookup key must never leak into output attributes:
+        // count-group@name is an NMTOKEN and a pipe character makes the document schema-invalid.
+        $outputContent = $this->getTestFile($outputPath);
+        $this->assertSame(2, substr_count($outputContent, '<count-group name="tu1">'));
+        $this->assertStringNotContainsString('|', $outputContent);
     }
 
     /**
@@ -2193,6 +2199,164 @@ class XliffReplacerTest extends Base
 
         // Pre-fix behavior, preserved: with only one plain-id entry, both occurrences of "tu1"
         // resolve to it via the fallback (no disambiguation possible without file-scoped data).
+        $this->assertEquals(
+            'Prima traduzione',
+            $output['files'][1]['trans-units'][1]['seg-target'][0]['raw-content']
+        );
+        $this->assertEquals(
+            'Prima traduzione',
+            $output['files'][2]['trans-units'][1]['seg-target'][0]['raw-content']
+        );
+    }
+
+    /**
+     * Same regression as can_disambiguate_duplicate_trans_unit_id_across_different_file_tags(),
+     * but for the XLIFF 2.0 path, which had no coverage for this fix.
+     *
+     * @throws NotValidFileException
+     * @throws NotSupportedVersionException
+     * @throws InvalidXmlException
+     * @throws XmlParsingException
+     */
+    #[Test]
+    public function can_disambiguate_duplicate_unit_id_across_different_file_tags_in_xliff_20(): void
+    {
+        $data = [
+            0 => [
+                'data_ref_map' => null,
+                'eq_word_count' => '1.00',
+                'error' => '',
+                'internal_id' => '0|tu1',
+                'mrk_id' => '0',
+                'mrk_prev_tags' => null,
+                'mrk_succ_tags' => null,
+                'prev_tags' => '',
+                'r2' => null,
+                'raw_word_count' => '1.00',
+                'segment' => 'First file source',
+                'sid' => '1',
+                'source_page' => null,
+                'status' => TranslationStatus::TRANSLATED,
+                'succ_tags' => '',
+                'translation' => 'Prima traduzione',
+            ],
+            1 => [
+                'data_ref_map' => null,
+                'eq_word_count' => '1.00',
+                'error' => '',
+                'internal_id' => '1|tu1',
+                'mrk_id' => '0',
+                'mrk_prev_tags' => null,
+                'mrk_succ_tags' => null,
+                'prev_tags' => '',
+                'r2' => null,
+                'raw_word_count' => '1.00',
+                'segment' => 'Second file source',
+                'sid' => '2',
+                'source_page' => null,
+                'status' => TranslationStatus::TRANSLATED,
+                'succ_tags' => '',
+                'translation' => 'Seconda traduzione',
+            ],
+        ];
+
+        // Composite keys: "<0-based ordinal position of the enclosing <file> element>|<unit id>".
+        $transUnits = [
+            '0|tu1' => [0],
+            '1|tu1' => [1],
+        ];
+
+        $inputFile = $this->getTestFilePath('20/duplicate-unit-id-across-files.xliff');
+        $outputPath = 'output/duplicate-unit-id-across-files.xliff';
+        $outputFile = $this->getTestFilePath($outputPath);
+
+        $xliffParser = new XliffParser();
+        $xliffParser->replaceTranslation($inputFile, $data, $transUnits, 'it-IT', $outputFile);
+
+        $output = $xliffParser->xliffToArray($this->getTestFile($outputPath));
+
+        $this->assertEquals(
+            'Prima traduzione',
+            $output['files'][1]['trans-units'][1]['seg-target'][0]['raw-content']
+        );
+        $this->assertEquals(
+            'Seconda traduzione',
+            $output['files'][2]['trans-units'][1]['seg-target'][0]['raw-content']
+        );
+
+        // The internal "<fileIndex>|<id>" lookup key must never leak into output attributes:
+        // mda:metaGroup@id is an NMTOKEN and a pipe character makes the document schema-invalid.
+        $outputContent = $this->getTestFile($outputPath);
+        $this->assertSame(2, substr_count($outputContent, 'word_count_tu.tu1.0'));
+        $this->assertStringNotContainsString('|', $outputContent);
+    }
+
+    /**
+     * Backward compatibility for the XLIFF 2.0 path, mirroring falls_back_to_plain_internal_id_for_pre_fix_data().
+     *
+     * Unlike Xliff12 (which resolves a segment by indexing $transUnits[id][0]), Xliff20's
+     * getCurrentSegment() resolves segments positionally via segmentInUnitPosition. So, unlike
+     * the 1.2 test, both physical occurrences of "tu1" need their own data entry (both keyed
+     * under the same plain, non-file-scoped id) to reflect realistic pre-fix data.
+     *
+     * @throws NotValidFileException
+     * @throws NotSupportedVersionException
+     * @throws InvalidXmlException
+     * @throws XmlParsingException
+     */
+    #[Test]
+    public function falls_back_to_plain_internal_id_for_pre_fix_data_in_xliff_20(): void
+    {
+        $data = $this->getData([
+            [
+                'data_ref_map' => null,
+                'eq_word_count' => '1.00',
+                'error' => '',
+                'internal_id' => 'tu1',
+                'mrk_id' => '0',
+                'mrk_prev_tags' => null,
+                'mrk_succ_tags' => null,
+                'prev_tags' => '',
+                'r2' => null,
+                'raw_word_count' => '1.00',
+                'segment' => 'First file source',
+                'sid' => '1',
+                'source_page' => null,
+                'status' => TranslationStatus::TRANSLATED,
+                'succ_tags' => '',
+                'translation' => 'Prima traduzione',
+            ],
+            [
+                'data_ref_map' => null,
+                'eq_word_count' => '1.00',
+                'error' => '',
+                'internal_id' => 'tu1',
+                'mrk_id' => '0',
+                'mrk_prev_tags' => null,
+                'mrk_succ_tags' => null,
+                'prev_tags' => '',
+                'r2' => null,
+                'raw_word_count' => '1.00',
+                'segment' => 'Second file source',
+                'sid' => '2',
+                'source_page' => null,
+                'status' => TranslationStatus::TRANSLATED,
+                'succ_tags' => '',
+                'translation' => 'Prima traduzione',
+            ],
+        ]);
+
+        $inputFile = $this->getTestFilePath('20/duplicate-unit-id-across-files.xliff');
+        $outputPath = 'output/duplicate-unit-id-across-files-plain.xliff';
+        $outputFile = $this->getTestFilePath($outputPath);
+
+        $xliffParser = new XliffParser();
+        $xliffParser->replaceTranslation($inputFile, $data['data'], $data['transUnits'], 'it-IT', $outputFile);
+
+        $output = $xliffParser->xliffToArray($this->getTestFile($outputPath));
+
+        // Pre-fix behavior, preserved: without file-scoping, both occurrences of "tu1" resolve
+        // via the plain-id fallback and both get translated.
         $this->assertEquals(
             'Prima traduzione',
             $output['files'][1]['trans-units'][1]['seg-target'][0]['raw-content']

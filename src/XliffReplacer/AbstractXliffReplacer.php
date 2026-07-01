@@ -42,7 +42,8 @@ abstract class AbstractXliffReplacer
 
     protected int $segmentInUnitPosition = 0;
     protected int $currentFileIndex = -1;                 // 0-based ordinal of the current <file> element
-    protected ?string $currentTransUnitId = null;        // id of current <trans-unit>
+    protected ?string $currentTransUnitId = null;        // raw id of current <trans-unit>, used for output
+    protected ?string $currentTransUnitLookupKey = null; // key (raw or file-scoped) used to look up $transUnits
     protected ?string $currentTransUnitIsTranslatable = null; // 'translate' attribute of current <trans-unit>
     protected bool $hasWrittenCounts = false;  // check if <unit> already wrote segment counts (forXliff v 2.*)
     protected string $targetLang;
@@ -390,10 +391,12 @@ abstract class AbstractXliffReplacer
             // trim to first 100 characters because this is the limit on Matecat's DB
             $rawTransUnitId = substr($attr['id'], 0, 100);
 
+            $this->currentTransUnitId = $rawTransUnitId;
+
             // prefer the file-scoped key if the caller supplied one (post-fix internal_id format);
             // fall back to the plain id for backward compatibility with data produced before this fix
             $fileScopedTransUnitId = $this->currentFileIndex . '|' . $rawTransUnitId;
-            $this->currentTransUnitId = isset($this->transUnits[$fileScopedTransUnitId]) ? $fileScopedTransUnitId : $rawTransUnitId;
+            $this->currentTransUnitLookupKey = isset($this->transUnits[$fileScopedTransUnitId]) ? $fileScopedTransUnitId : $rawTransUnitId;
 
             // `translate` attribute can be only yes or no
             // current 'translate' attribute of the current trans-unit
@@ -551,11 +554,11 @@ abstract class AbstractXliffReplacer
          */
         $this->lastTransUnit = [];
 
-        if (!isset($this->transUnits[$this->currentTransUnitId])) {
+        if (!isset($this->transUnits[$this->currentTransUnitLookupKey])) {
             return;
         }
 
-        $listOfSegmentsIds = $this->transUnits[$this->currentTransUnitId];
+        $listOfSegmentsIds = $this->transUnits[$this->currentTransUnitLookupKey];
         $last_value = null;
         $segmentsCount = count($listOfSegmentsIds);
         for ($i = 0; $i < $segmentsCount; $i++) {
@@ -576,7 +579,7 @@ abstract class AbstractXliffReplacer
     {
         if (
             $this->currentTransUnitIsTranslatable !== 'no' &&
-            isset($this->transUnits[$this->currentTransUnitId]) &&
+            isset($this->transUnits[$this->currentTransUnitLookupKey]) &&
             isset($this->segments[$this->segmentInUnitPosition])
         ) {
             return $this->segments[$this->segmentInUnitPosition];

@@ -71,7 +71,7 @@ class Xliff20 extends AbstractXliffReplacer
             //
             if (in_array($name, ['notes', 'originalData', 'segment', 'ignorable']) &&
                 $this->unitContainsMda === false &&
-                !empty($this->transUnits[$this->currentTransUnitId]) &&
+                !empty($this->transUnits[$this->currentTransUnitLookupKey]) &&
                 !$this->hasWrittenCounts
             ) {
                 // we need to update counts here
@@ -150,7 +150,7 @@ class Xliff20 extends AbstractXliffReplacer
             }
 
             if ('target' == $name && !$this->inAltTrans) {
-                if (isset($this->transUnits[$this->currentTransUnitId])) {
+                if (isset($this->transUnits[$this->currentTransUnitLookupKey])) {
                     $seg = $this->getCurrentSegment();
 
                     // update counts

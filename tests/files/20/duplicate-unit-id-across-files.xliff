@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:mda="urn:oasis:names:tc:xliff:metadata:2.0" version="2.0" srcLang="en-US" trgLang="it-IT">
+    <file id="f1" original="first.txt">
+        <unit id="tu1">
+            <segment>
+                <source>First file source</source>
+            </segment>
+        </unit>
+    </file>
+    <file id="f2" original="second.txt">
+        <unit id="tu1">
+            <segment>
+                <source>Second file source</source>
+            </segment>
+        </unit>
+    </file>
+</xliff>
