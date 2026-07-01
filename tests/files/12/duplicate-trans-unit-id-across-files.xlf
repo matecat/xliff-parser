@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+<file datatype="plaintext" original="first.txt" source-language="en-US" target-language="it-IT">
+<body>
+<trans-unit id="tu1">
+<source xml:lang="en-US">First file source</source>
+<seg-source><mrk mid="0" mtype="seg">First file source</mrk></seg-source>
+<target></target>
+</trans-unit>
+</body>
+</file>
+<file datatype="plaintext" original="second.txt" source-language="en-US" target-language="it-IT">
+<body>
+<trans-unit id="tu1">
+<source xml:lang="en-US">Second file source</source>
+<seg-source><mrk mid="0" mtype="seg">Second file source</mrk></seg-source>
+<target></target>
+</trans-unit>
+</body>
+</file>
+</xliff>

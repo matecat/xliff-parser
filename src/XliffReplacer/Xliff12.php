@@ -96,7 +96,7 @@ class Xliff12 extends AbstractXliffReplacer
             }
 
             if ('target' == $name && !$this->inAltTrans) {
-                if (isset($this->transUnits[$this->currentTransUnitId])) {
+                if (isset($this->transUnits[$this->currentTransUnitLookupKey])) {
                     // get translation of current segment, by indirect indexing: id -> positional index -> segment
                     // actually there may be more than one segment to that ID if there are two mrk of the same source segment
                     $tag = $this->rebuildTarget();
@@ -124,7 +124,7 @@ class Xliff12 extends AbstractXliffReplacer
 
                 // handling </trans-unit> closure
                 if (!$this->targetWasWritten) {
-                    if (isset($this->transUnits[$this->currentTransUnitId])) {
+                    if (isset($this->transUnits[$this->currentTransUnitLookupKey])) {
                         $tag = $this->rebuildTarget();
                     } else {
                         $tag = $this->createTargetTag("", "");
@@ -308,8 +308,8 @@ class Xliff12 extends AbstractXliffReplacer
      */
     protected function getCurrentSegment(): array
     {
-        if ($this->currentTransUnitIsTranslatable !== 'no' && isset($this->transUnits[$this->currentTransUnitId])) {
-            return $this->segments[$this->transUnits[$this->currentTransUnitId][0]];
+        if ($this->currentTransUnitIsTranslatable !== 'no' && isset($this->transUnits[$this->currentTransUnitLookupKey])) {
+            return $this->segments[$this->transUnits[$this->currentTransUnitLookupKey][0]];
         }
 
         return [];
