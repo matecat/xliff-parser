@@ -749,4 +749,58 @@ class XliffParserV2Test extends Base
         $this->assertEquals("[1]", $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ]['original-data'][0]['raw-content']);
         $this->assertEquals("[2]", $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ]['original-data'][1]['raw-content']);
     }
+
+    #[Test]
+    public function can_extract_disp_and_equiv_from_ph_tags(): void
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('20/xliff20-disp-equiv.xlf'));
+        $unit   = $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ];
+
+        $this->assertEquals([
+            ['attr' => ['tag' => 'ph', 'id' => '1', 'dataRef' => 'd1', 'disp' => '[Name]', 'equiv' => 'NAME']],
+            ['attr' => ['tag' => 'ph', 'id' => '2', 'dataRef' => 'd2', 'equiv' => 'COUNT']],
+        ], $unit['inline-codes']);
+
+        // raw-content is left untouched
+        $this->assertStringContainsString('<ph id="1" dataRef="d1" disp="[Name]" equiv="NAME"/>', $unit['source']['raw-content'][0]);
+    }
+
+    #[Test]
+    public function can_extract_disp_and_equiv_from_pc_sc_ec_and_nested_tags(): void
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('20/xliff20-disp-equiv.xlf'));
+        $unit   = $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 2 ];
+
+        $this->assertEquals([
+            ['attr' => ['tag' => 'pc', 'id' => '1', 'dispStart' => '&lt;b&gt;', 'dispEnd' => '&lt;/b&gt;', 'equivStart' => '', 'equivEnd' => '']],
+            ['attr' => ['tag' => 'ph', 'id' => '2', 'disp' => '[br]']],
+            ['attr' => ['tag' => 'sc', 'id' => '3', 'disp' => '[i]']],
+            ['attr' => ['tag' => 'ec', 'startRef' => '3', 'equiv' => '/i']],
+        ], $unit['inline-codes']);
+    }
+
+    #[Test]
+    public function does_not_add_inline_codes_without_disp_or_equiv(): void
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('20/xliff20-disp-equiv.xlf'));
+
+        $this->assertArrayNotHasKey('inline-codes', $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 3 ]);
+    }
+
+    #[Test]
+    public function encodes_disp_and_equiv_like_original_data(): void
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('20/xliff20-disp-equiv.xlf'));
+        $unit   = $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 4 ];
+
+        // single and double escaped values must match the corresponding <originalData> values
+        $this->assertEquals('&lt;p class="x"&gt;', $unit['original-data'][0]['raw-content']);
+        $this->assertEquals('&lt;p class="x"&gt;', $unit['inline-codes'][0]['attr']['dispStart']);
+
+        $this->assertEquals('&lt;/p&gt;', $unit['original-data'][1]['raw-content']);
+        $this->assertEquals('&lt;/p&gt;', $unit['inline-codes'][0]['attr']['dispEnd']);
+
+        $this->assertEquals('a &amp; b', $unit['original-data'][2]['raw-content']);
+        $this->assertEquals('a &amp; b', $unit['inline-codes'][1]['attr']['disp']);
+    }
 }
