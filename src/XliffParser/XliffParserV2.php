@@ -332,6 +332,7 @@ class XliffParserV2 extends AbstractXliffParser
         $relatedAttributes = ['id', 'startRef', 'dataRef', 'dataRefStart', 'dataRefEnd'];
 
         $inlineCodes = [];
+        $seenInlineCodes = [];
 
         foreach (['source', 'target'] as $contentTag) {
             foreach ($transUnit->childNodes as $segment) {
@@ -358,9 +359,11 @@ class XliffParserV2 extends AbstractXliffParser
 
                         // <ec> may have no id, it refers to its <sc> through startRef
                         $key = $element->localName . '#' . ($attributes['id'] ?? 'startRef:' . ($attributes['startRef'] ?? ''));
-                        if (isset($inlineCodes[$key])) {
+                        if (isset($seenInlineCodes[$key])) {
                             continue;
                         }
+
+                        $seenInlineCodes[$key] = true;
 
                         // encode disp/equiv values the same way as <originalData> (see extractTransUnitOriginalData)
                         foreach ($displayAttributes as $displayAttribute) {
@@ -377,7 +380,7 @@ class XliffParserV2 extends AbstractXliffParser
                             }
                         }
 
-                        $inlineCodes[$key] = [
+                        $inlineCodes[] = [
                             'attr' => array_merge(
                                 ['tag' => $element->localName],
                                 array_intersect_key(
@@ -391,7 +394,7 @@ class XliffParserV2 extends AbstractXliffParser
             }
         }
 
-        return array_values($inlineCodes);
+        return $inlineCodes;
     }
 
     /**
