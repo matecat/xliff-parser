@@ -162,6 +162,14 @@ class XliffParserV2 extends AbstractXliffParser
             $output['files'][$i]['trans-units'][$j]['original-data'] = $originalData;
         }
 
+        // inline-codes (exclusive for V2): disp/equiv attributes of <ph>, <pc>, <sc> and <ec>
+        // http://docs.oasis-open.org/xliff/xliff-core/v2.0/xliff-core-v2.0.html#disp
+        // http://docs.oasis-open.org/xliff/xliff-core/v2.0/xliff-core-v2.0.html#equiv
+        $inlineCodes = $this->extractTransUnitInlineCodes($transUnit);
+        if (!empty($inlineCodes)) {
+            $output['files'][$i]['trans-units'][$j]['inline-codes'] = $inlineCodes;
+        }
+
         // additionalTagData (exclusive for V2)
         $additionalTagData = $this->extractTransUnitAdditionalTagData($transUnit);
         if (!empty($additionalTagData)) {
@@ -300,6 +308,86 @@ class XliffParserV2 extends AbstractXliffParser
         }
 
         return $originalData;
+    }
+
+    /**
+     * Extract disp/equiv (and related dataRef) attributes of inline codes from trans-unit.
+     *
+     * Inline codes are collected from <source> first, then from <target> (only ids not already seen).
+     * Only inline codes carrying at least one disp* or equiv* attribute are returned.
+     * disp* and equiv* values are encoded like <originalData> values (dataRef map).
+     *
+     * Example:
+     *
+     * <ph id="1" dataRef="d1" disp="[Name]" equiv="NAME"/>
+     *
+     * ---> ['attr' => ['tag' => 'ph', 'id' => '1', 'dataRef' => 'd1', 'disp' => '[Name]', 'equiv' => 'NAME']]
+     *
+     * @return array<int, array<string, array<string, string>>>
+     */
+    private function extractTransUnitInlineCodes(DOMElement $transUnit): array
+    {
+        $inlineTags = ['ph', 'pc', 'sc', 'ec'];
+        $displayAttributes = ['disp', 'equiv', 'dispStart', 'dispEnd', 'equivStart', 'equivEnd'];
+        $relatedAttributes = ['id', 'startRef', 'dataRef', 'dataRefStart', 'dataRefEnd'];
+
+        $inlineCodes = [];
+
+        foreach (['source', 'target'] as $contentTag) {
+            foreach ($transUnit->childNodes as $segment) {
+                if (!$segment instanceof DOMElement || !in_array($segment->localName, ['segment', 'ignorable'])) {
+                    continue;
+                }
+
+                foreach ($segment->childNodes as $content) {
+                    if (!$content instanceof DOMElement || $content->localName !== $contentTag) {
+                        continue;
+                    }
+
+                    /** @var DOMElement $element */
+                    foreach ($content->getElementsByTagName('*') as $element) {
+                        if (!in_array($element->localName, $inlineTags)) {
+                            continue;
+                        }
+
+                        $attributes = $this->extractTagAttributes($element);
+
+                        if (empty(array_intersect_key($attributes, array_flip($displayAttributes)))) {
+                            continue;
+                        }
+
+                        // <ec> may have no id, it refers to its <sc> through startRef
+                        $key = $element->localName . '#' . ($attributes['id'] ?? 'startRef:' . ($attributes['startRef'] ?? ''));
+                        if (isset($inlineCodes[$key])) {
+                            continue;
+                        }
+
+                        // encode disp/equiv values the same way as <originalData> (see extractTransUnitOriginalData)
+                        foreach ($displayAttributes as $displayAttribute) {
+                            if (isset($attributes[$displayAttribute]) && '' !== $attributes[$displayAttribute]) {
+                                $attributes[$displayAttribute] = $this->parseNoteStringIntoArray(
+                                    $attributes[$displayAttribute],
+                                    false,
+                                    false
+                                )['raw-content'];
+                            }
+                        }
+
+                        $inlineCodes[$key] = [
+                            'attr' => array_merge(
+                                ['tag' => $element->localName],
+                                array_intersect_key(
+                                    $attributes,
+                                    array_flip(array_merge($relatedAttributes, $displayAttributes))
+                                )
+                            )
+                        ];
+                    }
+                }
+            }
+        }
+
+        return array_values($inlineCodes);
     }
 
     /**

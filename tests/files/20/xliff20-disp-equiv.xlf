@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en-US" trgLang="it-IT">
+    <file id="f1">
+        <unit id="u1">
+            <originalData>
+                <data id="d1">{name}</data>
+                <data id="d2">{count}</data>
+                <data id="d3">{date}</data>
+            </originalData>
+            <segment>
+                <source>Hello <ph id="1" dataRef="d1" disp="[Name]" equiv="NAME"/>, you have <ph id="2" dataRef="d2" equiv="COUNT"/> messages since <ph id="3" dataRef="d3"/></source>
+                <target>Ciao <ph id="1" dataRef="d1" disp="[Name]" equiv="NAME"/>, hai <ph id="2" dataRef="d2" equiv="COUNT"/> messaggi dal <ph id="3" dataRef="d3"/></target>
+            </segment>
+        </unit>
+        <unit id="u2">
+            <segment>
+                <source>This is <pc id="1" dispStart="&lt;b&gt;" dispEnd="&lt;/b&gt;" equivStart="" equivEnd="">bold with <ph id="2" disp="[br]"/></pc> and <sc id="3" disp="[i]"/>italic<ec startRef="3" equiv="/i"/></source>
+            </segment>
+        </unit>
+        <unit id="u3">
+            <segment>
+                <source>No display attributes <ph id="1" dataRef="d1"/></source>
+            </segment>
+        </unit>
+        <unit id="u4">
+            <originalData>
+                <data id="d1">&lt;p class=&quot;x&quot;&gt;</data>
+                <data id="d2">&amp;lt;/p&amp;gt;</data>
+                <data id="d3">a &amp; b</data>
+            </originalData>
+            <segment>
+                <source><pc id="1" dataRefStart="d1" dataRefEnd="d2" dispStart="&lt;p class=&quot;x&quot;&gt;" dispEnd="&amp;lt;/p&amp;gt;">text</pc> <ph id="2" dataRef="d3" disp="a &amp; b"/></source>
+            </segment>
+        </unit>
+    </file>
+</xliff>
