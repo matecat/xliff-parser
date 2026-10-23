@@ -365,11 +365,15 @@ class XliffParserV2 extends AbstractXliffParser
                         // encode disp/equiv values the same way as <originalData> (see extractTransUnitOriginalData)
                         foreach ($displayAttributes as $displayAttribute) {
                             if (isset($attributes[$displayAttribute]) && '' !== $attributes[$displayAttribute]) {
-                                $attributes[$displayAttribute] = $this->parseNoteStringIntoArray(
+                                $rawContentArray = $this->parseNoteStringIntoArray(
                                     $attributes[$displayAttribute],
                                     false,
                                     false
-                                )['raw-content'];
+                                );
+
+                                if (isset($rawContentArray['raw-content'])) {
+                                    $attributes[$displayAttribute] = $rawContentArray['raw-content'];
+                                }
                             }
                         }
 
