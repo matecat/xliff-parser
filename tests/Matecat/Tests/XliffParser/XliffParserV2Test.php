@@ -121,6 +121,62 @@ class XliffParserV2Test extends Base
      * @throws XmlParsingException
      */
     #[Test]
+    public function can_parse_xliff_v2_with_several_data_elements_on_one_line(): void
+    {
+        $parsed = (new XliffParser())->xliffToArray($this->getTestFile('20/xliff20-original-data-on-one-line.xlf'));
+        $originalData = $parsed[ 'files' ][ 1 ][ 'trans-units' ][ 1 ][ 'original-data' ];
+
+        $this->assertCount(3, $originalData);
+        $this->assertEquals('  ', $originalData[0]['raw-content']);
+        $this->assertEquals('d1', $originalData[0]['attr']['id']);
+        $this->assertEquals('&lt;g id="b1"&gt;', $originalData[1]['raw-content']);
+        $this->assertEquals('d2', $originalData[1]['attr']['id']);
+        $this->assertEquals('&lt;/g&gt;', $originalData[2]['raw-content']);
+        $this->assertEquals('d3', $originalData[2]['attr']['id']);
+    }
+
+    /**
+     * A single-line file with a large <originalData> map, as exported by Articulate Storyline,
+     * used to exhaust pcre.backtrack_limit and come back as an empty document.
+     *
+     * @throws NotValidFileException
+     * @throws NotSupportedVersionException
+     * @throws InvalidXmlException
+     * @throws XmlParsingException
+     */
+    #[Test]
+    public function can_parse_a_large_single_line_xliff_v2_with_original_data(): void
+    {
+        // The last <data> of the line is followed by a long run of markup with no </data>:
+        // with greedy quantifiers every '>' in that tail was a backtracking point.
+        $style = '&lt;Style FontFamily="+major" FontSize="24" FontIsBold="False" /&gt;';
+        $units = '<unit id="u1"><originalData>'
+            . '<data id="d1">' . $style . '</data><data id="d2">' . $style . '</data><data id="d3">' . $style . '</data>'
+            . '</originalData><segment><source><pc id="1" dataRefStart="d1">Segment 1</pc></source></segment></unit>';
+        for ($i = 2; $i <= 1500; $i++) {
+            $units .= '<unit id="u' . $i . '"><segment><source>Segment ' . $i . '</source></segment></unit>';
+        }
+        $xliff = '<?xml version="1.0" encoding="UTF-8"?>'
+            . '<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en-US" trgLang="it-IT">'
+            . '<file id="f1">' . $units . '</file></xliff>';
+
+        $parsed = (new XliffParser())->xliffToArray($xliff);
+        $transUnits = $parsed[ 'files' ][ 1 ][ 'trans-units' ];
+
+        $this->assertCount(1500, $transUnits);
+        $this->assertEquals(
+            $style,
+            $transUnits[ 1 ][ 'original-data' ][ 2 ][ 'raw-content' ]
+        );
+    }
+
+    /**
+     * @throws NotValidFileException
+     * @throws NotSupportedVersionException
+     * @throws InvalidXmlException
+     * @throws XmlParsingException
+     */
+    #[Test]
     public function can_parse_xliff_v2_with_pc_tags(): void
     {
         // <pc> tags do not be escaped here

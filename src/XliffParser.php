@@ -204,19 +204,36 @@ readonly class XliffParser
      * XliffParserV2::extractTransUnitOriginalData function will restore them
      *
      * (only for Xliff 2.0)
+     *
+     * The quantifiers must stay lazy: each match has to stop at the first </data>, or several
+     * <data> elements on the same line become a single match and the search backtracks across
+     * the whole line, which exhausts pcre.backtrack_limit on large single-line files.
+     *
+     * @throws NotValidFileException
      */
     private static function escapeDataInOriginalMap(string $xliffContent): string
     {
-        $xliffContent = preg_replace_callback(
-            '|<data(.*?)>(.*?)</data>|iU',
-            self::replaceSpace(...),
-            $xliffContent
-        );
-        return preg_replace_callback(
-            '|<data(.*?)>(.*?)</data>|iU',
-            self::replaceXliffTags(...),
-            $xliffContent
-        );
+        $xliffContent = self::replaceDataElements($xliffContent, self::replaceSpace(...));
+
+        return self::replaceDataElements($xliffContent, self::replaceXliffTags(...));
+    }
+
+    /**
+     * @param callable(array<int, string>): string $callback
+     *
+     * @throws NotValidFileException
+     */
+    private static function replaceDataElements(string $xliffContent, callable $callback): string
+    {
+        $replaced = preg_replace_callback('|<data(.*?)>(.*?)</data>|i', $callback, $xliffContent);
+
+        if ($replaced === null) {
+            throw new NotValidFileException(
+                'Unable to process the <originalData> map: ' . preg_last_error_msg()
+            );
+        }
+
+        return $replaced;
     }
 
     /**
